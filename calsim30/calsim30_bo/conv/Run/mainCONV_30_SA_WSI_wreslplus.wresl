@@ -1,0 +1,1089 @@
+! THIS IS THE MAIN WRESL FILE FOR CALSIM II D1641 Study
+! Erik Reyes 06/08/01
+
+SEQUENCE CYCLE1 {
+    model   SJRBASE
+    order   1
+    }
+SEQUENCE CYCLE2 {
+    model   SJR_WQ1
+    order   2
+    }
+SEQUENCE CYCLE3 {
+    model   SJR_PULSE
+     condition month==APR .or. month==MAY
+    order   3
+    }
+SEQUENCE CYCLE4 {
+    model   SJR_WQ2
+     condition month==APR .or. month==MAY
+    order   4
+    }
+SEQUENCE CYCLE5 {
+    model   VAMP_AND_DO
+     condition month>=APR .and. month<=SEP
+    order   5
+    }
+SEQUENCE CYCLE6 {
+    model   GW_INITIAL
+    order   6
+    }
+SEQUENCE CYCLE7 {
+    model   GW_FIRST
+    order   7
+    }
+SEQUENCE CYCLE8 {
+    model   GW_SECOND
+    order   8
+    }
+SEQUENCE CYCLE9 {
+    model   GW_THIRD
+    order   9
+    }
+SEQUENCE CYCLE10 {
+    model   SETUP
+    order   10
+    }    
+SEQUENCE CYCLE11 {
+    model   MONTHLYWEIGHTED
+    order   11
+    }
+SEQUENCE CYCLE12 {
+    model   WHEELCVC
+    order   12
+    }
+
+group Common_All { 
+    INCLUDE '..\..\common\NewFacilitySwitches.wresl'
+    INCLUDE '..\..\common\LevelofDevelopment.wresl'
+    INCLUDE '..\..\common\NorthOfDelta\Sacramento\NODOS\NODOS_JobControl.wresl'
+    INCLUDE '..\..\common\CAAFramework\LCPSIM\LCPSIM_Defines.wresl'
+    INCLUDE '..\..\common\CAAFramework\LCPSIM\LCPSIM_to_CALSIM_linkage.wresl'
+!    INCLUDE '..\..\common\Baseline\SanLuisLimitsDefs.wresl'
+    INCLUDE '..\..\common\sanjoaquin\Various\definitions\SJR_GWPumpingSplits.wresl'
+    INCLUDE 'Restoration\AprPartInflow.wresl'    
+    INCLUDE '..\..\common\System\System_SJR.wresl'
+    INCLUDE '..\..\common\wytypes\wytypes.wresl'
+!    INCLUDE '..\..\common\System\System_MOK.wresl'
+    INCLUDE '..\..\common\sanjoaquin\IntegratedOperations\IntegratedOperationsCommon1.wresl'   
+ 
+    INCLUDE '..\..\common\Cycle1thru5SystemDefsGlobal.wresl'  
+
+!    INCLUDE '..\..\common\hydrology\demands\demands_defs.wresl'
+!    INCLUDE '..\..\common\EWAActions\PreEWAMod\PreEWAStorageMod.wresl'         !Comment in for EWA runs
+!    INCLUDE '..\..\common\EWAActions\PreEWAMod\PreEWAStorageMod_WSI-DI_PreCONV.wresl'   !Comment in for non-EWA runs WTS runs
+    INCLUDE '..\..\common\EWAActions\PreEWAMod\PreEWAStorageMod_WSI-DI.wresl'   !Comment in for non-EWA runs
+
+!    INCLUDE 'BaseStudyResults\BaseStudyResults.wresl'                !Read in results from B2-submodel
+ 
+!	INCLUDE '..\..\common\B2Actions\Repeat\B2ActConditionsFix.wresl'        !Set up for reimplementing B2 actions
+
+    INCLUDE '..\..\common\hydrology\forecast\forecast.wresl'
+
+    INCLUDE'..\..\common\System\System_Sac_cycle1.wresl'
+    INCLUDE '..\..\common\cvp_dellogic\cvp_dellogic_sys\cvp_dellogic_sys_cycle1.wresl' !use for WSI training / remove for runs that Stage1 Transfers
+!    INCLUDE 'DeliveryLogic\CvpSysDeliveryLogicCycle1.wresl'                             !contains B2 and Stage1 Transfers adjustment to supply allocations
+
+    INCLUDE '..\..\common\sanjoaquin\Various\definitions\SJR_ChannelSplits.wresl'
+
+    INCLUDE '..\..\common\cvp_dellogic\cvp_dellogic_s\cvp_dellogic_s_cycle1.wresl' !use for WSI training / remove for runs that include B2
+!    INCLUDE 'DeliveryLogic\CvpSDeliveryLogicCycle1.wresl'            !contains B2 and export adjustments to SOD allocations
+
+    INCLUDE '..\..\common\sanjoaquin\Friant\SJRR_Rest_off.wresl'
+
+!    INCLUDE '..\..\common\sanjoaquin\Friant\SJRR_Rest.wresl'                     !Turns on SJRR Operations    
+    INCLUDE '..\..\common\sanjoaquin\SanJoaquinCore.wresl'
+    INCLUDE '..\..\common\SouthofDelta\NODOS\NODOS_L4Refuge_SOD.wresl'	
+
+    INCLUDE '..\..\common\sanjoaquin\IntegratedOperations\IntegratedOperationsCommon2.wresl'
+    INCLUDE '..\..\common\sanjoaquin\Friant\SJR_Rest_Req_Off_Local.wresl'
+	}
+
+group Common_FromSjrbaseToVamp {
+	INCLUDE '..\..\common\sanjoaquin\IntegratedOperations\IntegratedOperationsCyc1.wresl'  
+	INCLUDE '..\..\common\Cycle1thru5SystemDefsLocal.wresl'
+	}
+
+group Common_FromGWInitialToEnd{
+    INCLUDE '..\..\common\sanjoaquin\IntegratedOperations\USJRS_IO_OFF.wresl'
+    define  daysindv {alias daysin kind 'DAYS' units 'DAYS'}
+    INCLUDE '..\..\common\CCWD\LVM_System.wresl'
+
+    !*************************************************
+    !Make LVM changes with UserInput.wresl or associated SV timeseries or lookup tables.
+    INCLUDE '..\..\common\CCWD\UserInput.wresl'
+    !*************************************************
+    
+    INCLUDE '..\..\common\EWAActions\PreEWAMod\PreEWAStorageMod_WSI-DI_other.wresl'  !Comment in for non-EWA
+    INCLUDE '..\..\common\delta\DeltaExtFuncs_7inpANN.wresl'
+    INCLUDE '..\..\common\swp_dellogic\allocation\co_extfcn.wresl'
+    
+    INCLUDE        '..\..\common\CVGroundwater\CVGroundwater_ExtFuncs.wresl'
+	}
+
+group Weight_FromSjrbaseToVamp {
+	INCLUDE '..\..\common\System\SystemTables_SJR\weight-table.wresl'
+	}
+
+group Weight_FromGWInitialToEnd {
+	INCLUDE '..\..\common\System\SystemTables_SJR\weight-table.wresl'
+	INCLUDE 'System\SystemTables_ALL\weight-table.wresl'
+	}
+
+group Common_GW_part1 {  
+
+    INCLUDE '..\..\common\sanjoaquin\IntegratedOperations\SanLuisTransfers.wresl'    
+    INCLUDE '..\..\common\System\System_ALL.wresl'
+    INCLUDE '..\..\common\northofdelta\yuba\Yuba_Definition.wresl'
+!    INCLUDE '..\..\common\northofdelta\yuba\delivery.wresl'
+    INCLUDE '..\..\common\System\System_Sac.wresl'  
+    
+!    INCLUDE '..\..\common\System\SystemTables_Sac\constraints-seepage_initial.wresl'
+    
+    INCLUDE '..\..\common\ReOperations\ReopsVarDefine.wresl'
+    INCLUDE '..\..\common\EWAActions\ZeroEWAOps.wresl'
+
+    goal wheeling6 {I419 = 0.0}
+    INCLUDE '..\..\common\export_ops\export_ops1.wresl'
+    INCLUDE '..\..\common\export_ops\export_ops2.wresl'
+    INCLUDE '..\..\common\Delta\IsolatedFacility\IsolatedFacility.wresl'
+!    INCLUDE '..\..\common\ReOperations\Transfers\Transfers_MultiYr.wresl'
+!    INCLUDE '..\..\common\ReOperations\D204_Adjustment.wresl'                    !Comment in for WTS
+    INCLUDE 'ReOperations\Transfers\LYRA_stub.wresl'
+!    INCLUDE 'ReOperations\Transfers\TransfersCore.wresl'
+
+    INCLUDE '..\..\common\Freeport\Freeport.wresl'           !ejc
+
+    INCLUDE '..\..\common\swp_dellogic\swp_dellogic.wresl'
+!    INCLUDE 'DeliveryLogic\SwpDeliveryLogic.wresl'                           !contains Stage1 Transfers adjustment to supply allocations
+!    INCLUDE '..\..\common\ReOperations\Transfers\TransfersPreOps.wresl'
+    INCLUDE '..\..\common\ReOperations\Transfers\TransfersZeroOps.wresl'
+
+!    INCLUDE 'Delta\MRDO\X2\x2req.wresl'          ! X2 code for D1641 is different than B2 and EWA (additional Roe Island days are not triggered)
+    INCLUDE '..\..\common\delta\Ann\AnnCommon1.wresl'
+    INCLUDE '..\..\common\export_ops\DCC_stub.wresl'
+    INCLUDE '..\..\common\delta\xchannel\xc-gates.wresl'
+    INCLUDE '..\..\common\Delta\MRDO\X2\X2setup_ANN.wresl'
+
+    INCLUDE '..\..\common\CCWD\LVM_Ops1.wresl'
+
+    INCLUDE '..\..\common\export_ops\exportratio.wresl'
+    INCLUDE '..\..\common\export_ops\april_may_maxexport.wresl'
+
+!    INCLUDE '..\..\common\NorthOfDelta\Sacramento\NODOS\ERP\NODOS_ERP_preFlowSelect.wresl'
+    INCLUDE '..\..\common\NorthOfDelta\nod.wresl'
+    INCLUDE '..\..\common\NorthOfDelta\American\FMStandard.wresl'
+    INCLUDE '..\..\common\NorthOfDelta\Sacramento\setnodminflows.wresl' ! Set minimum flows at Keswick, Whiskeytown, and Nimbus
+!    INCLUDE '..\..\common\NorthOfDelta\American\Cycle7_Hst.wresl'
+
+!    INCLUDE 'ReOperations\integration\NOD_Storage_Transfer.wresl'
+    INCLUDE '..\..\common\ReOperations\wheeling\WheelCore.wresl'
+    INCLUDE '..\..\common\ReOperations\wheeling\wheelzeroCVC.wresl'
+    INCLUDE '..\..\common\ReOperations\wheeling\WheelZeroJPOD.wresl'
+    INCLUDE '..\..\common\ReOperations\wheeling\WheelZeroEWA.wresl'
+!    INCLUDE '..\..\common\NorthOfDelta\Sacramento\NODOS\NODOS_zeroCVPExOp.wresl' 
+
+!    INCLUDE 'coa\coa_PRESETUP.wresl'
+
+    INCLUDE '..\..\common\SanJoaquin\Delta\ZeroAOWater.wresl'
+    INCLUDE '..\..\common\SanJoaquin\Delta\COSMA_restrict_c6_c7.wresl'
+    
+    INCLUDE '..\..\common\cvp_dellogic\cvp_dellogic_sys\cvp_dellogic_sys_cycle6.wresl'
+    INCLUDE '..\..\common\cvp_dellogic\cvp_dellogic_s\cvp_dellogic_s_cycle6.wresl'
+!    INCLUDE '..\..\common\CAAFramework\LCPSIM\LCPSIM_Adjustments.wresl'
+    INCLUDE '..\..\common\CAAFramework\LCPSIM\LCPSIM_ZeroAdjustments.wresl'
+!    INCLUDE '..\..\common\wsi_di_gen\wsi_di_gen.wresl'
+    
+!    INCLUDE '..\..\common\sanjoaquin\Friant\SJR_Rest_Req_Off_Local.wresl'
+!    INCLUDE '..\..\common\sanjoaquin\Friant\SJR_Rest_Full.wresl'          !Turns on SJRR Operations    
+    INCLUDE '..\..\common\sanjoaquin\SanJoaquinAddCyc6.wresl'
+    INCLUDE '..\..\common\Delta\MRDO\X2\x2req_ANN.wresl'
+   include '..\..\common\SouthOfDelta\NODOS\Kern_GWRecharge.wresl'
+    INCLUDE '..\..\common\rulecurve\rulecv.wresl'
+
+    INCLUDE '..\..\common\sanjoaquin\IntegratedOperations\IntegratedOperationsCyc6.wresl'    
+	}
+    
+!    INCLUDE  '..\..\common\Delta\ANN\ExportEstimate1_PRESETUP.wresl'     /* Use this file for ANN salinity requirements, Gmodel must be OFF if this is ON */
+
+group Common_GW_part2 { 
+    INCLUDE  '..\..\common\Delta\Delta_ANN.wresl'     /* Use this file for ANN salinity requirements, Gmodel must be OFF if this is ON */
+    INCLUDE  '..\..\common\Delta\SoDeltaChannels\SoDeltaChannels.wresl'
+    INCLUDE '..\..\common\B2Actions\B2VampCommon.wresl'    !Needed for WangerActions.wresl unless already included elsewhere
+    INCLUDE '..\..\common\export_ops\OMR\OMR_stub.wresl'
+!    INCLUDE '..\..\common\shortage\shortage.wresl'
+!    INCLUDE '..\..\common\Delta\IsolatedFacility\IFDiversionCriteria.wresl'
+
+    INCLUDE '..\..\common\EWAActions\EWA_Purch_Est.wresl'
+    INCLUDE '..\..\common\CCWD\CCWD_OPS\CCWD_LVFILL_OMR_MW.wresl'
+    INCLUDE '..\..\common\CCWD\LVM_Ops2.wresl'
+
+!    INCLUDE '..\..\common\NorthOfDelta\Sacramento\NODOS\NODOS_release.wresl'
+!    INCLUDE '..\..\common\NorthOfDelta\Sacramento\NODOS\WQ\NODOS_pre_wqrelease.wresl'   ! NODOS WQ
+
+    INCLUDE '..\..\common\export_ops\Banks_pump_allow2.wresl'
+
+!    INCLUDE '..\..\common\ReOperations\ReOps_Limits.wresl'
+    INCLUDE '..\..\common\swpcvpdeloutput.wresl'
+    define cvpdeadstor {alias S_TRNTY_1 + S_SHSTA_1 + S_FOLSM_1 units 'taf'}
+    !goal setWTS_SWPAlloc {WTS_SWPAlloc = perdel_swp_mwd1}
+
+    INCLUDE '..\..\common\CCWD\LVE\WHEELING_OFF.WRESL'
+    INCLUDE '..\..\common\System\systemtables_all\connectivity-table.wresl'
+
+
+    INCLUDE '..\..\common\Freeport\SCWA\SCWA_excess_cycle6.wresl'    !ejc
+    INCLUDE '..\..\common\CCWD\CalSimConnection.wresl'
+    
+    INCLUDE '..\..\common\northofdelta\yuba\yuba_minflows_base.wresl'
+    INCLUDE '..\..\common\northofdelta\yuba\yuba_AnnualAllocation_LYRA.wresl'    
+    INCLUDE '..\..\common\northofdelta\yuba\yuba_power.wresl'
+    INCLUDE '..\..\common\northofdelta\yuba\yuba_operations.wresl'
+
+!    INCLUDE '..\..\common\swpcvpdeloutput.wresl'
+
+     }
+
+MODEL SJRBASE {         !CYCLE 1
+
+	include group Common_All 
+	include group Common_FromSjrbaseToVamp
+    
+    INCLUDE '..\..\common\ReOperations\Transfers\TransfersZeroOps_Cyc1thru5.wresl'    
+	
+    !INCLUDE '..\..\common\B2Actions\B2VarDefine.wresl'   !Set up for reimplementing B2 actions !CB made local (arc/dvar conflict)
+
+!    INCLUDE '..\..\common\sanjoaquin\Friant\SJR_Rest_Req_Off_Local.wresl'
+!    INCLUDE '..\..\common\sanjoaquin\Friant\SJR_Rest_Req_Local.wresl'     !Turns on SJRR Operations
+    INCLUDE '..\..\common\SanJoaquin\Delta\ZeroAOWater.wresl'    
+
+    INCLUDE '..\..\common\sanjoaquin\various\SetWSReturns\SetWSRetcycle1thru5.wresl' !fixing return flows into SJR by fixing associated deliveries
+    INCLUDE '..\..\common\sanjoaquin\PurchasedWater\InstreamFromOID.wresl'
+    INCLUDE '..\..\common\sanjoaquin\Stanislaus\stan_FW_min.wresl'
+    INCLUDE '..\..\common\sanjoaquin\Tuolumne\tuol_FERC_min.wresl'
+    INCLUDE '..\..\common\sanjoaquin\various\bounds_cycles\bounds_cycle1.wresl'
+    
+    include group Weight_FromSjrbaseToVamp
+
+	}
+     
+MODEL SJR_WQ1 {         !CYCLE 2
+
+	include group Common_All
+	include group Common_FromSjrbaseToVamp
+	include group Weight_FromSjrbaseToVamp
+
+!CB    INCLUDE '..\..\common\Cycle1thru5SystemDefs.wresl' !CB separated into global and local parts
+    
+    
+    !    INCLUDE '..\..\common\sanjoaquin\Friant\SJR_Rest_Req_Off_Local.wresl'
+!    INCLUDE '..\..\common\sanjoaquin\Friant\SJR_Rest_Req_Local.wresl'     !Turns on SJRR Operations
+    INCLUDE '..\..\common\SanJoaquin\Delta\ZeroAOWater.wresl'     
+    INCLUDE '..\..\common\ReOperations\Transfers\TransfersZeroOps_Cyc1thru5.wresl'
+    INCLUDE '..\..\common\sanjoaquin\various\SetWSReturns\SetWSRetcycle1thru5.wresl' !fixing return flows into SJR by fixing associated deliveries
+    INCLUDE '..\..\common\sanjoaquin\WaterQuality\disaggregation\WestsideReturns\WSReturnC1.wresl'       !MWH    SJR WD    
+    INCLUDE '..\..\common\sanjoaquin\WaterQuality\Vernalis_WQmin_Disag.wresl'
+    INCLUDE '..\..\common\sanjoaquin\Groundwater\SJRGW_restrict.wresl'
+    INCLUDE '..\..\common\sanjoaquin\various\bounds_cycles\bounds_cycle2.wresl'
+!    INCLUDE'..\..\common\northofdelta\yuba\AnnualAllocation_YUBA_CY2.wresl'
+     }
+
+MODEL SJR_PULSE {            !CYCLE 3
+
+	include group Common_All
+	include group Common_FromSjrbaseToVamp
+	include group Weight_FromSjrbaseToVamp
+	
+!CB    INCLUDE '..\..\common\Cycle1thru5SystemDefs.wresl' !CB separated into global and local parts
+    
+
+    !    INCLUDE '..\..\common\sanjoaquin\Friant\SJR_Rest_Req_Off_Local.wresl'
+!    INCLUDE '..\..\common\sanjoaquin\Friant\SJR_Rest_Req_Local.wresl'     !Turns on SJRR Operations
+    INCLUDE '..\..\common\SanJoaquin\Delta\ZeroAOWater.wresl' 
+    INCLUDE '..\..\common\ReOperations\Transfers\TransfersZeroOps_Cyc1thru5.wresl'
+    INCLUDE '..\..\common\sanjoaquin\various\SetWSReturns\SetWSRetcycle1thru5.wresl' !fixing return flows into SJR by fixing associated deliveries
+    INCLUDE '..\..\common\sanjoaquin\Stanislaus\stan_FW_pulse.wresl'
+    INCLUDE '..\..\common\sanjoaquin\Tuolumne\tuol_FERC_pulse.wresl'
+    INCLUDE '..\..\common\sanjoaquin\Groundwater\SJRGW_restrict.wresl'
+    INCLUDE '..\..\common\sanjoaquin\various\bounds_cycles\bounds_cycle3.wresl'
+!    INCLUDE'..\..\common\northofdelta\yuba\AnnualAllocation_YUBA_CY2.wresl'
+     }
+
+MODEL SJR_WQ2 {         !CYCLE 4
+
+	include group Common_All
+	include group Common_FromSjrbaseToVamp
+	include group Weight_FromSjrbaseToVamp
+		
+!CB    INCLUDE '..\..\common\Cycle1thru5SystemDefs.wresl' !CB separated into global and local parts
+    
+
+    !    INCLUDE '..\..\common\sanjoaquin\Friant\SJR_Rest_Req_Off_Local.wresl'
+!    INCLUDE '..\..\common\sanjoaquin\Friant\SJR_Rest_Req_Local.wresl'     !Turns on SJRR Operations
+    INCLUDE '..\..\common\SanJoaquin\Delta\ZeroAOWater.wresl' 
+    INCLUDE '..\..\common\ReOperations\Transfers\TransfersZeroOps_Cyc1thru5.wresl'
+    INCLUDE '..\..\common\sanjoaquin\various\SetWSReturns\SetWSRetcycle1thru5.wresl' !fixing return flows into SJR by fixing associated deliveries
+    INCLUDE '..\..\common\sanjoaquin\WaterQuality\disaggregation\WestsideReturns\WSReturnC3.wresl'       !MWH    SJR WD    
+    INCLUDE '..\..\common\sanjoaquin\WaterQuality\Vernalis_WQpulse_Disag.wresl'
+    INCLUDE '..\..\common\sanjoaquin\Groundwater\SJRGW_restrict.wresl'
+    INCLUDE '..\..\common\sanjoaquin\various\bounds_cycles\bounds_cycle4.wresl'
+!    INCLUDE'..\..\common\northofdelta\yuba\AnnualAllocation_YUBA_CY2.wresl'
+     }
+
+MODEL VAMP_AND_DO {           !CYCLE 5
+
+	include group Common_All
+	include group Common_FromSjrbaseToVamp
+	include group Weight_FromSjrbaseToVamp
+		
+!CB    INCLUDE '..\..\common\Cycle1thru5SystemDefs.wresl' !CB separated into global and local parts
+    
+
+    !    INCLUDE '..\..\common\sanjoaquin\Friant\SJR_Rest_Req_Off_Local.wresl'
+!    INCLUDE '..\..\common\sanjoaquin\Friant\SJR_Rest_Req_Local.wresl'     !Turns on SJRR Operations
+    INCLUDE '..\..\common\SanJoaquin\Delta\ZeroAOWater.wresl' 
+    INCLUDE '..\..\common\ReOperations\Transfers\TransfersZeroOps_Cyc1thru5.wresl'
+    INCLUDE '..\..\common\sanjoaquin\various\SetWSReturns\SetWSRetcycle1thru5.wresl' !fixing return flows into SJR by fixing associated deliveries
+    INCLUDE '..\..\common\SANJOAQUIN\VAMP\VAMP_REQ.WRESL'
+    INCLUDE '..\..\common\SANJOAQUIN\VAMP\VAMP_ALLOC.WRESL'
+    INCLUDE '..\..\common\SANJOAQUIN\STANISLAUS\DO.WRESL'
+    INCLUDE '..\..\common\sanjoaquin\Groundwater\SJRGW_restrict.wresl'
+    INCLUDE '..\..\common\sanjoaquin\various\bounds_cycles\bounds_cycle5.wresl'
+!    INCLUDE'..\..\common\northofdelta\yuba\AnnualAllocation_YUBA_CY2.wresl'
+     }
+
+MODEL GW_INITIAL {      !CYCLE 6 (also functions as the PRESETUP cycle)
+
+	include group Common_All
+	include group Common_FromGWInitialToEnd
+	
+	include group Common_GW_part1
+    
+    INCLUDE '..\..\common\System\SystemTables_Sac\constraints-seepage_initial.wresl'
+    INCLUDE  '..\..\common\Delta\ANN\ExportEstimate1_PRESETUP.wresl'    
+	
+	include group Common_GW_part2
+
+    INCLUDE 'coa\coa_PRESETUP.wresl'
+    	
+	include group Weight_FromGWInitialToEnd
+		
+	 }
+   
+MODEL GW_FIRST {       !CYCLE 7
+
+	include group Common_All
+	include group Common_FromGWInitialToEnd
+	
+	include group Common_GW_part1
+
+    INCLUDE '..\..\common\System\SystemTables_Sac\constraints-seepage_repeat.wresl'    
+    INCLUDE  '..\..\common\Delta\ANN\ExportEstimate1.wresl'    
+	    
+	include group Common_GW_part2
+	
+	INCLUDE 'coa\coa.wresl'
+	
+	include group Weight_FromGWInitialToEnd
+		
+	 }     
+     
+MODEL GW_SECOND {      !CYCLE 8
+
+	include group Common_All
+	include group Common_FromGWInitialToEnd
+	
+	include group Common_GW_part1
+    
+    INCLUDE '..\..\common\System\SystemTables_Sac\constraints-seepage_repeat2.wresl'    
+    INCLUDE  '..\..\common\Delta\ANN\ExportEstimate1.wresl'    
+	    
+	include group Common_GW_part2
+	
+	INCLUDE 'coa\coa.wresl'
+	
+	include group Weight_FromGWInitialToEnd
+
+	 }   
+     
+MODEL GW_THIRD {      !CYCLE 9
+	include group Common_All
+	include group Common_FromGWInitialToEnd
+	
+	include group Common_GW_part1
+    
+    INCLUDE '..\..\common\System\SystemTables_Sac\constraints-seepage_repeat3.wresl'    
+    INCLUDE  '..\..\common\Delta\ANN\ExportEstimate1.wresl'    
+	    
+	include group Common_GW_part2
+	
+	INCLUDE 'coa\coa.wresl'
+	
+	include group Weight_FromGWInitialToEnd
+     }
+
+MODEL SETUP {      !CYCLE 10 (also functions as fourth groundwater cycle)
+	include group Common_All
+	include group Common_FromGWInitialToEnd
+	
+	include group Common_GW_part1
+    
+    INCLUDE '..\..\common\System\SystemTables_Sac\constraints-seepage_repeat4.wresl'    
+    INCLUDE  '..\..\common\Delta\ANN\ExportEstimate1.wresl'    
+	    
+	include group Common_GW_part2
+	
+	INCLUDE 'coa\coa.wresl'
+	
+	include group Weight_FromGWInitialToEnd
+	 }
+   
+
+MODEL MONTHLYWEIGHTED {      !CYCLE 11
+	include group Common_All
+	include group Common_FromGWInitialToEnd
+    !define  daysindv {alias daysin kind 'DAYS' units 'DAYS'}
+    INCLUDE '..\..\common\sanjoaquin\IntegratedOperations\SanLuisTransfers.wresl'    
+    INCLUDE '..\..\common\System\System_ALL.wresl'
+    INCLUDE '..\..\common\northofdelta\yuba\Yuba_Definition.wresl'    
+!    INCLUDE '..\..\common\northofdelta\yuba\delivery.wresl'
+    INCLUDE '..\..\common\System\System_Sac2.wresl'
+    INCLUDE '..\..\common\hydrology\weirs\weir_steps_dailyops_SETUP.wresl'
+    INCLUDE '..\..\common\System\SystemTables_Sac\constraints-seepage_last.wresl'
+    !INCLUDE '..\..\common\EWAActions\PreEWAMod\PreEWAStorageMod_WSI-DI_other.wresl'  !Comment in for non-EWA
+    !INCLUDE '..\..\common\delta\DeltaExtFuncs_7inpANN.wresl'
+    !INCLUDE '..\..\common\swp_dellogic\allocation\co_extfcn.wresl'
+    
+    INCLUDE '..\..\common\ReOperations\ReopsVarDefine.wresl'
+    INCLUDE '..\..\common\EWAActions\ZeroEWAOps.wresl'
+
+    !INCLUDE        '..\..\common\CVGroundwater\CVGroundwater_ExtFuncs.wresl'
+    
+    goal wheeling6 {I419 = 0.0}
+    INCLUDE '..\..\common\export_ops\export_ops1.wresl'
+    INCLUDE '..\..\common\export_ops\export_ops2.wresl'
+    INCLUDE '..\..\common\Delta\IsolatedFacility\IsolatedFacility.wresl'
+!    INCLUDE '..\..\common\ReOperations\Transfers\Transfers_MultiYr.wresl'
+!    INCLUDE '..\..\common\ReOperations\D204_Adjustment.wresl'                    !Comment in for WTS
+    INCLUDE 'ReOperations\Transfers\LYRA_stub.wresl'
+!    INCLUDE 'ReOperations\Transfers\TransfersCore.wresl'
+
+    INCLUDE '..\..\common\Freeport\Freeport.wresl'           !ejc
+
+    INCLUDE '..\..\common\swp_dellogic\swp_dellogic.wresl'
+!    INCLUDE 'DeliveryLogic\SwpDeliveryLogic.wresl'                           !contains Stage1 Transfers adjustment to supply allocations
+!    INCLUDE '..\..\common\ReOperations\Transfers\TransfersPreOps.wresl'
+    INCLUDE '..\..\common\ReOperations\Transfers\TransfersZeroOps.wresl'
+
+!    INCLUDE 'Delta\MRDO\X2\x2req.wresl'          ! X2 code for D1641 is different than B2 and EWA (additional Roe Island days are not triggered)
+    INCLUDE '..\..\common\delta\Ann\AnnCommon1.wresl'
+    INCLUDE '..\..\common\export_ops\DCC_stub.wresl'
+    INCLUDE '..\..\common\delta\xchannel\xc-gates.wresl'
+    INCLUDE '..\..\common\Delta\MRDO\X2\X2setup_ANN.wresl'
+
+    INCLUDE '..\..\common\CCWD\LVM_Ops1.wresl'
+
+    INCLUDE '..\..\common\export_ops\exportratio.wresl'
+    INCLUDE '..\..\common\export_ops\april_may_maxexport.wresl'
+
+!    INCLUDE '..\..\common\NorthOfDelta\Sacramento\NODOS\ERP\NODOS_ERP_preFlowSelect.wresl'
+    INCLUDE '..\..\common\NorthOfDelta\nod.wresl'
+    INCLUDE '..\..\common\NorthOfDelta\American\FMStandard.wresl'
+    INCLUDE '..\..\common\NorthOfDelta\Sacramento\setnodminflows.wresl' ! Set minimum flows at Keswick, Whiskeytown, and Nimbus
+!    INCLUDE '..\..\common\NorthOfDelta\American\Cycle7_Hst.wresl'
+
+!    INCLUDE 'ReOperations\integration\NOD_Storage_Transfer.wresl'
+    INCLUDE '..\..\common\ReOperations\wheeling\WheelCore.wresl'
+    INCLUDE '..\..\common\ReOperations\wheeling\wheelzeroCVC.wresl'
+    INCLUDE '..\..\common\ReOperations\wheeling\WheelZeroJPOD.wresl'
+    INCLUDE '..\..\common\ReOperations\wheeling\WheelZeroEWA.wresl'
+!    INCLUDE '..\..\common\NorthOfDelta\Sacramento\NODOS\NODOS_zeroCVPExOp.wresl' 
+
+    INCLUDE '..\..\common\SanJoaquin\Delta\ZeroAOWater.wresl'
+    INCLUDE '..\..\common\SanJoaquin\Delta\COSMA_restrict_c6_c7.wresl'
+    
+    INCLUDE '..\..\common\cvp_dellogic\cvp_dellogic_sys\cvp_dellogic_sys_cycle6.wresl'
+    INCLUDE '..\..\common\cvp_dellogic\cvp_dellogic_s\cvp_dellogic_s_cycle6.wresl'
+!    INCLUDE '..\..\common\CAAFramework\LCPSIM\LCPSIM_Adjustments.wresl'
+    INCLUDE '..\..\common\CAAFramework\LCPSIM\LCPSIM_ZeroAdjustments.wresl'
+!    INCLUDE '..\..\common\wsi_di_gen\wsi_di_gen.wresl'
+    
+    !    INCLUDE '..\..\common\sanjoaquin\Friant\SJR_Rest_Req_Off_Local.wresl'
+!    INCLUDE '..\..\common\sanjoaquin\Friant\SJR_Rest_Full.wresl'          !Turns on SJRR Operations    
+    INCLUDE '..\..\common\sanjoaquin\SanJoaquinAddCyc6.wresl'
+    INCLUDE '..\..\common\Delta\MRDO\X2\x2req_ANN.wresl'
+   include '..\..\common\SouthOfDelta\NODOS\Kern_GWRecharge.wresl'
+    INCLUDE '..\..\common\rulecurve\rulecv.wresl'
+
+    INCLUDE '..\..\common\sanjoaquin\IntegratedOperations\IntegratedOperationsCyc6.wresl'    
+    
+    INCLUDE  '..\..\common\Delta\ANN\ExportEstimate1.wresl'     /* Use this file for ANN salinity requirements, Gmodel must be OFF if this is ON */
+    INCLUDE  '..\..\common\Delta\Delta_ANN.wresl'     /* Use this file for ANN salinity requirements, Gmodel must be OFF if this is ON */
+    INCLUDE  '..\..\common\Delta\SoDeltaChannels\SoDeltaChannels.wresl'
+    INCLUDE '..\..\common\B2Actions\B2VampCommon.wresl'    !Needed for WangerActions.wresl unless already included elsewhere
+    INCLUDE '..\..\common\export_ops\OMR\OMR_stub.wresl'
+!    INCLUDE '..\..\common\shortage\shortage.wresl'
+!    INCLUDE '..\..\common\Delta\IsolatedFacility\IFDiversionCriteria_DailyOps_SETUP.wresl'
+
+    INCLUDE 'coa\coa.wresl'
+
+    INCLUDE '..\..\common\EWAActions\EWA_Purch_Est.wresl'
+    INCLUDE '..\..\common\CCWD\CCWD_OPS\CCWD_LVFILL_OMR_MW.wresl'
+    INCLUDE '..\..\common\CCWD\LVM_Ops2.wresl'
+
+!    INCLUDE '..\..\common\NorthOfDelta\Sacramento\NODOS\NODOS_release.wresl'
+!    INCLUDE '..\..\common\NorthOfDelta\Sacramento\NODOS\WQ\NODOS_pre_wqrelease.wresl'   ! NODOS WQ
+
+    INCLUDE '..\..\common\export_ops\Banks_pump_allow2.wresl'
+    INCLUDE '..\..\common\export_ops\jul_sep_prefer_td_exp_SETUP.wresl'
+
+!    INCLUDE '..\..\common\ReOperations\ReOps_Limits.wresl'
+    INCLUDE '..\..\common\swpcvpdeloutput.wresl'
+    define cvpdeadstor {alias S_TRNTY_1 + S_SHSTA_1 + S_FOLSM_1 units 'taf'}
+    !goal setWTS_SWPAlloc {WTS_SWPAlloc = perdel_swp_mwd1}
+
+    INCLUDE '..\..\common\CCWD\LVE\WHEELING_OFF.WRESL'
+    INCLUDE '..\..\common\System\systemtables_all\connectivity-table.wresl'
+
+    INCLUDE '..\..\common\Freeport\SCWA\SCWA_excess_cycle6.wresl'    !ejc
+    INCLUDE '..\..\common\CCWD\CalSimConnection.wresl'
+
+    INCLUDE '..\..\common\northofdelta\yuba\yuba_minflows_base.wresl'
+    INCLUDE '..\..\common\northofdelta\yuba\yuba_power.wresl'
+    INCLUDE '..\..\common\northofdelta\yuba\yuba_operations.wresl'
+    INCLUDE '..\..\common\northofdelta\yuba\yuba_AnnualAllocation_CY2.wresl'
+    
+!    INCLUDE '..\..\common\swpcvpdeloutput.wresl'
+	include group Weight_FromGWInitialToEnd
+     }
+     
+MODEL UPSTREAM {      !CYCLE 12
+	include group Common_All
+	include group Common_FromGWInitialToEnd
+
+!    INCLUDE '..\..\common\northofdelta\yuba\delivery.wresl'
+    INCLUDE '..\..\common\sanjoaquin\IntegratedOperations\SanLuisTransfers.wresl'    
+    INCLUDE '..\..\common\System\System_ALL.wresl'
+    INCLUDE '..\..\common\northofdelta\yuba\Yuba_Definition.wresl'    
+    INCLUDE '..\..\common\System\System_Sac2.wresl'
+    INCLUDE '..\..\common\hydrology\weirs\weir_steps_dailyops_MONTHLYWEIGHTED.wresl'
+    INCLUDE '..\..\common\System\SystemTables_Sac\constraints-seepage_final.wresl'
+    !INCLUDE '..\..\common\EWAActions\PreEWAMod\PreEWAStorageMod_WSI-DI_other.wresl'  !Comment in for non-EWA
+    !INCLUDE '..\..\common\delta\DeltaExtFuncs_7inpANN.wresl'
+    !INCLUDE '..\..\common\swp_dellogic\allocation\co_extfcn.wresl'
+    
+    INCLUDE '..\..\common\ReOperations\ReopsVarDefine.wresl'
+    INCLUDE '..\..\common\EWAActions\ZeroEWAOps.wresl'
+
+    !INCLUDE        '..\..\common\CVGroundwater\CVGroundwater_ExtFuncs.wresl'
+    
+    goal wheeling6 {I419 = 0.0}
+    INCLUDE '..\..\common\export_ops\export_ops1.wresl'
+    INCLUDE '..\..\common\export_ops\export_ops2.wresl'
+    INCLUDE '..\..\common\Delta\IsolatedFacility\IsolatedFacility.wresl'
+!    INCLUDE '..\..\common\ReOperations\Transfers\Transfers_MultiYr.wresl'
+!    INCLUDE '..\..\common\ReOperations\D204_Adjustment.wresl'                    !Comment in for WTS
+    INCLUDE 'ReOperations\Transfers\LYRA_stub.wresl'
+!    INCLUDE 'ReOperations\Transfers\TransfersCore.wresl'
+
+    INCLUDE '..\..\common\Freeport\Freeport.wresl'           !ejc
+
+    INCLUDE '..\..\common\swp_dellogic\swp_dellogic.wresl'
+!    INCLUDE 'DeliveryLogic\SwpDeliveryLogic.wresl'                           !contains Stage1 Transfers adjustment to supply allocations
+!    INCLUDE '..\..\common\ReOperations\Transfers\TransfersPreOps.wresl'
+    INCLUDE '..\..\common\ReOperations\Transfers\TransfersZeroOps.wresl'
+
+!    INCLUDE 'Delta\MRDO\X2\x2req.wresl'          ! X2 code for D1641 is different than B2 and EWA (additional Roe Island days are not triggered)
+    INCLUDE '..\..\common\delta\Ann\AnnCommon1.wresl'
+    INCLUDE '..\..\common\CycleOutput\prev_cycle_MONTHLYWEIGHTED.wresl'
+    INCLUDE '..\..\common\export_ops\DCC_stub.wresl'
+    INCLUDE '..\..\common\delta\xchannel\xc-gates.wresl'
+    INCLUDE '..\..\common\Delta\MRDO\X2\X2setup_ANN_FWS.wresl'
+
+    INCLUDE '..\..\common\CCWD\LVM_Ops1.wresl'
+
+    INCLUDE '..\..\common\export_ops\exportratio.wresl'
+    INCLUDE '..\..\common\export_ops\april_may_maxexport.wresl'
+
+!    INCLUDE '..\..\common\NorthOfDelta\Sacramento\NODOS\ERP\NODOS_ERP_preFlowSelect.wresl'
+    INCLUDE '..\..\common\NorthOfDelta\nod.wresl'
+    INCLUDE '..\..\common\NorthOfDelta\American\FMStandard.wresl'
+    !INCLUDE '..\..\common\NorthOfDelta\Sacramento\setnodminflows.wresl' ! Set minimum flows at Keswick, Whiskeytown, and Nimbus
+    INCLUDE 'B2Actions\B2ActionsUpstreamRepeat.wresl'   !Add B2Upstream Actions
+!    INCLUDE '..\..\common\NorthOfDelta\American\Cycle7_Hst.wresl'
+
+!    INCLUDE 'ReOperations\integration\NOD_Storage_Transfer.wresl'
+    INCLUDE '..\..\common\ReOperations\wheeling\WheelCore.wresl'
+    INCLUDE '..\..\common\ReOperations\wheeling\wheelzeroCVC.wresl'
+    INCLUDE '..\..\common\ReOperations\wheeling\WheelZeroJPOD.wresl'
+    INCLUDE '..\..\common\ReOperations\wheeling\WheelZeroEWA.wresl'
+!    INCLUDE '..\..\common\NorthOfDelta\Sacramento\NODOS\NODOS_zeroCVPExOp.wresl' 
+
+    INCLUDE '..\..\common\SanJoaquin\Delta\ZeroAOWater.wresl'
+    INCLUDE '..\..\common\SanJoaquin\Delta\COSMA_restrict_c6_c7.wresl'
+    
+    INCLUDE '..\..\common\cvp_dellogic\cvp_dellogic_sys\cvp_dellogic_sys_cycle6.wresl'
+    INCLUDE '..\..\common\cvp_dellogic\cvp_dellogic_s\cvp_dellogic_s_cycle6.wresl'
+!    INCLUDE '..\..\common\CAAFramework\LCPSIM\LCPSIM_Adjustments.wresl'
+    INCLUDE '..\..\common\CAAFramework\LCPSIM\LCPSIM_ZeroAdjustments.wresl'
+!    INCLUDE '..\..\common\wsi_di_gen\wsi_di_gen.wresl'
+    
+    !    INCLUDE '..\..\common\sanjoaquin\Friant\SJR_Rest_Req_Off_Local.wresl'
+!    INCLUDE '..\..\common\sanjoaquin\Friant\SJR_Rest_Full.wresl'          !Turns on SJRR Operations    
+    INCLUDE '..\..\common\sanjoaquin\SanJoaquinAddCyc6.wresl'
+    INCLUDE '..\..\common\Delta\MRDO\X2\x2req_ANN.wresl'
+   include '..\..\common\SouthOfDelta\NODOS\Kern_GWRecharge.wresl'
+    INCLUDE '..\..\common\rulecurve\rulecv.wresl'
+
+    INCLUDE '..\..\common\sanjoaquin\IntegratedOperations\IntegratedOperationsCyc6.wresl'    
+    
+    INCLUDE  '..\..\common\Delta\ANN\ExportEstimate1.wresl'     /* Use this file for ANN salinity requirements, Gmodel must be OFF if this is ON */
+    INCLUDE  '..\..\common\Delta\Delta_ANN_Reduced_Calls.wresl'     ! Use this file for ANN salinity requirements
+    INCLUDE  '..\..\common\Delta\SoDeltaChannels\SoDeltaChannels.wresl'
+    INCLUDE '..\..\common\B2Actions\B2VampCommon.wresl'    !Needed for WangerActions.wresl unless already included elsewhere
+    INCLUDE '..\..\common\export_ops\OMR\OMR_stub.wresl'
+!    INCLUDE '..\..\common\shortage\shortage.wresl'
+!    INCLUDE '..\..\common\Delta\IsolatedFacility\IFDiversionCriteria_DailyOps_MONTHLYWEIGHTED.wresl'
+
+    INCLUDE 'coa\coa.wresl'
+
+    INCLUDE '..\..\common\EWAActions\EWA_Purch_Est.wresl'
+    INCLUDE '..\..\common\CCWD\CCWD_OPS\CCWD_LVFILL_OMR_MW.wresl'
+    INCLUDE '..\..\common\CCWD\LVM_Ops2.wresl'
+
+!    INCLUDE '..\..\common\NorthOfDelta\Sacramento\NODOS\NODOS_release.wresl'
+!    INCLUDE '..\..\common\NorthOfDelta\Sacramento\NODOS\WQ\NODOS_pre_wqrelease.wresl'   ! NODOS WQ
+
+    INCLUDE '..\..\common\export_ops\Banks_pump_allow2.wresl'
+    INCLUDE '..\..\common\export_ops\jul_sep_prefer_td_exp_SETUP.wresl'
+
+!    INCLUDE '..\..\common\ReOperations\ReOps_Limits.wresl'
+    INCLUDE '..\..\common\swpcvpdeloutput.wresl'
+    define cvpdeadstor {alias S_TRNTY_1 + S_SHSTA_1 + S_FOLSM_1 units 'taf'}
+    !goal setWTS_SWPAlloc {WTS_SWPAlloc = perdel_swp_mwd1}
+
+    INCLUDE '..\..\common\CCWD\LVE\WHEELING_OFF.WRESL'
+    INCLUDE '..\..\common\System\systemtables_all\connectivity-table.wresl'
+
+    INCLUDE '..\..\common\Freeport\SCWA\SCWA_excess_cycle6.wresl'    !ejc
+    INCLUDE '..\..\common\CCWD\CalSimConnection.wresl'
+
+    INCLUDE '..\..\common\northofdelta\yuba\yuba_minflows_base.wresl'
+    INCLUDE '..\..\common\northofdelta\yuba\yuba_power.wresl'
+    INCLUDE '..\..\common\northofdelta\yuba\yuba_operations.wresl'
+    INCLUDE '..\..\common\northofdelta\yuba\yuba_AnnualAllocation_CY2.wresl'
+    
+!    INCLUDE '..\..\common\swpcvpdeloutput.wresl'
+	include group Weight_FromGWInitialToEnd
+     }
+     
+MODEL DELTA {      !CYCLE 13
+	include group Common_All
+	include group Common_FromGWInitialToEnd
+
+!    INCLUDE '..\..\common\northofdelta\yuba\delivery.wresl'
+    INCLUDE '..\..\common\sanjoaquin\IntegratedOperations\SanLuisTransfers.wresl'    
+    INCLUDE '..\..\common\System\System_ALL.wresl'
+    INCLUDE '..\..\common\northofdelta\yuba\Yuba_Definition.wresl'    
+    INCLUDE '..\..\common\System\System_Sac2.wresl'
+    INCLUDE '..\..\common\hydrology\weirs\weir_steps_dailyops_UPSTREAM.wresl'
+    INCLUDE '..\..\common\System\SystemTables_Sac\constraints-seepage_final.wresl'
+    !INCLUDE '..\..\common\EWAActions\PreEWAMod\PreEWAStorageMod_WSI-DI_other.wresl'  !Comment in for non-EWA
+    !INCLUDE '..\..\common\delta\DeltaExtFuncs_7inpANN.wresl'
+    !INCLUDE '..\..\common\swp_dellogic\allocation\co_extfcn.wresl'
+    
+    INCLUDE '..\..\common\ReOperations\ReopsVarDefine.wresl'
+    INCLUDE '..\..\common\EWAActions\ZeroEWAOps.wresl'
+
+    !INCLUDE        '..\..\common\CVGroundwater\CVGroundwater_ExtFuncs.wresl'
+    
+    goal wheeling6 {I419 = 0.0}
+    INCLUDE '..\..\common\export_ops\export_ops1.wresl'
+    INCLUDE '..\..\common\export_ops\export_ops2.wresl'
+    INCLUDE '..\..\common\Delta\IsolatedFacility\IsolatedFacility.wresl'
+!    INCLUDE '..\..\common\ReOperations\Transfers\Transfers_MultiYr.wresl'
+!    INCLUDE '..\..\common\ReOperations\D204_Adjustment.wresl'                    !Comment in for WTS
+    INCLUDE 'ReOperations\Transfers\LYRA_stub.wresl'
+!    INCLUDE 'ReOperations\Transfers\TransfersCore.wresl'
+
+    INCLUDE '..\..\common\Freeport\Freeport.wresl'           !ejc
+
+!    INCLUDE '..\..\common\swp_dellogic\swp_dellogic.wresl'
+    INCLUDE 'DeliveryLogic\SwpDeliveryLogic.wresl'                           !contains Stage1 Transfers adjustment to supply allocations
+!    INCLUDE '..\..\common\ReOperations\Transfers\TransfersPreOps.wresl'
+    INCLUDE '..\..\common\ReOperations\Transfers\TransfersZeroOps.wresl'
+
+!    INCLUDE 'Delta\MRDO\X2\x2req.wresl'          ! X2 code for D1641 is different than B2 and EWA (additional Roe Island days are not triggered)
+    INCLUDE '..\..\common\delta\Ann\AnnCommon1.wresl'
+    INCLUDE '..\..\common\CycleOutput\prev_cycle_UPSTREAM.wresl'
+    INCLUDE '..\..\common\export_ops\DELTA_RPA1.wresl'
+    INCLUDE '..\..\common\delta\xchannel\xc-gates.wresl'
+    INCLUDE '..\..\common\Delta\MRDO\X2\X2setup_ANN_FWS.wresl'
+
+    INCLUDE '..\..\common\CCWD\LVM_Ops1.wresl'
+
+    INCLUDE '..\..\common\export_ops\exportratio.wresl'
+    INCLUDE '..\..\common\export_ops\april_may_maxexport.wresl'
+
+!    INCLUDE '..\..\common\NorthOfDelta\Sacramento\NODOS\ERP\NODOS_ERP_preFlowSelect.wresl'
+    INCLUDE '..\..\common\NorthOfDelta\nod.wresl'
+    INCLUDE '..\..\common\NorthOfDelta\American\FMStandard.wresl'
+    !INCLUDE '..\..\common\NorthOfDelta\Sacramento\setnodminflows.wresl' ! Set minimum flows at Keswick, Whiskeytown, and Nimbus
+    INCLUDE 'B2Actions\B2ActionsUpstreamRepeat.wresl'   !Add B2Upstream Actions
+!    INCLUDE '..\..\common\NorthOfDelta\American\Cycle7_Hst.wresl'
+
+!    INCLUDE 'ReOperations\integration\NOD_Storage_Transfer.wresl'
+    INCLUDE '..\..\common\ReOperations\wheeling\WheelCore.wresl'
+    INCLUDE '..\..\common\ReOperations\wheeling\wheelzeroCVC.wresl'
+    INCLUDE '..\..\common\ReOperations\wheeling\WheelZeroJPOD.wresl'
+    INCLUDE '..\..\common\ReOperations\wheeling\WheelZeroEWA.wresl'
+!    INCLUDE '..\..\common\NorthOfDelta\Sacramento\NODOS\NODOS_zeroCVPExOp.wresl' 
+
+    INCLUDE '..\..\common\SanJoaquin\Delta\ZeroAOWater.wresl'
+    INCLUDE '..\..\common\SanJoaquin\Delta\COSMA_restrict_c6_c7.wresl'
+    
+    INCLUDE 'B2Actions\B2SetBaseline.wresl'                          !B2 Setup stuff
+    INCLUDE '..\..\common\B2Actions\Repeat\B2ActionsDeltaRepeat.wresl'      !Add B2 Delta Actions
+    INCLUDE 'B2Actions\B2BanksFix.wresl'                             !Set SWP Banks PP cooperation
+
+    INCLUDE '..\..\common\cvp_dellogic\cvp_dellogic_sys\cvp_dellogic_sys_cycle6.wresl'
+    INCLUDE '..\..\common\cvp_dellogic\cvp_dellogic_s\cvp_dellogic_s_cycle6.wresl'
+!    INCLUDE '..\..\common\CAAFramework\LCPSIM\LCPSIM_Adjustments.wresl'
+    INCLUDE '..\..\common\CAAFramework\LCPSIM\LCPSIM_ZeroAdjustments.wresl'
+!    INCLUDE '..\..\common\wsi_di_gen\wsi_di_gen.wresl'
+    
+    !    INCLUDE '..\..\common\sanjoaquin\Friant\SJR_Rest_Req_Off_Local.wresl'
+!    INCLUDE '..\..\common\sanjoaquin\Friant\SJR_Rest_Full.wresl'          !Turns on SJRR Operations    
+    INCLUDE '..\..\common\sanjoaquin\SanJoaquinAddCyc6.wresl'
+    INCLUDE '..\..\common\Delta\MRDO\X2\x2req_ANN.wresl'
+   include '..\..\common\SouthOfDelta\NODOS\Kern_GWRecharge.wresl'
+    INCLUDE '..\..\common\rulecurve\rulecv.wresl'
+
+    INCLUDE '..\..\common\sanjoaquin\IntegratedOperations\IntegratedOperationsCyc6.wresl'    
+    
+    INCLUDE  '..\..\common\Delta\ANN\ExportEstimate1_B2.wresl'     /* Use this file for ANN salinity requirements, Gmodel must be OFF if this is ON */
+    INCLUDE  '..\..\common\Delta\Delta_ANN_Reduced_Calls.wresl'     ! Use this file for ANN salinity requirements
+    INCLUDE  '..\..\common\Delta\SoDeltaChannels\SoDeltaChannels.wresl'
+    INCLUDE '..\..\common\export_ops\DELTA_RPA2.wresl'
+
+!    INCLUDE '..\..\common\shortage\shortage.wresl'
+!    INCLUDE '..\..\common\Delta\IsolatedFacility\IFDiversionCriteria_DailyOps_UPSTREAM.wresl'
+
+    INCLUDE 'coa\coa_bo.wresl'
+
+    INCLUDE '..\..\common\EWAActions\EWA_Purch_Est.wresl'
+    INCLUDE '..\..\common\CCWD\CCWD_OPS\CCWD_LVFILL_OMR_DELTA.wresl'
+    INCLUDE '..\..\common\CCWD\LVM_Ops2.wresl'
+
+!    INCLUDE '..\..\common\NorthOfDelta\Sacramento\NODOS\NODOS_release.wresl'
+!    INCLUDE '..\..\common\NorthOfDelta\Sacramento\NODOS\WQ\NODOS_pre_wqrelease.wresl'   ! NODOS WQ
+
+    INCLUDE '..\..\common\export_ops\Banks_pump_allow2.wresl'
+    INCLUDE '..\..\common\export_ops\jul_sep_prefer_td_exp_SETUP.wresl'
+
+!    INCLUDE '..\..\common\ReOperations\ReOps_Limits.wresl'
+    INCLUDE '..\..\common\swpcvpdeloutput.wresl'
+    define cvpdeadstor {alias S_TRNTY_1 + S_SHSTA_1 + S_FOLSM_1 units 'taf'}
+    !goal setWTS_SWPAlloc {WTS_SWPAlloc = perdel_swp_mwd1}
+
+    INCLUDE '..\..\common\CCWD\LVE\WHEELING_OFF.WRESL'
+    INCLUDE '..\..\common\System\systemtables_all\connectivity-table.wresl'
+
+    INCLUDE '..\..\common\Freeport\SCWA\SCWA_excess_cycle6.wresl'    !ejc
+    INCLUDE '..\..\common\CCWD\CalSimConnection.wresl'
+
+    INCLUDE '..\..\common\CCWD\WQ_Calcs\WQ_Calcs_UPSTREAM.wresl'
+
+    INCLUDE '..\..\common\northofdelta\yuba\yuba_minflows_base.wresl'
+    INCLUDE '..\..\common\northofdelta\yuba\yuba_power.wresl'
+    INCLUDE '..\..\common\northofdelta\yuba\yuba_operations.wresl'
+    INCLUDE '..\..\common\northofdelta\yuba\yuba_AnnualAllocation_CY2.wresl'
+    
+!    INCLUDE '..\..\common\swpcvpdeloutput.wresl'
+	include group Weight_FromGWInitialToEnd
+     }
+
+MODEL TRANSFERS_STAGE1 {      !CYCLE 14
+	include group Common_All
+	include group Common_FromGWInitialToEnd
+    !define  daysindv {alias daysin kind 'DAYS' units 'DAYS'}
+    INCLUDE '..\..\common\sanjoaquin\IntegratedOperations\SanLuisTransfers.wresl'    
+    INCLUDE '..\..\common\System\System_ALL.wresl'
+    INCLUDE '..\..\common\northofdelta\yuba\Yuba_Definition.wresl'    
+!    INCLUDE '..\..\common\northofdelta\yuba\delivery.wresl'
+    INCLUDE '..\..\common\System\System_Sac2.wresl'
+    INCLUDE '..\..\common\hydrology\weirs\weir_steps_dailyops_DELTA.wresl'
+    INCLUDE '..\..\common\System\SystemTables_Sac\constraints-seepage_final.wresl'
+    !INCLUDE '..\..\common\EWAActions\PreEWAMod\PreEWAStorageMod_WSI-DI_other.wresl'  !Comment in for non-EWA
+    !INCLUDE '..\..\common\delta\DeltaExtFuncs_7inpANN.wresl'
+    !INCLUDE '..\..\common\swp_dellogic\allocation\co_extfcn.wresl'
+    
+    INCLUDE '..\..\common\ReOperations\ReopsVarDefine.wresl'
+    INCLUDE '..\..\common\EWAActions\ZeroEWAOps.wresl'
+
+    !INCLUDE        '..\..\common\CVGroundwater\CVGroundwater_ExtFuncs.wresl'
+    
+    goal wheeling6 {I419 = 0.0}
+    INCLUDE '..\..\common\export_ops\export_ops1.wresl'
+    INCLUDE '..\..\common\export_ops\export_ops2.wresl'
+    INCLUDE '..\..\common\Delta\IsolatedFacility\IsolatedFacility.wresl'
+!    INCLUDE '..\..\common\ReOperations\Transfers\Transfers_MultiYr.wresl'
+!    INCLUDE '..\..\common\ReOperations\D204_Adjustment.wresl'                    !Comment in for WTS
+    INCLUDE 'ReOperations\Transfers\LYRA_stub.wresl'
+!    INCLUDE 'ReOperations\Transfers\TransfersCore.wresl'
+
+    INCLUDE '..\..\common\Freeport\Freeport.wresl'           !ejc
+
+!    INCLUDE '..\..\common\swp_dellogic\swp_dellogic.wresl'
+    INCLUDE 'DeliveryLogic\SwpDeliveryLogic.wresl'                           !contains Stage1 Transfers adjustment to supply allocations
+!    INCLUDE '..\..\common\ReOperations\Transfers\TransfersPreOps.wresl'
+!    INCLUDE 'ReOperations\Transfers\TransfersSetBaseline_DELTA.wresl'
+!    INCLUDE 'ReOperations\Transfers\TransfersOps.wresl'
+!    INCLUDE '..\..\common\ReOperations\Transfers\TransfersZeroOps.wresl'
+
+!    INCLUDE 'Delta\MRDO\X2\x2req.wresl'          ! X2 code for D1641 is different than B2 and EWA (additional Roe Island days are not triggered)
+    INCLUDE '..\..\common\delta\Ann\AnnCommon1.wresl'
+    INCLUDE '..\..\common\CycleOutput\prev_cycle_DELTA.wresl'
+    INCLUDE '..\..\common\export_ops\DELTA_RPA1_DELTA.wresl'
+    INCLUDE '..\..\common\delta\xchannel\xc-gates.wresl'
+    INCLUDE '..\..\common\Delta\MRDO\X2\X2setup_ANN_FWS.wresl'
+
+    INCLUDE '..\..\common\CCWD\LVM_Ops1.wresl'
+
+    INCLUDE '..\..\common\export_ops\exportratio.wresl'
+    INCLUDE '..\..\common\export_ops\april_may_maxexport.wresl'
+
+!    INCLUDE '..\..\common\NorthOfDelta\Sacramento\NODOS\ERP\NODOS_ERP_preFlowSelect.wresl'
+    INCLUDE '..\..\common\NorthOfDelta\nod.wresl'
+    INCLUDE '..\..\common\NorthOfDelta\American\FMStandard.wresl'
+    !INCLUDE '..\..\common\NorthOfDelta\Sacramento\setnodminflows.wresl' ! Set minimum flows at Keswick, Whiskeytown, and Nimbus
+    INCLUDE 'B2Actions\B2ActionsUpstreamRepeat.wresl'   !Add B2Upstream Actions
+!    INCLUDE '..\..\common\NorthOfDelta\American\Cycle7_Hst.wresl'
+
+!    INCLUDE 'ReOperations\integration\NOD_Storage_Transfer.wresl'
+    INCLUDE '..\..\common\ReOperations\wheeling\WheelCore.wresl'
+    INCLUDE 'ReOperations\wheeling\WHLSetBaseline_DELTA.wresl'
+    INCLUDE '..\..\common\ReOperations\wheeling\wheelzeroCVC.wresl'
+    INCLUDE '..\..\common\ReOperations\wheeling\WheelZeroJPOD.wresl'
+    INCLUDE '..\..\common\ReOperations\wheeling\WheelZeroEWA.wresl'
+    INCLUDE '..\..\common\ReOperations\wheeling\wheelcap.wresl'
+!    INCLUDE '..\..\common\NorthOfDelta\Sacramento\NODOS\NODOS_zeroCVPExOp.wresl' 
+    INCLUDE '..\..\common\ReOperations\reopcontinuity.wresl'
+    INCLUDE 'ReOperations\wheeling\wheelfixes_DELTA.wresl'
+
+!    INCLUDE '..\..\common\SanJoaquin\Delta\ZeroAOWater.wresl'
+    INCLUDE '..\..\common\SanJoaquin\Delta\COSMA_restrict_c6_c7.wresl'
+    INCLUDE '..\..\common\SanJoaquin\Delta\DWSP_Term91.wresl'
+    
+    INCLUDE 'B2Actions\B2SetBaseline.wresl'                          !B2 Setup stuff
+    INCLUDE '..\..\common\B2Actions\Repeat\B2ActionsDeltaRepeat.wresl'      !Add B2 Delta Actions
+    INCLUDE 'B2Actions\B2BanksFix.wresl'                             !Set SWP Banks PP cooperation
+
+    INCLUDE '..\..\common\cvp_dellogic\cvp_dellogic_sys\cvp_dellogic_sys_cycle6.wresl'
+    INCLUDE '..\..\common\cvp_dellogic\cvp_dellogic_s\cvp_dellogic_s_cycle6.wresl'
+!    INCLUDE '..\..\common\CAAFramework\LCPSIM\LCPSIM_Adjustments.wresl'
+    INCLUDE '..\..\common\CAAFramework\LCPSIM\LCPSIM_ZeroAdjustments.wresl'
+!    INCLUDE '..\..\common\wsi_di_gen\wsi_di_gen.wresl'
+    
+    !    INCLUDE '..\..\common\sanjoaquin\Friant\SJR_Rest_Req_Off_Local.wresl'
+!    INCLUDE '..\..\common\sanjoaquin\Friant\SJR_Rest_Full.wresl'          !Turns on SJRR Operations    
+    INCLUDE '..\..\common\sanjoaquin\SanJoaquinAddCyc6.wresl'
+    INCLUDE '..\..\common\sanjoaquin\WaterQuality\disaggregation\Disag_WriteOut.wresl'
+    INCLUDE '..\..\common\Delta\MRDO\X2\x2req_ANN.wresl'
+   include '..\..\common\SouthOfDelta\NODOS\Kern_GWRecharge.wresl'
+    INCLUDE '..\..\common\rulecurve\rulecv.wresl'
+
+    INCLUDE '..\..\common\sanjoaquin\IntegratedOperations\IntegratedOperationsCyc6.wresl'    
+    
+    INCLUDE  '..\..\common\Delta\ANN\ExportEstimate1_B2.wresl'     /* Use this file for ANN salinity requirements, Gmodel must be OFF if this is ON */
+    INCLUDE  '..\..\common\Delta\Delta_ANN_Reduced_Calls.wresl'     ! Use this file for ANN salinity requirements
+    INCLUDE  '..\..\common\Delta\SoDeltaChannels\SoDeltaChannels.wresl'
+    INCLUDE '..\..\common\export_ops\DELTA_RPA2.wresl'
+    INCLUDE '..\..\common\shortage\shortage.wresl'
+!    INCLUDE '..\..\common\Delta\IsolatedFacility\IFDiversionCriteria_DailyOps_DELTA.wresl'
+
+    INCLUDE 'coa\coa_bo.wresl'
+
+    INCLUDE '..\..\common\EWAActions\EWA_Purch_Est.wresl'
+    INCLUDE '..\..\common\CCWD\CCWD_OPS\CCWD_LVFILL_OMR_DELTA.wresl'
+    INCLUDE '..\..\common\CCWD\LVM_Ops2.wresl'
+
+!    INCLUDE '..\..\common\NorthOfDelta\Sacramento\NODOS\NODOS_release.wresl'
+!    INCLUDE '..\..\common\NorthOfDelta\Sacramento\NODOS\WQ\NODOS_pre_wqrelease.wresl'   ! NODOS WQ
+
+    INCLUDE '..\..\common\export_ops\Banks_pump_allow2.wresl'
+    INCLUDE '..\..\common\export_ops\jul_sep_prefer_td_exp_SETUP.wresl'
+
+!    INCLUDE '..\..\common\ReOperations\ReOps_Limits.wresl'
+!    INCLUDE '..\..\common\CAAFramework\LCPSIM\CALSIM_to_LCPSIM_linkage.wresl'
+!    INCLUDE '..\..\common\CAAFramework\CVPM\CALSIM_to_CVPM_linkage.wresl'
+!    INCLUDE '..\..\common\CAAFramework\CVPM\CALSIM_to_CVPM_linkage_SJR.wresl'
+    INCLUDE '..\..\common\swpcvpdeloutput.wresl'
+    define cvpdeadstor {alias S_TRNTY_1 + S_SHSTA_1 + S_FOLSM_1 units 'taf'}
+!    INCLUDE '..\..\common\ReOperations\Transfers\TransfersCycOut_DELTA.wresl'
+    !goal setWTS_SWPAlloc {WTS_SWPAlloc = perdel_swp_mwd1}
+
+    INCLUDE '..\..\common\CCWD\LVE\WHEELING_OFF.WRESL'
+    INCLUDE '..\..\common\System\systemtables_all\connectivity-table.wresl'
+
+    INCLUDE '..\..\common\Freeport\SCWA\SCWA_excess_cycle6.wresl'    !ejc
+
+    INCLUDE '..\..\common\CCWD\CalSimConnection.wresl'
+    INCLUDE '..\..\common\CCWD\WQ_Calcs\WQ_Calcs_DELTA.wresl'    
+
+    INCLUDE '..\..\common\northofdelta\yuba\yuba_minflows_LYRA.wresl'
+    INCLUDE '..\..\common\northofdelta\yuba\yuba_power.wresl'
+    INCLUDE '..\..\common\northofdelta\yuba\yuba_operations.wresl'
+    INCLUDE '..\..\common\northofdelta\yuba\yuba_AnnualAllocation_CY2_TXFR.wresl'
+
+!    INCLUDE '..\..\common\swpcvpdeloutput.wresl'
+
+    INCLUDE 'CycleOutput\cycle_output.wresl'
+    
+    INCLUDE '..\..\common\ReOperations\Transfers\TransfersOps_Stg1_CalSim3.wresl'
+	include group Weight_FromGWInitialToEnd
+     }
+	 	 
+MODEL WHEELCVC {      !CYCLE 12
+	include group Common_All
+	include group Common_FromGWInitialToEnd
+
+    INCLUDE '..\..\common\sanjoaquin\IntegratedOperations\SanLuisTransfers.wresl'    
+    INCLUDE '..\..\common\System\System_ALL.wresl'
+    INCLUDE '..\..\common\northofdelta\yuba\Yuba_Definition.wresl'    
+!    INCLUDE '..\..\common\northofdelta\yuba\delivery.wresl'
+    INCLUDE '..\..\common\System\System_Sac2.wresl'
+    INCLUDE '..\..\common\hydrology\weirs\weir_steps_dailyops_MONTHLYWEIGHTED.wresl'
+    INCLUDE '..\..\common\System\SystemTables_Sac\constraints-seepage_final.wresl'
+    !INCLUDE '..\..\common\EWAActions\PreEWAMod\PreEWAStorageMod_WSI-DI_other.wresl'  !Comment in for non-EWA
+    !INCLUDE '..\..\common\delta\DeltaExtFuncs_7inpANN.wresl'
+    !INCLUDE '..\..\common\swp_dellogic\allocation\co_extfcn.wresl'
+    
+    INCLUDE '..\..\common\ReOperations\ReopsVarDefine.wresl'
+    INCLUDE '..\..\common\EWAActions\ZeroEWAOps.wresl'
+
+    !INCLUDE        '..\..\common\CVGroundwater\CVGroundwater_ExtFuncs.wresl'
+    
+    goal wheeling6 {I419 = 0.0}
+    INCLUDE '..\..\common\export_ops\export_ops1.wresl'
+    INCLUDE '..\..\common\export_ops\export_ops2.wresl'
+    INCLUDE '..\..\common\Delta\IsolatedFacility\IsolatedFacility.wresl'
+!    INCLUDE '..\..\common\ReOperations\Transfers\Transfers_MultiYr.wresl'
+!    INCLUDE '..\..\common\ReOperations\D204_Adjustment.wresl'                    !Comment in for WTS
+    INCLUDE 'ReOperations\Transfers\LYRA_stub.wresl'
+!    INCLUDE 'ReOperations\Transfers\TransfersCore.wresl'
+
+    INCLUDE '..\..\common\Freeport\Freeport.wresl'           !ejc
+
+    INCLUDE '..\..\common\swp_dellogic\swp_dellogic.wresl'
+!    INCLUDE 'DeliveryLogic\SwpDeliveryLogic.wresl'                           !contains Stage1 Transfers adjustment to supply allocations
+!    INCLUDE '..\..\common\ReOperations\Transfers\TransfersPreOps.wresl'
+!    INCLUDE 'ReOperations\Transfers\TransfersSetBaseline_DELTA.wresl'
+!    INCLUDE 'ReOperations\Transfers\TransfersOps.wresl'
+    INCLUDE '..\..\common\ReOperations\Transfers\TransfersZeroOps.wresl'
+
+!    INCLUDE 'Delta\MRDO\X2\x2req.wresl'          ! X2 code for D1641 is different than B2 and EWA (additional Roe Island days are not triggered)
+    INCLUDE '..\..\common\delta\Ann\AnnCommon1.wresl'
+    INCLUDE '..\..\common\CycleOutput\prev_cycle_MONTHLYWEIGHTED.wresl'
+    INCLUDE '..\..\common\export_ops\DCC_stub.wresl'
+    INCLUDE '..\..\common\delta\xchannel\xc-gates.wresl'
+    INCLUDE '..\..\common\Delta\MRDO\X2\X2setup_ANN_FWS.wresl'
+
+    INCLUDE '..\..\common\CCWD\LVM_Ops1.wresl'
+    
+    INCLUDE '..\..\common\export_ops\exportratio.wresl'
+    INCLUDE '..\..\common\export_ops\april_may_maxexport.wresl'    
+    
+!    INCLUDE '..\..\common\NorthOfDelta\Sacramento\NODOS\ERP\NODOS_ERP_preFlowSelect.wresl'
+    INCLUDE '..\..\common\NorthOfDelta\nod.wresl'
+    INCLUDE '..\..\common\NorthOfDelta\American\FMStandard.wresl'
+    INCLUDE '..\..\common\NorthOfDelta\Sacramento\setnodminflows.wresl' ! Set minimum flows at Keswick, Whiskeytown, and Nimbus
+    !INCLUDE 'B2Actions\B2ActionsUpstreamRepeat.wresl'   !Add B2Upstream Actions
+!    INCLUDE '..\..\common\NorthOfDelta\American\Cycle7_Hst.wresl'
+
+!    INCLUDE 'ReOperations\integration\NOD_Storage_Transfer.wresl'
+    INCLUDE '..\..\common\ReOperations\wheeling\WheelCore.wresl'
+    INCLUDE 'ReOperations\wheeling\WHLSetBaseline_MONTHLYWEIGHTED.wresl'
+    INCLUDE '..\..\common\ReOperations\wheeling\wheelcap.wresl'
+!    INCLUDE '..\..\common\ReOperations\wheeling\wheelzeroCVC.wresl'
+    INCLUDE '..\..\common\ReOperations\wheeling\WheelZeroJPOD.wresl'
+    INCLUDE '..\..\common\ReOperations\wheeling\WheelZeroEWA.wresl'
+
+!    INCLUDE '..\..\common\NorthOfDelta\Sacramento\NODOS\NODOS_zeroCVPExOp.wresl' 
+    INCLUDE '..\..\common\ReOperations\reopcontinuity.wresl'
+    INCLUDE 'ReOperations\wheeling\wheelfixes_MONTHLYWEIGHTED.wresl'
+
+!    INCLUDE '..\..\common\SanJoaquin\Delta\ZeroAOWater.wresl'
+    INCLUDE '..\..\common\SanJoaquin\Delta\COSMA_restrict_c6_c7.wresl'
+    INCLUDE '..\..\common\SanJoaquin\Delta\DWSP_Term91.wresl'
+    
+    !INCLUDE 'B2Actions\B2SetBaseline.wresl'                          !B2 Setup stuff
+    !INCLUDE '..\..\common\B2Actions\Repeat\B2ActionsDeltaRepeat.wresl'      !Add B2 Delta Actions
+    !INCLUDE 'B2Actions\B2BanksFix.wresl'                             !Set SWP Banks PP cooperation
+
+    INCLUDE '..\..\common\cvp_dellogic\cvp_dellogic_sys\cvp_dellogic_sys_cycle6.wresl'
+    INCLUDE '..\..\common\cvp_dellogic\cvp_dellogic_s\cvp_dellogic_s_cycle6.wresl'
+!    INCLUDE '..\..\common\CAAFramework\LCPSIM\LCPSIM_Adjustments.wresl'
+    INCLUDE '..\..\common\CAAFramework\LCPSIM\LCPSIM_ZeroAdjustments.wresl'
+    INCLUDE '..\..\common\wsi_di_gen\wsi_di_gen.wresl'
+    
+    !    INCLUDE '..\..\common\sanjoaquin\Friant\SJR_Rest_Req_Off_Local.wresl'
+!    INCLUDE '..\..\common\sanjoaquin\Friant\SJR_Rest_Full.wresl'          !Turns on SJRR Operations    
+    INCLUDE '..\..\common\sanjoaquin\SanJoaquinAddCyc6.wresl'
+    !INCLUDE '..\..\common\sanjoaquin\WaterQuality\disaggregation\Disag_WriteOut.wresl'
+    INCLUDE '..\..\common\Delta\MRDO\X2\x2req_ANN.wresl'
+   include '..\..\common\SouthOfDelta\NODOS\Kern_GWRecharge.wresl'
+    INCLUDE '..\..\common\rulecurve\rulecv.wresl'
+
+    INCLUDE '..\..\common\sanjoaquin\IntegratedOperations\IntegratedOperationsCyc6.wresl'    
+    
+    INCLUDE  '..\..\common\Delta\ANN\ExportEstimate1.wresl'     /* Use this file for ANN salinity requirements, Gmodel must be OFF if this is ON */
+    INCLUDE  '..\..\common\Delta\Delta_ANN_Reduced_Calls.wresl'     ! Use this file for ANN salinity requirements
+    INCLUDE  '..\..\common\Delta\SoDeltaChannels\SoDeltaChannels.wresl'
+    INCLUDE  '..\..\common\B2Actions\B2VampCommon.wresl'    !Needed for WangerActions.wresl unless already included elsewhere
+    INCLUDE  '..\..\common\export_ops\OMR\OMR_stub.wresl'
+!    INCLUDE '..\..\common\shortage\shortage.wresl'
+!    INCLUDE '..\..\common\Delta\IsolatedFacility\IFDiversionCriteria_DailyOps_TRANSFERS_STAGE1.wresl'
+
+    INCLUDE 'coa\coa.wresl'
+
+    INCLUDE '..\..\common\EWAActions\EWA_Purch_Est.wresl'
+    INCLUDE '..\..\common\CCWD\CCWD_OPS\CCWD_LVFILL_OMR_MW.wresl'
+    INCLUDE '..\..\common\CCWD\LVM_Ops2.wresl'
+    
+!    INCLUDE '..\..\common\NorthOfDelta\Sacramento\NODOS\NODOS_release.wresl'
+!    INCLUDE '..\..\common\NorthOfDelta\Sacramento\NODOS\WQ\NODOS_pre_wqrelease.wresl'   ! NODOS WQ
+
+    INCLUDE '..\..\common\export_ops\Banks_pump_allow2.wresl'
+    INCLUDE '..\..\common\export_ops\jul_sep_prefer_td_exp_SETUP.wresl'    
+
+!    INCLUDE '..\..\common\ReOperations\ReOps_Limits.wresl'
+!    INCLUDE '..\..\common\CAAFramework\LCPSIM\CALSIM_to_LCPSIM_linkage.wresl'
+!    INCLUDE '..\..\common\CAAFramework\CVPM\CALSIM_to_CVPM_linkage.wresl'
+!    INCLUDE '..\..\common\CAAFramework\CVPM\CALSIM_to_CVPM_linkage_SJR.wresl'
+    INCLUDE '..\..\common\swpcvpdeloutput.wresl'
+    define cvpdeadstor {alias S_TRNTY_1 + S_SHSTA_1 + S_FOLSM_1 units 'taf'}
+!    INCLUDE '..\..\common\ReOperations\Transfers\TransfersCycOut_DELTA.wresl'
+    !goal setWTS_SWPAlloc {WTS_SWPAlloc = perdel_swp_mwd1}
+
+    INCLUDE '..\..\common\CCWD\LVE\WHEELING_OFF.WRESL'
+    INCLUDE '..\..\common\System\systemtables_all\connectivity-table.wresl'
+
+    INCLUDE '..\..\common\Freeport\SCWA\SCWA_excess_cycle6.wresl'    !ejc
+
+    INCLUDE '..\..\common\CCWD\CalSimConnection.wresl'
+    INCLUDE '..\..\common\CCWD\WQ_Calcs\WQ_Calcs_MONTHLYWEIGHTED.wresl'    
+
+    INCLUDE '..\..\common\northofdelta\yuba\yuba_minflows_base.wresl'
+    INCLUDE '..\..\common\northofdelta\yuba\yuba_power.wresl'
+    INCLUDE '..\..\common\northofdelta\yuba\yuba_operations.wresl'
+    INCLUDE '..\..\common\northofdelta\yuba\yuba_AnnualAllocation_CY2.wresl'
+
+!    INCLUDE '..\..\common\swpcvpdeloutput.wresl'
+
+!    INCLUDE 'CycleOutput\cycle_output.wresl'
+    
+!    INCLUDE '..\..\common\ReOperations\Transfers\TransfersOps_Stg1_CalSim3.wresl'
+	include group Weight_FromGWInitialToEnd
+     }
+     
