@@ -99,15 +99,17 @@ public class MainGUI {
 				FormFactory.RELATED_GAP_COLSPEC,
 				FormFactory.DEFAULT_COLSPEC,
 				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,
+				ColumnSpec.decode("left:default"),
 				ColumnSpec.decode("max(20dlu;min)"),
 				FormFactory.DEFAULT_COLSPEC,
 				FormFactory.RELATED_GAP_COLSPEC,
 				FormFactory.DEFAULT_COLSPEC,
 				FormFactory.RELATED_GAP_COLSPEC,
 				ColumnSpec.decode("max(50dlu;default):grow"),
-				FormFactory.RELATED_GAP_COLSPEC,},
+				ColumnSpec.decode("max(15dlu;min)"),},
 			new RowSpec[] {
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.RELATED_GAP_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.RELATED_GAP_ROWSPEC,
@@ -144,12 +146,14 @@ public class MainGUI {
 		table.setRowHeight(20);
 		table.setIntercellSpacing(new Dimension(3, 3));
 		table.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-		panel_Simple.add(table, "6, 4, 5, 13");
+		panel_Simple.add(table, "6, 4, 5, 17");
 		table.setFont(new Font("Dialog", Font.PLAIN, 14));
 		table.setColumnSelectionAllowed(true);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
 				{"keyword1", "value1"},
+				{null, null},
+				{null, null},
 				{null, null},
 				{null, null},
 				{null, null},
@@ -180,19 +184,20 @@ public class MainGUI {
 		table.getColumnModel().getColumn(1).setMaxWidth(900);
 		
 		JButton btnNewButton_3 = new JButton("Import config...");
+		btnNewButton_3.setToolTipText("Optional.");
 		panel_Simple.add(btnNewButton_3, "4, 6");
 		
 		JButton btnNewButton = new JButton("Run dir...");
-		panel_Simple.add(btnNewButton, "4, 8");
+		panel_Simple.add(btnNewButton, "4, 8, fill, default");
 		
 		JButton btnNewButton_1 = new JButton("Init dss...");
-		panel_Simple.add(btnNewButton_1, "4, 10");
+		panel_Simple.add(btnNewButton_1, "4, 10, fill, default");
 		
 		JButton btnNewButton_2 = new JButton("Svar dss...");
-		panel_Simple.add(btnNewButton_2, "4, 12");
+		panel_Simple.add(btnNewButton_2, "4, 12, fill, default");
 		
-		JButton btnNewButton_4 = new JButton("New button");
-		panel_Simple.add(btnNewButton_4, "4, 14");
+		JButton btnNewButton_4 = new JButton("Dvar dss...");
+		panel_Simple.add(btnNewButton_4, "4, 14, fill, default");
 
 		JTabbedPane tabbedPane_PA = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane_Main.addTab("Position Analysis", tabbedPane_PA);
