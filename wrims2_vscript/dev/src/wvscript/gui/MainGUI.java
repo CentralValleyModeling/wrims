@@ -35,6 +35,8 @@ import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.CompoundBorder;
 import java.awt.Dimension;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class MainGUI {
 
@@ -108,7 +110,7 @@ public class MainGUI {
 				ColumnSpec.decode("max(50dlu;default):grow"),
 				ColumnSpec.decode("max(15dlu;min)"),},
 			new RowSpec[] {
-				FormFactory.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("max(10dlu;min)"),
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.RELATED_GAP_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
@@ -130,7 +132,12 @@ public class MainGUI {
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.RELATED_GAP_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,}));
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,}));
 		
 		JLabel lblNewLabel = new JLabel("Study name:");
 		panel_Simple.add(lblNewLabel, "4, 2, left, center");
@@ -185,19 +192,27 @@ public class MainGUI {
 		
 		JButton btnNewButton_3 = new JButton("Import config...");
 		btnNewButton_3.setToolTipText("Optional.");
-		panel_Simple.add(btnNewButton_3, "4, 6");
+		panel_Simple.add(btnNewButton_3, "4, 8, fill, default");
 		
 		JButton btnNewButton = new JButton("Run dir...");
-		panel_Simple.add(btnNewButton, "4, 8, fill, default");
+		panel_Simple.add(btnNewButton, "4, 12, fill, default");
 		
 		JButton btnNewButton_1 = new JButton("Init dss...");
-		panel_Simple.add(btnNewButton_1, "4, 10, fill, default");
+		panel_Simple.add(btnNewButton_1, "4, 14, fill, default");
 		
 		JButton btnNewButton_2 = new JButton("Svar dss...");
-		panel_Simple.add(btnNewButton_2, "4, 12, fill, default");
+		panel_Simple.add(btnNewButton_2, "4, 16, fill, default");
 		
 		JButton btnNewButton_4 = new JButton("Dvar dss...");
-		panel_Simple.add(btnNewButton_4, "4, 14, fill, default");
+		panel_Simple.add(btnNewButton_4, "4, 18, fill, default");
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Time step:  1MON", "Time step:  1DAY"}));
+		panel_Simple.add(comboBox, "4, 20, left, default");
+		
+		JButton btnNewButton_5 = new JButton("Run");
+		btnNewButton_5.setFont(new Font("Dialog", Font.BOLD, 16));
+		panel_Simple.add(btnNewButton_5, "4, 26, 3, 3, fill, default");
 
 		JTabbedPane tabbedPane_PA = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane_Main.addTab("Position Analysis", tabbedPane_PA);
