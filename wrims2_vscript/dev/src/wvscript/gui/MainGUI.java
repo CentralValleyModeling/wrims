@@ -37,6 +37,9 @@ import javax.swing.border.CompoundBorder;
 import java.awt.Dimension;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.io.File;
 
 public class MainGUI {
 
@@ -191,6 +194,33 @@ public class MainGUI {
 		table_configFile.getColumnModel().getColumn(1).setMaxWidth(900);
 		
 		JButton btn_importConfig = new JButton("Import config...");
+		btn_importConfig.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent paramActionEvent) {
+				
+				
+
+		        FChooser chooser = new FChooser();
+		        chooser.setMultiSelectionEnabled(true);
+		        int option = chooser.showOpenDialog(null);
+		        if (option == FChooser.APPROVE_OPTION) {
+		          File[] sf = chooser.getSelectedFiles();
+		          String filelist = "nothing";
+//		          if (sf.length > 0) filelist = sf[0].getName();
+//		          for (int i = 1; i < sf.length; i++) {
+//		            filelist += ", " + sf[i].getName();
+//		          }
+//		          statusbar.setText("You chose " + filelist);
+//		        }
+//		        else {
+//		          statusbar.setText("You canceled.");
+//		        }
+				
+				
+				
+				
+				
+			}
+		}});
 		btn_importConfig.setToolTipText("Optional.");
 		panel_Simple.add(btn_importConfig, "4, 8, fill, default");
 		
@@ -212,7 +242,7 @@ public class MainGUI {
 		
 		JButton btn_run = new JButton("Run");
 		btn_run.setFont(new Font("Dialog", Font.BOLD, 16));
-		panel_Simple.add(btn_run, "4, 26, 3, 3, fill, default");
+		panel_Simple.add(btn_run, "4, 26, 3, 1, fill, fill");
 
 		JTabbedPane tabbedPane_PA = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane_Main.addTab("Position Analysis", tabbedPane_PA);
