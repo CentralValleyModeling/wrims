@@ -41,8 +41,8 @@ import javax.swing.DefaultComboBoxModel;
 public class MainGUI {
 
 	private JFrame frmWvscript;
-	private JTextField textField;
-	private JTable table;
+	private JTextField textField_studyName;
+	private JTable table_configFile;
 
 	/**
 	 * Launch the application.
@@ -145,18 +145,18 @@ public class MainGUI {
 		JLabel lblNewLabel_1 = new JLabel("Config file content:");
 		panel_Simple.add(lblNewLabel_1, "6, 2");
 		
-		textField = new JTextField();
-		panel_Simple.add(textField, "4, 4, fill, default");
-		textField.setColumns(10);
+		textField_studyName = new JTextField();
+		panel_Simple.add(textField_studyName, "4, 4, fill, default");
+		textField_studyName.setColumns(10);
 		
-		table = new JTable();
-		table.setRowHeight(20);
-		table.setIntercellSpacing(new Dimension(3, 3));
-		table.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-		panel_Simple.add(table, "6, 4, 5, 17");
-		table.setFont(new Font("Dialog", Font.PLAIN, 14));
-		table.setColumnSelectionAllowed(true);
-		table.setModel(new DefaultTableModel(
+		table_configFile = new JTable();
+		table_configFile.setRowHeight(20);
+		table_configFile.setIntercellSpacing(new Dimension(3, 3));
+		table_configFile.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		panel_Simple.add(table_configFile, "6, 4, 5, 17");
+		table_configFile.setFont(new Font("Dialog", Font.PLAIN, 14));
+		table_configFile.setColumnSelectionAllowed(true);
+		table_configFile.setModel(new DefaultTableModel(
 			new Object[][] {
 				{"keyword1", "value1"},
 				{null, null},
@@ -183,36 +183,36 @@ public class MainGUI {
 				return columnTypes[columnIndex];
 			}
 		});
-		table.getColumnModel().getColumn(0).setPreferredWidth(100);
-		table.getColumnModel().getColumn(0).setMinWidth(50);
-		table.getColumnModel().getColumn(0).setMaxWidth(150);
-		table.getColumnModel().getColumn(1).setPreferredWidth(190);
-		table.getColumnModel().getColumn(1).setMinWidth(50);
-		table.getColumnModel().getColumn(1).setMaxWidth(900);
+		table_configFile.getColumnModel().getColumn(0).setPreferredWidth(100);
+		table_configFile.getColumnModel().getColumn(0).setMinWidth(50);
+		table_configFile.getColumnModel().getColumn(0).setMaxWidth(150);
+		table_configFile.getColumnModel().getColumn(1).setPreferredWidth(190);
+		table_configFile.getColumnModel().getColumn(1).setMinWidth(50);
+		table_configFile.getColumnModel().getColumn(1).setMaxWidth(900);
 		
-		JButton btnNewButton_3 = new JButton("Import config...");
-		btnNewButton_3.setToolTipText("Optional.");
-		panel_Simple.add(btnNewButton_3, "4, 8, fill, default");
+		JButton btn_importConfig = new JButton("Import config...");
+		btn_importConfig.setToolTipText("Optional.");
+		panel_Simple.add(btn_importConfig, "4, 8, fill, default");
 		
-		JButton btnNewButton = new JButton("Run dir...");
-		panel_Simple.add(btnNewButton, "4, 12, fill, default");
+		JButton btn_runDir = new JButton("Run dir...");
+		panel_Simple.add(btn_runDir, "4, 12, fill, default");
 		
-		JButton btnNewButton_1 = new JButton("Init dss...");
-		panel_Simple.add(btnNewButton_1, "4, 14, fill, default");
+		JButton btn_initDss = new JButton("Init dss...");
+		panel_Simple.add(btn_initDss, "4, 14, fill, default");
 		
-		JButton btnNewButton_2 = new JButton("Svar dss...");
-		panel_Simple.add(btnNewButton_2, "4, 16, fill, default");
+		JButton btn_svarDss = new JButton("Svar dss...");
+		panel_Simple.add(btn_svarDss, "4, 16, fill, default");
 		
-		JButton btnNewButton_4 = new JButton("Dvar dss...");
-		panel_Simple.add(btnNewButton_4, "4, 18, fill, default");
+		JButton btn_dvarDss = new JButton("Dvar dss...");
+		panel_Simple.add(btn_dvarDss, "4, 18, fill, default");
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Time step:  1MON", "Time step:  1DAY"}));
-		panel_Simple.add(comboBox, "4, 20, left, default");
+		JComboBox comboBox_timeStep = new JComboBox();
+		comboBox_timeStep.setModel(new DefaultComboBoxModel(new String[] {"Time step:  1MON", "Time step:  1DAY"}));
+		panel_Simple.add(comboBox_timeStep, "4, 20, left, default");
 		
-		JButton btnNewButton_5 = new JButton("Run");
-		btnNewButton_5.setFont(new Font("Dialog", Font.BOLD, 16));
-		panel_Simple.add(btnNewButton_5, "4, 26, 3, 3, fill, default");
+		JButton btn_run = new JButton("Run");
+		btn_run.setFont(new Font("Dialog", Font.BOLD, 16));
+		panel_Simple.add(btn_run, "4, 26, 3, 3, fill, default");
 
 		JTabbedPane tabbedPane_PA = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane_Main.addTab("Position Analysis", tabbedPane_PA);
