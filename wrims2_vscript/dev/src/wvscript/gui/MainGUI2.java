@@ -2,7 +2,6 @@ package wvscript.gui;
 
 import java.awt.EventQueue;
 
-import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -35,7 +34,6 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Font;
 import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.MatteBorder;
@@ -50,18 +48,15 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
 
-public class MainGUI {
+public class MainGUI2 {
 
 	private JFrame frmWvscript;
-	private JPanel panel_Simple_run;
-	private JPanel panel_Simple_config_wrapper;
+	private JTable table_configFile;
+	private JPanel panel_Simple;
 	private JTabbedPane tabbedPane_PA;
 	FileNameExtensionFilter filter;
-	private JTextField textField;
-	private JPanel panel_Simple;
+	private JLabel lbl_config;
 	/**
 	 * Launch the application.
 	 */
@@ -69,7 +64,7 @@ public class MainGUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainGUI window = new MainGUI();
+					MainGUI2 window = new MainGUI2();
 					window.frmWvscript.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -81,7 +76,7 @@ public class MainGUI {
 	/**
 	 * Create the application.
 	 */
-	public MainGUI() {
+	public MainGUI2() {
 
 		UIManager.put("FileChooser.readOnly", Boolean.TRUE);
 
@@ -118,124 +113,57 @@ public class MainGUI {
 
 		panel_Simple = new JPanel();
 		tabbedPane_Main.addTab("Simple", null, panel_Simple, null);
-		panel_Simple.setLayout(new BorderLayout(0, 0));
-		
-		panel_Simple_run = new JPanel();
-		panel_Simple.add(panel_Simple_run, BorderLayout.WEST);
 		simpleRunPanel();
-		
-		panel_Simple_config_wrapper = new JPanel();
-		panel_Simple.add(panel_Simple_config_wrapper, BorderLayout.CENTER);
-		simpleConfigPanel();
-		
+
 		tabbedPane_PA = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane_Main.addTab("Position Analysis", tabbedPane_PA);	
+		tabbedPane_Main.addTab("Position Analysis", tabbedPane_PA);
 		positionAnalysisPanel();
 
 	}
 
-	public void simpleConfigPanel() {
-		
-		panel_Simple_config_wrapper.setLayout(new FormLayout(new ColumnSpec[] {
-				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,
-				FormFactory.RELATED_GAP_COLSPEC,},
-			new RowSpec[] {
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,}));
-		
-		JLabel lblNewLabel_4 = new JLabel("Config:");
-		lblNewLabel_4.setFont(new Font("SansSerif", Font.BOLD, 13));
-		panel_Simple_config_wrapper.add(lblNewLabel_4, "2, 4");
-		
-		JPanel panel_3 = new JPanel();
-		panel_3.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panel_Simple_config_wrapper.add(panel_3, "2, 6, fill, fill");
-		panel_3.setLayout(new FormLayout(new ColumnSpec[] {
-				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,
-				FormFactory.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("default:grow"),},
-			new RowSpec[] {
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,}));
-		
-		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("New radio button");
-		rdbtnNewRadioButton_1.setHorizontalTextPosition(SwingConstants.LEFT);
-		panel_3.add(rdbtnNewRadioButton_1, "2, 1, 3, 1");
-		
-		JButton btnNewButton = new JButton("New button");
-		panel_3.add(btnNewButton, "2, 5");
-		
-		textField = new JTextField();
-		panel_3.add(textField, "4, 5, fill, default");
-		textField.setColumns(10);
-		
-		JLabel lblNewLabel = new JLabel("New label");
-		panel_3.add(lblNewLabel, "2, 11, right, default");
-		
-		JComboBox comboBox = new JComboBox();
-		panel_3.add(comboBox, "4, 11, fill, default");
-		
-	}
-
 	public void simpleRunPanel() {
-	
-		panel_Simple_run.setLayout(new FormLayout(new ColumnSpec[] {
-				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,
-				FormFactory.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("left:default"),
-				ColumnSpec.decode("max(20dlu;min)"),
-				FormFactory.DEFAULT_COLSPEC,},
-			new RowSpec[] {
-				RowSpec.decode("max(10dlu;min)"),
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
+
+		panel_Simple.setLayout(new FormLayout(new ColumnSpec[]{FormFactory.RELATED_GAP_COLSPEC, FormFactory.DEFAULT_COLSPEC,
+				FormFactory.RELATED_GAP_COLSPEC, ColumnSpec.decode("left:default"), ColumnSpec.decode("max(20dlu;min)"),
+				FormFactory.DEFAULT_COLSPEC, FormFactory.RELATED_GAP_COLSPEC, FormFactory.DEFAULT_COLSPEC, FormFactory.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(50dlu;default):grow"), ColumnSpec.decode("max(15dlu;min)"),}, new RowSpec[]{
+				RowSpec.decode("max(10dlu;min)"), FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,}));
-	
+
+		lbl_config = new JLabel("Config file content:");
+		panel_Simple.add(lbl_config, "6, 2");
+
 		JButton btn_runDir = new JButton("Run dir...");
-		panel_Simple_run.add(btn_runDir, "4, 4, fill, default");
-	
+		panel_Simple.add(btn_runDir, "4, 4, fill, default");
+
+		table_configFile = new JTable();
+		table_configFile.setRowHeight(20);
+		table_configFile.setIntercellSpacing(new Dimension(3, 3));
+		table_configFile.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		panel_Simple.add(table_configFile, "6, 4, 5, 17");
+		table_configFile.setFont(new Font("Dialog", Font.PLAIN, 14));
+		table_configFile.setColumnSelectionAllowed(true);
+		table_configFile.setModel(new DefaultTableModel(new Object[][]{{"keyword1", "value1"}, {null, null}, {null, null}, {null, null},
+				{null, null}, {null, null}, {null, null}, {null, null}, {null, null}, {null, null}, {null, null}, {null, null},
+				{null, null},}, new String[]{"Keyword", "Value"}) {
+			Class[] columnTypes = new Class[]{String.class, String.class};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+		});
+		table_configFile.getColumnModel().getColumn(0).setPreferredWidth(100);
+		table_configFile.getColumnModel().getColumn(0).setMinWidth(50);
+		table_configFile.getColumnModel().getColumn(0).setMaxWidth(150);
+		table_configFile.getColumnModel().getColumn(1).setPreferredWidth(190);
+		table_configFile.getColumnModel().getColumn(1).setMinWidth(50);
+		table_configFile.getColumnModel().getColumn(1).setMaxWidth(900);
+
 		JButton btn_openConfig = new JButton("Open config...");
 		filter = new FileNameExtensionFilter("txt file", "txt");
 		btn_openConfig.addActionListener(new ActionListener() {
@@ -246,7 +174,7 @@ public class MainGUI {
 				JFileChooser chooser = new JFileChooser(fsv);
 				chooser.setCurrentDirectory(dirToLock);
 				chooser.setControlButtonsAreShown(false);
-	
+
 				chooser.setAcceptAllFileFilterUsed(false);
 				chooser.setFileView(new FileView() {
 					
@@ -265,15 +193,15 @@ public class MainGUI {
 				int option = chooser.showOpenDialog(frmWvscript);
 				System.out.println("option:" + option + " JFileChooser.APPROVE_OPTION:" + JFileChooser.APPROVE_OPTION);
 				System.out.println(" file:" + chooser.getSelectedFile().getName());
-	
+
 				if (option == JFileChooser.APPROVE_OPTION) {
-	
+
 					File sf = chooser.getSelectedFile();
 					System.out.println(sf.getName());
 					String fileN = "nothing";
 					fileN = sf.getName();
-					//lbl_config.setText("Config file: " + fileN);
-	
+					lbl_config.setText("Config file: " + fileN);
+
 					// for (int i = 1; i < sf.length; i++) {
 					// filelist += ", " + sf[i].getName();
 					// }
@@ -282,33 +210,33 @@ public class MainGUI {
 					// else {
 					// statusbar.setText("You canceled.");
 					// }
-	
+
 				}
 			}
 		});
 		btn_openConfig.setToolTipText("Optional.");
-		panel_Simple_run.add(btn_openConfig, "4, 8, fill, default");
-	
+		panel_Simple.add(btn_openConfig, "4, 8, fill, default");
+
 		JButton btn_newConfig = new JButton("New config...");
-		panel_Simple_run.add(btn_newConfig, "4, 10, fill, default");
-	
+		panel_Simple.add(btn_newConfig, "4, 10, fill, default");
+
 		JButton btn_initDss = new JButton("Init dss...");
-		panel_Simple_run.add(btn_initDss, "4, 14, fill, default");
-	
+		panel_Simple.add(btn_initDss, "4, 14, fill, default");
+
 		JButton btn_svarDss = new JButton("Svar dss...");
-		panel_Simple_run.add(btn_svarDss, "4, 16, fill, default");
-	
+		panel_Simple.add(btn_svarDss, "4, 16, fill, default");
+
 		JButton btn_dvarDss = new JButton("Dvar dss...");
-		panel_Simple_run.add(btn_dvarDss, "4, 18, fill, default");
-	
+		panel_Simple.add(btn_dvarDss, "4, 18, fill, default");
+
 		JComboBox comboBox_timeStep = new JComboBox();
 		comboBox_timeStep.setModel(new DefaultComboBoxModel(new String[]{"Time step:  1MON", "Time step:  1DAY"}));
-		panel_Simple_run.add(comboBox_timeStep, "4, 20, left, default");
-	
+		panel_Simple.add(comboBox_timeStep, "4, 20, left, default");
+
 		JButton btn_run = new JButton("Run");
 		btn_run.setFont(new Font("Dialog", Font.BOLD, 16));
-		panel_Simple_run.add(btn_run, "4, 26, 3, 1, fill, fill");
-	
+		panel_Simple.add(btn_run, "4, 26, 3, 1, fill, fill");
+
 	}
 
 	public void positionAnalysisPanel() {
@@ -373,8 +301,5 @@ public class MainGUI {
 			}
 		}
 
-	}
-	public JPanel getPanel_Simple() {
-		return panel_Simple;
 	}
 }
