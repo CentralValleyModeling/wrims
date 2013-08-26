@@ -60,7 +60,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import javax.swing.JFormattedTextField;
 
-public class MainGUI {
+public class MainGUI1 {
 
 	private JFrame frmWvscript;
 	private JPanel panel_Simple_run;
@@ -80,7 +80,7 @@ public class MainGUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainGUI window = new MainGUI();
+					MainGUI1 window = new MainGUI1();
 					window.frmWvscript.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -92,7 +92,7 @@ public class MainGUI {
 	/**
 	 * Create the application.
 	 */
-	public MainGUI() {
+	public MainGUI1() {
 
 		UIManager.put("FileChooser.readOnly", Boolean.TRUE);
 
