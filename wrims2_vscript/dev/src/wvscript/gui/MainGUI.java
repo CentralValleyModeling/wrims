@@ -64,6 +64,8 @@ import java.awt.GridLayout;
 import javax.swing.JFormattedTextField;
 import javax.swing.JSpinner;
 
+import wvscript.app.WrimsStudy;
+
 public class MainGUI {
 
 	private File configDirToLock = new File("Z:\\temp");
@@ -82,6 +84,7 @@ public class MainGUI {
 	private JTextField textField_5;
 	private JTextField textField;
 	private JTextField textField_2;
+	WrimsStudy wsty;
 	/**
 	 * Launch the application.
 	 */
@@ -104,6 +107,8 @@ public class MainGUI {
 	public MainGUI() {
 
 		UIManager.put("FileChooser.readOnly", Boolean.TRUE);
+		UIManager.put("FileChooser.openButtonText", "Select");
+		UIManager.put("FileChooser.cancelButtonText", "Abort");
 
 		try {
 			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -138,11 +143,8 @@ public class MainGUI {
 
 		panel_Simple = new JPanel();
 		tabbedPane_Main.addTab("Simple", null, panel_Simple, null);
-		panel_Simple.setLayout(new FormLayout(new ColumnSpec[] {
-				ColumnSpec.decode("center:default:grow"),},
-			new RowSpec[] {
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,}));
+		panel_Simple.setLayout(new FormLayout(new ColumnSpec[]{ColumnSpec.decode("center:default:grow"),}, new RowSpec[]{
+				FormFactory.DEFAULT_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,}));
 
 		panel_Simple_run = new JPanel();
 		panel_Simple.add(panel_Simple_run, "1, 1, fill, top");
@@ -156,6 +158,8 @@ public class MainGUI {
 		tabbedPane_Main.addTab("Position Analysis", tabbedPane_PA);
 		positionAnalysisPanel();
 
+		wsty = new WrimsStudy();
+
 	}
 
 	public void simpleConfigPanel() {
@@ -164,53 +168,24 @@ public class MainGUI {
 		// null);
 
 		JPanel panel_Simple_config_basic = new JPanel();
-		//panel_Simple_config_basic.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		// panel_Simple_config_basic.setBorder(new
+		// EtchedBorder(EtchedBorder.LOWERED, null, null));
 		panel_Simple_config_wrapper.addTab("Basic Config", null, panel_Simple_config_basic, null);
-		panel_Simple_config_basic.setLayout(new FormLayout(new ColumnSpec[] {
-				ColumnSpec.decode("max(15dlu;min)"),
-				FormFactory.DEFAULT_COLSPEC,
-				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,
-				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,
-				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,
-				FormFactory.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("default:grow"),
-				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,},
-			new RowSpec[] {
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,}));
-		
-				JRadioButton rdbtn_wreslPlus = new JRadioButton(" Use WRESL+");
-				rdbtn_wreslPlus.setHorizontalTextPosition(SwingConstants.RIGHT);
-				panel_Simple_config_basic.add(rdbtn_wreslPlus, "2, 5, 5, 1");
+		panel_Simple_config_basic.setLayout(new FormLayout(new ColumnSpec[]{ColumnSpec.decode("20dlu"), FormFactory.DEFAULT_COLSPEC,
+				FormFactory.RELATED_GAP_COLSPEC, FormFactory.DEFAULT_COLSPEC, FormFactory.RELATED_GAP_COLSPEC, FormFactory.DEFAULT_COLSPEC,
+				FormFactory.RELATED_GAP_COLSPEC, FormFactory.DEFAULT_COLSPEC, FormFactory.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("default:grow"), ColumnSpec.decode("15dlu"),}, new RowSpec[]{RowSpec.decode("10dlu"),
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,}));
+
+		JRadioButton rdbtn_wreslPlus = new JRadioButton(" Use WRESL+");
+		rdbtn_wreslPlus.setHorizontalTextPosition(SwingConstants.RIGHT);
+		panel_Simple_config_basic.add(rdbtn_wreslPlus, "2, 5, 5, 1");
 
 		textField_1 = new JTextField();
 		panel_Simple_config_basic.add(textField_1, "4, 9, 7, 1, fill, default");
@@ -229,84 +204,84 @@ public class MainGUI {
 
 			SpinnerModel spm_month = new SpinnerNumberModel(10, 1, 12, 1);
 			SpinnerModel spm_year = new SpinnerNumberModel(1921, 1901, 2099, 1);
-			
-					JButton btnNewButton = new JButton("SV File");
-					btnNewButton.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent ae) {
 
-							FileSystemView fsv = new DirectoryRestrictedFileSystemView(driveToLock);
-							// JFileChooser chooser = new JFileChooser();
-							JFileChooser chooser = new JFileChooser(fsv);
-							chooser.setCurrentDirectory(configDirToLock);
-							chooser.setControlButtonsAreShown(false);
-							chooser.setAcceptAllFileFilterUsed(false);
+			JButton btnNewButton = new JButton("SV File");
+			btnNewButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent ae) {
 
-							chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-							chooser.setFileFilter(filter_dss);
-							int option = chooser.showOpenDialog(frmWvscript);
+					FileSystemView fsv = new DirectoryRestrictedFileSystemView(driveToLock);
+					// JFileChooser chooser = new JFileChooser();
+					JFileChooser chooser = new JFileChooser(fsv);
+					chooser.setCurrentDirectory(configDirToLock);
+					chooser.setControlButtonsAreShown(false);
+					chooser.setAcceptAllFileFilterUsed(false);
 
-							if (option == JFileChooser.APPROVE_OPTION) {
+					chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+					chooser.setFileFilter(filter_dss);
+					int option = chooser.showOpenDialog(frmWvscript);
 
-								File sf = chooser.getSelectedFile();
-								System.out.println(sf.getName());
-							}
-						}
-					});
-					panel_Simple_config_basic.add(btnNewButton, "2, 9");
+					if (option == JFileChooser.APPROVE_OPTION) {
+
+						File sf = chooser.getSelectedFile();
+						System.out.println(sf.getName());
+					}
+				}
+			});
+			panel_Simple_config_basic.add(btnNewButton, "2, 9");
 
 			textField_4 = new JTextField();
 			panel_Simple_config_basic.add(textField_4, "4, 11, 7, 1, fill, default");
 			textField_4.setColumns(10);
-			
-						JButton btnNewButton_1 = new JButton("Init File");
-						panel_Simple_config_basic.add(btnNewButton_1, "2, 11");
+
+			JButton btnNewButton_1 = new JButton("Init File");
+			panel_Simple_config_basic.add(btnNewButton_1, "2, 11");
 
 			textField_5 = new JTextField();
 			panel_Simple_config_basic.add(textField_5, "4, 13, 7, 1, fill, default");
 			textField_5.setColumns(10);
-																					
-																								JButton btnNewButton_2 = new JButton("DV File");
-																								panel_Simple_config_basic.add(btnNewButton_2, "2, 13");
-																		
-																					JLabel lblSvarDssA = new JLabel("SV File A Part:");
-																					panel_Simple_config_basic.add(lblSvarDssA, "2, 15, right, default");
-															
-																		JLabel lblNewLabel_4 = new JLabel("SV File F Part:");
-																		panel_Simple_config_basic.add(lblNewLabel_4, "2, 17, right, default");
-												
-															JLabel lblNewLabel_5 = new JLabel("Init File F Part:");
-															panel_Simple_config_basic.add(lblNewLabel_5, "2, 19, right, default");
-									
-												JLabel lblNewLabel = new JLabel("Time step:");
-												panel_Simple_config_basic.add(lblNewLabel, "2, 21, left, default");
-									JComboBox comboBox = new JComboBox(cbStrings);
-									panel_Simple_config_basic.add(comboBox, "4, 21, left, default");
-						
-									JLabel lblNewLabel_1 = new JLabel("Start date:");
-									panel_Simple_config_basic.add(lblNewLabel_1, "2, 23, left, default");
-			
-						JLabel lblNewLabel_2 = new JLabel("Stop date:");
-						panel_Simple_config_basic.add(lblNewLabel_2, "2, 25, left, default");
+
+			JButton btnNewButton_2 = new JButton("DV File");
+			panel_Simple_config_basic.add(btnNewButton_2, "2, 13");
+
+			JLabel lblSvarDssA = new JLabel("SV File A Part:");
+			panel_Simple_config_basic.add(lblSvarDssA, "2, 15, right, default");
+
+			JLabel lblNewLabel_4 = new JLabel("SV File F Part:");
+			panel_Simple_config_basic.add(lblNewLabel_4, "2, 17, right, default");
+
+			JLabel lblNewLabel_5 = new JLabel("Init File F Part:");
+			panel_Simple_config_basic.add(lblNewLabel_5, "2, 19, right, default");
+
+			JLabel lblNewLabel = new JLabel("Time step:");
+			panel_Simple_config_basic.add(lblNewLabel, "2, 21, left, default");
+			JComboBox comboBox = new JComboBox(cbStrings);
+			panel_Simple_config_basic.add(comboBox, "4, 21, left, default");
+
+			JLabel lblNewLabel_1 = new JLabel("Start date:");
+			panel_Simple_config_basic.add(lblNewLabel_1, "2, 23, left, default");
+
+			JLabel lblNewLabel_2 = new JLabel("Stop date:");
+			panel_Simple_config_basic.add(lblNewLabel_2, "2, 25, left, default");
 
 			JLabel lblNewLabel_6 = new JLabel("(YYYY-MM-DD)");
 			panel_Simple_config_basic.add(lblNewLabel_6, "10, 25, left, default");
-			
-						JSpinner spinner_year = new JSpinner(spm_year);
-						JSpinner.NumberEditor editor = new JSpinner.NumberEditor(spinner_year, "#");
-						spinner_year.setEditor(editor);
-						
-									panel_Simple_config_basic.add(spinner_year, "4, 25, left, default");
+
+			JSpinner spinner_year = new JSpinner(spm_year);
+			JSpinner.NumberEditor editor = new JSpinner.NumberEditor(spinner_year, "#");
+			spinner_year.setEditor(editor);
+
+			panel_Simple_config_basic.add(spinner_year, "4, 25, left, default");
 			JSpinner spinner_mont = new JSpinner(spm_month);
 			panel_Simple_config_basic.add(spinner_mont, "6, 25");
-			
-						JSpinner spinner_2 = new JSpinner();
-						panel_Simple_config_basic.add(spinner_2, "8, 25");
+
+			JSpinner spinner_2 = new JSpinner();
+			panel_Simple_config_basic.add(spinner_2, "8, 25");
 
 			JLabel lblNewLabel_3 = new JLabel("Number of Time Steps:");
 			panel_Simple_config_basic.add(lblNewLabel_3, "2, 27, 3, 1, left, default");
-			
-						JSpinner spinner_3 = new JSpinner();
-						panel_Simple_config_basic.add(spinner_3, "6, 27");
+
+			JSpinner spinner_3 = new JSpinner();
+			panel_Simple_config_basic.add(spinner_3, "6, 27");
 		} catch (ParseException ex) {
 			Logger.getLogger(MaskFormatterTest.class.getName()).log(Level.SEVERE, null, ex);
 		}
@@ -315,90 +290,112 @@ public class MainGUI {
 
 	public void simpleRunPanel() {
 
-		panel_Simple_run.setLayout(new FormLayout(new ColumnSpec[] {
-				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,
-				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,
-				FormFactory.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(100dlu;min):grow"),
-				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,
-				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,
-				FormFactory.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("default:grow"),
-				FormFactory.RELATED_GAP_COLSPEC,},
-			new RowSpec[] {
-				RowSpec.decode("max(10dlu;min)"),
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				RowSpec.decode("15dlu"),}));
-												
-														JButton btn_openConfig = new JButton("Open Config");
-														
-																btn_openConfig.addActionListener(new ActionListener() {
-																	public void actionPerformed(ActionEvent ae) {
-														
-																		FileSystemView fsv = new DirectoryRestrictedFileSystemView(configDirToLock);
-																		// JFileChooser chooser = new JFileChooser();
-																		JFileChooser chooser = new JFileChooser(fsv);
-																		chooser.setCurrentDirectory(configDirToLock);
-																		chooser.setControlButtonsAreShown(false);
-																		chooser.setAcceptAllFileFilterUsed(false);
-																		chooser.setFileView(new FileView() {
-														
-																			@Override
-																			public Boolean isTraversable(File f) {
-																				// File dirToLock = new File("Z:\\");
-																				// return dirToLock.equals(f);
-																				return false;
-																			}
-																		});
-																		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-																		// disableUpFolderButton(chooser);
-																		// disableDesktopButton(chooser);
-																		// chooser.setMultiSelectionEnabled(true);
-																		chooser.setFileFilter(filter_txt);
-																		int option = chooser.showOpenDialog(frmWvscript);
-																		System.out.println("option:" + option + " JFileChooser.APPROVE_OPTION:" + JFileChooser.APPROVE_OPTION);
-																		System.out.println(" file:" + chooser.getSelectedFile().getName());
-														
-																		if (option == JFileChooser.APPROVE_OPTION) {
-														
-																			File sf = chooser.getSelectedFile();
-																			System.out.println(sf.getName());
-																		}
-																	}
-																});
-																
-																JButton btnNewButton_5 = new JButton("Study Run Dir");
-																panel_Simple_run.add(btnNewButton_5, "4, 2");
-																
-																textField = new JTextField();
-																panel_Simple_run.add(textField, "6, 2, 7, 1, fill, default");
-																textField.setColumns(10);
-																btn_openConfig.setToolTipText("");
-																panel_Simple_run.add(btn_openConfig, "4, 4, fill, default");
-												
-												textField_2 = new JTextField();
-												panel_Simple_run.add(textField_2, "6, 4, fill, default");
-												textField_2.setColumns(10);
-																		
-																		JButton btnNewButton_3 = new JButton("Save");
-																		panel_Simple_run.add(btnNewButton_3, "8, 4");
-																		
-																		JButton btnNewButton_4 = new JButton("Save As");
-																		panel_Simple_run.add(btnNewButton_4, "10, 4");
-																		
-																				JButton btn_run = new JButton("Run");
-																				btn_run.setFont(new Font("Dialog", Font.BOLD, 16));
-																				panel_Simple_run.add(btn_run, "4, 8, fill, fill");
+		panel_Simple_run.setLayout(new FormLayout(new ColumnSpec[]{ColumnSpec.decode("15dlu"), FormFactory.DEFAULT_COLSPEC,
+				FormFactory.RELATED_GAP_COLSPEC, FormFactory.DEFAULT_COLSPEC, FormFactory.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(100dlu;min):grow"), FormFactory.RELATED_GAP_COLSPEC, FormFactory.DEFAULT_COLSPEC,
+				FormFactory.RELATED_GAP_COLSPEC, FormFactory.DEFAULT_COLSPEC, FormFactory.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("default:grow"), ColumnSpec.decode("15dlu"),}, new RowSpec[]{RowSpec.decode("max(10dlu;min)"),
+				FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, RowSpec.decode("15dlu"),}));
+
+		JButton btn_openConfig = new JButton("Open Config");
+
+		btn_openConfig.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+
+				FileSystemView fsv = new DirectoryRestrictedFileSystemView(configDirToLock);
+				// JFileChooser chooser = new JFileChooser();
+				JFileChooser chooser = new JFileChooser(fsv);
+				chooser.setCurrentDirectory(configDirToLock);
+				chooser.setControlButtonsAreShown(false);
+				chooser.setAcceptAllFileFilterUsed(false);
+				chooser.setFileView(new FileView() {
+
+					@Override
+					public Boolean isTraversable(File f) {
+						// File dirToLock = new File("Z:\\");
+						// return dirToLock.equals(f);
+						return false;
+					}
+				});
+				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				// disableUpFolderButton(chooser);
+				// disableDesktopButton(chooser);
+				// chooser.setMultiSelectionEnabled(true);
+				chooser.setFileFilter(filter_txt);
+				int option = chooser.showOpenDialog(frmWvscript);
+				System.out.println("option:" + option + " JFileChooser.APPROVE_OPTION:" + JFileChooser.APPROVE_OPTION);
+				System.out.println(" file:" + chooser.getSelectedFile().getName());
+
+				if (option == JFileChooser.APPROVE_OPTION) {
+
+					File sf = chooser.getSelectedFile();
+					System.out.println(sf.getName());
+				}
+			}
+		});
+
+		JButton btnNewButton_5 = new JButton("Study Run Dir");
+		btnNewButton_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				JFileChooser chooser = new JFileChooser()
+				{
+		            public void approveSelection() {
+		                if (getSelectedFile().isFile()) {
+		                    return;
+		                } else
+		                    super.approveSelection();
+		            }
+		    };
+				//chooser.setControlButtonsAreShown(false);
+				//chooser.setAcceptAllFileFilterUsed(false);
+
+				chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+				int option = chooser.showOpenDialog(frmWvscript);
+				System.out.println("option:" + option + " JFileChooser.APPROVE_OPTION:" + JFileChooser.APPROVE_OPTION);
+				System.out.println(" file:" + chooser.getSelectedFile().getName());
+
+				if (option == JFileChooser.APPROVE_OPTION) {
+
+					File sf = chooser.getSelectedFile();
+					String sf_abs = sf.getAbsolutePath();
+					System.out.println(sf_abs);
+					System.out.println(sf.getName());
+					   if (!sf.getName().equalsIgnoreCase("run")) {
+						   System.out.println(sf_abs + " is not a study run directory...");
+					    } else {
+							textField.setText(sf_abs);
+							MainGUI.this.wsty.studyRunDir = sf_abs;					    	
+					    }
+
+
+
+				}
+			}
+
+		});
+		panel_Simple_run.add(btnNewButton_5, "4, 2");
+
+		textField = new JTextField();
+		panel_Simple_run.add(textField, "6, 2, 7, 1, fill, default");
+		textField.setColumns(10);
+		btn_openConfig.setToolTipText("");
+		panel_Simple_run.add(btn_openConfig, "4, 4, fill, default");
+
+		textField_2 = new JTextField();
+		panel_Simple_run.add(textField_2, "6, 4, fill, default");
+		textField_2.setColumns(10);
+
+		JButton btnNewButton_3 = new JButton("Save");
+		panel_Simple_run.add(btnNewButton_3, "8, 4");
+
+		JButton btnNewButton_4 = new JButton("Save As");
+		panel_Simple_run.add(btnNewButton_4, "10, 4");
+
+		JButton btn_run = new JButton("Run");
+		btn_run.setFont(new Font("Dialog", Font.BOLD, 16));
+		panel_Simple_run.add(btn_run, "4, 8, fill, fill");
 
 	}
 
