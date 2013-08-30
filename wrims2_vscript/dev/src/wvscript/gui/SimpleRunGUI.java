@@ -67,6 +67,7 @@ import java.awt.GridLayout;
 import javax.swing.JFormattedTextField;
 import javax.swing.JSpinner;
 
+import wvscript.app.UserPrefs;
 import wvscript.app.WrimsStudy;
 import javax.swing.JTextArea;
 import java.beans.PropertyChangeListener;
@@ -353,6 +354,8 @@ public class SimpleRunGUI {
 					if (result == 0) {
 						// valid run dir
 						wsty.studyRunDir = new File(text);
+					    UserPrefs.prefs.put(UserPrefs.RUNDIR, wsty.studyRunDir.getAbsolutePath()); 
+						
 					} else if (result == 1) {
 						lbl_status.setText(Misc.htmlText(text, Params.isNotValidRunDir, "red"));
 					} else if (result == 2) {
@@ -398,6 +401,7 @@ public class SimpleRunGUI {
 					}
 				};
 				chooser.setPreferredSize(new Dimension(600, 500));
+				chooser.setCurrentDirectory(new File(UserPrefs.prefs.get(UserPrefs.RUNDIR, "c:\\test\\")).getParentFile());
 				// chooser.setControlButtonsAreShown(false);
 				// chooser.setAcceptAllFileFilterUsed(false);
 
@@ -441,9 +445,9 @@ public class SimpleRunGUI {
 
 				JFileChooser chooser;
 				if (wsty.studyRunDir != null) {
-					FileSystemView fsv = new DirectoryRestrictedFileSystemView(wsty.studyRunDir);
+					FileSystemView fsv = new DirectoryRestrictedFileSystemView(wsty.studyRunDir.getParentFile());
 					chooser = new JFileChooser(fsv);
-					chooser.setCurrentDirectory(wsty.studyRunDir);
+					chooser.setCurrentDirectory(wsty.studyRunDir.getParentFile());
 
 					chooser.setFileView(new FileView() {
 						@Override
@@ -456,10 +460,12 @@ public class SimpleRunGUI {
 
 				} else {
 					chooser = new JFileChooser();
+					chooser.setCurrentDirectory(new File("c:\\"));
 					// TODO: set current dir to user prefs
 					// chooser.setCurrentDirectory(set to user prefs);
 				}
-
+				
+				chooser.setPreferredSize(new Dimension(600, 500));
 				chooser.setControlButtonsAreShown(false);
 				chooser.setAcceptAllFileFilterUsed(false);
 
@@ -467,18 +473,18 @@ public class SimpleRunGUI {
 				// chooser.setMultiSelectionEnabled(true);
 				chooser.setFileFilter(Params.filter_config);
 				int option = chooser.showOpenDialog(frmWvscript);
-				System.out.println("option:" + option + " JFileChooser.APPROVE_OPTION:" + JFileChooser.APPROVE_OPTION);
-				System.out.println(" file:" + chooser.getSelectedFile().getName());
+				// System.out.println("option:" + option + " JFileChooser.APPROVE_OPTION:" + JFileChooser.APPROVE_OPTION);
+				// System.out.println(" file:" + chooser.getSelectedFile().getName());
 
 				if (option == JFileChooser.APPROVE_OPTION) {
 
 					File sf = chooser.getSelectedFile();
-					System.out.println("run dir: " + sf.getParent());
-					System.out.println("config: " + sf.getName());
-					wsty.configFile = sf;
-					wsty.studyRunDir = sf.getParentFile();
+
+					wsty.configFile = sf.getName();
+					wsty.studyRunDir = new File(sf.getParentFile(), "run");
+					
 					textField_styRunDir.setText(wsty.studyRunDir.getAbsolutePath());
-					textField_configFile.setText(wsty.configFile.getName());
+					textField_configFile.setText(wsty.configFile);
 				}
 			}
 		});

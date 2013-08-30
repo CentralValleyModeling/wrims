@@ -7,7 +7,7 @@ import java.util.Map;
 public class WrimsStudy {
 
 	public File studyRunDir;
-	public File configFile;
+	public String configFile;
 	//public String studyName;
 	public Map<String,String> configMap;
 	

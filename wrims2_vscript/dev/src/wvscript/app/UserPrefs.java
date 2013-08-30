@@ -4,9 +4,9 @@ import java.util.prefs.Preferences;
 
 public class UserPrefs {
 	
-  static Preferences prefs = Preferences.userNodeForPackage(UserPrefs.class);	
-  static final String RUNDIR = "run_dir";
-  static final String CONFIG = "config";
+  public static Preferences prefs = Preferences.userNodeForPackage(UserPrefs.class);	
+  public static final String RUNDIR = "rundir";
+  public static final String CONFIG = "config";
   
   
   public static void main(String args[]) throws Exception {
