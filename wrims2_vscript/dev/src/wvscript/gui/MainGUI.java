@@ -130,8 +130,9 @@ public class MainGUI {
 		JTabbedPane tabbedPane_Main = new JTabbedPane(JTabbedPane.TOP);
 		frmWvscript.getContentPane().add(tabbedPane_Main, BorderLayout.CENTER);
 
-		panel_Simple = gui_srg.calledFromMainGUI();
+		JPanel panel_Simple = new JPanel();
 		tabbedPane_Main.addTab("Simple", null, panel_Simple, null);
+		panel_Simple = gui_srg.calledFromMainGUI();
 
 
 		tabbedPane_PA = new JTabbedPane(JTabbedPane.TOP);

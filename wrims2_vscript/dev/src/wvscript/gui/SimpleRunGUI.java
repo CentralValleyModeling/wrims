@@ -7,6 +7,7 @@ import javax.swing.Icon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextPane;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
@@ -43,6 +44,8 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.CompoundBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.filechooser.FileView;
@@ -66,6 +69,8 @@ import javax.swing.JSpinner;
 
 import wvscript.app.WrimsStudy;
 import javax.swing.JTextArea;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 public class SimpleRunGUI {
 
@@ -103,14 +108,15 @@ public class SimpleRunGUI {
 
 	/**
 	 * Create the application.
-	 * @return 
+	 * 
+	 * @return
 	 */
 	public SimpleRunGUI(boolean isCalledFromMainGUI) {
-	
+
 		// do nothing
-		
+
 	}
-	
+
 	public SimpleRunGUI() {
 
 		UIManager.put("FileChooser.readOnly", Boolean.TRUE);
@@ -161,9 +167,9 @@ public class SimpleRunGUI {
 		panel_Simple.add(panel_Simple_config_wrapper, "1, 2, fill, bottom");
 		simpleConfigPanel();
 
-//		tabbedPane_PA = new JTabbedPane(JTabbedPane.TOP);
-//		tabbedPane_Main.addTab("Position Analysis", tabbedPane_PA);
-//		positionAnalysisPanel();
+		// tabbedPane_PA = new JTabbedPane(JTabbedPane.TOP);
+		// tabbedPane_Main.addTab("Position Analysis", tabbedPane_PA);
+		// positionAnalysisPanel();
 
 	}
 
@@ -180,12 +186,11 @@ public class SimpleRunGUI {
 		panel_Simple_config_wrapper = new JTabbedPane();
 		panel_Simple.add(panel_Simple_config_wrapper, "1, 2, fill, bottom");
 		simpleConfigPanel();
-		
-		
+
 		return panel_Simple;
 
 	}
-	
+
 	public void simpleConfigPanel() {
 
 		// panel_config_wrapper.addTab(lbl_basicConfig, null, panel_Simple,
@@ -195,46 +200,17 @@ public class SimpleRunGUI {
 		// panel_Simple_config_basic.setBorder(new
 		// EtchedBorder(EtchedBorder.LOWERED, null, null));
 		panel_Simple_config_wrapper.addTab("Basic Config", null, panel_Simple_config_basic, null);
-		panel_Simple_config_basic.setLayout(new FormLayout(new ColumnSpec[] {
-				ColumnSpec.decode("20dlu"),
-				FormFactory.DEFAULT_COLSPEC,
-				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,
-				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,
-				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,
-				FormFactory.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("default:grow"),
-				ColumnSpec.decode("20dlu"),},
-			new RowSpec[] {
-				RowSpec.decode("10dlu"),
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,}));
+		panel_Simple_config_basic.setLayout(new FormLayout(new ColumnSpec[]{ColumnSpec.decode("20dlu"), FormFactory.DEFAULT_COLSPEC,
+				FormFactory.RELATED_GAP_COLSPEC, FormFactory.DEFAULT_COLSPEC, FormFactory.RELATED_GAP_COLSPEC, FormFactory.DEFAULT_COLSPEC,
+				FormFactory.RELATED_GAP_COLSPEC, FormFactory.DEFAULT_COLSPEC, FormFactory.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("default:grow"), ColumnSpec.decode("20dlu"),}, new RowSpec[]{RowSpec.decode("10dlu"),
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,}));
 
 		JRadioButton rdbtn_wreslPlus = new JRadioButton(" Use WRESL+");
 		rdbtn_wreslPlus.setHorizontalTextPosition(SwingConstants.RIGHT);
@@ -342,87 +318,111 @@ public class SimpleRunGUI {
 
 	public void simpleRunPanel() {
 
-		panel_Simple_run.setLayout(new FormLayout(new ColumnSpec[] {
-				ColumnSpec.decode("15dlu"),
-				FormFactory.DEFAULT_COLSPEC,
-				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,
-				FormFactory.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(100dlu;min):grow"),
-				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,
-				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,
-				FormFactory.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("default:grow"),
-				ColumnSpec.decode("20dlu"),},
-			new RowSpec[] {
-				RowSpec.decode("15dlu"),
-				FormFactory.DEFAULT_ROWSPEC,
-				RowSpec.decode("max(10dlu;min)"),
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("default:grow"),
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				RowSpec.decode("15dlu"),}));
+		panel_Simple_run.setLayout(new FormLayout(new ColumnSpec[]{ColumnSpec.decode("15dlu"), FormFactory.DEFAULT_COLSPEC,
+				FormFactory.RELATED_GAP_COLSPEC, FormFactory.DEFAULT_COLSPEC, FormFactory.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(100dlu;min):grow"), FormFactory.RELATED_GAP_COLSPEC, FormFactory.DEFAULT_COLSPEC,
+				FormFactory.RELATED_GAP_COLSPEC, FormFactory.DEFAULT_COLSPEC, FormFactory.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("default:grow"), ColumnSpec.decode("20dlu"),}, new RowSpec[]{RowSpec.decode("15dlu"),
+				FormFactory.DEFAULT_ROWSPEC, RowSpec.decode("max(10dlu;min)"), FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("default:grow"), FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, RowSpec.decode("15dlu"),}));
+
+		lbl_status = new JLabel();
 		
-		lbl_status = new JLabel("Please choose study's run directory.");
+		lbl_status.setText(Params.plsSpecifyRunDir);		
+		
 		panel_Simple_run.add(lbl_status, "4, 2, 5, 1");
 
 		textField_styRunDir = new JTextField();
-		panel_Simple_run.add(textField_styRunDir, "6, 4, 7, 1, fill, default");
-		textField_styRunDir.setColumns(10);
-		
-				JButton btn_styRunDir = new JButton("Study Run Dir");
-				btn_styRunDir.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
 
-						JFileChooser chooser = new JFileChooser() {
-							public void approveSelection() {
-								if (getSelectedFile().isFile()) {
-									return;
-								} else
-									super.approveSelection();
-							}
-						};
-						chooser.setPreferredSize(new Dimension(600,500));
-						// chooser.setControlButtonsAreShown(false);
-						// chooser.setAcceptAllFileFilterUsed(false);
+		textField_styRunDir.getDocument().addDocumentListener(new DocumentListener() {
 
-						chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-						int option = chooser.showOpenDialog(frmWvscript);
-						//System.out.println("option:" + option + " JFileChooser.APPROVE_OPTION:" + JFileChooser.APPROVE_OPTION);
-						//System.out.println(" file:" + chooser.getSelectedFile().getName());
+			public void check() {
+				String text;
 
-						if (option == JFileChooser.APPROVE_OPTION) {
+				try {
+					text = textField_styRunDir.getText();
 
-							File sf = chooser.getSelectedFile();
-							String sf_abs = sf.getAbsolutePath();
-							System.out.println(sf_abs);
-							System.out.println(sf.getName());
-							if (!sf.getName().equalsIgnoreCase("run")) {
-								System.out.println(sf_abs + " is not a study run directory...");
-							} else {
-								wsty.studyRunDir = sf;
-								textField_styRunDir.setText(wsty.studyRunDir.getAbsolutePath());
-								
-								// check config file path
-								if (wsty.configFile!=null){
-									
-									wsty.configFile = new File(wsty.studyRunDir.getParentFile(), wsty.configFile.getName());
-									
-									
-								}
-								
-							}
-						}
+					int result = Misc.checkRunDir(text);
+
+					if (text.length() < 1) {
+						lbl_status.setText(Params.plsSpecifyRunDir);
+						return;
 					}
 
-				});
-				panel_Simple_run.add(btn_styRunDir, "4, 4");
+					if (result == 0) {
+						// valid run dir
+						wsty.studyRunDir = new File(text);
+					} else if (result == 1) {
+						lbl_status.setText(Misc.htmlText(text, Params.isNotValidRunDir, "red"));
+					} else if (result == 2) {
+						lbl_status.setText(Misc.htmlText(text, Params.notExist, "red"));
+					}
+
+				} catch (Exception ex) {
+					lbl_status.setText(Params.plsSpecifyRunDir);
+					return;
+				}
+
+			}
+			@Override
+			public void changedUpdate(DocumentEvent arg0) {
+				// TODO Auto-generated method stub
+				check();
+			}
+			@Override
+			public void insertUpdate(DocumentEvent arg0) {
+				// TODO Auto-generated method stub
+				check();
+			}
+			@Override
+			public void removeUpdate(DocumentEvent arg0) {
+				// TODO Auto-generated method stub
+				check();
+			}
+		});
+
+		panel_Simple_run.add(textField_styRunDir, "6, 4, 7, 1, fill, default");
+		textField_styRunDir.setColumns(10);
+
+		JButton btn_styRunDir = new JButton("Study Run Dir");
+		btn_styRunDir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				JFileChooser chooser = new JFileChooser() {
+					public void approveSelection() {
+						if (getSelectedFile().isFile()) {
+							return;
+						} else
+							super.approveSelection();
+					}
+				};
+				chooser.setPreferredSize(new Dimension(600, 500));
+				// chooser.setControlButtonsAreShown(false);
+				// chooser.setAcceptAllFileFilterUsed(false);
+
+				chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+				int option = chooser.showOpenDialog(frmWvscript);
+				// System.out.println("option:" + option +
+				// " JFileChooser.APPROVE_OPTION:" +
+				// JFileChooser.APPROVE_OPTION);
+				// System.out.println(" file:" +
+				// chooser.getSelectedFile().getName());
+
+				if (option == JFileChooser.APPROVE_OPTION) {
+
+					File sf = chooser.getSelectedFile();
+					String sf_abs = sf.getAbsolutePath();
+					System.out.println(sf_abs);
+					System.out.println(sf.getName());
+					wsty.studyRunDir = sf;
+					textField_styRunDir.setText(wsty.studyRunDir.getAbsolutePath());
+
+				}
+			}
+
+		});
+		panel_Simple_run.add(btn_styRunDir, "4, 4");
 
 		textField_configFile = new JTextField();
 		panel_Simple_run.add(textField_configFile, "6, 6, fill, default");
@@ -433,60 +433,61 @@ public class SimpleRunGUI {
 
 		JButton btnNewButton_4 = new JButton("Save As");
 		panel_Simple_run.add(btnNewButton_4, "10, 6");
-						
-								JButton btn_configFile = new JButton("Config File");
-								
-										btn_configFile.addActionListener(new ActionListener() {
-											public void actionPerformed(ActionEvent ae) {
-								
-												JFileChooser chooser;
-												if (wsty.studyRunDir!=null) {
-													FileSystemView fsv = new DirectoryRestrictedFileSystemView(wsty.studyRunDir);	
-													chooser = new JFileChooser(fsv);
-													chooser.setCurrentDirectory(wsty.studyRunDir);
-													
-													chooser.setFileView(new FileView() {
-														@Override
-														public Boolean isTraversable(File f) {
-															// File dirToLock = new File("Z:\\"); return dirToLock.equals(f);
-															return false;
-														}
-													});
-													
-												} else {
-													chooser = new JFileChooser();		
-													//TODO: set current dir to user prefs
-													//chooser.setCurrentDirectory(set to user prefs);
-												}
-												
-												chooser.setControlButtonsAreShown(false);
-												chooser.setAcceptAllFileFilterUsed(false);
-								
-												chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-												// chooser.setMultiSelectionEnabled(true);
-												chooser.setFileFilter(Params.filter_config);
-												int option = chooser.showOpenDialog(frmWvscript);
-												System.out.println("option:" + option + " JFileChooser.APPROVE_OPTION:" + JFileChooser.APPROVE_OPTION);
-												System.out.println(" file:" + chooser.getSelectedFile().getName());
-								
-												if (option == JFileChooser.APPROVE_OPTION) {
-								
-													File sf = chooser.getSelectedFile();
-													System.out.println("run dir: "+sf.getParent());
-													System.out.println("config: "+sf.getName());
-													wsty.configFile = sf;
-													wsty.studyRunDir = sf.getParentFile();
-													textField_styRunDir.setText(wsty.studyRunDir.getAbsolutePath());
-													textField_configFile.setText(wsty.configFile.getName());
-												}
-											}
-										});
-										btn_configFile.setToolTipText("");
-										panel_Simple_run.add(btn_configFile, "4, 6, fill, default");
-				
-						JButton btn_run = new JButton("Run");
-						btn_run.setFont(new Font("Dialog", Font.BOLD, 16));
-						panel_Simple_run.add(btn_run, "4, 8, fill, fill");
+
+		JButton btn_configFile = new JButton("Config File");
+
+		btn_configFile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+
+				JFileChooser chooser;
+				if (wsty.studyRunDir != null) {
+					FileSystemView fsv = new DirectoryRestrictedFileSystemView(wsty.studyRunDir);
+					chooser = new JFileChooser(fsv);
+					chooser.setCurrentDirectory(wsty.studyRunDir);
+
+					chooser.setFileView(new FileView() {
+						@Override
+						public Boolean isTraversable(File f) {
+							// File dirToLock = new File("Z:\\"); return
+							// dirToLock.equals(f);
+							return false;
+						}
+					});
+
+				} else {
+					chooser = new JFileChooser();
+					// TODO: set current dir to user prefs
+					// chooser.setCurrentDirectory(set to user prefs);
+				}
+
+				chooser.setControlButtonsAreShown(false);
+				chooser.setAcceptAllFileFilterUsed(false);
+
+				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				// chooser.setMultiSelectionEnabled(true);
+				chooser.setFileFilter(Params.filter_config);
+				int option = chooser.showOpenDialog(frmWvscript);
+				System.out.println("option:" + option + " JFileChooser.APPROVE_OPTION:" + JFileChooser.APPROVE_OPTION);
+				System.out.println(" file:" + chooser.getSelectedFile().getName());
+
+				if (option == JFileChooser.APPROVE_OPTION) {
+
+					File sf = chooser.getSelectedFile();
+					System.out.println("run dir: " + sf.getParent());
+					System.out.println("config: " + sf.getName());
+					wsty.configFile = sf;
+					wsty.studyRunDir = sf.getParentFile();
+					textField_styRunDir.setText(wsty.studyRunDir.getAbsolutePath());
+					textField_configFile.setText(wsty.configFile.getName());
+				}
+			}
+		});
+		btn_configFile.setToolTipText("");
+		panel_Simple_run.add(btn_configFile, "4, 6, fill, default");
+
+		JButton btn_run = new JButton("Run");
+		btn_run.setFont(new Font("Dialog", Font.BOLD, 16));
+		panel_Simple_run.add(btn_run, "4, 8, fill, fill");
 
 	}
 
