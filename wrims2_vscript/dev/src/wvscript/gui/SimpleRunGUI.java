@@ -103,7 +103,14 @@ public class SimpleRunGUI {
 
 	/**
 	 * Create the application.
+	 * @return 
 	 */
+	public SimpleRunGUI(boolean isCalledFromMainGUI) {
+	
+		// do nothing
+		
+	}
+	
 	public SimpleRunGUI() {
 
 		UIManager.put("FileChooser.readOnly", Boolean.TRUE);
@@ -154,12 +161,31 @@ public class SimpleRunGUI {
 		panel_Simple.add(panel_Simple_config_wrapper, "1, 2, fill, bottom");
 		simpleConfigPanel();
 
-		tabbedPane_PA = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane_Main.addTab("Position Analysis", tabbedPane_PA);
-		positionAnalysisPanel();
+//		tabbedPane_PA = new JTabbedPane(JTabbedPane.TOP);
+//		tabbedPane_Main.addTab("Position Analysis", tabbedPane_PA);
+//		positionAnalysisPanel();
 
 	}
 
+	public JPanel calledFromMainGUI() {
+
+		panel_Simple = new JPanel();
+		panel_Simple.setLayout(new FormLayout(new ColumnSpec[]{ColumnSpec.decode("center:default:grow"),}, new RowSpec[]{
+				FormFactory.DEFAULT_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,}));
+
+		panel_Simple_run = new JPanel();
+		panel_Simple.add(panel_Simple_run, "1, 1, fill, top");
+		simpleRunPanel();
+
+		panel_Simple_config_wrapper = new JTabbedPane();
+		panel_Simple.add(panel_Simple_config_wrapper, "1, 2, fill, bottom");
+		simpleConfigPanel();
+		
+		
+		return panel_Simple;
+
+	}
+	
 	public void simpleConfigPanel() {
 
 		// panel_config_wrapper.addTab(lbl_basicConfig, null, panel_Simple,
