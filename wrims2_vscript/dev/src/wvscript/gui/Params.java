@@ -13,7 +13,7 @@ public class Params {
 	public static final String notExist = " does not exist.";
 
 	public static final String[] configKeyList = {"WreslPlus", "MainFile", "Solver", "InitFile", "InitFPart", "SvarFile", "SvarAPart",
-			"SvarFPart", "DvarFile", "TimeStep", "StartYear", "StartMonth", "StartDay", "NumberOfSteps", "EndYear", "EndMonth", "EndDay",
+			"SvarFPart", "DvarFile", "TimeStep", "StartYear", "StartMonth", "StartDay", "NumberOfSteps", "StopYear", "StopMonth", "StopDay",
 			"LookupSubDir", "GroundwaterDir", "ShowWreslLog", "PrefixInitToDvarFile", "IlpLog", "IlpLogFormat", "IlpLogVarValue"};
 
 }
