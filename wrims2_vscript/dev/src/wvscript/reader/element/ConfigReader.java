@@ -38,6 +38,18 @@ public class ConfigReader {
 
 	}
 	
+	public static void setConfigKey(String[] configKeyListInput){
+		
+		configKeyList = configKeyListInput;		
+		configKeyMap = new HashMap<String , String>();
+		
+		for (String key: configKeyList) {
+			configKeyMap.put(key.toLowerCase(), key);
+		
+		}
+
+	}	
+	
 	public static Map<String, String> newConfigMap(){
 		
 		return new LinkedHashMap<String, String>();

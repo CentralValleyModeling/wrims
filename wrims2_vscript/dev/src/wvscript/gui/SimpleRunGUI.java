@@ -69,7 +69,12 @@ import javax.swing.JSpinner;
 
 import wvscript.app.UserPrefs;
 import wvscript.app.WrimsStudy;
+import wvscript.reader.element.ConfigReader;
+
 import javax.swing.JTextArea;
+
+import org.apache.commons.io.FilenameUtils;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
@@ -89,8 +94,9 @@ public class SimpleRunGUI {
 	private JTextField textField_5;
 	private JTextField textField_styRunDir;
 	private JTextField textField_configFile;
-	WrimsStudy wsty = new WrimsStudy();
 	private JLabel lbl_status;
+	WrimsStudy wsty = new WrimsStudy(lbl_status);
+
 	/**
 	 * Launch the application.
 	 */
@@ -329,9 +335,9 @@ public class SimpleRunGUI {
 				RowSpec.decode("default:grow"), FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, RowSpec.decode("15dlu"),}));
 
 		lbl_status = new JLabel();
-		
-		lbl_status.setText(Params.plsSpecifyRunDir);		
-		
+
+		lbl_status.setText(Params.plsSpecifyRunDir);
+
 		panel_Simple_run.add(lbl_status, "4, 2, 5, 1");
 
 		textField_styRunDir = new JTextField();
@@ -354,8 +360,8 @@ public class SimpleRunGUI {
 					if (result == 0) {
 						// valid run dir
 						wsty.studyRunDir = new File(text);
-					    UserPrefs.prefs.put(UserPrefs.RUNDIR, wsty.studyRunDir.getAbsolutePath()); 
-						
+						UserPrefs.prefs.put(UserPrefs.RUNDIR, wsty.studyRunDir.getAbsolutePath());
+
 					} else if (result == 1) {
 						lbl_status.setText(Misc.htmlText(text, Params.isNotValidRunDir, "red"));
 					} else if (result == 2) {
@@ -401,11 +407,12 @@ public class SimpleRunGUI {
 					}
 				};
 				chooser.setPreferredSize(new Dimension(600, 500));
-				chooser.setCurrentDirectory(new File(UserPrefs.prefs.get(UserPrefs.RUNDIR, "c:\\test\\")).getParentFile());
+				chooser.setCurrentDirectory(new File(UserPrefs.prefs.get(UserPrefs.RUNDIR, "c:\\")).getParentFile());
 				// chooser.setControlButtonsAreShown(false);
 				// chooser.setAcceptAllFileFilterUsed(false);
 
 				chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+				// chooser.setFileFilter(Params.filter_run);
 				int option = chooser.showOpenDialog(frmWvscript);
 				// System.out.println("option:" + option +
 				// " JFileChooser.APPROVE_OPTION:" +
@@ -413,7 +420,7 @@ public class SimpleRunGUI {
 				// System.out.println(" file:" +
 				// chooser.getSelectedFile().getName());
 
-				if (option == JFileChooser.APPROVE_OPTION) {
+				if (option == JFileChooser.APPROVE_OPTION  && chooser.getSelectedFile().getName().equalsIgnoreCase("run")) {
 
 					File sf = chooser.getSelectedFile();
 					String sf_abs = sf.getAbsolutePath();
@@ -421,6 +428,8 @@ public class SimpleRunGUI {
 					System.out.println(sf.getName());
 					wsty.studyRunDir = sf;
 					textField_styRunDir.setText(wsty.studyRunDir.getAbsolutePath());
+					
+					lbl_status.setText("Please select config file.");
 
 				}
 			}
@@ -429,6 +438,36 @@ public class SimpleRunGUI {
 		panel_Simple_run.add(btn_styRunDir, "4, 4");
 
 		textField_configFile = new JTextField();
+		textField_configFile.getDocument().addDocumentListener(new DocumentListener() {
+
+			public void check() {
+
+				String text;
+
+				if (wsty.studyRunDir != null) {
+
+					text = textField_configFile.getText();
+
+				}
+
+			}
+			@Override
+			public void changedUpdate(DocumentEvent arg0) {
+				// TODO Auto-generated method stub
+				check();
+			}
+			@Override
+			public void insertUpdate(DocumentEvent arg0) {
+				// TODO Auto-generated method stub
+				check();
+			}
+			@Override
+			public void removeUpdate(DocumentEvent arg0) {
+				// TODO Auto-generated method stub
+				check();
+			}
+		});
+
 		panel_Simple_run.add(textField_configFile, "6, 6, fill, default");
 		textField_configFile.setColumns(10);
 
@@ -460,40 +499,76 @@ public class SimpleRunGUI {
 
 				} else {
 					chooser = new JFileChooser();
-					chooser.setCurrentDirectory(new File("c:\\"));
+					chooser.setCurrentDirectory(new File(UserPrefs.prefs.get(UserPrefs.RUNDIR, "c:\\")).getParentFile());
+					// chooser.setCurrentDirectory(new File("c:\\"));
 					// TODO: set current dir to user prefs
 					// chooser.setCurrentDirectory(set to user prefs);
 				}
-				
+
 				chooser.setPreferredSize(new Dimension(600, 500));
-				chooser.setControlButtonsAreShown(false);
+				//chooser.setControlButtonsAreShown(false);
 				chooser.setAcceptAllFileFilterUsed(false);
 
 				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				// chooser.setMultiSelectionEnabled(true);
 				chooser.setFileFilter(Params.filter_config);
 				int option = chooser.showOpenDialog(frmWvscript);
-				// System.out.println("option:" + option + " JFileChooser.APPROVE_OPTION:" + JFileChooser.APPROVE_OPTION);
-				// System.out.println(" file:" + chooser.getSelectedFile().getName());
+				// System.out.println("option:" + option +
+				// " JFileChooser.APPROVE_OPTION:" +
+				// JFileChooser.APPROVE_OPTION);
+				// System.out.println(" file:" +
+				// chooser.getSelectedFile().getName());
 
-				if (option == JFileChooser.APPROVE_OPTION) {
+				if (option == JFileChooser.APPROVE_OPTION && FilenameUtils.getExtension(chooser.getSelectedFile().getName()).equalsIgnoreCase("config")) {
 
 					File sf = chooser.getSelectedFile();
 
-					wsty.configFile = sf.getName();
-					wsty.studyRunDir = new File(sf.getParentFile(), "run");
-					
-					textField_styRunDir.setText(wsty.studyRunDir.getAbsolutePath());
-					textField_configFile.setText(wsty.configFile);
+					//if (wsty.checkConfigExtension(sf.getName())) {
+
+						wsty.configFile = sf.getName();
+						wsty.studyRunDir = new File(sf.getParentFile(), "run");
+
+						textField_styRunDir.setText(wsty.studyRunDir.getAbsolutePath());
+						textField_configFile.setText(wsty.configFile);
+						
+						lbl_status.setText("Press \"parse config\" button to show run configuration.");
+					//}
+
 				}
 			}
 		});
 		btn_configFile.setToolTipText("");
 		panel_Simple_run.add(btn_configFile, "4, 6, fill, default");
 
+		JButton btn_parseConfig = new JButton("Parse Config");
+		btn_parseConfig.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				if (wsty.studyRunDir == null || wsty.configFile == null)
+					return;
+
+				File configFilePath = new File(wsty.studyRunDir.getParent(), wsty.configFile);
+				
+				if (!configFilePath.exists()) {
+					lbl_status.setText(Misc.htmlText(configFilePath.getAbsolutePath(), "Config file not exist.", "red"));
+					return;
+				}
+
+				if (!FilenameUtils.getExtension(wsty.configFile).equalsIgnoreCase("config")) {
+					lbl_status.setText(Misc.htmlText("", "Config file extension should be .config", "red"));
+					return;
+				}
+
+				lbl_status.setText("Parsing config.");
+
+			}
+		});
+		btn_parseConfig.setFont(new Font("SansSerif", Font.BOLD, 12));
+		panel_Simple_run.add(btn_parseConfig, "4, 8");
+
 		JButton btn_run = new JButton("Run");
-		btn_run.setFont(new Font("Dialog", Font.BOLD, 16));
-		panel_Simple_run.add(btn_run, "4, 8, fill, fill");
+		btn_run.setFont(new Font("SansSerif", Font.BOLD, 14));
+		panel_Simple_run.add(btn_run, "4, 10, fill, fill");
 
 	}
 
