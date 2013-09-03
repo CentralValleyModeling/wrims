@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="distro/lib/ant-contrib-1.0b3.jar"/>
 	<classpathentry kind="lib" path="lib/vista/jython/jython.jar"/>
 	<classpathentry kind="lib" path="forms-1.3.0.jar" sourcepath="forms-1.3.0-src.zip"/>
+	<classpathentry kind="lib" path="lib/wrims2/commons-io-2.1.jar"/>
 	<classpathentry kind="output" path="bin_dev"/>
 </classpath>
