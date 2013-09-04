@@ -25,6 +25,7 @@ configKeyList = [
              "GroundwaterDir",
              "ShowWreslLog",
              "PrefixInitToDvarFile",
+             "SendAliasToDvar",
              "IlpLog",
              "IlpLogFormat",
              "IlpLogVarValue"
