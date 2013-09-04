@@ -73,6 +73,7 @@ import wvscript.reader.element.ConfigReader;
 
 import javax.swing.JTextArea;
 
+import org.antlr.runtime.RecognitionException;
 import org.apache.commons.io.FilenameUtils;
 
 import java.beans.PropertyChangeListener;
@@ -87,15 +88,20 @@ public class SimpleRunGUI {
 	private JTabbedPane panel_Simple_config_wrapper;
 	private JTabbedPane tabbedPane_PA;
 	private JPanel panel_Simple;
-	private JTextField textField_1;
+	private JTextField textField_svFile;
 	private static final DateFormat df_yyyymmdd = new SimpleDateFormat("yyyy-mm-dd");
 	private static final DateFormat df_yyyymm = new SimpleDateFormat("yyyy-mm");
-	private JTextField textField_4;
-	private JTextField textField_5;
+	private JTextField textField_initFile;
+	private JTextField textField_dvFile;
 	private JTextField textField_styRunDir;
 	private JTextField textField_configFile;
 	private JLabel lbl_status;
 	WrimsStudy wsty = new WrimsStudy(lbl_status);
+	private JRadioButton rdbtn_wreslPlus;
+	private JComboBox comboBox_timeStep;
+	private JTextField textField_svFileAPart;
+	private JTextField textField_svFileFPart;
+	private JTextField textField_initFileFPart;
 
 	/**
 	 * Launch the application.
@@ -207,25 +213,54 @@ public class SimpleRunGUI {
 		// panel_Simple_config_basic.setBorder(new
 		// EtchedBorder(EtchedBorder.LOWERED, null, null));
 		panel_Simple_config_wrapper.addTab("Basic Config", null, panel_Simple_config_basic, null);
-		panel_Simple_config_basic.setLayout(new FormLayout(new ColumnSpec[]{ColumnSpec.decode("20dlu"), FormFactory.DEFAULT_COLSPEC,
-				FormFactory.RELATED_GAP_COLSPEC, FormFactory.DEFAULT_COLSPEC, FormFactory.RELATED_GAP_COLSPEC, FormFactory.DEFAULT_COLSPEC,
-				FormFactory.RELATED_GAP_COLSPEC, FormFactory.DEFAULT_COLSPEC, FormFactory.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("default:grow"), ColumnSpec.decode("20dlu"),}, new RowSpec[]{RowSpec.decode("10dlu"),
-				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,}));
+		panel_Simple_config_basic.setLayout(new FormLayout(new ColumnSpec[] {
+				ColumnSpec.decode("20dlu"),
+				FormFactory.DEFAULT_COLSPEC,
+				FormFactory.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("default:grow"),
+				FormFactory.RELATED_GAP_COLSPEC,
+				FormFactory.DEFAULT_COLSPEC,
+				FormFactory.RELATED_GAP_COLSPEC,
+				FormFactory.DEFAULT_COLSPEC,
+				FormFactory.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("default:grow"),
+				ColumnSpec.decode("20dlu"),},
+			new RowSpec[] {
+				RowSpec.decode("10dlu"),
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,}));
 
-		JRadioButton rdbtn_wreslPlus = new JRadioButton(" Use WRESL+");
+		rdbtn_wreslPlus = new JRadioButton(" Use WRESL+");
 		rdbtn_wreslPlus.setHorizontalTextPosition(SwingConstants.RIGHT);
 		panel_Simple_config_basic.add(rdbtn_wreslPlus, "2, 5, 5, 1");
 
-		textField_1 = new JTextField();
-		panel_Simple_config_basic.add(textField_1, "4, 9, 7, 1, fill, default");
-		textField_1.setColumns(10);
+		textField_svFile = new JTextField();
+		panel_Simple_config_basic.add(textField_svFile, "4, 9, 7, 1, fill, default");
+		textField_svFile.setColumns(10);
 
 		try {
 			MaskFormatter dateMask = new MaskFormatter("####-##-##");
@@ -264,36 +299,51 @@ public class SimpleRunGUI {
 			});
 			panel_Simple_config_basic.add(btnNewButton, "2, 9");
 
-			textField_4 = new JTextField();
-			panel_Simple_config_basic.add(textField_4, "4, 11, 7, 1, fill, default");
-			textField_4.setColumns(10);
+			textField_initFile = new JTextField();
+			panel_Simple_config_basic.add(textField_initFile, "4, 11, 7, 1, fill, default");
+			textField_initFile.setColumns(10);
 
 			JButton btnNewButton_1 = new JButton("Init File");
 			panel_Simple_config_basic.add(btnNewButton_1, "2, 11");
 
-			textField_5 = new JTextField();
-			panel_Simple_config_basic.add(textField_5, "4, 13, 7, 1, fill, default");
-			textField_5.setColumns(10);
+			textField_dvFile = new JTextField();
+			panel_Simple_config_basic.add(textField_dvFile, "4, 13, 7, 1, fill, default");
+			textField_dvFile.setColumns(10);
 
 			JButton btnNewButton_2 = new JButton("DV File");
 			panel_Simple_config_basic.add(btnNewButton_2, "2, 13");
 
 			JLabel lblSvarDssA = new JLabel("SV File A Part:");
 			panel_Simple_config_basic.add(lblSvarDssA, "2, 15, right, default");
+			
+			textField_svFileAPart = new JTextField();
+			panel_Simple_config_basic.add(textField_svFileAPart, "4, 15, 3, 1, fill, default");
+			textField_svFileAPart.setColumns(10);
 
 			JLabel lblNewLabel_4 = new JLabel("SV File F Part:");
 			panel_Simple_config_basic.add(lblNewLabel_4, "2, 17, right, default");
+			
+			textField_svFileFPart = new JTextField();
+			panel_Simple_config_basic.add(textField_svFileFPart, "4, 17, 3, 1, fill, default");
+			textField_svFileFPart.setColumns(10);
 
 			JLabel lblNewLabel_5 = new JLabel("Init File F Part:");
 			panel_Simple_config_basic.add(lblNewLabel_5, "2, 19, right, default");
+			
+			textField_initFileFPart = new JTextField();
+			panel_Simple_config_basic.add(textField_initFileFPart, "4, 19, 3, 1, fill, default");
+			textField_initFileFPart.setColumns(10);
 
 			JLabel lblNewLabel = new JLabel("Time step:");
 			panel_Simple_config_basic.add(lblNewLabel, "2, 21, left, default");
-			JComboBox comboBox = new JComboBox(cbStrings);
-			panel_Simple_config_basic.add(comboBox, "4, 21, left, default");
+			comboBox_timeStep = new JComboBox(cbStrings);
+			panel_Simple_config_basic.add(comboBox_timeStep, "4, 21, left, default");
 
 			JLabel lblNewLabel_1 = new JLabel("Start date:");
 			panel_Simple_config_basic.add(lblNewLabel_1, "2, 23, left, default");
+			
+
+
 
 			JLabel lblNewLabel_2 = new JLabel("Stop date:");
 			panel_Simple_config_basic.add(lblNewLabel_2, "2, 25, left, default");
@@ -301,22 +351,27 @@ public class SimpleRunGUI {
 			JLabel lblNewLabel_6 = new JLabel("(YYYY-MM-DD)");
 			panel_Simple_config_basic.add(lblNewLabel_6, "10, 25, left, default");
 
-			JSpinner spinner_year = new JSpinner(spm_year);
-			JSpinner.NumberEditor editor = new JSpinner.NumberEditor(spinner_year, "#");
-			spinner_year.setEditor(editor);
+			JSpinner spinner_stopYear = new JSpinner(spm_year);
+			JSpinner.NumberEditor ne_spinner_stopYear = new JSpinner.NumberEditor(spinner_stopYear, "#");
+			spinner_stopYear.setEditor(ne_spinner_stopYear);
+			panel_Simple_config_basic.add(spinner_stopYear, "4, 25, left, default");
+			
+			JSpinner spinner_startYear = new JSpinner(spm_year);
+			JSpinner.NumberEditor ne_spinner_startYear = new JSpinner.NumberEditor(spinner_startYear, "#");
+			spinner_startYear.setEditor(ne_spinner_startYear);
+			panel_Simple_config_basic.add(spinner_startYear, "4, 23, left, default");			
 
-			panel_Simple_config_basic.add(spinner_year, "4, 25, left, default");
-			JSpinner spinner_mont = new JSpinner(spm_month);
-			panel_Simple_config_basic.add(spinner_mont, "6, 25");
+			JSpinner spinner_stopMonth = new JSpinner(spm_month);
+			panel_Simple_config_basic.add(spinner_stopMonth, "6, 25");
 
-			JSpinner spinner_2 = new JSpinner();
-			panel_Simple_config_basic.add(spinner_2, "8, 25");
+			JSpinner spinner_stopDay = new JSpinner();
+			panel_Simple_config_basic.add(spinner_stopDay, "8, 25");
 
 			JLabel lblNewLabel_3 = new JLabel("Number of Time Steps:");
 			panel_Simple_config_basic.add(lblNewLabel_3, "2, 27, 3, 1, left, default");
 
-			JSpinner spinner_3 = new JSpinner();
-			panel_Simple_config_basic.add(spinner_3, "6, 27");
+			JSpinner spinner_numberOfTimeStep = new JSpinner();
+			panel_Simple_config_basic.add(spinner_numberOfTimeStep, "6, 27");
 		} catch (ParseException ex) {
 			Logger.getLogger(MaskFormatterTest.class.getName()).log(Level.SEVERE, null, ex);
 		}
@@ -560,6 +615,25 @@ public class SimpleRunGUI {
 				}
 
 				lbl_status.setText("Parsing config.");
+				
+				
+				ConfigReader.setConfigKey(Params.configKeyList);
+				
+				try {
+					ConfigReader.parseFile(configFilePath.getAbsolutePath());
+					wsty.configMap = ConfigReader.configMap;
+					System.out.println(wsty.configMap);
+
+					populateConfigOptions();
+					
+
+				} catch (RecognitionException e) {
+					// TODO Auto-generated catch block
+					lbl_status.setText(Misc.htmlText("", "Error in parsing config file.", "red"));	
+					wsty.configMap = null;
+					//e.printStackTrace();
+				}
+				
 
 			}
 		});
@@ -638,5 +712,25 @@ public class SimpleRunGUI {
 	}
 	public JPanel getPanel_Simple() {
 		return panel_Simple;
+	}
+	public JRadioButton getRdbtn_wreslPlus() {
+		return rdbtn_wreslPlus;
+	}
+	public JTextField getTextField_svFile() {
+		return textField_svFile;
+	}
+	public JTextField getTextField_initFile() {
+		return textField_initFile;
+	}
+	public void populateConfigOptions() {
+		
+		rdbtn_wreslPlus.setEnabled(wsty.configMap.get("WreslPlus").equalsIgnoreCase("no"));
+		textField_dvFile.setText(wsty.configMap.get("DvarFile").replace("\"", ""));
+		textField_svFile.setText(wsty.configMap.get("SvarFile").replace("\"", ""));
+		textField_initFile.setText(wsty.configMap.get("InitFile").replace("\"", ""));
+	
+	}
+	public JComboBox getComboBox_timeStep() {
+		return comboBox_timeStep;
 	}
 }
