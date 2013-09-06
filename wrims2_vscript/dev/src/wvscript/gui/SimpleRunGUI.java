@@ -730,7 +730,7 @@ public class SimpleRunGUI {
 	}
 	public void populateConfigOptions() {
 		
-		rdbtn_wreslPlus.setEnabled(wsty.configMap.get("WreslPlus").equalsIgnoreCase("no"));
+		rdbtn_wreslPlus.setSelected(wsty.configMap.get("WreslPlus").equalsIgnoreCase("yes"));
 		textField_dvFile.setText(wsty.configMap.get("DvarFile").replace("\"", ""));
 		textField_svFile.setText(wsty.configMap.get("SvarFile").replace("\"", ""));
 		textField_initFile.setText(wsty.configMap.get("InitFile").replace("\"", ""));
