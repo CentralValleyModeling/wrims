@@ -217,7 +217,7 @@ public class SimpleRunGUI {
 				ColumnSpec.decode("20dlu"),
 				FormFactory.DEFAULT_COLSPEC,
 				FormFactory.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("default:grow"),
+				FormFactory.DEFAULT_COLSPEC,
 				FormFactory.RELATED_GAP_COLSPEC,
 				FormFactory.DEFAULT_COLSPEC,
 				FormFactory.RELATED_GAP_COLSPEC,
@@ -273,8 +273,7 @@ public class SimpleRunGUI {
 
 			// spinner_1.setModel(new javax.swing.SpinnerListModel(tsList));
 
-			SpinnerModel spm_month = new SpinnerNumberModel(10, 1, 12, 1);
-			SpinnerModel spm_year = new SpinnerNumberModel(1921, 1901, 2099, 1);
+
 
 			JButton btnNewButton = new JButton("SV File");
 			btnNewButton.addActionListener(new ActionListener() {
@@ -317,21 +316,21 @@ public class SimpleRunGUI {
 			panel_Simple_config_basic.add(lblSvarDssA, "2, 15, right, default");
 			
 			textField_svFileAPart = new JTextField();
-			panel_Simple_config_basic.add(textField_svFileAPart, "4, 15, 3, 1, fill, default");
+			panel_Simple_config_basic.add(textField_svFileAPart, "4, 15, 5, 1, fill, default");
 			textField_svFileAPart.setColumns(10);
 
 			JLabel lblNewLabel_4 = new JLabel("SV File F Part:");
 			panel_Simple_config_basic.add(lblNewLabel_4, "2, 17, right, default");
 			
 			textField_svFileFPart = new JTextField();
-			panel_Simple_config_basic.add(textField_svFileFPart, "4, 17, 3, 1, fill, default");
+			panel_Simple_config_basic.add(textField_svFileFPart, "4, 17, 5, 1, fill, default");
 			textField_svFileFPart.setColumns(10);
 
 			JLabel lblNewLabel_5 = new JLabel("Init File F Part:");
 			panel_Simple_config_basic.add(lblNewLabel_5, "2, 19, right, default");
 			
 			textField_initFileFPart = new JTextField();
-			panel_Simple_config_basic.add(textField_initFileFPart, "4, 19, 3, 1, fill, default");
+			panel_Simple_config_basic.add(textField_initFileFPart, "4, 19, 5, 1, fill, default");
 			textField_initFileFPart.setColumns(10);
 
 			JLabel lblNewLabel = new JLabel("Time step:");
@@ -340,10 +339,7 @@ public class SimpleRunGUI {
 			panel_Simple_config_basic.add(comboBox_timeStep, "4, 21, left, default");
 
 			JLabel lblNewLabel_1 = new JLabel("Start date:");
-			panel_Simple_config_basic.add(lblNewLabel_1, "2, 23, left, default");
-			
-
-
+			panel_Simple_config_basic.add(lblNewLabel_1, "2, 23, left, default");					
 
 			JLabel lblNewLabel_2 = new JLabel("Stop date:");
 			panel_Simple_config_basic.add(lblNewLabel_2, "2, 25, left, default");
@@ -351,21 +347,31 @@ public class SimpleRunGUI {
 			JLabel lblNewLabel_6 = new JLabel("(YYYY-MM-DD)");
 			panel_Simple_config_basic.add(lblNewLabel_6, "10, 25, left, default");
 
-			JSpinner spinner_stopYear = new JSpinner(spm_year);
+			JSpinner spinner_stopYear = new JSpinner(Params.spm_year);
 			JSpinner.NumberEditor ne_spinner_stopYear = new JSpinner.NumberEditor(spinner_stopYear, "#");
 			spinner_stopYear.setEditor(ne_spinner_stopYear);
 			panel_Simple_config_basic.add(spinner_stopYear, "4, 25, left, default");
 			
-			JSpinner spinner_startYear = new JSpinner(spm_year);
+			JSpinner spinner_startYear = new JSpinner(Params.spm_year);
 			JSpinner.NumberEditor ne_spinner_startYear = new JSpinner.NumberEditor(spinner_startYear, "#");
 			spinner_startYear.setEditor(ne_spinner_startYear);
 			panel_Simple_config_basic.add(spinner_startYear, "4, 23, left, default");			
 
-			JSpinner spinner_stopMonth = new JSpinner(spm_month);
+			JSpinner spinner_stopMonth = new JSpinner(Params.spm_month);
 			panel_Simple_config_basic.add(spinner_stopMonth, "6, 25");
+			
+			JSpinner spinner_startMonth = new JSpinner(Params.spm_month);
+			panel_Simple_config_basic.add(spinner_startMonth, "6, 23");
 
-			JSpinner spinner_stopDay = new JSpinner();
+			
+			
+			JSpinner spinner_stopDay = new JSpinner(Params.spm_day);
+			spinner_stopDay.setEnabled(false);
 			panel_Simple_config_basic.add(spinner_stopDay, "8, 25");
+			
+			JSpinner spinner_startDay = new JSpinner(Params.spm_day);
+			spinner_startDay.setEnabled(false);
+			panel_Simple_config_basic.add(spinner_startDay, "8, 23");
 
 			JLabel lblNewLabel_3 = new JLabel("Number of Time Steps:");
 			panel_Simple_config_basic.add(lblNewLabel_3, "2, 27, 3, 1, left, default");
@@ -728,7 +734,16 @@ public class SimpleRunGUI {
 		textField_dvFile.setText(wsty.configMap.get("DvarFile").replace("\"", ""));
 		textField_svFile.setText(wsty.configMap.get("SvarFile").replace("\"", ""));
 		textField_initFile.setText(wsty.configMap.get("InitFile").replace("\"", ""));
-	
+		textField_svFileAPart.setText(wsty.configMap.get("SvarAPart"));
+		textField_svFileFPart.setText(wsty.configMap.get("SvarFPart"));
+		textField_initFileFPart.setText(wsty.configMap.get("InitFPart"));
+		if (wsty.configMap.get("TimeStep").equalsIgnoreCase("1DAY")){
+			comboBox_timeStep.setSelectedIndex(1);
+		} else if (wsty.configMap.get("TimeStep").equalsIgnoreCase("1MON")){
+			comboBox_timeStep.setSelectedIndex(0);
+		} else {
+			// error in TimStep
+		}
 	}
 	public JComboBox getComboBox_timeStep() {
 		return comboBox_timeStep;
