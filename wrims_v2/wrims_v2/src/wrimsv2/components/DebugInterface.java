@@ -72,6 +72,7 @@ import wrimsv2.wreslplus.elements.StudyTemp;
 import wrimsv2.wreslplus.elements.SvarTemp;
 import wrimsv2.wreslplus.elements.Tools;
 import wrimsv2.wreslplus.elements.procedures.ProcIfIncItemGroup;
+import wrimsv2.wreslplus.elements.procedures.ProcWeight;
 
 public class DebugInterface {
 	private ServerSocket requestSocket;
@@ -531,12 +532,14 @@ public class DebugInterface {
 			ArrayList<String> svList = fileDataSet.svList;
 			ArrayList<String> asList = fileDataSet.asList;
 			ArrayList<String> tsList = fileDataSet.tsList;
+			ArrayList<String> wtList = fileDataSet.wtList;
 			asList.removeAll(dvList);
 			ArrayList<String> sortedList=new ArrayList<String>();
 			sortedList.addAll(dvList);
 			sortedList.addAll(svList);
 			sortedList.addAll(tsList);
 			sortedList.addAll(asList);
+			sortedList.addAll(wtList);
 			
 			ArrayList<String> gList = fileDataSet.gList;
 			for (String gName:gList){
@@ -636,6 +639,7 @@ public class DebugInterface {
 		ArrayList<String> svList = new ArrayList<String>();
 		ArrayList<String> asList = new ArrayList<String>();
 		ArrayList<String> tsList = new ArrayList<String>();
+		ArrayList<String> wtList = new ArrayList<String>();
 		ArrayList<String> gList = new ArrayList<String>();
 		ArrayList<String> sortedList = new ArrayList<String>();
 		ModelTemp modelTemp;
@@ -654,11 +658,14 @@ public class DebugInterface {
 				asList = modelTemp.asList;
 				tsList = modelTemp.tsList;
 				gList = modelTemp.glList;
+				ProcWeight.collectWeightVar(modelTemp);
+				wtList = modelTemp.wvList_post;
 				asList.removeAll(dvList);
 				sortedList.addAll(dvList);
 				sortedList.addAll(svList);
 				sortedList.addAll(tsList);
 				sortedList.addAll(asList);
+				sortedList.addAll(wtList);
 				for (String gName:gList){
 					if (modelTemp.glMap.containsKey(gName)){
 						Set<String> dependants = modelTemp.glMap.get(gName).dependants;
@@ -707,12 +714,15 @@ public class DebugInterface {
 			asList = modelTemp.asList;
 			tsList = modelTemp.tsList;
 			gList = modelTemp.glList;
+			ProcWeight.collectWeightVar(modelTemp);
+			wtList = modelTemp.wvList_post;
 			sortedList = new ArrayList<String>();
 			asList.removeAll(dvList);
 			sortedList.addAll(dvList);
 			sortedList.addAll(svList);
 			sortedList.addAll(tsList);
 			sortedList.addAll(asList);
+			sortedList.addAll(wtList);
 			for (String gName:gList){
 				if (modelTemp.glMap.containsKey(gName)){
 					Set<String> dependants = modelTemp.glMap.get(gName).dependants;
