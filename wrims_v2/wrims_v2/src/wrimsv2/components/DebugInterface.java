@@ -1556,13 +1556,22 @@ public class DebugInterface {
 		StudyDataSet sds = ControlData.currStudyDataSet;
 		ArrayList<String> ml = sds.getModelList();
 		Map<String, Map<String, IntDouble>> varCycleValue = sds.getVarCycleValueMap();
+		Map<String, Map<String, IntDouble>> varCycleIndexValue = sds.getVarCycleIndexValueMap();
 		if (varCycleValue.containsKey(variableName)){
 			Map<String, IntDouble> cycleValue = varCycleValue.get(variableName);
 			int cycleIndex=1;
 			for (String cycle: ml){
-				if (cycleValue.containsKey(cycle) && cycleIndex<ControlData.currCycleIndex+1){
-					IntDouble id=cycleValue.get(cycle);
-					if (id!=null) dataString=dataString+cycleIndex+":"+cycle+":"+df.format(id.getData())+"#";
+				if (cycleIndex<ControlData.currCycleIndex+1){
+					if (cycleValue.containsKey(cycle)){
+						IntDouble id=cycleValue.get(cycle);
+						if (id!=null) dataString=dataString+cycleIndex+":"+cycle+":"+df.format(id.getData())+"#";
+					}else if (varCycleIndexValue.containsKey(variableName)){
+						Map<String, IntDouble> cycleIndexValue = varCycleIndexValue.get(variableName);
+						if (cycleIndexValue.containsKey(cycle)){
+							IntDouble id=cycleIndexValue.get(cycle);
+							if (id!=null) dataString=dataString+cycleIndex+":"+cycle+":"+df.format(id.getData())+"#";
+						}
+					}
 				}
 				cycleIndex=cycleIndex+1;
 			}
@@ -1572,11 +1581,31 @@ public class DebugInterface {
 				Map<String, IntDouble> cycleValue = varTimeArrayCycleValue.get(variableName);
 				int cycleIndex=1;
 				for (String cycle: ml){
-					if (cycleValue.containsKey(cycle) && cycleIndex<ControlData.currCycleIndex+1){
-						IntDouble id=cycleValue.get(cycle);
-						if (id!=null) dataString=dataString+cycleIndex+":"+cycle+":"+df.format(id.getData())+"#";
+					if (cycleIndex<ControlData.currCycleIndex+1){
+						if (cycleValue.containsKey(cycle)){
+							IntDouble id=cycleValue.get(cycle);
+							if (id!=null) dataString=dataString+cycleIndex+":"+cycle+":"+df.format(id.getData())+"#";
+						}else if (varCycleIndexValue.containsKey(variableName)){
+							Map<String, IntDouble> cycleIndexValue = varCycleIndexValue.get(variableName);
+							if (cycleIndexValue.containsKey(cycle)){
+								IntDouble id=cycleIndexValue.get(cycle);
+								if (id!=null) dataString=dataString+cycleIndex+":"+cycle+":"+df.format(id.getData())+"#";
+							}
+						}
 					}
 					cycleIndex=cycleIndex+1;
+				}
+			}else{
+				if (varCycleIndexValue.containsKey(variableName)){
+					Map<String, IntDouble> cycleValue = varCycleIndexValue.get(variableName);
+					int cycleIndex=1;
+					for (String cycle: ml){
+						if (cycleValue.containsKey(cycle) && cycleIndex<ControlData.currCycleIndex+1){
+							IntDouble id=cycleValue.get(cycle);
+							if (id!=null) dataString=dataString+cycleIndex+":"+cycle+":"+df.format(id.getData())+"#";
+						}
+						cycleIndex=cycleIndex+1;
+					}
 				}
 			}
 		}
