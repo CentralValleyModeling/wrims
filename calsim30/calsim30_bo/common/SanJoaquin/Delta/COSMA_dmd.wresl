@@ -26,7 +26,7 @@ define COSMA_MIper_Oct { case posdenominator  {condition COSMAOct > 0.0 value CO
 define COSMA_Aprdv { std kind 'COSMA-demand' units 'taf' }
 define COSMAApr { !from Apr to Mar
      case FirstYr {
-          condition month == Oct .and. wateryear == 1922
+          condition month == Oct .and. wateryear == beginWaterYear
           sum(i=0,5,1) COSMA_MIDmd(i) }
      case LastYr {
           condition month == Apr .and. wateryear == 2003

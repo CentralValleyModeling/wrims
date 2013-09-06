@@ -200,7 +200,7 @@ define deltar_cvp_sdv {std kind 'DEL-TARGET' units 'taf'}
 
 define del_third_cvp_s {
   case initialdel {
-    condition month <= FEB .and. wateryear == 1922
+    condition month <= FEB .and. wateryear == beginWaterYear
     value anncvpCL_tot_s}
   case march_april {
     condition month >= MAR .and. month <=MAY

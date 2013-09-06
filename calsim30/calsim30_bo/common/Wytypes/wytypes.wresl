@@ -2,7 +2,7 @@
 ! Code and tables by A. Munevar 7/8/98
 ! American River D893 added by Dustin Jones 12/27/99
 
-define bgnWY {value 1922}
+define bgnWY {value beginWaterYear}
 define EndWY {value 2009}
 
 ! ================ INDICES AS DEFINED BY DWR (CHANGE IN FEB) =====================

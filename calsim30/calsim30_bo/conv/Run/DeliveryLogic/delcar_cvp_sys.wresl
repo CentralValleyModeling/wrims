@@ -49,7 +49,7 @@ define deltar_cvp_sysdv {std kind 'DEL-TARGET' units 'taf'}    ! This saves delt
 
 define del_third_cvp_sys {
     case      initialdel {
-        condition month <= FEB .and. wateryear == 1922   ! Use the total annual
+        condition month <= FEB .and. wateryear == beginWaterYear   ! Use the total annual
         value     anncvpCL_tot_sys }                  ! contract amount until
                                                          ! the first delivery
                                                      ! target is assigned.

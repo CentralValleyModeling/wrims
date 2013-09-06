@@ -16,7 +16,7 @@ define remainTA_25_100 {select remainDemand from swp_3pattern_demands given perc
 define swpdel_PMI27io { ! Actual MWD-MI Deliveries at node 27
 
        case      Oct_DEC  {
-       condition month >= OCT .and. month <= DEC .and. Wateryear > 1922
+       condition month >= OCT .and. month <= DEC .and. Wateryear > beginWaterYear
        sum(i=-1,prevJAN,-1) D27_PMI_fmp(i) * cfs_taf(i) }
 
        case      Feb_SEP {
@@ -31,7 +31,7 @@ define swpdel_PMI27io { ! Actual MWD-MI Deliveries at node 27
 define swpdel_PMI885io {
 
        case      Oct_DEC  {
-       condition month >= OCT .and. month <= DEC .and. Wateryear > 1922
+       condition month >= OCT .and. month <= DEC .and. Wateryear > beginWaterYear
        sum(i=-1,prevJAN,-1) D885_PMI_fmp(i) * cfs_taf(i) }
 
        case      Feb_SEP {
@@ -46,7 +46,7 @@ define swpdel_PMI885io {
 define swpdel_PMI899io {
 
        case      Oct_DEC  {
-       condition month >= OCT .and. month <= DEC .and. Wateryear > 1922
+       condition month >= OCT .and. month <= DEC .and. Wateryear > beginWaterYear
        sum(i=-1,prevJAN,-1) D899_PMI_fmp(i) * cfs_taf(i) }
 
        case      Feb_SEP {
@@ -61,7 +61,7 @@ define swpdel_PMI899io {
 define swpdel_PMI895io {
 
        case      Oct_DEC  {
-       condition month >= OCT .and. month <= DEC .and. Wateryear > 1922
+       condition month >= OCT .and. month <= DEC .and. Wateryear > beginWaterYear
        sum(i=-1,prevJAN,-1) D895_PMI_fmp(i) * cfs_taf(i) }
 
        case      Feb_SEP {

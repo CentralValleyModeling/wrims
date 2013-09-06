@@ -25,7 +25,7 @@ define EwaPurchTgtEstDV {std kind 'EWA-PURCH-TAF' units 'taf'}
 !this April's LVE release to last May's EWA purchase target, which makes less sense.
 define EwaPurchTgtEst {
     case first_year {
-        condition wateryear == 1922 .and. month < APR
+        condition wateryear == beginWaterYear .and. month < APR
         select Target from EwaPurchase where wyt=1 }
     case April {
         condition month == APR
@@ -42,7 +42,7 @@ goal setEwaPurchEstDV {EwaPurchTgtEstDV = EwaPurchTgtEst}
 
 define EwaNODPctEst {
     case first_year {
-        condition wateryear == 1922 .and. month < APR
+        condition wateryear == beginWaterYear .and. month < APR
         select   NOD
         from     EwaAllocPurch
         given    alloc=1.0

@@ -148,7 +148,7 @@ define NODOS_excessfill {std kind 'FLOW' units 'CFS'}
 goal setNODOS_excfill {NODOS_excessfill = C177A + C177B + C177C_NORM + C177D + C177E}
 define NODOSavailcapprv {
     case first_month {
-	 condition month == OCT .and. wateryear == 1922
+	 condition month == OCT .and. wateryear == beginWaterYear
          value max(NODOS_StorMax - 950.,1.)}   ! 950. from initial storage assumptions
     case otherwise {
          condition always

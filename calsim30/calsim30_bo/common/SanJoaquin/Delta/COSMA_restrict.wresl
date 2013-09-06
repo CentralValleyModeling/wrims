@@ -98,7 +98,7 @@ goal setDWSP_dmd {C513a < COSMA_MIdmd*taf_cfs}
 
 !define RemainWR { !annual sale from lookup table
 !   case firstmonth {
-!       condition month == oct .and. wateryear == 1922
+!       condition month == oct .and. wateryear == beginWaterYear
 !              value 30.}
 !   case January {
 !       condition month == jan

@@ -131,7 +131,7 @@ Note: S52Avail_part1 does not account for Fresno River seepage
 */
 define S52Avail_part1 {
     case first5months {
-        condition month <= mar .and. wateryear == 1922
+        condition month <= mar .and. wateryear == beginWaterYear
         value         S52(-1) }
     case April {
         condition month == apr
@@ -378,7 +378,7 @@ define prev53avail_p1 {std kind 'water-supply' units 'taf'}
 
 define S53Avail_part1 {
     case first5months {
-        condition month <= mar .and. wateryear == 1922
+        condition month <= mar .and. wateryear == beginWaterYear
         value         S53(-1) }
     case April {
         condition month == apr

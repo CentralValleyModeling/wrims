@@ -8,7 +8,7 @@ define PrevYrYuba  {value PrevYrYubaGW + PrevYrYubaSW }
 !
 define D204_Adjustment {
       case first {
-            condition wateryear == 1922
+            condition wateryear == beginWaterYear
             value 0. }
       case Jan {
             condition month == Jan

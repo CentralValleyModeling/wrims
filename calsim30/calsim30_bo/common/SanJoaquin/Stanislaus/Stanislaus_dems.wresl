@@ -83,7 +83,7 @@ define ann_CSJID {
         sum(i=0,11,1) max(0.,(cuaw_512_pag(i)*1.1 + cuaw_512_pag(i)*0.3
                        - min(i512(i), (cuaw_512_pag(i)*1.1 + cuaw_512_pag(i)*0.3)))) * cfs_taf(i)}
     case initialCase {
-          condition month < mar .and. wateryear == 1922
+          condition month < mar .and. wateryear == beginWaterYear
           value 132.0 }   ! set to annual average
     case otherwise {
         condition   always

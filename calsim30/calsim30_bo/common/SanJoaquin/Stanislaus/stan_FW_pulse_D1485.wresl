@@ -20,7 +20,7 @@ Fish & Wildlife flows
 
 define OIDSSJIDdem{
          case firstyear {
-           condition month >= oct .and. month <=feb .and. wateryear > 1922
+           condition month >= oct .and. month <=feb .and. wateryear > beginWaterYear
            value OSSJIDDV(prevMAR)*.959}
          case others {
            condition always
@@ -50,7 +50,7 @@ define stanfish_yr2 { select stanf from stan_yr given NMF = NMforecast1 use line
 
 /* define stanfish_yr2 {
         case firstyr {
-                condition wateryear == 1922 .and. month <= mar
+                condition wateryear == beginWaterYear .and. month <= mar
                 value 98.9 + stan_dem_est + min(204.,max(NMforecast3-((310.-stan_dem_est)-stan_dem_est)-1700.,0.0))
         }
         case march {

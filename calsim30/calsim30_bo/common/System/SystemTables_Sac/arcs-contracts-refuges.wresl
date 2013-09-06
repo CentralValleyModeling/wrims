@@ -383,7 +383,7 @@ define WR_CRK005_17N_NR  {alias WRmon_CRK005_17N_NR kind 'WATER-RIGHT' units 'TA
 
 
 
-! The 1922 Agreement specifies November to March
+! The beginWaterYear Agreement specifies November to March
 ! Western Canal WD GM says water is delivered from after rice harvest through December
 ! Model using October to December period
 ! Western Canal is typically closed mid-January

@@ -72,8 +72,8 @@ define ERP_C5MIF_FlowStab {
        case CritCondOffRamp {
         condition wyt_NODOS + prev_wyt_SAC >= 8
         value 0.}
-       case Oct1922{
-            condition  FallStabilitySwitch > 0 .and. month == OCT .and. wateryear == 1922
+       case OctbeginWaterYear{
+            condition  FallStabilitySwitch > 0 .and. month == OCT .and. wateryear == beginWaterYear
             value  4500. }
 ! Stabilize fall flows - 6000 cfs target
        case OctJan6000 {

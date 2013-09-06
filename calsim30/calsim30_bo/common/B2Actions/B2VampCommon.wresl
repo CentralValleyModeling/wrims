@@ -12,7 +12,7 @@ J. Wilde 10/25/2001. Change to alternate between 1500 and 3000 cfs for hi flow c
 define PulseHidv {std kind 'counter' UNITS 'NONE'}
 define PulseHi {
     case Firstyear {
-        condition wateryear==1922
+        condition wateryear==beginWaterYear
         value 3000.0}
     case OCT_MAR {
         condition month>=OCT .and. month<=MAR

@@ -24,7 +24,7 @@
 ! Minimum instream Stanislaus flows to be met from New Melones releases.
 define OIDInstreamToBeMet {
     case first_months {
-        condition month<=DEC .and. wateryear==1922
+        condition month<=DEC .and. wateryear==beginWaterYear
         value       0. }
     case October {
         condition month == OCT

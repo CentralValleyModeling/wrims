@@ -290,7 +290,7 @@ define TPulseON_D1   {
     case other  {condition always value 0. }   }
 
 define TPulseON_D2   {
-    case start    {condition month==OCT .and. int(wateryear)==1922 value 0.}
+    case start    {condition month==OCT .and. int(wateryear)==beginWaterYear value 0.}
     case trigON31 {condition  daysin == 31. .and. Q_SAC097_2/max(Q_SAC097_29dv(-1),-Q_SAC097_2+Q_SAC097_29dv(-1)) >= 1.45 .and. Q_SAC097_2 > 12000.0 value 1. }
     case trigON30 {condition  daysin == 30. .and. Q_SAC097_2/max(Q_SAC097_28dv(-1),-Q_SAC097_2+Q_SAC097_28dv(-1)) >= 1.45 .and. Q_SAC097_2 > 12000.0 value 1. }
     case trigON29 {condition  daysin == 29. .and. Q_SAC097_2/max(Q_SAC097_27dv(-1),-Q_SAC097_2+Q_SAC097_27dv(-1)) >= 1.45 .and. Q_SAC097_2 > 12000.0 value 1. }
@@ -298,7 +298,7 @@ define TPulseON_D2   {
     case other  {condition always value 0. }   }
 
 define TPulseON_D3   {
-    case start    {condition month==OCT .and. int(wateryear)==1922 value 0.}
+    case start    {condition month==OCT .and. int(wateryear)==beginWaterYear value 0.}
     case trigON31 {condition  daysin == 31. .and. Q_SAC097_3/max(Q_SAC097_30dv(-1),-Q_SAC097_3+Q_SAC097_30dv(-1)) >= 1.45 .and. Q_SAC097_3 > 12000.0 value 1. }
     case trigON30 {condition  daysin == 30. .and. Q_SAC097_3/max(Q_SAC097_29dv(-1),-Q_SAC097_3+Q_SAC097_29dv(-1)) >= 1.45 .and. Q_SAC097_3 > 12000.0 value 1. }
     case trigON29 {condition  daysin == 29. .and. Q_SAC097_3/max(Q_SAC097_28dv(-1),-Q_SAC097_3+Q_SAC097_28dv(-1)) >= 1.45 .and. Q_SAC097_3 > 12000.0 value 1. }
@@ -306,7 +306,7 @@ define TPulseON_D3   {
     case other  {condition always value 0. }   }
 
 define TPulseON_D4   {
-    case start    {condition month==OCT .and. int(wateryear)==1922 value 0.}
+    case start    {condition month==OCT .and. int(wateryear)==beginWaterYear value 0.}
     case trigON31 {condition  daysin == 31. .and. Q_SAC097_4/max(Q_SAC097_31dv(-1),-Q_SAC097_4+Q_SAC097_31dv(-1)) >= 1.45 .and. Q_SAC097_4 > 12000.0 value 1. }
     case trigON30 {condition  daysin == 30. .and. Q_SAC097_4/max(Q_SAC097_30dv(-1),-Q_SAC097_4+Q_SAC097_30dv(-1)) >= 1.45 .and. Q_SAC097_4 > 12000.0 value 1. }
     case trigON29 {condition  daysin == 29. .and. Q_SAC097_4/max(Q_SAC097_29dv(-1),-Q_SAC097_4+Q_SAC097_29dv(-1)) >= 1.45 .and. Q_SAC097_4 > 12000.0 value 1. }
@@ -477,7 +477,7 @@ define TPulseOFF1_D1   {    case start    {condition month==OCT value 0. }
                                     Q_SAC097_26dv(-1) < Q_SAC097_25dv(-1) .and.  Q_SAC097_25dv(-1) < Q_SAC097_24dv(-1) .or. Q_SAC097_1 <=12000. value 1. }
     case other  {condition always value 0. }   }
 
-define TPulseOFF1_D2   {    case start    {condition month==OCT .and. int(wateryear)==1922 value 0.}
+define TPulseOFF1_D2   {    case start    {condition month==OCT .and. int(wateryear)==beginWaterYear value 0.}
     case trigOFF1 {condition daysin == 31. .and. Q_SAC097_2 < Q_SAC097_1 .and.  Q_SAC097_1 < Q_SAC097_31dv(-1) .and. Q_SAC097_31dv(-1) < Q_SAC097_30dv(-1) .and.
                                     Q_SAC097_30dv(-1) < Q_SAC097_29dv(-1) .and.  Q_SAC097_29dv(-1) < Q_SAC097_28dv(-1) .or. Q_SAC097_2 <=12000. value 1. }
     case trigOFF2 {condition daysin == 30. .and. Q_SAC097_2 < Q_SAC097_1 .and.  Q_SAC097_1 < Q_SAC097_30dv(-1) .and. Q_SAC097_30dv(-1) < Q_SAC097_29dv(-1) .and.
@@ -488,7 +488,7 @@ define TPulseOFF1_D2   {    case start    {condition month==OCT .and. int(watery
                                     Q_SAC097_27dv(-1) < Q_SAC097_26dv(-1) .and.  Q_SAC097_26dv(-1) < Q_SAC097_25dv(-1) .or. Q_SAC097_2 <=12000. value 1. }
     case other  {condition always value 0. }   }
 
-define TPulseOFF1_D3   {    case start    {condition month==OCT .and. int(wateryear)==1922 value 0.}
+define TPulseOFF1_D3   {    case start    {condition month==OCT .and. int(wateryear)==beginWaterYear value 0.}
     case trigOFF1 {condition daysin == 31. .and. Q_SAC097_3 < Q_SAC097_2 .and.  Q_SAC097_2 < Q_SAC097_1 .and. Q_SAC097_1 < Q_SAC097_31dv(-1) .and.
                                     Q_SAC097_31dv(-1) < Q_SAC097_30dv(-1) .and.  Q_SAC097_30dv(-1) < Q_SAC097_29dv(-1) .or. Q_SAC097_3 <=12000. value 1. }
     case trigOFF2 {condition daysin == 30. .and. Q_SAC097_3 < Q_SAC097_2 .and.  Q_SAC097_2 < Q_SAC097_1 .and. Q_SAC097_1 < Q_SAC097_30dv(-1) .and.
@@ -500,7 +500,7 @@ define TPulseOFF1_D3   {    case start    {condition month==OCT .and. int(watery
     case other  {condition always value 0. }   }
 
 
-define TPulseOFF1_D4   {    case start    {condition month==OCT .and. int(wateryear)==1922 value 0.}
+define TPulseOFF1_D4   {    case start    {condition month==OCT .and. int(wateryear)==beginWaterYear value 0.}
     case trigOFF1 {condition daysin == 31. .and. Q_SAC097_4 < Q_SAC097_3 .and.  Q_SAC097_3 < Q_SAC097_2 .and. Q_SAC097_2 < Q_SAC097_1 .and.
                                     Q_SAC097_1 < Q_SAC097_31dv(-1) .and.  Q_SAC097_31dv(-1) < Q_SAC097_30dv(-1) .or. Q_SAC097_4 <=12000. value 1. }
     case trigOFF2 {condition daysin == 30. .and. Q_SAC097_4 < Q_SAC097_3.and.  Q_SAC097_3 < Q_SAC097_2 .and. Q_SAC097_2 < Q_SAC097_1 .and.
@@ -512,7 +512,7 @@ define TPulseOFF1_D4   {    case start    {condition month==OCT .and. int(watery
     case other  {condition always value 0. }   }
 
 
-define TPulseOFF1_D5   {    case start    {condition month==OCT .and. int(wateryear)==1922 value 0.}
+define TPulseOFF1_D5   {    case start    {condition month==OCT .and. int(wateryear)==beginWaterYear value 0.}
     case trigOFF1 {condition daysin == 31. .and. Q_SAC097_5 < Q_SAC097_4 .and.  Q_SAC097_4 < Q_SAC097_3 .and. Q_SAC097_3 < Q_SAC097_2 .and.
                                     Q_SAC097_2 < Q_SAC097_1 .and.  Q_SAC097_1 < Q_SAC097_31dv(-1) .or. Q_SAC097_5 <=12000. value 1. }
     case trigOFF2 {condition daysin == 30. .and. Q_SAC097_5 < Q_SAC097_4.and.  Q_SAC097_4 < Q_SAC097_3 .and. Q_SAC097_3 < Q_SAC097_2 .and.
@@ -691,7 +691,7 @@ case trigOFF4 {condition daysin==28     .and.   bypass_LLP_d1 > 20000.  .and.   
 case other  {condition always value 0. }   }
 
 define TPulseOFF2_D2   {
-case start    {condition month==OCT .and. int(wateryear)==1922 value 0.}
+case start    {condition month==OCT .and. int(wateryear)==beginWaterYear value 0.}
 case trigOFF1 {condition daysin==31     .and.   bypass_LLP_d2 > 20000.  .and.   bypass_LLP_d1 > 20000.  .and.   bypass_LLP_d31dv(-1) > 20000.   .and.   bypass_LLP_d30dv(-1) > 20000.   .and.   bypass_LLP_d29dv(-1) > 20000.   .and.   bypass_LLP_d28dv(-1) > 20000.   .and.   bypass_LLP_d27dv(-1) > 20000.   .and.   bypass_LLP_d26dv(-1) > 20000.   .and.   bypass_LLP_d25dv(-1) > 20000.   .and.   bypass_LLP_d24dv(-1) > 20000.    value 1.    }
 case trigOFF2 {condition daysin==30     .and.   bypass_LLP_d2 > 20000.  .and.   bypass_LLP_d1 > 20000.  .and.   bypass_LLP_d30dv(-1) > 20000.   .and.   bypass_LLP_d29dv(-1) > 20000.   .and.   bypass_LLP_d28dv(-1) > 20000.   .and.   bypass_LLP_d27dv(-1) > 20000.   .and.   bypass_LLP_d26dv(-1) > 20000.   .and.   bypass_LLP_d25dv(-1) > 20000.   .and.   bypass_LLP_d24dv(-1) > 20000.   .and.   bypass_LLP_d23dv(-1) > 20000.    value 1.    }
 case trigOFF3 {condition daysin==29     .and.   bypass_LLP_d2 > 20000.  .and.   bypass_LLP_d1 > 20000.  .and.   bypass_LLP_d29dv(-1) > 20000.   .and.   bypass_LLP_d28dv(-1) > 20000.   .and.   bypass_LLP_d27dv(-1) > 20000.   .and.   bypass_LLP_d26dv(-1) > 20000.   .and.   bypass_LLP_d25dv(-1) > 20000.   .and.   bypass_LLP_d24dv(-1) > 20000.   .and.   bypass_LLP_d23dv(-1) > 20000.   .and.   bypass_LLP_d22dv(-1) > 20000.    value 1.    }
@@ -699,7 +699,7 @@ case trigOFF4 {condition daysin==28     .and.   bypass_LLP_d2 > 20000.  .and.   
 case other  {condition always value 0. }   }
 
 define TPulseOFF2_D3   {
-case start    {condition month==OCT .and. int(wateryear)==1922 value 0.}
+case start    {condition month==OCT .and. int(wateryear)==beginWaterYear value 0.}
 case trigOFF1 {condition daysin==31     .and.   bypass_LLP_d3 > 20000.  .and.   bypass_LLP_d2 > 20000.  .and.   bypass_LLP_d1 > 20000.  .and.   bypass_LLP_d31dv(-1) > 20000.   .and.   bypass_LLP_d30dv(-1) > 20000.   .and.   bypass_LLP_d29dv(-1) > 20000.   .and.   bypass_LLP_d28dv(-1) > 20000.   .and.   bypass_LLP_d27dv(-1) > 20000.   .and.   bypass_LLP_d26dv(-1) > 20000.   .and.   bypass_LLP_d25dv(-1) > 20000.    value 1.    }
 case trigOFF2 {condition daysin==30     .and.   bypass_LLP_d3 > 20000.  .and.   bypass_LLP_d2 > 20000.  .and.   bypass_LLP_d1 > 20000.  .and.   bypass_LLP_d30dv(-1) > 20000.   .and.   bypass_LLP_d29dv(-1) > 20000.   .and.   bypass_LLP_d28dv(-1) > 20000.   .and.   bypass_LLP_d27dv(-1) > 20000.   .and.   bypass_LLP_d26dv(-1) > 20000.   .and.   bypass_LLP_d25dv(-1) > 20000.   .and.   bypass_LLP_d24dv(-1) > 20000.    value 1.    }
 case trigOFF3 {condition daysin==29     .and.   bypass_LLP_d3 > 20000.  .and.   bypass_LLP_d2 > 20000.  .and.   bypass_LLP_d1 > 20000.  .and.   bypass_LLP_d29dv(-1) > 20000.   .and.   bypass_LLP_d28dv(-1) > 20000.   .and.   bypass_LLP_d27dv(-1) > 20000.   .and.   bypass_LLP_d26dv(-1) > 20000.   .and.   bypass_LLP_d25dv(-1) > 20000.   .and.   bypass_LLP_d24dv(-1) > 20000.   .and.   bypass_LLP_d23dv(-1) > 20000.    value 1.    }
@@ -707,7 +707,7 @@ case trigOFF4 {condition daysin==28     .and.   bypass_LLP_d3 > 20000.  .and.   
 case other  {condition always value 0. }   }
 
 define TPulseOFF2_D4   {
-case start    {condition month==OCT .and. int(wateryear)==1922 value 0.}
+case start    {condition month==OCT .and. int(wateryear)==beginWaterYear value 0.}
 case trigOFF1 {condition daysin==31     .and.   bypass_LLP_d4 > 20000.  .and.   bypass_LLP_d3 > 20000.  .and.   bypass_LLP_d2 > 20000.  .and.   bypass_LLP_d1 > 20000.  .and.   bypass_LLP_d31dv(-1) > 20000.   .and.   bypass_LLP_d30dv(-1) > 20000.   .and.   bypass_LLP_d29dv(-1) > 20000.   .and.   bypass_LLP_d28dv(-1) > 20000.   .and.   bypass_LLP_d27dv(-1) > 20000.   .and.   bypass_LLP_d26dv(-1) > 20000.    value 1.    }
 case trigOFF2 {condition daysin==30     .and.   bypass_LLP_d4 > 20000.  .and.   bypass_LLP_d3 > 20000.  .and.   bypass_LLP_d2 > 20000.  .and.   bypass_LLP_d1 > 20000.  .and.   bypass_LLP_d30dv(-1) > 20000.   .and.   bypass_LLP_d29dv(-1) > 20000.   .and.   bypass_LLP_d28dv(-1) > 20000.   .and.   bypass_LLP_d27dv(-1) > 20000.   .and.   bypass_LLP_d26dv(-1) > 20000.   .and.   bypass_LLP_d25dv(-1) > 20000.    value 1.    }
 case trigOFF3 {condition daysin==29     .and.   bypass_LLP_d4 > 20000.  .and.   bypass_LLP_d3 > 20000.  .and.   bypass_LLP_d2 > 20000.  .and.   bypass_LLP_d1 > 20000.  .and.   bypass_LLP_d29dv(-1) > 20000.   .and.   bypass_LLP_d28dv(-1) > 20000.   .and.   bypass_LLP_d27dv(-1) > 20000.   .and.   bypass_LLP_d26dv(-1) > 20000.   .and.   bypass_LLP_d25dv(-1) > 20000.   .and.   bypass_LLP_d24dv(-1) > 20000.    value 1.    }
@@ -715,7 +715,7 @@ case trigOFF4 {condition daysin==28     .and.   bypass_LLP_d4 > 20000.  .and.   
 case other  {condition always value 0. }   }
 
 define TPulseOFF2_D5   {
-case start    {condition month==OCT .and. int(wateryear)==1922 value 0.}
+case start    {condition month==OCT .and. int(wateryear)==beginWaterYear value 0.}
 case trigOFF1 {condition daysin==31     .and.   bypass_LLP_d5 > 20000.  .and.   bypass_LLP_d4 > 20000.  .and.   bypass_LLP_d3 > 20000.  .and.   bypass_LLP_d2 > 20000.  .and.   bypass_LLP_d1 > 20000.  .and.   bypass_LLP_d31dv(-1) > 20000.   .and.   bypass_LLP_d30dv(-1) > 20000.   .and.   bypass_LLP_d29dv(-1) > 20000.   .and.   bypass_LLP_d28dv(-1) > 20000.   .and.   bypass_LLP_d27dv(-1) > 20000.    value 1.    }
 case trigOFF2 {condition daysin==30     .and.   bypass_LLP_d5 > 20000.  .and.   bypass_LLP_d4 > 20000.  .and.   bypass_LLP_d3 > 20000.  .and.   bypass_LLP_d2 > 20000.  .and.   bypass_LLP_d1 > 20000.  .and.   bypass_LLP_d30dv(-1) > 20000.   .and.   bypass_LLP_d29dv(-1) > 20000.   .and.   bypass_LLP_d28dv(-1) > 20000.   .and.   bypass_LLP_d27dv(-1) > 20000.   .and.   bypass_LLP_d26dv(-1) > 20000.    value 1.    }
 case trigOFF3 {condition daysin==29     .and.   bypass_LLP_d5 > 20000.  .and.   bypass_LLP_d4 > 20000.  .and.   bypass_LLP_d3 > 20000.  .and.   bypass_LLP_d2 > 20000.  .and.   bypass_LLP_d1 > 20000.  .and.   bypass_LLP_d29dv(-1) > 20000.   .and.   bypass_LLP_d28dv(-1) > 20000.   .and.   bypass_LLP_d27dv(-1) > 20000.   .and.   bypass_LLP_d26dv(-1) > 20000.   .and.   bypass_LLP_d25dv(-1) > 20000.    value 1.    }
@@ -723,7 +723,7 @@ case trigOFF4 {condition daysin==28     .and.   bypass_LLP_d5 > 20000.  .and.   
 case other  {condition always value 0. }   }
 
 define TPulseOFF2_D6   {
-case start    {condition month==OCT .and. int(wateryear)==1922 value 0.}
+case start    {condition month==OCT .and. int(wateryear)==beginWaterYear value 0.}
 case trigOFF1 {condition daysin==31     .and.   bypass_LLP_d6 > 20000.  .and.   bypass_LLP_d5 > 20000.  .and.   bypass_LLP_d4 > 20000.  .and.   bypass_LLP_d3 > 20000.  .and.   bypass_LLP_d2 > 20000.  .and.   bypass_LLP_d1 > 20000.  .and.   bypass_LLP_d31dv(-1) > 20000.   .and.   bypass_LLP_d30dv(-1) > 20000.   .and.   bypass_LLP_d29dv(-1) > 20000.   .and.   bypass_LLP_d28dv(-1) > 20000.    value 1.    }
 case trigOFF2 {condition daysin==30     .and.   bypass_LLP_d6 > 20000.  .and.   bypass_LLP_d5 > 20000.  .and.   bypass_LLP_d4 > 20000.  .and.   bypass_LLP_d3 > 20000.  .and.   bypass_LLP_d2 > 20000.  .and.   bypass_LLP_d1 > 20000.  .and.   bypass_LLP_d30dv(-1) > 20000.   .and.   bypass_LLP_d29dv(-1) > 20000.   .and.   bypass_LLP_d28dv(-1) > 20000.   .and.   bypass_LLP_d27dv(-1) > 20000.    value 1.    }
 case trigOFF3 {condition daysin==29     .and.   bypass_LLP_d6 > 20000.  .and.   bypass_LLP_d5 > 20000.  .and.   bypass_LLP_d4 > 20000.  .and.   bypass_LLP_d3 > 20000.  .and.   bypass_LLP_d2 > 20000.  .and.   bypass_LLP_d1 > 20000.  .and.   bypass_LLP_d29dv(-1) > 20000.   .and.   bypass_LLP_d28dv(-1) > 20000.   .and.   bypass_LLP_d27dv(-1) > 20000.   .and.   bypass_LLP_d26dv(-1) > 20000.    value 1.    }
@@ -731,7 +731,7 @@ case trigOFF4 {condition daysin==28     .and.   bypass_LLP_d6 > 20000.  .and.   
 case other  {condition always value 0. }   }
 
 define TPulseOFF2_D7   {
-case start    {condition month==OCT .and. int(wateryear)==1922 value 0.}
+case start    {condition month==OCT .and. int(wateryear)==beginWaterYear value 0.}
 case trigOFF1 {condition daysin==31     .and.   bypass_LLP_d7 > 20000.  .and.   bypass_LLP_d6 > 20000.  .and.   bypass_LLP_d5 > 20000.  .and.   bypass_LLP_d4 > 20000.  .and.   bypass_LLP_d3 > 20000.  .and.   bypass_LLP_d2 > 20000.  .and.   bypass_LLP_d1 > 20000.  .and.   bypass_LLP_d31dv(-1) > 20000.   .and.   bypass_LLP_d30dv(-1) > 20000.   .and.   bypass_LLP_d29dv(-1) > 20000.    value 1.    }
 case trigOFF2 {condition daysin==30     .and.   bypass_LLP_d7 > 20000.  .and.   bypass_LLP_d6 > 20000.  .and.   bypass_LLP_d5 > 20000.  .and.   bypass_LLP_d4 > 20000.  .and.   bypass_LLP_d3 > 20000.  .and.   bypass_LLP_d2 > 20000.  .and.   bypass_LLP_d1 > 20000.  .and.   bypass_LLP_d30dv(-1) > 20000.   .and.   bypass_LLP_d29dv(-1) > 20000.   .and.   bypass_LLP_d28dv(-1) > 20000.    value 1.    }
 case trigOFF3 {condition daysin==29     .and.   bypass_LLP_d7 > 20000.  .and.   bypass_LLP_d6 > 20000.  .and.   bypass_LLP_d5 > 20000.  .and.   bypass_LLP_d4 > 20000.  .and.   bypass_LLP_d3 > 20000.  .and.   bypass_LLP_d2 > 20000.  .and.   bypass_LLP_d1 > 20000.  .and.   bypass_LLP_d29dv(-1) > 20000.   .and.   bypass_LLP_d28dv(-1) > 20000.   .and.   bypass_LLP_d27dv(-1) > 20000.    value 1.    }
@@ -739,7 +739,7 @@ case trigOFF4 {condition daysin==28     .and.   bypass_LLP_d7 > 20000.  .and.   
 case other  {condition always value 0. }   }
 
 define TPulseOFF2_D8   {
-case start    {condition month==OCT .and. int(wateryear)==1922 value 0.}
+case start    {condition month==OCT .and. int(wateryear)==beginWaterYear value 0.}
 case trigOFF1 {condition daysin==31     .and.   bypass_LLP_d8 > 20000.  .and.   bypass_LLP_d7 > 20000.  .and.   bypass_LLP_d6 > 20000.  .and.   bypass_LLP_d5 > 20000.  .and.   bypass_LLP_d4 > 20000.  .and.   bypass_LLP_d3 > 20000.  .and.   bypass_LLP_d2 > 20000.  .and.   bypass_LLP_d1 > 20000.  .and.   bypass_LLP_d31dv(-1) > 20000.   .and.   bypass_LLP_d30dv(-1) > 20000.    value 1.    }
 case trigOFF2 {condition daysin==30     .and.   bypass_LLP_d8 > 20000.  .and.   bypass_LLP_d7 > 20000.  .and.   bypass_LLP_d6 > 20000.  .and.   bypass_LLP_d5 > 20000.  .and.   bypass_LLP_d4 > 20000.  .and.   bypass_LLP_d3 > 20000.  .and.   bypass_LLP_d2 > 20000.  .and.   bypass_LLP_d1 > 20000.  .and.   bypass_LLP_d30dv(-1) > 20000.   .and.   bypass_LLP_d29dv(-1) > 20000.    value 1.    }
 case trigOFF3 {condition daysin==29     .and.   bypass_LLP_d8 > 20000.  .and.   bypass_LLP_d7 > 20000.  .and.   bypass_LLP_d6 > 20000.  .and.   bypass_LLP_d5 > 20000.  .and.   bypass_LLP_d4 > 20000.  .and.   bypass_LLP_d3 > 20000.  .and.   bypass_LLP_d2 > 20000.  .and.   bypass_LLP_d1 > 20000.  .and.   bypass_LLP_d29dv(-1) > 20000.   .and.   bypass_LLP_d28dv(-1) > 20000.    value 1.    }
@@ -747,7 +747,7 @@ case trigOFF4 {condition daysin==28     .and.   bypass_LLP_d8 > 20000.  .and.   
 case other  {condition always value 0. }   }
 
 define TPulseOFF2_D9   {
-case start    {condition month==OCT .and. int(wateryear)==1922 value 0.}
+case start    {condition month==OCT .and. int(wateryear)==beginWaterYear value 0.}
 case trigOFF1 {condition daysin==31     .and.   bypass_LLP_d9 > 20000.  .and.   bypass_LLP_d8 > 20000.  .and.   bypass_LLP_d7 > 20000.  .and.   bypass_LLP_d6 > 20000.  .and.   bypass_LLP_d5 > 20000.  .and.   bypass_LLP_d4 > 20000.  .and.   bypass_LLP_d3 > 20000.  .and.   bypass_LLP_d2 > 20000.0 .and.   bypass_LLP_d1 > 20000.  .and.   bypass_LLP_d31dv(-1) > 20000.    value 1.    }
 case trigOFF2 {condition daysin==30     .and.   bypass_LLP_d9 > 20000.  .and.   bypass_LLP_d8 > 20000.  .and.   bypass_LLP_d7 > 20000.  .and.   bypass_LLP_d6 > 20000.  .and.   bypass_LLP_d5 > 20000.  .and.   bypass_LLP_d4 > 20000.  .and.   bypass_LLP_d3 > 20000.  .and.   bypass_LLP_d2 > 20000.0 .and.   bypass_LLP_d1 > 20000.  .and.   bypass_LLP_d30dv(-1) > 20000.    value 1.    }
 case trigOFF3 {condition daysin==29     .and.   bypass_LLP_d9 > 20000.  .and.   bypass_LLP_d8 > 20000.  .and.   bypass_LLP_d7 > 20000.  .and.   bypass_LLP_d6 > 20000.  .and.   bypass_LLP_d5 > 20000.  .and.   bypass_LLP_d4 > 20000.  .and.   bypass_LLP_d3 > 20000.  .and.   bypass_LLP_d2 > 20000.0 .and.   bypass_LLP_d1 > 20000.  .and.   bypass_LLP_d29dv(-1) > 20000.    value 1.    }

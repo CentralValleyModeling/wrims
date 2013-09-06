@@ -31,7 +31,7 @@ define stan_dem_estdv {alias stan_dem_est kind 'demand' units 'taf'}
 ! New Melones forecast 3, the Projected end of September storage 
 define NMforecast3 {
     case firstyr {
-    condition wateryear == 1922 .and. month <= mar
+    condition wateryear == beginWaterYear .and. month <= mar
         value NMforecast1 - (OSSJID_yr*0.959) - stan_dem_est - 53.3 - 68.-60.
     }
     case Mar {
@@ -245,7 +245,7 @@ define OIDcut_S {value OIDredAnnual *  OID_South_pct}
 ! SSJID only cuts delivery capacity in Sept and Oct IF it contributed water to VAMP
 define SSJIDcut {
     case first_month {
-        condition month<=oct .and. wateryear==1922
+        condition month<=oct .and. wateryear==beginWaterYear
         value       0. }
     case October {
         condition   month == oct
