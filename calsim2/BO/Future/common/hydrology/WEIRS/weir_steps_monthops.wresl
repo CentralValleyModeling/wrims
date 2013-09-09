@@ -1,0 +1,181 @@
+/*weir_steps_monthops.wresl
+
+This file is the section of Fremont and Sacramento weirs extracted from the weir_steps.wresl
+file. It will be run only during cycle 6 and then these weirs will be
+operated on daily approach as described in code of file weir_steps_dailyops.wresl
+
+*******************************************************************************
+
+Sacramento River - Butte & Colusa Basin, and Weir Overflow Operation.
+Weir and Overflow ratings are estimates and therefore subject to change.
+River Miles based on miles above Collinsville.
+
+
+*******************************************************************************
+*******************************************************************************
+NOTES:
+
+- Weir flows are significantly influenced by backwater effects and weir submergence,
+  making it difficult to measure or estimate weir spills.
+
+- To simplify weir and overflow operation, the flow arcs are defined by a simple
+  linear equation.  This should not be a significant issue in a real application,
+  since actual weir flow is not terribly important output for a monthly time step.
+  However, a reasonable representation of weir flow is more important for weekly
+  and shorter time steps, especially daily; therefore, future revisions may be necessary.
+
+- Since estimates of the river flow at weir crest elevation are reasonably known,
+  this point was fixed in the analysis.  This approach was used for all weirs
+  except the gated Sacramento Weir, as noted below.
+
+- The weir flows are computed from the inflows to the nodes before taking deliveries
+  out since this is the order that it's done in PROSIM.  Weir flows are not
+  available to the demands at the nodes.
+
+Sacramento Weir Flow to Yolo Bypass
+- The Sacramento Weir is the only weir with operating gates (48).  The weir rating curve
+  assumes all 48 gates are open.
+- It appears that PROSIM also assumes the gates remain open at all times.  This operation
+  will cause spills more frequently than would normally occur.  Under actual
+  current operation, the gates remain closed during normal (non-flood) operation and are
+  not opened until stages at the "I" Street gage exceed or are forecasted to exceed 27.5 feet.
+  The 48 gates are then opened, as needed, to prevent stages greater than 29.0 ft.
+  However, the complication is that the gates must remain open until stages in the river
+  and bypass drop below the weir crest (river flows less than 37,000 cfs), when the gates
+  can be raised.
+- When the Sacramento Weir gates are opened during a flood, water flows upstream
+  from the American River to the weir.  Therefore, the weir arc is included at
+  the junction of the American River (Node 166).
+- The weir logic, below, is a very simplified representation of weir gate operation,
+  refinements may be required during model calibration.
+
+*******************************************************************************
+*******************************************************************************
+
+
+This file contains statements that set up the following weirs and overflows:
+- Fremont Weir Overflow to Yolo Bypass, River Mile 82
+- Sacramento Weir Overflow to Yolo Bypass, River Mile 63       */
+
+
+! *******************************************************************************
+! Estimated Overflow Rating for Fremont Weir to the Yolo Bypass
+! (River Mile 82), DSA 69.
+
+! Estimated Sacramento River flow at weir crest elevation is 62,000 cfs
+define C160_0 {upper 62000. kind 'flow-channel' units 'cfs'}         ! segment from 0 to 62000
+define C160_1 {upper unbounded kind 'flow-channel' units 'cfs'}     ! segment above 62000
+goal sumN160in {C134 + C137 + C223 + R160 = C160_0 + C160_1 }
+
+! slopes of Fremont Weir overflow curves for each segment of Sac River flow
+define int_fweir {INTEGER STD KIND 'INTEGER' UNITS 'NONE'}
+define fwslope0 {value 0.0}
+define fwslope1 {value 0.79808}
+
+! weir flow will be a sum of all the segment's linearized functions
+goal actfwflow {D160 = fwslope0*C160_0 + fwslope1*C160_1 }
+
+! integer variable to bound segments for proper filling step by step
+goal boundN160in_0 {C160_0 > int_fweir * 62000.}
+goal boundN160in_1 {C160_1 < int_fweir * 9999999.}
+
+
+/* 			!************BDCP Structure*************
+define D160_A {std kind 'FLOW-DELIVERY' units 'CFS'} !Freemont Weir Spills to Yolo Bypass
+define D160_B {std kind 'FLOW-DELIVERY' units 'CFS'} !Freemont Weir Spills to Yolo Bypass
+goal setd160split { D160 = D160_A + D160_B }
+
+! Estimated Sacramento River flow at weir crest elevation is 56581,000 cfs
+define C160_0 {upper 54273. kind 'flow-channel' units 'cfs'}         ! segment from 0 to 54273
+define C160_1 {upper unbounded kind 'flow-channel' units 'cfs'}     ! segment above 54273
+goal sumN160in {C134 + C137 + C223 + R160 = C160_0 + C160_1 }
+
+! slopes of Fremont Weir overflow curves for each segment of Sac River flow
+define int_fweir {INTEGER STD KIND 'INTEGER' UNITS 'NONE'}
+define fwslope0 {value 0.}
+define fwslope1 {value 0.8618}
+
+! weir flow will be a sum of all the segment's linearized functions
+! integer variable to bound segments for proper filling step by step
+goal actfwflow {D160_A = fwslope0*C160_0 + fwslope1*C160_1 }
+goal boundN160in_0 {C160_0 > int_fweir * 54273.}
+goal boundN160in_1 {C160_1 < int_fweir * 9999999.}
+*/
+
+/* 			!************BDCP Structure*************   !M.Reginato 01/2009
+
+define SacFREzero {value 15530.1 }    !Max Flow at Sac River(at Verona C160) without spills over the new weir
+define SacFREmax1 {value 20316. - SacFREzero }  !Max Flow at sac river covered by the first slope of Fremont notch equation
+define SacFREmax2 {value 31554.2 - 20316. } !Max Flow at sac river covered by the second slope of Fremont notch equation
+
+!Split of Sac flow
+define C160B_0 {upper SacFREzero kind 'flow-channel' units 'cfs'}   !Verona Flow up to notch crest
+define C160B_1 {upper SacFREmax1 kind 'flow-channel' units 'cfs'}    !Verona Flow from notch to 1000. notch flow
+define C160B_15 {upper SacFREmax2 kind 'flow-channel' units 'cfs'}   !Verona Flow from 1000. to 6000. notch flow
+define C160B_2 {upper unbounded kind 'flow-channel' units 'cfs'}    !Above Fremont weir notch
+
+define gate11flowmon {      !Flow for the gate at 11.5 ft elevation
+	case Dec_Mar {condition month >=DEC .and. month<=MAR
+		value 100.}
+	case other { condition always
+		value 0. }   }
+
+goal sumN160Bin {C134 + C137 + C223 + R160 = C160B_0 + C160B_1 + C160B_15 + C160B_2 + gate11flowmon}
+
+define int_fweir2 {INTEGER STD KIND 'INTEGER' UNITS 'NONE'}
+define int_fweir25 {INTEGER STD KIND 'INTEGER' UNITS 'NONE'}
+define int_fweir3 {INTEGER STD KIND 'INTEGER' UNITS 'NONE'}
+define fw2slope0 {value 0.}
+define fw2slope1 {value 0.1045}    ! Weir slope
+define fw2slope15 {value 0.5339}    ! Weir slope
+define fw2slope2 {value 0.}
+
+goal actfwflow2 {
+	lhs D160_B
+	case DEC_APR{
+	 condition month >=DEC .and. month <=APR
+ 	 rhs fw2slope0*C160B_0 + fw2slope1*C160B_1 + fw2slope15*C160B_15 +  fw2slope2*C160B_2 + gate11flowmon}
+	case other{
+	 condition always
+	 rhs 0.+ gate11flowmon }
+}
+
+goal boundN160Bin_0  {C160B_0 > int_fweir2 * SacFREzero}
+goal boundN160Bin_1a {C160B_1 < int_fweir2 * SacFREmax1}
+
+goal boundN160Bin_1c  {C160B_1 > int_fweir25 * SacFREmax1}
+goal boundN160Bin_1d  {C160B_15 < int_fweir25 * SacFREmax2}
+
+goal boundN160Bin_1b {C160B_15 > int_fweir3 * SacFREmax2}
+goal boundN160Bin_2  {C160B_2 < int_fweir3 * 9999999.}
+*/
+
+define QsacFth {alias C134 + C137 + C223 + R160  kind 'flow-channel' units 'cfs'}
+
+
+! *******************************************************************************
+! Estimated Overflow Rating for Sacramento Weir to the Yolo Bypass
+! (River Mile 63), DSA 70.
+! See notes at top of file for a discussion of the Sacramento Weir.
+
+
+! flow in cfs
+define C166_0 {upper 73000. kind 'flow-channel' units 'cfs'}           ! segment from 0 to 73000
+define C166_1 {upper unbounded kind 'flow-channel' units 'cfs'}       ! segment above 73000
+goal sumN166in {C165 + C303 + C308 + I166 - D166B = C166_0 + C166_1}
+
+! slopes of Sacramento Weir overflow curves for each segment of Sac River flow
+define swslope0 {value 0.0}
+define swslope1 {value 0.8738}
+
+! weir flow will be a sum of all the segment's linearized functions
+goal actswflow {D166A = swslope0*C166_0 + swslope1*C166_1 }
+
+! integer variable to bound segments for proper filling step by step
+define int_sweir {INTEGER STD KIND 'INTEGER' UNITS 'NONE'}
+goal boundC166_0 {C166_0 > int_sweir * 73000.}
+goal boundC166_1 {C166_1 < int_sweir * 9999999.}
+
+define Qsac166 {alias C165 + C303 + C308 + I166 - D166B  kind 'flow-channel' units 'cfs'}
+
+

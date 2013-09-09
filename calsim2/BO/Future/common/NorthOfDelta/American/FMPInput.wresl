@@ -1,0 +1,11 @@
+!! Code by A. Dvorak     as of  1/8/03
+
+! Defines Upper American River Model timeseries, this is a timeseries of storage in French Meadows,
+! Hell Hole, and Union Valley Reservoirs, which are upstream of Folsom
+define UARM {timeseries kind 'STORAGE' units 'TAF'}
+define UARM_{alias UARM kind 'STORAGE' units 'TAF'}
+
+! Defines Sacramento River Index
+define SRI {timeseries kind 'INDEX' units 'TAF'}
+define SRI_{alias SRI kind 'INDEX' units 'TAF'}
+

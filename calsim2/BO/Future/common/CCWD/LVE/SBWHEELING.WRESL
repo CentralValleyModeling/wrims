@@ -1,0 +1,108 @@
+!Limit wheeling to South Bay contractors.
+
+goal limit_SB_whl {C423B_WHL_SB < D810 + D813 + D814 + D815}
+
+!Limit San Felipe wheeling to SCVWD demand.
+
+goal limit_SF_whl {C423B_WHL_SF < 0.44*D710 + 0.93*D711}
+
+
+!Need to set water quality limits on direct wheeling.
+
+!When it is a fill opportunity, can't degrade water quality in Old River Pipeline such that unable to meet delivery target or fill target
+
+!When we are releasing for water quality, must restrict direct wheeling such that we don't have to increase LV releases.
+
+
+!Determine the quantity of water you can wheel without affecting water quality,
+
+define D408_ORVC_nc {value max(0., D408_ORVC_minmax - C421[DELTA])}
+
+!Calculate the water quality at service area when C421 is removed.
+!First calculate amount of C421 going to service area
+
+define C421_to_D420 {value min(C423_DEL[DELTA], C421[DELTA])}
+
+!Calculate reduced D420
+define D420_reduced {value max(0.,D420[DELTA] - C421_to_D420)}
+
+!Then calculate water quality at D420 if water from C421 was shut off
+define WQ420_NoC421 {
+	case Zero {
+		condition	D420_reduced < 0.1
+		value		0.
+	}
+	case otherwise {
+		condition	always
+		value		(D420[DELTA]*WQ420[DELTA] - C421_to_D420*WQ421[DELTA])/D420_reduced
+	}
+}
+
+define WQ420_NoC421_ {alias WQ420_NoC421 kind 'salinity-temp' units 'mg/L'}
+define WQ420_c7 {alias WQ420[DELTA] kind 'salinity' units 'mg/L'}
+define WQ421_c7 {alias WQ421[DELTA] kind 'salinity' units 'mg/L'}
+define D408_ORVC_nc_ {alias D408_ORVC_nc kind 'ops-calc' units 'cfs'}
+define D420_reduced_ {alias D420_reduced kind 'ops-calc' units 'cfs'}
+define C421_to_D420_ {alias C421_to_D420 kind 'ops-calc' units 'cfs'}
+
+!Calculate WQ421 allowed.
+define WQ421_allowed {
+	case D420AllC421 {
+		condition	D420_reduced < 0.1
+		value		max(WQ421[DELTA],WQ420_target)
+	}
+	case NoC421ToD420 {
+		condition	C421_to_D420 < 0.1
+		value		9999.
+	}
+	case otherwise {
+		condition	always
+		value		(D420[DELTA]*WQ420_target - D420_reduced*WQ420_NoC421)/C421_to_D420
+	}
+}
+
+define WQ421_allowed_ {alias WQ421_allowed kind 'salinity-limit' units 'mg/L'}
+
+!Determine increase in D408_ORVC_maxmax allowed.
+define DORVC_maxmax_lim {
+	case NoORVC {
+		condition	C421[DELTA] < 0.1
+		value		D408_ORVC_maxmax
+	}
+	case NoFillandWQ {
+		condition	C422_FILL[DELTA] < 0.1 .and. WQ408_ORVC_max <= WQ421_allowed
+		value		D408_ORVC_maxmax
+	}
+	case NoFill {
+		condition	C422_FILL[DELTA] < 0.1
+		value		max(0.,min(D408_ORVC_minmax*(WQ421_allowed - WQ408_ORVC_min)/(WQ408_ORVC_max - WQ421_allowed),D408_ORVC_maxmax))
+	}
+	case FillandWQ {
+		condition	WQ408_ORVC_max <= min(WQ422_target1,WQ421_allowed)
+		value		D408_ORVC_maxmax
+	}
+	case otherwise {
+		condition	always
+		value		max(0.,min(D408_ORVC_minmax*(min(WQ422_target1,WQ421_allowed) - WQ408_ORVC_min)/(WQ408_ORVC_max - min(WQ422_target1,WQ421_allowed)),D408_ORVC_maxmax))
+	}
+}
+		
+define DORVCmaxmaxlim_ {alias DORVC_maxmax_lim kind 'diversion-limit' units 'cfs'}	
+
+define lim_sbwhl_wq {value max(0., D408_ORVC_minmax + DORVC_maxmax_lim - D408_OR[DELTA] - D408_VC[DELTA])}
+
+goal set_lim_sbwhl_wq {D408_P - D408_P[DELTA] < lim_sbwhl_wq}
+
+define lim_sbwhl_wq_ {alias lim_sbwhl_wq kind 'wheeling-limit' units 'cfs'}
+
+!Allow Partner LV storage to be used for wheeling when no diversions allowed.  User sets LV_whl_switch to allow operation.
+goal no_LV_whl {C422_REL_P_WHL < LV_whl_switch*MinDiv_switch*9999.}
+
+
+!Maintain Rock Slough operation from previous cycles.
+goal set_D408_RS {
+  lhs     D408_RS
+  rhs     D408_RS[DELTA]
+  lhs>rhs penalty 99999
+  lhs<rhs penalty 99999
+}

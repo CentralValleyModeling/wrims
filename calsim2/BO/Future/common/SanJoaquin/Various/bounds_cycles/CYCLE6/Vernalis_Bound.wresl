@@ -1,0 +1,93 @@
+! Edward Chang
+! 5/01/2000
+! Joint Model
+! Revised by C. Hsu, 4/10/03, USBR, for review and documentation project
+! This code bounds decision variables using monthly weighted constraints for cycle 6 only (within San Joaquin Basin)
+!###################################################################################################
+ 
+/*
+Flow at Vernalis, without Vernalis minimum flows from February to June plus October
+*/
+define Vern_nomincycle6 { 
+    case NonPulseNonDO {
+        condition   month <= mar
+        value       C639[SJR_WQ1]}
+    case April {
+        condition   month == apr
+        value       14.*C639[SJR_WQ1]/30. + 16.*C639[VAMP_AND_DO]/30. }
+    case Mayonly {
+        condition   month == may
+        value       15.*C639[VAMP_AND_DO]/31. + 16.*C639[SJR_WQ1]/31. }
+    case NonPulsePlusDO {
+        condition   always
+        value       C639[VAMP_AND_DO] }
+        }
+
+! Upper SJR operations can create cycle to cycle changes in Chowchilla Bypass
+! losses and westside cycle returns that result in cycle 6 solutions to 
+! upper basin flows that affect Vernalis.  If these differences are not 
+! accounted for then they come out of New Melones, which is not correct.
+
+! correction 1 - if the Chowchilla bypass use flips from on to off to on
+! based on SJRR pulse flows, the effect on loss (L595) needs to be accommodated
+define L595mod {std kind 'mod' units 'cfs'}
+goal setL595mod{
+    lhs L595mod
+    case AprilChowBPFlip {
+        condition month==APR .and. L595[sjrbase]>L595[vamp_and_do]
+        rhs 14.*C614[sjrbase]/30.+16.*C614[vamp_and_do]/30.-C614}
+    case otherwise {
+        condition always
+        rhs 0. }
+}
+! correction 2 - if VAMP is pulling water from the exchange contractors
+! the difference in westside return flow needs to be accommodated
+!define WSRFmod {std kind 'mod' units 'cfs'}
+!goal setWSRFmod{
+!    lhs WSRFmod
+!    case AprilVAMPExch {
+!        condition month==APR .and. C607BVAMP[vamp_and_do]>0.
+!        rhs C619     - 14.*C619[sjrbase]/30.    -16.*C619[vamp_and_do]/30.
+!           +R614West - 14.*R614West[sjrbase]/30.-16.*R614West[vamp_and_do]/30.}
+!    case otherwise {
+!        condition always
+!        rhs 0. }
+!}
+
+! Total flows at Vernalis including instream and minimum flows
+ goal set1Vernalis_cycle6 { C639 = Vern_nomincycle6 /*+ C10INSTREAM*/ + C10RPA + C10MIN + C20MIN - L595mod /*- WSRFmod*/}
+
+
+/*
+Vernalis flows during pulse (April and May including ERPP), and non-pulse periods
+for use in computing final water quality based on split month calculations
+ERPP inflows will affect Vernalis flows in May
+*/
+! ERPP inflows for 10 days, units = CFS
+define SJRERPPinflows { value     0. }
+        
+
+/*
+15 day water representing cycle pulse period; weights ERPP for 15 days
+does not include D639 (Vernalis Non-project Diversion)
+*/
+define pulseC639woD639 { 
+     case April {        
+          condition month == apr
+          value     C639[VAMP_AND_DO] }
+     case MayOnly {
+          condition  month == may
+          value     C639[VAMP_AND_DO] + SJRERPPinflows*10./15.}
+     case NotAprMay {          
+          condition always
+          value     0. }
+          } 
+! Vernalis non-pulse flow before the Vernalis Non-project Diversion
+define flowC639woD639 {       
+     case OctthruMay {
+          condition month <= may
+          value C639[SJR_WQ1] + VernMin_reqtobemet + MercedRelease_Oct*TAF_cfs }
+     case DOwindow {
+          condition always
+          value     C639[VAMP_AND_DO] + VernMin_reqtobemet}
+          }

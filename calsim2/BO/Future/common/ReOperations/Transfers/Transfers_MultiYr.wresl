@@ -1,0 +1,136 @@
+! Transfers_MultiYr.wresl
+!
+! Tracking parameters for multi-year Max calculations related to GW substitution transfers
+!
+!
+define YubaGWdv        {std kind 'WTS-Acquisition' units 'taf'}
+define PrevYrYubaGWdv  {std kind 'Acquisition' units 'taf'}
+define PrevYrYubaGW {
+      case FirstYr {
+            condition wateryear == 1922
+            value 0. }
+      case Oct {
+            condition month == OCT
+            value   YubaGWdv(prevSep) }     !Adjusting for WTS 
+      case otherwise {
+            condition always
+            value PrevYrYubaGWdv(-1) }
+}
+goal setPrevYrYubaGWdv {PrevYrYubaGWdv = PrevYrYubaGW }
+!
+define YubaSWdv       {std kind 'WTS-Acquisition' units 'taf'}
+define PrevYrYubaSWdv {std kind 'Acquisition' units 'taf'}
+define PrevYrYubaSW {
+      case FirstYr {
+            condition wateryear == 1922
+            value 0. }
+      case Oct {
+            condition month == OCT
+            value   YubaSWdv(prevSep) }
+      case otherwise {
+            condition always
+            value PrevYrYubaSWdv(-1) }
+}
+goal setPrevYrYubaSWdv {PrevYrYubaSWdv = PrevYrYubaSW }
+!
+define SacGWdv       {std kind 'WTS-Acquisition' units 'taf'}
+define PrevYrSacGWdv {std kind 'Acquisition' units 'taf'}
+!
+define PrevYrSacGW {
+      case FirstYr {
+            condition wateryear == 1922
+            value 0. }
+      case Oct {
+            condition month == OCT
+            value   SacGWdv(prevSep)}
+      case otherwise {
+            condition always
+            value PrevYrSacGWdv(-1) }
+}
+goal setPrevYrSacGWdv {PrevYrSacGWdv = PrevYrSacGW }
+!
+!
+define SacOthGWdv       {std kind 'WTS-Acquisition' units 'taf'}   
+define PrevYrSacOthGWdv {std kind 'Acquisition' units 'taf'}
+!
+define PrevYrSacOthGW {
+      case FirstYr {
+            condition wateryear == 1922
+            value 0. }
+      case Oct {
+            condition month == OCT
+            value   SacOthGWdv(prevSep)}                           
+      case otherwise {
+            condition always
+            value PrevYrSacOthGWdv(-1) }
+}
+goal setPrevYrSacOthGWdv {PrevYrSacOthGWdv = PrevYrSacOthGW }
+!
+!
+define FeathGWdv       {std kind 'WTS-Acquisition' units 'taf'}    
+define PrevYrFeathGWdv {std kind 'Acquisition' units 'taf'}
+!
+define PrevYrFeathGW {
+      case FirstYr {
+            condition wateryear == 1922
+            value 0. }
+      case Oct {
+            condition month == OCT
+            value   FeathGWdv(prevSep)}                           
+      case otherwise {
+            condition always
+            value PrevYrFeathGWdv(-1) }
+}
+goal setPrevYrFeathGWdv {PrevYrFeathGWdv = PrevYrFeathGW }
+!
+!
+define AmerRGWdv       {std kind 'WTS-Acquisition' units 'taf'}   
+define PrevYrAmerRGWdv {std kind 'Acquisition' units 'taf'}
+!
+define PrevYrAmerRGW {
+      case FirstYr {
+            condition wateryear == 1922
+            value 0. }
+      case Oct {
+            condition month == OCT
+            value   AmerRGWdv(prevSep)}                          
+      case otherwise {
+            condition always
+            value PrevYrAmerRGWdv(-1) }
+}
+goal setPrevYrAmerRGWdv {PrevYrAmerRGWdv = PrevYrAmerRGW }
+!
+!
+define DMCGWdv         {std kind 'WTS-Acquisition' units 'taf'}
+define PrevYrDMCGWdv   {std kind 'Acquisition' units 'taf'}
+!
+define PrevYrDMCGW {
+      case FirstYr {
+            condition wateryear == 1922
+            value 0. }
+      case Oct {
+            condition month == OCT
+            value   DMCGWdv(prevSep) }  !Adjusting for WTS 
+      case otherwise {
+            condition always
+            value PrevYrDMCGWdv(-1) }
+}
+goal setPrevYrDMCGWdv {PrevYrDMCGWdv = PrevYrDMCGW }
+!
+!
+define CAGWdv         {std kind 'WTS-Acquisition' units 'taf'}
+define PrevYrCAGWdv   {std kind 'Acquisition' units 'taf'}
+!
+define PrevYrCAGW {
+      case FirstYr {
+            condition wateryear == 1922
+            value 0. }
+      case Oct {
+            condition month == OCT
+            value   CAGWdv(prevSep) }    !Adjusting for WTS 
+      case otherwise {
+            condition always
+            value PrevYrCAGWdv(-1) }
+}
+goal setPrevYrCAGWdv {PrevYrCAGWdv = PrevYrCAGW }
+!

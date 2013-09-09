@@ -1,0 +1,1185 @@
+! Exports Section
+define[local] D419_swp_TDc7 {alias D419_swp_TD[UPSTREAM] kind 'FLOW-DELIVERY' UNITS 'CFS'} ! SWP Banks
+define[local] D419_cvp_TDc7 {alias D419_cvp_TD[UPSTREAM] kind 'FLOW-DELIVERY' UNITS 'CFS'} ! Total CVP wheeling at Banks
+define[local] D419_EXP1_TDc7 {alias D419_EXP1_TD[UPSTREAM] kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define[local] D419_EXP2_TDc7 {alias D419_EXP2_TD[UPSTREAM] kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define[local] D418_cvp_TDc7 {alias D418_cvp_TD[UPSTREAM] kind 'FLOW-DELIVERY' UNITS 'CFS'} ! Tracy
+
+! SJR Section
+define[local] C520mif_SJRBASE  {alias C520_mif[SJRBASE]      kind 'FLOW-CHANNEL'  units 'CFS'}
+define[local] C520mif_SJR_WQ1  {alias C520_mif[SJR_WQ1]      kind 'FLOW-CHANNEL'  units 'CFS'}
+define[local] C520mif_SPULSE  {alias C520_mif[SJR_PULSE]      kind 'FLOW-CHANNEL'  units 'CFS'}
+define[local] C520mif_SJRWQ2  {alias C520_mif[SJR_WQ2]      kind 'FLOW-CHANNEL'  units 'CFS'}
+define[local] C520mif_VAMPDO  {alias C520_mif[VAMP_AND_DO]      kind 'FLOW-CHANNEL'  units 'CFS'}
+define[local] C520mif_MOWEI  {alias C520_mif[MONTHLYWEIGHTED]      kind 'FLOW-CHANNEL'  units 'CFS'}
+define[local] stanfyr2SJRBASE  {alias stanfish_yr2DV[SJRBASE]      kind 'STORAGE'  units 'TAF'}
+define[local] stanmin_c1dv {alias stanmin2DV[sjrbase] kind 'output-cfs' units 'cfs'}
+define[local] stanpulse_c3dv {std kind 'fish-pulse-req' units 'cfs'}
+goal setstanpulsec3 {
+    lhs stanpulse_c3dv
+    case aprmay {
+        condition month==apr .or. month==may
+        rhs stanpulse_dv[SJR_PULSE] }
+    case otherwise {
+        condition month<apr .or. month>may
+        rhs 0.}
+}
+
+define Stan_C520FW_dv {alias Stan_C520FW kind 'output-cfs' units 'cfs'}
+define Stan_C528FW_dv {alias Stan_C528FW kind 'output-cfs' units 'cfs'}
+define C10InstreamTgtdv {alias C10InstrmTgt1dv[sjrbase] kind 'output-cfs' units 'cfs'}
+define C520InstreamC1 {alias C520INSTREAM[sjrbase] kind 'output-cfs' units 'cfs'}
+define C520INSTGTDV {alias C520INSTGTDV[SJRBASE] kind 'output-cfs' units 'cfs'}
+!goal setC520INSTGTDV {C520INSTGTDV = C520INSTGTDV[SJRBASE]}
+
+! SJR_WQ1
+define[local] C605a_SJRWQ1 {alias C605a[SJR_WQ1]     kind 'FLOW-CHANNEL'  units 'CFS'}
+define[local] C708_SJRWQ1  {alias C708[SJR_WQ1]      kind 'FLOW-CHANNEL'  units 'CFS'}
+define[local] D607B_SJRWQ1 {alias D607B[SJR_WQ1]     kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] D608B_SJRWQ1 {alias D608B[SJR_WQ1]     kind 'FLOW-DELIVERY' units 'CFS'}
+!define[local] C639_SJRWQ1  {alias C639[SJR_WQ1]      kind 'FLOW-CHANNEL'  units 'CFS'}
+! SJR_WQ2
+define[local] C639_SJRWQ2  {alias C639[SJR_WQ2]      kind 'FLOW-CHANNEL'  units 'CFS'}
+! VAMP_AND_DO
+define[local] C501_VAMPDO  {alias C501[VAMP_AND_DO]  kind 'FLOW-CHANNEL'  units 'CFS'}
+!define[local] C503_VAMPDO  {alias C503[VAMP_AND_DO]  kind 'FLOW-CHANNEL'  units 'CFS'}
+define[local] C508_VAMPDO  {alias C508[VAMP_AND_DO]  kind 'FLOW-CHANNEL'  units 'CFS'}
+define[local] C605a_VAMPDO {alias C605a[VAMP_AND_DO]     kind 'FLOW-CHANNEL'  units 'CFS'}
+define[local] C639_VAMPDO  {alias C639[VAMP_AND_DO]  kind 'FLOW-CHANNEL'  units 'CFS'}
+define[local] C708_VAMPDO  {alias C708[VAMP_AND_DO]  kind 'FLOW-CHANNEL'  units 'CFS'}
+define[local] D607B_VAMPDO {alias D607B[VAMP_AND_DO] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] D608B_VAMPDO {alias D608B[VAMP_AND_DO] kind 'FLOW-DELIVERY' units 'CFS'}
+
+! Variables for Post Analysis of FWS BO and NMFS BO Action specific Costs
+define[local] S1_BASE {alias S1[MONTHLYWEIGHTED] kind 'STORAGE' units 'TAF'}
+define[local] S4_BASE {alias S4[MONTHLYWEIGHTED] kind 'STORAGE' units 'TAF'}
+define[local] S6_BASE {alias S6[MONTHLYWEIGHTED] kind 'STORAGE' units 'TAF'}
+define[local] S8_BASE {alias S8[MONTHLYWEIGHTED] kind 'STORAGE' units 'TAF'}
+define[local] S11_BASE {alias S11[MONTHLYWEIGHTED] kind 'STORAGE' units 'TAF'}
+define[local] S12_BASE {alias S12[MONTHLYWEIGHTED] kind 'STORAGE' units 'TAF'}
+define[local] C3_BASE {alias C3[MONTHLYWEIGHTED] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] C5_BASE {alias C5[MONTHLYWEIGHTED] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] C203_BASE {alias C203[MONTHLYWEIGHTED] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] C9_BASE {alias C9[MONTHLYWEIGHTED] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] C406_BASE {alias C406[MONTHLYWEIGHTED] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] D409_BASE {alias D409[MONTHLYWEIGHTED] kind 'FLOW-DELIVERY' units 'CFS'}
+!
+define[local] S1_UPSTREAM {alias S1[UPSTREAM] kind 'STORAGE' units 'TAF'}
+define[local] S4_UPSTREAM {alias S4[UPSTREAM] kind 'STORAGE' units 'TAF'}
+define[local] S6_UPSTREAM {alias S6[UPSTREAM] kind 'STORAGE' units 'TAF'}
+define[local] S8_UPSTREAM {alias S8[UPSTREAM] kind 'STORAGE' units 'TAF'}
+define[local] S11_UPSTREAM {alias S11[UPSTREAM] kind 'STORAGE' units 'TAF'}
+define[local] S12_UPSTREAM {alias S12[UPSTREAM] kind 'STORAGE' units 'TAF'}
+define[local] C3_UPSTREAM {alias C3[UPSTREAM] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] C5_UPSTREAM {alias C5[UPSTREAM] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] C203_UPSTREAM {alias C203[UPSTREAM] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] C9_UPSTREAM {alias C9[UPSTREAM] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] C406_UPSTREAM {alias C406[UPSTREAM] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] D409_UPSTREAM {alias D409[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+!
+define[local] S1_DELTA {alias S1[DELTA] kind 'STORAGE' units 'TAF'}
+define[local] S4_DELTA {alias S4[DELTA] kind 'STORAGE' units 'TAF'}
+define[local] S6_DELTA {alias S6[DELTA] kind 'STORAGE' units 'TAF'}
+define[local] S8_DELTA {alias S8[DELTA] kind 'STORAGE' units 'TAF'}
+define[local] S11_DELTA {alias S11[DELTA] kind 'STORAGE' units 'TAF'}
+define[local] S12_DELTA {alias S12[DELTA] kind 'STORAGE' units 'TAF'}
+define[local] C3_DELTA {alias C3[DELTA] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] C5_DELTA {alias C5[DELTA] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] C203_DELTA {alias C203[DELTA] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] C9_DELTA {alias C9[DELTA] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] C406_DELTA {alias C406[DELTA] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] D409_DELTA {alias D409[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+
+!Save cycle results for LV
+define D408_c6 {alias D408[monthlyweighted] kind 'flow-delivery' units 'cfs'}
+define D408_CVP_c6 {alias D408_CVP[monthlyweighted] kind 'flow-delivery' units 'cfs'}
+define D408_DS_c6 {alias D408_DS[monthlyweighted] kind 'flow-delivery' units 'cfs'}
+define D408_TX_c6 {alias D408_TX[monthlyweighted] kind 'flow-delivery' units 'cfs'}
+define D408_ECC_c6 {alias D408_ECC[monthlyweighted] kind 'flow-delivery' units 'cfs'}
+define I424_c6 {alias I424[monthlyweighted] kind 'flow-inflow' units 'cfs'}
+define S422_c6 {alias S422[monthlyweighted] kind 'storage' units 'taf'}
+define D420_c6 {alias D420[monthlyweighted] kind 'flow-delivery' units 'cfs'}
+
+define D408_c7 {alias D408[UPSTREAM] kind 'flow-delivery' units 'cfs'}
+define D408_CVP_c7 {alias D408_CVP[UPSTREAM] kind 'flow-delivery' units 'cfs'}
+define D408_DS_c7 {alias D408_DS[UPSTREAM] kind 'flow-delivery' units 'cfs'}
+define D408_TX_c7 {alias D408_TX[UPSTREAM] kind 'flow-delivery' units 'cfs'}
+define D408_ECC_c7 {alias D408_ECC[UPSTREAM] kind 'flow-delivery' units 'cfs'}
+define I424_c7 {alias I424[UPSTREAM] kind 'flow-inflow' units 'cfs'}
+define S422_c7 {alias S422[UPSTREAM] kind 'storage' units 'taf'}
+define D420_c7 {alias D420[UPSTREAM] kind 'flow-delivery' units 'cfs'}
+
+define D408_c8 {alias D408[delta] kind 'flow-delivery' units 'cfs'}
+define D408_CVP_c8 {alias D408_CVP[delta] kind 'flow-delivery' units 'cfs'}
+define D408_DS_c8 {alias D408_DS[delta] kind 'flow-delivery' units 'cfs'}
+define D408_TX_c8 {alias D408_TX[delta] kind 'flow-delivery' units 'cfs'}
+define D408_ECC_c8 {alias D408_ECC[delta] kind 'flow-delivery' units 'cfs'}
+define I424_c8 {alias I424[delta] kind 'flow-inflow' units 'cfs'}
+define S422_c8 {alias S422[delta] kind 'storage' units 'taf'}
+define D420_c8 {alias D420[delta] kind 'flow-delivery' units 'cfs'}
+
+define NMFSdaysopen_c8  {alias NMFSdaysopendv[DELTA] kind 'DCC-DAYS-OPEN' UNITS 'NONE'}
+define NMFSMaxExpDCC_c8 {alias NMFS_MaxExpDCCdv[DELTA] kind 'Export-Limit' units 'cfs'}
+
+! Outputs for US FWS RPA Verification
+define NDO_cyc_MW {alias NDO[monthlyweighted] kind 'flow-ndo' units 'cfs'}
+define D418_cyc_MW {alias D418[monthlyweighted] kind 'flow-delivery' units 'cfs'}
+define D419_cyc_MW {alias D419[monthlyweighted] kind 'flow-delivery' units 'cfs'}
+define D408_cyc_MW {alias D408[monthlyweighted] kind 'flow-delivery' units 'cfs'}
+define D409_cyc_MW {alias D409[monthlyweighted] kind 'flow-delivery' units 'cfs'}
+
+!MONTHLYWEIGHTED
+define[local] QsacFth_Cycle6 {alias QsacFth[MONTHLYWEIGHTED] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] C166_Cycle6 {alias C166[MONTHLYWEIGHTED] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] C169IFMIN_Cycle6 {alias C169_IFMIN[MONTHLYWEIGHTED] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] C169IF400_Cycle6 {alias C169_IF400[MONTHLYWEIGHTED] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] C169_Cycle6 {alias C169[MONTHLYWEIGHTED] kind 'FLOW-CHANNEL' units 'CFS'}
+
+define[local] D160_Cycle6 {alias D160[MONTHLYWEIGHTED] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] D166A_Cycle6 {alias D166A[MONTHLYWEIGHTED] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] D400_Cycle6 {alias D400[MONTHLYWEIGHTED] kind 'FLOW-DELIVERY' units 'CFS'}
+
+!UPSTREAM
+/*
+define[local] QsacFth_Cycle7 {alias QsacFth[UPSTREAM] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] C166_Cycle7 {alias C166[UPSTREAM] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] Qsac166ns_c7 {alias Qsac166nospilldv[UPSTREAM] kind 'DEBUG' units 'CFS'}
+define[local] Qsac166corr_c7 {alias Qsac166corrdv[UPSTREAM] kind 'DEBUG' units 'CFS'}
+define[local] C169_Cycle7 {alias C169[UPSTREAM] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] C169IFMIN_Cycle7 {alias C169_IFMIN[UPSTREAM] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] C169IF400_Cycle7 {alias C169_IF400[UPSTREAM] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] Qsac169ns_c7 {alias Qsac169nospilldv[UPSTREAM] kind 'DEBUG' units 'CFS'}
+define[local] Qsac169corr_c7 {alias Qsac169corrdv[UPSTREAM] kind 'DEBUG' units 'CFS'}
+
+define[local] D160_Cycle7 {alias D160[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] D166A_Cycle7 {alias D166A[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] D400_Cycle7 {alias D400[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+!!!!needs to be corrected to 'FLOW-CHANNEL'
+define[local] qsacFth1_c7{alias qsacFth1dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth2_c7{alias qsacFth2dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth3_c7{alias qsacFth3dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth4_c7{alias qsacFth4dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth5_c7{alias qsacFth5dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth6_c7{alias qsacFth6dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth7_c7{alias qsacFth7dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth8_c7{alias qsacFth8dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth9_c7{alias qsacFth9dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth10_c7{alias qsacFth10dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth11_c7{alias qsacFth11dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth12_c7{alias qsacFth12dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth13_c7{alias qsacFth13dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth14_c7{alias qsacFth14dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth15_c7{alias qsacFth15dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth16_c7{alias qsacFth16dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth17_c7{alias qsacFth17dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth18_c7{alias qsacFth18dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth19_c7{alias qsacFth19dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth20_c7{alias qsacFth20dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth21_c7{alias qsacFth21dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth22_c7{alias qsacFth22dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth23_c7{alias qsacFth23dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth24_c7{alias qsacFth24dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth25_c7{alias qsacFth25dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth26_c7{alias qsacFth26dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth27_c7{alias qsacFth27dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth28_c7{alias qsacFth28dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth29_c7{alias qsacFth29dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth30_c7{alias qsacFth30dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth31_c7{alias qsacFth31dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+
+define[local] frespill_1_c7{alias frespill_1dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_2_c7{alias frespill_2dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_3_c7{alias frespill_3dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_4_c7{alias frespill_4dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_5_c7{alias frespill_5dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_6_c7{alias frespill_6dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_7_c7{alias frespill_7dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_8_c7{alias frespill_8dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_9_c7{alias frespill_9dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_10_c7{alias frespill_10dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_11_c7{alias frespill_11dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_12_c7{alias frespill_12dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_13_c7{alias frespill_13dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_14_c7{alias frespill_14dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_15_c7{alias frespill_15dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_16_c7{alias frespill_16dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_17_c7{alias frespill_17dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_18_c7{alias frespill_18dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_19_c7{alias frespill_19dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_20_c7{alias frespill_20dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_21_c7{alias frespill_21dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_22_c7{alias frespill_22dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_23_c7{alias frespill_23dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_24_c7{alias frespill_24dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_25_c7{alias frespill_25dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_26_c7{alias frespill_26dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_27_c7{alias frespill_27dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_28_c7{alias frespill_28dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_29_c7{alias frespill_29dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_30_c7{alias frespill_30dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_31_c7{alias frespill_31dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_1_c7{alias qsac166_1dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_2_c7{alias qsac166_2dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_3_c7{alias qsac166_3dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_4_c7{alias qsac166_4dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_5_c7{alias qsac166_5dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_6_c7{alias qsac166_6dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_7_c7{alias qsac166_7dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_8_c7{alias qsac166_8dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_9_c7{alias qsac166_9dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_10_c7{alias qsac166_10dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_11_c7{alias qsac166_11dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_12_c7{alias qsac166_12dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_13_c7{alias qsac166_13dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_14_c7{alias qsac166_14dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_15_c7{alias qsac166_15dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_16_c7{alias qsac166_16dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_17_c7{alias qsac166_17dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_18_c7{alias qsac166_18dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_19_c7{alias qsac166_19dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_20_c7{alias qsac166_20dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_21_c7{alias qsac166_21dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_22_c7{alias qsac166_22dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_23_c7{alias qsac166_23dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_24_c7{alias qsac166_24dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_25_c7{alias qsac166_25dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_26_c7{alias qsac166_26dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_27_c7{alias qsac166_27dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_28_c7{alias qsac166_28dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_29_c7{alias qsac166_29dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_30_c7{alias qsac166_30dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_31_c7{alias qsac166_31dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_1_c7{alias sacspill_1dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_2_c7{alias sacspill_2dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_3_c7{alias sacspill_3dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_4_c7{alias sacspill_4dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_5_c7{alias sacspill_5dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_6_c7{alias sacspill_6dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_7_c7{alias sacspill_7dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_8_c7{alias sacspill_8dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_9_c7{alias sacspill_9dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_10_c7{alias sacspill_10dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_11_c7{alias sacspill_11dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_12_c7{alias sacspill_12dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_13_c7{alias sacspill_13dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_14_c7{alias sacspill_14dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_15_c7{alias sacspill_15dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_16_c7{alias sacspill_16dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_17_c7{alias sacspill_17dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_18_c7{alias sacspill_18dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_19_c7{alias sacspill_19dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_20_c7{alias sacspill_20dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_21_c7{alias sacspill_21dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_22_c7{alias sacspill_22dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_23_c7{alias sacspill_23dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_24_c7{alias sacspill_24dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_25_c7{alias sacspill_25dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_26_c7{alias sacspill_26dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_27_c7{alias sacspill_27dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_28_c7{alias sacspill_28dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_29_c7{alias sacspill_29dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_30_c7{alias sacspill_30dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_31_c7{alias sacspill_31dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_1_c7{alias qsac169_1dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_2_c7{alias qsac169_2dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_3_c7{alias qsac169_3dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_4_c7{alias qsac169_4dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_5_c7{alias qsac169_5dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_6_c7{alias qsac169_6dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_7_c7{alias qsac169_7dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_8_c7{alias qsac169_8dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_9_c7{alias qsac169_9dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_10_c7{alias qsac169_10dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_11_c7{alias qsac169_11dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_12_c7{alias qsac169_12dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_13_c7{alias qsac169_13dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_14_c7{alias qsac169_14dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_15_c7{alias qsac169_15dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_16_c7{alias qsac169_16dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_17_c7{alias qsac169_17dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_18_c7{alias qsac169_18dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_19_c7{alias qsac169_19dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_20_c7{alias qsac169_20dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_21_c7{alias qsac169_21dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_22_c7{alias qsac169_22dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_23_c7{alias qsac169_23dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_24_c7{alias qsac169_24dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_25_c7{alias qsac169_25dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_26_c7{alias qsac169_26dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_27_c7{alias qsac169_27dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_28_c7{alias qsac169_28dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_29_c7{alias qsac169_29dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_30_c7{alias qsac169_30dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_31_c7{alias qsac169_31dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_1_c7{alias bypass_1dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_2_c7{alias bypass_2dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_3_c7{alias bypass_3dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_4_c7{alias bypass_4dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_5_c7{alias bypass_5dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_6_c7{alias bypass_6dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_7_c7{alias bypass_7dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_8_c7{alias bypass_8dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_9_c7{alias bypass_9dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_10_c7{alias bypass_10dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_11_c7{alias bypass_11dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_12_c7{alias bypass_12dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_13_c7{alias bypass_13dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_14_c7{alias bypass_14dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_15_c7{alias bypass_15dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_16_c7{alias bypass_16dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_17_c7{alias bypass_17dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_18_c7{alias bypass_18dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_19_c7{alias bypass_19dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_20_c7{alias bypass_20dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_21_c7{alias bypass_21dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_22_c7{alias bypass_22dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_23_c7{alias bypass_23dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_24_c7{alias bypass_24dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_25_c7{alias bypass_25dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_26_c7{alias bypass_26dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_27_c7{alias bypass_27dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_28_c7{alias bypass_28dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_29_c7{alias bypass_29dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_30_c7{alias bypass_30dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_31_c7{alias bypass_31dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_1_c7{alias ndd_1dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_2_c7{alias ndd_2dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_3_c7{alias ndd_3dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_4_c7{alias ndd_4dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_5_c7{alias ndd_5dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_6_c7{alias ndd_6dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_7_c7{alias ndd_7dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_8_c7{alias ndd_8dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_9_c7{alias ndd_9dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_10_c7{alias ndd_10dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_11_c7{alias ndd_11dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_12_c7{alias ndd_12dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_13_c7{alias ndd_13dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_14_c7{alias ndd_14dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_15_c7{alias ndd_15dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_16_c7{alias ndd_16dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_17_c7{alias ndd_17dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_18_c7{alias ndd_18dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_19_c7{alias ndd_19dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_20_c7{alias ndd_20dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_21_c7{alias ndd_21dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_22_c7{alias ndd_22dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_23_c7{alias ndd_23dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_24_c7{alias ndd_24dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_25_c7{alias ndd_25dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_26_c7{alias ndd_26dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_27_c7{alias ndd_27dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_28_c7{alias ndd_28dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_29_c7{alias ndd_29dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_30_c7{alias ndd_30dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_31_c7{alias ndd_31dv[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+*/
+
+!DELTA
+/*
+define[local] QsacFth_Cycle8 {alias QsacFth[DELTA] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] C166_Cycle8 {alias C166[DELTA] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] Qsac166ns_c8 {alias Qsac166nospilldv[DELTA] kind 'DEBUG' units 'CFS'}
+define[local] Qsac166corr_c8 {alias Qsac166corrdv[DELTA] kind 'DEBUG' units 'CFS'}
+define[local] C169_Cycle8 {alias C169[DELTA] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] C169IFMIN_Cycle8 {alias C169_IFMIN[DELTA] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] C169IF400_Cycle8 {alias C169_IF400[DELTA] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] Qsac169ns_c8 {alias Qsac169nospilldv[DELTA] kind 'DEBUG' units 'CFS'}
+define[local] Qsac169corr_c8 {alias Qsac169corrdv[DELTA] kind 'DEBUG' units 'CFS'}
+
+define[local] D160_Cycle8 {alias D160[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] D166A_Cycle8 {alias D166A[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] D400_Cycle8 {alias D400[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+
+define[local] qsacFth1_c8{alias qsacFth1dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth2_c8{alias qsacFth2dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth3_c8{alias qsacFth3dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth4_c8{alias qsacFth4dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth5_c8{alias qsacFth5dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth6_c8{alias qsacFth6dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth7_c8{alias qsacFth7dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth8_c8{alias qsacFth8dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth9_c8{alias qsacFth9dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth10_c8{alias qsacFth10dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth11_c8{alias qsacFth11dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth12_c8{alias qsacFth12dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth13_c8{alias qsacFth13dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth14_c8{alias qsacFth14dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth15_c8{alias qsacFth15dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth16_c8{alias qsacFth16dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth17_c8{alias qsacFth17dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth18_c8{alias qsacFth18dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth19_c8{alias qsacFth19dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth20_c8{alias qsacFth20dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth21_c8{alias qsacFth21dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth22_c8{alias qsacFth22dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth23_c8{alias qsacFth23dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth24_c8{alias qsacFth24dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth25_c8{alias qsacFth25dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth26_c8{alias qsacFth26dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth27_c8{alias qsacFth27dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth28_c8{alias qsacFth28dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth29_c8{alias qsacFth29dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth30_c8{alias qsacFth30dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsacFth31_c8{alias qsacFth31dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_1_c8{alias frespill_1dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_2_c8{alias frespill_2dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_3_c8{alias frespill_3dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_4_c8{alias frespill_4dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_5_c8{alias frespill_5dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_6_c8{alias frespill_6dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_7_c8{alias frespill_7dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_8_c8{alias frespill_8dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_9_c8{alias frespill_9dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_10_c8{alias frespill_10dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_11_c8{alias frespill_11dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_12_c8{alias frespill_12dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_13_c8{alias frespill_13dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_14_c8{alias frespill_14dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_15_c8{alias frespill_15dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_16_c8{alias frespill_16dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_17_c8{alias frespill_17dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_18_c8{alias frespill_18dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_19_c8{alias frespill_19dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_20_c8{alias frespill_20dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_21_c8{alias frespill_21dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_22_c8{alias frespill_22dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_23_c8{alias frespill_23dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_24_c8{alias frespill_24dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_25_c8{alias frespill_25dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_26_c8{alias frespill_26dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_27_c8{alias frespill_27dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_28_c8{alias frespill_28dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_29_c8{alias frespill_29dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_30_c8{alias frespill_30dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] frespill_31_c8{alias frespill_31dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_1_c8{alias qsac166_1dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_2_c8{alias qsac166_2dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_3_c8{alias qsac166_3dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_4_c8{alias qsac166_4dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_5_c8{alias qsac166_5dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_6_c8{alias qsac166_6dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_7_c8{alias qsac166_7dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_8_c8{alias qsac166_8dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_9_c8{alias qsac166_9dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_10_c8{alias qsac166_10dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_11_c8{alias qsac166_11dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_12_c8{alias qsac166_12dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_13_c8{alias qsac166_13dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_14_c8{alias qsac166_14dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_15_c8{alias qsac166_15dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_16_c8{alias qsac166_16dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_17_c8{alias qsac166_17dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_18_c8{alias qsac166_18dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_19_c8{alias qsac166_19dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_20_c8{alias qsac166_20dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_21_c8{alias qsac166_21dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_22_c8{alias qsac166_22dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_23_c8{alias qsac166_23dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_24_c8{alias qsac166_24dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_25_c8{alias qsac166_25dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_26_c8{alias qsac166_26dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_27_c8{alias qsac166_27dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_28_c8{alias qsac166_28dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_29_c8{alias qsac166_29dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_30_c8{alias qsac166_30dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166_31_c8{alias qsac166_31dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+
+define[local] qsac166b_1_c8{alias qsac166b_1dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166b_2_c8{alias qsac166b_2dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166b_3_c8{alias qsac166b_3dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166b_4_c8{alias qsac166b_4dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166b_5_c8{alias qsac166b_5dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166b_6_c8{alias qsac166b_6dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166b_7_c8{alias qsac166b_7dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166b_8_c8{alias qsac166b_8dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166b_9_c8{alias qsac166b_9dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166b_10_c8{alias qsac166b_10dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166b_11_c8{alias qsac166b_11dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166b_12_c8{alias qsac166b_12dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166b_13_c8{alias qsac166b_13dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166b_14_c8{alias qsac166b_14dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166b_15_c8{alias qsac166b_15dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166b_16_c8{alias qsac166b_16dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166b_17_c8{alias qsac166b_17dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166b_18_c8{alias qsac166b_18dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166b_19_c8{alias qsac166b_19dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166b_20_c8{alias qsac166b_20dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166b_21_c8{alias qsac166b_21dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166b_22_c8{alias qsac166b_22dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166b_23_c8{alias qsac166b_23dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166b_24_c8{alias qsac166b_24dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166b_25_c8{alias qsac166b_25dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166b_26_c8{alias qsac166b_26dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166b_27_c8{alias qsac166b_27dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166b_28_c8{alias qsac166b_28dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166b_29_c8{alias qsac166b_29dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166b_30_c8{alias qsac166b_30dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac166b_31_c8{alias qsac166b_31dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+
+define[local] sacspill_1_c8{alias sacspill_1dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_2_c8{alias sacspill_2dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_3_c8{alias sacspill_3dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_4_c8{alias sacspill_4dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_5_c8{alias sacspill_5dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_6_c8{alias sacspill_6dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_7_c8{alias sacspill_7dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_8_c8{alias sacspill_8dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_9_c8{alias sacspill_9dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_10_c8{alias sacspill_10dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_11_c8{alias sacspill_11dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_12_c8{alias sacspill_12dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_13_c8{alias sacspill_13dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_14_c8{alias sacspill_14dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_15_c8{alias sacspill_15dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_16_c8{alias sacspill_16dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_17_c8{alias sacspill_17dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_18_c8{alias sacspill_18dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_19_c8{alias sacspill_19dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_20_c8{alias sacspill_20dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_21_c8{alias sacspill_21dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_22_c8{alias sacspill_22dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_23_c8{alias sacspill_23dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_24_c8{alias sacspill_24dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_25_c8{alias sacspill_25dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_26_c8{alias sacspill_26dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_27_c8{alias sacspill_27dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_28_c8{alias sacspill_28dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_29_c8{alias sacspill_29dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_30_c8{alias sacspill_30dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] sacspill_31_c8{alias sacspill_31dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+
+define[local] qsac169_1_c8{alias qsac169_1dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_2_c8{alias qsac169_2dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_3_c8{alias qsac169_3dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_4_c8{alias qsac169_4dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_5_c8{alias qsac169_5dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_6_c8{alias qsac169_6dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_7_c8{alias qsac169_7dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_8_c8{alias qsac169_8dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_9_c8{alias qsac169_9dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_10_c8{alias qsac169_10dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_11_c8{alias qsac169_11dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_12_c8{alias qsac169_12dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_13_c8{alias qsac169_13dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_14_c8{alias qsac169_14dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_15_c8{alias qsac169_15dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_16_c8{alias qsac169_16dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_17_c8{alias qsac169_17dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_18_c8{alias qsac169_18dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_19_c8{alias qsac169_19dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_20_c8{alias qsac169_20dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_21_c8{alias qsac169_21dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_22_c8{alias qsac169_22dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_23_c8{alias qsac169_23dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_24_c8{alias qsac169_24dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_25_c8{alias qsac169_25dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_26_c8{alias qsac169_26dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_27_c8{alias qsac169_27dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_28_c8{alias qsac169_28dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_29_c8{alias qsac169_29dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_30_c8{alias qsac169_30dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] qsac169_31_c8{alias qsac169_31dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_1_c8{alias bypass_1dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_2_c8{alias bypass_2dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_3_c8{alias bypass_3dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_4_c8{alias bypass_4dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_5_c8{alias bypass_5dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_6_c8{alias bypass_6dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_7_c8{alias bypass_7dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_8_c8{alias bypass_8dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_9_c8{alias bypass_9dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_10_c8{alias bypass_10dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_11_c8{alias bypass_11dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_12_c8{alias bypass_12dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_13_c8{alias bypass_13dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_14_c8{alias bypass_14dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_15_c8{alias bypass_15dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_16_c8{alias bypass_16dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_17_c8{alias bypass_17dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_18_c8{alias bypass_18dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_19_c8{alias bypass_19dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_20_c8{alias bypass_20dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_21_c8{alias bypass_21dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_22_c8{alias bypass_22dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_23_c8{alias bypass_23dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_24_c8{alias bypass_24dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_25_c8{alias bypass_25dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_26_c8{alias bypass_26dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_27_c8{alias bypass_27dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_28_c8{alias bypass_28dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_29_c8{alias bypass_29dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_30_c8{alias bypass_30dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] bypass_31_c8{alias bypass_31dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_1_c8{alias ndd_1dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_2_c8{alias ndd_2dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_3_c8{alias ndd_3dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_4_c8{alias ndd_4dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_5_c8{alias ndd_5dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_6_c8{alias ndd_6dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_7_c8{alias ndd_7dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_8_c8{alias ndd_8dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_9_c8{alias ndd_9dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_10_c8{alias ndd_10dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_11_c8{alias ndd_11dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_12_c8{alias ndd_12dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_13_c8{alias ndd_13dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_14_c8{alias ndd_14dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_15_c8{alias ndd_15dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_16_c8{alias ndd_16dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_17_c8{alias ndd_17dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_18_c8{alias ndd_18dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_19_c8{alias ndd_19dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_20_c8{alias ndd_20dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_21_c8{alias ndd_21dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_22_c8{alias ndd_22dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_23_c8{alias ndd_23dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_24_c8{alias ndd_24dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_25_c8{alias ndd_25dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_26_c8{alias ndd_26dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_27_c8{alias ndd_27dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_28_c8{alias ndd_28dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_29_c8{alias ndd_29dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_30_c8{alias ndd_30dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] ndd_31_c8{alias ndd_31dv[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+*/
+
+
+/* Outputs for spreadsheet analyzing controlling factors */
+!PRESETUP cycle variables 
+define[local] D403BPRE  {alias D403B[PRESETUP]     KIND 'FLOW-DELIVERY' UNITS 'CFS'}
+define[local] C112PRE  {alias C112[PRESETUP]      kind 'FLOW-CHANNEL'  units 'CFS'}
+define[local] C408PRE  {alias C408[PRESETUP]      kind 'FLOW-CHANNEL'  units 'CFS'}
+
+define[local] D419PRE     {alias D419[PRESETUP]    KIND 'debug' UNITS 'CFS'}
+define[local] D419_swpPRE     {alias D419_swp[PRESETUP]    KIND 'debug' UNITS 'CFS'}
+define[local] D418PRE         {alias D418[PRESETUP]        KIND 'debug' UNITS 'CFS'}
+define[local] D419_exp1PRE    {alias D419_exp1[PRESETUP]   KIND 'debug' UNITS 'CFS'}
+define[local] D419_exp2PRE    {alias D419_exp2[PRESETUP]   KIND 'debug' UNITS 'CFS'}
+define[local] D418_exp1PRE    {alias D418_exp1[PRESETUP]   KIND 'debug' UNITS 'CFS'}
+define[local] D418_exp2PRE    {alias D418_exp2[PRESETUP]   KIND 'debug' UNITS 'CFS'}
+define[local] C407_swpPRE     {alias C407_swp[PRESETUP]    KIND 'debug' UNITS 'CFS'}
+define[local] C407_cvpPRE     {alias C407_cvp[PRESETUP]    KIND 'debug' UNITS 'CFS'}
+define[local] D409PRE         {alias D409[PRESETUP]        KIND 'debug' units 'cfs'}
+define[local] eiexpctrlPRE       {alias eiexpctrl[PRESETUP]      KIND 'debug' units 'cfs'}
+define[local] aprmayexpctrlPRE       {alias AMctrl[PRESETUP]      KIND 'debug' units 'cfs'}
+define[local] aprmaybanksctrlPRE       {alias AMBctrl[PRESETUP]      KIND 'debug' units 'cfs'}
+define[local] aprmayjonesctrlPRE       {alias AMJctrl[PRESETUP]      KIND 'debug' units 'cfs'}
+
+define[local] C5_mPRE   {alias C5_m[PRESETUP]  KIND 'debug' UNITS 'CFS'}
+define[local] C9_mPRE  {alias C9_m[PRESETUP] KIND 'debug' UNITS 'CFS'}
+define[local] C3_mPRE   {alias C3_m[PRESETUP]  KIND 'debug' UNITS 'CFS'}
+define[local] C203PRE     {alias C203[PRESETUP]    KIND 'debug' UNITS 'CFS'}
+define[local] C203_mPRE     {alias C203_m[PRESETUP]    KIND 'debug' UNITS 'CFS'}
+
+define[local] Inflow_PRE {alias Inflow[PRESETUP] kind 'debug' units 'cfs'}
+
+define[local] SWPDS_PRE       {alias SWPDS[PRESETUP]     KIND 'debug' UNITS 'CFS'}
+define[local] SHADS_PRE       {alias SHADS[PRESETUP]     KIND 'debug' UNITS 'CFS'}
+define[local] FOLDS_PRE       {alias FOLDS[PRESETUP]     KIND 'debug' UNITS 'CFS'}
+define[local] WHSSW_PRE       {alias WHSSW[PRESETUP]     KIND 'debug' UNITS 'CFS'}
+define[local] IBU_PRE         {alias IBU[PRESETUP]       KIND 'debug' UNITS 'CFS'}
+define[local] UWFE_PRE        {alias UWFE[PRESETUP]      KIND 'debug' UNITS 'CFS'}
+define[local] UNUSED_FS_PRE   {alias UNUSED_FS[PRESETUP] KIND 'debug' UNITS 'CFS'}
+define[local] UNUSED_SS_PRE   {alias UNUSED_SS[PRESETUP] KIND 'debug' UNITS 'CFS'}
+                                                                                                            
+define[local] exp_est_SWP_PRE        {alias exp_est_SWP[PRESETUP] kind 'debug' units 'cfs'}
+define[local] exp_est_CVP_PRE        {alias exp_est_CVP[PRESETUP] kind 'debug' units 'cfs'}
+
+define[local] RSReqSacDVPRE {alias RSReqSacDV[PRESETUP] kind 'debug' units 'CFS'}
+define[local] JPReqSacDVPRE {alias JPReqSacDV[PRESETUP] kind 'debug' units 'CFS'}
+define[local] EMReqSacDVPRE {alias EMReqSacDV[PRESETUP] kind 'debug' units 'CFS'}
+define[local] COReqSacDVPRE {alias COReqSacDV[PRESETUP] kind 'debug' units 'CFS'}
+define[local] AnnSacReqDVPRE {alias AnnSacReqDV[PRESETUP] kind 'debug' units 'CFS'}
+
+define[local] C400_MIFPRE {alias C400_MIF[PRESETUP] kind 'debug' units 'CFS'}
+define[local] C400_EXCPRE {alias C400_EXC[PRESETUP] kind 'debug' units 'CFS'}
+define[local] C400_ANNPRE {alias C400_ANN[PRESETUP] kind 'debug' units 'CFS'}
+
+define[local] C303_MIFPRE {alias C303_MIF[PRESETUP] kind 'debug' units 'CFS'}
+define[local] C303_EXCPRE {alias C303_EXC[PRESETUP] kind 'debug' units 'CFS'}
+
+define[local] C5_MIFPRE {alias C5_MIF[PRESETUP] kind 'debug' units 'CFS'}
+define[local] C5_EXCPRE {alias C5_EXC[PRESETUP] kind 'debug' units 'CFS'}
+
+define[local] C9_MIFPRE {alias C9_MIF[PRESETUP] kind 'debug' units 'CFS'}
+define[local] C9_EXCPRE {alias C9_EXC[PRESETUP] kind 'debug' units 'CFS'}
+
+define[local] C200a_MIFPRE {alias C200a_MIF[PRESETUP] kind 'debug' units 'CFS'}
+define[local] C200a_EXCPRE {alias C200a_EXC[PRESETUP] kind 'debug' units 'CFS'}
+define[local] C200bPRE {alias C200b[PRESETUP] kind 'debug' units 'CFS'}
+
+define[local] C112_MIFPRE {alias C112_MIF[PRESETUP] kind 'debug' units 'CFS'}
+define[local] C112_EXCPRE {alias C112_EXC[PRESETUP] kind 'debug' units 'CFS'}
+
+define[local] C405_MIFPRE {alias C405_MIF[PRESETUP] kind 'debug' units 'CFS'}
+define[local] C405_EXCPRE {alias C405_EXC[PRESETUP] kind 'debug' units 'CFS'}
+
+define[local] C203_MIFPRE {alias C203_MIF[PRESETUP] kind 'debug' units 'CFS'}
+define[local] C203_EXCPRE {alias C203_EXC[PRESETUP] kind 'debug' units 'CFS'}
+
+define[local] C129_MIFPRE {alias C129_MIF[PRESETUP] kind 'debug' units 'CFS'}
+define[local] C129_EXCPRE {alias C129_EXC[PRESETUP] kind 'debug' units 'CFS'}
+
+define[local] C3_MIFPRE {alias C3_MIF[PRESETUP] kind 'debug' units 'CFS'}
+define[local] C3_EXCPRE {alias C3_EXC[PRESETUP] kind 'debug' units 'CFS'}
+
+define[local] C157_MIFPRE {alias C157_MIF[PRESETUP] kind 'debug' units 'CFS'}
+define[local] C157_EXCPRE {alias C157_EXC[PRESETUP] kind 'debug' units 'CFS'}
+
+define[local] C223_MIFPRE {alias C223_MIF[PRESETUP] kind 'debug' units 'CFS'}
+define[local] C223_EXCPRE {alias C223_EXC[PRESETUP] kind 'debug' units 'CFS'}
+
+define[local] S4PRE {alias S4[PRESETUP] kind 'debug' units 'TAF'}
+define[local] S8PRE {alias S8[PRESETUP] kind 'debug' units 'TAF'}
+define[local] S1PRE {alias S1[PRESETUP] kind 'debug' units 'TAF'}
+define[local] S6PRE {alias S6[PRESETUP] kind 'transfer-taf' units 'TAF'}
+define[local] S11PRE {alias S11[PRESETUP] kind 'debug' units 'TAF'}
+define[local] S12PRE {alias S12[PRESETUP] kind 'debug' units 'TAF'}
+
+define[local] CVPRULECVPRE {alias CVPRULECV[PRESETUP] kind 'debug' units 'TAF'}
+define[local] SWPRULECVPRE {alias SWPRULECV[PRESETUP] kind 'debug' units 'TAF'}
+
+define[local] C407PRE {alias C407[PRESETUP] kind 'debug' units 'CFS'}
+define[local] D407PRE {alias D407[PRESETUP] kind 'debug' units 'CFS'}
+define[local] C407_ANNPRE {alias C407_ANN[PRESETUP] kind 'debug' units 'CFS'}
+define[local] MRDO_FINALPRE {alias MRDO_FINALDV[PRESETUP] kind 'debug' units 'CFS'}
+
+define[local] exp_est_totalPRE {alias exp_est_total[PRESETUP] kind 'debug' units 'cfs'}
+
+define[local] S4LEVEL3DVPRE {alias S4LEVEL3DV[PRESETUP] kind 'debug' units 'TAF'}
+define[local] S8LEVEL3DVPRE {alias S8LEVEL3DV[PRESETUP] kind 'debug' units 'TAF'}
+define[local] S1LEVEL3DVPRE {alias S1LEVEL3DV[PRESETUP] kind 'debug' units 'TAF'}
+define[local] S6LEVEL3DVPRE {alias S6LEVEL3DV[PRESETUP] kind 'debug' units 'TAF'}
+define[local] S6LEVEL4DVPRE {alias S6LEVEL4DV[PRESETUP] kind 'debug' units 'TAF'}
+
+!SETUP Cycle Results
+define[local] D403BSET  {alias D403B[SETUP]     KIND 'FLOW-DELIVERY' UNITS 'CFS'}
+define[local] C112SET  {alias C112[SETUP]      kind 'FLOW-CHANNEL'  units 'CFS'}
+define[local] C408SET  {alias C408[SETUP]      kind 'FLOW-CHANNEL'  units 'CFS'}
+
+define[local] D419SET     {alias D419[SETUP]    KIND 'debug' UNITS 'CFS'}
+define[local] D419_swpSET     {alias D419_swp[SETUP]    KIND 'debug' UNITS 'CFS'}
+define[local] D418SET         {alias D418[SETUP]        KIND 'debug' UNITS 'CFS'}
+define[local] D419_exp1SET    {alias D419_exp1[SETUP]   KIND 'debug' UNITS 'CFS'}
+define[local] D419_exp2SET    {alias D419_exp2[SETUP]   KIND 'debug' UNITS 'CFS'}
+define[local] D418_exp1SET    {alias D418_exp1[SETUP]   KIND 'debug' UNITS 'CFS'}
+define[local] D418_exp2SET    {alias D418_exp2[SETUP]   KIND 'debug' UNITS 'CFS'}
+define[local] C407_swpSET     {alias C407_swp[SETUP]    KIND 'debug' UNITS 'CFS'}
+define[local] C407_cvpSET     {alias C407_cvp[SETUP]    KIND 'debug' UNITS 'CFS'}
+define[local] D409SET         {alias D409[SETUP]        KIND 'debug' units 'cfs'}
+define[local] eiexpctrlSET       {alias eiexpctrl[SETUP]      KIND 'debug' units 'cfs'}
+define[local] aprmayexpctrlSET       {alias AMctrl[SETUP]      KIND 'debug' units 'cfs'}
+define[local] aprmaybanksctrlSET       {alias AMBctrl[SETUP]      KIND 'debug' units 'cfs'}
+define[local] aprmayjonesctrlSET       {alias AMJctrl[SETUP]      KIND 'debug' units 'cfs'}
+
+define[local] C5_mSET   {alias C5_m[SETUP]  KIND 'debug' UNITS 'CFS'}
+define[local] C9_mSET  {alias C9_m[SETUP] KIND 'debug' UNITS 'CFS'}
+define[local] C3_mSET   {alias C3_m[SETUP]  KIND 'debug' UNITS 'CFS'}
+define[local] C203SET     {alias C203[SETUP]    KIND 'debug' UNITS 'CFS'}
+define[local] C203_mSET     {alias C203_m[SETUP]    KIND 'debug' UNITS 'CFS'}
+
+define[local] Inflow_SET {alias Inflow[SETUP] kind 'debug' units 'cfs'}
+
+define[local] SWPDS_SET       {alias SWPDS[SETUP]     KIND 'debug' UNITS 'CFS'}
+define[local] SHADS_SET       {alias SHADS[SETUP]     KIND 'debug' UNITS 'CFS'}
+define[local] FOLDS_SET       {alias FOLDS[SETUP]     KIND 'debug' UNITS 'CFS'}
+define[local] WHSSW_SET       {alias WHSSW[SETUP]     KIND 'debug' UNITS 'CFS'}
+define[local] IBU_SET         {alias IBU[SETUP]       KIND 'debug' UNITS 'CFS'}
+define[local] UWFE_SET        {alias UWFE[SETUP]      KIND 'debug' UNITS 'CFS'}
+define[local] UNUSED_FS_SET   {alias UNUSED_FS[SETUP] KIND 'debug' UNITS 'CFS'}
+define[local] UNUSED_SS_SET   {alias UNUSED_SS[SETUP] KIND 'debug' UNITS 'CFS'}
+                                                                                                            
+define[local] exp_est_SWP_SET        {alias exp_est_SWP[SETUP] kind 'debug' units 'cfs'}
+define[local] exp_est_CVP_SET        {alias exp_est_CVP[SETUP] kind 'debug' units 'cfs'}
+
+define[local] RSReqSacDVSET {alias RSReqSacDV[SETUP] kind 'debug' units 'CFS'}
+define[local] JPReqSacDVSET {alias JPReqSacDV[SETUP] kind 'debug' units 'CFS'}
+define[local] EMReqSacDVSET {alias EMReqSacDV[SETUP] kind 'debug' units 'CFS'}
+define[local] COReqSacDVSET {alias COReqSacDV[SETUP] kind 'debug' units 'CFS'}
+define[local] AnnSacReqDVSET {alias AnnSacReqDV[SETUP] kind 'debug' units 'CFS'}
+
+define[local] C400_MIFSET {alias C400_MIF[SETUP] kind 'debug' units 'CFS'}
+define[local] C400_EXCSET {alias C400_EXC[SETUP] kind 'debug' units 'CFS'}
+define[local] C400_ANNSET {alias C400_ANN[SETUP] kind 'debug' units 'CFS'}
+
+define[local] C303_MIFSET {alias C303_MIF[SETUP] kind 'debug' units 'CFS'}
+define[local] C303_EXCSET {alias C303_EXC[SETUP] kind 'debug' units 'CFS'}
+
+define[local] C5_MIFSET {alias C5_MIF[SETUP] kind 'debug' units 'CFS'}
+define[local] C5_EXCSET {alias C5_EXC[SETUP] kind 'debug' units 'CFS'}
+
+define[local] C9_MIFSET {alias C9_MIF[SETUP] kind 'debug' units 'CFS'}
+define[local] C9_EXCSET {alias C9_EXC[SETUP] kind 'debug' units 'CFS'}
+
+define[local] C200a_MIFSET {alias C200a_MIF[SETUP] kind 'debug' units 'CFS'}
+define[local] C200a_EXCSET {alias C200a_EXC[SETUP] kind 'debug' units 'CFS'}
+define[local] C200bSET {alias C200b[SETUP] kind 'debug' units 'CFS'}
+
+define[local] C112_MIFSET {alias C112_MIF[SETUP] kind 'debug' units 'CFS'}
+define[local] C112_EXCSET {alias C112_EXC[SETUP] kind 'debug' units 'CFS'}
+
+define[local] C405_MIFSET {alias C405_MIF[SETUP] kind 'debug' units 'CFS'}
+define[local] C405_EXCSET {alias C405_EXC[SETUP] kind 'debug' units 'CFS'}
+
+define[local] C203_MIFSET {alias C203_MIF[SETUP] kind 'debug' units 'CFS'}
+define[local] C203_EXCSET {alias C203_EXC[SETUP] kind 'debug' units 'CFS'}
+
+define[local] C129_MIFSET {alias C129_MIF[SETUP] kind 'debug' units 'CFS'}
+define[local] C129_EXCSET {alias C129_EXC[SETUP] kind 'debug' units 'CFS'}
+
+define[local] C3_MIFSET {alias C3_MIF[SETUP] kind 'debug' units 'CFS'}
+define[local] C3_EXCSET {alias C3_EXC[SETUP] kind 'debug' units 'CFS'}
+
+define[local] C157_MIFSET {alias C157_MIF[SETUP] kind 'debug' units 'CFS'}
+define[local] C157_EXCSET {alias C157_EXC[SETUP] kind 'debug' units 'CFS'}
+
+define[local] C223_MIFSET {alias C223_MIF[SETUP] kind 'debug' units 'CFS'}
+define[local] C223_EXCSET {alias C223_EXC[SETUP] kind 'debug' units 'CFS'}
+
+define[local] S4SET {alias S4[SETUP] kind 'debug' units 'CFS'}
+define[local] S8SET {alias S8[SETUP] kind 'debug' units 'CFS'}
+define[local] S1SET {alias S1[SETUP] kind 'debug' units 'CFS'}
+define[local] S6SET {alias S6[SETUP] kind 'debug' units 'CFS'}
+define[local] S11SET {alias S11[SETUP] kind 'debug' units 'CFS'}
+define[local] S12SET {alias S12[SETUP] kind 'debug' units 'CFS'}
+
+define[local] CVPRULECVSET {alias CVPRULECV[SETUP] kind 'debug' units 'CFS'}
+define[local] SWPRULECVSET {alias SWPRULECV[SETUP] kind 'debug' units 'CFS'}
+
+define[local] C407SET {alias C407[SETUP] kind 'debug' units 'CFS'}
+define[local] D407SET {alias D407[SETUP] kind 'debug' units 'CFS'}
+define[local] C407_ANNSET {alias C407_ANN[SETUP] kind 'debug' units 'CFS'}
+define[local] MRDO_FINALSET {alias MRDO_FINALDV[SETUP] kind 'debug' units 'CFS'}
+
+define[local] exp_est_totalSET {alias exp_est_total[SETUP] kind 'debug' units 'cfs'}
+
+define[local] S4LEVEL3DVSET {alias S4LEVEL3DV[SETUP] kind 'debug' units 'cfs'}
+define[local] S8LEVEL3DVSET {alias S8LEVEL3DV[SETUP] kind 'debug' units 'cfs'}
+define[local] S1LEVEL3DVSET {alias S1LEVEL3DV[SETUP] kind 'debug' units 'cfs'}
+define[local] S6LEVEL3DVSET {alias S6LEVEL3DV[SETUP] kind 'debug' units 'cfs'}
+define[local] S6LEVEL4DVSET {alias S6LEVEL4DV[SETUP] kind 'debug' units 'cfs'}
+
+
+!UPSTREAM cycle variables
+define[local] D403BUP  {alias D403B[UPSTREAM]     KIND 'FLOW-DELIVERY' UNITS 'CFS'}
+define[local] C112UP  {alias C112[UPSTREAM]      kind 'FLOW-CHANNEL'  units 'CFS'}
+define[local] C408UP  {alias C408[UPSTREAM]      kind 'FLOW-CHANNEL'  units 'CFS'}
+
+define[local] D419UP  {alias D419[UPSTREAM]     KIND 'FLOW-DELIVERY' UNITS 'CFS'}
+define[local] D419_swpUP  {alias D419_swp[UPSTREAM]     KIND 'FLOW-DELIVERY' UNITS 'CFS'}
+define[local] D418UP  {alias D418[UPSTREAM]     KIND 'FLOW-DELIVERY' UNITS 'CFS'}
+define[local] D418_CVPUP    {alias D418_CVP[UPSTREAM] KIND 'FLOW-DELIVERY' UNITS 'CFS'}
+define[local] D419_exp1UP  {alias D419_exp1[UPSTREAM]   KIND 'debug' UNITS 'CFS'}
+define[local] D419_exp2UP  {alias D419_exp2[UPSTREAM]   KIND 'debug' UNITS 'CFS'}
+define[local] D418_exp1UP  {alias D418_exp1[UPSTREAM]   KIND 'debug' UNITS 'CFS'}
+define[local] D418_exp2UP  {alias D418_exp2[UPSTREAM]   KIND 'debug' UNITS 'CFS'}
+define[local] D419_SWP_TD_UP  {alias D419_SWP_TD[UPSTREAM] KIND 'TRANSFER' UNITS 'CFS'}
+define[local] D418_TD_UP    {alias D418_TD[UPSTREAM] KIND 'TRANSFER' UNITS 'CFS'}
+
+define[local] C407_swpUP       {alias C407_swp[UPSTREAM]    KIND 'TRANSFER' UNITS 'CFS'}
+define[local] C407_cvpUP       {alias C407_cvp[UPSTREAM]    KIND 'TRANSFER' UNITS 'CFS'}
+define[local] D409UP           {alias D409[UPSTREAM]        KIND 'debug' units 'cfs'}
+define[local] eiexpctrlUP     {alias eiexpctrl[UPSTREAM]      KIND 'debug' units 'cfs'}
+define[local] aprmayexpctrlUP     {alias AMctrl[UPSTREAM]      KIND 'debug' units 'cfs'}
+define[local] aprmaybanksctrlUP       {alias AMBctrl[UPSTREAM]      KIND 'debug' units 'cfs'}
+define[local] aprmayjonesctrlUP       {alias AMJctrl[UPSTREAM]      KIND 'debug' units 'cfs'}
+define[local] NonPulsExpCtrlUP   {alias NonPulseExpCtrl[UPSTREAM]      KIND 'TRANSFER' units 'cfs'}
+
+define[local] C5_mUP     {alias C5_m[UPSTREAM]  KIND 'debug' UNITS 'CFS'}
+define[local] C9_mUP    {alias C9_m[UPSTREAM] KIND 'debug' UNITS 'CFS'}
+define[local] C3_mUP     {alias C3_m[UPSTREAM]  KIND 'debug' UNITS 'CFS'}
+define[local] C203UP       {alias C203[UPSTREAM]    KIND 'debug' UNITS 'CFS'}
+define[local] C203_mUP       {alias C203_m[UPSTREAM]    KIND 'debug' UNITS 'CFS'}
+
+define[local] Inflow_UP {alias Inflow[UPSTREAM] kind 'debug' units 'cfs'}
+
+define[local] SWPDS_UP       {alias SWPDS[UPSTREAM]     KIND 'debug' UNITS 'CFS'}
+define[local] SHADS_UP       {alias SHADS[UPSTREAM]     KIND 'debug' UNITS 'CFS'}
+define[local] FOLDS_UP       {alias FOLDS[UPSTREAM]     KIND 'debug' UNITS 'CFS'}
+define[local] WHSSW_UP       {alias WHSSW[UPSTREAM]     KIND 'debug' UNITS 'CFS'}
+define[local] IBU_UP         {alias IBU[UPSTREAM]       KIND 'debug' UNITS 'CFS'}
+define[local] UWFE_UP        {alias UWFE[UPSTREAM]      KIND 'debug' UNITS 'CFS'}
+define[local] UNUSED_FS_UP   {alias UNUSED_FS[UPSTREAM] KIND 'debug' UNITS 'CFS'}
+define[local] UNUSED_SS_UP   {alias UNUSED_SS[UPSTREAM] KIND 'debug' UNITS 'CFS'}
+
+define[local] exp_est_SWP_UP      {alias exp_est_SWP[UPSTREAM] kind 'debug' units 'cfs'}
+define[local] exp_est_CVP_UP      {alias exp_est_CVP[UPSTREAM] kind 'debug' units 'cfs'}
+define[local] exp_estSWPlim3c2  {alias exp_estSWPlim3[UPSTREAM] kind 'debug' units 'cfs'}
+
+define[local] RSReqSacDVUP {alias RSReqSacDV[UPSTREAM] kind 'debug' units 'CFS'}
+define[local] JPReqSacDVUP {alias JPReqSacDV[UPSTREAM] kind 'debug' units 'CFS'}
+define[local] EMReqSacDVUP {alias EMReqSacDV[UPSTREAM] kind 'debug' units 'CFS'}
+define[local] COReqSacDVUP {alias COReqSacDV[UPSTREAM] kind 'debug' units 'CFS'}
+define[local] AnnSacReqDVUP {alias AnnSacReqDV[UPSTREAM] kind 'debug' units 'CFS'}
+
+define[local] C400_MIFUP {alias C400_MIF[UPSTREAM] kind 'debug' units 'CFS'}
+define[local] C400_EXCUP {alias C400_EXC[UPSTREAM] kind 'debug' units 'CFS'}
+define[local] C400_ANNUP {alias C400_ANN[UPSTREAM] kind 'debug' units 'CFS'}
+
+define[local] C303_MIFUP {alias C303_MIF[UPSTREAM] kind 'debug' units 'CFS'}
+define[local] C303_EXCUP {alias C303_EXC[UPSTREAM] kind 'debug' units 'CFS'}
+
+define[local] C5_MIFUP {alias C5_MIF[UPSTREAM] kind 'debug' units 'CFS'}
+define[local] C5_EXCUP {alias C5_EXC[UPSTREAM] kind 'debug' units 'CFS'}
+
+define[local] C9_MIFUP {alias C9_MIF[UPSTREAM] kind 'debug' units 'CFS'}
+define[local] C9_EXCUP {alias C9_EXC[UPSTREAM] kind 'debug' units 'CFS'}
+
+define[local] C200a_MIFUP {alias C200a_MIF[UPSTREAM] kind 'debug' units 'CFS'}
+define[local] C200a_EXCUP {alias C200a_EXC[UPSTREAM] kind 'debug' units 'CFS'}
+define[local] C200bUP {alias C200b[UPSTREAM] kind 'debug' units 'CFS'}
+
+define[local] C112_MIFUP {alias C112_MIF[UPSTREAM] kind 'debug' units 'CFS'}
+define[local] C112_EXCUP {alias C112_EXC[UPSTREAM] kind 'debug' units 'CFS'}
+
+define[local] C405_MIFUP {alias C405_MIF[UPSTREAM] kind 'debug' units 'CFS'}
+define[local] C405_EXCUP {alias C405_EXC[UPSTREAM] kind 'debug' units 'CFS'}
+
+define[local] C203_MIFUP {alias C203_MIF[UPSTREAM] kind 'debug' units 'CFS'}
+define[local] C203_EXCUP {alias C203_EXC[UPSTREAM] kind 'debug' units 'CFS'}
+
+define[local] C129_MIFUP {alias C129_MIF[UPSTREAM] kind 'debug' units 'CFS'}
+define[local] C129_EXCUP {alias C129_EXC[UPSTREAM] kind 'debug' units 'CFS'}
+
+define[local] C3_MIFUP {alias C3_MIF[UPSTREAM] kind 'debug' units 'CFS'}
+define[local] C3_EXCUP {alias C3_EXC[UPSTREAM] kind 'debug' units 'CFS'}
+
+define[local] C157_MIFUP {alias C157_MIF[UPSTREAM] kind 'debug' units 'CFS'}
+define[local] C157_EXCUP {alias C157_EXC[UPSTREAM] kind 'debug' units 'CFS'}
+
+define[local] C223_MIFUP {alias C223_MIF[UPSTREAM] kind 'debug' units 'CFS'}
+define[local] C223_EXCUP {alias C223_EXC[UPSTREAM] kind 'debug' units 'CFS'}
+
+define[local] S4UP {alias S4[UPSTREAM] kind 'debug' units 'CFS'}
+define[local] S8UP {alias S8[UPSTREAM] kind 'debug' units 'CFS'}
+define[local] S1UP {alias S1[UPSTREAM] kind 'debug' units 'CFS'}
+define[local] S6UP {alias S6[UPSTREAM] kind 'debug' units 'CFS'}
+define[local] S11UP {alias S11[UPSTREAM] kind 'debug' units 'CFS'}
+define[local] S12UP {alias S12[UPSTREAM] kind 'debug' units 'CFS'}
+
+define[local] CVPRULECVUP {alias CVPRULECV[UPSTREAM] kind 'debug' units 'CFS'}
+define[local] SWPRULECVUP {alias SWPRULECV[UPSTREAM] kind 'debug' units 'CFS'}
+
+define[local] C407UP {alias C407[UPSTREAM] kind 'debug' units 'CFS'}
+define[local] D407UP {alias D407[UPSTREAM] kind 'debug' units 'CFS'}
+define[local] C407_ANNUP {alias C407_ANN[UPSTREAM] kind 'debug' units 'CFS'}
+define[local] MRDO_FINALUP {alias MRDO_FINALDV[UPSTREAM] kind 'debug' units 'CFS'}
+
+define[local] exp_est_totalUP {alias exp_est_total[UPSTREAM] kind 'debug' units 'cfs'}
+
+define[local] S4LEVEL3DVUP {alias S4LEVEL3DV[UPSTREAM] kind 'debug' units 'cfs'}
+define[local] S8LEVEL3DVUP {alias S8LEVEL3DV[UPSTREAM] kind 'debug' units 'cfs'}
+define[local] S1LEVEL3DVUP {alias S1LEVEL3DV[UPSTREAM] kind 'debug' units 'cfs'}
+define[local] S6LEVEL3DVUP {alias S6LEVEL3DV[UPSTREAM] kind 'debug' units 'cfs'}
+define[local] S6LEVEL4DVUP {alias S6LEVEL4DV[UPSTREAM] kind 'debug' units 'cfs'}
+
+!Additional aliases it was easier to add here:
+define JonesAllowOut {alias TracyMaxAllow kind 'EXPORT-CTRL-JONES' UNITS 'CFS' }
+define maxJonescalcDV {alias maxTracycalc Units 'cfs'}
+
+!Various reservoir target levels that weren't previously in the DV file
+define S1Level1dv {alias S1level1 kind 'STORAGE-LEVEL' units 'TAF'}
+define S1Level2dv {alias S1level2 kind 'STORAGE-LEVEL' units 'TAF'}
+define S1Level4dv {alias S1level4 kind 'STORAGE-LEVEL' units 'TAF'}
+define S1Level5dv {alias S1level5 kind 'STORAGE-LEVEL' units 'TAF'}
+
+define S4Level1dv {alias S4level1 kind 'STORAGE-LEVEL' units 'TAF'}
+define S4Level2dv {alias S4level2 kind 'STORAGE-LEVEL' units 'TAF'}
+define S4Level4dv {alias S4level4 kind 'STORAGE-LEVEL' units 'TAF'}
+define S4Level5dv {alias S4level5 kind 'STORAGE-LEVEL' units 'TAF'}
+define S4Level6dv {alias S4level6 kind 'STORAGE-LEVEL' units 'TAF'}
+
+define S8Level1dv {alias S8level1 kind 'STORAGE-LEVEL' units 'TAF'}
+define S8Level2dv {alias S8level2 kind 'STORAGE-LEVEL' units 'TAF'}
+define S8Level4dv {alias S8level4 kind 'STORAGE-LEVEL' units 'TAF'}
+define S8Level5dv {alias S8level5 kind 'STORAGE-LEVEL' units 'TAF'}
+define S8Level6dv {alias S8level6 kind 'STORAGE-LEVEL' units 'TAF'}
+
+define S6Level1dv {alias S6level1 kind 'STORAGE-LEVEL' units 'TAF'}
+define S6Level2dv {alias S6level2 kind 'STORAGE-LEVEL' units 'TAF'}
+define S6Level5dv {alias S6level5 kind 'STORAGE-LEVEL' units 'TAF'}
+define S6Level6dv {alias S6level6 kind 'STORAGE-LEVEL' units 'TAF'}
+
+define S11Level1dv {alias S11level1 kind 'STORAGE-LEVEL' units 'TAF'}
+define S11Level2dv {alias S11level2 kind 'STORAGE-LEVEL' units 'TAF'}
+define S11Level3dv {alias S11level3 kind 'STORAGE-LEVEL' units 'TAF'}
+define S11Level4dv {alias S11level4 kind 'STORAGE-LEVEL' units 'TAF'}
+define S11Level5dv {alias S11level5 kind 'STORAGE-LEVEL' units 'TAF'}
+
+define S12Level1dv {alias S12level1 kind 'STORAGE-LEVEL' units 'TAF'}
+define S12Level2dv {alias S12level2 kind 'STORAGE-LEVEL' units 'TAF'}
+define S12Level3dv {alias S12level3 kind 'STORAGE-LEVEL' units 'TAF'}
+define S12Level4dv {alias S12level4 kind 'STORAGE-LEVEL' units 'TAF'}
+define S12Level5dv {alias S12level5 kind 'STORAGE-LEVEL' units 'TAF'}
+
+
+/*
+define C708PRE  {alias C708[PRESETUP]        kind 'output-cfs' units 'cfs'}
+define C708SET  {alias C708[SETUP]           kind 'output-cfs' units 'cfs'}
+define C708MW   {alias C708[MONTHLYWEIGHTED] kind 'output-cfs' units 'cfs'}
+define C708UP   {alias C708[UPSTREAM]        kind 'output-cfs' units 'cfs'}
+define C708DLT  {alias C708[DELTA]           kind 'output-cfs' units 'cfs'}
+define C607BCPRE  {alias C607BC[PRESETUP]        kind 'output-cfs' units 'cfs'}
+define C607BCSET  {alias C607BC[SETUP]           kind 'output-cfs' units 'cfs'}
+define C607BCMW   {alias C607BC[MONTHLYWEIGHTED] kind 'output-cfs' units 'cfs'}
+define C607BCUP   {alias C607BC[UPSTREAM]        kind 'output-cfs' units 'cfs'}
+define C607BCDLT  {alias C607BC[DELTA]           kind 'output-cfs' units 'cfs'}
+define C608BCPRE  {alias C608BC[PRESETUP]        kind 'output-cfs' units 'cfs'}
+define C608BCSET  {alias C608BC[SETUP]           kind 'output-cfs' units 'cfs'}
+define C608BCMW   {alias C608BC[MONTHLYWEIGHTED] kind 'output-cfs' units 'cfs'}
+define C608BCUP   {alias C608BC[UPSTREAM]        kind 'output-cfs' units 'cfs'}
+define C608BCDLT  {alias C608BC[DELTA]           kind 'output-cfs' units 'cfs'}
+define R614WESTPRE  {alias R614WEST[PRESETUP]        kind 'output-cfs' units 'cfs'}
+define R614WESTSET  {alias R614WEST[SETUP]           kind 'output-cfs' units 'cfs'}
+define R614WESTMW   {alias R614WEST[MONTHLYWEIGHTED] kind 'output-cfs' units 'cfs'}
+define R614WESTUP   {alias R614WEST[UPSTREAM]        kind 'output-cfs' units 'cfs'}
+define R614WESTDLT  {alias R614WEST[DELTA]           kind 'output-cfs' units 'cfs'}
+define C607PRE  {alias C607[PRESETUP]        kind 'output-cfs' units 'cfs'}
+define C607SET  {alias C607[SETUP]           kind 'output-cfs' units 'cfs'}
+define C607MW   {alias C607[MONTHLYWEIGHTED] kind 'output-cfs' units 'cfs'}
+define C607UP   {alias C607[UPSTREAM]        kind 'output-cfs' units 'cfs'}
+define C607DLT  {alias C607[DELTA]           kind 'output-cfs' units 'cfs'}
+define C608PRE  {alias C608[PRESETUP]        kind 'output-cfs' units 'cfs'}
+define C608SET  {alias C608[SETUP]           kind 'output-cfs' units 'cfs'}
+define C608MW   {alias C608[MONTHLYWEIGHTED] kind 'output-cfs' units 'cfs'}
+define C608UP   {alias C608[UPSTREAM]        kind 'output-cfs' units 'cfs'}
+define C608DLT  {alias C608[DELTA]           kind 'output-cfs' units 'cfs'}
+define C611PRE  {alias C611[PRESETUP]        kind 'output-cfs' units 'cfs'}
+define C611SET  {alias C611[SETUP]           kind 'output-cfs' units 'cfs'}
+define C611MW   {alias C611[MONTHLYWEIGHTED] kind 'output-cfs' units 'cfs'}
+define C611UP   {alias C611[UPSTREAM]        kind 'output-cfs' units 'cfs'}
+define C611DLT  {alias C611[DELTA]           kind 'output-cfs' units 'cfs'}
+define C614PRE  {alias C614[PRESETUP]        kind 'output-cfs' units 'cfs'}
+define C614SET  {alias C614[SETUP]           kind 'output-cfs' units 'cfs'}
+define C614MW   {alias C614[MONTHLYWEIGHTED] kind 'output-cfs' units 'cfs'}
+define C614UP   {alias C614[UPSTREAM]        kind 'output-cfs' units 'cfs'}
+define C614DLT  {alias C614[DELTA]           kind 'output-cfs' units 'cfs'}
+define C619PRE  {alias C619[PRESETUP]        kind 'output-cfs' units 'cfs'}
+define C619SET  {alias C619[SETUP]           kind 'output-cfs' units 'cfs'}
+define C619MW   {alias C619[MONTHLYWEIGHTED] kind 'output-cfs' units 'cfs'}
+define C619UP   {alias C619[UPSTREAM]        kind 'output-cfs' units 'cfs'}
+define C619DLT  {alias C619[DELTA]           kind 'output-cfs' units 'cfs'}
+define C620PRE  {alias C620[PRESETUP]        kind 'output-cfs' units 'cfs'}
+define C620SET  {alias C620[SETUP]           kind 'output-cfs' units 'cfs'}
+define C620MW   {alias C620[MONTHLYWEIGHTED] kind 'output-cfs' units 'cfs'}
+define C620UP   {alias C620[UPSTREAM]        kind 'output-cfs' units 'cfs'}
+define C620DLT  {alias C620[DELTA]           kind 'output-cfs' units 'cfs'}
+
+define del_cvp_pag_sPRE  {alias del_cvp_pag_s[PRESETUP]        kind 'output-cfs' units 'cfs'}
+define del_cvp_pag_sSET  {alias del_cvp_pag_s[SETUP]           kind 'output-cfs' units 'cfs'}
+define del_cvp_pag_sMW   {alias del_cvp_pag_s[MONTHLYWEIGHTED] kind 'output-cfs' units 'cfs'}
+define del_cvp_pag_sUP   {alias del_cvp_pag_s[UPSTREAM]        kind 'output-cfs' units 'cfs'}
+define del_cvp_pag_sDLT  {alias del_cvp_pag_s[DELTA]           kind 'output-cfs' units 'cfs'}
+define del_cvp_pMI_sPRE  {alias del_cvp_pMI_s[PRESETUP]        kind 'output-cfs' units 'cfs'}
+define del_cvp_pMI_sSET  {alias del_cvp_pMI_s[SETUP]           kind 'output-cfs' units 'cfs'}
+define del_cvp_pMI_sMW   {alias del_cvp_pMI_s[MONTHLYWEIGHTED] kind 'output-cfs' units 'cfs'}
+define del_cvp_pMI_sUP   {alias del_cvp_pMI_s[UPSTREAM]        kind 'output-cfs' units 'cfs'}
+define del_cvp_pMI_sDLT  {alias del_cvp_pMI_s[DELTA]           kind 'output-cfs' units 'cfs'}
+define del_cvp_pEX_sPRE  {alias del_cvp_pEX_s[PRESETUP]        kind 'output-cfs' units 'cfs'}
+define del_cvp_pEX_sSET  {alias del_cvp_pEX_s[SETUP]           kind 'output-cfs' units 'cfs'}
+define del_cvp_pEX_sMW   {alias del_cvp_pEX_s[MONTHLYWEIGHTED] kind 'output-cfs' units 'cfs'}
+define del_cvp_pEX_sUP   {alias del_cvp_pEX_s[UPSTREAM]        kind 'output-cfs' units 'cfs'}
+define del_cvp_pEX_sDLT  {alias del_cvp_pEX_s[DELTA]           kind 'output-cfs' units 'cfs'}
+define del_cvp_pRF_sPRE  {alias del_cvp_pRF_s[PRESETUP]        kind 'output-cfs' units 'cfs'}
+define del_cvp_pRF_sSET  {alias del_cvp_pRF_s[SETUP]           kind 'output-cfs' units 'cfs'}
+define del_cvp_pRF_sMW   {alias del_cvp_pRF_s[MONTHLYWEIGHTED] kind 'output-cfs' units 'cfs'}
+define del_cvp_pRF_sUP   {alias del_cvp_pRF_s[UPSTREAM]        kind 'output-cfs' units 'cfs'}
+define del_cvp_pRF_sDLT  {alias del_cvp_pRF_s[DELTA]           kind 'output-cfs' units 'cfs'}
+
+define D700PRE {alias D700[PRESETUP] kind 'output-cfs' units 'cfs'}
+define D700SET {alias D700[SETUP] kind 'output-cfs' units 'cfs'}
+define D700MW {alias D700[MONTHLYWEIGHTED] kind 'output-cfs' units 'cfs'}
+define D700UP {alias D700[UPSTREAM] kind 'output-cfs' units 'cfs'}
+define D700DLT {alias D700[DELTA] kind 'output-cfs' units 'cfs'}
+define D701PRE {alias D701[PRESETUP] kind 'output-cfs' units 'cfs'}
+define D701SET {alias D701[SETUP] kind 'output-cfs' units 'cfs'}
+define D701MW {alias D701[MONTHLYWEIGHTED] kind 'output-cfs' units 'cfs'}
+define D701UP {alias D701[UPSTREAM] kind 'output-cfs' units 'cfs'}
+define D701DLT {alias D701[DELTA] kind 'output-cfs' units 'cfs'}
+define D706PRE {alias D706[PRESETUP] kind 'output-cfs' units 'cfs'}
+define D706SET {alias D706[SETUP] kind 'output-cfs' units 'cfs'}
+define D706MW {alias D706[MONTHLYWEIGHTED] kind 'output-cfs' units 'cfs'}
+define D706UP {alias D706[UPSTREAM] kind 'output-cfs' units 'cfs'}
+define D706DLT {alias D706[DELTA] kind 'output-cfs' units 'cfs'}
+define D707PRE {alias D707[PRESETUP] kind 'output-cfs' units 'cfs'}
+define D707SET {alias D707[SETUP] kind 'output-cfs' units 'cfs'}
+define D707MW {alias D707[MONTHLYWEIGHTED] kind 'output-cfs' units 'cfs'}
+define D707UP {alias D707[UPSTREAM] kind 'output-cfs' units 'cfs'}
+define D707DLT {alias D707[DELTA] kind 'output-cfs' units 'cfs'}
+define D708PRE {alias D708[PRESETUP] kind 'output-cfs' units 'cfs'}
+define D708SET {alias D708[SETUP] kind 'output-cfs' units 'cfs'}
+define D708MW {alias D708[MONTHLYWEIGHTED] kind 'output-cfs' units 'cfs'}
+define D708UP {alias D708[UPSTREAM] kind 'output-cfs' units 'cfs'}
+define D708DLT {alias D708[DELTA] kind 'output-cfs' units 'cfs'}
+define D607APRE {alias D607A[PRESETUP] kind 'output-cfs' units 'cfs'}
+define D607ASET {alias D607A[SETUP] kind 'output-cfs' units 'cfs'}
+define D607AMW {alias D607A[MONTHLYWEIGHTED] kind 'output-cfs' units 'cfs'}
+define D607AUP {alias D607A[UPSTREAM] kind 'output-cfs' units 'cfs'}
+define D607ADLT {alias D607A[DELTA] kind 'output-cfs' units 'cfs'}
+define D607BPRE {alias D607B[PRESETUP] kind 'output-cfs' units 'cfs'}
+define D607BSET {alias D607B[SETUP] kind 'output-cfs' units 'cfs'}
+define D607BMW {alias D607B[MONTHLYWEIGHTED] kind 'output-cfs' units 'cfs'}
+define D607BUP {alias D607B[UPSTREAM] kind 'output-cfs' units 'cfs'}
+define D607BDLT {alias D607B[DELTA] kind 'output-cfs' units 'cfs'}
+define D607CPRE {alias D607C[PRESETUP] kind 'output-cfs' units 'cfs'}
+define D607CSET {alias D607C[SETUP] kind 'output-cfs' units 'cfs'}
+define D607CMW {alias D607C[MONTHLYWEIGHTED] kind 'output-cfs' units 'cfs'}
+define D607CUP {alias D607C[UPSTREAM] kind 'output-cfs' units 'cfs'}
+define D607CDLT {alias D607C[DELTA] kind 'output-cfs' units 'cfs'}
+define D608BPRE {alias D608B[PRESETUP] kind 'output-cfs' units 'cfs'}
+define D608BSET {alias D608B[SETUP] kind 'output-cfs' units 'cfs'}
+define D608BMW {alias D608B[MONTHLYWEIGHTED] kind 'output-cfs' units 'cfs'}
+define D608BUP {alias D608B[UPSTREAM] kind 'output-cfs' units 'cfs'}
+define D608BDLT {alias D608B[DELTA] kind 'output-cfs' units 'cfs'}
+define D608CPRE {alias D608C[PRESETUP] kind 'output-cfs' units 'cfs'}
+define D608CSET {alias D608C[SETUP] kind 'output-cfs' units 'cfs'}
+define D608CMW {alias D608C[MONTHLYWEIGHTED] kind 'output-cfs' units 'cfs'}
+define D608CUP {alias D608C[UPSTREAM] kind 'output-cfs' units 'cfs'}
+define D608CDLT {alias D608C[DELTA] kind 'output-cfs' units 'cfs'}
+define D833PRE {alias D833[PRESETUP] kind 'output-cfs' units 'cfs'}
+define D833SET {alias D833[SETUP] kind 'output-cfs' units 'cfs'}
+define D833MW {alias D833[MONTHLYWEIGHTED] kind 'output-cfs' units 'cfs'}
+define D833UP {alias D833[UPSTREAM] kind 'output-cfs' units 'cfs'}
+define D833DLT {alias D833[DELTA] kind 'output-cfs' units 'cfs'}
+define D835PRE {alias D835[PRESETUP] kind 'output-cfs' units 'cfs'}
+define D835SET {alias D835[SETUP] kind 'output-cfs' units 'cfs'}
+define D835MW {alias D835[MONTHLYWEIGHTED] kind 'output-cfs' units 'cfs'}
+define D835UP {alias D835[UPSTREAM] kind 'output-cfs' units 'cfs'}
+define D835DLT {alias D835[DELTA] kind 'output-cfs' units 'cfs'}
+define D836PRE {alias D836[PRESETUP] kind 'output-cfs' units 'cfs'}
+define D836SET {alias D836[SETUP] kind 'output-cfs' units 'cfs'}
+define D836MW {alias D836[MONTHLYWEIGHTED] kind 'output-cfs' units 'cfs'}
+define D836UP {alias D836[UPSTREAM] kind 'output-cfs' units 'cfs'}
+define D836DLT {alias D836[DELTA] kind 'output-cfs' units 'cfs'}
+define D837PRE {alias D837[PRESETUP] kind 'output-cfs' units 'cfs'}
+define D837SET {alias D837[SETUP] kind 'output-cfs' units 'cfs'}
+define D837MW {alias D837[MONTHLYWEIGHTED] kind 'output-cfs' units 'cfs'}
+define D837UP {alias D837[UPSTREAM] kind 'output-cfs' units 'cfs'}
+define D837DLT {alias D837[DELTA] kind 'output-cfs' units 'cfs'}
+define D839PRE {alias D839[PRESETUP] kind 'output-cfs' units 'cfs'}
+define D839SET {alias D839[SETUP] kind 'output-cfs' units 'cfs'}
+define D839MW {alias D839[MONTHLYWEIGHTED] kind 'output-cfs' units 'cfs'}
+define D839UP {alias D839[UPSTREAM] kind 'output-cfs' units 'cfs'}
+define D839DLT {alias D839[DELTA] kind 'output-cfs' units 'cfs'}
+define D841PRE {alias D841[PRESETUP] kind 'output-cfs' units 'cfs'}
+define D841SET {alias D841[SETUP] kind 'output-cfs' units 'cfs'}
+define D841MW {alias D841[MONTHLYWEIGHTED] kind 'output-cfs' units 'cfs'}
+define D841UP {alias D841[UPSTREAM] kind 'output-cfs' units 'cfs'}
+define D841DLT {alias D841[DELTA] kind 'output-cfs' units 'cfs'}
+define D843PRE {alias D843[PRESETUP] kind 'output-cfs' units 'cfs'}
+define D843SET {alias D843[SETUP] kind 'output-cfs' units 'cfs'}
+define D843MW {alias D843[MONTHLYWEIGHTED] kind 'output-cfs' units 'cfs'}
+define D843UP {alias D843[UPSTREAM] kind 'output-cfs' units 'cfs'}
+define D843DLT {alias D843[DELTA] kind 'output-cfs' units 'cfs'}
+define D844PRE {alias D844[PRESETUP] kind 'output-cfs' units 'cfs'}
+define D844SET {alias D844[SETUP] kind 'output-cfs' units 'cfs'}
+define D844MW {alias D844[MONTHLYWEIGHTED] kind 'output-cfs' units 'cfs'}
+define D844UP {alias D844[UPSTREAM] kind 'output-cfs' units 'cfs'}
+define D844DLT {alias D844[DELTA] kind 'output-cfs' units 'cfs'}
+define R630WESTPRE {alias R630WEST[PRESETUP] kind 'output-cfs' units 'cfs'}
+define R630WESTSET {alias R630WEST[SETUP] kind 'output-cfs' units 'cfs'}
+define R630WESTMW {alias R630WEST[MONTHLYWEIGHTED] kind 'output-cfs' units 'cfs'}
+define R630WESTUP {alias R630WEST[UPSTREAM] kind 'output-cfs' units 'cfs'}
+define R630WESTDLT {alias R630WEST[DELTA] kind 'output-cfs' units 'cfs'}
+*/
