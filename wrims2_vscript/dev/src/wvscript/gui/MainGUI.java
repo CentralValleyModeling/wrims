@@ -133,8 +133,8 @@ public class MainGUI {
 		JPanel panel_Simple = new JPanel();
 		tabbedPane_Main.addTab("Simple", null, panel_Simple, null);
 		panel_Simple = gui_srg.calledFromMainGUI();
-
-
+		tabbedPane_Main.setComponentAt(0, panel_Simple);
+		
 		tabbedPane_PA = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane_Main.addTab("Position Analysis", tabbedPane_PA);
 		positionAnalysisPanel();
