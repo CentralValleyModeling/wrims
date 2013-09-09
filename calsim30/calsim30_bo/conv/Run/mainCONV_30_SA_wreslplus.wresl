@@ -1,6 +1,10 @@
 ! THIS IS THE MAIN WRESL FILE FOR CALSIM II D1641 Study
 ! Erik Reyes 06/08/01
 
+initial {
+	svar beginWaterYear{ value 1922 }
+}
+
 SEQUENCE CYCLE1 {
     model   SJRBASE
     order   1
