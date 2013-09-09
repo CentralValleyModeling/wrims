@@ -1,0 +1,13 @@
+! NOAA draft interim RPA flow reqt at Vernalis for Apr1-May31.  
+! VAMP (Apr15-Mar15 pulse period) may be greater, e.g., 7000 cfs, but not lower.
+! Implemented by Hilts (USFWS) May 05, 2009
+! New file added to all steps, though only used by the modified vernalis_min.wresl 
+! which looks up value using "minimum", not "linear"
+NoaaVern60dayMinphase1
+WSP     NOAAmin
+0       0
+1000    1500
+1400    3000
+2000    4500
+2500    6000
+9999    6000

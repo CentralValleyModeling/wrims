@@ -1,0 +1,6 @@
+!ccwd.wresl
+!Sets up CCWD Requested Diversions from Freeport for Export
+
+define D168B_ccwd {std kind 'flow-delivery' units 'cfs'}
+
+goal capD168Bccwd {D168B_ccwd < 0. }

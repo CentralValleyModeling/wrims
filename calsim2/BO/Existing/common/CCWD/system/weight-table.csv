@@ -1,0 +1,52 @@
+Weight
+Weight
+Weight
+Weight
+Dvar,Weight,Dvar Units,Description
+C422_KC,999999.1,CFS,Kellogg Creek Release
+D420,999999,CFS,CCWD delivery
+S422_CC_1,130201,TAF,emergency pool
+S422_CC_2,130200,TAF,water quality storage
+F422,-999999,CFS,FLEX BOUND
+I424,600000,CFS,Mokelumne Intertie
+D406A_MS,700000,CFS,Mallard Slough
+D408_VC_LCL,1600,CFS,VC has best water quality
+D408_OR_LCL,1600,CFS,OR has best water quality
+D408_RS_LCL,1600,CFS,RS has best water quality and no fish screen criteria
+D408_VC_MCL,0.1,CFS,VC has mid water quality
+D408_OR_MCL,0.1,CFS,OR has mid water quality
+D408_RS_MCL,0.1,CFS,RS has mid water quality and no fish screen criteria
+D408_VC_P_LCL,0.01,CFS,Partner wq operations
+D408_OR_P_LCL,0.01,CFS,Partner wq operations
+D408_RS_ECC,1300.0001,CFS,Take ECCID transfer water at RS first
+D408_OR_ECC,1300,CFS,Take ECCID transfer water at OR second
+D408_OR_DS,0.0016,CFS,Maximize LV water right
+D408_VC_DS,0.0015,CFS,Maximize LV water right
+D408_OR_CVP,0.0014,CFS,Next take CVP contract water
+D408_VC_CVP,0.0013,CFS,Next take CVP contract water
+D408_RS_CVP,0.0012,CFS,Next take CVP contract water
+D408_RS_TX,0.0011,CFS,Buy transfer water last
+D408_OR_TX,0.001,CFS,Buy transfer water last
+I422_FLEX,-9999999,CFS,FLEX BOUND
+I422_FLEX_P,-9999998,CFS,FLEX BOUND
+F422_P,-9999998,CFS,FLEX BOUND
+C423B_WHL_SB,0.11,CFS,
+C423B_WHL_SF,0.1,CFS,
+D408_P_STR_CVP,-1300,CFS,
+D408_P_DEL_CVP,-1300,CFS,
+D408_P_STR_SWP,-1300.1,CFS,
+D408_P_DEL_SWP,-1300.1,CFS,
+D810_LV,19.1,CFS,
+D813_LV,4,CFS,
+D814_LV,5,CFS,
+D815_LV,6,CFS,
+D710_LV,19,CFS,
+D711_LV,2,CFS,
+D856_LV,18.1,CFS,
+D708_LV,18,CFS,
+D408_TX_H,14000,CFS,High priority in-Delta transfer
+C424_DT,3000,CFS,
+C422_REL_P_WHL,2005,CFS,
+Delta_Surplus,0.0001,CFS,
+
+

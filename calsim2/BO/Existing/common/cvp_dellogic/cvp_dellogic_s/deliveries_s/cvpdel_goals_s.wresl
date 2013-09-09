@@ -1,0 +1,27 @@
+!Draft WRESL statements for CVP delivery logic
+!CVPDEL_GOALS   (setting decision variables for cvp delivery logic)
+!Edward Chang
+!4/27/99    10:00am
+!Later Edited by Ajay Dev 10/19/1999
+
+!Sanjay Pahuja/HILL 1/8/02
+!wsi modified to include trinity
+
+!This code sets decision variables in cycle 6, which will be accessed in next month's cycle 1
+!*************************************************************************************************************
+
+!Sum of CVP storages 
+
+
+define S4_ERPadj    {value min(max(ERPStorReserve-S32(-1),0.),S4(-1) -100.)}  !has value if S32 running lower than ERPStorReserve guidance
+define S32_ERPadj   {value min(    ERPStorReserve            ,S32(-1))}       !has value according to S32 within ERPStorReserve guidance
+define S32_otheradj {value min(max(S32(-1)-S32_ERPadj-CVPStorReserve,0.),S32(-1)-S32_ERPadj)}  !has value if remaining storage exists above ERPStorReserve and CVPStorReserve guidance
+
+goal setWSI_CVP_Storage { WSI_CVP_Storage = S1 +
+                        S4 - S4_ERPadj + S44 - S4_WTS(-1) +
+                        S8 + S11 +
+                        S32 - S32_ERPadj - S32_otheradj }
+
+!CVP San Luis storage
+goal setCVP_SL { CVP_SL = S11 }
+
