@@ -1,0 +1,131 @@
+/*
+This file defines export levels for each project (SWP,CVP).
+Estimates are based on current month delivery and San Luis rule-curve.
+*/
+
+!*********************************************************************************************
+! SWP exports:
+! This calculation is considering both potential ND intake as well as SD intake - see ExportEstimate2.wresl
+
+! export for south-of-delta SWP: demand
+define EstSWPSodDem {value swp_total_demand - I860 } !Ryan 8/9/2005
+define exp_est_SWPDem {alias EstSWPSodDem kind 'EXPORT-ESTIMATE' units 'CFS'}
+
+! export for south-of-delta SWP: rulecurve
+define EstSWPSodRC {value SWPRULEcalc1*taf_cfs - S12(-1)*taf_cfs}
+define exp_est_SWPRC {alias EstSWPSodRC kind 'EXPORT-ESTIMATE' units 'CFS'}
+
+! New code for working with FWS and NMFS BO Delta Actions
+define EstSWPMaxExp_RPA {select estimate from ExportEstimate_SWP where month = month }
+
+! export for south-of-delta SWP: demand + rulecurve
+define est_oro_release{
+    case verylow {condition S6[PRESETUP] <= 1250.0 
+    value 300.0}
+    case low {condition S6[PRESETUP]>1250.0 .and. S6[PRESETUP] <= 1800.0 
+    value  0.25*(S6(-1) - 1000. - DrainTar_buffer)*taf_cfs}
+    case high {condition S6[PRESETUP]>1800.0 .and. S6[PRESETUP] <= 2200.0 
+    value 0.50*(S6(-1) - 1000. - DrainTar_buffer)*taf_cfs}
+    case veryhigh { condition always 
+    value 0.75*(S6(-1) - 1000. - DrainTar_buffer)*taf_cfs}
+}
+define EstSWPSodExp {
+! constrain to EstSWPMaxExp_RPA for cases where FWS and NMFS BO Delta Actions control ALL exports from Delta
+    case noIF{
+    condition JonesIFSwitch == 0 .and. BanksIFSwitch == 0
+        value min(BanksMaxAllow, max(300.0, EstSWPSodDem + EstSWPSodRC), EstSWPMaxExp_RPA, max(300.,est_oro_release))
+    }
+! If there is another intake (Isolated Facility ND intake) do not constrain
+    case IF{
+    condition always
+        value min(BanksMaxAllow, max(300.0, EstSWPSodDem + EstSWPSodRC), max(300.,est_oro_release))
+    }
+}
+define exp_est_SWP {alias EstSWPSodExp kind 'EXPORT-ESTIMATE' units 'CFS'}
+define exp_estSWPlim3  {alias max(300.,est_oro_release) kind 'debug' units 'cfs'}
+
+!*********************************************************************************************
+! CVP exports:
+! This calculation is considering both potential ND intake as well as SD intake - see ExportEstimate2.wresl
+
+! export for south-of-delta CVP: demand
+define EstCVPSodDem {value
+  dem_totcvps_pag*taf_cfs*perdel_cvpag_s - dem_d607a_pag*taf_cfs*perdel_cvpag_s +
+  dem_totcvps_pls*taf_cfs - dem_d607d_pls*taf_cfs +
+  dem_totcvps_pmi*taf_cfs*perdel_cvpmi_s  +
+  dem_totcvps_pex*taf_cfs*perdel_cvpex_s - dem_d607b_pex*taf_cfs*perdel_cvpex_s - dem_d608b_pex*taf_cfs*perdel_cvpex_s  +
+  dem_totcvps_prf*taf_cfs*perdel_cvprf_s - dem_d607c_prf*taf_cfs*perdel_cvprf_s - dem_d608c_prf*taf_cfs*perdel_cvprf_s  +
+  max(0.0, dem_d607a_pag*taf_cfs*perdel_cvpag_s + dem_d607d_pls*taf_cfs + dem_d607b_pex*taf_cfs*perdel_cvpex_s +
+  dem_d607c_prf*taf_cfs*perdel_cvprf_s + dem_d608b_pex*taf_cfs*perdel_cvpex_s + dem_d608c_prf*taf_cfs*perdel_cvprf_s - C605a[SJR_WQ1] - I607)}
+
+define exp_est_CVPDem {alias EstCVPSodDem kind 'EXPORT-ESTIMATE' units 'CFS'}
+
+! export for south-of-delta CVP: rulecurve
+define EstCVPSodRC {value CvpRuleCalc1*taf_cfs - S11(-1)*taf_cfs}
+define exp_est_CVPRC {alias EstCVPSodRC kind 'EXPORT-ESTIMATE' units 'CFS'}
+
+! minimum Tracy pumping (for potential ND intake as well as SD intake)
+define TracyMinPumpLevel {
+        case TracyShastaLow {
+                condition S4(-1) + S44(-1) - S4_WTS(-1) < 1500.0
+                value 600.0 }
+        case tracylowshastafolsom {
+                condition S8(-1) < 400. .and. S4(-1) + S44(-1) - S4_WTS(-1) < 2000. !Better reflection of actual operations by trying to keep
+                value 800. }                                                            !water from being released for SL storage during low storage
+        case TracyShastaHigh {
+                condition always
+                value 800.0 }
+}
+! export for south-of-delta CVP: demand + rulecurve
+define CVPexportcap {value maxTracycalc+ CVPDedBanksSwitch*BanksMaxAllowCVP}
+
+! New code for working with B2 Delta Actions
+define EstCVPMaxExp_B2 {
+       case Action2On {
+            condition month >= DEC .and. month <= JAN .and. int(B2Action2On)==1
+            value     max(TracyMinPumpLevel,D418CVPTD_B2Base + D419CVPTD_B2Base) } ! - redAction2)}
+       case Action7On {
+            condition month >= FEB .and. month <= MAR .and. int(B2Action7On)==1
+            value     max(TracyMinPumpLevel,D418CVPTD_B2Base + D419CVPTD_B2Base) } ! - (ResAction7/2.)*taf_cfs)}
+       case Action6On {
+            condition month == APR .and. int(B2Action6On)==1
+            value     PulseExpRes*0.5 }
+       case Action4On {
+            condition month == MAY .and. int(B2Action4On)==1
+            value     PulseExpRes*0.5 }
+       case Action3OnAPR {
+            condition month == APR .and. int(B2Action3On)==1
+            value     min(min(CVPexportcap, max(0.0, EstCVPSodDem + EstCVPSodRC)*14.0/daysin + PulseExpRes*0.5*16.0/daysin), TracyCapPermit*14.0/daysin + PulseExpRes*0.5*16.0/daysin) }
+       case Action3OnMAY {
+            condition month == MAY .and. int(B2Action3On)==1
+            value     min(3000.*16.0/daysin + PulseExpRes*0.5*15.0/daysin, TracyCapPermit*14.0/daysin + PulseExpRes*0.5*16.0/daysin) }
+       case Action5On {
+            condition month == JUN .and. int(B2Action5On)==1
+            value     min(D418_cvp_TD(-1)*0.5 + D419_CVP_TD(-1)*0.5 + min(CVPexportcap, max(0.0, EstCVPSodDem + EstCVPSodRC)*0.5), 3000.0) }
+       case Action5Off {
+            condition month == JUN
+            value     3000.0}
+       case rest {
+            condition always
+            value     99999. }
+       }
+
+! New code for working with FWS and NMFS BO Delta Actions
+define EstCVPMaxExp_RPA {select estimate from ExportEstimate_CVP where month = month }
+
+define EstCVPSodExp {
+    case noIF{
+    condition JonesIFSwitch == 0 .and. BanksIFSwitch == 0
+! constrain to EstCVPMaxExp_B2 for cases where B2 Delta Actions control ALL exports from Delta
+!       value min(CVPexportcap, max(TracyMinPumpLevel, EstCVPSodDem + EstCVPSodRC), EstCVPMaxExp_B2 )
+! constrain to EstCVPMaxExp_RPA for cases where FWS and NMFS BO Delta Actions control ALL exports from Delta
+        value min(CVPexportcap, max(TracyMinPumpLevel, EstCVPSodDem + EstCVPSodRC), EstCVPMaxExp_RPA )
+    }
+! If there is another intake (Isolated Facility ND intake) do not constrain
+    case IF{
+    condition always
+        value     min(CVPexportcap, max(TracyMinPumpLevel, EstCVPSodDem + EstCVPSodRC))
+    }
+}
+define exp_est_CVP {alias EstCVPSodExp kind 'EXPORT-ESTIMATE' units 'CFS'}
+

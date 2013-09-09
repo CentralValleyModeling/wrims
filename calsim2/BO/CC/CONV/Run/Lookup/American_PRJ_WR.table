@@ -1,0 +1,12 @@
+! This table lists the Annual contract amounts for both Project Water and Water Rights Water along
+! The American River.
+!
+! The index in the first column refers to Project Water = 1, and Water Rights Water = 2. 
+! Type 2 currently not used but 3 is El Dorado County Fazio water
+! The units for this table are TAF.
+American_PRJ_WR
+index       Folsom      SJWDSac     ElDorIDPL   Roseville   CalPrkRc    SMUD        PCWASac     SCWA        PCWAPump
+1           7.0         24.2        7.55        32.0        5.0         30.0        0.0         30.0        35.0
+2           27.0        33.0        17.0        30.0        0.0         15.0        0.0         0.0         35.5
+3           0.0         0.0         15.0        0.0         0.0         0.0         0.0         0.0         0.0
+4           0.0         0.0         0.0         0.0         0.0         0.0         0.0         0.0         0.0
