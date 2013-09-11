@@ -78,6 +78,8 @@ import org.apache.commons.io.FilenameUtils;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class SimpleRunGUI {
 
@@ -102,6 +104,13 @@ public class SimpleRunGUI {
 	private JTextField textField_svFileAPart;
 	private JTextField textField_svFileFPart;
 	private JTextField textField_initFileFPart;
+	private JSpinner spinner_startDay;
+	private JSpinner spinner_stopDay;
+	private JSpinner spinner_numberOfTimeStep;
+	private JSpinner spinner_startMonth;
+	private JSpinner spinner_startYear;
+	private JSpinner spinner_stopYear;
+	private JSpinner spinner_stopMonth;
 
 	/**
 	 * Launch the application.
@@ -336,6 +345,26 @@ public class SimpleRunGUI {
 			JLabel lblNewLabel = new JLabel("Time step:");
 			panel_Simple_config_basic.add(lblNewLabel, "2, 21, left, default");
 			comboBox_timeStep = new JComboBox(cbStrings);
+			comboBox_timeStep.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					if (comboBox_timeStep.getSelectedIndex()==1){
+						//spinner_startDay.setForeground(Params.spinnerForeground);
+						//spinner_startDay.setVisible(true);
+						spinner_startDay.setEnabled(true);
+						//spinner_stopDay.setForeground(Params.spinnerForeground);
+						//spinner_stopDay.setVisible(true);
+						spinner_stopDay.setEnabled(true);
+					} else {
+						//spinner_startDay.setForeground(Params.spinnerBackground);
+						//spinner_startDay.setVisible(false);						
+						spinner_startDay.setEnabled(false);
+						//spinner_stopDay.setForeground(Params.spinnerBackground);
+						//spinner_stopDay.setVisible(false);
+						spinner_stopDay.setEnabled(false);						
+					}
+				}
+			});
+
 			panel_Simple_config_basic.add(comboBox_timeStep, "4, 21, left, default");
 
 			JLabel lblNewLabel_1 = new JLabel("Start date:");
@@ -347,36 +376,61 @@ public class SimpleRunGUI {
 			JLabel lblNewLabel_6 = new JLabel("(YYYY-MM-DD)");
 			panel_Simple_config_basic.add(lblNewLabel_6, "10, 25, left, default");
 
-			JSpinner spinner_stopYear = new JSpinner(Params.spm_year);
+			spinner_stopYear = new JSpinner(Params.spm_stop_year);
+			spinner_stopYear.addChangeListener(new SpinnerDateChangeListener());
 			JSpinner.NumberEditor ne_spinner_stopYear = new JSpinner.NumberEditor(spinner_stopYear, "#");
 			spinner_stopYear.setEditor(ne_spinner_stopYear);
 			panel_Simple_config_basic.add(spinner_stopYear, "4, 25, left, default");
 			
-			JSpinner spinner_startYear = new JSpinner(Params.spm_year);
+			spinner_startYear = new JSpinner(Params.spm_start_year);
+			spinner_startYear.addChangeListener(new SpinnerDateChangeListener());
 			JSpinner.NumberEditor ne_spinner_startYear = new JSpinner.NumberEditor(spinner_startYear, "#");
 			spinner_startYear.setEditor(ne_spinner_startYear);
 			panel_Simple_config_basic.add(spinner_startYear, "4, 23, left, default");			
 
-			JSpinner spinner_stopMonth = new JSpinner(Params.spm_month);
+			spinner_stopMonth = new JSpinner(Params.spm_stop_month);
+			spinner_stopMonth.addChangeListener(new SpinnerDateChangeListener());
 			panel_Simple_config_basic.add(spinner_stopMonth, "6, 25");
 			
-			JSpinner spinner_startMonth = new JSpinner(Params.spm_month);
+			spinner_startMonth = new JSpinner(Params.spm_start_month);
+			spinner_startMonth.addChangeListener(new SpinnerDateChangeListener());
 			panel_Simple_config_basic.add(spinner_startMonth, "6, 23");
 
 			
 			
-			JSpinner spinner_stopDay = new JSpinner(Params.spm_day);
+			spinner_stopDay = new JSpinner(Params.spm_stop_day);
+			spinner_stopDay.addChangeListener(new SpinnerDateChangeListener());
+			//spinner_stopDay.setForeground(Params.spinnerBackground);
 			spinner_stopDay.setEnabled(false);
+			//spinner_stopDay.setVisible(false);
 			panel_Simple_config_basic.add(spinner_stopDay, "8, 25");
 			
-			JSpinner spinner_startDay = new JSpinner(Params.spm_day);
+			spinner_startDay = new JSpinner(Params.spm_start_day);
+			spinner_startDay.addChangeListener(new SpinnerDateChangeListener());
+			//spinner_startDay.setForeground(Params.spinnerBackground);
 			spinner_startDay.setEnabled(false);
+			//spinner_startDay.setVisible(false);
 			panel_Simple_config_basic.add(spinner_startDay, "8, 23");
 
 			JLabel lblNewLabel_3 = new JLabel("Number of Time Steps:");
 			panel_Simple_config_basic.add(lblNewLabel_3, "2, 27, 3, 1, left, default");
 
-			JSpinner spinner_numberOfTimeStep = new JSpinner();
+			spinner_numberOfTimeStep = new JSpinner();
+			spinner_numberOfTimeStep.addChangeListener(new ChangeListener() {
+				public void stateChanged(ChangeEvent arg0) {
+					if (comboBox_timeStep.getSelectedIndex()==0){
+						// monthly step
+						// TODO: set the stop date
+						
+					} else {
+						// daily step
+						
+						
+						
+					}
+					
+				}
+			});
 			panel_Simple_config_basic.add(spinner_numberOfTimeStep, "6, 27");
 		} catch (ParseException ex) {
 			Logger.getLogger(MaskFormatterTest.class.getName()).log(Level.SEVERE, null, ex);
@@ -399,7 +453,7 @@ public class SimpleRunGUI {
 
 		lbl_status.setText(Params.plsSpecifyRunDir);
 
-		panel_Simple_run.add(lbl_status, "4, 2, 5, 1");
+		panel_Simple_run.add(lbl_status, "4, 2, 9, 1");
 
 		textField_styRunDir = new JTextField();
 
@@ -592,7 +646,8 @@ public class SimpleRunGUI {
 						textField_styRunDir.setText(wsty.studyRunDir.getAbsolutePath());
 						textField_configFile.setText(wsty.configFile);
 						
-						lbl_status.setText("Press \"parse config\" button to show run configuration.");
+						lbl_status.setText(Misc.htmlText("", "Press \"parse config\" button to show run configuration.", "red"));
+
 					//}
 
 				}
@@ -632,6 +687,8 @@ public class SimpleRunGUI {
 
 					populateConfigOptions();
 					
+					//lbl_status.setText("This config is parsed: " +new File(wsty.studyRunDir.getParent(), wsty.configFile).getAbsolutePath() );
+					lbl_status.setText("Config parsing completed.");
 
 				} catch (RecognitionException e) {
 					// TODO Auto-generated catch block
@@ -719,15 +776,7 @@ public class SimpleRunGUI {
 	public JPanel getPanel_Simple() {
 		return panel_Simple;
 	}
-	public JRadioButton getRdbtn_wreslPlus() {
-		return rdbtn_wreslPlus;
-	}
-	public JTextField getTextField_svFile() {
-		return textField_svFile;
-	}
-	public JTextField getTextField_initFile() {
-		return textField_initFile;
-	}
+
 	public void populateConfigOptions() {
 		
 		rdbtn_wreslPlus.setSelected(wsty.configMap.get("WreslPlus").equalsIgnoreCase("yes"));
@@ -737,15 +786,42 @@ public class SimpleRunGUI {
 		textField_svFileAPart.setText(wsty.configMap.get("SvarAPart"));
 		textField_svFileFPart.setText(wsty.configMap.get("SvarFPart"));
 		textField_initFileFPart.setText(wsty.configMap.get("InitFPart"));
+		spinner_startYear.setValue(Integer.parseInt(wsty.configMap.get("StartYear")));
+		spinner_stopYear.setValue(Integer.parseInt(wsty.configMap.get("StopYear")));
+		spinner_startMonth.setValue(Integer.parseInt(wsty.configMap.get("StartMonth")));
+		spinner_stopMonth.setValue(Integer.parseInt(wsty.configMap.get("StopMonth")));
+
 		if (wsty.configMap.get("TimeStep").equalsIgnoreCase("1DAY")){
 			comboBox_timeStep.setSelectedIndex(1);
+			spinner_startDay.setEnabled(true);
+			spinner_stopDay.setEnabled(true);
+			spinner_startDay.setValue(Integer.parseInt(wsty.configMap.get("StartDay")));
+			spinner_stopDay.setValue(Integer.parseInt(wsty.configMap.get("StopDay")));
 		} else if (wsty.configMap.get("TimeStep").equalsIgnoreCase("1MON")){
 			comboBox_timeStep.setSelectedIndex(0);
 		} else {
-			// error in TimStep
+			
+			// error in TimeStep
+			//lbl_status.setText(Misc.htmlText("", "Time step error.", "red"));
+			comboBox_timeStep.setSelectedIndex(0);
+			wsty.configMap.put("TimeStep", "1MON");
+
 		}
+
+		
+		//lbl_status.setText(wsty.)
 	}
-	public JComboBox getComboBox_timeStep() {
-		return comboBox_timeStep;
+
+	
+	class SpinnerDateChangeListener implements ChangeListener {
+		public void stateChanged(ChangeEvent e) {
+			// set number of time step
+			spinner_numberOfTimeStep.setValue(100);
+			
+			
+		}
+		
 	}
 }
+
+
