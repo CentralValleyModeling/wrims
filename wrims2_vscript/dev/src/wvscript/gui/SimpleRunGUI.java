@@ -222,46 +222,17 @@ public class SimpleRunGUI {
 		// panel_Simple_config_basic.setBorder(new
 		// EtchedBorder(EtchedBorder.LOWERED, null, null));
 		panel_Simple_config_wrapper.addTab("Basic Config", null, panel_Simple_config_basic, null);
-		panel_Simple_config_basic.setLayout(new FormLayout(new ColumnSpec[] {
-				ColumnSpec.decode("20dlu"),
-				FormFactory.DEFAULT_COLSPEC,
-				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,
-				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,
-				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,
-				FormFactory.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("default:grow"),
-				ColumnSpec.decode("20dlu"),},
-			new RowSpec[] {
-				RowSpec.decode("10dlu"),
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,}));
+		panel_Simple_config_basic.setLayout(new FormLayout(new ColumnSpec[]{ColumnSpec.decode("20dlu"), FormFactory.DEFAULT_COLSPEC,
+				FormFactory.RELATED_GAP_COLSPEC, FormFactory.DEFAULT_COLSPEC, FormFactory.RELATED_GAP_COLSPEC, FormFactory.DEFAULT_COLSPEC,
+				FormFactory.RELATED_GAP_COLSPEC, FormFactory.DEFAULT_COLSPEC, FormFactory.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("default:grow"), ColumnSpec.decode("20dlu"),}, new RowSpec[]{RowSpec.decode("10dlu"),
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,}));
 
 		rdbtn_wreslPlus = new JRadioButton(" Use WRESL+");
 		rdbtn_wreslPlus.setHorizontalTextPosition(SwingConstants.RIGHT);
@@ -281,8 +252,6 @@ public class SimpleRunGUI {
 			tsList.add("1DAY");
 
 			// spinner_1.setModel(new javax.swing.SpinnerListModel(tsList));
-
-
 
 			JButton btnNewButton = new JButton("SV File");
 			btnNewButton.addActionListener(new ActionListener() {
@@ -323,21 +292,21 @@ public class SimpleRunGUI {
 
 			JLabel lblSvarDssA = new JLabel("SV File A Part:");
 			panel_Simple_config_basic.add(lblSvarDssA, "2, 15, right, default");
-			
+
 			textField_svFileAPart = new JTextField();
 			panel_Simple_config_basic.add(textField_svFileAPart, "4, 15, 5, 1, fill, default");
 			textField_svFileAPart.setColumns(10);
 
 			JLabel lblNewLabel_4 = new JLabel("SV File F Part:");
 			panel_Simple_config_basic.add(lblNewLabel_4, "2, 17, right, default");
-			
+
 			textField_svFileFPart = new JTextField();
 			panel_Simple_config_basic.add(textField_svFileFPart, "4, 17, 5, 1, fill, default");
 			textField_svFileFPart.setColumns(10);
 
 			JLabel lblNewLabel_5 = new JLabel("Init File F Part:");
 			panel_Simple_config_basic.add(lblNewLabel_5, "2, 19, right, default");
-			
+
 			textField_initFileFPart = new JTextField();
 			panel_Simple_config_basic.add(textField_initFileFPart, "4, 19, 5, 1, fill, default");
 			textField_initFileFPart.setColumns(10);
@@ -347,20 +316,20 @@ public class SimpleRunGUI {
 			comboBox_timeStep = new JComboBox(cbStrings);
 			comboBox_timeStep.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					if (comboBox_timeStep.getSelectedIndex()==1){
-						//spinner_startDay.setForeground(Params.spinnerForeground);
-						//spinner_startDay.setVisible(true);
+					if (comboBox_timeStep.getSelectedIndex() == 1) {
+						// spinner_startDay.setForeground(Params.spinnerForeground);
+						// spinner_startDay.setVisible(true);
 						spinner_startDay.setEnabled(true);
-						//spinner_stopDay.setForeground(Params.spinnerForeground);
-						//spinner_stopDay.setVisible(true);
+						// spinner_stopDay.setForeground(Params.spinnerForeground);
+						// spinner_stopDay.setVisible(true);
 						spinner_stopDay.setEnabled(true);
 					} else {
-						//spinner_startDay.setForeground(Params.spinnerBackground);
-						//spinner_startDay.setVisible(false);						
+						// spinner_startDay.setForeground(Params.spinnerBackground);
+						// spinner_startDay.setVisible(false);
 						spinner_startDay.setEnabled(false);
-						//spinner_stopDay.setForeground(Params.spinnerBackground);
-						//spinner_stopDay.setVisible(false);
-						spinner_stopDay.setEnabled(false);						
+						// spinner_stopDay.setForeground(Params.spinnerBackground);
+						// spinner_stopDay.setVisible(false);
+						spinner_stopDay.setEnabled(false);
 					}
 				}
 			});
@@ -368,7 +337,7 @@ public class SimpleRunGUI {
 			panel_Simple_config_basic.add(comboBox_timeStep, "4, 21, left, default");
 
 			JLabel lblNewLabel_1 = new JLabel("Start date:");
-			panel_Simple_config_basic.add(lblNewLabel_1, "2, 23, left, default");					
+			panel_Simple_config_basic.add(lblNewLabel_1, "2, 23, left, default");
 
 			JLabel lblNewLabel_2 = new JLabel("Stop date:");
 			panel_Simple_config_basic.add(lblNewLabel_2, "2, 25, left, default");
@@ -381,35 +350,33 @@ public class SimpleRunGUI {
 			JSpinner.NumberEditor ne_spinner_stopYear = new JSpinner.NumberEditor(spinner_stopYear, "#");
 			spinner_stopYear.setEditor(ne_spinner_stopYear);
 			panel_Simple_config_basic.add(spinner_stopYear, "4, 25, left, default");
-			
+
 			spinner_startYear = new JSpinner(Params.spm_start_year);
 			spinner_startYear.addChangeListener(new SpinnerDateChangeListener());
 			JSpinner.NumberEditor ne_spinner_startYear = new JSpinner.NumberEditor(spinner_startYear, "#");
 			spinner_startYear.setEditor(ne_spinner_startYear);
-			panel_Simple_config_basic.add(spinner_startYear, "4, 23, left, default");			
+			panel_Simple_config_basic.add(spinner_startYear, "4, 23, left, default");
 
 			spinner_stopMonth = new JSpinner(Params.spm_stop_month);
 			spinner_stopMonth.addChangeListener(new SpinnerDateChangeListener());
 			panel_Simple_config_basic.add(spinner_stopMonth, "6, 25");
-			
+
 			spinner_startMonth = new JSpinner(Params.spm_start_month);
 			spinner_startMonth.addChangeListener(new SpinnerDateChangeListener());
 			panel_Simple_config_basic.add(spinner_startMonth, "6, 23");
 
-			
-			
 			spinner_stopDay = new JSpinner(Params.spm_stop_day);
 			spinner_stopDay.addChangeListener(new SpinnerDateChangeListener());
-			//spinner_stopDay.setForeground(Params.spinnerBackground);
+			// spinner_stopDay.setForeground(Params.spinnerBackground);
 			spinner_stopDay.setEnabled(false);
-			//spinner_stopDay.setVisible(false);
+			// spinner_stopDay.setVisible(false);
 			panel_Simple_config_basic.add(spinner_stopDay, "8, 25");
-			
+
 			spinner_startDay = new JSpinner(Params.spm_start_day);
 			spinner_startDay.addChangeListener(new SpinnerDateChangeListener());
-			//spinner_startDay.setForeground(Params.spinnerBackground);
+			// spinner_startDay.setForeground(Params.spinnerBackground);
 			spinner_startDay.setEnabled(false);
-			//spinner_startDay.setVisible(false);
+			// spinner_startDay.setVisible(false);
 			panel_Simple_config_basic.add(spinner_startDay, "8, 23");
 
 			JLabel lblNewLabel_3 = new JLabel("Number of Time Steps:");
@@ -418,17 +385,15 @@ public class SimpleRunGUI {
 			spinner_numberOfTimeStep = new JSpinner();
 			spinner_numberOfTimeStep.addChangeListener(new ChangeListener() {
 				public void stateChanged(ChangeEvent arg0) {
-					if (comboBox_timeStep.getSelectedIndex()==0){
+					if (comboBox_timeStep.getSelectedIndex() == 0) {
 						// monthly step
 						// TODO: set the stop date
-						
+
 					} else {
 						// daily step
-						
-						
-						
+
 					}
-					
+
 				}
 			});
 			panel_Simple_config_basic.add(spinner_numberOfTimeStep, "6, 27");
@@ -535,7 +500,7 @@ public class SimpleRunGUI {
 				// System.out.println(" file:" +
 				// chooser.getSelectedFile().getName());
 
-				if (option == JFileChooser.APPROVE_OPTION  && chooser.getSelectedFile().getName().equalsIgnoreCase("run")) {
+				if (option == JFileChooser.APPROVE_OPTION && chooser.getSelectedFile().getName().equalsIgnoreCase("run")) {
 
 					File sf = chooser.getSelectedFile();
 					String sf_abs = sf.getAbsolutePath();
@@ -543,7 +508,7 @@ public class SimpleRunGUI {
 					System.out.println(sf.getName());
 					wsty.studyRunDir = sf;
 					textField_styRunDir.setText(wsty.studyRunDir.getAbsolutePath());
-					
+
 					lbl_status.setText("Please select config file.");
 
 				}
@@ -621,7 +586,7 @@ public class SimpleRunGUI {
 				}
 
 				chooser.setPreferredSize(new Dimension(600, 500));
-				//chooser.setControlButtonsAreShown(false);
+				// chooser.setControlButtonsAreShown(false);
 				chooser.setAcceptAllFileFilterUsed(false);
 
 				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -634,21 +599,23 @@ public class SimpleRunGUI {
 				// System.out.println(" file:" +
 				// chooser.getSelectedFile().getName());
 
-				if (option == JFileChooser.APPROVE_OPTION && FilenameUtils.getExtension(chooser.getSelectedFile().getName()).equalsIgnoreCase("config")) {
+				if (option == JFileChooser.APPROVE_OPTION
+						&& FilenameUtils.getExtension(chooser.getSelectedFile().getName()).equalsIgnoreCase("config")) {
 
 					File sf = chooser.getSelectedFile();
 
-					//if (wsty.checkConfigExtension(sf.getName())) {
+					// if (wsty.checkConfigExtension(sf.getName())) {
 
-						wsty.configFile = sf.getName();
-						wsty.studyRunDir = new File(sf.getParentFile(), "run");
+					wsty.configFile = sf.getName();
+					wsty.studyRunDir = new File(sf.getParentFile(), "run");
 
-						textField_styRunDir.setText(wsty.studyRunDir.getAbsolutePath());
-						textField_configFile.setText(wsty.configFile);
-						
-						lbl_status.setText(Misc.htmlText("", "Press \"parse config\" button to show run configuration.", "red"));
+					textField_styRunDir.setText(wsty.studyRunDir.getAbsolutePath());
+					textField_configFile.setText(wsty.configFile);
 
-					//}
+					//lbl_status.setText(Misc.htmlText("", "Press \"parse config\" button to show run configuration.", "red"));
+
+					loadConfig();
+					// }
 
 				}
 			}
@@ -656,52 +623,14 @@ public class SimpleRunGUI {
 		btn_configFile.setToolTipText("");
 		panel_Simple_run.add(btn_configFile, "4, 6, fill, default");
 
-		JButton btn_parseConfig = new JButton("Parse Config");
-		btn_parseConfig.addActionListener(new ActionListener() {
+		JButton btn_reloadConfig = new JButton("Reload Config");
+		btn_reloadConfig.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
-				if (wsty.studyRunDir == null || wsty.configFile == null)
-					return;
-
-				File configFilePath = new File(wsty.studyRunDir.getParent(), wsty.configFile);
-				
-				if (!configFilePath.exists()) {
-					lbl_status.setText(Misc.htmlText(configFilePath.getAbsolutePath(), "Config file not exist.", "red"));
-					return;
-				}
-
-				if (!FilenameUtils.getExtension(wsty.configFile).equalsIgnoreCase("config")) {
-					lbl_status.setText(Misc.htmlText("", "Config file extension should be .config", "red"));
-					return;
-				}
-
-				lbl_status.setText("Parsing config.");
-				
-				
-				ConfigReader.setConfigKey(Params.configKeyList);
-				
-				try {
-					ConfigReader.parseFile(configFilePath.getAbsolutePath());
-					wsty.configMap = ConfigReader.configMap;
-					System.out.println(wsty.configMap);
-
-					populateConfigOptions();
-					
-					//lbl_status.setText("This config is parsed: " +new File(wsty.studyRunDir.getParent(), wsty.configFile).getAbsolutePath() );
-					lbl_status.setText("Config parsing completed.");
-
-				} catch (RecognitionException e) {
-					// TODO Auto-generated catch block
-					lbl_status.setText(Misc.htmlText("", "Error in parsing config file.", "red"));	
-					wsty.configMap = null;
-					//e.printStackTrace();
-				}
-				
-
+				loadConfig();
 			}
 		});
-		btn_parseConfig.setFont(new Font("SansSerif", Font.BOLD, 12));
-		panel_Simple_run.add(btn_parseConfig, "4, 8");
+		btn_reloadConfig.setFont(new Font("SansSerif", Font.PLAIN, 12));
+		panel_Simple_run.add(btn_reloadConfig, "4, 8");
 
 		JButton btn_run = new JButton("Run");
 		btn_run.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -778,7 +707,7 @@ public class SimpleRunGUI {
 	}
 
 	public void populateConfigOptions() {
-		
+
 		rdbtn_wreslPlus.setSelected(wsty.configMap.get("WreslPlus").equalsIgnoreCase("yes"));
 		textField_dvFile.setText(wsty.configMap.get("DvarFile").replace("\"", ""));
 		textField_svFile.setText(wsty.configMap.get("SvarFile").replace("\"", ""));
@@ -791,37 +720,74 @@ public class SimpleRunGUI {
 		spinner_startMonth.setValue(Integer.parseInt(wsty.configMap.get("StartMonth")));
 		spinner_stopMonth.setValue(Integer.parseInt(wsty.configMap.get("StopMonth")));
 
-		if (wsty.configMap.get("TimeStep").equalsIgnoreCase("1DAY")){
+		if (wsty.configMap.get("TimeStep").equalsIgnoreCase("1DAY")) {
 			comboBox_timeStep.setSelectedIndex(1);
 			spinner_startDay.setEnabled(true);
 			spinner_stopDay.setEnabled(true);
 			spinner_startDay.setValue(Integer.parseInt(wsty.configMap.get("StartDay")));
 			spinner_stopDay.setValue(Integer.parseInt(wsty.configMap.get("StopDay")));
-		} else if (wsty.configMap.get("TimeStep").equalsIgnoreCase("1MON")){
+		} else if (wsty.configMap.get("TimeStep").equalsIgnoreCase("1MON")) {
 			comboBox_timeStep.setSelectedIndex(0);
 		} else {
-			
+
 			// error in TimeStep
-			//lbl_status.setText(Misc.htmlText("", "Time step error.", "red"));
+			// lbl_status.setText(Misc.htmlText("", "Time step error.", "red"));
 			comboBox_timeStep.setSelectedIndex(0);
 			wsty.configMap.put("TimeStep", "1MON");
 
 		}
 
-		
-		//lbl_status.setText(wsty.)
+		// lbl_status.setText(wsty.)
 	}
 
-	
+	public void loadConfig() {
+
+		if (wsty.studyRunDir == null || wsty.configFile == null)
+			return;
+
+		File configFilePath = new File(wsty.studyRunDir.getParent(), wsty.configFile);
+
+		if (!configFilePath.exists()) {
+			lbl_status.setText(Misc.htmlText(configFilePath.getAbsolutePath(), "Config file not exist.", "red"));
+			return;
+		}
+
+		if (!FilenameUtils.getExtension(wsty.configFile).equalsIgnoreCase("config")) {
+			lbl_status.setText(Misc.htmlText("", "Config file extension should be .config", "red"));
+			return;
+		}
+
+		lbl_status.setText("Parsing config.");
+
+		ConfigReader.setConfigKey(Params.configKeyList);
+
+		try {
+			ConfigReader.parseFile(configFilePath.getAbsolutePath());
+			wsty.configMap = ConfigReader.configMap;
+			System.out.println(wsty.configMap);
+
+			populateConfigOptions();
+
+			// lbl_status.setText("This config is parsed: " +new
+			// File(wsty.studyRunDir.getParent(),
+			// wsty.configFile).getAbsolutePath() );
+			lbl_status.setText("Config parsing completed.");
+
+		} catch (RecognitionException e) {
+			// TODO Auto-generated catch block
+			lbl_status.setText(Misc.htmlText("", "Error in parsing config file.", "red"));
+			wsty.configMap = null;
+			// e.printStackTrace();
+		}
+
+	}
+
 	class SpinnerDateChangeListener implements ChangeListener {
 		public void stateChanged(ChangeEvent e) {
 			// set number of time step
 			spinner_numberOfTimeStep.setValue(100);
-			
-			
+
 		}
-		
+
 	}
 }
-
-
