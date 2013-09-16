@@ -79,6 +79,15 @@
          toolbarPath="group1"
          class="wrimsv2_plugin.debugger.toolbaritem.VarGoalSearch"
          enablesFor="*">
+      </action> 
+      <action
+         id="wpp.allweight" 
+         label="Weight"
+         icon="icons\weight_icon.png" 
+         tooltip="weighted variables"
+         toolbarPath="group1"
+         class="wrimsv2_plugin.debugger.toolbaritem.WeightedVariables"
+         enablesFor="*">
       </action>  
    </viewContribution> 
 </extension>

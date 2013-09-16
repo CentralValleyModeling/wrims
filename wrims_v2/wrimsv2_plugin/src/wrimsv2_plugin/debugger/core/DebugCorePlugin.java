@@ -67,6 +67,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static IValue[] allVariableStack;
 	public static IValue[] allGoalStack;
 	public static IValue[] watchStack;
+	public static String weightedVariables="";
 	public static ArrayList<String> fileControlGoals;
 	public static ArrayList<String> allControlGoals;
 	public static ArrayList<String> watchControlGoals;

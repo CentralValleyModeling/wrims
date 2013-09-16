@@ -45,6 +45,7 @@ import wrimsv2_plugin.tools.SetSelectionInTable;
 
 public class WPPAllVariableView extends AbstractDebugView implements ISelectionListener { 
 	private IValue[] dataStack=null;
+	private Table table;
 	
 	public class ViewLabelProvider implements ITableLabelProvider {
 
@@ -183,7 +184,7 @@ public class WPPAllVariableView extends AbstractDebugView implements ISelectionL
 		viewer.setLabelProvider(new ViewLabelProvider());
 		viewer.setContentProvider(new ViewContentProvider());
 		getSite().setSelectionProvider(viewer);
-		Table table = viewer.getTable();
+		table = viewer.getTable();
 	    new TableColumn(table, SWT.LEFT).setText("Variable");
 	    new TableColumn(table, SWT.LEFT).setText("Value");
 	    
@@ -242,12 +243,16 @@ public class WPPAllVariableView extends AbstractDebugView implements ISelectionL
 		TableViewer viewer=(TableViewer) getViewer();
 		IStructuredSelection oldSelection = ((IStructuredSelection)viewer.getSelection());
 		viewer.setInput(DebugCorePlugin.target);
-		Table table=viewer.getTable();
+		table=viewer.getTable();
 	    for (int i = 0, n = table.getColumnCount(); i < n; i++) {
 	    	table.getColumn(i).pack();
 	    }
 		viewer.refresh();
 		if (dataStack.length>0) new SetSelectionInTable(oldSelection, viewer, table);
 		DebugCorePlugin.updateSelectedVariable=true;
+	}
+	
+	public Table getTable(){
+		return table;
 	}
 }

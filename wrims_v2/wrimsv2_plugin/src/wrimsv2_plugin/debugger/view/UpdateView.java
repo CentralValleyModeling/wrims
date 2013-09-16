@@ -119,8 +119,12 @@ public class UpdateView {
 		}catch (DebugException e) {
 			WPPException.handleException(e);
 		}
-						
-		DebugCorePlugin.allVariableStack=DataProcess.generateTree(data);
+		
+		String[] dataStrings = data.split("&");
+		if (dataStrings.length==2){
+			DebugCorePlugin.weightedVariables=dataStrings[1];
+		}
+		DebugCorePlugin.allVariableStack=DataProcess.generateTree(dataStrings[0]);
 							
 		final IWorkbench workbench=PlatformUI.getWorkbench();
 			workbench.getDisplay().asyncExec(new Runnable(){

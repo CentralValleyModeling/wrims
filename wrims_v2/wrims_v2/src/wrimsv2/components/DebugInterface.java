@@ -37,6 +37,7 @@ import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.Timeseries;
+import wrimsv2.commondata.wresldata.WeightElement;
 import wrimsv2.debug.ChangeSolver;
 import wrimsv2.debug.ReLoadSVDss;
 import wrimsv2.evaluator.DataTimeSeries;
@@ -1225,6 +1226,17 @@ public class DebugInterface {
 		Collections.sort(allDataNames);
 		for (String variable: allDataNames){
 			dataString=dataString+variable+":"+df.format(allData.get(variable))+"#";
+		}
+		
+		dataString=dataString+"&";
+		Map<String, WeightElement> wtMap = mds.wtMap;
+		Map<String, WeightElement> wtSlackSurplusMap = mds.wtSlackSurplusMap;
+		for (String variable:allDataNames){
+			if (wtMap.containsKey(variable)){
+				dataString=dataString+variable+":"+wtMap.get(variable).getValue()+"#";
+			}else if (wtSlackSurplusMap.containsKey(variable)){
+				dataString=dataString+variable+":"+wtSlackSurplusMap.get(variable).getValue()+"#";
+			}
 		}
 		
 		if (dataString.endsWith("#")) dataString=dataString.substring(0, dataString.length()-1);
