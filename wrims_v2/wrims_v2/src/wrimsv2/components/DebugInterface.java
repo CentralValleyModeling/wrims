@@ -1251,9 +1251,9 @@ public class DebugInterface {
 		Map<String, WeightElement> wtSlackSurplusMap = mds.wtSlackSurplusMap;
 		for (String variable:allDataNames){
 			if (wtMap.containsKey(variable)){
-				dataString=dataString+variable+":"+wtMap.get(variable).getValue()+"#";
+				dataString=dataString+variable+":"+df.format(wtMap.get(variable).getValue())+"#";
 			}else if (wtSlackSurplusMap.containsKey(variable)){
-				dataString=dataString+variable+":"+wtSlackSurplusMap.get(variable).getValue()+"#";
+				dataString=dataString+variable+":"+df.format(wtSlackSurplusMap.get(variable).getValue())+"#";
 			}
 		}
 		

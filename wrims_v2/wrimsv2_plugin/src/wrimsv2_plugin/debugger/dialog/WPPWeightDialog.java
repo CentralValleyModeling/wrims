@@ -1,7 +1,9 @@
 package wrimsv2_plugin.debugger.dialog;
 
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import org.eclipse.debug.core.DebugException;
@@ -27,7 +29,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
@@ -97,16 +101,20 @@ public class WPPWeightDialog extends Dialog {
 		return dialogArea;
 	 }
 	
-	public void constructTable(Table table){
-		TableColumn tc1 = new TableColumn(table, SWT.LEFT);
+	public void constructTable(final Table table){
+		
+	    final TableColumn tc1 = new TableColumn(table, SWT.LEFT);
 		tc1.setText("Variable");
 		tc1.setWidth(150);
 		tc1.setResizable(true);
-	    TableColumn tc2 = new TableColumn(table, SWT.LEFT);
+		
+		
+		final TableColumn tc2 = new TableColumn(table, SWT.LEFT);
 	    tc2.setText("Weight");
 	    tc2.setWidth(150);
 		tc2.setResizable(true);
-	    TableColumn tc3 = new TableColumn(table, SWT.LEFT);
+		
+		final TableColumn tc3 = new TableColumn(table, SWT.LEFT);
 	    tc3.setText("Value");
 	    tc3.setWidth(150);
 		tc3.setResizable(true);
@@ -114,24 +122,94 @@ public class WPPWeightDialog extends Dialog {
 		Map<Integer, Integer> variableAltColIndex = DebugCorePlugin.variableAltColIndex;
 		if (variableAltColIndex.size()>0) firstAlt=true;
 		
+		final TableColumn tc4 = new TableColumn(table, SWT.LEFT);
 		if (firstAlt){
-			TableColumn tc4 = new TableColumn(table, SWT.LEFT);
 			int i=variableAltColIndex.get(2)+1;
 			tc4.setText("Alt"+i);
-			tc4.setWidth(150);
-			tc4.setResizable(true);
-
-			TableColumn tc5 = new TableColumn(table, SWT.LEFT);
-			tc5.setText("Obj Change");
-			tc5.setWidth(150);
-			tc5.setResizable(true);
+		}else{
+			tc4.setText("Alt");
 		}
+		tc4.setWidth(150);
+		tc4.setResizable(true);
+
+		final TableColumn tc5 = new TableColumn(table, SWT.LEFT);
+		tc5.setText("Obj Change");
+		tc5.setWidth(150);
+		tc5.setResizable(true);
 		
 	    table.setHeaderVisible(true);
 	    table.setLinesVisible(true);
 	    
-	    fillData(table);
-	    table.redraw();
+	    Listener nameSortListener = new Listener() {  
+            
+			@Override
+			public void handleEvent(Event e) {
+				 TableItem[] items = table.getItems();
+				 Collator collator = Collator.getInstance(Locale.getDefault());  
+	             TableColumn column = (TableColumn)e.widget;  
+	             int index=0;
+	             
+	             for (int i = 1; i < items.length; i++) {  
+	                 String value1 = items[i].getText(index);  
+	                 for (int j = 0; j < i; j++){  
+	                     String value2 = items[j].getText(index);  
+	                     if (collator.compare(value1, value2) < 0) {  
+	                         String[] values = {items[i].getText(0), items[i].getText(1), items[i].getText(2), items[i].getText(3), items[i].getText(4)};  
+	                         items[i].dispose();  
+	                         TableItem item = new TableItem(table, SWT.NONE, j);  
+	                         item.setText(values);  
+	                         items = table.getItems();  
+	                         break;  
+	                     }
+	                 }  
+	             }  
+	             table.setSortColumn(column);  
+	        } 
+	     };  
+	     
+		 Listener valueSortListener = new Listener() {  
+	            
+				@Override
+				public void handleEvent(Event e) {
+					 TableItem[] items = table.getItems();
+					 Collator collator = Collator.getInstance(Locale.getDefault());  
+		             TableColumn column = (TableColumn)e.widget;  
+		             int index;
+		             if (column==tc2){
+		            	 index=1;
+		             }else if (column == tc3){
+		            	 index=2;
+		             }else if (column == tc4){
+		            	 index=3;
+		             }else{
+		            	 index=4;
+		             }
+		             
+		             for (int i = 1; i < items.length; i++) {  
+		                 double value1 = Double.parseDouble(items[i].getText(index));  
+		                 for (int j = 0; j < i; j++){  
+		                     double value2 = Double.parseDouble(items[j].getText(index));  
+		                     if (value1 > value2) {
+		                    	 String[] values = {items[i].getText(0), items[i].getText(1), items[i].getText(2), items[i].getText(3), items[i].getText(4)};  
+		                         items[i].dispose();  
+		                         TableItem item = new TableItem(table, SWT.NONE, j);  
+		                         item.setText(values);  
+		                         items = table.getItems();  
+		                         break;  
+		                     }
+		                 }  
+		             }  
+		             table.setSortColumn(column);  
+		        } 
+		     };  
+		 tc1.addListener(SWT.Selection, nameSortListener);
+		 tc2.addListener(SWT.Selection, valueSortListener);
+		 tc3.addListener(SWT.Selection, valueSortListener);
+		 tc4.addListener(SWT.Selection, valueSortListener);
+		 tc5.addListener(SWT.Selection, valueSortListener);
+	     
+		 fillData(table);
+		 table.redraw();
 	}
 	
 	public void fillData(final Table table){
@@ -171,7 +249,7 @@ public class WPPWeightDialog extends Dialog {
 				ti.setText(3, alt);
 				if (!alt.equals("")){
 					double objChange=(Double.parseDouble(value)-Double.parseDouble(alt))*Double.parseDouble(wt);
-					ti.setText(4, String.valueOf(objChange));
+					ti.setText(4, DebugCorePlugin.df.format(objChange));
 				}
 			}
 		}
