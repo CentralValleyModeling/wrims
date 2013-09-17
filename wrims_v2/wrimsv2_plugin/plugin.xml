@@ -89,6 +89,15 @@
          class="wrimsv2_plugin.debugger.toolbaritem.WeightedVariables"
          enablesFor="*">
       </action>  
+      <action
+         id="wpp.alldssvaraibles" 
+         label="All Variables from DSS"
+         icon="icons\DSS_icon.png" 
+         tooltip="all variables from DSS"
+         toolbarPath="group1"
+         class="wrimsv2_plugin.debugger.toolbaritem.AllDssVariables"
+         enablesFor="*">
+      </action>
    </viewContribution> 
 </extension>
 <extension point="org.eclipse.ui.viewActions"> 

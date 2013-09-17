@@ -52,6 +52,9 @@ public class ProcessAltColumn {
 			case 1:
 				altColumnIndex=DebugCorePlugin.watchAltColIndex;
 				break;
+			case 2:
+				altColumnIndex=DebugCorePlugin.variableAltColIndex;
+				break;
 		}
 		
 		for (int i=0; i<4; i++){
@@ -75,6 +78,10 @@ public class ProcessAltColumn {
 			case 1:
 				vp=DebugCorePlugin.watchProperty;
 				altColIndex=DebugCorePlugin.watchAltColIndex;
+				break;
+			case 2:
+				vp=DebugCorePlugin.allVariableProperty;
+				altColIndex=DebugCorePlugin.variableAltColIndex;
 				break;
 		}
 		String aPart = DebugCorePlugin.aPart;

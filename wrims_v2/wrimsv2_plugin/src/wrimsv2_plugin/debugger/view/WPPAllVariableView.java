@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPart;
@@ -244,6 +245,7 @@ public class WPPAllVariableView extends AbstractDebugView implements ISelectionL
 		IStructuredSelection oldSelection = ((IStructuredSelection)viewer.getSelection());
 		viewer.setInput(DebugCorePlugin.target);
 		table=viewer.getTable();
+		ProcessAltColumn.removeAltColumns(table);
 	    for (int i = 0, n = table.getColumnCount(); i < n; i++) {
 	    	table.getColumn(i).pack();
 	    }
@@ -254,5 +256,24 @@ public class WPPAllVariableView extends AbstractDebugView implements ISelectionL
 	
 	public Table getTable(){
 		return table;
+	}
+	
+	public void showDssAlt(){
+		TableViewer viewer=(TableViewer) getViewer();
+		ProcessAltColumn.AdjustAltColumnNames(viewer, 2);
+		fillDssAltData();
+	}
+	
+	public void fillDssAltData(){
+		int size=table.getItemCount();
+		int numCol = table.getColumnCount();
+		for (int index=2; index<numCol; index++){
+			for (int i=0; i<size; i++){
+				TableItem ti = table.getItem(i);
+				String vn = ti.getText(0);
+				ti.setText(index, ProcessAltColumn.addAltColumnData(vn, 2, index));
+			}
+		}
+		table.redraw();
 	}
 }

@@ -1134,6 +1134,7 @@ public class DebugInterface {
 		Map<String, Svar> svFutMap = mds.svFutMap;
 		Map<String, Alias> asMap = mds.asMap;
 		Map<String, Svar> parameterMap = sds.getParameterMap();
+		Map<String, String> partsMap=new HashMap<String, String>(); 
 
 		IntDouble intDouble;
 		
@@ -1142,11 +1143,13 @@ public class DebugInterface {
 		while (tsIterator.hasNext()){
 			String tsName=tsIterator.next();
 			if (!allDataNames.contains(tsName)){
-				intDouble=tsMap.get(tsName).getData();
+				Timeseries ts = tsMap.get(tsName);
+				intDouble=ts.getData();
 				if (intDouble != null){
 					allDataNames.add(tsName);
 					allTsNames.add(tsName);
 					allData.put(tsName, intDouble.getData());
+					partsMap.put(tsName, ts.kind+":"+ControlData.timeStep);
 				}
 			}
 		}
@@ -1156,11 +1159,13 @@ public class DebugInterface {
 		while (dvIterator.hasNext()){
 			String dvName=dvIterator.next();
 			if (!allDataNames.contains(dvName)){
-				intDouble=dvMap.get(dvName).getData();
+				Dvar dv = dvMap.get(dvName);
+				intDouble=dv.getData();
 				if (intDouble !=null){
 					allDataNames.add(dvName);
 					allDvNames.add(dvName);
 					allData.put(dvName, intDouble.getData());
+					partsMap.put(dvName, dv.kind+":"+ControlData.timeStep);
 				}
 			}
 		}
@@ -1170,11 +1175,13 @@ public class DebugInterface {
 		while (svIterator.hasNext()){
 			String svName=svIterator.next();
 			if (!allDataNames.contains(svName)){
-				intDouble=svMap.get(svName).getData();
+				Svar sv = svMap.get(svName);
+				intDouble=sv.getData();
 				if (intDouble!=null){
 					allDataNames.add(svName);
 					allSvNames.add(svName);
 					allData.put(svName, intDouble.getData());
+					partsMap.put(svName, sv.kind+":"+ControlData.timeStep);
 				}
 			}
 		}
@@ -1184,11 +1191,13 @@ public class DebugInterface {
 		while (svFutIterator.hasNext()){
 			String svFutName=svFutIterator.next();
 			if (!allDataNames.contains(svFutName)){
-				intDouble=svFutMap.get(svFutName).getData();
+				Svar svFut = svFutMap.get(svFutName);
+				intDouble=svFut.getData();
 				if (intDouble!=null){
 					allDataNames.add(svFutName);
 					allSvNames.add(svFutName);
 					allData.put(svFutName, intDouble.getData());
+					partsMap.put(svFutName, svFut.kind+":"+ControlData.timeStep);
 				}
 			}
 		}
@@ -1198,10 +1207,12 @@ public class DebugInterface {
 		while (asIterator.hasNext()){
 			String asName=asIterator.next();
 			if (!allDataNames.contains(asName)){
-				intDouble=asMap.get(asName).getData();
+				Alias as = asMap.get(asName);
+				intDouble=as.getData();
 				if (intDouble!=null){
 					allDataNames.add(asName);
 					allData.put(asName, intDouble.getData());
+					partsMap.put(asName, as.kind+":"+ControlData.timeStep);
 				}
 			}
 			if (!allAsNames.contains(asName)){
@@ -1214,11 +1225,13 @@ public class DebugInterface {
 		while (parameterIterator.hasNext()){
 			String parameterName=parameterIterator.next();
 			if (!allDataNames.contains(parameterName)){
-				intDouble=parameterMap.get(parameterName).getData();
+				Svar parameter = parameterMap.get(parameterName);
+				intDouble=parameter.getData();
 				if (intDouble!=null){
 					allDataNames.add(parameterName);
 					allParameterNames.add(parameterName);
 					allData.put(parameterName, intDouble.getData());
+					partsMap.put(parameterName, parameter.kind+":"+ControlData.timeStep);
 				}
 			}
 		}
@@ -1226,6 +1239,11 @@ public class DebugInterface {
 		Collections.sort(allDataNames);
 		for (String variable: allDataNames){
 			dataString=dataString+variable+":"+df.format(allData.get(variable))+"#";
+		}
+		
+		dataString=dataString+"&";
+		for (String variable: partsMap.keySet()){
+			dataString=dataString+variable+":"+partsMap.get(variable)+"#";
 		}
 		
 		dataString=dataString+"&";

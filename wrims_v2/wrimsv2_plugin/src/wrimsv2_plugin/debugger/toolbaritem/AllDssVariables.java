@@ -33,7 +33,7 @@ import wrimsv2_plugin.debugger.view.WPPAllVariableView;
 import wrimsv2_plugin.debugger.view.WPPVariableView;
 import wrimsv2_plugin.tools.DataProcess;
 
-public class AllControlGoals extends ActionDelegate implements IViewActionDelegate{
+public class AllDssVariables extends ActionDelegate implements IViewActionDelegate{
 
 	@Override
 	public void init(IViewPart view) {
@@ -42,10 +42,10 @@ public class AllControlGoals extends ActionDelegate implements IViewActionDelega
 	}
 
 	public void run(IAction action) {
-		if (DebugCorePlugin.target!=null && DebugCorePlugin.target.isSuspended()) getAllControlGoals();
+		if (DebugCorePlugin.target!=null && DebugCorePlugin.target.isSuspended()) getAllDssVariables();
 	}
 	
-	public void getAllControlGoals(){
+	public void getAllDssVariables(){
 		final IWorkbench workbench=PlatformUI.getWorkbench();
 		workbench.getDisplay().asyncExec(new Runnable(){
 			public void run(){
@@ -54,35 +54,25 @@ public class AllControlGoals extends ActionDelegate implements IViewActionDelega
 				try {
 					dialog.run(true,false, new IRunnableWithProgress() {
 						@Override
-						public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+						public void run(final IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
 							String goal="";
-							monitor.beginTask("Determine all control goals", 100);
-							try{
-								goal=DebugCorePlugin.target.sendRequest("allcontrolgoals");
-							}catch (DebugException e) {
-								WPPException.handleException(e);
-							}
-							monitor.worked(33);
-							
-							DebugCorePlugin.allControlGoals=DataProcess.generateArrayList(goal);
-							monitor.worked(33);
+							monitor.beginTask("Retrieve data from DSS files", 100);
 							
 							final IWorkbench workbench=PlatformUI.getWorkbench();
 							workbench.getDisplay().asyncExec(new Runnable(){
 								public void run(){
-									WPPAllGoalView allGoalView = (WPPAllGoalView) workbench.getActiveWorkbenchWindow().getActivePage().findView(DebugCorePlugin.ID_WPP_ALLGOAL_VIEW);
-									allGoalView.updateView();
+									DebugCorePlugin.allVariableProperty=DataProcess.generateVariableProperty(DebugCorePlugin.allVarProperties);
+									WPPAllVariableView allVariableView = (WPPAllVariableView) workbench.getActiveWorkbenchWindow().getActivePage().findView(DebugCorePlugin.ID_WPP_ALLVARIABLE_VIEW);
+									allVariableView.showDssAlt();
+									monitor.done();
 								}
 							});
-							monitor.done();
 						}
 					});
 				} catch (InvocationTargetException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					WPPException.handleException(e);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					WPPException.handleException(e);
 				}
 			}
 		});

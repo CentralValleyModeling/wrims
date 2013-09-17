@@ -121,8 +121,11 @@ public class UpdateView {
 		}
 		
 		String[] dataStrings = data.split("&");
-		if (dataStrings.length==2){
-			DebugCorePlugin.weightedVariables=dataStrings[1];
+		if (dataStrings.length==3){
+			DebugCorePlugin.weightedVariables=dataStrings[2];
+			DebugCorePlugin.allVarProperties=dataStrings[1];
+		}else if (dataStrings.length==2){
+			DebugCorePlugin.allVarProperties=dataStrings[1];
 		}
 		DebugCorePlugin.allVariableStack=DataProcess.generateTree(dataStrings[0]);
 							
@@ -154,7 +157,15 @@ public class UpdateView {
 							}
 							monitor.worked(33);
 							
-							DebugCorePlugin.allVariableStack=DataProcess.generateTree(data);
+							String[] dataStrings = data.split("&");
+							if (dataStrings.length==3){
+								DebugCorePlugin.weightedVariables=dataStrings[2];
+								DebugCorePlugin.allVarProperties=dataStrings[1];
+							}else if (dataStrings.length==2){
+								DebugCorePlugin.allVarProperties=dataStrings[1];
+							}
+							
+							DebugCorePlugin.allVariableStack=DataProcess.generateTree(dataStrings[0]);
 							monitor.worked(33);
 							
 							final IWorkbench workbench=PlatformUI.getWorkbench();

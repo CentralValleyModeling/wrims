@@ -36,8 +36,8 @@ public class WeightedVariables 	extends ActionDelegate implements IViewActionDel
 		workbench.getDisplay().asyncExec(new Runnable(){
 			public void run(){
 				Shell shell=workbench.getActiveWorkbenchWindow().getShell();
-				WPPWeightDialog dialog= new WPPWeightDialog(shell, SWT.BORDER|SWT.APPLICATION_MODAL, true, false, false, false, false, "Weighted Variables", "Weighted Variables");
-				dialog.open(view);
+				WPPWeightDialog dialog= new WPPWeightDialog(shell);
+				dialog.openDialog();
 			}
 		});
 	}

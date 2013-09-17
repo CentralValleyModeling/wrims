@@ -67,12 +67,14 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static IValue[] allVariableStack;
 	public static IValue[] allGoalStack;
 	public static IValue[] watchStack;
+	public static String allVarProperties="";
 	public static String weightedVariables="";
 	public static ArrayList<String> fileControlGoals;
 	public static ArrayList<String> allControlGoals;
 	public static ArrayList<String> watchControlGoals;
 	public static ArrayList<String> watchItems=new ArrayList<String>();
 	public static Map<String, VariableProperty> variableProperty=new HashMap<String, VariableProperty>();
+	public static Map<String, VariableProperty> allVariableProperty = new HashMap<String, VariableProperty>();
 	public static Map<String, VariableProperty> watchProperty=new HashMap<String, VariableProperty>();
 	public static Map<Integer, Integer> variableAltColIndex=new HashMap<Integer, Integer>();;
 	public static Map<Integer, Integer> watchAltColIndex=new HashMap<Integer, Integer>();;
