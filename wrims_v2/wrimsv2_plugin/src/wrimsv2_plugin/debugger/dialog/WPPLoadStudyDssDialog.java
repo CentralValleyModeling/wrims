@@ -62,7 +62,7 @@ public class WPPLoadStudyDssDialog extends Dialog {
 
 	public void openDialog(){
 		create();
-		getShell().setSize(900, 300);
+		getShell().setSize(900, 330);
 		getShell().setText("Load Alt DV/SV");
 		open();
 	}

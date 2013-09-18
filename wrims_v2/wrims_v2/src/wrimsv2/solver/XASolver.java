@@ -115,15 +115,14 @@ public class XASolver {
 				String weightName=(String)weightIterator.next();
 				ControlData.xasolver.setColumnObjective(weightName, weightMap.get(weightName).getValue());
 			}
-		
-			Map<String, WeightElement> weightSlackSurplusMap = SolverData.getWeightSlackSurplusMap();
-			ArrayList<String> usedWeightSlackSurplusCollection = ControlData.currModelDataSet.usedWtSlackSurplusList;
-			Iterator<String> usedWeightSlackSurplusIterator = usedWeightSlackSurplusCollection.iterator();
-		
-			while(usedWeightSlackSurplusIterator.hasNext()){
-				String usedWeightSlackSurplusName=(String)usedWeightSlackSurplusIterator.next();
-				ControlData.xasolver.setColumnObjective(usedWeightSlackSurplusName, weightSlackSurplusMap.get(usedWeightSlackSurplusName).getValue());
-			}
+		}
+		Map<String, WeightElement> weightSlackSurplusMap = SolverData.getWeightSlackSurplusMap();
+		ArrayList<String> usedWeightSlackSurplusCollection = ControlData.currModelDataSet.usedWtSlackSurplusList;
+		Iterator<String> usedWeightSlackSurplusIterator = usedWeightSlackSurplusCollection.iterator();
+	
+		while(usedWeightSlackSurplusIterator.hasNext()){
+			String usedWeightSlackSurplusName=(String)usedWeightSlackSurplusIterator.next();
+			ControlData.xasolver.setColumnObjective(usedWeightSlackSurplusName, weightSlackSurplusMap.get(usedWeightSlackSurplusName).getValue());
 		}
 	}
 	

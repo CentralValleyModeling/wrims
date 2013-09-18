@@ -1247,14 +1247,29 @@ public class DebugInterface {
 		}
 		
 		dataString=dataString+"&";
-		Map<String, WeightElement> wtMap = mds.wtMap;
-		Map<String, WeightElement> wtSlackSurplusMap = mds.wtSlackSurplusMap;
-		for (String variable:allDataNames){
-			if (wtMap.containsKey(variable)){
-				dataString=dataString+variable+":"+df.format(wtMap.get(variable).getValue())+"#";
-			}else if (wtSlackSurplusMap.containsKey(variable)){
-				dataString=dataString+variable+":"+df.format(wtSlackSurplusMap.get(variable).getValue())+"#";
+		
+		Map<String, WeightElement> weightMap = SolverData.getWeightMap();
+		for (int i=0; i<=1; i++){
+			ArrayList<String> weightCollection;
+			if (i==0){
+				weightCollection = ControlData.currModelDataSet.wtList;
+			}else{
+				weightCollection = ControlData.currModelDataSet.wtTimeArrayList;
 			}
+			Iterator<String> weightIterator = weightCollection.iterator();
+		
+			while(weightIterator.hasNext()){
+				String weightName=(String)weightIterator.next();
+				dataString=dataString+weightName+":"+df.format(weightMap.get(weightName).getValue())+"#";
+			}
+		}
+		Map<String, WeightElement> weightSlackSurplusMap = SolverData.getWeightSlackSurplusMap();
+		ArrayList<String> usedWeightSlackSurplusCollection = ControlData.currModelDataSet.usedWtSlackSurplusList;
+		Iterator<String> usedWeightSlackSurplusIterator = usedWeightSlackSurplusCollection.iterator();
+	
+		while(usedWeightSlackSurplusIterator.hasNext()){
+			String usedWeightSlackSurplusName=(String)usedWeightSlackSurplusIterator.next();
+			dataString=dataString+usedWeightSlackSurplusName+":"+df.format(weightSlackSurplusMap.get(usedWeightSlackSurplusName).getValue())+"#";
 		}
 		
 		if (dataString.endsWith("#")) dataString=dataString.substring(0, dataString.length()-1);
