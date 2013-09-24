@@ -185,17 +185,28 @@ public class WPPWeightDialog extends Dialog {
 		            	 index=4;
 		             }
 		             
-		             for (int i = 1; i < items.length; i++) {  
-		                 double value1 = Double.parseDouble(items[i].getText(index));  
-		                 for (int j = 0; j < i; j++){  
-		                     double value2 = Double.parseDouble(items[j].getText(index));  
+		             for (int i = 1; i < items.length; i++) {
+		            	 double value1, value2;
+		            	 String value1Str = items[i].getText(index);
+		            	 if (value1Str.equals("")){
+		            		 value1 = 0.0;
+		            	 }else{
+		            		 value1 = Double.parseDouble(value1Str);
+		            	 }
+		                 for (int j = 0; j < i; j++){
+		                	 String value2Str = items[j].getText(index);
+		                	 if (value2Str.equals("")){
+			            		 value2 = 0.0;
+			            	 }else{
+			            		 value2 = Double.parseDouble(value2Str);
+			            	 }
 		                     if (value1 > value2) {
 		                    	 String[] values = {items[i].getText(0), items[i].getText(1), items[i].getText(2), items[i].getText(3), items[i].getText(4)};  
 		                         items[i].dispose();  
 		                         TableItem item = new TableItem(table, SWT.NONE, j);  
 		                         item.setText(values);  
-		                         items = table.getItems();  
-		                         break;  
+		                         items = table.getItems(); 
+		                         break;
 		                     }
 		                 }  
 		             }  
