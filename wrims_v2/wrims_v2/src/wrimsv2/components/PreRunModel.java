@@ -49,6 +49,8 @@ public class PreRunModel {
 			System.out.println("=======Run Complete Unsuccessfully=======");
 			System.exit(0);
 		}
+		DSSUtil.generateCatalog(FilePaths.fullInitDssPath);
+		DSSUtil.generateCatalog(FilePaths.fullSvarDssPath);
 		ControlData.groupInit= DSSUtil.createGroup("local", FilePaths.fullInitDssPath);
 		ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarDssPath);
 		ControlData.allTsMap=sds.getTimeseriesMap();
