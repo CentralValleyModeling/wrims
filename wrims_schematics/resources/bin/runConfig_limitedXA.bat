@@ -24,6 +24,8 @@ set t=%ConfigFilePath%
 set t=%t::=@%
 set t=%t:\=$%
 
+set temp_wrims2=%~dp0_temp\%t%
+
 IF EXIST %temp_wrims2% (
 	rmdir /s /q %temp_wrims2%
 )
