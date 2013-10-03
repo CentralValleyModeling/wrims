@@ -25,7 +25,13 @@ public class TableOperation {
 	public static boolean retrieveLookUpData (String name){
 		String tableFullPath=FilePaths.mainDirectory+"lookup"+File.separator+FilePaths.lookupSubDirectory+File.separator+name+".table";
 		try{
-			    FileInputStream fstream = new FileInputStream(tableFullPath);
+				File f = new File(tableFullPath);
+				if(!f.exists()) {
+					Error.addEvaluationError("Table "+name+" could not be found.");
+					return false;
+				}
+			
+				FileInputStream fstream = new FileInputStream(tableFullPath);
 			    DataInputStream in = new DataInputStream(fstream);
 			    BufferedReader br = new BufferedReader(new InputStreamReader(in));
 			    
