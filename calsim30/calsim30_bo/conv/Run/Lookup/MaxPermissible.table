@@ -3,6 +3,6 @@
 ! Modified by Hilts 20090204 to hopefully eliminate the Stan 1500 cfs limitation.
 !*****************************************************************************************
 MAXPERMISSIBLE
-Node	MaxLimit
+NodeID	MaxLimit
 16		7500.001
 528		7500.001

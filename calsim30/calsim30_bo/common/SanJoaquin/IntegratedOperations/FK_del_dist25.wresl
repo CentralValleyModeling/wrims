@@ -10,10 +10,10 @@ define D910_16B {std kind 'flow-delivery' units 'cfs'}
 
 goal split_D910 {D910 = D910_C1 + D910_C2 + D910_215 + D910_SD + D910_16B }
 
-define dist_910_c1 {select C1 from FK_delivery_dist where NODE = 910}
-define dist_910_c2 {select C2 from FK_delivery_dist where NODE = 910}
-define dist_910_215 {select C215 from FK_delivery_dist where NODE = 910}
-define dist_910_LOSS {select LOSS from FK_delivery_dist where NODE = 910}
+define dist_910_c1 {select C1 from FK_delivery_dist where nodeID= 910}
+define dist_910_c2 {select C2 from FK_delivery_dist where nodeID= 910}
+define dist_910_215 {select C215 from FK_delivery_dist where nodeID= 910}
+define dist_910_LOSS {select LOSS from FK_delivery_dist where nodeID= 910}
 
 goal lim_D910_c1 {D910_C1 < FK_C1_DEL * taf_cfs * dist_910_c1/100.}
 goal lim_D910_c2 {D910_C2 < FK_final_C2 * taf_cfs * dist_910_c2/100.}
@@ -30,10 +30,10 @@ define D920_16B {std kind 'flow-delivery' units 'cfs'}
 
 goal split_D920 {D920 = D920_C1 + D920_C2 + D920_215 + D920_SD + D920_16B}
 
-define dist_920_c1 {select C1 from FK_delivery_dist where NODE = 920}
-define dist_920_c2 {select C2 from FK_delivery_dist where NODE = 920}
-define dist_920_215 {select C215 from FK_delivery_dist where NODE = 920}
-define dist_920_LOSS {select LOSS from FK_delivery_dist where NODE = 920}
+define dist_920_c1 {select C1 from FK_delivery_dist where nodeID= 920}
+define dist_920_c2 {select C2 from FK_delivery_dist where nodeID= 920}
+define dist_920_215 {select C215 from FK_delivery_dist where nodeID= 920}
+define dist_920_LOSS {select LOSS from FK_delivery_dist where nodeID= 920}
 
 goal lim_D920_c1 {D920_C1 < FK_C1_DEL * taf_cfs * dist_920_c1/100.}
 goal lim_D920_c2 {D920_C2 < FK_final_C2 * taf_cfs * dist_920_c2/100.}
@@ -50,10 +50,10 @@ define D932_16B {std kind 'flow-delivery' units 'cfs'}
 
 goal split_D932 {D932 = D932_C1 + D932_C2 + D932_215 + D932_SD + D932_16B}
 
-define dist_932_c1 {select C1 from FK_delivery_dist where NODE = 932}
-define dist_932_c2 {select C2 from FK_delivery_dist where NODE = 932}
-define dist_932_215 {select C215 from FK_delivery_dist where NODE = 932}
-define dist_932_LOSS {select LOSS from FK_delivery_dist where NODE = 932}
+define dist_932_c1 {select C1 from FK_delivery_dist where nodeID= 932}
+define dist_932_c2 {select C2 from FK_delivery_dist where nodeID= 932}
+define dist_932_215 {select C215 from FK_delivery_dist where nodeID= 932}
+define dist_932_LOSS {select LOSS from FK_delivery_dist where nodeID= 932}
 
 goal lim_D932_c1 {D932_C1 < FK_C1_DEL * taf_cfs * dist_932_c1/100.}
 goal lim_D932_c2 {D932_C2 < FK_final_C2 * taf_cfs * dist_932_c2/100.}
@@ -70,10 +70,10 @@ define D933_16B {std kind 'flow-delivery' units 'cfs'}
 
 goal split_D933 {D933 = D933_C1 + D933_C2 + D933_215 + D933_SD + D933_16B}
 
-define dist_933_c1 {select C1 from FK_delivery_dist where NODE = 933}
-define dist_933_c2 {select C2 from FK_delivery_dist where NODE = 933}
-define dist_933_215 {select C215 from FK_delivery_dist where NODE = 933}
-define dist_933_LOSS {select LOSS from FK_delivery_dist where NODE = 933}
+define dist_933_c1 {select C1 from FK_delivery_dist where nodeID= 933}
+define dist_933_c2 {select C2 from FK_delivery_dist where nodeID= 933}
+define dist_933_215 {select C215 from FK_delivery_dist where nodeID= 933}
+define dist_933_LOSS {select LOSS from FK_delivery_dist where nodeID= 933}
 
 goal lim_D933_c1 {D933_C1 < FK_C1_DEL * taf_cfs * dist_933_c1/100.}
 goal lim_D933_c2 {D933_C2 < FK_final_C2 * taf_cfs * dist_933_c2/100.}
@@ -90,10 +90,10 @@ define D937_16B {std kind 'flow-delivery' units 'cfs'}
 
 goal split_D937 {D937 = D937_C1 + D937_C2 + D937_215 + D937_SD + D937_16B}
 
-define dist_937_c1 {select C1 from FK_delivery_dist where NODE = 937}
-define dist_937_c2 {select C2 from FK_delivery_dist where NODE = 937}
-define dist_937_215 {select C215 from FK_delivery_dist where NODE = 937}
-define dist_937_LOSS {select LOSS from FK_delivery_dist where NODE = 937}
+define dist_937_c1 {select C1 from FK_delivery_dist where nodeID= 937}
+define dist_937_c2 {select C2 from FK_delivery_dist where nodeID= 937}
+define dist_937_215 {select C215 from FK_delivery_dist where nodeID= 937}
+define dist_937_LOSS {select LOSS from FK_delivery_dist where nodeID= 937}
 
 goal lim_D937_c1 {D937_C1 < FK_C1_DEL * taf_cfs * dist_937_c1/100.}
 goal lim_D937_c2 {D937_C2 < FK_final_C2 * taf_cfs * dist_937_c2/100.}
@@ -110,10 +110,10 @@ define D950_16B {std kind 'flow-delivery' units 'cfs'}
 
 goal split_D950 {D950 = D950_C1 + D950_C2 + D950_215 + D950_SD + D950_16B}
 
-define dist_950_c1 {select C1 from FK_delivery_dist where NODE = 950}
-define dist_950_c2 {select C2 from FK_delivery_dist where NODE = 950}
-define dist_950_215 {select C215 from FK_delivery_dist where NODE = 950}
-define dist_950_LOSS {select LOSS from FK_delivery_dist where NODE = 950}
+define dist_950_c1 {select C1 from FK_delivery_dist where nodeID= 950}
+define dist_950_c2 {select C2 from FK_delivery_dist where nodeID= 950}
+define dist_950_215 {select C215 from FK_delivery_dist where nodeID= 950}
+define dist_950_LOSS {select LOSS from FK_delivery_dist where nodeID= 950}
 
 goal lim_D950_c1 {D950_C1 < FK_C1_DEL * taf_cfs * dist_950_c1/100.}
 goal lim_D950_c2 {D950_C2 < FK_final_C2 * taf_cfs * dist_950_c2/100.}

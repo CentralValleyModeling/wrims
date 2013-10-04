@@ -29,7 +29,7 @@ Node   MaxLimit
 528    1500.001
 */
 ! Regulated releases from Goodwin Dam (Tulloch Reservoir) < user defined capacity (i.e. 1500 cfs)
-define maxGoodwin { select MaxLimit from MaxPermissible where node=16 }
+define maxGoodwin { select MaxLimit from MaxPermissible where nodeID=16 }
 ! Set limits on Goodwin release
 goal RestrGoodwin{ C520 - C520F < maxGoodwin }
 

@@ -326,7 +326,7 @@ This representation of refuge return quantities does not reflect:
 define AnnDem_D708 {value 182.6} !Sum first 12 months of dem_d708_prf, TAF, LDB 8/30/04
 define ANN_D708_RF { value 0.61 * AnnDem_D708 * perdel_cvprf_s } !LDB, 8/30/04
 ! Lower DMC refuge monthly percentage of return flows to SJR at Salt Slough
-define SJRF_708_614  {select mon_pct from CVPcontractRF where node=708, contr=1, month=month}
+define SJRF_708_614  {select mon_pct from CVPcontractRF where nodeID=708, contr=1, month=month}
 ! Lower DMC refuge return flows to SJR at Salt Slough
 goal returnflowR614k { R614k = ANN_D708_RF * SJRF_708_614 * taf_cfs }
 
@@ -336,7 +336,7 @@ Returns location of these two refuge location is:
 Mendota WMA back to Mendota Pool: R607i of R607West
 Grasslands WD to Mud Slough: R614L of R614 West*/
 define SJRF_607C_614  {    select mon_pct from CVPcontractRF    !monthly release schedule
-                    where node=6073, contr=1, month=month}
+                    where nodeID=6073, contr=1, month=month}
 define AnnDem_D607C_RF {value 94.41} !Annual refuge diversion in TAF
 !Mendota WMA
 define AnnDem_MWMA {value 27.01} !Annual diversion amount in TAF

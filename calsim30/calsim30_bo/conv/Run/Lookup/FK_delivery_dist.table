@@ -2,7 +2,7 @@
 !Copied from FWUA-MWD_sim_010505 (lgb) .xls
 !Units %
 FK_delivery_dist			
-NODE	C1	C2	C215	Loss
+NODEID	C1	C2	C215	Loss
 910	9.8	7.2	1.9	18.8
 920	24.9	18.2	12.5	39.3
 932	20.4	28.9	5.2	9.6
