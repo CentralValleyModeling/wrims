@@ -39,14 +39,14 @@ set temp_wrims2=%~dp0_temp\%t%\
 :------------------:
 set JarDir=%~dp0%\..\lib
 set AppJars=%JarDir%\WRIMSv2.jar
-set AppJars=%AppJars%;%JarDir%\gurobi.jar
+rem set AppJars=%AppJars%;%JarDir%\gurobi.jar
 set AppJars=%AppJars%;%JarDir%\heclib.jar
 set AppJars=%AppJars%;%JarDir%\jnios.jar
 set AppJars=%AppJars%;%JarDir%\jpy.jar
 set AppJars=%AppJars%;%JarDir%\misc.jar
 set AppJars=%AppJars%;%JarDir%\pd.jar
 set AppJars=%AppJars%;%JarDir%\vista.jar
-set AppJars=%AppJars%;%JarDir%\lpsolve55j.jar
+rem set AppJars=%AppJars%;%JarDir%\lpsolve55j.jar
 set AppJars=%AppJars%;%JarDir%\commons-io-2.1.jar
 set AppJars=%AppJars%;%JarDir%\javatuples-1.2.jar
 set AppJars=%AppJars%;%JarDir%\guava-11.0.2.jar
