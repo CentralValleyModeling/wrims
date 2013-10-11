@@ -161,7 +161,7 @@ timeseries returns [IntDouble id]
 	
 partC: 	(IDENT|IDENT1|usedKeywords) ('-' (IDENT|IDENT1|usedKeywords))*;
   
-usedKeywords: YEAR|MONTH|MONTH_CONST|DAY|PASTMONTH|RANGE|TAFCFS|DAYSIN|SUM|MAX|MIN|INT|REAL|ABS|EXP|LOG|LOG10|POW|MOD|SELECT|FROM|GIVEN|USE|WHERE
+usedKeywords: YEAR|MONTH|MONTH_CONST|DAY|PASTMONTH|RANGE|TAFCFS|DAYSIN|DAYSINTIMESTEP|SUM|MAX|MIN|INT|REAL|ABS|EXP|LOG|LOG10|POW|MOD|SELECT|FROM|GIVEN|USE|WHERE
 |CONSTRAIN|ALWAYS|NAME|DVAR|CYCLE|FILE|CONDITION|INCLUDE|LOWERBOUND|UPPERBOUND|INTEGERTYPE|UNITS|CONVERTUNITS|TYPE|OUTPUT
 |CASE|ORDER|EXPRESSION|LHSGTRHS|LHSLTRHS|WEIGHT|FUNCTION|FROM_WRESL_FILE|UPPERUNBOUNDED|LOWERUNBOUNDED|AND|OR|NOT;
 
@@ -200,7 +200,7 @@ term returns [IntDouble id]
 	:	(IDENT {id=ValueEvaluation.term_IDENT($IDENT.text);})
 	| (FLOAT {id=ValueEvaluation.term_FLOAT($FLOAT.text);}) 
 	| ('(' (e=expression) ')' {id=$e.id;})
-	| ((knownTS{id=ValueEvaluation.term_knownTS($knownTS.result);}) 
+	| (knownTS{id=ValueEvaluation.term_knownTS($knownTS.result);}) 
 	| func{id=$func.id;}
 	| (INTEGER {id=ValueEvaluation.term_INTEGER($INTEGER.text);})
 	| tafcfs_term{id=$tafcfs_term.id;}
@@ -209,7 +209,8 @@ term returns [IntDouble id]
 	| DAY {id=ValueEvaluation.term_DAY();}
 	| MONTH_CONST{id=ValueEvaluation.term_MONTH_CONST($MONTH_CONST.text);}
 	| PASTMONTH{id=ValueEvaluation.term_PASTMONTH($PASTMONTH.text);}
-	| DAYSIN{id=ValueEvaluation.daysIn();})
+	| DAYSIN{id=ValueEvaluation.daysIn();}
+	| DAYSINTIMESTEP{id=ValueEvaluation.daysInTimeStep();}
 	| (SVAR{id=ValueEvaluation.term_SVAR($SVAR.text.replace("{","").replace("}",""));})
 	| ARRAY_ITERATOR{id=ValueEvaluation.term_ARRAY_ITERATOR();} 
 	| '(' sumExpression ')' {id=$sumExpression.id;}
@@ -376,6 +377,7 @@ RANGE: 'range';
 
 TAFCFS: 'taf_cfs'|'cfs_taf'|'cfs_af'|'af_cfs';
 DAYSIN: 'daysin'|'daysinmonth';
+DAYSINTIMESTEP: 'daysintimestep';
 
 ARRAY_ITERATOR : '$m' ;
 

@@ -168,7 +168,7 @@ timeseries returns [EvalExpression ee]
 	
 partC: 	(IDENT|IDENT1|usedKeywords) ('-' (IDENT|IDENT1|usedKeywords))*;
   
-usedKeywords: YEAR|MONTH|MONTH_CONST|DAY|PASTMONTH|RANGE|TAFCFS|DAYSIN|SUM|MAX|MIN|INT|REAL|ABS|EXP|LOG|LOG10|POW|MOD|SELECT|FROM|GIVEN|USE|WHERE
+usedKeywords: YEAR|MONTH|MONTH_CONST|DAY|PASTMONTH|RANGE|TAFCFS|DAYSIN|DAYSINTIMESTEP|SUM|MAX|MIN|INT|REAL|ABS|EXP|LOG|LOG10|POW|MOD|SELECT|FROM|GIVEN|USE|WHERE
 |CONSTRAIN|ALWAYS|NAME|DVAR|CYCLE|FILE|CONDITION|INCLUDE|LOWERBOUND|UPPERBOUND|INTEGERTYPE|UNITS|CONVERTUNITS|TYPE|OUTPUT
 |CASE|ORDER|EXPRESSION|LHSGTRHS|LHSLTRHS|WEIGHT|FUNCTION|FROM_WRESL_FILE|UPPERUNBOUNDED|LOWERUNBOUNDED|AND|OR|NOT;
 
@@ -218,6 +218,7 @@ term returns [EvalExpression ee]
 	| MONTH_CONST{ee=Evaluation.term_MONTH_CONST($MONTH_CONST.text);}
 	| PASTMONTH{ee=Evaluation.term_PASTMONTH($PASTMONTH.text);}
 	| DAYSIN{ee=Evaluation.daysIn();}
+	| DAYSINTIMESTEP{ee=Evaluation.daysInTimeStep();}
 	| (SVAR{ee=Evaluation.term_SVAR($SVAR.text.replace("{","").replace("}",""));}) 
 	| ARRAY_ITERATOR{ee=Evaluation.term_ARRAY_ITERATOR();}
 	| '(' sumExpression ')'{ee=$sumExpression.ee;}
@@ -384,6 +385,7 @@ RANGE: 'range';
 
 TAFCFS: 'taf_cfs'|'cfs_taf'|'cfs_af'|'af_cfs';
 DAYSIN: 'daysin'|'daysinmonth';
+DAYSINTIMESTEP: 'daysintimestep';
 
 ARRAY_ITERATOR : '$m' ;
 

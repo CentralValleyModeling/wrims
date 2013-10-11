@@ -853,6 +853,15 @@ public class ValueEvaluation {
 		return new IntDouble(days, true);
 	}
 	
+	public static IntDouble daysInTimeStep(){
+		if (ControlData.currTimeStep.equals("1MON")){
+			return daysIn();
+		}else{
+			IntDouble id=new IntDouble(1, true);
+			return new IntDouble(1, true);
+		}
+	}
+	
 	public static IntDouble tafcfs_term(String ident, IntDouble id){
 		if (id==null){
 			ControlData.dataMonth=ControlData.currMonth;

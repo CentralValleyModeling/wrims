@@ -1209,6 +1209,15 @@ public class Evaluation {
 		return new EvalExpression(id);
 	}
 	
+	public static EvalExpression daysInTimeStep(){
+		if (ControlData.currTimeStep.equals("1MON")){
+			return daysIn();
+		}else{
+			IntDouble id=new IntDouble(1, true);
+			return new EvalExpression(id);
+		}
+	}
+	
 	public static EvalExpression tafcfs_term(String ident, EvalExpression ee){
 		if (ee==null){
 			ControlData.dataMonth=ControlData.currMonth;
