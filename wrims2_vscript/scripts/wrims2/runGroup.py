@@ -53,14 +53,14 @@ class RunGroup:
 		if P.exists(subGroupDir):
 			FileUtils.erase(subGroupDir)
 
-		# strange bug. need to investigate.
-		try: 
-			os.makedirs(subGroupDir)
-		except:
-			os.mkdir(subGroupDir)	
-						
 	
 		if simultaneousRun > 1:
+			
+			# strange bug. need to investigate.
+			try: 
+				os.makedirs(subGroupDir)
+			except:
+				os.mkdir(subGroupDir)	
 			
 			chunks=[self._runList[x:x+simultaneousRun] for x in xrange(0, len(self._runList), simultaneousRun)]
 				

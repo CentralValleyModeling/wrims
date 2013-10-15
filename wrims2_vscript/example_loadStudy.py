@@ -16,8 +16,8 @@ studyRunDir = path.join(Param.mainScriptDir,'studies/callite_D1641/Run')
 configFile = 'D1641.config'
 
 
-s = Study('testStudy', studyRunDir)
-s.importConfig(configFile)    
-#s.writeBatch(pause=True)
+s = Study('testStudy', studyRunDir) # 'testStudy' is the name of the study
+s.importConfig(configFile)    # a config file named 'testStudy' is created from the imported config
+#s.writeBatch(pause=True)  # set pause=True to inspect error message. Default setting is false.
 s.run()
 

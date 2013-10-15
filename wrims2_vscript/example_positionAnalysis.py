@@ -60,7 +60,7 @@ historyWYs = [1929, 1930, 1931, 1932, 1933, 1934, 1976, 1977]
 sequentialYRs = 1
 
 # specify the number of runs at the same time
-simultaneousRuns = 4 
+simultaneousRuns = 1 
 
 # UARM: Upper American River Model, that is storage in French Meadows, 
 # Hell Hole, and Union Valley Reservoirs, which are upstream of Folsom.
@@ -115,14 +115,6 @@ for beginWY in historyWYs:
     # copy all tables from LookupOriginalDir to outSubDir
     FileUtils.copyAll(lookupOriginalDir, path.join(studyRunDir, "Lookup", outSubDir))
 
-    # create lookup table for converting futureWaterYear to historicalWaterYear
-#     posTable = open(path.join(studyRunDir, "Lookup", outSubDir,"Position_Analysis.table"),'w+'  )
-#     posTable.write("Position_Analysis\n")
-#     posTable.write("FutureWaterYear     HistoricalWaterYear\n")
-#     for iYear in range(sequentialYRs):
-#         posTable.write(str(futureWY+iYear)+"\t"+str(beginWY+iYear)+'\n')
-#     posTable.close()
-    
 
     for tableName in yearlyTableList:
         outTablePath = path.join(studyRunDir, "Lookup", outSubDir, tableName)
@@ -168,7 +160,7 @@ for beginWY in historyWYs:
                 LookupSubDir=studyName,
                 PrefixInitToDvarFile='Yes')
     
-    s.writeBatch(pause=False)
+    s.writeBatch(pause=False) # set pause=True to inspect error message
     runGroup.add(s)
 
 # write batch for all runs
