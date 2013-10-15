@@ -74,7 +74,7 @@ set PATH=%ExternalDir%;%JarDir%
 
 
 
-%temp_wrims2%/../../jre/bin/java -Xmx1472m -Xss1280K -Djava.library.path=%PATH% %CLASSPATH% wrimsv2.components.ControllerBatch -config="%configFilePath%"
+%temp_wrims2%/../../jre/bin/java -Xmx1000m -Xss1280K -Djava.library.path=%PATH% %CLASSPATH% wrimsv2.components.ControllerBatch -config="%configFilePath%"
 
 IF /I [%2]==[-pause] GOTO pause
 
