@@ -4,13 +4,23 @@ import wrimsv2.components.ControlData;
 import wrimsv2.components.FilePaths;
 
 import com.sunsetsoft.xa.Optimizer;
+import com.sunsetsoft.xa.XAException;
+
+import wrimsv2.components.Error;
 
 public class InitialXASolver {
 	public InitialXASolver(){
 		ControlData.xasolver=new Optimizer(25000);
 		ControlData.xasolver.setActivationCodes( 234416483 , 19834525 ) ;
 		ControlData.xasolver.setXAMessageWindowOff();
-		ControlData.xasolver.openConnection();
+		try{
+			ControlData.xasolver.openConnection();
+		}
+		catch (XAException e)
+	    {
+	       Error.addEngineError("Missing XA Dongle or supporting license files.");
+	       return;
+	    }
 		ControlData.xasolver.setModelSize(100, 100);
 		ControlData.xasolver.setCommand("MAXIMIZE Yes MUTE yes FORCE No wait no matlist v set visible no");
 		System.out.println("Initialize XA solver done");

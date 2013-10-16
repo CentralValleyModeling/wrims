@@ -211,6 +211,10 @@ public class ControllerDebug extends Thread {
 		
 		if (ControlData.solverName.equalsIgnoreCase("XA") || ControlData.solverName.equalsIgnoreCase("XALOG")) {
 			new InitialXASolver();
+			if (Error.getTotalError()>0){
+				System.out.println("Model run suspends due to error.");
+				di.handleRequest("suspend");
+			}
 		}else if (ControlData.solverName.equalsIgnoreCase("Gurobi")){
 			GurobiSolver.initialize();
 		}

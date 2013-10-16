@@ -42,12 +42,12 @@ public class PreRunModel {
 		if (!(new File(FilePaths.fullInitDssPath)).exists()){ 
 			System.out.println("Error: Initial file "+ FilePaths.fullInitDssPath+" doesn't exist.");
 			System.out.println("=======Run Complete Unsuccessfully=======");
-			System.exit(0);
+			System.exit(1);
 		}
 		if (!(new File(FilePaths.fullSvarDssPath)).exists()){ 
 			System.out.println("Error: Svar file "+ FilePaths.fullSvarDssPath+" doesn't exist.");
 			System.out.println("=======Run Complete Unsuccessfully=======");
-			System.exit(0);
+			System.exit(1);
 		}
 		DSSUtil.generateCatalog(FilePaths.fullInitDssPath);
 		DSSUtil.generateCatalog(FilePaths.fullSvarDssPath);

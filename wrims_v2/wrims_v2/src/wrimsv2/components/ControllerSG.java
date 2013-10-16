@@ -181,6 +181,10 @@ public class ControllerSG {
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
 		
 		new InitialXASolver();
+		if (Error.getTotalError()>0){
+			System.out.println("Model run exits due to error.");
+			System.exit(1);
+		}
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
 		VariableTimeStep.initialCurrTimeStep(modelList);
