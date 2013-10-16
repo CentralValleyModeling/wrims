@@ -4,10 +4,11 @@
 #
 ## Step 1. Provide initial data for decision variables:  /Run/DSS/CL_INIT_2012.dss
 ## Step 2. Provide 2012 annual requests data in this table: /Run/Lookup/PA_Base_D1641_Existing/AnnualReqDel_swp.table
-## Step 3. Enter data in the following "User Input" section
-## Step 4. Open a command prompt and type "vscript example_positionAnalysis.py"
-## Step 5. A batch file named "CalLitePA_demo.bat" will be generated. Double click this batch file to run the project.
-## Step 6. After runs completed, open this dss file to see results: /studies/callite_D1641Existing_PA__2012oct/Run/DSS/CalLitePA_demo_DV.dss to see results
+## Step 3. Provide 2012 water year type in these tables: wytype, wytypeD1485, wytypeDefic, and wytypeSnow
+## Step 4. Enter data in the following "User Input" section
+## Step 5. Open a command prompt and type "vscript example_positionAnalysis.py"
+## Step 6. A batch file named "CalLitePA_demo.bat" will be generated. Double click this batch file to run the project.
+## Step 7. After runs completed, open this dss file to see results: /studies/callite_D1641Existing_PA__2012oct/Run/DSS/CalLitePA_demo_DV.dss to see results
 #=====================================================================================
 
 from os import path 
@@ -46,8 +47,8 @@ lookupOriginalDir = path.join(studyRunDir, "Lookup", "PA_Base_D1641_Existing" )
 
 # futureWY is the beginning water year that the historical svar data will be copied to
 futureWY = 2013
-startYear=2012 # tied to lookup table data and initial data
-startMonth=10  # tied to lookup table data and initial data
+startYear=2012 #  calendar year 2012 oct is water year 2013 oct
+startMonth=10  #  tied initial data
 
 
 # historyWYs are the historical svars that will be used to simulate future water year svars
@@ -138,7 +139,7 @@ for beginWY in historyWYs:
     studyName = projectName+'_'+outSvarFpart
 
     DssVista.copyDssToFuture_waterYear(svarOriginalFile, svarShiftedFile, beginWY, sequentialYRs, futureWY, outSvarFpart)    
-    DssVista.array2dss(svarShiftedFile, UARM_at_2012_09, "30SEP2012 2400", "/CALLITE/UARM/STORAGE//1MON/"+ outSvarFpart +"/", "TAF")
+    DssVista.array2dss(svarShiftedFile, UARM_at_2012_09, "30SEP2012 2400", "/"+svarAPart+"/UARM/STORAGE//1MON/"+ outSvarFpart +"/", "TAF")
 
 
 
