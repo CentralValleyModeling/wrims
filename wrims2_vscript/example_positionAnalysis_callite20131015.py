@@ -170,7 +170,7 @@ for beginWY in historyWYs:
                 LookupSubDir=studyName,
                 PrefixInitToDvarFile='Yes')
     
-    s.writeBatch(pause=True) # set pause=True to inspect error message
+    s.writeBatch(pause=False) # set pause=True to inspect error message
     runGroup.add(s)
 
 # write batch for all runs

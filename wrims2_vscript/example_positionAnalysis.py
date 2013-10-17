@@ -28,7 +28,7 @@ LogUtils.initLogging()
 projectName ="CalLitePA_demo"
 
 # studyRunDir is the run directory of the CalLite study
-studyRunDir = path.join(Param.mainScriptDir, "studies/callite_D1641Existing_PA__2012oct/Run")
+studyRunDir = path.join(Param.mainScriptDir, "studies/callite_old/Run")
 
 # svarOriginalFile is the svar dss file path
 svarOriginalFile =path.join(studyRunDir, "DSS/CL_EXISTING_BO_081011_SV.dss")
@@ -138,7 +138,7 @@ for beginWY in historyWYs:
     outSvarFpart = str(beginWY)+"_"+str(endWY) # e.g., 1945_1947
     studyName = projectName+'_'+outSvarFpart
 
-    DssVista.copyDssToFuture_waterYear(svarOriginalFile, svarShiftedFile, beginWY, sequentialYRs, futureWY, outSvarFpart)    
+    DssVista.copyDssToFuture_waterYear(svarOriginalFile, svarShiftedFile, beginWY, sequentialYRs, 0, futureWY, outSvarFpart)    
     DssVista.array2dss(svarShiftedFile, UARM_at_2012_09, "30SEP2012 2400", "/"+svarAPart+"/UARM/STORAGE//1MON/"+ outSvarFpart +"/", "TAF")
 
 
