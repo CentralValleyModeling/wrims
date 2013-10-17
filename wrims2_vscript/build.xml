@@ -27,6 +27,8 @@
 	</target>
 	    	
 	<target name="Clean_files" >
+		<delete file="${src.dir}/CalLitePA_demo.bat" failonerror="false"/>
+		
 		<if>
 		  <available file="${temp.dir}" type="dir" />
 		  <then>
@@ -82,7 +84,7 @@
 				<include name="*.py"/>
 				<include name="*.bat"/>
 				<include name="*.txt"/>
-				
+				<include name="test.dss"/>
 				<include name="*.properties"/>
 		
 			</fileset>

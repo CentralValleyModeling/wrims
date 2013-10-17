@@ -52,7 +52,7 @@ set AppJars=%AppJars%;%JarDir%\vista.jar
 set AppJars=%AppJars%;%JarDir%\commons-io-2.1.jar
 set AppJars=%AppJars%;%JarDir%\javatuples-1.2.jar
 set AppJars=%AppJars%;%JarDir%\guava-11.0.2.jar
-set AppJars=%AppJars%;%JarDir%\XAOptimizer.jar
+set AppJars=%AppJars%;%JarDir%\CalLiteV16.jar
 
 :---------------------------------:
 : user defined java class and dll :
@@ -76,11 +76,11 @@ set PATH=%ExternalDir%;%JarDir%
 
 
 
-%temp_wrims2%/../../jre/bin/java -Xmx1472m -Xss1280K -Djava.library.path=%PATH% %CLASSPATH% wrimsv2.components.ControllerBatch -config="%configFilePath%"
+%temp_wrims2%/../../jre/bin/java -Xmx1000m -Xss1280K -Djava.library.path=%PATH% %CLASSPATH% wrimsv2.components.ControllerBatch -config="%configFilePath%"
 
 IF /I [%2]==[-pause] GOTO pause
 
-exit
+pause
 
 :pause
 pause

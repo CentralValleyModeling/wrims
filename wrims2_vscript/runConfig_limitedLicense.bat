@@ -27,11 +27,13 @@ set t=%t:\=$%
 
 set temp_wrims2=%~dp0_temp\%t%
 
-IF EXIST %temp_wrims2% (
-	rmdir /s /q %temp_wrims2%
+IF EXIST %temp_wrims2%\study.sty (
+	del /F /Q %temp_wrims2%\study.sty
 )
- 
-mkdir %temp_wrims2%
+
+IF NOT EXIST %temp_wrims2% (
+	mkdir %temp_wrims2%
+) 
 
 set temp_wrims2=%~dp0_temp\%t%\
 
