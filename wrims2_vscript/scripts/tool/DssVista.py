@@ -49,11 +49,11 @@ def copyDssToFuture_calendarYear(inFile, outFile, beginYR, sequentialYR, futureY
     
         arr2dss(outFile, y_arr, interval, beginTime_new, pathname_new, attr)
         
-def copyDssToFuture_waterYear(inFile, outFile, beginWY, sequentialYR, futureWY=-99, outFpart="", epart="1MON"):
+def copyDssToFuture_waterYear(inFile, outFile, beginWY, sequentialYR, bufferYR=0, futureWY=-99, outFpart="", epart="1MON"):
     
     beginCY = beginWY - 1
-    endCY = beginCY + sequentialYR - 1 + 1
-    endWY = beginWY + sequentialYR - 1
+    endCY = beginCY + sequentialYR + bufferYR - 1 + 1
+    endWY = beginWY + sequentialYR + bufferYR - 1
     futureCY = futureWY - 1
 
     tw = timewindow("31OCT"+str(beginCY)+" 2400 - 30SEP"+str(endCY)+" 2400")  
