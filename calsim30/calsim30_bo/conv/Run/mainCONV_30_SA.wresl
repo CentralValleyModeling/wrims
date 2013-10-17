@@ -70,6 +70,7 @@ SEQUENCE CYCLE16 {
     }
 
 MODEL SJRBASE {         !CYCLE 1
+    define beginWaterYear{ value 1922 }
     INCLUDE '..\..\common\NewFacilitySwitches.wresl'
     INCLUDE '..\..\common\LevelofDevelopment.wresl'
     INCLUDE '..\..\common\NorthOfDelta\Sacramento\NODOS\NODOS_JobControl.wresl'
