@@ -591,8 +591,8 @@ goal setGPmin_20_NA1   {GP_20_NA1  > GPmin_20_NA1 * AWo_20_NA1 * (1+ RPF_20_NA1 
 define GPmin_20_NA1_dv	{alias GPmin_20_NA1 * AWo_20_NA1 * (1+ RPF_20_NA1 - RUFo_20_NA1) + GPmin_20_NA1 * AWr_20_NA1 * (1+ RPF_20_NA1 - RUFr_20_NA1) kind 'GW-PUMPING-LIMIT' units 'CFS'}
 
 ! 20_NA2
-goal setGPmin_20_NA2   {GP_20_NA2  > GPmin_20_NA2  * AWo_20_NA2 * (1+ RPF_20_NA1 - RUFo_20_NA2) + GPmin_20_NA2 * AWr_20_NA2 * (1+ RPF_20_NA2 - RUFr_20_NA2)}
-!goal setGPmax_20_NA2   {GP_20_NA2  < GPmax_20_NA2 * AWo_20_NA2 *  (1+ RPF_20_NA1 - RUFo_20_NA2) + GPmax_20_NA2 * AWr_20_NA2 * (1+ RPF_20_NA2 - RUFr_20_NA2)}
+goal setGPmin_20_NA2   {GP_20_NA2  > GPmin_20_NA2  * AWo_20_NA2 * (1+ RPF_20_NA2 - RUFo_20_NA2) + GPmin_20_NA2 * AWr_20_NA2 * (1+ RPF_20_NA2 - RUFr_20_NA2)}
+!goal setGPmax_20_NA2   {GP_20_NA2  < GPmax_20_NA2 * AWo_20_NA2 *  (1+ RPF_20_NA2 - RUFo_20_NA2) + GPmax_20_NA2 * AWr_20_NA2 * (1+ RPF_20_NA2 - RUFr_20_NA2)}
 define GPmin_20_NA2_dv	{alias GPmin_20_NA2 * AWo_20_NA2 * (1+ RPF_20_NA2 - RUFo_20_NA2) + GPmin_20_NA2 * AWr_20_NA2 * (1+ RPF_20_NA2 - RUFr_20_NA2) kind 'GW-PUMPING-LIMIT' units 'CFS'}
 
 ! 20_PA
