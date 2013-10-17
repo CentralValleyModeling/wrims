@@ -157,7 +157,7 @@ for beginWY in historyWYs:
     s = Study(studyName, studyRunDir)
     s.createConfig(
                 WreslPlus='Yes',
-                MainFile='Run/Main_2012.wresl',
+                MainFile='Run/Main_PA_2012.wresl',
                 StartYear=startYear, 
                 StartMonth=startMonth,
                 InitFile=path.relpath(initFile, path.dirname(studyRunDir)),
