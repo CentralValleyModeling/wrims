@@ -115,11 +115,14 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	
 	public static String[] studyDvFileNames={"","","",""};
 	public static String[] studySvFileNames={"","","",""};
-	public static boolean[] selectedStudies={false, false, false, false};
+	public static String[] studyFolderNames={"","","",""};
+	public static boolean[] selectedStudies={false, false, false, false, false, false, false, false};
 	public static HecDss[] dvDss=new HecDss[4];
 	public static HecDss[] svDss=new HecDss[4];
 	public static Vector[] dvVector=new Vector[4]; 
 	public static Vector[] svVector=new Vector[4]; 
+	@SuppressWarnings("unchecked")
+	public static Map<String, String>[] studiesData=new HashMap[4];
 	
 	public static String aPart="";
 	public static String initFPart="";

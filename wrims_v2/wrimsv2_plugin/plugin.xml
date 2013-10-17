@@ -504,12 +504,12 @@
  <extension
        point="org.eclipse.ui.actionSets">
     <actionSet
-          id="wpp.dss"
-          label="DSS"
+          id="wpp.data"
+          label="Data"
           visible="true">
        <menu
-             id="wpp.dss"
-             label="DSS"
+             id="wpp.data"
+             label="Data"
              path="additions">
           <groupMarker
                 name="operation">
@@ -522,21 +522,21 @@
              class="wrimsv2_plugin.debugger.menuitem.SaveDVFileMenu"
              id="wpp.savedvfile"
              label="Save To DV File"
-             menubarPath="wpp.dss/operation"
+             menubarPath="wpp.data/operation"
              style="push">
        </action>
        <action
              class="wrimsv2_plugin.debugger.menuitem.SaveSVFileMenu"
              id="wpp.savesvfile"
              label="Save To SV File"
-             menubarPath="wpp.dss/operation"
+             menubarPath="wpp.data/operation"
              style="push">
        </action>
        <action
              class="wrimsv2_plugin.debugger.menuitem.LoadStudiesDSS"
              id="wpp.loadstudiesdss"
-             label="Load Studies DSS"
-             menubarPath="wpp.dss/operation"
+             label="Load DSS/Studies"
+             menubarPath="wpp.data/operation"
              style="push">
        </action>
     </actionSet>

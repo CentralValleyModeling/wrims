@@ -819,24 +819,25 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		}
 	}
 	
-	private void handleSuspended(final String event){
-		enableRunMenuWithSuspended();
-		processViews();
+	private void handleSuspended(final String event){		
 		
 		if (event.contains("!")){
 			final String[] dateStrings=event.replaceFirst("suspended!", "").split("#");
+			DebugCorePlugin.suspendedYear=Integer.parseInt(dateStrings[0]);
+			DebugCorePlugin.suspendedMonth=Integer.parseInt(dateStrings[1]);
+			DebugCorePlugin.suspendedDay=Integer.parseInt(dateStrings[2]);
+			DebugCorePlugin.suspendedCycle=Integer.parseInt(dateStrings[3]);
 			final IWorkbench workbench=PlatformUI.getWorkbench();
 			workbench.getDisplay().asyncExec(new Runnable(){
 				public void run(){
 					DebugCorePlugin.debugSet.setDebugDate(dateStrings[0],dateStrings[1], dateStrings[2]);
 					DebugCorePlugin.debugSet.getComboCycle().setText(dateStrings[3]);
-					DebugCorePlugin.suspendedYear=Integer.parseInt(dateStrings[0]);
-					DebugCorePlugin.suspendedMonth=Integer.parseInt(dateStrings[1]);
-					DebugCorePlugin.suspendedDay=Integer.parseInt(dateStrings[2]);
-					DebugCorePlugin.suspendedCycle=Integer.parseInt(dateStrings[3]);
 				}
 			});
 		}
+		enableRunMenuWithSuspended();
+		DataProcess.generateAltStudyData();
+		processViews();
 		
 		if (event.contains(":")) {
 			String[] eventPart=event.split(":");

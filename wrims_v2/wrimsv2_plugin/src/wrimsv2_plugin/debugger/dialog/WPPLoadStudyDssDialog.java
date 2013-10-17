@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
@@ -45,14 +46,18 @@ import wrimsv2_plugin.debugger.view.WPPGoalView;
 import wrimsv2_plugin.debugger.view.WPPVarDetailView;
 import wrimsv2_plugin.debugger.view.WPPVariableView;
 import wrimsv2_plugin.debugger.view.WPPWatchView;
+import wrimsv2_plugin.tools.DataProcess;
 
 public class WPPLoadStudyDssDialog extends Dialog {
-	private Button[] checkBox;
+	private Button[] checkBox=new Button[8];
 	private Text[] dvFileText=new Text[4];
 	private Button[] dvBrowserButton=new Button[4];
 	private Text[] svFileText=new Text[4];
 	private Button[] svBrowserButton=new Button[4];
+	private Text[] studyFolderText=new Text[4];
+	private Button[] studyBrowserButton=new Button[4];
 	private String unavailableFiles="";
+	private String unavailableFolders="";
 	private String errorFiles="";
 	
 	public WPPLoadStudyDssDialog(Shell parentShell) {
@@ -62,8 +67,8 @@ public class WPPLoadStudyDssDialog extends Dialog {
 
 	public void openDialog(){
 		create();
-		getShell().setSize(900, 330);
-		getShell().setText("Load Alt DV/SV");
+		getShell().setSize(900, 550);
+		getShell().setText("Load Alt DV/SV or Study");
 		open();
 	}
 
@@ -76,10 +81,9 @@ public class WPPLoadStudyDssDialog extends Dialog {
 		fl.marginHeight=15;
 		
 		Label label1=new Label(dialogArea, SWT.NONE);
-		label1.setText("Please select DV and SV file for alternative studies");
+		label1.setText("Please select DV and SV files or study folders for alternatives");
 		
-		Composite[] fileSelection = new Composite[4];
-		checkBox = new Button[4];
+		Composite[] fileSelection = new Composite[8];
 		
 		for (int i=0; i<4; i++){
 			final int j=i;
@@ -93,6 +97,17 @@ public class WPPLoadStudyDssDialog extends Dialog {
 			GridData gd0 = new GridData(GridData.FILL_HORIZONTAL);
 			gd0.horizontalSpan = 3;
 			checkBox[i].setLayoutData(gd0);
+			/*
+			checkBox[i].addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					for (int j=4; j<8; j++){
+						checkBox[j].setSelection(false);
+						DebugCorePlugin.selectedStudies[j]=false;
+					}
+				}
+			});
+			*/
 			
 			dvFileText[i] = new Text(fileSelection[i], SWT.SINGLE | SWT.BORDER);
 			GridData gd1 = new GridData(GridData.FILL_HORIZONTAL);
@@ -157,21 +172,83 @@ public class WPPLoadStudyDssDialog extends Dialog {
 			});
 		}
 		
+		for (int i=4; i<8; i++){
+			final int j=i-4;
+			fileSelection[i] = new Composite(dialogArea, SWT.NONE);
+			GridLayout layout = new GridLayout(37, true);
+			fileSelection[i].setLayout(layout);
+			
+			checkBox[i]=new Button(fileSelection[i], SWT.CHECK);
+			checkBox[i].setText("Alt "+(i+1)+":");
+			checkBox[i].setSelection(DebugCorePlugin.selectedStudies[i]);
+			GridData gd0 = new GridData(GridData.FILL_HORIZONTAL);
+			gd0.horizontalSpan = 3;
+			checkBox[i].setLayoutData(gd0);
+			/*
+			checkBox[i].addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					for (int j=0; j<4; j++){
+						checkBox[j].setSelection(false);
+						DebugCorePlugin.selectedStudies[j]=false;
+					}
+				}
+			});
+			*/
+			
+			studyFolderText[j] = new Text(fileSelection[i], SWT.SINGLE | SWT.BORDER);
+			GridData gd1 = new GridData(GridData.FILL_HORIZONTAL);
+			gd1.horizontalSpan = 27;
+			studyFolderText[j].setLayoutData(gd1);
+			studyFolderText[j].setText(DebugCorePlugin.studyFolderNames[j]);
+		
+			studyBrowserButton[j] = new Button(fileSelection[i], SWT.PUSH);
+			studyBrowserButton[j].setText("Browser Study");
+			GridData gd2 = new GridData(GridData.FILL_HORIZONTAL);
+			gd2.horizontalSpan = 7;
+			studyBrowserButton[j].setLayoutData(gd2);
+			studyBrowserButton[j].addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					final IWorkbench workbench=PlatformUI.getWorkbench();
+					workbench.getDisplay().asyncExec(new Runnable(){
+						public void run(){
+							Shell shell=workbench.getActiveWorkbenchWindow().getShell();
+							DirectoryDialog dlg=new DirectoryDialog(shell, SWT.SAVE);
+							String file=dlg.open();
+							if (file !=null){
+								studyFolderText[j].setText(file);
+							}
+						}
+					});
+				}
+			});
+		}
+		
 		return dialogArea;
 	}
 	
 	@Override
 	public void okPressed(){
 		selectFiles();
-		if (checkFilesExist()){
-			if (openDssFiles()){
+		if (DebugCorePlugin.selectedStudies[0] || DebugCorePlugin.selectedStudies[1] || DebugCorePlugin.selectedStudies[2] || DebugCorePlugin.selectedStudies[3]){
+			if (checkFilesExist()){
+				if (openDssFiles()){
+					close();
+					processViews();
+				}else{
+					showDssFileErrorDialog(1);
+				}
+			}else{
+				showDssFileErrorDialog(0);
+			}
+		}else{
+			if (checkFoldersExist()){
 				close();
 				processViews();
 			}else{
-				showDssFileErrorDialog(1);
+				showDssFileErrorDialog(2);
 			}
-		}else{
-			showDssFileErrorDialog(0);
 		}
 	}
 	
@@ -184,6 +261,15 @@ public class WPPLoadStudyDssDialog extends Dialog {
 			}
 			DebugCorePlugin.studyDvFileNames[i]=dvFileText[i].getText();
 			DebugCorePlugin.studySvFileNames[i]=svFileText[i].getText();
+		}
+		for (int i=4; i<8; i++){
+			int j=i-4;
+			if (checkBox[i].getSelection()){
+				DebugCorePlugin.selectedStudies[i]=true;
+			}else{
+				DebugCorePlugin.selectedStudies[i]=false;
+			}
+			DebugCorePlugin.studyFolderNames[j]=studyFolderText[j].getText();
 		}
 	}
 	
@@ -200,6 +286,9 @@ public class WPPLoadStudyDssDialog extends Dialog {
 					break;
 				case 1:
 					messageBox.setMessage("Dss files "+errorFiles+" could not be opened.");
+					break;
+				case 2:
+					messageBox.setMessage("Study folders "+unavailableFolders+" do not exist.");
 					break;
 				}
 				messageBox.open();
@@ -228,6 +317,25 @@ public class WPPLoadStudyDssDialog extends Dialog {
 			unavailableFiles=unavailableFiles.substring(0, unavailableFiles.length()-1);
 		}
 		return allFileFound;
+	}
+	
+	public boolean checkFoldersExist(){
+		unavailableFolders="";
+		boolean allFolderFound=true;
+		for (int i=4; i<8; i++){
+			int j=i-4;
+			if (DebugCorePlugin.selectedStudies[i]){
+				File folder = new File(DebugCorePlugin.studyFolderNames[j]);
+				if (!folder.exists()){
+					unavailableFolders=unavailableFolders+DebugCorePlugin.studyFolderNames[j]+",";
+					allFolderFound=false;
+				}
+			}		
+		}
+		if (unavailableFolders.endsWith(",")){
+			unavailableFolders=unavailableFolders.substring(0, unavailableFolders.length()-1);
+		}
+		return allFolderFound;
 	}
 	
 	public boolean openDssFiles(){
@@ -271,6 +379,7 @@ public class WPPLoadStudyDssDialog extends Dialog {
 				WPPWatchView watchView = (WPPWatchView) workBenchPage.findView(DebugCorePlugin.ID_WPP_WATCH_VIEW);
 				
 				if (DebugCorePlugin.target!=null && DebugCorePlugin.target.isSuspended()){
+					DataProcess.generateAltStudyData();
 					variableView.updateView();
 					if (DebugCorePlugin.target.allVGLoadedViewNames.contains(DebugCorePlugin.TITLE_WATCH_VIEW)) watchView.updateView();
 				}else{

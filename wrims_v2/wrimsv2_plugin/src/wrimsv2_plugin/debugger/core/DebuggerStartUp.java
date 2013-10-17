@@ -2,6 +2,7 @@ package wrimsv2_plugin.debugger.core;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.ui.IStartup;
 import org.eclipse.ui.IWorkbench;
@@ -21,6 +22,7 @@ public class DebuggerStartUp implements IStartup {
 	public void earlyStartup() {
 		enableRunMenu();
 		initialWatchViewer();
+		initialStudyData();
 	}
 
 	public void enableRunMenu(){
@@ -57,6 +59,13 @@ public class DebuggerStartUp implements IStartup {
 					watchView.addWatched(varGoalName);
 				}
 			});
+		}
+	}
+	
+	public void initialStudyData(){
+		Map<String, String>[] studiesData = DebugCorePlugin.studiesData;
+		for (int i=0; i<4; i++){
+			studiesData[i]=new HashMap<String, String>();
 		}
 	}
 }

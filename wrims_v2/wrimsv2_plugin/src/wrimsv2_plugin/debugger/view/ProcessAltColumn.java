@@ -37,7 +37,8 @@ public class ProcessAltColumn {
 		for (int i=colSize-1; i>=0; i--){
 			TableColumn tc = table.getColumn(i);
 			String cn=tc.getText();
-			if (cn.equals("Alt1") || cn.equals("Alt2") || cn.equals("Alt3") || cn.equals("Alt4")){
+			if (cn.equals("Alt1") || cn.equals("Alt2") || cn.equals("Alt3") || cn.equals("Alt4")
+					|| cn.equals("Alt5") || cn.equals("Alt6")|| cn.equals("Alt7")|| cn.equals("Alt8")){
 				tc.dispose();
 			}
 		}
@@ -57,7 +58,7 @@ public class ProcessAltColumn {
 				break;
 		}
 		
-		for (int i=0; i<4; i++){
+		for (int i=0; i<8; i++){
 			if (DebugCorePlugin.selectedStudies[i]){
 				altColumnIndex.put(table.getColumnCount(), i);
 				TableColumn tc=new TableColumn(table, SWT.NORMAL);
@@ -91,44 +92,57 @@ public class ProcessAltColumn {
 		Vector[] dvVector=DebugCorePlugin.dvVector;
 		Vector[] svVector=DebugCorePlugin.svVector;
 		
-		if (vp.containsKey(vn)){
-			VariableProperty property=vp.get(vn);
-			String timestep=property.getPartE();
-			String ss="B="+vn+", C="+property.getPartC()+", E="+timestep;
-			String startTime=TimeOperation.createStartTime(DebugCorePlugin.suspendedYear, DebugCorePlugin.suspendedMonth, DebugCorePlugin.suspendedDay, timestep);
-			String endTime=TimeOperation.createEndTime(DebugCorePlugin.suspendedYear, DebugCorePlugin.suspendedMonth, DebugCorePlugin.suspendedDay, timestep);
-			int i=altColIndex.get(index);
-			try {
-				DataContainer dc;
-				double[] values;
-				HecDss dss = dvDss[i];
-				Vector v=DebugCorePlugin.dvVector[i];
-				String pn=DssOperations.matchPathName(v, vn, property.getPartC(), timestep);
-				if (pn!=null){
-					dc = dss.get(pn, startTime, endTime);
-					values=((TimeSeriesContainer)dc).values;
-					if (values.length>0){
-						return DebugCorePlugin.df.format(values[0]);
-					}
-				}else{
-					dss=svDss[i];
-					v=DebugCorePlugin.svVector[i];
-					pn=DssOperations.matchPathName(v, vn, property.getPartC(), timestep);
-					if (pn !=null){
+		int i=altColIndex.get(index);
+		if (i<4){
+			if (vp.containsKey(vn)){
+				VariableProperty property=vp.get(vn);
+				String timestep=property.getPartE();
+				String ss="B="+vn+", C="+property.getPartC()+", E="+timestep;
+				String startTime=TimeOperation.createStartTime(DebugCorePlugin.suspendedYear, DebugCorePlugin.suspendedMonth, DebugCorePlugin.suspendedDay, timestep);
+				String endTime=TimeOperation.createEndTime(DebugCorePlugin.suspendedYear, DebugCorePlugin.suspendedMonth, DebugCorePlugin.suspendedDay, timestep);
+			
+				try {
+					DataContainer dc;
+					double[] values;
+					HecDss dss = dvDss[i];
+					Vector v=DebugCorePlugin.dvVector[i];
+					String pn=DssOperations.matchPathName(v, vn, property.getPartC(), timestep);
+					if (pn!=null){
 						dc = dss.get(pn, startTime, endTime);
 						values=((TimeSeriesContainer)dc).values;
 						if (values.length>0){
 							return DebugCorePlugin.df.format(values[0]);
 						}
-					}
+					}else{
+						dss=svDss[i];
+						v=DebugCorePlugin.svVector[i];
+						pn=DssOperations.matchPathName(v, vn, property.getPartC(), timestep);
+						if (pn !=null){
+							dc = dss.get(pn, startTime, endTime);
+							values=((TimeSeriesContainer)dc).values;
+							if (values.length>0){
+								return DebugCorePlugin.df.format(values[0]);
+							}
+						}
+					}	
+					return "";
+				} catch (Exception e) {
+					WPPException.handleException(e);
+					return "";
 				}
-				return "";
-			} catch (Exception e) {
-				WPPException.handleException(e);
+			}else{
 				return "";
 			}
 		}else{
-			return "";
+			int j=i-4;
+			Map<String, String> studyData = DebugCorePlugin.studiesData[j];
+			if (studyData.containsKey(vn)){
+				String dataString=studyData.get(vn).trim().replace(",", "");
+				double value=Double.parseDouble(dataString);
+				return DebugCorePlugin.df.format(value);
+			}else{
+				return "";
+			}
 		}
 	}
 }
