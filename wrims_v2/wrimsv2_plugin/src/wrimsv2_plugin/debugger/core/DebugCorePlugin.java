@@ -62,6 +62,8 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	
 	public static WPPDebugTarget target;
 	
+	@SuppressWarnings("unchecked")
+	public static Map<String, String>[] variableAltValue=new HashMap[8];
 	public static IValue[] variableStack;	
 	public static IValue[] goalStack;
 	public static IValue[] allVariableStack;

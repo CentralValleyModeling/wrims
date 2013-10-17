@@ -2,6 +2,7 @@ package wrimsv2_plugin.debugger.view;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -97,6 +98,7 @@ public class UpdateView {
 				public void run(){
 					IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
 				
+					DataProcess.initialVariableValueAlt();
 					//data="i:4456#a(-1):123.0#reservoir:reservorlevel1%56:reservorlevel2%1234";
 					String[] dataParts = data.split("!");
 					DebugCorePlugin.variableStack=DataProcess.generateTree(dataParts[0]);

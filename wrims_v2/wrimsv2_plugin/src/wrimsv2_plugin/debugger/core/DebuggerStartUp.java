@@ -13,6 +13,7 @@ import wrimsv2_plugin.debugger.toolbaritem.EnableButtons;
 import wrimsv2_plugin.debugger.toolbaritem.HandlePauseResumeButton;
 import wrimsv2_plugin.debugger.view.UpdateView;
 import wrimsv2_plugin.debugger.view.WPPWatchView;
+import wrimsv2_plugin.tools.DataProcess;
 import wrimsv2_plugin.tools.ProcWatchItem;
 import wrimsv2_plugin.tools.ShowDuplicatedWatch;
 
@@ -23,6 +24,7 @@ public class DebuggerStartUp implements IStartup {
 		enableRunMenu();
 		initialWatchViewer();
 		initialStudyData();
+		DataProcess.initialVariableValueAlt();
 	}
 
 	public void enableRunMenu(){

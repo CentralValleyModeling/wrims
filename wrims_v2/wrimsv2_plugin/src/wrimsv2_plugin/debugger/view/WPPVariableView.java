@@ -97,15 +97,23 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 						}else if (index==1){
 							return ((WPPValue) element).getValueString();
 						}else{
-							return ProcessAltColumn.addAltColumnData(((WPPValue) element).getVariableString(), 0, index);
+							String vn=((WPPValue) element).getVariableString();
+							String vs=ProcessAltColumn.addAltColumnData(vn, 0, index);
+							int i=DebugCorePlugin.variableAltColIndex.get(index);
+							DebugCorePlugin.variableAltValue[i].put(vn,vs);
+							return vs;
 						}
 					}else{
 						if (index==0){
 							return ((WPPValue) element).getVariableString();
-						}else if (index==1){	
+						}else if (index==1){
 							return ((WPPValue) element).getValueString();
 						}else{
-							return ProcessAltColumn.addAltColumnData(((WPPValue) element).getVariableString(), 0, index);
+							String vn=((WPPValue) element).getVariableString();
+							String vs=ProcessAltColumn.addAltColumnData(vn, 0, index);
+							int i=DebugCorePlugin.variableAltColIndex.get(index);
+							DebugCorePlugin.variableAltValue[i].put(vn,vs);
+							return vs;
 						}
 					}
 				} catch (DebugException e) {

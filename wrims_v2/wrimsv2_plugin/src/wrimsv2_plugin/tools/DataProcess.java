@@ -124,4 +124,11 @@ public class DataProcess {
 			}
 		}
 	}
+	
+	public static void initialVariableValueAlt(){
+		Map<String, String>[] variableValueAlt = DebugCorePlugin.variableAltValue;
+		for (int i=0; i<8; i++){
+			variableValueAlt[i]=new HashMap<String, String>();
+		}
+	}
 }

@@ -322,6 +322,13 @@
        sourcePathComputerId="wpp.sourcePathComputer">
    </launchConfigurationType>
 </extension>
+ <extension point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+  <launchConfigurationTypeImage
+     id="wpp.launchTypeImage"
+     configTypeID="wpp.launchType"
+     icon="icons/wpp_icon.png">
+  </launchConfigurationTypeImage>
+ </extension>
 <extension
          point="org.eclipse.debug.core.sourceLocators">
       <sourceLocator
