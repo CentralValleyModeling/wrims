@@ -12,7 +12,7 @@ LogUtils.initLogging()
 
 
 
-studyRunDir = path.join(Param.mainScriptDir,'studies/callite_D1641/Run')
+studyRunDir = path.join(Param.mainScriptDir,'studies/callite_old/Run')
 configFile = 'D1641.config'
 
 
