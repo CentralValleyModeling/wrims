@@ -1,5 +1,7 @@
 package gov.ca.dwr.wresl.xtext.editor.ui.texthover;
 
+import java.util.Map;
+
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DVar;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AliasImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ConstDefImpl;
@@ -29,25 +31,25 @@ public class WreslEObjectDocumentationProvider implements
 	public String getDocumentation(EObject o) {
 	    if (o instanceof DeclarationImpl){
 			String name=((DeclarationImpl) o).getName();
-			return "value : "+getValue(name);
+			return getValue(name);
 		}else if (o instanceof AliasImpl){
 			String name=((AliasImpl) o).getRef().getName();
-			return "value : "+getValue(name);
+			return getValue(name);
 		}else if (o instanceof GoalImpl){
 			String name=((GoalImpl) o).getName();
 			return "constraint : "+getConstraint(name);
 		}else if (o instanceof IdentImpl){
 			String name=((IdentImpl) o).getName();
-			return "value : "+getValue(name);
+			return getValue(name);
 		}else if (o instanceof SvarDefImpl){
 			String name=((SvarDefImpl) o).getRef().getName();;
-			return "value : "+getValue(name);
+			return getValue(name);
 		}else if (o instanceof DvarDefImpl){
 			String name=((DvarDefImpl) o).getRef().getName();
-			return "value : "+getValue(name);
+			return getValue(name);
 		}else if (o instanceof ConstDefImpl){
 			String name=((ConstDefImpl) o).getRef().getName();
-			return "value : "+getValue(name);
+			return getValue(name);
 		}else if (o instanceof ExternalDefImpl){
 			return null;
 		}else{
@@ -71,7 +73,15 @@ public class WreslEObjectDocumentationProvider implements
 						}
 						return hoverInfo;
 					}else{
-						return dataStack[i].getValueString();
+						Map<String, String>[] variableAltValue = DebugCorePlugin.variableAltValue;
+						String hoverInfo="<p>value&nbsp;:&nbsp;"+dataStack[i].getValueString()+"</p>";
+						for (int j=0; j<8; j++){
+							Map<String, String> vAVs = variableAltValue[j];
+							if (vAVs.containsKey(varName)){
+								hoverInfo=hoverInfo+"<p>Alt"+(j+1)+"&nbsp;&nbsp;&nbsp;:&nbsp;"+vAVs.get(varName)+"</p>";
+							}
+						}
+						return hoverInfo;
 					}
 				} catch (DebugException e) {
 					WPPException.handleException(e);
