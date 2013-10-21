@@ -61,7 +61,7 @@ public class AllDssVariables extends ActionDelegate implements IViewActionDelega
 							final IWorkbench workbench=PlatformUI.getWorkbench();
 							workbench.getDisplay().asyncExec(new Runnable(){
 								public void run(){
-									DebugCorePlugin.allVariableProperty=DataProcess.generateVariableProperty(DebugCorePlugin.allVarProperties);
+									DebugCorePlugin.allVariableProperty=DataProcess.retrieveAllVariableProperty();
 									WPPAllVariableView allVariableView = (WPPAllVariableView) workbench.getActiveWorkbenchWindow().getActivePage().findView(DebugCorePlugin.ID_WPP_ALLVARIABLE_VIEW);
 									allVariableView.showDssAlt();
 									monitor.done();

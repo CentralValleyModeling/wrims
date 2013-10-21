@@ -25,6 +25,7 @@ import wrimsv2_plugin.debugger.model.WPPDebugTarget;
 import wrimsv2_plugin.debugger.model.WPPValue;
 import wrimsv2_plugin.tools.DataProcess;
 import wrimsv2_plugin.tools.FileProcess;
+import wrimsv2_plugin.tools.VariableProperty;
 
 public class UpdateView {
 	
@@ -122,6 +123,7 @@ public class UpdateView {
 			WPPException.handleException(e);
 		}
 		
+		/*
 		String[] dataStrings = data.split("&");
 		if (dataStrings.length==3){
 			DebugCorePlugin.weightedVariables=dataStrings[2];
@@ -130,7 +132,16 @@ public class UpdateView {
 			DebugCorePlugin.allVarProperties=dataStrings[1];
 		}
 		DebugCorePlugin.allVariableStack=DataProcess.generateTree(dataStrings[0]);
-							
+		*/
+		
+		if (data.equals("alldataretrieved")){
+			DebugCorePlugin.allVariableStack=DataProcess.retrieveAllVariableValue();
+		}else{
+			DebugCorePlugin.allVariableStack=new WPPValue[0];
+			DebugCorePlugin.allVariableProperty=new HashMap<String, VariableProperty>();
+			WPPException.handleException(new Exception("Failed in retrieve all variable data"));
+		}
+		
 		final IWorkbench workbench=PlatformUI.getWorkbench();
 			workbench.getDisplay().asyncExec(new Runnable(){
 			public void run(){
@@ -159,6 +170,7 @@ public class UpdateView {
 							}
 							monitor.worked(33);
 							
+							/*
 							String[] dataStrings = data.split("&");
 							if (dataStrings.length==3){
 								DebugCorePlugin.weightedVariables=dataStrings[2];
@@ -168,6 +180,16 @@ public class UpdateView {
 							}
 							
 							DebugCorePlugin.allVariableStack=DataProcess.generateTree(dataStrings[0]);
+							*/
+							
+							if (data.equals("alldataretrieved")){
+								DebugCorePlugin.allVariableStack=DataProcess.retrieveAllVariableValue();
+							}else{
+								DebugCorePlugin.allVariableStack=new WPPValue[0];
+								DebugCorePlugin.allVariableProperty=new HashMap<String, VariableProperty>();
+								WPPException.handleException(new Exception("Failed in retrieve all variable data"));
+							}
+							
 							monitor.worked(33);
 							
 							final IWorkbench workbench=PlatformUI.getWorkbench();
@@ -198,8 +220,13 @@ public class UpdateView {
 		}catch (DebugException e) {
 			WPPException.handleException(e);
 		}
-									
-		DebugCorePlugin.allGoalStack=DataProcess.generateTree(goal);
+		
+		if (goal.equals("allgoalretrieved")){
+			DebugCorePlugin.allGoalStack=DataProcess.retrieveAllGoal();
+		}else{
+			DebugCorePlugin.allGoalStack=new WPPValue[0];
+			WPPException.handleException(new Exception("Failed in retrieve all goals"));
+		}
 							
 		DebugCorePlugin.allControlGoals=new ArrayList<String>();
 		final IWorkbench workbench=PlatformUI.getWorkbench();
@@ -230,7 +257,12 @@ public class UpdateView {
 							}
 							monitor.worked(33);
 							
-							DebugCorePlugin.allGoalStack=DataProcess.generateTree(goal);
+							if (goal.equals("allgoalretrieved")){
+								DebugCorePlugin.allGoalStack=DataProcess.retrieveAllGoal();
+							}else{
+								DebugCorePlugin.allGoalStack=new WPPValue[0];
+								WPPException.handleException(new Exception("Failed in retrieve all goals"));
+							}
 							monitor.worked(33);
 							
 							DebugCorePlugin.allControlGoals=new ArrayList<String>();

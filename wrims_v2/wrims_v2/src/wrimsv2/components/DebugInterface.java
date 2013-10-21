@@ -1,10 +1,13 @@
 package wrimsv2.components;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -257,7 +260,7 @@ public class DebugInterface {
 			}
 		}else if (request.equals("alldata")){
 			try{
-				dataString=getAllVariableString();
+				dataString=getAllVariableFiles();
 				sendRequest(dataString);
 			}catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -285,7 +288,7 @@ public class DebugInterface {
 			ControlData.isParseStudy=true;
 		}else if (request.equals("allgoals")){
 			try{
-				goalString=getAllGoalString();
+				goalString=getAllGoalFile();
 				sendRequest(goalString);
 			}catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -1115,7 +1118,7 @@ public class DebugInterface {
 		if (goalString.endsWith(":")) goalString=goalString.substring(0, goalString.length()-1);
 		return goalString;
 	}
-	
+
 	public String getAllVariableString(){
 		String dataString="";
 		ArrayList<String> allDataNames=new ArrayList<String>();
@@ -1276,6 +1279,183 @@ public class DebugInterface {
 		return dataString;
 	}
 	
+	public String getAllVariableFiles(){
+		String allDataString="alldataretrieved";
+		ArrayList<String> allDataNames=new ArrayList<String>();
+		ArrayList<String> allTsNames=new ArrayList<String>();
+		ArrayList<String> allDvNames=new ArrayList<String>();
+		ArrayList<String> allSvNames=new ArrayList<String>();
+		ArrayList<String> allAsNames=new ArrayList<String>();
+		ArrayList<String> allParameterNames=new ArrayList<String>();
+		Map<String, Number> allData=new HashMap<String, Number>();
+		StudyDataSet sds = ControlData.currStudyDataSet;
+		String modelName=sds.getModelList().get(ControlData.currCycleIndex);
+		ModelDataSet mds=sds.getModelDataSetMap().get(modelName);
+		Map<String, Timeseries> tsMap = mds.tsMap;
+		Map<String, Dvar> dvMap = SolverData.getDvarMap();
+		Map<String, Svar> svMap = mds.svMap;
+		Map<String, Svar> svFutMap = mds.svFutMap;
+		Map<String, Alias> asMap = mds.asMap;
+		Map<String, Svar> parameterMap = sds.getParameterMap();
+		Map<String, String> partsMap=new HashMap<String, String>(); 
+
+		IntDouble intDouble;
+		
+		Set<String> tsKeySet = tsMap.keySet();
+		Iterator<String> tsIterator = tsKeySet.iterator();
+		while (tsIterator.hasNext()){
+			String tsName=tsIterator.next();
+			if (!allDataNames.contains(tsName)){
+				Timeseries ts = tsMap.get(tsName);
+				intDouble=ts.getData();
+				if (intDouble != null){
+					allDataNames.add(tsName);
+					allTsNames.add(tsName);
+					allData.put(tsName, intDouble.getData());
+					partsMap.put(tsName, ts.kind+":"+ControlData.timeStep);
+				}
+			}
+		}
+		
+		Set<String> dvKeySet = dvMap.keySet();
+		Iterator<String> dvIterator = dvKeySet.iterator();
+		while (dvIterator.hasNext()){
+			String dvName=dvIterator.next();
+			if (!allDataNames.contains(dvName)){
+				Dvar dv = dvMap.get(dvName);
+				intDouble=dv.getData();
+				if (intDouble !=null){
+					allDataNames.add(dvName);
+					allDvNames.add(dvName);
+					allData.put(dvName, intDouble.getData());
+					partsMap.put(dvName, dv.kind+":"+ControlData.timeStep);
+				}
+			}
+		}
+		
+		Set<String> svKeySet = svMap.keySet();
+		Iterator<String> svIterator = svKeySet.iterator();
+		while (svIterator.hasNext()){
+			String svName=svIterator.next();
+			if (!allDataNames.contains(svName)){
+				Svar sv = svMap.get(svName);
+				intDouble=sv.getData();
+				if (intDouble!=null){
+					allDataNames.add(svName);
+					allSvNames.add(svName);
+					allData.put(svName, intDouble.getData());
+					partsMap.put(svName, sv.kind+":"+ControlData.timeStep);
+				}
+			}
+		}
+		
+		Set<String> svFutKeySet = svFutMap.keySet();
+		Iterator<String> svFutIterator = svFutKeySet.iterator();
+		while (svFutIterator.hasNext()){
+			String svFutName=svFutIterator.next();
+			if (!allDataNames.contains(svFutName)){
+				Svar svFut = svFutMap.get(svFutName);
+				intDouble=svFut.getData();
+				if (intDouble!=null){
+					allDataNames.add(svFutName);
+					allSvNames.add(svFutName);
+					allData.put(svFutName, intDouble.getData());
+					partsMap.put(svFutName, svFut.kind+":"+ControlData.timeStep);
+				}
+			}
+		}
+		
+		Set<String> asKeySet = asMap.keySet();
+		Iterator<String> asIterator = asKeySet.iterator();
+		while (asIterator.hasNext()){
+			String asName=asIterator.next();
+			if (!allDataNames.contains(asName)){
+				Alias as = asMap.get(asName);
+				intDouble=as.getData();
+				if (intDouble!=null){
+					allDataNames.add(asName);
+					allData.put(asName, intDouble.getData());
+					partsMap.put(asName, as.kind+":"+ControlData.timeStep);
+				}
+			}
+			if (!allAsNames.contains(asName)){
+				allAsNames.add(asName);
+			}
+		}
+		
+		Set<String> parameterKeySet = parameterMap.keySet();
+		Iterator<String> parameterIterator = parameterKeySet.iterator();
+		while (parameterIterator.hasNext()){
+			String parameterName=parameterIterator.next();
+			if (!allDataNames.contains(parameterName)){
+				Svar parameter = parameterMap.get(parameterName);
+				intDouble=parameter.getData();
+				if (intDouble!=null){
+					allDataNames.add(parameterName);
+					allParameterNames.add(parameterName);
+					allData.put(parameterName, intDouble.getData());
+					partsMap.put(parameterName, parameter.kind+":"+ControlData.timeStep);
+				}
+			}
+		}
+		
+		try{
+			File allDataFile = new File("allvariables.dat");
+			FileOutputStream allDataStream = new FileOutputStream(allDataFile);
+			OutputStreamWriter allDataWriter = new OutputStreamWriter(allDataStream);    
+			BufferedWriter allDataBuffer = new BufferedWriter(allDataWriter);
+
+			Collections.sort(allDataNames);
+			for (String variable: allDataNames){
+				allDataBuffer.write(variable+":"+df.format(allData.get(variable))+System.getProperty("line.separator"));
+			}
+			allDataBuffer.close();
+		
+			File allPartFile = new File("allparts.dat");
+        	FileOutputStream allPartStream = new FileOutputStream(allPartFile);
+        	OutputStreamWriter allPartWriter = new OutputStreamWriter(allPartStream);    
+        	BufferedWriter allPartBuffer = new BufferedWriter(allPartWriter);
+
+			for (String variable: partsMap.keySet()){
+				allPartBuffer.write(variable+":"+partsMap.get(variable)+System.getProperty("line.separator"));
+			}
+			allPartBuffer.close();
+		
+			File allWeightFile = new File("allweights.dat");
+        	FileOutputStream allWeightStream = new FileOutputStream(allWeightFile);
+        	OutputStreamWriter allWeightWriter = new OutputStreamWriter(allWeightStream);    
+        	BufferedWriter allWeightBuffer = new BufferedWriter(allWeightWriter);
+
+			Map<String, WeightElement> weightMap = SolverData.getWeightMap();
+			for (int i=0; i<=1; i++){
+				ArrayList<String> weightCollection;
+				if (i==0){
+					weightCollection = ControlData.currModelDataSet.wtList;
+				}else{
+					weightCollection = ControlData.currModelDataSet.wtTimeArrayList;
+				}
+				Iterator<String> weightIterator = weightCollection.iterator();
+		
+				while(weightIterator.hasNext()){
+					String weightName=(String)weightIterator.next();
+					allWeightBuffer.write(weightName+":"+df.format(weightMap.get(weightName).getValue())+System.getProperty("line.separator"));
+				}
+			}
+			Map<String, WeightElement> weightSlackSurplusMap = SolverData.getWeightSlackSurplusMap();
+			ArrayList<String> usedWeightSlackSurplusCollection = ControlData.currModelDataSet.usedWtSlackSurplusList;
+			Iterator<String> usedWeightSlackSurplusIterator = usedWeightSlackSurplusCollection.iterator();
+	
+			while(usedWeightSlackSurplusIterator.hasNext()){
+				String usedWeightSlackSurplusName=(String)usedWeightSlackSurplusIterator.next();
+				allWeightBuffer.write(usedWeightSlackSurplusName+":"+df.format(weightSlackSurplusMap.get(usedWeightSlackSurplusName).getValue())+System.getProperty("line.separator"));
+			}
+			allWeightBuffer.close();
+		}catch (IOException e){
+			allDataString="failed";
+		}
+		return allDataString;
+	}
+	
 	public String getAllGoalString(){
 		String goalString="";
 		Map<String, EvalConstraint> gMap = SolverData.getConstraintDataMap();
@@ -1332,6 +1512,75 @@ public class DebugInterface {
 		}
 		if (goalString.endsWith("#")) goalString=goalString.substring(0, goalString.length()-1);
 		return goalString;
+	}
+	
+	public String getAllGoalFile(){
+		String allgoal="allgoalretrieved";
+		Map<String, EvalConstraint> gMap = SolverData.getConstraintDataMap();
+		Set<String> goalKeySet=gMap.keySet();
+		ArrayList<String> gKeyArrayList=new ArrayList<String>();
+		Iterator ki=goalKeySet.iterator();
+		while (ki.hasNext()){
+			gKeyArrayList.add((String) ki.next());
+		}
+		Collections.sort(gKeyArrayList);
+		
+		try{
+			File allGoalFile = new File("allgoals.dat");
+			FileOutputStream allGoalStream = new FileOutputStream(allGoalFile);
+			OutputStreamWriter allGoalWriter = new OutputStreamWriter(allGoalStream);    
+			BufferedWriter allGoalBuffer = new BufferedWriter(allGoalWriter);
+			
+			for (int i=0; i<gKeyArrayList.size(); i++){
+				String goalName=gKeyArrayList.get(i);
+				String goalString=goalName+":";
+				EvalConstraint ec=gMap.get(goalName);
+				if (ec!=null){
+					EvalExpression ee=ec.getEvalExpression();
+					Map<String, IntDouble> multiplier = ee.getMultiplier();
+					Set<String> mKeySet = multiplier.keySet();
+					Iterator<String> mi = mKeySet.iterator();
+					while (mi.hasNext()){
+						String variable=mi.next();
+						Number value=multiplier.get(variable).getData();
+						double value1=value.doubleValue();
+						if (goalString.endsWith(":")){
+							if (value1==1.0){
+								goalString=goalString+variable;
+							}else if (value1==-1.0){
+								goalString=goalString+"-"+variable;
+							}else{
+								goalString=goalString+df.format(value)+variable;
+							}
+						}else{
+							if (value1==1.0){
+								goalString=goalString+"+"+variable;
+							}else if (value1 == -1.0){
+								goalString=goalString+"-"+variable;
+							}else if(value1>=0){
+								goalString=goalString+"+"+df.format(value)+variable;
+							}else{
+								goalString=goalString+df.format(value)+variable;
+							}
+						}
+					}
+					Number value=ee.getValue().getData();
+					double value1=value.doubleValue();
+					if (value1>0){
+						goalString=goalString+"+"+df.format(value)+ec.getSign()+"0"+System.getProperty("line.separator");
+					}else if(value1<0){
+						goalString=goalString+df.format(value)+ec.getSign()+"0"+System.getProperty("line.separator");
+					}else{
+						goalString=goalString+ec.getSign()+"0"+System.getProperty("line.separator");
+					}
+					allGoalBuffer.write(goalString);
+				}
+			}
+			allGoalBuffer.close();
+		}catch (IOException e){
+			return "failed";
+		}
+		return allgoal;
 	}
 	
 	public String getWatch(String vGNameString){

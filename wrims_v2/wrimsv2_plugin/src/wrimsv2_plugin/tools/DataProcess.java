@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.debug.core.model.IValue;
 
@@ -42,6 +43,115 @@ public class DataProcess {
 			}
 			return values;
 		}
+	}
+	
+	public static IValue[] retrieveAllGoal(){
+		String line="";
+		
+		ArrayList<String> keys=new ArrayList<String>();
+		Map<String, String> allGoalMap = new HashMap<String, String>();
+		String allGoalFileName="allgoals.dat";
+		File allGoalFile=new File(allGoalFileName);
+		if (allGoalFile.exists()){
+			try {
+				FileReader fr = new FileReader(allGoalFile);
+				BufferedReader br = new BufferedReader(fr);
+				while ((line = br.readLine()) != null) {
+					String[] part=line.split(":");
+					String gn=part[0];
+					keys.add(gn);
+					allGoalMap.put(gn, part[1]);
+				}
+			} catch (Exception e) {
+				WPPException.handleException(e);
+			}
+		}
+		
+		int size=allGoalMap.size();
+		
+		WPPValue[] values=new WPPValue[size];  
+		for (int i=0; i<size; i++){
+			String gn=keys.get(i);
+			WPPValue value=new WPPValue(DebugCorePlugin.target,allGoalMap.get(gn),gn); 
+			values[i]=value;
+		}
+		return values;
+	}
+	
+	public static IValue[] retrieveAllVariableValue(){
+		String line="";
+		
+		ArrayList<String> keys=new ArrayList<String>();
+		Map<String, String> allVariableMap = new HashMap<String, String>();
+		String allVariableFileName="allvariables.dat";
+		File allVariableFile=new File(allVariableFileName);
+		if (allVariableFile.exists()){
+			try {
+				FileReader fr = new FileReader(allVariableFile);
+				BufferedReader br = new BufferedReader(fr);
+				while ((line = br.readLine()) != null) {
+					String[] part=line.split(":");
+					String vn=part[0];
+					keys.add(vn);
+					allVariableMap.put(vn, part[1]);
+				}
+			} catch (Exception e) {
+				WPPException.handleException(e);
+			}
+		}
+		
+		int size=allVariableMap.size();
+		
+		WPPValue[] values=new WPPValue[size];  
+		for (int i=0; i<size; i++){
+			String vn=keys.get(i);
+			WPPValue value=new WPPValue(DebugCorePlugin.target,allVariableMap.get(vn),vn); 
+			values[i]=value;
+		}
+		return values;
+	}
+	
+	public static Map<String, String> retrieveWeightedVariables(){
+		String line="";
+		
+		Map<String, String> weightedVariableMap = new HashMap<String, String>();
+		String weightFileName="allweights.dat";
+		File weightFile=new File(weightFileName);
+		if (weightFile.exists()){
+			try {
+				FileReader fr = new FileReader(weightFile);
+				BufferedReader br = new BufferedReader(fr);
+				while ((line = br.readLine()) != null) {
+					String[] part=line.split(":");
+					weightedVariableMap.put(part[0], part[1]);
+				}
+			} catch (Exception e) {
+				WPPException.handleException(e);
+			}
+		}
+		return weightedVariableMap;
+	}
+	
+	public static Map<String, VariableProperty> retrieveAllVariableProperty(){
+		String line="";
+		
+		Map<String, VariableProperty> allVariableProperty=new HashMap<String, VariableProperty>();
+		String partFileName="allparts.dat";
+		File partFile=new File(partFileName);
+		if (partFile.exists()){
+			try {
+				FileReader fr = new FileReader(partFile);
+				BufferedReader br = new BufferedReader(fr);
+				while ((line = br.readLine()) != null) {
+					String[] part=line.split(":");
+					VariableProperty vp = new VariableProperty(part[1], part[2]);
+					allVariableProperty.put(part[0], vp);
+				}
+			} catch (Exception e) {
+				WPPException.handleException(e);
+			}
+		}
+		return allVariableProperty;
 	}
 	
 	public static ArrayList<String> generateArrayList(String data){
@@ -131,4 +241,5 @@ public class DataProcess {
 			variableValueAlt[i]=new HashMap<String, String>();
 		}
 	}
+	
 }

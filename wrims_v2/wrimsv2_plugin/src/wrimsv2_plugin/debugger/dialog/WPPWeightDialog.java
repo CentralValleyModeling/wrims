@@ -3,8 +3,10 @@ package wrimsv2_plugin.debugger.dialog;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.debug.core.DebugException;
 import org.eclipse.debug.core.model.IValue;
@@ -224,19 +226,18 @@ public class WPPWeightDialog extends Dialog {
 	}
 	
 	public void fillData(final Table table){
-		String weightedVariables=DebugCorePlugin.weightedVariables;
-		if (weightedVariables.equals("")) return;
-		String[] dataStrings = weightedVariables.split("#");
-		int size=dataStrings.length;
 
-		DebugCorePlugin.allVariableProperty=DataProcess.generateVariableProperty(DebugCorePlugin.allVarProperties);
+		Map<String, String> weightedVariableMap = DataProcess.retrieveWeightedVariables();
+				
+		DebugCorePlugin.allVariableProperty = DataProcess.retrieveAllVariableProperty();
 		WPPValue[] allVarStack = (WPPValue[])DebugCorePlugin.allVariableStack;
 		int allVarStackSize=allVarStack.length;
 		String value="";
-		for (int i=0; i<size; i++){
-			String[] varWeight = dataStrings[i].split(":");
-			String var=varWeight[0];
-			String wt=varWeight[1];
+		Set<String> keys = weightedVariableMap.keySet();
+		Iterator it=keys.iterator();
+		while (it.hasNext()){
+			String var=(String) it.next();
+			String wt=weightedVariableMap.get(var);
 			TableItem ti=new TableItem(table, SWT.NONE);
 			ti.setText(0, var);
 			ti.setText(1, wt);
