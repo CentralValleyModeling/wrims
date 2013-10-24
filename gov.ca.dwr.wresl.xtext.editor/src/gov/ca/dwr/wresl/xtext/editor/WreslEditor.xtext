@@ -299,7 +299,7 @@ CFS_TAF: 'cfs_taf';
 
 TAF_CFS: 'taf_cfs';
 
-DaysIn: 'daysin'|'daysinmonth';
+DaysIn: 'daysin'|'daysinmonth'|'daysintimestep';
 
 WaterYear: 'wateryear';
 

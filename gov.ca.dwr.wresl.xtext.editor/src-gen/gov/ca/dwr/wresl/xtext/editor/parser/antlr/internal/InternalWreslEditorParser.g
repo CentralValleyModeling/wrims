@@ -8174,6 +8174,13 @@ ruleDaysIn returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()]
         $current.merge(kw);
         newLeafNode(kw, grammarAccess.getDaysInAccess().getDaysinmonthKeyword_1()); 
     }
+
+    |
+	kw=KEYWORD_98 
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getDaysInAccess().getDaysintimestepKeyword_2()); 
+    }
 )
     ;
 

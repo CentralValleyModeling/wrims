@@ -5003,13 +5003,14 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Keyword cDaysinKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
 		private final Keyword cDaysinmonthKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
+		private final Keyword cDaysintimestepKeyword_2 = (Keyword)cAlternatives.eContents().get(2);
 		
 		//DaysIn:
 		//
-		//	"daysin" | "daysinmonth";
+		//	"daysin" | "daysinmonth" | "daysintimestep";
 		public ParserRule getRule() { return rule; }
 
-		//"daysin" | "daysinmonth"
+		//"daysin" | "daysinmonth" | "daysintimestep"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//"daysin"
@@ -5017,6 +5018,9 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 		//"daysinmonth"
 		public Keyword getDaysinmonthKeyword_1() { return cDaysinmonthKeyword_1; }
+
+		//"daysintimestep"
+		public Keyword getDaysintimestepKeyword_2() { return cDaysintimestepKeyword_2; }
 	}
 
 	public class WaterYearElements extends AbstractParserRuleElementFinder {
@@ -6532,7 +6536,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//DaysIn:
 	//
-	//	"daysin" | "daysinmonth";
+	//	"daysin" | "daysinmonth" | "daysintimestep";
 	public DaysInElements getDaysInAccess() {
 		return (pDaysIn != null) ? pDaysIn : (pDaysIn = new DaysInElements());
 	}

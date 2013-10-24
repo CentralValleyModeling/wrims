@@ -2025,6 +2025,7 @@
       <alternatives xsi:type="xtext:Alternatives">
         <elements xsi:type="xtext:Keyword" value="daysin"/>
         <elements xsi:type="xtext:Keyword" value="daysinmonth"/>
+        <elements xsi:type="xtext:Keyword" value="daysintimestep"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="WaterYear">

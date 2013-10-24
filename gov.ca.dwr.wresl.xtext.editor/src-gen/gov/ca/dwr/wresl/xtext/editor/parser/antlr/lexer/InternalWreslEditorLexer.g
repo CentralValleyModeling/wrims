@@ -16,6 +16,8 @@ import org.eclipse.xtext.parser.antlr.Lexer;
 
 
 
+KEYWORD_98 : ('D'|'d')('A'|'a')('Y'|'y')('S'|'s')('I'|'i')('N'|'n')('T'|'t')('I'|'i')('M'|'m')('E'|'e')('S'|'s')('T'|'t')('E'|'e')('P'|'p');
+
 KEYWORD_97 : ('D'|'d')('A'|'a')('Y'|'y')('S'|'s')('I'|'i')('N'|'n')('M'|'m')('O'|'o')('N'|'n')('T'|'t')('H'|'h');
 
 KEYWORD_96 : ('T'|'t')('I'|'i')('M'|'m')('E'|'e')('S'|'s')('E'|'e')('R'|'r')('I'|'i')('E'|'e')('S'|'s');
