@@ -6589,6 +6589,14 @@ rule__DaysIn__Alternatives
 { after(grammarAccess.getDaysInAccess().getDaysinmonthKeyword_1()); }
 )
 
+    |(
+{ before(grammarAccess.getDaysInAccess().getDaysintimestepKeyword_2()); }
+
+	'daysintimestep' 
+
+{ after(grammarAccess.getDaysInAccess().getDaysintimestepKeyword_2()); }
+)
+
 ;
 finally {
 	restoreStackSize(stackSize);
