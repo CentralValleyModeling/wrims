@@ -199,6 +199,9 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static final String ATTR_WPP_WRESLPLUS=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_WRESLPLUS";
 	public static final String ATTR_WPP_FREEXA=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_FREEXA";
 	
+	public static final String lineSep="\n";
+	public static final String tab="\t";
+	
 	public static String textVarGoalSearch="";
 	
 	public static String hoverText="";

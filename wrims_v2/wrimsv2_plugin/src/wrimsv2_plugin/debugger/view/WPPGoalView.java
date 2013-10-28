@@ -39,6 +39,7 @@ import org.eclipse.ui.IWorkbenchPart;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.debugger.listener.TableCopyListener;
 import wrimsv2_plugin.debugger.model.IWPPEventListener;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
 import wrimsv2_plugin.debugger.model.WPPValue;
@@ -195,6 +196,9 @@ public class WPPGoalView extends AbstractDebugView implements ISelectionListener
 	    table.setHeaderVisible(true);
 	    table.setLinesVisible(true);
 
+	    TableCopyListener tcl=new TableCopyListener(table);
+	    table.addKeyListener(tcl);
+	    
 	    // Pack the window
 	    parent.pack();
 	    

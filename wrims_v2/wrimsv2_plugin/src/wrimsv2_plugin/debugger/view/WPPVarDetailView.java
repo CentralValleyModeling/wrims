@@ -52,6 +52,8 @@ import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.dialog.WPPCycleDialog;
 import wrimsv2_plugin.debugger.dialog.WPPTimeSeriesDialog;
 import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.debugger.listener.TableCopyListener;
+import wrimsv2_plugin.debugger.listener.TableCursorCopyListener;
 import wrimsv2_plugin.debugger.model.WPPValue;
 import wrimsv2_plugin.tools.DataProcess;
 import wrimsv2_plugin.tools.DssOperations;
@@ -196,6 +198,9 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 	    tc3.setWidth(150);
 	    table.setHeaderVisible(true);
 	    table.setLayoutData(new GridData(GridData.FILL_BOTH));
+	    
+	    TableCopyListener tcl= new TableCopyListener(table);
+	    table.addKeyListener(tcl);
 	}
 
 	@Override
@@ -289,6 +294,7 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 	    fillAltTimeseries(table, variableNames.get(0), timeseries);
 	    table.redraw();
 	    final TableCursor cursor = new TableCursor(table, SWT.NONE);
+	    cursor.addKeyListener(new TableCursorCopyListener(table));
 	    cursor.addSelectionListener(new SelectionAdapter(){
 
 			@Override
@@ -430,6 +436,7 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 	    }
 	    table.redraw();
 	    final TableCursor cursor = new TableCursor(table, SWT.NONE);
+	    cursor.addKeyListener(new TableCursorCopyListener(table));
 	    cursor.addSelectionListener(new SelectionAdapter(){
 
 			@Override

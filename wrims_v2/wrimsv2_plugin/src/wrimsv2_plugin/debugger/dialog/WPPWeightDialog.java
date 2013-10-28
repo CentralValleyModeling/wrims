@@ -17,6 +17,11 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableTree;
 import org.eclipse.swt.custom.TableTreeItem;
+import org.eclipse.swt.dnd.Clipboard;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -47,6 +52,7 @@ import org.eclipse.ui.PlatformUI;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.debugger.listener.TableCopyListener;
 import wrimsv2_plugin.debugger.menuitem.EnableMenus;
 import wrimsv2_plugin.debugger.model.WPPValue;
 import wrimsv2_plugin.debugger.view.ProcessAltColumn;
@@ -65,7 +71,7 @@ public class WPPWeightDialog extends Dialog {
 	
 	public WPPWeightDialog(Shell parent) {
 		super(parent);
-		// TODO Auto-generated constructor stub
+		setShellStyle(SWT.MIN);
 	}
 	
 	public void openDialog(){
@@ -83,22 +89,11 @@ public class WPPWeightDialog extends Dialog {
 		layout.marginWidth=20;
 		dialogArea.setLayout(layout);
 				
-		Table table = new Table(dialogArea, SWT.NONE);
+		Table table = new Table(dialogArea, SWT.MULTI|SWT.FULL_SELECTION);
 		GridData gd1=new GridData(750, 390);
 		table.setLayoutData(gd1);
 	    constructTable(table);
-	    
-		Button ok = new Button(dialogArea, SWT.PUSH);
-		ok.setText("OK");
-		ok.addSelectionListener(new SelectionAdapter(){
-			public void widgetSelected(SelectionEvent event){
-				close();
-			}
-		});
-		GridData gd2= new GridData(GridData.HORIZONTAL_ALIGN_CENTER);
-		ok.setLayoutData(gd2);
-		
-		dialogArea.getShell().setDefaultButton(ok);
+	    	    
 		dialogArea.pack();
 		return dialogArea;
 	 }
@@ -141,6 +136,51 @@ public class WPPWeightDialog extends Dialog {
 		
 	    table.setHeaderVisible(true);
 	    table.setLinesVisible(true);
+	    
+	    TableCopyListener tcl=new TableCopyListener(table);
+	    table.addKeyListener(tcl);
+	    
+	    /*
+	    table.addKeyListener(new KeyListener() {
+            
+			@Override
+	    	public void keyReleased(KeyEvent e) {
+                
+            }
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				String lineSep=DebugCorePlugin.lineSep;
+				String tab=DebugCorePlugin.tab;
+				
+				if((e.stateMask == SWT.CTRL) && (e.keyCode == 'c'))
+                {
+                	Clipboard cb = new Clipboard(getShell().getDisplay());
+                	TextTransfer textTransfer = TextTransfer.getInstance();
+                	TableItem[] ti = table.getSelection();
+                	String[] data=new String[1];
+                	Transfer[] transfer=new Transfer[1];
+               		transfer[0]=textTransfer;
+                	TableColumn[] tc = table.getColumns();
+                	data[0]="";
+                	int tcl=tc.length;
+                	for (int i=0; i<tcl; i++){
+                		data[0]=data[0]+tc[i].getText()+tab;
+                	}
+                	data[0]=data[0]+lineSep;
+                	for (int i=0; i<ti.length; i++){
+                		TableItem tableItem = ti[i];
+                		for (int j=0; j<tcl; j++){
+                			data[0]=data[0]+ti[i].getText(j)+tab;
+                		}
+                		data[0]=data[0]+lineSep;
+                	}
+                	cb.setContents(data, transfer);
+                	cb.dispose();
+                }		
+			}
+	    });
+	    */
 	    
 	    Listener nameSortListener = new Listener() {  
             
