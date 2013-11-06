@@ -114,6 +114,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	
 	public static String savedSvFileName="";
 	public static String savedDvFileName="";
+	public static String controlGoalsFileName="";
 	
 	public static String[] studyDvFileNames={"","","",""};
 	public static String[] studySvFileNames={"","","",""};

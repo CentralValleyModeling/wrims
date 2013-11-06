@@ -127,6 +127,15 @@
          enablesFor="*">
       </action>
       <action
+         id="wpp.exportcontrolgoals" 
+         label="Export Control"
+         icon="icons\exportcontrol_icon.png" 
+         tooltip="export control goals"
+         toolbarPath="group1"
+         class="wrimsv2_plugin.debugger.toolbaritem.ExportControlGoals"
+         enablesFor="*">
+      </action> 
+      <action
          id="wpp.allcontrolgoals" 
          label="Control"
          icon="icons\control_icon.png" 
