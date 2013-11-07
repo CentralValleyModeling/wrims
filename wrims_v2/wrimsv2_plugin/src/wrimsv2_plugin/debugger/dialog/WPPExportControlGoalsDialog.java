@@ -118,7 +118,7 @@ public class WPPExportControlGoalsDialog extends Dialog {
 		
 		Label label3=new Label(dialogArea, SWT.NONE);
 		label3.setText("Optional goals filter:");
-		fileName=DebugCorePlugin.filterFileName;
+		filterName=DebugCorePlugin.filterFileName;
 		
 		Composite filterSelection = new Composite(dialogArea, SWT.NONE);
 		filterSelection.setLayout(layout);
