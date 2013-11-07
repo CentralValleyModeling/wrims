@@ -115,6 +115,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static String savedSvFileName="";
 	public static String savedDvFileName="";
 	public static String controlGoalsFileName="";
+	public static String filterFileName="";
 	
 	public static String[] studyDvFileNames={"","","",""};
 	public static String[] studySvFileNames={"","","",""};
@@ -200,7 +201,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static final String ATTR_WPP_WRESLPLUS=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_WRESLPLUS";
 	public static final String ATTR_WPP_FREEXA=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_FREEXA";
 	
-	public static final String lineSep="\n";
+	public static final String lineSep=System.getProperty("line.separator");
 	public static final String tab="\t";
 	
 	public static String textVarGoalSearch="";

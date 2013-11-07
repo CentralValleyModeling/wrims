@@ -127,7 +127,7 @@ public class WPPLoadStudyDssDialog extends Dialog {
 					workbench.getDisplay().asyncExec(new Runnable(){
 						public void run(){
 							Shell shell=workbench.getActiveWorkbenchWindow().getShell();
-							FileDialog dlg=new FileDialog(shell, SWT.SAVE);
+							FileDialog dlg=new FileDialog(shell, SWT.OPEN);
 							dlg.setFilterNames(new String[]{"DSS Files (*.dss)", "All Files (*.*)"});
 							dlg.setFilterExtensions(new String[]{"*.dss", "*.*"});
 							dlg.setFileName(dvFileText[j].getText());
@@ -158,7 +158,7 @@ public class WPPLoadStudyDssDialog extends Dialog {
 					workbench.getDisplay().asyncExec(new Runnable(){
 						public void run(){
 							Shell shell=workbench.getActiveWorkbenchWindow().getShell();
-							FileDialog dlg=new FileDialog(shell, SWT.SAVE);
+							FileDialog dlg=new FileDialog(shell, SWT.OPEN);
 							dlg.setFilterNames(new String[]{"DSS Files (*.dss)", "All Files (*.*)"});
 							dlg.setFilterExtensions(new String[]{"*.dss", "*.*"});
 							dlg.setFileName(svFileText[j].getText());
@@ -214,7 +214,7 @@ public class WPPLoadStudyDssDialog extends Dialog {
 					workbench.getDisplay().asyncExec(new Runnable(){
 						public void run(){
 							Shell shell=workbench.getActiveWorkbenchWindow().getShell();
-							DirectoryDialog dlg=new DirectoryDialog(shell, SWT.SAVE);
+							DirectoryDialog dlg=new DirectoryDialog(shell, SWT.OPEN);
 							String file=dlg.open();
 							if (file !=null){
 								studyFolderText[j].setText(file);

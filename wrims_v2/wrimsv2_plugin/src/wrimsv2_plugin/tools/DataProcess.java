@@ -62,6 +62,7 @@ public class DataProcess {
 					keys.add(gn);
 					allGoalMap.put(gn, part[1]);
 				}
+				fr.close();
 			} catch (Exception e) {
 				WPPException.handleException(e);
 			}
@@ -95,6 +96,7 @@ public class DataProcess {
 					keys.add(vn);
 					allVariableMap.put(vn, part[1]);
 				}
+				fr.close();
 			} catch (Exception e) {
 				WPPException.handleException(e);
 			}
@@ -125,6 +127,7 @@ public class DataProcess {
 					String[] part=line.split(":");
 					weightedVariableMap.put(part[0], part[1]);
 				}
+				fr.close();
 			} catch (Exception e) {
 				WPPException.handleException(e);
 			}
@@ -147,6 +150,7 @@ public class DataProcess {
 					VariableProperty vp = new VariableProperty(part[1], part[2]);
 					allVariableProperty.put(part[0], vp);
 				}
+				fr.close();
 			} catch (Exception e) {
 				WPPException.handleException(e);
 			}

@@ -1,9 +1,11 @@
 package wrimsv2_plugin.debugger.dialog;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
@@ -47,7 +49,11 @@ import wrimsv2_plugin.debugger.view.WPPVarDetailView;
 
 public class WPPExportControlGoalsDialog extends Dialog {
 	private Text fileText;
+	private Text filterText;
 	private	String fileName="";
+	private String filterName="";
+	private ArrayList<String> filterGoals=new ArrayList<String>();
+	private boolean doFilter=false;
 	
 	public WPPExportControlGoalsDialog(Shell parentShell) {
 		super(parentShell);
@@ -56,7 +62,7 @@ public class WPPExportControlGoalsDialog extends Dialog {
 
 	public void openDialog(){
 		create();
-		getShell().setSize(600, 200);
+		getShell().setSize(600, 320);
 		getShell().setText("Export Control Goals");
 		open();
 	}
@@ -94,13 +100,51 @@ public class WPPExportControlGoalsDialog extends Dialog {
 				workbench.getDisplay().asyncExec(new Runnable(){
 					public void run(){
 						Shell shell=workbench.getActiveWorkbenchWindow().getShell();
-						FileDialog dlg=new FileDialog(shell, SWT.SAVE);
+						FileDialog dlg=new FileDialog(shell, SWT.OPEN);
 						dlg.setFilterNames(new String[]{"Data Files (*.dat)", "All Files (*.*)"});
 						dlg.setFilterExtensions(new String[]{"*.dat", "*.*"});
 						dlg.setFileName(fileText.getText());
 						String file=dlg.open();
 						if (file !=null){
 							fileText.setText(file);
+						}
+					}
+				});
+			}
+		});
+		
+		Label label2=new Label(dialogArea, SWT.NONE);
+		label2.setText("");
+		
+		Label label3=new Label(dialogArea, SWT.NONE);
+		label3.setText("Optional goals filter:");
+		fileName=DebugCorePlugin.filterFileName;
+		
+		Composite filterSelection = new Composite(dialogArea, SWT.NONE);
+		filterSelection.setLayout(layout);
+		filterText = new Text(filterSelection, SWT.SINGLE | SWT.BORDER);
+		filterText.setLayoutData(gd1);
+		filterText.setText(filterName);
+		
+		Button filterButton = new Button(filterSelection, SWT.PUSH);
+		filterButton.setText("Browser");
+		filterButton.setLayoutData(gd2);
+		filterButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				final IWorkbench workbench=PlatformUI.getWorkbench();
+				workbench.getDisplay().asyncExec(new Runnable(){
+					public void run(){
+						Shell shell=workbench.getActiveWorkbenchWindow().getShell();
+						FileDialog dlg=new FileDialog(shell, SWT.OPEN);
+						dlg.setFilterNames(new String[]{"Filter Files (*.flt)", "All Files (*.*)"});
+						dlg.setFilterExtensions(new String[]{"*.flt", "*.*"});
+						dlg.setFileName(filterText.getText());
+						String file=dlg.open();
+						if (file !=null){
+							filterText.setText(file);
+						}else{
+							filterText.setText("");
 						}
 					}
 				});
@@ -114,6 +158,7 @@ public class WPPExportControlGoalsDialog extends Dialog {
 	public void okPressed(){
 		fileName=fileText.getText();
 		DebugCorePlugin.controlGoalsFileName=fileName;
+		procFilterFile();
 		boolean exists = (new File(fileName)).exists();
 		if (exists) {
 			final IWorkbench workbench=PlatformUI.getWorkbench();
@@ -132,6 +177,36 @@ public class WPPExportControlGoalsDialog extends Dialog {
 		close();
 	}
 	
+	public void procFilterFile(){
+		filterGoals=new ArrayList<String>();
+		filterName=filterText.getText();
+		DebugCorePlugin.filterFileName=filterName;
+		File filterFile=new File(filterName);
+		if (filterFile.exists()){
+			doFilter=true;
+			try {
+				FileReader fr = new FileReader(filterFile);
+				BufferedReader br = new BufferedReader(fr);
+				String line = br.readLine();
+				if (line != null){
+					line=line.trim().toLowerCase();
+					if (!line.equals("filter")){
+						filterGoals.add(line);
+					}
+					while ((line = br.readLine()) != null) {
+						line=line.trim().toLowerCase();
+						filterGoals.add(line);
+					}
+				}
+				fr.close();
+			} catch (Exception e) {
+				WPPException.handleException(e);
+			}
+		}else{
+			doFilter=false;
+		}
+	}
+	
 	public void exportControlGoals(){
 		final IWorkbench workbench=PlatformUI.getWorkbench();
 		workbench.getDisplay().asyncExec(new Runnable(){
@@ -147,12 +222,28 @@ public class WPPExportControlGoalsDialog extends Dialog {
 					OutputStreamWriter controlGoalsWriter = new OutputStreamWriter(controlGoalsStream);    
 					BufferedWriter controlGoalsBuffer = new BufferedWriter(controlGoalsWriter);
 					
+					controlGoalsBuffer.write("Control   Goal             Constraint"+System.getProperty("line.separator"));
 					for (int i=0; i<size; i++){
 						TableItem ti = table.getItem(i);
 						String goalName=ti.getText(0);
-						if (DebugCorePlugin.allControlGoals.contains(goalName)){
-							String controlGoal=goalName+" : "+ti.getText(1)+System.getProperty("line.separator");
-							controlGoalsBuffer.write(controlGoal);
+						if (doFilter){
+							if (filterGoals.contains(goalName)){
+								if (DebugCorePlugin.allControlGoals.contains(goalName)){
+									String controlGoal="C         "+goalName+" : "+ti.getText(1)+DebugCorePlugin.lineSep;
+									controlGoalsBuffer.write(controlGoal);
+								}else{
+									String controlGoal="N         "+goalName+" : "+ti.getText(1)+DebugCorePlugin.lineSep;
+									controlGoalsBuffer.write(controlGoal);
+								}
+							}
+						}else{
+							if (DebugCorePlugin.allControlGoals.contains(goalName)){
+								String controlGoal="C         "+goalName+" : "+ti.getText(1)+DebugCorePlugin.lineSep;
+								controlGoalsBuffer.write(controlGoal);
+							}else{
+								String controlGoal="N         "+goalName+" : "+ti.getText(1)+DebugCorePlugin.lineSep;
+								controlGoalsBuffer.write(controlGoal);
+							}
 						}
 					}
 					
