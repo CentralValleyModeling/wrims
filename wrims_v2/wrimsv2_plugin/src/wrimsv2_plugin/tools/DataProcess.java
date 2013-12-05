@@ -51,7 +51,9 @@ public class DataProcess {
 		ArrayList<String> keys=new ArrayList<String>();
 		Map<String, String> allGoalMap = new HashMap<String, String>();
 		String allGoalFileName="allgoals.dat";
-		File allGoalFile=new File(allGoalFileName);
+		File dataFolder = new File(DebugCorePlugin.dataDir);
+		dataFolder.mkdirs();
+		File allGoalFile=new File(dataFolder, allGoalFileName);
 		if (allGoalFile.exists()){
 			try {
 				FileReader fr = new FileReader(allGoalFile);
@@ -85,7 +87,9 @@ public class DataProcess {
 		ArrayList<String> keys=new ArrayList<String>();
 		Map<String, String> allVariableMap = new HashMap<String, String>();
 		String allVariableFileName="allvariables.dat";
-		File allVariableFile=new File(allVariableFileName);
+		File dataFolder = new File(DebugCorePlugin.dataDir);
+		dataFolder.mkdirs();
+		File allVariableFile=new File(dataFolder, allVariableFileName);
 		if (allVariableFile.exists()){
 			try {
 				FileReader fr = new FileReader(allVariableFile);
@@ -118,7 +122,9 @@ public class DataProcess {
 		
 		Map<String, String> weightedVariableMap = new HashMap<String, String>();
 		String weightFileName="allweights.dat";
-		File weightFile=new File(weightFileName);
+		File dataFolder = new File(DebugCorePlugin.dataDir);
+		dataFolder.mkdirs();
+		File weightFile=new File(dataFolder, weightFileName);
 		if (weightFile.exists()){
 			try {
 				FileReader fr = new FileReader(weightFile);
@@ -140,7 +146,9 @@ public class DataProcess {
 		
 		Map<String, VariableProperty> allVariableProperty=new HashMap<String, VariableProperty>();
 		String partFileName="allparts.dat";
-		File partFile=new File(partFileName);
+		File dataFolder = new File(DebugCorePlugin.dataDir);
+		dataFolder.mkdirs();
+		File partFile=new File(dataFolder, partFileName);
 		if (partFile.exists()){
 			try {
 				FileReader fr = new FileReader(partFile);

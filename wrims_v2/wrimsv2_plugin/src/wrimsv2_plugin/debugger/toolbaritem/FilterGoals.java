@@ -25,7 +25,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionDelegate;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
-import wrimsv2_plugin.debugger.dialog.WPPExportControlGoalsDialog;
+import wrimsv2_plugin.debugger.dialog.WPPFilterGoalsDialog;
 import wrimsv2_plugin.debugger.dialog.WPPReSimDialog;
 import wrimsv2_plugin.debugger.dialog.WPPSaveFileDialog;
 import wrimsv2_plugin.debugger.dialog.WPPVarGoalSearchDialog;
@@ -35,7 +35,7 @@ import wrimsv2_plugin.debugger.view.WPPAllVariableView;
 import wrimsv2_plugin.debugger.view.WPPVariableView;
 import wrimsv2_plugin.tools.DataProcess;
 
-public class ExportControlGoals extends ActionDelegate implements IViewActionDelegate{
+public class FilterGoals extends ActionDelegate implements IViewActionDelegate{
 
 	@Override
 	public void init(IViewPart view) {
@@ -48,7 +48,7 @@ public class ExportControlGoals extends ActionDelegate implements IViewActionDel
 		workbench.getDisplay().asyncExec(new Runnable(){
 			public void run(){
 				Shell shell=workbench.getActiveWorkbenchWindow().getShell();
-				WPPExportControlGoalsDialog dialog= new WPPExportControlGoalsDialog(shell);
+				WPPFilterGoalsDialog dialog= new WPPFilterGoalsDialog(shell);
 				dialog.openDialog();
 			}
 		});

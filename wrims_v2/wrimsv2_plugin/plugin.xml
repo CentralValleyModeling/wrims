@@ -112,6 +112,15 @@
          class="wrimsv2_plugin.debugger.toolbaritem.VarGoalSearch"
          enablesFor="*">
       </action>  
+      <action
+         id="wpp.filtergoals" 
+         label="Filter Goal"
+         icon="icons\filtergoal_icon.png" 
+         tooltip="filter goals"
+         toolbarPath="group1"
+         class="wrimsv2_plugin.debugger.toolbaritem.FilterGoals"
+         enablesFor="*">
+      </action> 
    </viewContribution> 
 </extension>
 <extension point="org.eclipse.ui.viewActions"> 
@@ -127,12 +136,12 @@
          enablesFor="*">
       </action>
       <action
-         id="wpp.exportcontrolgoals" 
-         label="Export Control"
-         icon="icons\exportcontrol_icon.png" 
-         tooltip="export control goals"
+         id="wpp.filtergoals" 
+         label="Filter Goal"
+         icon="icons\filtergoal_icon.png" 
+         tooltip="filter goals"
          toolbarPath="group1"
-         class="wrimsv2_plugin.debugger.toolbaritem.ExportControlGoals"
+         class="wrimsv2_plugin.debugger.toolbaritem.FilterGoals"
          enablesFor="*">
       </action> 
       <action

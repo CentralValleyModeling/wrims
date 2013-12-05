@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -42,6 +43,7 @@ import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.Timeseries;
 import wrimsv2.commondata.wresldata.WeightElement;
 import wrimsv2.debug.ChangeSolver;
+import wrimsv2.debug.FilterGoal;
 import wrimsv2.debug.ReLoadSVDss;
 import wrimsv2.evaluator.DataTimeSeries;
 import wrimsv2.evaluator.DssDataSet;
@@ -98,6 +100,8 @@ public class DebugInterface {
 	private String[] debugDvar;
 	private String[] debugAlias;
 	private String[] allDebugVariables;
+	private ArrayList<String> filterGoalNames=new ArrayList<String>();
+	private Map<String, FilterGoal> filterGoals=new HashMap<String, FilterGoal>();
 	public DecimalFormat df = new DecimalFormat("#.####");
 	public static String[] monitorVarNames=new String[0];
 	public static String monitorVarTimeStep="";
@@ -105,6 +109,7 @@ public class DebugInterface {
 	public int resimYear;
 	public int resimMonth;
 	public int resimDay;
+	private String dataDir="data";
 	
 	public DebugInterface(int requestPort, int eventPort, String args[]){
 		try{	
@@ -302,6 +307,20 @@ public class DebugInterface {
 				e.printStackTrace();
 			}
 			
+		}else if (request.startsWith("filtergoal:")){
+			int index=request.indexOf(":");
+			try {
+				if (request.equals("filtergoal:")){
+					sendRequest("");
+				}else{
+					String fileName=request.substring(index+1);
+					goalString=getFilterGoal(fileName);
+					sendRequest(goalString);
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}else if (request.startsWith("time")){
 			String [] requestParts=request.split(":");
 			String[] yearMonthDayCycle=requestParts[1].split("/");
@@ -1119,6 +1138,135 @@ public class DebugInterface {
 		return goalString;
 	}
 
+	public String getFilterGoal(String fileName){
+		String filtergoal="filteredgoalretrieved";
+		if (procFilterFile(fileName)){
+			Map<String, EvalConstraint> gMap = SolverData.getConstraintDataMap();
+			Map<String, Dvar> dvMap = SolverData.getDvarMap();
+			Set<String> goalKeySet=filterGoals.keySet();
+								
+			try{
+				File dataFolder= new File(dataDir);
+				dataFolder.mkdirs();
+				File filterGoalFile = new File(dataFolder, "filtergoals.dat");
+				FileOutputStream filterGoalStream = new FileOutputStream(filterGoalFile);
+				OutputStreamWriter filterGoalWriter = new OutputStreamWriter(filterGoalStream);    
+				BufferedWriter filterGoalBuffer = new BufferedWriter(filterGoalWriter);
+			
+				for (int i=0; i<filterGoalNames.size(); i++){
+					String goalName=filterGoalNames.get(i);
+					String goalString=goalName+";";
+					double lhs=0.0;
+					if (gMap.containsKey(goalName)){
+						EvalConstraint ec=gMap.get(goalName);
+						if (ec!=null){
+							EvalExpression ee=ec.getEvalExpression();
+							Map<String, IntDouble> multiplier = ee.getMultiplier();
+							Set<String> mKeySet = multiplier.keySet();
+							Iterator<String> mi = mKeySet.iterator();
+							boolean hasData = true;
+							while (mi.hasNext()){
+								String variable=mi.next();
+								Number value=multiplier.get(variable).getData();
+								double value1=value.doubleValue();
+								if (goalString.endsWith(":")){
+									if (value1==1.0){
+										goalString=goalString+variable;
+									}else if (value1==-1.0){
+										goalString=goalString+"-"+variable;
+									}else{
+										goalString=goalString+df.format(value)+variable;
+									}
+								}else{
+									if (value1==1.0){
+										goalString=goalString+"+"+variable;
+									}else if (value1 == -1.0){
+										goalString=goalString+"-"+variable;
+									}else if(value1>=0){
+										goalString=goalString+"+"+df.format(value)+variable;
+									}else{
+										goalString=goalString+df.format(value)+variable;
+									}
+								}
+								if (!(variable.startsWith("surplus__") || variable.startsWith("slack__"))){
+									IntDouble id = dvMap.get(variable).getData();
+									if (id==null){
+										hasData=false;
+									}else{
+										double variableValue=id.getData().doubleValue();
+										lhs=lhs+value1*variableValue;
+									}
+								}
+							}
+							Number value=ee.getValue().getData();
+							double value1=value.doubleValue();
+							if (value1>0){
+								goalString=goalString+"+"+df.format(value)+ec.getSign()+"0";
+							}else if(value1<0){
+								goalString=goalString+df.format(value)+ec.getSign()+"0";
+							}else{
+								goalString=goalString+ec.getSign()+"0";
+							}
+							lhs=lhs+value1;
+							FilterGoal fg = filterGoals.get(goalName);
+							double tolerance=Double.parseDouble(fg.getTolerance());
+							if (Math.abs(lhs)<=tolerance && hasData){
+								goalString=goalString+";"+"y"+System.getProperty("line.separator");
+							}else{
+								goalString=goalString+";"+"n"+System.getProperty("line.separator");
+							}
+							filterGoalBuffer.write(goalString);
+						}
+					}
+				}
+				filterGoalBuffer.close();
+			}catch (IOException e){
+				return "failed";
+			}
+		}else{
+			return "failed";
+		}
+		return filtergoal;
+	}
+	
+	public boolean procFilterFile(String filterName){
+		boolean doFilter=true;
+		filterGoals=new HashMap<String, FilterGoal>();
+		filterGoalNames=new ArrayList<String>();
+		File filterFile=new File(filterName);
+		if (filterFile.exists()){
+			doFilter=true;
+			try {
+				FileReader fr = new FileReader(filterFile);
+				BufferedReader br = new BufferedReader(fr);
+				String line = br.readLine();
+				if (line != null){
+					while ((line = br.readLine()) != null) {
+						line=line.trim().toLowerCase();
+						String[] filterParts=line.split(",");
+						int length=filterParts.length;
+						FilterGoal fg=new FilterGoal();
+						if (length==3){
+							fg.setAlias(filterParts[1]);
+							fg.setTolerance(filterParts[2]);
+						}else if (length==2){
+							fg.setAlias(filterParts[1]);
+						}
+						filterGoals.put(filterParts[0], fg);
+						filterGoalNames.add(filterParts[0]);
+					}
+				}
+				fr.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+				doFilter=false;
+			}
+		}else{
+			doFilter=false;
+		}
+		return doFilter;
+	}
+	
 	public String getAllVariableString(){
 		String dataString="";
 		ArrayList<String> allDataNames=new ArrayList<String>();
@@ -1400,7 +1548,9 @@ public class DebugInterface {
 		}
 		
 		try{
-			File allDataFile = new File("allvariables.dat");
+			File dataFolder= new File(dataDir);
+			dataFolder.mkdirs();
+			File allDataFile = new File(dataFolder, "allvariables.dat");
 			FileOutputStream allDataStream = new FileOutputStream(allDataFile);
 			OutputStreamWriter allDataWriter = new OutputStreamWriter(allDataStream);    
 			BufferedWriter allDataBuffer = new BufferedWriter(allDataWriter);
@@ -1411,7 +1561,8 @@ public class DebugInterface {
 			}
 			allDataBuffer.close();
 		
-			File allPartFile = new File("allparts.dat");
+			dataFolder.mkdirs();
+			File allPartFile = new File(dataFolder, "allparts.dat");
         	FileOutputStream allPartStream = new FileOutputStream(allPartFile);
         	OutputStreamWriter allPartWriter = new OutputStreamWriter(allPartStream);    
         	BufferedWriter allPartBuffer = new BufferedWriter(allPartWriter);
@@ -1421,7 +1572,7 @@ public class DebugInterface {
 			}
 			allPartBuffer.close();
 		
-			File allWeightFile = new File("allweights.dat");
+			File allWeightFile = new File(dataFolder, "allweights.dat");
         	FileOutputStream allWeightStream = new FileOutputStream(allWeightFile);
         	OutputStreamWriter allWeightWriter = new OutputStreamWriter(allWeightStream);    
         	BufferedWriter allWeightBuffer = new BufferedWriter(allWeightWriter);
@@ -1526,7 +1677,9 @@ public class DebugInterface {
 		Collections.sort(gKeyArrayList);
 		
 		try{
-			File allGoalFile = new File("allgoals.dat");
+			File dataFolder= new File(dataDir);
+			dataFolder.mkdirs();
+			File allGoalFile = new File(dataFolder, "allgoals.dat");
 			FileOutputStream allGoalStream = new FileOutputStream(allGoalFile);
 			OutputStreamWriter allGoalWriter = new OutputStreamWriter(allGoalStream);    
 			BufferedWriter allGoalBuffer = new BufferedWriter(allGoalWriter);

@@ -30,6 +30,7 @@ import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.menuitem.EnableMenus;
 import wrimsv2_plugin.debugger.menuitem.NextTimeStepMenu;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
+import wrimsv2_plugin.debugger.model.WPPValue;
 import wrimsv2_plugin.debugger.toolbaritem.DebugSet;
 import wrimsv2_plugin.debugger.view.WPPVariableView;
 import wrimsv2_plugin.tools.VariableProperty;
@@ -64,11 +65,11 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	
 	@SuppressWarnings("unchecked")
 	public static Map<String, String>[] variableAltValue=new HashMap[8];
-	public static IValue[] variableStack;	
-	public static IValue[] goalStack;
-	public static IValue[] allVariableStack;
-	public static IValue[] allGoalStack;
-	public static IValue[] watchStack;
+	public static IValue[] variableStack=new WPPValue[0];	
+	public static IValue[] goalStack=new WPPValue[0];
+	public static IValue[] allVariableStack=new WPPValue[0];
+	public static IValue[] allGoalStack=new WPPValue[0];
+	public static IValue[] watchStack=new WPPValue[0];
 	public static String allVarProperties="";
 	public static String weightedVariables="";
 	public static ArrayList<String> fileControlGoals;
@@ -80,6 +81,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static Map<String, VariableProperty> watchProperty=new HashMap<String, VariableProperty>();
 	public static Map<Integer, Integer> variableAltColIndex=new HashMap<Integer, Integer>();;
 	public static Map<Integer, Integer> watchAltColIndex=new HashMap<Integer, Integer>();;
+	public static String dataDir="data";
 	
 	public static ArrayList<String[]> varDetailTimeseries= new ArrayList<String[]>();
 	public static ArrayList<String[]> varDetailFuture= new ArrayList<String[]>();
