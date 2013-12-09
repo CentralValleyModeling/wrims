@@ -179,8 +179,8 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 			consolePane = new ConsolePanel(new JTextArea());
 			tabbedPane.add(consolePane, "Console");
 
-			toolsPane = new ToolPanel();
-			tabbedPane.add(toolsPane, "Tools");
+//			toolsPane = new ToolPanel();
+//			tabbedPane.add(toolsPane, "Tools");//out-of-date, removed by LHZ on 11/27/2013 
 			// batchPane = new BatchPanel(tabbedPane);
 			// tabbedPane.add(batchPane, "Batch");
 
@@ -1117,12 +1117,12 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 		item.setMnemonic('O');
 		item.setIcon(null); // choose not to use icon in menu
 
-		item = viewmenu.add(_viewer.getZoomRectangleAction());
-		item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F6, 0));
-		item.setMnemonic('Z');
-
-		item = viewmenu.add(new JCheckBoxMenuItem(_viewer
-				.getZoomRectangleAction()));
+//		item = viewmenu.add(_viewer.getZoomRectangleAction());
+//		item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F6, 0));
+//		item.setMnemonic('Z');
+//
+//		item = viewmenu.add(new JCheckBoxMenuItem(_viewer
+//				.getZoomRectangleAction()));
 
 		viewmenu.addSeparator();
 

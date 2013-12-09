@@ -51,6 +51,7 @@ public class PanelWithCollapsibleInsetPanel extends JPanel {
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
 
+		toggleButton.setPreferredSize(new Dimension(22, 22));
 		layeredPane.add(toggleButton, new Integer(3));
 		layeredPane.add(insetPanel, new Integer(2));
 		layeredPane.add(mainPanel, new Integer(1));

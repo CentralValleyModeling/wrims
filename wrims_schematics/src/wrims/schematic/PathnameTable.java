@@ -57,6 +57,13 @@ public class PathnameTable extends JScrollPane {
 	private void constructTable() {
 		TableSorter sorter = new TableSorter(_tableModel);
 		JTable table = new JTable(sorter);
+//		JTable table = new JTable(sorter){
+//			@Override  //added by LHZ to select/deselect a row by clicking it
+//		    public void changeSelection(int rowIndex, int columnIndex,  
+//		            boolean toggle, boolean extend) {  
+//		        super.changeSelection(rowIndex, columnIndex, true, false);
+//		    }
+//		};
 		/*
 		 * // Use of this renderer screws up the setSelectionMode method ????
 		 * JTable table = new JTable(sorter) { public TableCellRenderer

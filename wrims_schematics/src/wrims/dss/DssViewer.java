@@ -529,15 +529,15 @@ public class DssViewer implements Outputer {
 				String[] split = period.split(" +");
 
 				startDate.setDate(split[0]); // CB TODO comment out?
-				startDate.setTime("2400");
-				month = startDate.month() + 1;
-				year = startDate.year();
-				if (month == 13) {
-					year = startDate.year() + 1;
-				}
-				String monthName = DssViewer.months[(month - 1) % 12];
-				startDate.setDate(monthName + year);
-				startDate.add(-1440);
+				startDate.setTime("0100");
+//				month = startDate.month() + 1;
+//				year = startDate.year();
+//				if (month == 13) {
+//					year = startDate.year() + 1;
+//				}
+//				String monthName = DssViewer.months[(month - 1) % 12];
+//				startDate.setDate(monthName + year);
+//				startDate.add(-1440);
 				startTimes[index] = startDate;
 
 				endDate.setDate(split[2]); // CB TODO comment out?
@@ -547,7 +547,7 @@ public class DssViewer implements Outputer {
 				if (month == 13) {
 					year = startDate.year() + 1;
 				}
-				monthName = DssViewer.months[(month - 1) % 12];
+				String monthName = DssViewer.months[(month - 1) % 12];
 				endDate.setDate(monthName + year);
 				endDate.add(-1440);
 				endTimes[index++] = endDate;
@@ -1112,6 +1112,7 @@ public class DssViewer implements Outputer {
 		G2dDialog dialog = loadG2d(title, type);
 		dialog.initPlot();
 		dialog.setVisible(true);
+//		dialog.showPlot();// LHZ: not sure about the difference
 		return dialog;
 	}
 
@@ -1680,8 +1681,9 @@ public class DssViewer implements Outputer {
 			Enumeration<DSSFile> filesEnum = files.elements();
 			while (filesEnum.hasMoreElements()) {
 				DSSFile file = filesEnum.nextElement();
+				pathKey = (String)pathOrDTS;
 				String path = ((String) pathOrDTS).replace(baseF, F);
-				pathKey = path;
+				//pathKey = path;
 				try { // CB added to prevent exit after one bad path. Then moved
 					// to here from below
 					dataSet = file.read(path); // CB moved to here from below
@@ -1713,6 +1715,9 @@ public class DssViewer implements Outputer {
 		if (dataSet != null) {
 			if (_mode.equals("Diff")) {
 				if (key == _keys[0]) {
+					if (_baseSet==null){
+						this._baseSet=new HashMap<String,HecMath>();
+					}
 					_baseSet.put(pathKey, dataSet);
 				} else {
 					try {

@@ -204,7 +204,7 @@ public class MonthlyTableFrame extends JFrame implements ActionListener {
 															// are CFS
 		// _showAverageColumn = false; // need to set in other places in class
 		// as well
-			_viewTotalColumn = new JCheckBoxMenuItem("Average Column",
+			_viewTotalColumn = new JCheckBoxMenuItem("Total Column",
 					_showTotalColumn);
 			_viewTotalColumn.setMnemonic('A');
 			_viewTotalColumn.addActionListener(this);

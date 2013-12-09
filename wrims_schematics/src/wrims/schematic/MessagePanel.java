@@ -50,15 +50,15 @@ public class MessagePanel {
 	public static final int FEDERAL_CONTRACT_YEAR = 2; // CB added
 
 	/** CB added */
-	public static String[] _twSelections = { "OCT1921 - SEP2009",
-			"OCT1921 - SEP1994", "MAY1928 - OCT1934", "JUN1986 - SEP1992",
-			"OCT1975 - SEP1977", "OCT1983 - SEP1993", };
+	public static String[] _twSelections = { "OCT1921 - SEP2009","OCT1921 - SEP2003",
+			"OCT1928 - SEP1934","OCT1986 - SEP1992","OCT1975 - SEP1977",
+			"OCT1976 - SEP1977","OCT1994 - SEP2003","OCT2000 - SEP2009"};
 	private int _annualType; // CB added
 
 	private static Preferences _userPrefs; // CB added
 	static {
 		_userPrefs = Preferences.userNodeForPackage(MessagePanel.class);
-		String tws = _userPrefs.get("timewindows", "OCT1921 - SEP2009,OCT1921 - SEP1994,MAY1928 - OCT1934,JUN1986 - SEP1992,OCT1975 - SEP1977,OCT1983 - SEP1993");
+		String tws = _userPrefs.get("timewindows", "OCT1921 - SEP2009,OCT1921 - SEP2003,OCT1928 - SEP1934,OCT1986 - SEP1992,OCT1975 - SEP1977,OCT1976 - SEP1977,OCT1994 - SEP2003,OCT2000 - SEP2009");
 		_twSelections = tws.split(",");
 	}
 	public static String CHECKED = "checked";
