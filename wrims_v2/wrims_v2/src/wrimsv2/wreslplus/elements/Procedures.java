@@ -12,6 +12,7 @@ import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.IntDouble;
 import wrimsv2.wreslparser.elements.LogUtils;
+import wrimsv2.wreslplus.elements.procedures.ErrorCheck;
 
 public class Procedures {
 
@@ -129,6 +130,21 @@ public class Procedures {
 		
 		seq.asList.addAll(mt.asList); 
 		seq.glList.addAll(mt.glList);
+
+		// check redefined goal
+		if (ErrorCheck.findDuplicatesIgnoreCase(seq.glList).size()>0){
+			
+			String glName = ErrorCheck.findDuplicatesIgnoreCase(seq.glList).get(0);
+			GoalTemp glObj_mt = mt.glMap.get(glName);
+			String msg = "Goal ["+glName+"] is redefined.";
+			LogUtils.errMsgLocation(glObj_mt.fromWresl, glObj_mt.line, msg);
+			
+			GoalTemp glObj_seq = seq.glMap.get(glName);			
+			LogUtils.errMsgLocation(glObj_seq.fromWresl, glObj_seq.line, msg);
+			
+		}
+		
+		
 		seq.gl2List.addAll(mt.gl2List);
 		seq.tsList.addAll(mt.tsList);
 		
