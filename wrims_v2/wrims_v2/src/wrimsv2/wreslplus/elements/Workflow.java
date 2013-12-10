@@ -219,7 +219,8 @@ public class Workflow {
 
 		ProcWeight.processWeightGroup(st);
 						
-		Procedures.copyModelVarMapToSequenceVarMap(st);
+		if(Procedures.copyModelVarMapToSequenceVarMap(st)) return null;
+		
 				
 		if (ErrorCheck.checkWeightObjList(st)) return null;
 		

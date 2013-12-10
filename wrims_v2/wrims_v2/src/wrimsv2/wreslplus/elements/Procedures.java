@@ -12,6 +12,7 @@ import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.IntDouble;
 import wrimsv2.wreslparser.elements.LogUtils;
+import wrimsv2.wreslplus.elements.procedures.ErrorCheck;
 
 public class Procedures {
 
@@ -65,8 +66,9 @@ public class Procedures {
 
 	}
 
-	public static void copyModelVarMapToSequenceVarMap(StudyTemp st) {
+	public static boolean copyModelVarMapToSequenceVarMap(StudyTemp st) {
 		
+		boolean hasError = false;
 		
 		
 		for (String seqName : st.seqList) {
@@ -86,7 +88,7 @@ public class Procedures {
 					ModelTemp incModel = st.modelMap.get(f);
 				
 
-					copyModelVarMapToSequenceVarMap(incModel, seqObj);
+					if(copyModelVarMapToSequenceVarMap(incModel, seqObj)) return true;
 
 					
 				}
@@ -97,17 +99,20 @@ public class Procedures {
 				
 				ModelTemp incModel = st.fileModelDataTable.get(f, st.fileModelNameMap.get(f).get(0));
 				
-				copyModelVarMapToSequenceVarMap(incModel, seqObj);
+				if (copyModelVarMapToSequenceVarMap(incModel, seqObj)) return true;
 			
 			}
 
-			copyModelVarMapToSequenceVarMap(seqModelObj, seqObj);
+			if (copyModelVarMapToSequenceVarMap(seqModelObj, seqObj)) return true;
 
 		}
 		
+		return hasError;
 	}
 
-	public static void copyModelVarMapToSequenceVarMap(ModelTemp mt, SequenceTemp seq) {
+	public static boolean copyModelVarMapToSequenceVarMap(ModelTemp mt, SequenceTemp seq) {
+		
+		boolean hasError = false;
 		
 		for (String cycleName: mt.neededCycleVarMap.keySet()){
 		
@@ -129,6 +134,24 @@ public class Procedures {
 		
 		seq.asList.addAll(mt.asList); 
 		seq.glList.addAll(mt.glList);
+
+		// check redefined goal
+		if (ErrorCheck.findDuplicatesIgnoreCase(seq.glList).size()>0){
+	
+			
+			String glName = ErrorCheck.findDuplicatesIgnoreCase(seq.glList).get(0);
+			GoalTemp glObj_mt = mt.glMap.get(glName);
+			String msg = "Goal ["+glName+"] is redefined in Cycle ["+ seq.id +"]";
+			LogUtils.errMsgLocation(glObj_mt.fromWresl, glObj_mt.line, msg);
+
+			GoalTemp glObj_seq = seq.glMap.get(glName);			
+			LogUtils.errMsgLocation(glObj_seq.fromWresl, glObj_seq.line, msg);
+			
+			hasError = true;
+			return hasError;
+			
+		}
+				
 		seq.gl2List.addAll(mt.gl2List);
 		seq.tsList.addAll(mt.tsList);
 		
@@ -151,6 +174,7 @@ public class Procedures {
 		
 		seq.groupWeightMap.putAll(mt.groupWeightMap);
 		
+		return hasError;
 	}
 	
 	public static void convertAliasToGoal(StudyTemp s) {
@@ -277,17 +301,19 @@ public class Procedures {
 				
 				
 				for( String includedFile: st.allOffspringMap.get(f)){
-					int index =list_post1.indexOf(includedFile);
-					
-					
+					int index =list_post2.indexOf(includedFile);
+
+
 					//Pair<String,String> p2 = new Pair<String, String>(includedFile, st.fileModelNameMap.get(includedFile).get(0));
 					
 					//ModelTemp includedModel = st.fileModelDataMap.get(p2);
+					if (index>-1) {
+						ModelTemp includedModel = st.fileModelDataTable.get(includedFile, st.fileModelNameMap.get(includedFile).get(0));
 					
-					ModelTemp includedModel = st.fileModelDataTable.get(includedFile, st.fileModelNameMap.get(includedFile).get(0));
-					list_post1.addAll(index+1, includedModel.incFileAbsPathList_post); 
-					list_post2.addAll(index+1, includedModel.incFileRelativePathList_post); 
-					
+
+						list_post1.addAll(index+1, includedModel.incFileAbsPathList_post); 
+						list_post2.addAll(index+1, includedModel.incFileRelativePathList_post); 
+					}
 				}
 			}
 		}
