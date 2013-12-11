@@ -104,8 +104,25 @@ public class Procedures {
 			}
 
 			if (copyModelVarMapToSequenceVarMap(seqModelObj, seqObj)) return true;
+			
+			
+			
+			// check redefinition of Goal
+			
+			if (ErrorCheck.findDuplicatesIgnoreCase(seqObj.glList).size()>0){
+				
+				String glName = ErrorCheck.findDuplicatesIgnoreCase(seqObj.glList).get(0);
+				GoalTemp glObj_seq = seqObj.glMap.get(glName);		
+				String msg = "Goal ["+glName+"] is redefined in Cycle ["+ seqObj.id +"]";
+				LogUtils.errMsgLocation(glObj_seq.fromWresl, glObj_seq.line, msg);
+				
+				hasError = true;
+				return hasError;
+				
+			}
 
 		}
+		
 		
 		return hasError;
 	}
@@ -136,20 +153,22 @@ public class Procedures {
 		seq.glList.addAll(mt.glList);
 
 		// check redefined goal
-		if (ErrorCheck.findDuplicatesIgnoreCase(seq.glList).size()>0){
-	
-			
-			String glName = ErrorCheck.findDuplicatesIgnoreCase(seq.glList).get(0);
-			GoalTemp glObj_mt = mt.glMap.get(glName);
-			String msg = "Goal ["+glName+"] is redefined in Cycle ["+ seq.id +"]";
-			LogUtils.errMsgLocation(glObj_mt.fromWresl, glObj_mt.line, msg);
+		// TODO: provide option to turn on or off
+		if (false) {
+			if (ErrorCheck.findDuplicatesIgnoreCase(seq.glList).size() > 0) {
 
-			GoalTemp glObj_seq = seq.glMap.get(glName);			
-			LogUtils.errMsgLocation(glObj_seq.fromWresl, glObj_seq.line, msg);
-			
-			hasError = true;
-			return hasError;
-			
+				String glName = ErrorCheck.findDuplicatesIgnoreCase(seq.glList).get(0);
+				GoalTemp glObj_mt = mt.glMap.get(glName);
+				String msg = "Goal [" + glName + "] is redefined in Cycle [" + seq.id + "]";
+				LogUtils.errMsgLocation(glObj_mt.fromWresl, glObj_mt.line, msg);
+
+				GoalTemp glObj_seq = seq.glMap.get(glName);
+				LogUtils.errMsgLocation(glObj_seq.fromWresl, glObj_seq.line, msg);
+
+				hasError = true;
+				return hasError;
+
+			}
 		}
 				
 		seq.gl2List.addAll(mt.gl2List);
