@@ -63,9 +63,9 @@ pair : ID('-'|ID)*  '/' ID('-'|ID)* ;
    
 configFile : 
       ENDLINE* 
-      Begin Config ENDLINE+ 
+      (Begin Config ENDLINE+)? 
 			( c=configItem  { configMap.put($c.key, $c.val); } )+  
-			End Config  //{ System.out.println( cMap); }
+			(End Config)?  //{ System.out.println( cMap); }
 			
 			;
 
