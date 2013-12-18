@@ -84,7 +84,7 @@ configItem returns[String key, String val ]
    ;
 
 integer : INT ;
-complex : INT?  ( ID | '.' | '-' | '\"' | '\\' )+ ;
+complex : INT?  ( ID | '.' | '-' | '\"' | '\\' | ':' )+ ;
 
 
 
