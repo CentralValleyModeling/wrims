@@ -420,7 +420,10 @@ public class ControllerBatch {
 						ControlData.isPostProcessing=false;
 						mds.processModel();
 					
-						if (ILP.logging) {
+						boolean isLastCycle = (i == modelList.size() - 1);
+						
+						if (ILP.logging && (ILP.loggingAllCycles || isLastCycle ) ) {
+
 							ILP.setIlpFile();
 							ILP.writeIlp();
 							if (ILP.loggingVariableValue) {
@@ -440,7 +443,7 @@ public class ControllerBatch {
 				            LPSolveSolver.setLP(ILP.lpSolveFilePath);
 				            LPSolveSolver.solve();
 				            if (Error.error_solving.size()<1) {
-				            	if (ILP.logging) {
+				            	if (ILP.logging && (ILP.loggingAllCycles || isLastCycle ) )  {
 				            		ILP.writeObjValue_LPSOLVE();
 				            		if (ILP.loggingVariableValue) ILP.writeDvarValue_LPSOLVE();
 				            	}
@@ -453,7 +456,7 @@ public class ControllerBatch {
 							//long runPeriod=(long) (endTimeInMillis-startTimeInMillis);
 							//System.out.println(" XA runtime: "+runPeriod/60000+"min"+Math.round((runPeriod/60000.0-runPeriod/60000)*60)+"sec");
 							
-							if (ILP.logging) {
+							if (ILP.logging && (ILP.loggingAllCycles || isLastCycle ) ) {
 								ILP.writeObjValue_XA();
 								if (ILP.loggingVariableValue) ILP.writeDvarValue_XA();
 							}

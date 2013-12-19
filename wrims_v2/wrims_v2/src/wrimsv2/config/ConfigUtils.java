@@ -361,8 +361,24 @@ public class ConfigUtils {
 		if (strIlpLog.equalsIgnoreCase("yes") || strIlpLog.equalsIgnoreCase("true")) {
 
 			ILP.logging = true;
+			// IlpLogAllCycles
+			// default is false
+			if (configMap.keySet().contains("ilplogallcycles")) {
+
+				String s = configMap.get("ilplogallcycles");
+
+				if (s.equalsIgnoreCase("yes") || s.equalsIgnoreCase("true")) {
+					ILP.loggingAllCycles = true;
+				}
+				else if (s.equalsIgnoreCase("no") || s.equalsIgnoreCase("false")) {
+					ILP.loggingAllCycles = false;
+				}
+				else {
+					ILP.loggingAllCycles = false;
+				}
+			}
 			// IlpLogVarValue
-			// default is true
+			// default is false
 			if (configMap.keySet().contains("ilplogvarvalue")) {
 
 				String s = configMap.get("ilplogvarvalue");
@@ -420,6 +436,7 @@ public class ConfigUtils {
 			}
 
 			System.out.println("IlpLog:                 " + ILP.logging);
+			System.out.println("IlpLogAllCycles:        " + ILP.loggingAllCycles);
 			System.out.println("IlpLogVarValue:         " + ILP.loggingVariableValue);
 			System.out.println("IlpLogMaximumFractionDigits: " + ILP.maximumFractionDigits);
 

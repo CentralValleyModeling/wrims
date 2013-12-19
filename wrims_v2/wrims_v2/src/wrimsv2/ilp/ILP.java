@@ -53,6 +53,7 @@ public class ILP {
 	private static DecimalFormat df;
 	public static int maximumFractionDigits = 8;
 	public static boolean loggingVariableValue = false;
+	public static boolean loggingAllCycles = false;
 	public static boolean logging = false;
 	public static boolean loggingAmpl = false;
 	public static boolean loggingCplexLp = false; // special LP problem file format designed by Cplex
