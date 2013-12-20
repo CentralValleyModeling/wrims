@@ -109,17 +109,17 @@ public class Procedures {
 			
 			// check redefinition of Goal
 			
-			if (ErrorCheck.findDuplicatesIgnoreCase(seqObj.glList).size()>0){
-				
-				String glName = ErrorCheck.findDuplicatesIgnoreCase(seqObj.glList).get(0);
-				GoalTemp glObj_seq = seqObj.glMap.get(glName);		
-				String msg = "Goal ["+glName+"] is redefined in Cycle ["+ seqObj.id +"]";
-				LogUtils.errMsgLocation(glObj_seq.fromWresl, glObj_seq.line, msg);
-				
-				hasError = true;
-				return hasError;
-				
-			}
+//			if (ErrorCheck.findDuplicatesIgnoreCase(seqObj.glList).size()>0){
+//				
+//				String glName = ErrorCheck.findDuplicatesIgnoreCase(seqObj.glList).get(0);
+//				GoalTemp glObj_seq = seqObj.glMap.get(glName);		
+//				String msg = "Goal ["+glName+"] is redefined in Cycle ["+ seqObj.id +"]";
+//				LogUtils.errMsgLocation(glObj_seq.fromWresl, glObj_seq.line, msg);
+//				
+//				hasError = true;
+//				return hasError;
+//				
+//			}
 
 		}
 		
@@ -721,7 +721,9 @@ public class Procedures {
 						}
 						else {
 
-							LogUtils.errMsg(" Unknown type of variable ["+ e +"] in ["+ se+": "+q.model +"] is used in ["+o+": "+otherSeq.model+"]");
+							// TODO: this variable is in a IF statement where condition is not satisfied therefore not exists in previous cycle
+							
+							//LogUtils.errMsg(" Unknown type of variable ["+ e +"] in ["+ se+": "+q.model +"] is used in ["+o+": "+otherSeq.model+"]");
 
 						}
 					}
