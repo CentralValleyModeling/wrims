@@ -1,5 +1,6 @@
 from wvscript.reader.element import DssTransferReader
 from scripts.tool import Param
+from scripts.tool import DssHec
 import hec.heclib.dss.HecDss as HecDss
 #import hec.heclib.dss.DSSPathname as DSSPathname
 
@@ -33,7 +34,7 @@ class DssTransferProcess:
             #print self.transferMap
         
     
-    def run(self):
+    def run(self, startYear, startMonth, numberOfSteps):
         
 
 #        Tools.cleanDssCatalog(self.source)
@@ -46,11 +47,11 @@ class DssTransferProcess:
         if self.transferSpecFile == None:
             
             self._logger.info("Copy all vars ")
-            Tools.dssDataTransferMonthly(self.source, self.destination, self.outFpart, self.startYear, self.startMonth, self.numberOfSteps)
+            DssHec.dssDataTransferMonthly(self.source, self.destination, self.outFpart, startYear, startMonth, numberOfSteps)
         
         else:    
             self._logger.info("Copy vars specified in transfer file")
-            Tools.dssDataTransferMonthly(self.source, self.destination, self.outFpart, self.startYear, self.startMonth, self.numberOfSteps, transferMap=self.transferMap)
+            DssHec.dssDataTransferMonthly(self.source, self.destination, self.outFpart, startYear, startMonth, numberOfSteps, transferMap=self.transferMap)
     
 #        inFile.close()
 #        outFile.close()

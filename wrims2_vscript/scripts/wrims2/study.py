@@ -88,12 +88,8 @@ class Study:
 				print '=> ' + key + ':' + self._cMap.get(key)	
 		
 	
-	def _run_wrims(self):
+	def _run_wrims(self,startYear=None,startMonth=None, numberOfSteps=None):
 
-
-		# call cmd to run config path
-		
-# 		if (startYear != self._startYear) or (numberOfSteps != self._numberOfSteps):
 # 	
 # 			self._logger.info("Write study config:  "+self.ms_configPath)
 # 			# write config file
@@ -101,13 +97,25 @@ class Study:
 # 		
 # 			self._logger.info("Run generated config: "+self.ms_configPath)
 # 			
-# 			#subprocess.call([self.batFileName, self.ms_configPath])
 # 			subprocess.call(["cmd.exe", "/c", "start", self.batFileName, self.ms_configPath])
 # 			
-# 		else:
-# 			self._logger.info("Run original config: "+self.configPath)
-# 			#subprocess.call([self.batFileName, self.configPath])	
-# 			subprocess.call(["cmd.exe", "/c", "start", self.batFileName, self.configPath])
+
+		if startYear!=None and startMonth!=None and numberOfSteps!=None :
+
+			# write configFile
+			cf = open(self._configPath,'w+')	
+			cf.write("Begin Config\n")
+			for key in self._configKeyList:
+				if key!='StartYear' and key!='NumberOfSteps' and key!='StartMonth':
+					if self._cMap.get(key):
+						cf.write( key + '\t' + str(self._cMap.get(key)) + '\n')
+			
+			cf.write('StartYear      '+str(startYear)+'\n')
+			cf.write('StartMonth     '+str(startMonth)+'\n')
+			cf.write('NumberOfSteps  '+str(numberOfSteps)+'\n')				
+			cf.write("End Config\n")		
+			cf.close()
+		
 			
 		self._logger.info("Run study config: "+self._configPath)	
 		subprocess.call(["cmd.exe", "/c", "start", self._batFileName, self._configPath])
@@ -125,7 +133,7 @@ class Study:
 		process.run()
 		
 		
-	def run(self):
+	def run(self,startYear=None, startMonth=None, numberOfSteps=None):
 	
 		#self._startYear=startYear
 		#self._numberOfSteps=numberOfSteps
@@ -136,7 +144,7 @@ class Study:
 # 		if NumberOfSteps == None:
 # 			NumberOfSteps = self._NumberOfSteps
 		
-		self._run_wrims()
+		self._run_wrims(startYear, startMonth, numberOfSteps)
 		
 # 		for pn in self.processDict.keys():
 # 			self._run_process(pn, StartYear, NumberOfSteps)
