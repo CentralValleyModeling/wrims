@@ -117,10 +117,48 @@ public class Procedures {
 				LogUtils.errMsgLocation(glObj_seq.fromWresl, glObj_seq.line, msg);
 				
 				hasError = true;
-				return hasError;
+				//return hasError;
+				
+			}
+			
+			// check redefinition of Svar
+			if (ErrorCheck.findDuplicatesIgnoreCase(seqObj.svIncFileList_post).size()>0){
+				
+				String svName = ErrorCheck.findDuplicatesIgnoreCase(seqObj.svIncFileList_post).get(0);
+				SvarTemp svObj_seq = seqObj.svMap.get(svName);		
+				String msg = "Svar ["+svName+"] is redefined in Cycle ["+ seqObj.id +"]";
+				LogUtils.errMsgLocation(svObj_seq.fromWresl, svObj_seq.line, msg);
+				
+				hasError = true;
+				//return hasError;
+				
+			}
+			
+			// check redefinition of Dvar
+			if (ErrorCheck.findDuplicatesIgnoreCase(seqObj.dvList).size()>0){
+				
+				String dvName = ErrorCheck.findDuplicatesIgnoreCase(seqObj.dvList).get(0);
+				DvarTemp dvObj_seq = seqObj.dvMap.get(dvName);		
+				String msg = "Dvar ["+dvName+"] is redefined in Cycle ["+ seqObj.id +"]";
+				LogUtils.errMsgLocation(dvObj_seq.fromWresl, dvObj_seq.line, msg);
+				
+				hasError = true;
+				//return hasError;
 				
 			}
 
+			// check redefinition of Alias
+			if (ErrorCheck.findDuplicatesIgnoreCase(seqObj.asList).size()>0){
+				
+				String asName = ErrorCheck.findDuplicatesIgnoreCase(seqObj.asList).get(0);
+				AliasTemp asObj_seq = seqObj.asMap.get(asName);		
+				String msg = "Alias ["+asName+"] is redefined in Cycle ["+ seqObj.id +"]";
+				LogUtils.errMsgLocation(asObj_seq.fromWresl, asObj_seq.line, msg);
+				
+				hasError = true;
+				//return hasError;
+				
+			}
 		}
 		
 		
