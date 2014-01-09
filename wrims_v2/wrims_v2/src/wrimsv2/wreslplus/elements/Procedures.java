@@ -106,9 +106,7 @@ public class Procedures {
 			if (copyModelVarMapToSequenceVarMap(seqModelObj, seqObj)) return true;
 			
 			
-			
 			// check redefinition of Goal
-			
 			if (ErrorCheck.findDuplicatesIgnoreCase(seqObj.glList).size()>0){
 				
 				String glName = ErrorCheck.findDuplicatesIgnoreCase(seqObj.glList).get(0);
@@ -158,6 +156,42 @@ public class Procedures {
 				hasError = true;
 				//return hasError;
 				
+			}
+			
+			// check redefinition of Timeseries
+			if (ErrorCheck.findDuplicatesIgnoreCase(seqObj.tsList).size()>0){
+				
+				String tsName = ErrorCheck.findDuplicatesIgnoreCase(seqObj.tsList).get(0);
+				TimeseriesTemp tsObj_seq = seqObj.tsMap.get(tsName);		
+				String msg = "Timeseries ["+tsName+"] is redefined in Cycle ["+ seqObj.id +"]";
+				LogUtils.errMsgLocation(tsObj_seq.fromWresl, tsObj_seq.line, msg);
+				
+				hasError = true;
+				//return hasError;
+				
+			}
+			
+			// check redefinition of vars
+			if (!hasError) {
+
+				ArrayList<String> allVars = new ArrayList<String>();
+				allVars.addAll(seqObj.glList);
+				allVars.addAll(seqObj.svIncFileList_post);
+				allVars.addAll(seqObj.dvList);
+				allVars.addAll(seqObj.asList);
+				allVars.addAll(seqObj.tsList);				
+				
+				if (ErrorCheck.findDuplicatesIgnoreCase(allVars).size() > 0) {
+
+					String name = ErrorCheck.findDuplicatesIgnoreCase(allVars).get(0);
+					String msg = "Dvar, Svar, Timeseries, Alias, or Goal label [" + name + "] is redefined in Cycle [" + seqObj.id + "]";
+					LogUtils.errMsg(msg);
+
+					hasError = true;
+					// return hasError;
+
+				}
+
 			}
 		}
 		
