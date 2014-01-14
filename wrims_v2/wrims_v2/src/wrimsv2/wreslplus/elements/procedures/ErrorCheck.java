@@ -102,7 +102,7 @@ public class ErrorCheck {
 	
 	public static void checkVarUsedBeforeDefined(SequenceTemp seqObj) {
 		
-		for (String key : seqObj.asMap.keySet()) {
+/*		for (String key : seqObj.asMap.keySet()) {
 
 			AliasTemp asObj = seqObj.asMap.get(key);
 			
@@ -115,8 +115,6 @@ public class ErrorCheck {
 			asObj.dependants_unknown = temp;	
 			
 			if (asObj.dependants_unknown.size()>0){
-//				LogUtils.errMsg(asObj.fromWresl+
-//						"\n  In model ["+seqObj.model+"] variable(s) not defined before use: "+asObj.dependants_unknown+" in Alias ["+asObj.id+"]");
 				String msg = "In model ["+seqObj.model+"] variable(s) not defined before use: "+asObj.dependants_unknown+" in Alias ["+asObj.id+"]";
 				LogUtils.errMsgLocation(asObj.fromWresl, asObj.line, msg);
 			}
@@ -138,13 +136,12 @@ public class ErrorCheck {
 			glObj.dependants_unknown = temp;
 				
 			if (glObj.dependants_unknown.size()>0){
-//				LogUtils.errMsg(glObj.fromWresl+
-//						"\n  In model ["+seqObj.model+"] variable(s) not defined before use: "+glObj.dependants_unknown+" in Goal ["+glObj.id+"]");
 				String msg = "In model ["+seqObj.model+"] variable(s) not defined before use: "+glObj.dependants_unknown+" in Goal ["+glObj.id+"]";
 				LogUtils.errMsgLocation(glObj.fromWresl, glObj.line, msg);
 			}
 	
 		}
+		*/
 
 		for (int i=0; i<seqObj.svIncFileList_post.size(); i++) {
 
@@ -163,9 +160,7 @@ public class ErrorCheck {
 			
 				
 			if (svObj.dependants_unknown.size()>0){
-//				LogUtils.errMsg(svObj.fromWresl+
-//						"\n  In model ["+seqObj.model+"] variable(s) not defined before use: "+svObj.dependants_unknown+" in Svar ["+svObj.id+"]");
-				String msg = "In model ["+seqObj.model+"] variable(s) not defined before use: "+svObj.dependants_unknown+" in Svar ["+svObj.id+"]";
+				String msg = "In Sequence: ["+seqObj.id+"] Svar: ["+ svObj.id + "] has unknown variable(s): "+svObj.dependants_unknown;
 				LogUtils.errMsgLocation(svObj.fromWresl, svObj.line, msg);
 			
 			
@@ -174,9 +169,7 @@ public class ErrorCheck {
 				for (String dep: svObj.dependants_svar){
 					
 					if ( seqObj.svIncFileList_post.indexOf(dep)> i){
-//						LogUtils.errMsg(svObj.fromWresl+
-//								"\n  In model ["+seqObj.model+"] variable not defined before use: "+dep+" in Svar ["+svObj.id+"]");
-						String msg = "In model ["+seqObj.model+"] variable not defined before use: "+dep+" in Svar ["+svObj.id+"]";
+						String msg = "In Sequence: ["+seqObj.id+"] Svar: ["+ svObj.id + "] has variable(s) not defined before use: "+dep;
 						LogUtils.errMsgLocation(svObj.fromWresl, svObj.line, msg);
 					}
 					

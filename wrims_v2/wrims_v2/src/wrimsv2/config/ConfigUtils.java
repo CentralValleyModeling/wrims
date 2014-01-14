@@ -282,10 +282,10 @@ public class ConfigUtils {
 			} else if (s.equalsIgnoreCase("no") || s.equalsIgnoreCase("false")){
 				StudyUtils.parserCheckVarUndefined = false;	
 			} else {
-				StudyUtils.parserCheckVarUndefined = false;	
+				StudyUtils.parserCheckVarUndefined = true;	
 			}
 		}else{
-			StudyUtils.parserCheckVarUndefined = false;
+			StudyUtils.parserCheckVarUndefined = true;
 		}
 		System.out.println("ParserCheckVarUndefined: "+StudyUtils.parserCheckVarUndefined);
 		
