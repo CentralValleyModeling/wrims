@@ -7,6 +7,8 @@ import java.util.Vector;
 
 import javax.swing.JScrollPane;
 
+import org.eclipse.swt.widgets.Composite;
+
 /**
  * Displays a table view of data based on selection on DSSCatalogView
  * <p>
@@ -31,12 +33,12 @@ public class DSSTableView extends AbstractDSSView {
 	/**
 	 * Show plot for selected 
 	 */
-	protected void showSelected(Vector<DataContainer> dataVector) {
+	public void showSelected(Vector<DataContainer> dataVector) {
 		if (dataVector != null && dataVector.size() > 0) {
 			contentPane.removeAll();
 			table = new HecDataTable(contentPane);
 			table.setDateTimeAsTwoColumns(false);
-			table.setData(dataVector, true, 0);
+			table.setData(dataVector, true, 0);//TODO
 			contentPane.add(new JScrollPane(table));
 			contentPane.invalidate();
 			contentPane.doLayout();
@@ -44,4 +46,8 @@ public class DSSTableView extends AbstractDSSView {
 		}
 	}
 
+	public void createPartControl(Composite parent){
+		super.createPartControl(parent);
+		//contentPane.add(comp);
+	}
 }

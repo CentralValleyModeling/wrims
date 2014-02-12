@@ -36,7 +36,7 @@ public class DSSPlotView extends AbstractDSSView {
 	/**
 	 * Show plot for selected 
 	 */
-	protected void showSelected(Vector<DataContainer> dataVector) {
+	public void showSelected(Vector<DataContainer> dataVector) {
 		if (plot != null) {
 			//plot.clearPanel();
 		}

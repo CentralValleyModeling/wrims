@@ -4,6 +4,7 @@ import gov.ca.dwr.hecdssvue.Activator;
 import hec.heclib.dss.CondensedReference;
 import hec.heclib.dss.HecDss;
 import hec.io.DataContainer;
+import hec.io.TimeSeriesContainer;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -47,10 +48,10 @@ import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.statushandlers.StatusManager;
 
-public class DSSCatalogView extends ViewPart {
+//public class DSSCatalogView extends ViewPart {
+public class DSSCatalogView extends AbstractDSSView {
 
 	/**
 	 * The ID of the view as specified by the extension.
@@ -62,7 +63,9 @@ public class DSSCatalogView extends ViewPart {
 	private Action tabulateAction;
 	private Action doubleClickAction;
 	private HecDss dss;
-
+//	private ArrayList<HecDss> dssArray = new ArrayList<HecDss> ();
+//	private ArrayList<HecDss> dssArray;
+	
 	private TableViewSorter comparator;
 
 	class TableViewSorter extends ViewerComparator {
@@ -107,10 +110,16 @@ public class DSSCatalogView extends ViewPart {
 
 	class ViewContentProvider implements IStructuredContentProvider {
 		Job catalogJob = null;
+//		Vector<CondensedReference> condensedCatalog_elem;
 		Vector<CondensedReference> condensedCatalog;
+//		ArrayList<HecDss> dssInputs = new ArrayList<HecDss>();
+		ArrayList<HecDss> dssInputs;
 
 		public void inputChanged(Viewer v, Object oldInput, Object newInput) {
-			final HecDss dssInput = (HecDss) newInput;
+//			final HecDss dssInput = (HecDss) newInput;   //1 dss
+//			final ArrayList<HecDss> dssInputs = (ArrayList<HecDss>) newInput;
+			dssInputs = (ArrayList<HecDss>) newInput;
+
 			while (catalogJob != null && catalogJob.getState() == Job.RUNNING) {
 				catalogJob.cancel();
 				try {
@@ -122,12 +131,30 @@ public class DSSCatalogView extends ViewPart {
 
 				@Override
 				protected IStatus run(IProgressMonitor monitor) {
-					if (dssInput != null) {
-						monitor.beginTask("Cataloging...", 2);
-						monitor.worked(1);
-						condensedCatalog = dssInput.getCondensedCatalog();
-						monitor.done();
-					} else {
+					//1 dss
+//					if (dssInput != null) {
+//						monitor.beginTask("Cataloging...", 2);
+//						monitor.worked(1);
+//						condensedCatalog = dssInput.getCondensedCatalog();
+//						monitor.done();
+//					} else {
+//						condensedCatalog = null;
+//					}
+					if (dssInputs != null) {
+						condensedCatalog = new Vector<CondensedReference>();//TODO
+						int i=0;
+					    for (Iterator<HecDss> it = dssInputs.iterator(); it.hasNext();i++){
+					    	if (i>1) break;//only show the first 2 files (base dv+sv)
+						    HecDss dssInput = it.next();
+							monitor.beginTask("Cataloging...", 2);
+							monitor.worked(1);
+							Vector<CondensedReference> condensedCatalog_elem = dssInput.getCondensedCatalog();
+//							if (dssInput!=null) {
+//								Vector<CondensedReference> condensedCatalog_elem = dssInput.getCondensedCatalog();
+//							}
+							condensedCatalog.addAll(condensedCatalog_elem);
+							monitor.done();
+					}} else {
 						condensedCatalog = null;
 					}
 					
@@ -157,8 +184,8 @@ public class DSSCatalogView extends ViewPart {
 			}
 
 			ArrayList<String[]> pathParts = new ArrayList<String[]>();
-			for (Iterator<CondensedReference> it = condensedCatalog.iterator(); it
-					.hasNext();) {
+			for (Iterator<CondensedReference> it = condensedCatalog.iterator();
+					it.hasNext();) {
 				CondensedReference next = it.next();
 				String[] parts = next.getNominalPathname().split("/");
 				pathParts.add(parts);
@@ -234,14 +261,19 @@ public class DSSCatalogView extends ViewPart {
 								if (dss != null) {
 									dss.close();
 								}
-								dss = HecDss
-										.open(file.getLocation().toString());
-								viewer.setInput(dss);
+								dss = HecDss.open(file.getLocation().toString());
+//								viewer.setInput(dss);      //1 dss
+								ArrayList<HecDss> dssArray = new ArrayList<HecDss> ();// for multiple dss readin
+								dssArray = new ArrayList<HecDss> ();// for multiple dss readin
+//								HecDss dss1 = HecDss.open("D:/D1485_v14/DSS/CL_FUTURE_PREBO_080911_SV.dss");//TODO
+//								dssArray.add(dss1);//TODO
+								dssArray.add(dss);
+								viewer.setInput(dssArray);
 							} catch (Exception ex) {
 								Status status = new Status(IStatus.ERROR,
-										Activator.PLUGIN_ID,
-										"Error opening dss file: "
-												+ file.getLocation(), ex);
+								                Activator.PLUGIN_ID,
+								                "Error opening dss file: "
+								                + file.getLocation(), ex);
 								StatusManager.getManager().handle(status,
 										StatusManager.LOG);
 							}
@@ -397,12 +429,89 @@ public class DSSCatalogView extends ViewPart {
 		}
 		return sb.toString();
 	}
+	
+	/* 
+	 * return path data from 1 file
+	 */
+//	public DataContainer getData(String pathname) {
+//		try {
+//			return dss.get(pathname, true);
+//		} catch (Exception ex) {
+//			return null;
+//		}
+//	}
+	
+	/* 
+	 * return path data from multiple files
+	 */
+	public Vector<DataContainer> getData(String pathname) {
+		Vector<DataContainer> dataVector_path = new Vector<DataContainer>();
+//		DataContainer dataVector_file = new DataContainer();
+		TimeSeriesContainer dataVector_file = new TimeSeriesContainer();
+        int dv_flag;
+        ArrayList<HecDss> dssArray = (ArrayList<HecDss>)getViewer().getInput();
 
-	public DataContainer getData(String pathname) {
-		try {
-			return dss.get(pathname, true);
-		} catch (Exception ex) {
-			return null;
+		for (int i = 0; i <dssArray.size(); i++){
+			dv_flag = i%2;
+			switch(dv_flag){
+			  case 0:
+				try{
+//				  dataVector_file = dssArray.get(i).get(pathname, true);
+				  dataVector_file = (TimeSeriesContainer)dssArray.get(i).get(pathname, true);
+				} catch (Exception ex) {
+				  dataVector_file = null;
+			    }
+				dataVector_path.add(dataVector_file);
+//				dataVector_file.units//TODO
+                break;
+			  case 1:
+//				if (dataVector_file.numberValues == 0){
+//				if (dataVector_path.get((i-1)/2).numberValues == 0){
+//				if (dataVector_file.fullName==""){//TODO:prev null
+				if ((dataVector_file==null)||(dataVector_file.fullName=="")){//TODO
+//				if (dataVector_file==null){//TODO
+//				if (dataVector_path.get((i-1)/2).equals(null)){
+				  try{
+//					dataVector_file = dssArray.get(i).get(pathname, true);
+				    dataVector_file = (TimeSeriesContainer)dssArray.get(i).get(pathname, true);
+				  } catch (Exception ex) {
+				    dataVector_file = null;
+			      }
+				dataVector_path.set((i-1)/2, dataVector_file);
+				}
+		        break;
+			}
 		}
+		
+		
+		
+		return dataVector_path;
+     }
+	
+	public TableViewer getViewer() {
+		return viewer;
 	}
+
+	protected void showSelected(Vector<DataContainer> dataVector) {
+		try {
+			DSSPlotView dpv = (DSSPlotView) getSite().getWorkbenchWindow()
+                              .getActivePage().showView(DSSPlotView.ID);
+			dpv.showSelected(dataVector);
+
+			DSSTableView dtv = (DSSTableView) getSite().getWorkbenchWindow()
+                               .getActivePage().showView(DSSTableView.ID);
+			dtv.showSelected(dataVector);
+		} catch (PartInitException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+//	public void setInput(ArrayList<HecDss> dssArray){
+//		this.dssArray=dssArray;
+//	}
+	
+//	public void updateData(){
+//		dssArray=(ArrayList<HecDss>)getViewer().getInput();
+//	}
 }

@@ -59,13 +59,21 @@ public abstract class AbstractDSSView extends ViewPart {
 					Iterator iterator = ((IStructuredSelection) selection)
 							.iterator();
 					Vector<DataContainer> dataVector = new Vector();
+					Vector<DataContainer> dataVector_path = new Vector();
 					while(iterator.hasNext()){
 						String[] parts = (String[]) iterator.next();
-						DataContainer data = catalogView.getData(catalogView.getPathname(parts));
-						if (data == null) {
+						// read 1 file
+//						DataContainer data = catalogView.getData(catalogView.getPathname(parts));
+//						if (data == null) {
+//							continue;
+//						}
+//						dataVector.add(data);
+                        // read multiple files
+						dataVector_path = catalogView.getData(catalogView.getPathname(parts));
+						if (dataVector_path == null) {
 							continue;
 						}
-						dataVector.add(data);
+						dataVector.addAll(dataVector_path);
 					}
 					showSelected(dataVector);
 				}
