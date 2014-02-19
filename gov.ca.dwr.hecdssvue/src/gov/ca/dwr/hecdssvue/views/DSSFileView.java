@@ -190,7 +190,7 @@ public class DSSFileView extends ViewPart {
 					workbench.getDisplay().asyncExec(new Runnable(){
 						public void run(){
 							Shell shell=workbench.getActiveWorkbenchWindow().getShell();
-							FileDialog dlg=new FileDialog(shell, SWT.SAVE);
+							FileDialog dlg=new FileDialog(shell, SWT.OPEN);
 							dlg.setFilterNames(new String[]{"DSS Files (*.dss)", "All Files (*.*)"});
 							dlg.setFilterExtensions(new String[]{"*.dss", "*.*"});
 							dlg.setFileName(dvFileText[j].getText());
@@ -221,7 +221,7 @@ public class DSSFileView extends ViewPart {
 					workbench.getDisplay().asyncExec(new Runnable(){
 						public void run(){
 							Shell shell=workbench.getActiveWorkbenchWindow().getShell();
-							FileDialog dlg=new FileDialog(shell, SWT.SAVE);
+							FileDialog dlg=new FileDialog(shell, SWT.OPEN);
 							dlg.setFilterNames(new String[]{"DSS Files (*.dss)", "All Files (*.*)"});
 							dlg.setFilterExtensions(new String[]{"*.dss", "*.*"});
 							dlg.setFileName(svFileText[j].getText());
