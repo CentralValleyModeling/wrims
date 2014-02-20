@@ -28,13 +28,15 @@ public class EnableButtons {
 					String id=iterator.next();
 					IWorkbenchPage page = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage();
 					IViewPart viewPart = page.findView( IConsoleConstants.ID_CONSOLE_VIEW ); 
-					IViewSite viewSite = viewPart.getViewSite(); 
-					IActionBars actionBars = viewSite.getActionBars(); 
-					IToolBarManager toolBarManager = actionBars.getToolBarManager();
-					IContributionItem contributionItem = toolBarManager.find(id);
-					PluginActionContributionItem pACI = ((PluginActionContributionItem)contributionItem);
-					IAction action = pACI.getAction();
-					action.setEnabled(enableButtonMap.get(id));
+					if (viewPart != null){
+						IViewSite viewSite = viewPart.getViewSite(); 
+						IActionBars actionBars = viewSite.getActionBars(); 
+						IToolBarManager toolBarManager = actionBars.getToolBarManager();
+						IContributionItem contributionItem = toolBarManager.find(id);
+						PluginActionContributionItem pACI = ((PluginActionContributionItem)contributionItem);
+						IAction action = pACI.getAction();
+						action.setEnabled(enableButtonMap.get(id));
+					}
 				}
 			}
 		});
