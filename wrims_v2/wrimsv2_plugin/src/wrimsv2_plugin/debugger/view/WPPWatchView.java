@@ -206,7 +206,7 @@ public class WPPWatchView extends AbstractDebugView implements ISelectionListene
 	    for (int i = 0, n = table.getColumnCount(); i < n; i++) {
 	    	table.getColumn(i).pack();
 	    }
-
+	    
 	    // Turn on the header and the lines
 	    table.setHeaderVisible(true);
 	    table.setLinesVisible(true);
@@ -214,12 +214,28 @@ public class WPPWatchView extends AbstractDebugView implements ISelectionListene
 	    TableCopyListener tcl=new TableCopyListener(table);
 	    table.addKeyListener(tcl);
 
+	    setInitialWatchVariables(table);
+	    
 	    // Pack the window
 	    parent.pack();
 	    
 		return viewer;
 	}
 
+	public void setInitialWatchVariables(Table table){
+		ArrayList<String> watchItems= ProcWatchItem.getLastWatchItems();
+		DebugCorePlugin.watchItems = watchItems;
+		int size = watchItems.size();
+		for (int i=0; i<size; i++){
+			String varGoalName=watchItems.get(i);
+			TableItem item = new TableItem(table, SWT.NONE);
+			String[] data=new String[2];
+			data[0]=varGoalName;
+			data[1]="";
+			item.setText(data);
+		}
+	}
+	
 	@Override
 	protected void createActions() {
 		// TODO Auto-generated method stub

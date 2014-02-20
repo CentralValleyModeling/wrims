@@ -22,7 +22,6 @@ public class DebuggerStartUp implements IStartup {
 	@Override
 	public void earlyStartup() {
 		enableRunMenu();
-		initialWatchViewer();
 		initialStudyData();
 		DataProcess.initialVariableValueAlt();
 	}
@@ -46,22 +45,6 @@ public class DebuggerStartUp implements IStartup {
 		enableButtonMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLEBUTTON, false);
 		enableButtonMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEPBUTTON, false);
 		new EnableButtons(enableButtonMap);
-	}
-	
-	public void initialWatchViewer(){
-		ArrayList<String> watchItems= ProcWatchItem.getLastWatchItems();
-		DebugCorePlugin.watchItems = watchItems;
-		int size = watchItems.size();
-		for (int i=0; i<size; i++){
-			final String varGoalName=watchItems.get(i);
-			final IWorkbench workbench=PlatformUI.getWorkbench();
-			workbench.getDisplay().asyncExec(new Runnable(){
-				public void run(){
-					WPPWatchView watchView = (WPPWatchView) workbench.getActiveWorkbenchWindow().getActivePage().findView(DebugCorePlugin.ID_WPP_WATCH_VIEW);
-					watchView.addWatched(varGoalName);
-				}
-			});
-		}
 	}
 	
 	public void initialStudyData(){
