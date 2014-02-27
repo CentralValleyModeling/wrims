@@ -1,9 +1,12 @@
 package gov.ca.dwr.hecdssvue.views;
 
+import hec.gfx2d.G2dMouseAdapter;
 import hec.gfx2d.G2dObject;
 import hec.gfx2d.G2dPanel;
+import hec.gfx2d.G2dZoomAdapter;
 import hec.gfx2d.PairedDataSet;
 import hec.gfx2d.TimeSeriesDataSet;
+import hec.gfx2d.Viewport;
 import hec.io.DataContainer;
 import hec.io.PairedDataContainer;
 import hec.io.TimeSeriesContainer;
@@ -69,5 +72,7 @@ public class DSSPlotView extends AbstractDSSView {
 
 		}
 		plot.buildComponents(g2dataVector, false, true);
+		Viewport[] viewPorts = plot.getViewports();
+		if (viewPorts.length>0) plot.setMouseAdapter(new G2dZoomAdapter(viewPorts[0], plot));
 	}
 }

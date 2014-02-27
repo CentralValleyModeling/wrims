@@ -99,5 +99,37 @@
          </includes>
       </viewerContentBinding>
    </extension>
-
+ <extension
+       point="org.eclipse.ui.actionSets">
+    <actionSet
+          id="gov.ca.dwr.hecdssvue.dss"
+          label="DSS"
+          visible="true">
+       <menu
+             id="gov.ca.dwr.hecdssvue.dss"
+             label="DSS"
+             path="additions">
+          <groupMarker
+                name="operation">
+          </groupMarker>
+          <separator
+                name="additions">
+          </separator>
+       </menu>
+       <action
+             class="gov.ca.dwr.hecdssvue.menus.SaveDss"
+             id="gov.ca.dwr.hecdssvue.savedss"
+             label="Save"
+             menubarPath="gov.ca.dwr.hecdssvue.dss/operation"
+             style="push">
+       </action>
+       <action
+             class="gov.ca.dwr.hecdssvue.menus.AllowEdit"
+             id="gov.ca.dwr.hecdssvue.alloweidt"
+             label="Allow Editing"
+             menubarPath="gov.ca.dwr.hecdssvue.dss/operation"
+             style="push">
+       </action>
+    </actionSet>
+ </extension>
 </plugin>
