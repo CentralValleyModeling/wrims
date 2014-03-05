@@ -50,6 +50,8 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.statushandlers.StatusManager;
 
+import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+
 //public class DSSCatalogView extends ViewPart {
 public class DSSCatalogView extends AbstractDSSView {
 
@@ -70,12 +72,13 @@ public class DSSCatalogView extends AbstractDSSView {
 
 	class TableViewSorter extends ViewerComparator {
 		private int propertyIndex;
+		private static final int ASCENDING = 0;
 		private static final int DESCENDING = 1;
-		private int direction = DESCENDING;
+		private int direction = ASCENDING;
 
 		public TableViewSorter() {
-			this.propertyIndex = 0;
-			direction = DESCENDING;
+			this.propertyIndex = 1;
+			direction = ASCENDING;
 		}
 
 		public int getDirection() {
@@ -89,7 +92,7 @@ public class DSSCatalogView extends AbstractDSSView {
 			} else {
 				// New column; do an ascending sort
 				this.propertyIndex = column;
-				direction = DESCENDING;
+				direction = ASCENDING;
 			}
 		}
 
@@ -98,7 +101,7 @@ public class DSSCatalogView extends AbstractDSSView {
 			String[] parts1 = (String[]) e1;
 			String[] parts2 = (String[]) e2;
 			int rc = 0;
-			rc = parts1[propertyIndex].compareTo(parts2[propertyIndex]);
+			rc = parts1[propertyIndex+1].compareTo(parts2[propertyIndex+1]);
 			// If descending order, flip the direction
 			if (direction == DESCENDING) {
 				rc = -rc;
@@ -144,7 +147,6 @@ public class DSSCatalogView extends AbstractDSSView {
 						condensedCatalog = new Vector<CondensedReference>();//TODO
 						int i=0;
 					    for (Iterator<HecDss> it = dssInputs.iterator(); it.hasNext();i++){
-					    	if (i>1) break;//only show the first 2 files (base dv+sv)
 						    HecDss dssInput = it.next();
 							monitor.beginTask("Cataloging...", 2);
 							monitor.worked(1);
@@ -152,12 +154,15 @@ public class DSSCatalogView extends AbstractDSSView {
 //							if (dssInput!=null) {
 //								Vector<CondensedReference> condensedCatalog_elem = dssInput.getCondensedCatalog();
 //							}
-							condensedCatalog.addAll(condensedCatalog_elem);
+							if (i<2){
+								condensedCatalog.addAll(condensedCatalog_elem);
+							}
 							monitor.done();
-					}} else {
+					    }
+					    
+					} else {
 						condensedCatalog = null;
-					}
-					
+					}					
 					return Status.OK_STATUS;
 				}
 			};
@@ -262,13 +267,11 @@ public class DSSCatalogView extends AbstractDSSView {
 									dss.close();
 								}
 								dss = HecDss.open(file.getLocation().toString());
-//								viewer.setInput(dss);      //1 dss
 								ArrayList<HecDss> dssArray = new ArrayList<HecDss> ();// for multiple dss readin
 								dssArray = new ArrayList<HecDss> ();// for multiple dss readin
-//								HecDss dss1 = HecDss.open("D:/D1485_v14/DSS/CL_FUTURE_PREBO_080911_SV.dss");//TODO
-//								dssArray.add(dss1);//TODO
 								dssArray.add(dss);
 								viewer.setInput(dssArray);
+								resetDssFileView();
 							} catch (Exception ex) {
 								Status status = new Status(IStatus.ERROR,
 								                Activator.PLUGIN_ID,
@@ -505,6 +508,51 @@ public class DSSCatalogView extends AbstractDSSView {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public Vector<String[]> getSelectedParts(){
+		Vector<String[]> selectedParts=new Vector<String[]>();
+		ISelection selection = viewer.getSelection();
+		Iterator iterator = ((IStructuredSelection) selection)
+				.iterator();
+		while(iterator.hasNext()){
+			String[] parts = (String[]) iterator.next();
+			selectedParts.add(parts);
+		}
+		return selectedParts;
+	}
+	
+	public Vector<String> getSelectedPathNames(){
+		Vector<String> selectedPathnames=new Vector<String>();
+		ISelection selection = viewer.getSelection();
+		Iterator iterator = ((IStructuredSelection) selection)
+				.iterator();
+		while(iterator.hasNext()){
+			String[] parts = (String[]) iterator.next();
+			selectedPathnames.add(getPathname(parts));
+		}
+		return selectedPathnames;
+	}
+	
+	public void resetDssFileView(){
+		DebugCorePlugin.selectedStudies[0]=true;
+		for (int i=1; i<8; i++){
+			DebugCorePlugin.selectedStudies[i]=false;
+		}
+		String fn = dss.getFilename();
+		if (fn.toLowerCase().endsWith("sv.dss")){
+			DebugCorePlugin.svDss[0]=dss;
+			DebugCorePlugin.studySvFileNames[0]=fn;
+			DebugCorePlugin.studyDvFileNames[0]="";
+		}else{
+			DebugCorePlugin.dvDss[0]=dss;
+			DebugCorePlugin.studySvFileNames[0]="";
+			DebugCorePlugin.studyDvFileNames[0]=fn;
+		}
+		for (int i=1; i<4; i++){
+			DebugCorePlugin.studySvFileNames[i]="";
+			DebugCorePlugin.studyDvFileNames[i]="";
+		}
 	}
 	
 //	public void setInput(ArrayList<HecDss> dssArray){

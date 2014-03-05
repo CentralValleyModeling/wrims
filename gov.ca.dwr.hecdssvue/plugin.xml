@@ -124,8 +124,36 @@
              style="push">
        </action>
        <action
+             class="gov.ca.dwr.hecdssvue.menus.InsertRows"
+             id="gov.ca.dwr.hecdssvue.insertrows"
+             label="Insert Rows"
+             menubarPath="gov.ca.dwr.hecdssvue.dss/operation"
+             style="push">
+       </action>
+       <action
+             class="gov.ca.dwr.hecdssvue.menus.DuplicateRecords"
+             id="gov.ca.dwr.hecdssvue.duplicaterecords"
+             label="Duplicate Records"
+             menubarPath="gov.ca.dwr.hecdssvue.dss/operation"
+             style="push">
+       </action>
+       <action
+             class="gov.ca.dwr.hecdssvue.menus.DeleteRecords"
+             id="gov.ca.dwr.hecdssvue.deleterecords"
+             label="Delete Records"
+             menubarPath="gov.ca.dwr.hecdssvue.dss/operation"
+             style="push">
+       </action>
+       <action
+             class="gov.ca.dwr.hecdssvue.menus.RenameRecords"
+             id="gov.ca.dwr.hecdssvue.renamerecords"
+             label="Rename Records"
+             menubarPath="gov.ca.dwr.hecdssvue.dss/operation"
+             style="push">
+       </action>
+       <action
              class="gov.ca.dwr.hecdssvue.menus.AllowEdit"
-             id="gov.ca.dwr.hecdssvue.alloweidt"
+             id="gov.ca.dwr.hecdssvue.allowedit"
              label="Allow Editing"
              menubarPath="gov.ca.dwr.hecdssvue.dss/operation"
              style="push">
