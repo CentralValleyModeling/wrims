@@ -44,7 +44,7 @@ public class XASolver {
 		setDVars();
 		setWeights();
 		
-		ControlData.xasolver.solve();
+		ControlData.xasolver.solveWithInfeasibleAnalysis();
 		
 		modelStatus=ControlData.xasolver.getModelStatus();
 		if (ControlData.showRunTimeMessage) System.out.println("Model status: "+modelStatus);
