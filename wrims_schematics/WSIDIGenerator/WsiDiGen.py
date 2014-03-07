@@ -102,14 +102,14 @@ class WsiDiGenCl:
 
       #load arrays removing first DI value and last two WSI values
       for i in range(0,len(wsi)):
-         if(wsi[i] > 0.1 and wcount < nd):
+         if(wsi[i] >= 0.0 and wcount < nd):
             tmpWSI.append(wsi[i])
       	    wcount += 1
    	    if(wsi[i] > wsiMax ):
                wsiMax=wsi[i]
   	    if(wsi[i] < wsiMin ):
                wsiMin=wsi[i]
-         if(di[i] > 0.1 and dcount < nd ):
+         if(di[i] >= 0.0 and dcount < nd ):
             if(dcount > 0 ):
 	       tmpDI.append(di[i])
 	       dcount += 1
