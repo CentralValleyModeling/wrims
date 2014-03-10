@@ -43,6 +43,13 @@
             id="gov.ca.dwr.hecdssvue.views.DSSFileView"
             name="DSS Files Compare">
       </view>
+      <view
+            category="gov.ca.dwr.hecdssvue"
+            class="gov.ca.dwr.hecdssvue.views.DSSFilterView"
+            icon="icons/sample.gif"
+            id="gov.ca.dwr.hecdssvue.views.DSSFilterView"
+            name="DSS Filter">
+      </view>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">

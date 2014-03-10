@@ -6,12 +6,15 @@ import hec.hecmath.DSS;
 import hec.hecmath.DSSFile;
 import hec.hecmath.HecMathException;
 import hec.io.DataContainer;
+import hec.io.TimeSeriesContainer;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import wrimsv2_plugin.debugger.exception.WPPException;
 
-public class TableOps {
+public class DataOps {
 
 	public static void saveData(HecDataTable table) {
 		if (table.hasDataChanged()){
@@ -50,5 +53,55 @@ public class TableOps {
 			}
 		}
 	}
-	
+
+	public static TimeSeriesContainer getMonthlyData(TimeSeriesContainer tsc, ArrayList months) {
+		TimeSeriesContainer ntsc = null;
+
+		try {
+			List<Double> lvalues = new ArrayList<Double>();
+			List<Integer> ltimes = new ArrayList<Integer>();
+
+			double[] values = tsc.values;
+			int[] times = tsc.times;
+
+			HecTime ht = new HecTime();
+			// ht.set(tsc.startTime);
+
+			for (int i = 0; i < values.length; i++) {
+				// System.out.println(times[i]+" "+ht.month()+" "+months[1]+" "+values[i]);
+
+				ht.set(times[i]);
+				// WRONG MONTH FIX: subtract 1 min
+				ht.add(-1);
+
+				if (months.contains(ht.month())) {
+					ltimes.add(times[i]);
+					lvalues.add(values[i]);
+					// values[i] = Constants.UNDEFINED;
+				}
+			}
+
+			double[] nvalues = new double[lvalues.size()];
+			int[] ntimes = new int[ltimes.size()];
+
+			for (int i = 0; i < lvalues.size(); i++) {
+				ntimes[i] = ltimes.get(i).intValue();
+				nvalues[i] = lvalues.get(i).doubleValue();
+				// System.out.println(ntimes[i]+" "+nvalues[i]);
+			}
+
+			ntsc = (TimeSeriesContainer) tsc.clone();
+			ntsc.values = nvalues;
+			ntsc.numberValues = nvalues.length;
+			ntsc.times = ntimes;
+			ntsc.startTime = ntimes[0];
+			ntsc.endTime = ntimes[ntimes.length - 1];
+			ntsc.interval = -1; // irregular time-series
+
+		} catch (Exception e) {
+		}
+
+		return ntsc;
+
+	}
 }

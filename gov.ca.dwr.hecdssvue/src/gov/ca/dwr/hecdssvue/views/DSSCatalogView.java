@@ -1,13 +1,17 @@
 package gov.ca.dwr.hecdssvue.views;
 
 import gov.ca.dwr.hecdssvue.Activator;
+import gov.ca.dwr.hecdssvue.PluginCore;
+import gov.ca.dwr.hecdssvue.components.DataOps;
 import hec.heclib.dss.CondensedReference;
 import hec.heclib.dss.HecDss;
+import hec.heclib.util.HecTime;
 import hec.io.DataContainer;
 import hec.io.TimeSeriesContainer;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 import org.eclipse.core.resources.IFile;
@@ -460,7 +464,7 @@ public class DSSCatalogView extends AbstractDSSView {
 			  case 0:
 				try{
 //				  dataVector_file = dssArray.get(i).get(pathname, true);
-				  dataVector_file = (TimeSeriesContainer)dssArray.get(i).get(pathname, true);
+				  dataVector_file = DataOps.getMonthlyData((TimeSeriesContainer)dssArray.get(i).get(pathname, true), PluginCore.months);
 				} catch (Exception ex) {
 				  dataVector_file = null;
 			    }
@@ -476,7 +480,7 @@ public class DSSCatalogView extends AbstractDSSView {
 //				if (dataVector_path.get((i-1)/2).equals(null)){
 				  try{
 //					dataVector_file = dssArray.get(i).get(pathname, true);
-				    dataVector_file = (TimeSeriesContainer)dssArray.get(i).get(pathname, true);
+				    dataVector_file = DataOps.getMonthlyData((TimeSeriesContainer)dssArray.get(i).get(pathname, true), PluginCore.months);
 				  } catch (Exception ex) {
 				    dataVector_file = null;
 			      }
@@ -554,12 +558,4 @@ public class DSSCatalogView extends AbstractDSSView {
 			DebugCorePlugin.studyDvFileNames[i]="";
 		}
 	}
-	
-//	public void setInput(ArrayList<HecDss> dssArray){
-//		this.dssArray=dssArray;
-//	}
-	
-//	public void updateData(){
-//		dssArray=(ArrayList<HecDss>)getViewer().getInput();
-//	}
 }

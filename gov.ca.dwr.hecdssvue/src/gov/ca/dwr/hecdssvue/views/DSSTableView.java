@@ -1,7 +1,7 @@
 package gov.ca.dwr.hecdssvue.views;
 
 import gov.ca.dwr.hecdssvue.PluginCore;
-import gov.ca.dwr.hecdssvue.components.TableOps;
+import gov.ca.dwr.hecdssvue.components.DataOps;
 import hec.dataTable.HecDataTable;
 import hec.dataTable.TimeSeriesDataModel;
 import hec.hecmath.DSS;
@@ -44,7 +44,7 @@ public class DSSTableView extends AbstractDSSView {
 	 * Show plot for selected 
 	 */
 	public void showSelected(Vector<DataContainer> dataVector) {
-		if (table !=null) TableOps.saveData(table);
+		if (table !=null) DataOps.saveData(table);
 		
 		if (dataVector != null && dataVector.size() > 0) {
 			contentPane.removeAll();

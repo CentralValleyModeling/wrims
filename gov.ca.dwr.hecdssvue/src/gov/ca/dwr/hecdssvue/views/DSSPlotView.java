@@ -1,5 +1,7 @@
 package gov.ca.dwr.hecdssvue.views;
 
+import gov.ca.dwr.hecdssvue.PluginCore;
+import gov.ca.dwr.hecdssvue.components.DataOps;
 import hec.gfx2d.G2dMouseAdapter;
 import hec.gfx2d.G2dObject;
 import hec.gfx2d.G2dPanel;
@@ -54,10 +56,11 @@ public class DSSPlotView extends AbstractDSSView {
 		for (Iterator iterator = dataVector.iterator(); iterator.hasNext();) {
 			DataContainer data = (DataContainer) iterator.next();
 			if (data instanceof TimeSeriesContainer) {
+				Object ntsc = DataOps.getMonthlyData((TimeSeriesContainer)data, PluginCore.months);
 				TimeSeriesDataSet ts = new TimeSeriesDataSet(
-						(TimeSeriesContainer) data);
+						(TimeSeriesContainer) ntsc);
 				if (((TimeSeriesContainer) data).timeZoneID != null) {
-					ts.setGmtOffset(((TimeSeriesContainer) data).timeZoneRawOffset
+					ts.setGmtOffset(((TimeSeriesContainer) ntsc).timeZoneRawOffset
 							/ (1000 * 60 * 60));
 				}
 				g2dObj = ts;

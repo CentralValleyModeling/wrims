@@ -1,7 +1,7 @@
 package gov.ca.dwr.hecdssvue.menus;
 
 import gov.ca.dwr.hecdssvue.PluginCore;
-import gov.ca.dwr.hecdssvue.components.TableOps;
+import gov.ca.dwr.hecdssvue.components.DataOps;
 import gov.ca.dwr.hecdssvue.views.DSSTableView;
 import hec.dataTable.HecDataTable;
 
@@ -23,7 +23,7 @@ public class SaveDss implements IWorkbenchWindowActionDelegate{
 		
 		if (dssTableView != null){
 			HecDataTable table = dssTableView.getTable();
-			if (table != null) TableOps.saveData(table);
+			if (table != null) DataOps.saveData(table);
 		}
 	}
 
