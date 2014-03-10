@@ -30,6 +30,7 @@ import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -39,6 +40,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
@@ -62,11 +64,11 @@ public class FilterPanel extends JPanel {
 	private JTextField[] _pathText;
 
 	private JButton _filterBtn = null;
-	private JButton _plotBtn = null;
-	private JButton _exceedBtn = null;
-	private JButton _annualTotBtn = null;
-	private JButton _annualTotExceedBtn = null;
-	private JButton _monthlyAvgBtn = null; 
+	private JRadioButton _plotBtn = null;
+	private JRadioButton _exceedBtn = null;
+	private JRadioButton _annualTotBtn = null;
+	private JRadioButton _annualTotExceedBtn = null;
+	private JRadioButton _monthlyAvgBtn = null; 
 	JTable _table = null;
 
 	private JList _monthlist;
@@ -300,11 +302,183 @@ public class FilterPanel extends JPanel {
 				.createLineBorder(Color.blue), "Filter"));
 
 		_filterBtn = new JButton("Filter");
-		_plotBtn = new JButton("Plot");
-		_exceedBtn = new JButton("Exceedance");
-		_annualTotBtn = new JButton("Annual");
-		_annualTotExceedBtn = new JButton("Annual Total");
-		_monthlyAvgBtn = new JButton("Monthly Average");
+		_plotBtn = new JRadioButton("Model Data");
+		_plotBtn.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				PluginCore.chartType=0;
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		_exceedBtn = new JRadioButton("Exceedance");
+		_exceedBtn.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				PluginCore.chartType=1;
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		_annualTotBtn = new JRadioButton("Annual Total");
+		_annualTotBtn.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				PluginCore.chartType=2;
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		_annualTotExceedBtn = new JRadioButton("Annual Exceedence");
+		_annualTotExceedBtn.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				PluginCore.chartType=3;
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		_monthlyAvgBtn = new JRadioButton("Monthly Average");
+		_monthlyAvgBtn.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				PluginCore.chartType=4;
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		ButtonGroup group = new ButtonGroup();
+	    group.add(_plotBtn);
+	    group.add(_exceedBtn);
+	    group.add(_annualTotBtn);
+	    group.add(_annualTotExceedBtn);
+	    group.add(_monthlyAvgBtn);
+		_plotBtn.setSelected(true);
+		PluginCore.chartType=0;
 
 		// List of Months for plots/table
 		_monthlist = createMonthList();

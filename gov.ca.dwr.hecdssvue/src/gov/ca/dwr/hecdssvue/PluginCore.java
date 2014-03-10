@@ -8,6 +8,7 @@ public class PluginCore {
 	
 	public static boolean dssEditable=false;
 	
+	public static int chartType=0;
 	public static ArrayList<Integer> months= new ArrayList<Integer>(){{
 	    add(10);
 	    add(11);
