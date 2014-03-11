@@ -94,8 +94,8 @@ public class DSSFileView extends ViewPart {
 				selectFiles();
 				if (DebugCorePlugin.selectedStudies[0] || DebugCorePlugin.selectedStudies[1] || DebugCorePlugin.selectedStudies[2] || DebugCorePlugin.selectedStudies[3]){
 					if (checkFilesExist()){
-						openDssFiles();
-						if (openDssFiles()){
+						boolean success=openDssFiles();
+						if (success){
 ////							close();
 ////							processViews();
 						}else{

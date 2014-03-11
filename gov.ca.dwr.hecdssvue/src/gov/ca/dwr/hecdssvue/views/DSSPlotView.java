@@ -187,7 +187,16 @@ public class DSSPlotView extends AbstractDSSView {
 			// CB maximum of 12 periods to check (for monthly data only) TODO
 			// fix if daily or other is added
 			int firstMonth = 24;
-			int firstPossibleMonth = 10;
+			int firstPossibleMonth;
+			if (PluginCore.annualType == PluginCore.WATERYEAR) {
+				firstPossibleMonth = 10;
+			} else if (PluginCore.annualType == PluginCore.CALENDAR_YEAR) {
+				firstPossibleMonth = 1;
+			} else if (PluginCore.annualType == PluginCore.FEDERAL_CONTRACT_YEAR) {
+				firstPossibleMonth = 3;
+			} else {
+				return null;
+			}
 
 			HecTime htTemp = new HecTime();
 			int month;
@@ -214,26 +223,74 @@ public class DSSPlotView extends AbstractDSSView {
 
 				// WRONG MONTH FIX: subtract 1 min
 				ht.add(-1);
-
-				if ((year_prev == 0) && (ht.month() != firstMonth)) {
-					continue; // CB added to not use incomplete first
-					// wateryear (i.e., data start is NOT Oct.)
-				}
-				if ((ht.month() == 10) || (ht.month() == 11)
-						|| (ht.month() == 12)) {
-					year = ht.year() + 1;
-				} else {
+				if (PluginCore.annualType == PluginCore.WATERYEAR) { // CB added
+					// annual
+					// types
+					if ((year_prev == 0) && (ht.month() != firstMonth)) {
+						continue; // CB added to not use incomplete first
+						// wateryear (i.e., data start is NOT Oct.)
+					}
+					if ((ht.month() == 10) || (ht.month() == 11)
+							|| (ht.month() == 12)) {
+						year = ht.year() + 1;
+					} else {
+						year = ht.year();
+					}
+					if ((year_prev != 0) && (year > year_prev)) {
+						lvalues.add(total);
+						// End of water year
+						ht.set("30 September " + year_prev, "24:00");
+						ltimes.add(ht.value());
+						total = 0.0;
+					}
+					total += values[i];
+					year_prev = year;
+				} else if (PluginCore.annualType == PluginCore.CALENDAR_YEAR) { // CB
+					// added
+					// this
+					// section
+					if ((year_prev == 0) && (ht.month() != firstMonth)) {
+						continue; // CB added to not use incomplete first
+						// calendar year (i.e., data start is NOT
+						// Jan.)
+					}
 					year = ht.year();
+					if ((year_prev != 0) && (year > year_prev)) {
+						lvalues.add(total);
+						// End of calendar year
+						ht.set("31 December " + year_prev, "24:00");
+						ltimes.add(ht.value());
+						total = 0.0;
+					}
+					total += values[i];
+					year_prev = year;
+				} else if (PluginCore.annualType == PluginCore.FEDERAL_CONTRACT_YEAR) { // CB
+					// added
+					// this
+					// section
+					if ((year_prev == 0) && (ht.month() != firstMonth)) {
+						continue; // CB added to not use incomplete first
+						// wateryear (i.e., data start is NOT March)
+					}
+					if ((ht.month() == 1) || (ht.month() == 2)) {
+						year = ht.year() - 1;
+					} else {
+						year = ht.year();
+					}
+					if ((year_prev != 0) && (year > year_prev)) {
+						lvalues.add(total);
+						// End of contract year
+						if (TimeOperation.numberOfDays(2, year) == 29) {
+							ht.set("29 February " + year, "24:00");
+						} else {
+							ht.set("28 February " + year, "24:00");
+						}
+						ltimes.add(ht.value());
+						total = 0.0;
+					}
+					total += values[i];
+					year_prev = year;
 				}
-				if ((year_prev != 0) && (year > year_prev)) {
-					lvalues.add(total);
-					// End of water year
-					ht.set("30 September " + year_prev, "24:00");
-					ltimes.add(ht.value());
-					total = 0.0;
-				}
-				total += values[i];
-				year_prev = year;
 			}
 			// CB added block to handle cases where last month is not last month
 			// of year type (i.e., partial years not including last month)

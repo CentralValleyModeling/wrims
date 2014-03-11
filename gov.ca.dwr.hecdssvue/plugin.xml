@@ -45,10 +45,10 @@
       </view>
       <view
             category="gov.ca.dwr.hecdssvue"
-            class="gov.ca.dwr.hecdssvue.views.DSSFilterView"
+            class="gov.ca.dwr.hecdssvue.views.DSSOpsView"
             icon="icons/sample.gif"
-            id="gov.ca.dwr.hecdssvue.views.DSSFilterView"
-            name="DSS Filter">
+            id="gov.ca.dwr.hecdssvue.views.DSSOpsView"
+            name="DSS Options">
       </view>
    </extension>
    <extension

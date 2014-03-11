@@ -9,8 +9,12 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -34,6 +38,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
@@ -55,12 +60,21 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
-public class FilterPanel extends JPanel {
+import wrimsv2_plugin.tools.TimeOperation;
 
-	public static boolean DEBUG = false;
-	public final String DEFAULT_TIME_WINDOW = "31Oct1921 2400 30Sep2009 2400"; // CB
+public class OpsPanel extends JPanel {
+
+	public static final String CFS = "cfs";
+	public static final String TAF = "taf";
+
+	public static String[] _twSelections = { "All", "OCT1921 - SEP2009","OCT1921 - SEP2003",
+			"OCT1928 - SEP1934","OCT1986 - SEP1992","OCT1975 - SEP1977",
+			"OCT1976 - SEP1977","OCT1994 - SEP2003","OCT2000 - SEP2009"};
+
+	private Vector<String> _twitems = new Vector<String>(1, 1);
+	
 	// added
-	String _timeWindow = DEFAULT_TIME_WINDOW;
+	//String _timeWindow = DEFAULT_TIME_WINDOW;
 	private JTextField[] _pathText;
 
 	private JButton _filterBtn = null;
@@ -69,16 +83,34 @@ public class FilterPanel extends JPanel {
 	private JRadioButton _annualTotBtn = null;
 	private JRadioButton _annualTotExceedBtn = null;
 	private JRadioButton _monthlyAvgBtn = null; 
-	JTable _table = null;
 
 	private JList _monthlist;
 
-	HashMap<Integer, Object> _fparts = new HashMap<Integer, Object>();
+	private JRadioButton taf = new JRadioButton("TAF");
+	private JRadioButton cfs = new JRadioButton("CFS");
 
-	// public FilterPanel(MainPanel mp) {
-	public FilterPanel() {
-		setLayout(new BorderLayout());
+	private JRadioButton comp = new JRadioButton("comp");
+	private JRadioButton diff = new JRadioButton("diff");
+
+	private JRadioButton wateryear = new JRadioButton("oct - sep"); 
+	private JRadioButton calendar = new JRadioButton("jan - dec"); ; 
+	private JRadioButton fedContract = new JRadioButton("mar - feb");  
+	
+	private static String[] labelText = {
+		"Mode: ", 
+		"  Time Window:  ", 
+		"  Units:  ",
+		"  Annual Type: " };
+	
+	
+	private JLabel labelNames[];
+	
+	private Font f;
+	
+	public OpsPanel() {
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); 
 		add(createUpperPanel());
+		add(createLowerPanel());
 	}
 
 	/**
@@ -90,15 +122,6 @@ public class FilterPanel extends JPanel {
 			String name = ((JCheckBox) e.getSource()).getText();
 			// TODO: figure out what I was planning or trying to do here
 		}
-	}
-
-	String[] retrieveDateRangeFromTimeWindow() {
-		// time window format: "31Oct1921 2400 30Sep2003 2400"
-		String[] rangePair = new String[2];
-		String[] split = _timeWindow.split(" +");
-		rangePair[0] = split[0].substring(2);
-		rangePair[1] = split[2].substring(2);
-		return rangePair;
 	}
 
 	public void refreshFilter(int dssType) {
@@ -153,9 +176,6 @@ public class FilterPanel extends JPanel {
 		return l;
 	}
 
-	public void setTimeWindow(String tw) {
-			_timeWindow = "31Oct1921 2400 30Sep2009 2400"; // defualt full time
-	}
 
 	private String getPathSpec(boolean useRegex) {
 		String pathSpec = "";
@@ -260,9 +280,349 @@ public class FilterPanel extends JPanel {
 		});
 	}
 
-	// //////////////////// GeneralRetrievePanel.java code
-	// /////////////////////////////////////////
 	public JPanel createUpperPanel() {
+		int fontSize = 12;
+		labelNames = new JLabel[labelText.length];
+		for (int i = 0; i < labelText.length; i++) {
+			labelNames[i] = new JLabel(labelText[i]);
+			f = labelNames[i].getFont();
+			f = new Font(f.getName(), f.getStyle(), fontSize);
+			labelNames[i].setFont(f);
+			labelNames[i].setForeground(Color.black);
+			if (i != 4 || i != 7) {
+				labelNames[i].setSize(10, 10);
+			} else {
+				labelNames[i].setSize(10, 10);
+			}
+		}
+		
+		
+		JPanel upperPanel = new JPanel();
+		upperPanel.add(createUtilsPanel());
+		return upperPanel;
+	}
+	
+	public JPanel createUtilsPanel() {
+		JPanel panel = new JPanel();
+		GridBagLayout gb = new GridBagLayout();
+		GridBagConstraints gc = new GridBagConstraints();
+		panel.setLayout(gb);
+		gc.anchor = GridBagConstraints.WEST;
+		gc.gridx = 0;
+		gc.gridy = 0;
+		panel.add(labelNames[0], gc);
+		gc.gridx = 1;
+		panel.add(createModePanel(), gc);
+		gc.gridx = 2;
+		// panel.add(labelNames[16],gc);
+		panel.add(labelNames[3], gc); // CB put it back in
+		gc.gridx = 3;
+		// panel.add(createViewPanel(),gc);
+		panel.add(createAnnualTypePanel(), gc); // CB added
+		gc.gridx = 4;
+		panel.add(new JLabel("            "), gc);
+		gc.gridx = 5;
+		panel.add(labelNames[1], gc);
+		gc.gridx = 6;
+		panel.add(createTWBox(), gc);
+		gc.gridx = 7;
+		panel.add(labelNames[2], gc);
+		gc.gridx = 8;
+		panel.add(createUnitsPanel());
+		return panel;
+	}
+
+	public JPanel createUnitsPanel() {
+		JPanel panel = new JPanel();
+		ButtonGroup g = new ButtonGroup();
+
+		if (PluginCore.units == PluginCore.cfs)
+			cfs.setSelected(true);
+		else 
+			taf.setSelected(true);
+		g.add(taf);
+		g.add(cfs);
+		taf.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PluginCore.units=PluginCore.taf;
+			}
+		});
+		cfs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PluginCore.units=PluginCore.cfs;
+			}
+		});
+		taf.setFont(new Font(f.getName(), f.getStyle(), 10));
+		cfs.setFont(new Font(f.getName(), f.getStyle(), 10));
+		panel.setPreferredSize(new Dimension(100, 12));
+		panel.setLayout(new GridLayout(1, 0));
+		panel.add(taf);
+		panel.add(cfs);
+		return panel;
+	}
+
+	public JPanel createModePanel() {
+		comp.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		diff.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		
+		JPanel panel = new JPanel();
+		ButtonGroup g = new ButtonGroup();
+		g.add(comp);
+		g.add(diff);
+		comp.setFont(new Font(f.getName(), f.getStyle(), 10));
+		diff.setFont(new Font(f.getName(), f.getStyle(), 10));
+		panel.setPreferredSize(new Dimension(125, 12));
+		panel.setLayout(new GridLayout(1, 0));
+		panel.add(comp);
+		panel.add(diff);
+		comp.setSelected(true);
+		PluginCore.mode=comp.getText();
+		comp.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				PluginCore.mode=comp.getText();
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		diff.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				PluginCore.mode=diff.getText();
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		return panel;
+	}
+
+	public JPanel createAnnualTypePanel() {
+		JPanel panel = new JPanel();
+		ButtonGroup g = new ButtonGroup();
+		g.add(wateryear);
+		g.add(calendar);
+		g.add(fedContract);
+		setAnnualType(PluginCore.WATERYEAR);
+		g.setSelected(wateryear.getModel(), true);
+		wateryear.setFont(new Font(f.getName(), f.getStyle(), 12));
+		calendar.setFont(new Font(f.getName(), f.getStyle(), 12));
+		fedContract.setFont(new Font(f.getName(), f.getStyle(), 12));
+		panel.setPreferredSize(new Dimension(230, 12));
+		panel.setLayout(new GridLayout(1, 0));
+		panel.add(wateryear);
+		panel.add(calendar);
+		panel.add(fedContract);
+		wateryear.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				setAnnualType(PluginCore.WATERYEAR);
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		calendar.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				setAnnualType(PluginCore.CALENDAR_YEAR);
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		fedContract.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				setAnnualType(PluginCore.FEDERAL_CONTRACT_YEAR);
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		return panel;
+	}
+
+	public JComboBox createTWBox() {
+		for (int i = 0; i < _twSelections.length; i++)
+			_twitems.addElement(_twSelections[i]);
+		final JComboBox twbox = new JComboBox(_twitems);
+		twbox.setEditable(true);
+		twbox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JComboBox tb = (JComboBox) e.getSource();
+				String twSel = (String) tb.getSelectedItem();
+				setTimeWindow(twSel);
+			}
+		});
+		Dimension d = new Dimension(350, 17);
+		twbox.setMinimumSize(d);
+		twbox.setFont(new Font(f.getName(), f.getStyle(), 10));
+		twbox.setSelectedIndex(0);
+		PluginCore.tw="All";
+		return twbox;
+	}
+	
+	public void setTimeWindow(String twSel) {
+		if (twSel.equals("All")){
+			PluginCore.tw="All";
+		}else{
+			String[] split = twSel.split(" +");
+			String startMonth = split[0].substring(0, 3);
+			String endMonth = split[2].substring(0, 3);
+			String startYear = split[0].substring(3);
+			String endYear = split[2].substring(3);
+			try {
+				int sYear = Integer.parseInt(startYear);
+				int sMonth = TimeOperation.monthValue(startMonth);
+				int eYear = Integer.parseInt(endYear);
+				int eMonth = TimeOperation.monthValue(endMonth);
+				int daysInStartMonth = TimeOperation.numberOfDays(sMonth,
+					sYear);
+				int daysInEndMonth = TimeOperation.numberOfDays(eMonth,
+					eYear);
+				PluginCore.tw = daysInStartMonth + startMonth
+					+ startYear + " 2400 " + daysInEndMonth
+					+ endMonth + endYear + " 2400";
+			} catch (NumberFormatException nfe) {
+				PluginCore.tw = "31Oct1921 2400 30Sep2009 2400"; 
+			}
+		}
+	}
+	
+	public void setAnnualType(int annType) {
+		PluginCore.annualType = annType;
+	}
+	
+	public JPanel createLowerPanel() {
 		int textwidth = 15;
 		// create filter panel
 		JPanel filterPanel = new JPanel();
@@ -511,9 +871,9 @@ public class FilterPanel extends JPanel {
 		box1.add(Box.createHorizontalGlue());
 		box1.add(box);
 		box1.add(Box.createHorizontalGlue());
-		JPanel upperPanel = new JPanel();
-		upperPanel.setLayout(new BorderLayout());
-		upperPanel.add(box1, BorderLayout.CENTER);
-		return upperPanel;
+		JPanel lowerPanel = new JPanel();
+		lowerPanel.setLayout(new BorderLayout());
+		lowerPanel.add(box1, BorderLayout.CENTER);
+		return lowerPanel;
 	}
 }
