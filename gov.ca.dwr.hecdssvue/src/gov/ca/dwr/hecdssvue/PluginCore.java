@@ -8,11 +8,13 @@ public class PluginCore {
 	
 	public static boolean dssEditable=false;
 	
-	public static String mode="comp";
+	public static final String comp="comp";
+	public static final String diff="diff";
+	public static String mode=comp;
 	
-	public final static int taf=100;
-	public final static int cfs=200;
-	public static int units=taf;
+	public final static String taf="TAF";
+	public final static String cfs="CFS";
+	public static String units=cfs;
 	
 	public static int chartType=0;
 	

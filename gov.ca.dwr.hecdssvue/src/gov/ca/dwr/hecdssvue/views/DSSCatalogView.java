@@ -464,11 +464,20 @@ public class DSSCatalogView extends AbstractDSSView {
 			  case 0:
 				try{
 //				  dataVector_file = dssArray.get(i).get(pathname, true);
-				  dataVector_file = DataOps.getMonthlyData((TimeSeriesContainer)dssArray.get(i).get(pathname, true), PluginCore.months);
+				  if (PluginCore.tw.equals("All")){	
+					  dataVector_file = DataOps.getMonthlyData((TimeSeriesContainer)dssArray.get(i).get(pathname, true), PluginCore.months);
+				  }else{
+					  String startTime=PluginCore.tw.substring(0, 13);
+					  String endTime=PluginCore.tw.substring(15, 28);
+					  dataVector_file = DataOps.getMonthlyData((TimeSeriesContainer)dssArray.get(i).get(pathname, startTime, endTime), PluginCore.months);
+				  }
 				} catch (Exception ex) {
 				  dataVector_file = null;
 			    }
-				dataVector_path.add(dataVector_file);
+				if (PluginCore.mode.equals(PluginCore.diff) && i>1 && dataVector_file !=null){
+					dataVector_file=DataOps.diff(dataVector_file, (TimeSeriesContainer)dataVector_path.get(0));
+				}
+				if (dataVector_file !=null) dataVector_path.add(dataVector_file);
 //				dataVector_file.units//TODO
                 break;
 			  case 1:
@@ -480,17 +489,28 @@ public class DSSCatalogView extends AbstractDSSView {
 //				if (dataVector_path.get((i-1)/2).equals(null)){
 				  try{
 //					dataVector_file = dssArray.get(i).get(pathname, true);
-				    dataVector_file = DataOps.getMonthlyData((TimeSeriesContainer)dssArray.get(i).get(pathname, true), PluginCore.months);
+					if (PluginCore.tw.equals("All")){  
+						dataVector_file = DataOps.getMonthlyData((TimeSeriesContainer)dssArray.get(i).get(pathname, true), PluginCore.months);
+					}else{ 
+						String startTime=PluginCore.tw.substring(0, 13);
+						String endTime=PluginCore.tw.substring(15, 28);
+						dataVector_file = DataOps.getMonthlyData((TimeSeriesContainer)dssArray.get(i).get(pathname, startTime, endTime), PluginCore.months);
+					}
 				  } catch (Exception ex) {
 				    dataVector_file = null;
 			      }
-				dataVector_path.set((i-1)/2, dataVector_file);
+				  if (PluginCore.mode.equals(PluginCore.diff) && i>1 && dataVector_file !=null){
+						dataVector_file=DataOps.diff(dataVector_file, (TimeSeriesContainer)dataVector_path.get(0));
+				  }
+				  dataVector_path.add(dataVector_file);
 				}
 		        break;
 			}
 		}
 		
-		
+		if (PluginCore.mode.equals(PluginCore.diff) && dataVector_path.size()>0){
+			dataVector_path.remove(0);
+		}
 		
 		return dataVector_path;
      }

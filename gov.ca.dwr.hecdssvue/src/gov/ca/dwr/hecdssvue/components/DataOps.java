@@ -1,9 +1,11 @@
 package gov.ca.dwr.hecdssvue.components;
 
+import gov.ca.dwr.hecdssvue.PluginCore;
 import hec.dataTable.HecDataTable;
 import hec.heclib.util.HecTime;
 import hec.hecmath.DSS;
 import hec.hecmath.DSSFile;
+import hec.hecmath.HecMath;
 import hec.hecmath.HecMathException;
 import hec.io.DataContainer;
 import hec.io.TimeSeriesContainer;
@@ -16,6 +18,8 @@ import wrimsv2_plugin.debugger.exception.WPPException;
 
 public class DataOps {
 
+	private static double FACTOR = 1000. * 43560 / (24 * 60 * 60);
+	
 	public static void saveData(HecDataTable table) {
 		if (table.hasDataChanged()){
 			int firstError[] = new int[3];
@@ -101,7 +105,76 @@ public class DataOps {
 		} catch (Exception e) {
 		}
 
+		ntsc=unitsConversion(ntsc);
+		
 		return ntsc;
 
+	}
+	
+	public static TimeSeriesContainer unitsConversion(TimeSeriesContainer tsc) {
+		String units=tsc.units;
+		if (!PluginCore.units.equals(units)) {
+			if (PluginCore.units.equals(PluginCore.taf) && units.equals(PluginCore.cfs)){
+				tsc = adjustMonthlyData(tsc, true); 
+				tsc.units=PluginCore.taf;
+			} else if (PluginCore.units.equals(PluginCore.cfs) && units.equals(PluginCore.taf)){
+				tsc = adjustMonthlyData(tsc, false); 
+				tsc.units=PluginCore.cfs;				
+			}
+		}
+		return tsc;
+	}
+
+	public static TimeSeriesContainer adjustMonthlyData(TimeSeriesContainer tsc, boolean isCFStoTAF) { 
+
+		HecTime ht = null;
+		try {
+			// double[] values = tsc.values;
+			double[] nvalues = new double[tsc.values.length];
+			int[] times = tsc.times;
+			int ndays = 0;
+			ht = new HecTime();
+			for (int i = 0; i < times.length; i++) {
+				ht.set(times[i]);
+				// FIX: subtract 1 min
+				ht.add(-1);
+				ndays = ht.day();
+				/*
+				 * HecTime BUG: sometimes ht.day() returns a day later than *
+				 * should???? I wasted a lot of time on this!!
+				 * 
+				 * returns ht.day() == 1, ht.hour() == 0 AS OPPOSED TO ht.day()
+				 * == 28,30,31 (depending on month), ht.hour() == 24
+				 */
+
+				// if (DEBUG) System.out.println(ht.year()+" "+ht.month()+
+				// " "+ht.day()+ht.hour()+" "+ht.minute()+" "+ht.second()+" "+times[i]+"
+				// "+values[i]);
+				// CB nvalues[i] = tsc.values[i] * ndays * factor;
+				if (isCFStoTAF) {
+					nvalues[i] = tsc.values[i] * ndays / FACTOR;
+				} else {
+					nvalues[i] = tsc.values[i] / ndays * FACTOR;
+				}
+			}
+			tsc.values = nvalues;
+
+		} catch (Exception e) {
+			WPPException.handleException(e);
+		}
+		return tsc;
+	}
+
+	public static TimeSeriesContainer diff(TimeSeriesContainer tsc1, TimeSeriesContainer tsc0){
+		try {
+			HecMath hm0=HecMath.createInstance(tsc0);
+			HecMath hm1=HecMath.createInstance(tsc1);
+			hm1=hm1.subtract(hm0);
+			return (TimeSeriesContainer)hm1.getData();
+		} catch (HecMathException e) {
+			WPPException.handleException(e);
+			return tsc1;
+		}
+		
 	}
 }

@@ -64,9 +64,6 @@ import wrimsv2_plugin.tools.TimeOperation;
 
 public class OpsPanel extends JPanel {
 
-	public static final String CFS = "cfs";
-	public static final String TAF = "taf";
-
 	public static String[] _twSelections = { "All", "OCT1921 - SEP2009","OCT1921 - SEP2003",
 			"OCT1928 - SEP1934","OCT1986 - SEP1992","OCT1975 - SEP1977",
 			"OCT1976 - SEP1977","OCT1994 - SEP2003","OCT2000 - SEP2009"};
@@ -89,8 +86,8 @@ public class OpsPanel extends JPanel {
 	private JRadioButton taf = new JRadioButton("TAF");
 	private JRadioButton cfs = new JRadioButton("CFS");
 
-	private JRadioButton comp = new JRadioButton("comp");
-	private JRadioButton diff = new JRadioButton("diff");
+	private JRadioButton comp = new JRadioButton(PluginCore.comp);
+	private JRadioButton diff = new JRadioButton(PluginCore.diff);
 
 	private JRadioButton wateryear = new JRadioButton("oct - sep"); 
 	private JRadioButton calendar = new JRadioButton("jan - dec"); ; 
@@ -289,11 +286,6 @@ public class OpsPanel extends JPanel {
 			f = new Font(f.getName(), f.getStyle(), fontSize);
 			labelNames[i].setFont(f);
 			labelNames[i].setForeground(Color.black);
-			if (i != 4 || i != 7) {
-				labelNames[i].setSize(10, 10);
-			} else {
-				labelNames[i].setSize(10, 10);
-			}
 		}
 		
 		
@@ -340,8 +332,8 @@ public class OpsPanel extends JPanel {
 			cfs.setSelected(true);
 		else 
 			taf.setSelected(true);
-		g.add(taf);
 		g.add(cfs);
+		g.add(taf);
 		taf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PluginCore.units=PluginCore.taf;
@@ -352,12 +344,12 @@ public class OpsPanel extends JPanel {
 				PluginCore.units=PluginCore.cfs;
 			}
 		});
-		taf.setFont(new Font(f.getName(), f.getStyle(), 10));
-		cfs.setFont(new Font(f.getName(), f.getStyle(), 10));
+		taf.setFont(new Font(f.getName(), f.getStyle(), 12));
+		cfs.setFont(new Font(f.getName(), f.getStyle(), 12));
 		panel.setPreferredSize(new Dimension(100, 12));
 		panel.setLayout(new GridLayout(1, 0));
-		panel.add(taf);
 		panel.add(cfs);
+		panel.add(taf);
 		return panel;
 	}
 
@@ -381,8 +373,8 @@ public class OpsPanel extends JPanel {
 		ButtonGroup g = new ButtonGroup();
 		g.add(comp);
 		g.add(diff);
-		comp.setFont(new Font(f.getName(), f.getStyle(), 10));
-		diff.setFont(new Font(f.getName(), f.getStyle(), 10));
+		comp.setFont(new Font(f.getName(), f.getStyle(), 12));
+		diff.setFont(new Font(f.getName(), f.getStyle(), 12));
 		panel.setPreferredSize(new Dimension(125, 12));
 		panel.setLayout(new GridLayout(1, 0));
 		panel.add(comp);
@@ -585,7 +577,7 @@ public class OpsPanel extends JPanel {
 		});
 		Dimension d = new Dimension(350, 17);
 		twbox.setMinimumSize(d);
-		twbox.setFont(new Font(f.getName(), f.getStyle(), 10));
+		twbox.setFont(new Font(f.getName(), f.getStyle(), 12));
 		twbox.setSelectedIndex(0);
 		PluginCore.tw="All";
 		return twbox;
