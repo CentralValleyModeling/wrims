@@ -1,6 +1,7 @@
 package gov.ca.dwr.hecdssvue.views;
 
 import gov.ca.dwr.hecdssvue.Activator;
+import gov.ca.dwr.hecdssvue.PluginCore;
 import hec.dataTable.HecDataTable;
 import hec.heclib.dss.HecDss;
 import hec.io.DataContainer;
@@ -101,7 +102,7 @@ public class DSSFileView extends ViewPart {
 						}else{
 							showDssFileErrorDialog(1);
 						}
-						ArrayList<HecDss> dssArray = new ArrayList<HecDss> ();
+						PluginCore.dssArray = new ArrayList<HecDss> ();
 //						dssArray.add(DebugCorePlugin.dvDss[0]);
 //						dssArray.add(DebugCorePlugin.svDss[0]);
 //						for (int i = 0; i <DebugCorePlugin.dvDss.length; i++){
@@ -110,15 +111,15 @@ public class DSSFileView extends ViewPart {
 //						}
 						for (int i = 0; i <DebugCorePlugin.selectedStudies.length/2;i++){
 							if (DebugCorePlugin.selectedStudies[i]==true){
-								dssArray.add(DebugCorePlugin.dvDss[i]);
-								dssArray.add(DebugCorePlugin.svDss[i]);
+								PluginCore.dssArray.add(DebugCorePlugin.dvDss[i]);
+								PluginCore.dssArray.add(DebugCorePlugin.svDss[i]);
 							}
 						}
 						try {
 							DSSCatalogView dcv = (DSSCatalogView) getSite().getWorkbenchWindow()
                                                 .getActivePage().showView(DSSCatalogView.ID);
 							try {
-								dcv.getViewer().setInput(dssArray);
+								dcv.getViewer().setInput(PluginCore.dssArray);
 //								dcv.setInput(dssArray);
 //								dcv.updateData();
 							} catch (Exception ex) {

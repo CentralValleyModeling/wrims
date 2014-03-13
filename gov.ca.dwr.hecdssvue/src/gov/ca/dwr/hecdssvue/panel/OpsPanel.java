@@ -1,6 +1,7 @@
 package gov.ca.dwr.hecdssvue.panel;
 
 import gov.ca.dwr.hecdssvue.PluginCore;
+import gov.ca.dwr.hecdssvue.views.DSSCatalogView;
 import hec.dssgui.Group;
 import hec.hecmath.DSS;
 import hec.hecmath.DSSFile;
@@ -54,11 +55,17 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.ProgressMonitor;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PlatformUI;
 
 import wrimsv2_plugin.tools.TimeOperation;
 
@@ -272,7 +279,14 @@ public class OpsPanel extends JPanel {
 			}
 			
 			public void filter(){
-				
+				final IWorkbench workbench=PlatformUI.getWorkbench();
+				workbench.getDisplay().asyncExec(new Runnable(){
+					public void run(){
+						IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
+						DSSCatalogView dssCatalogView=(DSSCatalogView) workBenchPage.findView(PluginCore.ID_DSSVue_DSSCatalogView);
+						dssCatalogView.getViewer().setInput(PluginCore.dssArray);
+					}
+				});
 			}
 		});
 	}
@@ -645,15 +659,84 @@ public class OpsPanel extends JPanel {
 		setTextFieldAction(_pathText[5]);
 		_pathText[5].setBorder(BorderFactory.createTitledBorder(BorderFactory
 				.createLineBorder(Color.lightGray), "F"));
-
+		
 		// filterPanel.add(_varTypeBox);
 		for (int i = 0; i < 6; i++) {
 			filterPanel.add(_pathText[i]);
+			_pathText[i].getDocument().addDocumentListener(new DocumentListener() {
+				  public void changedUpdate(DocumentEvent e) {
+					      setFilter();
+					  }
+					  public void removeUpdate(DocumentEvent e) {
+						  setFilter();
+					  }
+					  public void insertUpdate(DocumentEvent e) {
+						  setFilter();
+					  }
+					  
+					  public void setFilter(){
+							PluginCore.filter=getPathSpec(false);
+					  }
+					  
+					  public String getPathSpec(boolean useRegex) {
+							String pathSpec = "";
+
+							String glob = "*";
+							if (useRegex)
+								glob = ".*";
+
+							for (int i = 0; i < 6; i++) {
+								String txt = _pathText[i].getText().trim().toUpperCase();
+								if (txt.length() > 0)
+									pathSpec = pathSpec + "/" + txt;
+								else
+									pathSpec = pathSpec + "/" + glob;
+							}
+							pathSpec = pathSpec + "/";
+							return pathSpec;
+						}
+					});
 		}
 		filterPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory
 				.createLineBorder(Color.blue), "Filter"));
 
 		_filterBtn = new JButton("Filter");
+		_filterBtn.addMouseListener(new MouseListener(){
+			
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				final IWorkbench workbench=PlatformUI.getWorkbench();
+				workbench.getDisplay().asyncExec(new Runnable(){
+					public void run(){
+						IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
+						DSSCatalogView dssCatalogView=(DSSCatalogView) workBenchPage.findView(PluginCore.ID_DSSVue_DSSCatalogView);
+						dssCatalogView.getViewer().setInput(PluginCore.dssArray);
+					}
+				});
+			}
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
 		_plotBtn = new JRadioButton("Model Data");
 		_plotBtn.addMouseListener(new MouseListener(){
 

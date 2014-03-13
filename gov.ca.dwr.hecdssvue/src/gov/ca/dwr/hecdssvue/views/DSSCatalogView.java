@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
+import java.util.regex.Pattern;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -44,7 +45,9 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISharedImages;
@@ -197,7 +200,7 @@ public class DSSCatalogView extends AbstractDSSView {
 					it.hasNext();) {
 				CondensedReference next = it.next();
 				String[] parts = next.getNominalPathname().split("/");
-				pathParts.add(parts);
+				if (showFilteredRows(parts, PluginCore.filter, false)) pathParts.add(parts);
 			}
 			return pathParts.toArray();
 		}
@@ -271,10 +274,9 @@ public class DSSCatalogView extends AbstractDSSView {
 									dss.close();
 								}
 								dss = HecDss.open(file.getLocation().toString());
-								ArrayList<HecDss> dssArray = new ArrayList<HecDss> ();// for multiple dss readin
-								dssArray = new ArrayList<HecDss> ();// for multiple dss readin
-								dssArray.add(dss);
-								viewer.setInput(dssArray);
+								PluginCore.dssArray = new ArrayList<HecDss> ();// for multiple dss readin
+								PluginCore.dssArray.add(dss);
+								viewer.setInput(PluginCore.dssArray);
 								resetDssFileView();
 							} catch (Exception ex) {
 								Status status = new Status(IStatus.ERROR,
@@ -577,5 +579,35 @@ public class DSSCatalogView extends AbstractDSSView {
 			DebugCorePlugin.studySvFileNames[i]="";
 			DebugCorePlugin.studyDvFileNames[i]="";
 		}
+	}
+	
+	public boolean showFilteredRows(String[] pathParts, String filter, boolean useRegex) {
+		String search = filter.trim().toUpperCase();
+		// if (filter.equals("///////") && !useRegex)
+		// filter = "/*/*/*/*/*/*/";
+		// filter = "/.*/.*/.*/.*/.*/.*/";
+
+		String[] parts = search.split("/");
+		int i;
+		Pattern[] pattern = new Pattern[7];
+
+		// Compile the match pattern for each 'part'
+		for (i = 1; i < 7; i++) {
+			// map interface non-regex wildcards to a regex
+			if (!useRegex) {
+				parts[i] = parts[i].replaceAll("\\?", ".");
+				parts[i] = parts[i].replaceAll("\\*", ".*");
+			}
+			pattern[i] = Pattern.compile(parts[i]);
+
+		}
+
+		boolean match = true;
+		for (i = 1; i < 7; i++) {
+			match = pattern[i].matcher((String) pathParts[i]).matches();
+			if (!match)
+				break;
+		}
+		return match;
 	}
 }

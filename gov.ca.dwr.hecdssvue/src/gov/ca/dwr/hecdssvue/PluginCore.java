@@ -1,5 +1,7 @@
 package gov.ca.dwr.hecdssvue;
 
+import hec.heclib.dss.HecDss;
+
 import java.util.ArrayList;
 
 public class PluginCore {
@@ -40,4 +42,8 @@ public class PluginCore {
 	    add(8);
 	    add(9);
 	}};
+	
+	public static String filter="/*/*/*/*/*/*/";
+	
+	public static ArrayList<HecDss> dssArray = new ArrayList<HecDss> ();// for multiple dss readin
 }

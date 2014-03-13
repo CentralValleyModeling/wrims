@@ -113,11 +113,16 @@ public class DataOps {
 	
 	public static TimeSeriesContainer unitsConversion(TimeSeriesContainer tsc) {
 		String units=tsc.units;
+		
+		String fullName = tsc.fullName;
+		String[] parts = fullName.split("/");
+		boolean isStorage = parts[3].trim().toLowerCase().startsWith("storage");
+		
 		if (!PluginCore.units.equals(units)) {
 			if (PluginCore.units.equals(PluginCore.taf) && units.equals(PluginCore.cfs)){
 				tsc = adjustMonthlyData(tsc, true); 
 				tsc.units=PluginCore.taf;
-			} else if (PluginCore.units.equals(PluginCore.cfs) && units.equals(PluginCore.taf)){
+			} else if (PluginCore.units.equals(PluginCore.cfs) && units.equals(PluginCore.taf) && !isStorage){
 				tsc = adjustMonthlyData(tsc, false); 
 				tsc.units=PluginCore.cfs;				
 			}

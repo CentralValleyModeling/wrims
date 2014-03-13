@@ -29,7 +29,7 @@ public class DSSOpsView extends AbstractDSSView {
 	 * The ID of the view as specified by the extension.
 	 */
 	public static final String ID = "gov.ca.dwr.hecdssvue.views.DSSOpsView";
-	OpsPanel filter;
+	private OpsPanel options;
 
 	/**
 	 * The constructor.
@@ -48,7 +48,11 @@ public class DSSOpsView extends AbstractDSSView {
 	
 	public void createPartControl(Composite parent){
 		super.createPartControl(parent);
-		filter = new OpsPanel();
-		contentPane.add(filter);
+		options = new OpsPanel();
+		contentPane.add(options);
+	}
+	
+	public OpsPanel getOpsPanel(){
+		return options;
 	}
 }
