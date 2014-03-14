@@ -24,6 +24,13 @@
       </view>
       <view
             category="gov.ca.dwr.hecdssvue"
+            class="gov.ca.dwr.hecdssvue.views.DSSMonthlyView"
+            icon="icons/sample.gif"
+            id="gov.ca.dwr.hecdssvue.views.DSSMonthlyView"
+            name="DSS Monthly">
+      </view>
+      <view
+            category="gov.ca.dwr.hecdssvue"
             class="gov.ca.dwr.hecdssvue.views.DSSPlotView"
             icon="icons/sample.gif"
             id="gov.ca.dwr.hecdssvue.views.DSSPlotView"
@@ -34,7 +41,7 @@
             class="gov.ca.dwr.hecdssvue.views.DSSTableView"
             icon="icons/sample.gif"
             id="gov.ca.dwr.hecdssvue.views.DSSTableView"
-            name="DSS Table View">
+            name="DSS Table">
       </view>
       <view
             category="gov.ca.dwr.hecdssvue"
