@@ -530,6 +530,10 @@ public class DSSCatalogView extends AbstractDSSView {
 			DSSTableView dtv = (DSSTableView) getSite().getWorkbenchWindow()
                                .getActivePage().showView(DSSTableView.ID);
 			dtv.showSelected(dataVector);
+			
+			DSSMonthlyView mv = (DSSMonthlyView) getSite().getWorkbenchWindow()
+                    .getActivePage().showView(DSSMonthlyView.ID);
+			mv.showSelected(dataVector);
 		} catch (PartInitException e) {
 			e.printStackTrace();
 		}

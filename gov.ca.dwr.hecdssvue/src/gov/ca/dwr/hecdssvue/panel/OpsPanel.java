@@ -102,7 +102,7 @@ public class OpsPanel extends JPanel {
 	
 	private static String[] labelText = {
 		"Mode: ", 
-		"  Time Window:  ", 
+		"  Time Window: ", 
 		"  Units:  ",
 		"  Annual Type: " };
 	
@@ -326,7 +326,7 @@ public class OpsPanel extends JPanel {
 		// panel.add(createViewPanel(),gc);
 		panel.add(createAnnualTypePanel(), gc); // CB added
 		gc.gridx = 4;
-		panel.add(new JLabel("            "), gc);
+		panel.add(new JLabel(""), gc);
 		gc.gridx = 5;
 		panel.add(labelNames[1], gc);
 		gc.gridx = 6;
