@@ -157,38 +157,54 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 		_fileMenu = new JMenu("File");
 		_fileMenu.setMnemonic('F');
 		_menuBar.add(_fileMenu);
-		_saveItem = new JMenuItem("Save", 'S');
-		_saveItem.setAccelerator(KeyStroke.getKeyStroke('S', 2, false));
-		_saveItem.addActionListener(this);
-		_saveItem.setEnabled(false);
-		_fileMenu.add(_saveItem);
-		_saveAsItem = new JMenuItem("Save As...", 'a');
-		_saveAsItem.addActionListener(this);
-		_saveAsItem.setEnabled(false);
-		_fileMenu.add(_saveAsItem);
-		_fileMenu.addSeparator();
 		_printItem = new JMenuItem("Print...", 'P');
 		_printItem.setAccelerator(KeyStroke.getKeyStroke('P', 2, false));
-		_printItem.addActionListener(this);
+		_printItem.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				print();
+			}
+			
+		});
 		_fileMenu.add(_printItem);
+		
 		_printPreview = new JMenuItem("Print Preview...", 'r');
-		_printPreview.addActionListener(this);
+		_printPreview.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				printPreview();
+			}
+			
+		});
 		_printPreview.setEnabled(false);
 		_fileMenu.add(_printPreview);
+		
 		_export = new JMenuItem("Export...", 'E');
-		_export.addActionListener(this);
+		_export.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				export();
+			}
+			
+		});
 		_fileMenu.add(_export);
 		_fileMenu.addSeparator();
-		_exitItem = new JMenuItem("Close", 67);
-		_exitItem.setAccelerator(KeyStroke.getKeyStroke(87, 2, false));
-		_exitItem.addActionListener(this);
-		_fileMenu.add(_exitItem);
 		_viewMenu = new JMenu("View");
 		_viewMenu.setMnemonic('V');
 
 		_viewCommas = new JCheckBoxMenuItem("Commas", _showCommas);
 		_viewCommas.setMnemonic('S');
-		_viewCommas.addActionListener(this);
+		_viewCommas.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ViewCommas_Action();
+			}
+			
+		});
 		_viewMenu.add(_viewCommas);
 
 		if (PluginCore.units.equals(PluginCore.taf)) { // No average or
@@ -200,7 +216,14 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 			_viewTotalColumn = new JCheckBoxMenuItem("Total Column",
 					_showTotalColumn);
 			_viewTotalColumn.setMnemonic('A');
-			_viewTotalColumn.addActionListener(this);
+			_viewTotalColumn.addActionListener(new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					ViewTotalColumn_Action();
+				}
+				
+			});
 			_viewTotalColumn.setSelected(_showTotalColumn);
 			_viewMenu.add(_viewTotalColumn);
 		}
@@ -218,37 +241,93 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 		_decimal0.setMnemonic('0');
 		_decimalGroup.add(_decimal0);
 		_viewDecimals.add(_decimal0);
-		_decimal0.addActionListener(this);
+		_decimal0.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				DecimalPlaces_Action(0);
+			}
+			
+		});
+		
 		_decimal1 = new JRadioButtonMenuItem("0.0");
 		_decimal1.setMnemonic('1');
 		_decimalGroup.add(_decimal1);
 		_viewDecimals.add(_decimal1);
-		_decimal1.addActionListener(this);
+		_decimal1.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				DecimalPlaces_Action(1);
+			}
+			
+		});
+		
 		_decimal2 = new JRadioButtonMenuItem("0.00");
 		_decimal2.setMnemonic('2');
 		_decimalGroup.add(_decimal2);
 		_viewDecimals.add(_decimal2);
-		_decimal2.addActionListener(this);
+		_decimal2.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				DecimalPlaces_Action(2);
+			}
+			
+		});
+		
 		_decimal3 = new JRadioButtonMenuItem("0.000");
 		_decimal3.setMnemonic('3');
 		_decimalGroup.add(_decimal3);
 		_viewDecimals.add(_decimal3);
-		_decimal3.addActionListener(this);
+		_decimal3.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				DecimalPlaces_Action(3);
+			}
+			
+		});
+		
 		_decimal4 = new JRadioButtonMenuItem("0.0000");
 		_decimal4.setMnemonic('4');
 		_decimalGroup.add(_decimal4);
 		_viewDecimals.add(_decimal4);
-		_decimal4.addActionListener(this);
+		_decimal4.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				DecimalPlaces_Action(4);
+			}
+			
+		});
+		
 		_decimal5 = new JRadioButtonMenuItem("0.00000");
 		_decimal5.setMnemonic('5');
 		_decimalGroup.add(_decimal5);
 		_viewDecimals.add(_decimal5);
-		_decimal5.addActionListener(this);
+		_decimal5.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				DecimalPlaces_Action(5);
+			}
+			
+		});
+		
 		_decimal6 = new JRadioButtonMenuItem("0.000000");
 		_decimal6.setMnemonic('6');
 		_decimalGroup.add(_decimal6);
 		_viewDecimals.add(_decimal6);
-		_decimal6.addActionListener(this);
+		_decimal6.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				DecimalPlaces_Action(6);
+			}
+			
+		});
+		
 		switch (_decimalPlaces) {
 		case 0:
 			_decimal0.setSelected(true);
@@ -522,6 +601,7 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 		int oldPlaces = _table.getPrecision();
 		if (oldPlaces != numberDecimals) {
 			_table.setPrecision(numberDecimals);
+			_decimalPlaces=numberDecimals;
 			_preferences.putInt(DECIMAL_PLACES, numberDecimals);
 			validate();
 			repaint();
@@ -531,7 +611,7 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 	}
 
 	private void ViewCommas_Action() {
-		_showCommas = _viewCommas.getState();
+		_showCommas = !_showCommas;
 		_table.setShowCommas(_showCommas);
 		_preferences.putBoolean(SHOW_COMMAS, _showCommas);
 		validate();

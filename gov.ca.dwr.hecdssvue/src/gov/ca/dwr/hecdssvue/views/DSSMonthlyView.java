@@ -48,12 +48,12 @@ public class DSSMonthlyView extends AbstractDSSView {
 	 * Show plot for selected 
 	 */
 	public void showSelected(final Vector<DataContainer> dataVector) {
-		loadMonthlyTable(PluginCore.annualType, dataVector);
-		monthly.getTable().setupModel();
-		monthly.showTable();
-		contentPane.invalidate();
-		contentPane.doLayout();
-		contentPane.repaint();
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				loadMonthlyTable(PluginCore.annualType, dataVector);
+				monthly.getTable().setupModel();
+				monthly.showTable();
+			}});
 	}
 	
 	public void createPartControl(Composite parent){
