@@ -1,6 +1,7 @@
 package gov.ca.dwr.jdiagram.views;
 
 import gov.ca.dwr.jdiagram.Activator;
+import gov.ca.dwr.jdiagram.toolbars.DateCombo;
 
 import java.awt.BorderLayout;
 import java.awt.Frame;
@@ -23,8 +24,10 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IViewPart;
@@ -75,6 +78,8 @@ public class SchematicView extends ViewPart {
 	private float _zoomFactor = 100;
 
 	private Action zoomNormalAction;
+	
+	private ToolItem _date;
 
 	private DiagramSelectionProvider selectionProvider;
 
@@ -103,8 +108,8 @@ public class SchematicView extends ViewPart {
 		JRootPane root = new JRootPane();
 		panel.add(root);
 		java.awt.Container contentPane = root.getContentPane();
-		JLayeredPane layeredPane = new JLayeredPane();
-		contentPane.add(layeredPane);
+		//JLayeredPane layeredPane = new JLayeredPane();
+		//contentPane.add(layeredPane);
 		diagramView = new DiagramView(diagram = new Diagram());
 		diagramView.setAllowInplaceEdit(false);
 		diagramView.setBehavior(Behavior.DoNothing);
@@ -133,10 +138,10 @@ public class SchematicView extends ViewPart {
 			}
 
 		});
-		layeredPane.add(new JScrollPane(diagramView));
+		contentPane.add(new JScrollPane(diagramView));
 		Overview overview = new Overview();
 		overview.setDiagramView(diagramView);
-		layeredPane.add(overview,1);
+		//layeredPane.add(overview,1);
 		IWorkbenchPage activePage = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage();
 		/*
@@ -165,6 +170,7 @@ public class SchematicView extends ViewPart {
 		manager.add(zoomInAction);
 		manager.add(zoomOutAction);
 		manager.add(zoomNormalAction);
+		manager.add(new DateCombo());
 	}
 
 	@SuppressWarnings("deprecation")
@@ -181,11 +187,15 @@ public class SchematicView extends ViewPart {
 					return;
 				}
 				try {
+					diagramView.suspendRepaint();
 					if (file.endsWith(".xml")) {
 						diagram.loadFromXml(file);
 					} else {
 						diagram.loadFrom(file);
 					}
+					//Rectangle2D rect = diagram.getBounds();
+					//diagramView.zoomToFit(rect);
+					diagramView.resumeRepaint();
 				} catch (Exception ex) {
 					Status status = new Status(IStatus.ERROR,
 							Activator.PLUGIN_ID, "Error Opening Schematic", ex);

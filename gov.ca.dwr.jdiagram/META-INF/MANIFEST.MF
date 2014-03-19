@@ -20,7 +20,9 @@ Export-Package: com.mindfusion.common,
  com.mindfusion.graphs,
  com.mindfusion.pdf,
  com.mindfusion.svg,
- gov.ca.dwr.jdiagram
+ gov.ca.dwr.jdiagram,
+ gov.ca.dwr.jdiagram.views
 Bundle-ClassPath: JDiagram.jar,
  .
 Bundle-Vendor: California Department of Water Resources
+Import-Package: wrimsv2_plugin.tools
