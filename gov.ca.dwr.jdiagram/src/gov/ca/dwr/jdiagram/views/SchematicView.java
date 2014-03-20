@@ -1,14 +1,25 @@
 package gov.ca.dwr.jdiagram.views;
 
+import gov.ca.dwr.hecdssvue.PluginCore;
 import gov.ca.dwr.jdiagram.Activator;
 import gov.ca.dwr.jdiagram.toolbars.DateCombo;
+import hec.heclib.dss.CondensedReference;
+import hec.heclib.dss.HecDss;
+import hec.heclib.util.HecTime;
+import hec.hecmath.HecMath;
+import hec.io.DataContainer;
+import hec.io.TimeSeriesContainer;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Panel;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Float;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 
@@ -39,6 +50,11 @@ import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
 
+import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+import wrimsv2_plugin.debugger.exception.WPPException;
+
+import com.mindfusion.diagramming.Align;
+import com.mindfusion.diagramming.AttachToNode;
 import com.mindfusion.diagramming.Behavior;
 import com.mindfusion.diagramming.Diagram;
 import com.mindfusion.diagramming.DiagramAdapter;
@@ -46,11 +62,14 @@ import com.mindfusion.diagramming.DiagramItem;
 import com.mindfusion.diagramming.DiagramLink;
 import com.mindfusion.diagramming.DiagramLinkList;
 import com.mindfusion.diagramming.DiagramNode;
+import com.mindfusion.diagramming.DiagramNodeList;
 import com.mindfusion.diagramming.DiagramView;
+import com.mindfusion.diagramming.Group;
 import com.mindfusion.diagramming.LinkEvent;
 import com.mindfusion.diagramming.NodeEvent;
 import com.mindfusion.diagramming.Overview;
 import com.mindfusion.diagramming.ShapeNode;
+import com.mindfusion.diagramming.TextFormat;
 
 /**
  * This view represents the schematic drawing
@@ -78,10 +97,18 @@ public class SchematicView extends ViewPart {
 	private float _zoomFactor = 100;
 
 	private Action zoomNormalAction;
-	
-	private ToolItem _date;
 
 	private DiagramSelectionProvider selectionProvider;
+
+	private Rectangle2D.Float lastVisibleRect;
+
+	private DateCombo dateCombo;
+	
+	private static final Object VALUE_TEXT = "__VT__";
+	
+	private static int precision = 0;
+	
+	private static double FACTOR = 1000. * 43560 / (24 * 60 * 60);
 
 	/**
 	 * The constructor.
@@ -170,7 +197,8 @@ public class SchematicView extends ViewPart {
 		manager.add(zoomInAction);
 		manager.add(zoomOutAction);
 		manager.add(zoomNormalAction);
-		manager.add(new DateCombo());
+		dateCombo=new DateCombo(this);
+		manager.add(dateCombo);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -193,8 +221,8 @@ public class SchematicView extends ViewPart {
 					} else {
 						diagram.loadFrom(file);
 					}
-					//Rectangle2D rect = diagram.getBounds();
-					//diagramView.zoomToFit(rect);
+					Rectangle2D rect = diagram.getBounds();
+					diagramView.zoomToFit(rect);
 					diagramView.resumeRepaint();
 				} catch (Exception ex) {
 					Status status = new Status(IStatus.ERROR,
@@ -408,5 +436,516 @@ public class SchematicView extends ViewPart {
 		public void setPropertyValue(Object id, Object value) {
 		}
 
+	}
+
+	public void refreshValues(final int index, boolean force) {
+		synchronized (diagramView) {
+			final Rectangle2D.Float visibleRect = diagramView.deviceToDoc(diagramView
+					.getVisibleRect());
+			if (!force && visibleRect.equals(lastVisibleRect)) {
+				return;
+			}
+			if (lastVisibleRect == null) {
+				lastVisibleRect = visibleRect;
+			}
+			clearValueBoxes(lastVisibleRect);
+			lastVisibleRect = visibleRect;
+			
+			Combo dl = dateCombo.getDateList();
+			final String selDate = dl.getItem(dl.getSelectionIndex());
+			new Thread(new Runnable() {
+				public void run() {
+					updateValues(index, selDate, visibleRect);
+				}
+			}).start();
+		}
+	}
+	
+	public void updateValues(int index, String date, Rectangle2D.Float visibleRect){
+		Hashtable<String, String>[] values = null;
+		Hashtable<String, Object> visibleNodes = getVisibleNodes(visibleRect);
+		
+		final Hashtable<String, Object> names = new Hashtable<String, Object>();
+		for (String v : visibleNodes.keySet()) {
+			names.put(v, v);
+		}
+		if (index==0){
+			values = retrieveUndebug(PluginCore.units, date,
+				names);
+		}else{
+			values = retrieveDebug(PluginCore.units, date,
+					names);
+		}
+		setValues(index, visibleNodes, values);
+	}
+	
+	public Hashtable<String, String>[] retrieveUndebug(String units, String date, Hashtable<String, Object> names){
+		String[] tws = dateCombo.getTimewindows();
+		for (int i=0; i<tws.length; i++){
+			if (date.equals(tws[i])){
+				return calculateLongTermAverage(units, date, names);
+			}
+		}
+		
+		int size=names.size();
+		Hashtable<String, String>[] results = new Hashtable[4];
+
+		for (int i = 0; i < 4; ++i) {
+			results[i] = new Hashtable<String, String>();
+		}
+
+		int baseIndex=5;
+		
+		for (int j = 1; j < 4; j++) {
+			int k=j-1;
+			if (DebugCorePlugin.selectedStudies[k]){
+				if (baseIndex>j){
+					baseIndex=j;
+				}
+				HecDss dvFile = DebugCorePlugin.dvDss[k];
+
+				Enumeration<String> variableEnum = names.keys();
+				while (variableEnum.hasMoreElements()) {
+					String name = variableEnum.nextElement();
+					ArrayList<String[]> pathParts = new ArrayList<String[]>();
+					CondensedReference found = null;
+					String partC="";
+					int i=0;
+					for (Iterator<CondensedReference> it = PluginCore.condensedCatalog.iterator();
+							it.hasNext();) {
+						CondensedReference next = it.next();
+						String[] parts = PluginCore.allPathParts[i];
+						i++;
+						if (parts[2].equalsIgnoreCase(name)){
+							found=next;
+							partC=parts[3];
+						}
+						continue;
+					}
+					String value = "";			
+					if (found !=null && dvFile !=null){
+						try {
+							DataContainer dataSet = dvFile.get(found.getNominalPathname(), true);
+							TimeSeriesContainer tsc = (TimeSeriesContainer)dataSet;
+							if (tsc !=null) {
+								boolean isTAFSelected = (PluginCore.units.equalsIgnoreCase("taf") ? true
+										: false);
+								tsc = unitsConversion(partC, tsc, isTAFSelected);
+								HecTime hecStartTime = new HecTime();
+								hecStartTime.set(tsc.startTime);
+								HecTime ht = new HecTime();
+							
+								ht.setDate(date);
+								int valueIndex = (ht.year() - hecStartTime.year())
+											* 12 + (ht.month() - hecStartTime.month());
+								if (valueIndex < 0 || valueIndex > tsc.values.length - 1) {
+										value = "N/A";
+								} else {
+									Double value_temp=tsc.values[valueIndex];
+									if (Math.abs(value_temp)>100000000) {//empty value
+										value="N/A";
+									} else {
+										value = tsc.values[valueIndex] + " "
+												+ tsc.units;
+									}
+								}
+															
+								if (PluginCore.mode.equals(PluginCore.diff)) {
+									if (j > baseIndex) {
+										if (results[baseIndex] == null || results[baseIndex].get(name) == null){
+											results[j].put(name,"N/A");
+											continue;
+										}
+										String[] baseFields = results[baseIndex].get(name)
+											.split("\\s");
+										String[] altFields = value.split("\\s");
+										try {
+											double baseVal = Double.parseDouble(baseFields[0]);
+											double altVal = Double.parseDouble(altFields[0]);
+											results[j].put(name, (altVal - baseVal) + " " + baseFields[1]);
+										} catch (NumberFormatException nfe) {
+											results[j].put(name,"N/A");
+										}
+									}else {
+										results[j].put(name, value);
+									}
+								} else {
+									results[j].put(name, value);
+								}
+							}else{
+								results[j].put(name, value);
+							}
+						} catch (Exception e) {
+							//WPPException.handleException(e);
+							results[j].put(name, value);
+						}
+					}
+				}
+			}
+		}
+		return results;
+	}
+	
+	public Hashtable<String, String>[] calculateLongTermAverage(String units, String date, Hashtable<String, Object> names){
+
+		int size=names.size();
+		Hashtable<String, String>[] results = new Hashtable[4];
+
+		for (int i = 0; i < 4; ++i) {
+			results[i] = new Hashtable<String, String>();
+		}
+		
+		return results;
+	}	
+	
+	public Hashtable<String, String>[] retrieveDebug(String units, String date, Hashtable<String, Object> names){
+		int size=names.size();
+		Hashtable<String, String>[] results = new Hashtable[4];
+
+		for (int i = 0; i < 4; ++i) {
+			results[i] = new Hashtable<String, String>();
+		}
+
+		int baseIndex=5;
+		
+		Enumeration<String> variableEnum = names.keys();
+		for (int j = 1; j < 4; ++j) {
+			int k=j-1;
+			if (DebugCorePlugin.selectedStudies[k]){
+				if (baseIndex>j){
+					baseIndex=j;
+				}
+				HecDss dvFile = DebugCorePlugin.dvDss[k];
+
+				while (variableEnum.hasMoreElements()) {
+					String name = variableEnum.nextElement();
+					ArrayList<String[]> pathParts = new ArrayList<String[]>();
+					CondensedReference found = null;
+					String partC="";
+					for (Iterator<CondensedReference> it = PluginCore.condensedCatalog.iterator();
+							it.hasNext();) {
+						CondensedReference next = it.next();
+						String[] parts = next.getNominalPathname().split("/");
+						if (parts[2].equalsIgnoreCase(name)){
+							found=next;
+							partC=parts[3];
+						}
+						continue;
+					}
+					String value = "";			
+					if (found !=null && dvFile !=null){
+						try {
+							TimeSeriesContainer tsc = (TimeSeriesContainer)dvFile.get(found.getNominalPathname(), true);
+							if (tsc !=null) {
+								boolean isTAFSelected = (PluginCore.units.equalsIgnoreCase("taf") ? true
+										: false);
+								tsc = unitsConversion(partC, tsc, isTAFSelected);
+								HecTime hecStartTime = new HecTime();
+								hecStartTime.set(tsc.startTime);
+								HecTime ht = new HecTime();
+							
+								ht.setDate(date);
+								int valueIndex = (ht.year() - hecStartTime.year())
+											* 12 + (ht.month() - hecStartTime.month());
+								if (valueIndex < 0 || valueIndex > tsc.values.length - 1) {
+										value = "N/A";
+								} else {
+									Double value_temp=tsc.values[valueIndex];
+									if (Math.abs(value_temp)>100000000) {//empty value
+										value="N/A";
+									} else {
+										value = tsc.values[valueIndex] + " "
+												+ tsc.units;
+									}
+								}
+															
+								if (PluginCore.mode.equals(PluginCore.diff)) {
+									if (j > baseIndex) {
+										if (results[baseIndex] == null || results[baseIndex].get(name) == null){
+											results[j].put(name,"N/A");
+											continue;
+										}
+										String[] baseFields = results[baseIndex].get(name)
+											.split("\\s");
+										String[] altFields = value.split("\\s");
+										try {
+											double baseVal = Double.parseDouble(baseFields[0]);
+											double altVal = Double.parseDouble(altFields[0]);
+											results[j].put(name, (altVal - baseVal) + " " + baseFields[1]);
+										} catch (NumberFormatException nfe) {
+											results[j].put(name,"N/A");
+										}
+									}else {
+										results[j].put(name, value);
+									}
+								} else {
+									results[j].put(name, value);
+								}
+							}else{
+								results[j].put(name, value);
+							}
+						} catch (Exception e) {
+							WPPException.handleException(e);
+						}
+						
+					}
+				}
+			}
+		}
+		return results;
+	}
+	
+	public void setValues(int index, Hashtable<String, Object> visibleNodes, Hashtable<String, String>[] values){
+		try {
+			diagramView.suspendRepaint();
+			synchronized (diagramView) {
+				for (int studyId = 0; studyId < values.length; studyId++) {
+					Hashtable<String, String> valuesInStudy = values[studyId];
+					for (String name : valuesInStudy.keySet()) {
+						Object object = visibleNodes.get(name);
+						if (object == null) {
+							continue;
+						}
+						String value = valuesInStudy.get(name);
+						value = truncateAfterDecimal(value, precision,
+								true);
+						if (object instanceof ShapeNode) {
+							ShapeNode shapeNode = (ShapeNode) object;
+							Group subordinateGroup = shapeNode
+									.getSubordinateGroup();
+							DiagramNode diagramNode = null;
+							if (subordinateGroup != null) {
+								DiagramNodeList attachedNodes = subordinateGroup
+										.getAttachedNodes();
+								if (studyId > attachedNodes.size() - 1) {
+									diagramNode = createTextNodeWithIntermediates(
+											studyId, attachedNodes.size(),
+											shapeNode);
+								} else {
+									diagramNode = attachedNodes.get(studyId);
+								}
+							} else {
+								diagramNode = createTextNodeWithIntermediates(
+										studyId, 0, shapeNode);
+//								diagramNode = createTextNode(studyId, shapeNode);
+							}
+							if (diagramNode != null) {
+								diagramNode.setEditedText(value);
+								if (PluginCore.mode.equals(PluginCore.diff) && studyId > 0) {
+									((ShapeNode) diagramNode)
+											.setTextColor(Color.red);
+								} else {
+									((ShapeNode) diagramNode)
+									.setTextColor(Color.black);
+								}
+								((ShapeNode) diagramNode)
+										.setToolTip(getToolTip(index, studyId, PluginCore.mode.equals(PluginCore.diff)));
+							}
+						}
+					}
+				}
+			}
+		} finally {
+			diagramView.resumeRepaint();
+		}
+	}
+	
+	public 	void clearValueBoxes(Float visibleRect) {
+		if (visibleRect == null) {
+			return;
+		}
+		Hashtable<String, Object> visibleNodes = getVisibleNodes(visibleRect);
+		DiagramNodeList nodes = diagram.getNodes();
+		for (Object o : visibleNodes.values()) {
+			if (o instanceof ShapeNode) {
+				ShapeNode shapeNode = (ShapeNode) o;
+				Object id = shapeNode.getId();
+				if (id != null && id.equals(VALUE_TEXT)) {
+					shapeNode.setText("");
+					// nodes.remove(shapeNode);
+				}
+			}
+		}
+	}
+
+	public Hashtable<String, Object> getVisibleNodes(
+			Rectangle2D.Float visibleRect) {
+		Hashtable<String, Object> variables = new Hashtable<String, Object>();
+		Iterable<ShapeNode> items = diagram.items(ShapeNode.class);
+		for (ShapeNode item : items) {
+			if (!item.getBounds().intersects(visibleRect))
+				continue;
+			if (item.getTransparent()) {// ignore transparent text nodes
+				continue;
+			}
+			variables.put(((ShapeNode) item).getTextToEdit(), item);
+		}
+		return variables;
+
+	}
+	
+	private ShapeNode createTextNodeWithIntermediates(int studyId,
+			int startingWithId, ShapeNode shapeNode) {
+		ShapeNode textNode = null;
+		for (int id = startingWithId; id <= studyId; id++){
+			textNode = createTextNode(id, shapeNode);
+		}
+		return textNode;
+	}
+	
+	private ShapeNode createTextNode(int studyId, ShapeNode shapeNode) {
+		Float r = shapeNode.getBounds();
+		Rectangle2D.Float r2 = null;
+		TextFormat tf = null;
+		int attachPos = AttachToNode.BottomLeft;
+		switch (studyId) {
+		case 1:
+			attachPos = AttachToNode.BottomRight;
+			r2 = new Rectangle2D.Float(r.x + r.width / 2, r.y + r.height / 2,
+					r.width / 2, r.height / 2);
+			tf = new TextFormat(Align.Far, Align.Far);
+			break;
+		case 2:
+			attachPos = AttachToNode.TopLeft;
+			r2 = new Rectangle2D.Float(r.x, r.y, r.width / 2, r.height / 2);
+			tf = new TextFormat(Align.Near, Align.Near);
+			break;
+		case 3:
+			attachPos = AttachToNode.TopRight;
+			r2 = new Rectangle2D.Float(r.x + r.width / 2, r.y, r.width / 2,
+					r.height / 2);
+			tf = new TextFormat(Align.Far, Align.Near);
+			break;
+		default:
+			attachPos = AttachToNode.BottomLeft;
+			r2 = new Rectangle2D.Float(r.x, r.y + r.height / 2, r.width / 2,
+					r.height / 2);
+			tf = new TextFormat(Align.Near, Align.Far);
+			break;
+		}
+
+		ShapeNode transparentTextNode = diagram.getFactory()
+				.createShapeNode(r2);
+		transparentTextNode.setId(VALUE_TEXT);
+		transparentTextNode.setTransparent(true);
+		transparentTextNode.setLocked(true);
+		transparentTextNode.setFont(shapeNode.getFont());
+		transparentTextNode.setPen(shapeNode.getPen());
+		transparentTextNode.setBrush(shapeNode.getBrush());
+		transparentTextNode.setTextFormat(tf);
+		transparentTextNode.attachTo(shapeNode, attachPos);
+		return transparentTextNode;
+	}
+	
+	private String truncateAfterDecimal(String value, int i,
+			boolean displayUnits) {
+		if (value == null) {
+			return null;
+		}
+		String[] fields = value.split("\\s");
+		if (fields.length < 2) {
+			return value;
+		}
+		return String.format("%." + i + "f %s", Double.parseDouble(fields[0]),
+				displayUnits ? fields[1] : "");
+	}
+	
+	public static String getToolTip(int index, int studyId, boolean isDiff) {
+		if (index==0){
+			switch (studyId) {
+			case 0:
+				return "";
+			case 1:
+				return "Alt 1";
+			case 2:
+				return isDiff ? "Alt 2 - Alt 1" : "Alt 2";
+			case 3:
+				return isDiff ? "Alt 3 - Alt 2" : "Alt 3";
+			}
+			return "";
+		}else{	
+			switch (studyId) {
+			case 0:
+				return "Debug";
+			case 1:
+				return isDiff ? "Alt 1 - Debug" : "Alt 1";
+			case 2:
+				return isDiff ? "Alt 2 - Debug" : "Alt 2";
+			case 3:
+				return isDiff ? "Alt 3 - Bebug" : "Alt 3";
+			}
+			return "";
+		}
+	}
+	
+	public TimeSeriesContainer unitsConversion(String partC, TimeSeriesContainer dataSet, boolean force) {
+
+		boolean isStorage = partC.trim().equalsIgnoreCase("storage");
+
+		// if (isStorage)
+		// System.out.print(""); //CB debugging
+
+		if ((PluginCore.units.equals("TAF") || force || isStorage)
+				&& dataSet.units.equals("CFS")) {
+			// CB dataSet = adjustMonthlyData(dataSet, 1.9834631 / 1000.);
+			dataSet = adjustMonthlyData(dataSet, true); // CB added constant IV FACTOR
+			// so do not need to pass a
+			// factor
+			dataSet.units="TAF";
+
+		} else if (PluginCore.units.equals("CFS") && dataSet.units.equals("TAF")
+				&& !force && !isStorage) { // CB added section
+			dataSet = adjustMonthlyData(dataSet, false); // CB added constant IV
+			// FACTOR so do not
+			// need to pass a
+			// factor
+			dataSet.units="CFS";
+		}
+		return dataSet;
+	}
+	
+	public TimeSeriesContainer adjustMonthlyData(TimeSeriesContainer tsc, boolean isCFStoTAF) { // CB added
+		// the
+		// boolean
+		// and
+		// made
+		// a
+		// constant
+		// IV
+		// factor
+		HecTime ht = null;
+		try {
+			double[] nvalues = new double[tsc.values.length];
+			int[] times = tsc.times;
+			int ndays = 0;
+			ht = new HecTime();
+			for (int i = 0; i < times.length; i++) {
+				ht.set(times[i]);
+				// FIX: subtract 1 min
+				ht.add(-1);
+				ndays = ht.day();
+				/*
+				 * HecTime BUG: sometimes ht.day() returns a day later than *
+				 * should???? I wasted a lot of time on this!!
+				 * 
+				 * returns ht.day() == 1, ht.hour() == 0 AS OPPOSED TO ht.day()
+				 * == 28,30,31 (depending on month), ht.hour() == 24
+				 */
+
+				// if (DEBUG) System.out.println(ht.year()+" "+ht.month()+
+				// " "+ht.day()+ht.hour()+" "+ht.minute()+" "+ht.second()+" "+times[i]+"
+				// "+values[i]);
+				// CB nvalues[i] = tsc.values[i] * ndays * factor;
+				if (isCFStoTAF) {
+					nvalues[i] = tsc.values[i] * ndays / FACTOR;
+				} else {
+					nvalues[i] = tsc.values[i] / ndays * FACTOR;
+				}
+			}
+			tsc.values = nvalues;
+		} catch (Exception e) {
+			System.out.println("Exception adjustMonthlyData: " + e);
+		}
+		return tsc;
 	}
 }
