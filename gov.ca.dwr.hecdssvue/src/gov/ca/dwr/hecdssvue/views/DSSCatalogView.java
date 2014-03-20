@@ -121,7 +121,6 @@ public class DSSCatalogView extends AbstractDSSView {
 	class ViewContentProvider implements IStructuredContentProvider {
 		Job catalogJob = null;
 //		Vector<CondensedReference> condensedCatalog_elem;
-		Vector<CondensedReference> condensedCatalog;
 //		ArrayList<HecDss> dssInputs = new ArrayList<HecDss>();
 		ArrayList<HecDss> dssInputs;
 
@@ -151,7 +150,7 @@ public class DSSCatalogView extends AbstractDSSView {
 //						condensedCatalog = null;
 //					}
 					if (dssInputs != null) {
-						condensedCatalog = new Vector<CondensedReference>();//TODO
+						PluginCore.condensedCatalog = new Vector<CondensedReference>();//TODO
 						int i=0;
 					    for (Iterator<HecDss> it = dssInputs.iterator(); it.hasNext();i++){
 						    HecDss dssInput = it.next();
@@ -162,13 +161,13 @@ public class DSSCatalogView extends AbstractDSSView {
 //								Vector<CondensedReference> condensedCatalog_elem = dssInput.getCondensedCatalog();
 //							}
 							if (i<2){
-								condensedCatalog.addAll(condensedCatalog_elem);
+								PluginCore.condensedCatalog.addAll(condensedCatalog_elem);
 							}
 							monitor.done();
 					    }
 					    
 					} else {
-						condensedCatalog = null;
+						PluginCore.condensedCatalog = null;
 					}					
 					return Status.OK_STATUS;
 				}
@@ -191,15 +190,19 @@ public class DSSCatalogView extends AbstractDSSView {
 					e.printStackTrace();
 				}
 			}
-			if (condensedCatalog == null) {
+			if (PluginCore.condensedCatalog == null) {
 				return new Object[] {};
 			}
 
 			ArrayList<String[]> pathParts = new ArrayList<String[]>();
-			for (Iterator<CondensedReference> it = condensedCatalog.iterator();
+			PluginCore.allPathParts = new String[PluginCore.condensedCatalog.size()][7];
+			int i=0;
+			for (Iterator<CondensedReference> it = PluginCore.condensedCatalog.iterator();
 					it.hasNext();) {
 				CondensedReference next = it.next();
 				String[] parts = next.getNominalPathname().split("/");
+				PluginCore.allPathParts[i]=parts;
+				i++;
 				if (showFilteredRows(parts, PluginCore.filter, false)) pathParts.add(parts);
 			}
 			return pathParts.toArray();

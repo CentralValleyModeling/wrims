@@ -1,8 +1,10 @@
 package gov.ca.dwr.hecdssvue;
 
+import hec.heclib.dss.CondensedReference;
 import hec.heclib.dss.HecDss;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class PluginCore {
 	public static String ID_DSSVue_DSSTableView="gov.ca.dwr.hecdssvue.views.DSSTableView";
@@ -46,4 +48,6 @@ public class PluginCore {
 	public static String filter="/*/*/*/*/*/*/";
 	
 	public static ArrayList<HecDss> dssArray = new ArrayList<HecDss> ();// for multiple dss readin
+	public static Vector<CondensedReference> condensedCatalog;
+	public static String[][] allPathParts=new String[0][7];
 }
