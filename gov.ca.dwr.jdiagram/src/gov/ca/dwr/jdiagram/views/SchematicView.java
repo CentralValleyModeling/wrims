@@ -6,6 +6,7 @@ import gov.ca.dwr.jdiagram.toolbars.DateCombo;
 import hec.heclib.dss.CondensedReference;
 import hec.heclib.dss.HecDss;
 import hec.heclib.util.HecTime;
+import hec.hecmath.DSSFile;
 import hec.hecmath.HecMath;
 import hec.io.DataContainer;
 import hec.io.TimeSeriesContainer;
@@ -19,6 +20,7 @@ import java.awt.geom.Rectangle2D.Float;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -224,6 +226,8 @@ public class SchematicView extends ViewPart {
 					Rectangle2D rect = diagram.getBounds();
 					diagramView.zoomToFit(rect);
 					diagramView.resumeRepaint();
+					collectAllSchematicVariables();
+					loadAllSchematicVariableData();
 				} catch (Exception ex) {
 					Status status = new Status(IStatus.ERROR,
 							Activator.PLUGIN_ID, "Error Opening Schematic", ex);
@@ -502,35 +506,23 @@ public class SchematicView extends ViewPart {
 				if (baseIndex>j){
 					baseIndex=j;
 				}
-				HecDss dvFile = DebugCorePlugin.dvDss[k];
 
 				Enumeration<String> variableEnum = names.keys();
 				while (variableEnum.hasMoreElements()) {
 					String name = variableEnum.nextElement();
 					ArrayList<String[]> pathParts = new ArrayList<String[]>();
 					CondensedReference found = null;
-					String partC="";
-					int i=0;
-					for (Iterator<CondensedReference> it = PluginCore.condensedCatalog.iterator();
-							it.hasNext();) {
-						CondensedReference next = it.next();
-						String[] parts = PluginCore.allPathParts[i];
-						i++;
-						if (parts[2].equalsIgnoreCase(name)){
-							found=next;
-							partC=parts[3];
-						}
-						continue;
-					}
+					boolean isStorage=false;
+					if (PluginCore.allStorageNames.contains(name)) isStorage=true;
 					String value = "";			
-					if (found !=null && dvFile !=null){
+					if (PluginCore.allSchematicVariableData[k].containsKey(name)){
 						try {
-							DataContainer dataSet = dvFile.get(found.getNominalPathname(), true);
-							TimeSeriesContainer tsc = (TimeSeriesContainer)dataSet;
+							HecMath dataSet = PluginCore.allSchematicVariableData[k].get(name);
+							TimeSeriesContainer tsc = (TimeSeriesContainer)dataSet.getData();
 							if (tsc !=null) {
 								boolean isTAFSelected = (PluginCore.units.equalsIgnoreCase("taf") ? true
 										: false);
-								tsc = unitsConversion(partC, tsc, isTAFSelected);
+								tsc = unitsConversion(isStorage, tsc, isTAFSelected);
 								HecTime hecStartTime = new HecTime();
 								hecStartTime.set(tsc.startTime);
 								HecTime ht = new HecTime();
@@ -615,31 +607,21 @@ public class SchematicView extends ViewPart {
 				if (baseIndex>j){
 					baseIndex=j;
 				}
-				HecDss dvFile = DebugCorePlugin.dvDss[k];
 
 				while (variableEnum.hasMoreElements()) {
 					String name = variableEnum.nextElement();
 					ArrayList<String[]> pathParts = new ArrayList<String[]>();
-					CondensedReference found = null;
-					String partC="";
-					for (Iterator<CondensedReference> it = PluginCore.condensedCatalog.iterator();
-							it.hasNext();) {
-						CondensedReference next = it.next();
-						String[] parts = next.getNominalPathname().split("/");
-						if (parts[2].equalsIgnoreCase(name)){
-							found=next;
-							partC=parts[3];
-						}
-						continue;
-					}
+					boolean isStorage=false;
+					if (PluginCore.allStorageNames.contains(name)) isStorage=true;
 					String value = "";			
-					if (found !=null && dvFile !=null){
+					if (PluginCore.allSchematicVariableData[k].containsKey(name)){
 						try {
-							TimeSeriesContainer tsc = (TimeSeriesContainer)dvFile.get(found.getNominalPathname(), true);
-							if (tsc !=null) {
+							HecMath dataSet = PluginCore.allSchematicVariableData[k].get(name);
+							if (dataSet !=null) {
+								TimeSeriesContainer tsc=(TimeSeriesContainer)dataSet.getData();
 								boolean isTAFSelected = (PluginCore.units.equalsIgnoreCase("taf") ? true
 										: false);
-								tsc = unitsConversion(partC, tsc, isTAFSelected);
+								tsc = unitsConversion(isStorage, tsc, isTAFSelected);
 								HecTime hecStartTime = new HecTime();
 								hecStartTime.set(tsc.startTime);
 								HecTime ht = new HecTime();
@@ -878,12 +860,7 @@ public class SchematicView extends ViewPart {
 		}
 	}
 	
-	public TimeSeriesContainer unitsConversion(String partC, TimeSeriesContainer dataSet, boolean force) {
-
-		boolean isStorage = partC.trim().equalsIgnoreCase("storage");
-
-		// if (isStorage)
-		// System.out.print(""); //CB debugging
+	public TimeSeriesContainer unitsConversion(boolean isStorage, TimeSeriesContainer dataSet, boolean force) {
 
 		if ((PluginCore.units.equals("TAF") || force || isStorage)
 				&& dataSet.units.equals("CFS")) {
@@ -947,5 +924,73 @@ public class SchematicView extends ViewPart {
 			System.out.println("Exception adjustMonthlyData: " + e);
 		}
 		return tsc;
+	}
+	
+	public void collectAllSchematicVariables(){
+		Hashtable<String, Object> allNodes = getVisibleNodes(diagram.getBounds());
+		
+		PluginCore.allSchematicVariableNames = new ArrayList<String>();
+		for (String v : allNodes.keySet()) {
+			PluginCore.allSchematicVariableNames.add(v);
+		}
+	}
+	
+	public void loadAllSchematicVariableData(){
+		PluginCore.allSchematicVariableData = new HashMap[3];
+		for (int kk=0; kk<3; kk++){
+			HashMap<String, HecMath> data= new HashMap<String, HecMath>();
+			PluginCore.allSchematicVariableData[kk]=data;
+			if (DebugCorePlugin.selectedStudies[kk]){
+				if (DebugCorePlugin.dvDss[kk] !=null){
+					DebugCorePlugin.dvDss[kk].setTimeWindow(DebugCorePlugin.timeWindow);
+				}
+				if (DebugCorePlugin.svDss[kk] !=null){
+					DebugCorePlugin.svDss[kk].setTimeWindow(DebugCorePlugin.timeWindow);
+				}
+			}
+				
+				
+		}
+		
+		int size = PluginCore.allSchematicVariableNames.size();
+		for (int j=0; j<size; j++) {
+			String name = PluginCore.allSchematicVariableNames.get(j);
+			if (PluginCore.allPathName.containsKey(name)){
+				String pathName = PluginCore.allPathName.get(name);
+				for (int i=0; i<3; i++){
+					if (DebugCorePlugin.selectedStudies[i]){
+						HecMath dataSet=null;
+						HecDss dvFile = DebugCorePlugin.dvDss[i];
+						HecDss svFile = DebugCorePlugin.svDss[i];
+						if (dvFile != null){
+							try {
+								dataSet = dvFile.read(pathName);
+								if (dataSet ==null){
+									readFromSV(svFile, pathName, name, i);
+									continue;
+								}else{
+									PluginCore.allSchematicVariableData[i].put(name, dataSet);
+									continue;
+								}
+							} catch (Exception e) {
+								readFromSV(svFile, pathName, name, i);
+							}
+						}else{
+							readFromSV(svFile, pathName, name, i);
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	public void readFromSV(HecDss svFile, String pathName, String name, int i){
+		try {
+			HecMath dataSet = svFile.read(pathName);
+			if (dataSet !=null){
+				PluginCore.allSchematicVariableData[i].put(name, dataSet);
+			}
+		} catch (Exception e) {
+		}
 	}
 }
