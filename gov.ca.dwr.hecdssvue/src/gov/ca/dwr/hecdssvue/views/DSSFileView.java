@@ -2,6 +2,7 @@ package gov.ca.dwr.hecdssvue.views;
 
 import gov.ca.dwr.hecdssvue.Activator;
 import gov.ca.dwr.hecdssvue.PluginCore;
+import gov.ca.dwr.hecdssvue.components.DataOps;
 import hec.dataTable.HecDataTable;
 import hec.heclib.dss.HecDss;
 import hec.io.DataContainer;
@@ -120,6 +121,7 @@ public class DSSFileView extends ViewPart {
                                                 .getActivePage().showView(DSSCatalogView.ID);
 							try {
 								dcv.getViewer().setInput(PluginCore.dssArray);
+								DataOps.loadAllSchematicVariableData();
 //								dcv.setInput(dssArray);
 //								dcv.updateData();
 							} catch (Exception ex) {
@@ -360,6 +362,4 @@ public class DSSFileView extends ViewPart {
 	public void setFocus() {
 //		contentPane.requestFocus();
 	}
-
-
 }

@@ -2,6 +2,7 @@ package gov.ca.dwr.hecdssvue.components;
 
 import gov.ca.dwr.hecdssvue.PluginCore;
 import hec.dataTable.HecDataTable;
+import hec.heclib.dss.HecDss;
 import hec.heclib.util.HecTime;
 import hec.hecmath.DSS;
 import hec.hecmath.DSSFile;
@@ -11,9 +12,11 @@ import hec.io.DataContainer;
 import hec.io.TimeSeriesContainer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
+import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
 
 public class DataOps {
@@ -181,5 +184,55 @@ public class DataOps {
 			return tsc1;
 		}
 		
+	}
+	
+	public static void loadAllSchematicVariableData(){
+		PluginCore.allSchematicVariableData = new HashMap[3];
+		for (int kk=0; kk<3; kk++){
+			HashMap<String, HecMath> data= new HashMap<String, HecMath>();
+			PluginCore.allSchematicVariableData[kk]=data;
+		}
+		
+		
+		int size = PluginCore.allSchematicVariableNames.size();
+		for (int j=0; j<size; j++) {
+			String name = PluginCore.allSchematicVariableNames.get(j);
+			if (PluginCore.allPathName.containsKey(name)){
+				String pathName = PluginCore.allPathName.get(name);
+				for (int i=0; i<3; i++){
+					if (DebugCorePlugin.selectedStudies[i]){
+						HecMath dataSet=null;
+						HecDss dvFile = DebugCorePlugin.dvDss[i];
+						HecDss svFile = DebugCorePlugin.svDss[i];
+						if (dvFile != null){
+							try {
+								dataSet= dvFile.read(pathName);
+								if (dataSet ==null){
+									readFromSV(svFile, pathName, name, i);
+									continue;
+								}else{
+									PluginCore.allSchematicVariableData[i].put(name, dataSet);
+									continue;
+								}
+							} catch (Exception e) {
+								readFromSV(svFile, pathName, name, i);
+							}
+						}else{
+							readFromSV(svFile, pathName, name, i);
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	public static void readFromSV(HecDss svFile, String pathName, String name, int i){
+		try {
+			HecMath dataSet = svFile.read(pathName);
+			if (dataSet !=null){
+				PluginCore.allSchematicVariableData[i].put(name, dataSet);
+			}
+		} catch (Exception e) {
+		}
 	}
 }

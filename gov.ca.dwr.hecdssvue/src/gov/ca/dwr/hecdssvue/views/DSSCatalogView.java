@@ -10,6 +10,7 @@ import hec.io.DataContainer;
 import hec.io.TimeSeriesContainer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -195,17 +196,36 @@ public class DSSCatalogView extends AbstractDSSView {
 			}
 
 			ArrayList<String[]> pathParts = new ArrayList<String[]>();
-			PluginCore.allPathParts = new String[PluginCore.condensedCatalog.size()][7];
+			PluginCore.allStorageNames= new ArrayList<String>();
+			PluginCore.allPathName = new HashMap<String, String>();
 			int i=0;
 			for (Iterator<CondensedReference> it = PluginCore.condensedCatalog.iterator();
 					it.hasNext();) {
 				CondensedReference next = it.next();
-				String[] parts = next.getNominalPathname().split("/");
-				PluginCore.allPathParts[i]=parts;
+				String pathName = next.getNominalPathname();
+				String[] parts = pathName.split("/");
+				if (parts[3].toLowerCase().startsWith("storage")) PluginCore.allStorageNames.add(parts[2]);
+				PluginCore.allPathName.put(parts[2], getPath(parts));
 				i++;
 				if (showFilteredRows(parts, PluginCore.filter, false)) pathParts.add(parts);
 			}
 			return pathParts.toArray();
+		}
+		
+		public String getPath(String[] parts) { // CB changed return type to String
+			StringBuffer path = new StringBuffer();// CB to speed up
+			path.append("/");
+			path.append(parts[1]);
+			path.append("/");
+			path.append(parts[2]);
+			path.append("/");
+			path.append(parts[3]);
+			path.append("//");
+			path.append(parts[5]);
+			path.append("/");
+			path.append(parts[6]);
+			path.append("/");
+			return path.toString();
 		}
 	}
 
@@ -281,6 +301,7 @@ public class DSSCatalogView extends AbstractDSSView {
 								PluginCore.dssArray.add(dss);
 								viewer.setInput(PluginCore.dssArray);
 								resetDssFileView();
+								DataOps.loadAllSchematicVariableData();
 							} catch (Exception ex) {
 								Status status = new Status(IStatus.ERROR,
 								                Activator.PLUGIN_ID,
