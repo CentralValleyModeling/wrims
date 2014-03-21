@@ -127,7 +127,7 @@ public class DataOps {
 				tsc.units=PluginCore.taf;
 			} else if (PluginCore.units.equals(PluginCore.cfs) && units.equals(PluginCore.taf) && !isStorage){
 				tsc = adjustMonthlyData(tsc, false); 
-				tsc.units=PluginCore.cfs;				
+				tsc.units=PluginCore.cfs;
 			}
 		}
 		return tsc;
@@ -187,10 +187,27 @@ public class DataOps {
 	}
 	
 	public static void loadAllSchematicVariableData(){
+		PluginCore.allSchematicVariableUnitsCFS=new HashMap[3];
+		PluginCore.allSchematicVariableUnitsTAF=new HashMap[3];
+		PluginCore.longTermAverageDataCFS=new ArrayList[8];
+		PluginCore.longTermAverageDataTAF=new ArrayList[8];
 		PluginCore.allSchematicVariableData = new HashMap[3];
 		for (int kk=0; kk<3; kk++){
 			HashMap<String, HecMath> data= new HashMap<String, HecMath>();
 			PluginCore.allSchematicVariableData[kk]=data;
+			HashMap<String, String> cfsUnitsMap = new HashMap<String, String>();
+			PluginCore.allSchematicVariableUnitsCFS[kk]=cfsUnitsMap;
+			HashMap<String, String> tafUnitsMap = new HashMap<String, String>();
+			PluginCore.allSchematicVariableUnitsTAF[kk]=tafUnitsMap;
+			
+			if (DebugCorePlugin.selectedStudies[kk]){
+				if (DebugCorePlugin.dvDss[kk] !=null){
+					DebugCorePlugin.dvDss[kk].setTimeWindow(DebugCorePlugin.timeWindow);
+				}
+				if (DebugCorePlugin.svDss[kk] !=null){
+					DebugCorePlugin.svDss[kk].setTimeWindow(DebugCorePlugin.timeWindow);
+				}
+			}	
 		}
 		
 		
@@ -212,6 +229,8 @@ public class DataOps {
 									continue;
 								}else{
 									PluginCore.allSchematicVariableData[i].put(name, dataSet);
+									PluginCore.allSchematicVariableUnitsCFS[i].put(name, dataSet.getUnits());
+									PluginCore.allSchematicVariableUnitsTAF[i].put(name, dataSet.getUnits());
 									continue;
 								}
 							} catch (Exception e) {
@@ -231,6 +250,8 @@ public class DataOps {
 			HecMath dataSet = svFile.read(pathName);
 			if (dataSet !=null){
 				PluginCore.allSchematicVariableData[i].put(name, dataSet);
+				PluginCore.allSchematicVariableUnitsCFS[i].put(name, dataSet.getUnits());
+				PluginCore.allSchematicVariableUnitsTAF[i].put(name, dataSet.getUnits());
 			}
 		} catch (Exception e) {
 		}
