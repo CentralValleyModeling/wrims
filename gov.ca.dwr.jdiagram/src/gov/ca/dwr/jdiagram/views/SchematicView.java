@@ -8,6 +8,7 @@ import hec.heclib.dss.HecDss;
 import hec.heclib.util.HecTime;
 import hec.hecmath.DSSFile;
 import hec.hecmath.HecMath;
+import hec.hecmath.HecMathException;
 import hec.io.DataContainer;
 import hec.io.TimeSeriesContainer;
 
@@ -24,6 +25,7 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.JLayeredPane;
 import javax.swing.JRootPane;
@@ -54,6 +56,7 @@ import org.eclipse.ui.views.properties.PropertyDescriptor;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.tools.TimeOperation;
 
 import com.mindfusion.diagramming.Align;
 import com.mindfusion.diagramming.AttachToNode;
@@ -474,20 +477,28 @@ public class SchematicView extends ViewPart {
 			names.put(v, v);
 		}
 		if (index==0){
-			values = retrieveUndebug(PluginCore.units, date,
-				names);
+			values = retrieveUndebug(date, names);
 		}else{
-			values = retrieveDebug(PluginCore.units, date,
-					names);
+			values = retrieveDebug(date, names);
 		}
 		setValues(index, visibleNodes, values);
 	}
 	
-	public Hashtable<String, String>[] retrieveUndebug(String units, String date, Hashtable<String, Object> names){
+	public Hashtable<String, String>[] retrieveUndebug(String date, Hashtable<String, Object> names){
 		String[] tws = dateCombo.getTimewindows();
 		for (int i=0; i<tws.length; i++){
 			if (date.equals(tws[i])){
-				return calculateLongTermAverage(units, date, names);
+				if (PluginCore.units.equals(PluginCore.cfs)){
+					if (PluginCore.longTermAverageDataCFS[i]==null) {
+						calculateLongTermAverage(i, date, tws, true);
+					}
+					return retrieveLongTermAverage(i, names, true);
+				}else{
+					if (PluginCore.longTermAverageDataTAF[i]==null) {
+						calculateLongTermAverage(i, date, tws, false);
+					}
+					return retrieveLongTermAverage(i, names, false);
+				}
 			}
 		}
 		
@@ -513,16 +524,16 @@ public class SchematicView extends ViewPart {
 					ArrayList<String[]> pathParts = new ArrayList<String[]>();
 					CondensedReference found = null;
 					boolean isStorage=false;
-					if (PluginCore.allStorageNames.contains(name)) isStorage=true;
 					String value = "";			
 					if (PluginCore.allSchematicVariableData[k].containsKey(name)){
 						try {
 							HecMath dataSet = PluginCore.allSchematicVariableData[k].get(name);
+							if (PluginCore.allStorageNames.contains(name)) isStorage=true;
 							TimeSeriesContainer tsc = (TimeSeriesContainer)dataSet.getData();
 							if (tsc !=null) {
 								boolean isTAFSelected = (PluginCore.units.equalsIgnoreCase("taf") ? true
 										: false);
-								tsc = unitsConversion(isStorage, tsc, isTAFSelected);
+								tsc = unitsConversion(isStorage, tsc, isTAFSelected, k, name);
 								HecTime hecStartTime = new HecTime();
 								hecStartTime.set(tsc.startTime);
 								HecTime ht = new HecTime();
@@ -578,19 +589,194 @@ public class SchematicView extends ViewPart {
 		return results;
 	}
 	
-	public Hashtable<String, String>[] calculateLongTermAverage(String units, String date, Hashtable<String, Object> names){
+	public void calculateLongTermAverage(int pi, String date, String[] tws, boolean isCFS){
 
+		int size = tws.length;
+		
+		Hashtable<String, Double> _longTermTafToCfsConversionFactors = new Hashtable<String, Double>();
+
+		ArrayList<HashMap<String, Double>> termAverage= new ArrayList<HashMap<String, Double>>();
+		if (isCFS){
+			PluginCore.longTermAverageDataCFS[pi]=termAverage;
+		}else{
+			PluginCore.longTermAverageDataTAF[pi]=termAverage;
+		}
+		
+		int index = 0;
+		int month = -1;
+		int year = -1;
+
+		HecTime startDate = new HecTime();
+		HecTime endDate = new HecTime();
+		
+		String[] split = date.split(" - ");
+		startDate.setDate(split[0]); 
+		startDate.setTime("0100");
+
+		endDate.setDate(split[1]); 
+		endDate.setTime("2400");
+		month = endDate.month() + 1;
+		year = endDate.year();
+		if (month == 13) {
+			year = startDate.year() + 1;
+		}
+		String monthName = TimeOperation.getMonthText(month);
+		endDate.setDate(monthName + year);
+		endDate.add(-1440);
+		
+		HecTime ht = new HecTime();
+		HecTime hecStartTime = new HecTime();
+		HecTime hecEndTime = new HecTime();
+
+		for (int i=0; i<3; i++){
+			HashMap<String, Double> altAverage = new HashMap<String, Double>();
+			termAverage.add(altAverage);
+			
+			HashMap<String, HecMath> altSchematicVariableData = PluginCore.allSchematicVariableData[i];
+			Set<String> keys=altSchematicVariableData.keySet();
+			Iterator<String> it = keys.iterator();
+			while (it.hasNext()){
+				String name=it.next();
+				HecMath dataSet=altSchematicVariableData.get(name);
+				boolean isStorage=false;
+				try {
+					TimeSeriesContainer tsc = (TimeSeriesContainer)dataSet.getData();
+					if (PluginCore.allStorageNames.contains(name)) isStorage=true;
+					boolean isTAFSelected = (PluginCore.units.equalsIgnoreCase("taf") ? true
+							: false);
+					tsc=unitsConversion(isStorage, tsc, isTAFSelected, i, name);
+					ht.set(startDate);
+					hecStartTime.set(tsc.startTime);
+					hecEndTime.set(tsc.endTime);
+					int count=0;
+					double sum=0.0;
+					boolean inRange=false;
+					while (ht.compareTimes(hecEndTime)<=0 && ht.compareTimes(endDate)<=0){
+						if (ht.compareTimes(hecStartTime) >= 0){
+							int valueIndex = (ht.year() - hecStartTime
+								.year())
+								* 12
+								+ (ht.month() - hecStartTime
+										.month());
+							sum += tsc.values[valueIndex];
+							count++;
+							inRange=true;
+						}
+						month = -1;
+						if (ht.day() > 1) {
+							month = ht.month() + 2;
+							if (month >= 13) {
+								year = ht.year() + 1;
+							} else {
+								year = ht.year();
+							}
+							ht.setDate(TimeOperation.getMonthText(month)+
+									+ year);
+						} else {
+							month = ht.month() + 1;
+							if (month == 13) {
+								year = ht.year() + 1;
+							} else {
+								year = ht.year();
+							}
+							ht.setDate(TimeOperation.getMonthText(month)+
+									+ year);
+						}
+						ht.add(-1440); // 86400 advanced ht from October 31,
+						// 1921 at 2400 to December 30, 1921
+						// at 2400.
+					}
+					if (inRange) {
+						altAverage.put(name, sum/count);
+					}
+				} catch (HecMathException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}	
+	
+	public Hashtable<String, String>[] retrieveLongTermAverage(int index, Hashtable<String, Object> names, boolean isCFS){
+		
 		int size=names.size();
 		Hashtable<String, String>[] results = new Hashtable[4];
 
 		for (int i = 0; i < 4; ++i) {
 			results[i] = new Hashtable<String, String>();
 		}
+
+		int baseIndex=5;
 		
+		ArrayList<HashMap<String, Double>> termAverage;
+		if (isCFS){
+			termAverage=PluginCore.longTermAverageDataCFS[index];
+		}else{
+			termAverage=PluginCore.longTermAverageDataTAF[index];
+		}
+		
+		for (int j = 1; j < 4; j++) {
+			int k=j-1;
+			if (DebugCorePlugin.selectedStudies[k]){
+				if (baseIndex>j){
+					baseIndex=j;
+				}
+				Enumeration<String> variableEnum = names.keys();
+				while (variableEnum.hasMoreElements()) {
+					String name = variableEnum.nextElement();
+					ArrayList<String[]> pathParts = new ArrayList<String[]>();
+					CondensedReference found = null;
+					boolean isStorage=false;
+					if (PluginCore.allStorageNames.contains(name)) isStorage=true;
+					String value = "";			
+					HashMap<String, Double> altAverage = termAverage.get(k);
+					if (altAverage.containsKey(name)){
+						double data = altAverage.get(name);
+						boolean isTAFSelected = (PluginCore.units.equalsIgnoreCase("taf") ? true
+								: false);
+						String units;
+						if (isCFS){
+							units=PluginCore.allSchematicVariableUnitsCFS[k].get(name);
+						}else{
+							units=PluginCore.allSchematicVariableUnitsTAF[k].get(name);
+						}
+						if (data>100000000) {
+							value="N/A";
+						} else {
+							value = data + " " + units;
+						}
+						if (PluginCore.mode.equals(PluginCore.diff)) {
+							if (j > baseIndex) {
+								if (results[baseIndex] == null || results[baseIndex].get(name) == null){
+									results[j].put(name,"N/A");
+									continue;
+								}
+								String[] baseFields = results[baseIndex].get(name)
+										.split("\\s");
+								String[] altFields = value.split("\\s");
+								try {
+									double baseVal = Double.parseDouble(baseFields[0]);
+									double altVal = Double.parseDouble(altFields[0]);
+									results[j].put(name, (altVal - baseVal) + " " + baseFields[1]);
+								} catch (NumberFormatException nfe) {
+									results[j].put(name,"N/A");
+								}
+							}else {
+								results[j].put(name, value);
+							}
+						}else {
+							results[j].put(name, value);
+						}
+					}else{
+						value="";
+						results[j].put(name, value);
+					}	
+				}	
+			}
+		}
 		return results;
-	}	
+	}
 	
-	public Hashtable<String, String>[] retrieveDebug(String units, String date, Hashtable<String, Object> names){
+	public Hashtable<String, String>[] retrieveDebug(String date, Hashtable<String, Object> names){
 		int size=names.size();
 		Hashtable<String, String>[] results = new Hashtable[4];
 
@@ -612,16 +798,16 @@ public class SchematicView extends ViewPart {
 					String name = variableEnum.nextElement();
 					ArrayList<String[]> pathParts = new ArrayList<String[]>();
 					boolean isStorage=false;
-					if (PluginCore.allStorageNames.contains(name)) isStorage=true;
 					String value = "";			
 					if (PluginCore.allSchematicVariableData[k].containsKey(name)){
 						try {
 							HecMath dataSet = PluginCore.allSchematicVariableData[k].get(name);
 							if (dataSet !=null) {
+								if (PluginCore.allStorageNames.contains(name)) isStorage=true;
 								TimeSeriesContainer tsc=(TimeSeriesContainer)dataSet.getData();
 								boolean isTAFSelected = (PluginCore.units.equalsIgnoreCase("taf") ? true
 										: false);
-								tsc = unitsConversion(isStorage, tsc, isTAFSelected);
+								tsc = unitsConversion(isStorage, tsc, isTAFSelected, k, name);
 								HecTime hecStartTime = new HecTime();
 								hecStartTime.set(tsc.startTime);
 								HecTime ht = new HecTime();
@@ -860,7 +1046,7 @@ public class SchematicView extends ViewPart {
 		}
 	}
 	
-	public TimeSeriesContainer unitsConversion(boolean isStorage, TimeSeriesContainer dataSet, boolean force) {
+	public TimeSeriesContainer unitsConversion(boolean isStorage, TimeSeriesContainer dataSet, boolean force, int index, String name) {
 
 		if ((PluginCore.units.equals("TAF") || force || isStorage)
 				&& dataSet.units.equals("CFS")) {
@@ -869,6 +1055,7 @@ public class SchematicView extends ViewPart {
 			// so do not need to pass a
 			// factor
 			dataSet.units="TAF";
+			PluginCore.allSchematicVariableUnitsTAF[index].put(name, "TAF");
 
 		} else if (PluginCore.units.equals("CFS") && dataSet.units.equals("TAF")
 				&& !force && !isStorage) { // CB added section
@@ -877,6 +1064,7 @@ public class SchematicView extends ViewPart {
 			// need to pass a
 			// factor
 			dataSet.units="CFS";
+			PluginCore.allSchematicVariableUnitsCFS[index].put(name, "CFS");
 		}
 		return dataSet;
 	}
@@ -936,10 +1124,19 @@ public class SchematicView extends ViewPart {
 	}
 	
 	public void loadAllSchematicVariableData(){
+		PluginCore.allSchematicVariableUnitsCFS=new HashMap[3];
+		PluginCore.allSchematicVariableUnitsTAF=new HashMap[3];
+		PluginCore.longTermAverageDataCFS=new ArrayList[8];
+		PluginCore.longTermAverageDataTAF=new ArrayList[8];
 		PluginCore.allSchematicVariableData = new HashMap[3];
 		for (int kk=0; kk<3; kk++){
 			HashMap<String, HecMath> data= new HashMap<String, HecMath>();
 			PluginCore.allSchematicVariableData[kk]=data;
+			HashMap<String, String> cfsUnitsMap = new HashMap<String, String>();
+			PluginCore.allSchematicVariableUnitsCFS[kk]=cfsUnitsMap;
+			HashMap<String, String> tafUnitsMap = new HashMap<String, String>();
+			PluginCore.allSchematicVariableUnitsTAF[kk]=tafUnitsMap;
+			
 			if (DebugCorePlugin.selectedStudies[kk]){
 				if (DebugCorePlugin.dvDss[kk] !=null){
 					DebugCorePlugin.dvDss[kk].setTimeWindow(DebugCorePlugin.timeWindow);
@@ -947,9 +1144,7 @@ public class SchematicView extends ViewPart {
 				if (DebugCorePlugin.svDss[kk] !=null){
 					DebugCorePlugin.svDss[kk].setTimeWindow(DebugCorePlugin.timeWindow);
 				}
-			}
-				
-				
+			}		
 		}
 		
 		int size = PluginCore.allSchematicVariableNames.size();
@@ -970,6 +1165,8 @@ public class SchematicView extends ViewPart {
 									continue;
 								}else{
 									PluginCore.allSchematicVariableData[i].put(name, dataSet);
+									PluginCore.allSchematicVariableUnitsCFS[i].put(name, dataSet.getUnits());
+									PluginCore.allSchematicVariableUnitsTAF[i].put(name, dataSet.getUnits());
 									continue;
 								}
 							} catch (Exception e) {
@@ -989,6 +1186,8 @@ public class SchematicView extends ViewPart {
 			HecMath dataSet = svFile.read(pathName);
 			if (dataSet !=null){
 				PluginCore.allSchematicVariableData[i].put(name, dataSet);
+				PluginCore.allSchematicVariableUnitsCFS[i].put(name, dataSet.getUnits());
+				PluginCore.allSchematicVariableUnitsTAF[i].put(name, dataSet.getUnits());
 			}
 		} catch (Exception e) {
 		}
