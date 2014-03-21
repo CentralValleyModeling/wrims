@@ -1,5 +1,6 @@
 package gov.ca.dwr.jdiagram.toolbars;
 
+import gov.ca.dwr.jdiagram.SchematicPluginCore;
 import gov.ca.dwr.jdiagram.views.SchematicView;
 
 import java.awt.geom.Rectangle2D;
@@ -24,9 +25,6 @@ public class DateCombo extends
 	
 	SchematicView schematicView;
 	private Combo dateList;
-	public static String[] _twSelections = { "OCT1921 - SEP2009","OCT1921 - SEP2003",
-		"OCT1928 - SEP1934","OCT1986 - SEP1992","OCT1975 - SEP1977",
-		"OCT1976 - SEP1977","OCT1994 - SEP2003","OCT2000 - SEP2009"};
 	
 	public DateCombo(SchematicView schematicView) {
 		this.schematicView=schematicView;
@@ -50,8 +48,13 @@ public class DateCombo extends
 
 			@Override
 			public void modifyText(ModifyEvent e) {
+				SchematicPluginCore.selDate=dateList.getText();
 				if (!DebugCorePlugin.isDebugging){
 					schematicView.refreshValues(0, true);					
+				}else{
+					if (DebugCorePlugin.target !=null){
+						schematicView.refreshValues(1, true);
+					}
 				}
 			}
 			
@@ -62,7 +65,7 @@ public class DateCombo extends
 	public void setDateCombo(int startMonth, int startYear, int endMonth, int endYear){
 		dateList.removeAll();
 		for (int i=0; i<8; i++){
-			dateList.add(_twSelections[i]);
+			dateList.add(SchematicPluginCore._twSelections[i]);
 		}
 		int j=startMonth;
 		for (int i=startYear; i<=endYear; i++){
@@ -76,13 +79,5 @@ public class DateCombo extends
 			}
 			j=1;
 		}
-	}
-	
-	public Combo getDateList(){
-		return dateList;
-	}
-	
-	public String[] getTimewindows(){
-		return _twSelections;
 	}
 }

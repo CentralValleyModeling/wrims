@@ -2,6 +2,7 @@ package gov.ca.dwr.jdiagram.views;
 
 import gov.ca.dwr.hecdssvue.PluginCore;
 import gov.ca.dwr.jdiagram.Activator;
+import gov.ca.dwr.jdiagram.SchematicPluginCore;
 import gov.ca.dwr.jdiagram.toolbars.DateCombo;
 import hec.heclib.dss.CondensedReference;
 import hec.heclib.dss.HecDss;
@@ -26,10 +27,13 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JLayeredPane;
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IStatus;
@@ -114,6 +118,8 @@ public class SchematicView extends ViewPart {
 	private static int precision = 0;
 	
 	private static double FACTOR = 1000. * 43560 / (24 * 60 * 60);
+	
+	private int index_lastnode = 0;
 
 	/**
 	 * The constructor.
@@ -144,11 +150,15 @@ public class SchematicView extends ViewPart {
 		//contentPane.add(layeredPane);
 		diagramView = new DiagramView(diagram = new Diagram());
 		diagramView.setAllowInplaceEdit(false);
-		diagramView.setBehavior(Behavior.DoNothing);
+		diagramView.setBehavior(Behavior.Pan);
 		getSite().setSelectionProvider(
 				selectionProvider = new DiagramSelectionProvider());
 		diagram.addDiagramListener(new DiagramAdapter() {
-
+			private Timer refreshTimer = new Timer();
+			private TimerTask refreshTask;
+			private int delay = 50;
+			
+			
 			@Override
 			public void linkClicked(LinkEvent e) {
 				selectionProvider.setSelection(new DiagramItemSelection(e
@@ -167,6 +177,39 @@ public class SchematicView extends ViewPart {
 
 			@Override
 			public void nodeDoubleClicked(NodeEvent e) {
+			}
+
+			@Override
+			public void viewportChanged() {
+				refreshTimer.cancel();
+				refreshTimer = new Timer();
+				refreshTask = new TimerTask() {
+
+					@Override
+					public void run() {
+						SwingUtilities.invokeLater(new Runnable() {
+							public void run() {
+								try {
+									// diagramView.suspendRepaint();
+									// overview.suspendRepaint();
+									if (!DebugCorePlugin.isDebugging){
+										refreshValues(0, false);					
+									}else{
+										if (DebugCorePlugin.target !=null){
+											refreshValues(0, false);
+										}
+									}
+								} finally {
+									// diagramView.resumeRepaint();
+									// overview.resumeRepaint();
+								}
+
+							}
+						});
+					}
+
+				};
+				refreshTimer.schedule(refreshTask, delay);
 			}
 
 		});
@@ -445,11 +488,11 @@ public class SchematicView extends ViewPart {
 
 	}
 
-	public void refreshValues(final int index, boolean force) {
+	public void refreshValues(final int index, boolean force) {		
 		synchronized (diagramView) {
 			final Rectangle2D.Float visibleRect = diagramView.deviceToDoc(diagramView
 					.getVisibleRect());
-			if (!force && visibleRect.equals(lastVisibleRect)) {
+			if (!force && lastVisibleRect==null) {
 				return;
 			}
 			if (lastVisibleRect == null) {
@@ -458,8 +501,7 @@ public class SchematicView extends ViewPart {
 			clearValueBoxes(lastVisibleRect);
 			lastVisibleRect = visibleRect;
 			
-			Combo dl = dateCombo.getDateList();
-			final String selDate = dl.getItem(dl.getSelectionIndex());
+			final String selDate = SchematicPluginCore.selDate;
 			new Thread(new Runnable() {
 				public void run() {
 					updateValues(index, selDate, visibleRect);
@@ -485,7 +527,7 @@ public class SchematicView extends ViewPart {
 	}
 	
 	public Hashtable<String, String>[] retrieveUndebug(String date, Hashtable<String, Object> names){
-		String[] tws = dateCombo.getTimewindows();
+		String[] tws = SchematicPluginCore._twSelections;
 		for (int i=0; i<tws.length; i++){
 			if (date.equals(tws[i])){
 				if (PluginCore.units.equals(PluginCore.cfs)){
@@ -1191,5 +1233,27 @@ public class SchematicView extends ViewPart {
 			}
 		} catch (Exception e) {
 		}
+	}
+	
+	public boolean findInView(String text) {
+		if (diagram == null || text == null) {
+			return false;
+		}
+		text = text.toLowerCase();
+		DiagramNodeList nodes = diagram.getNodes();
+		int n_node=nodes.size();
+//		for (DiagramNode n : nodes) {	
+//			String nodeText = n.getTextToEdit();
+		for (int i_node = 1; i_node <= n_node; i_node++){
+			int index_currentnode = (i_node + index_lastnode) % n_node;
+			DiagramNode n = nodes.get(index_currentnode);
+			String nodeText = n.getTextToEdit();
+			if (nodeText != null && nodeText.toLowerCase().contains(text)) {
+				diagramView.bringIntoView(n);
+				index_lastnode = index_currentnode;
+				return true;
+			}
+		}
+		return false;
 	}
 }
