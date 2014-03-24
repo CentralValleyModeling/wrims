@@ -34,12 +34,14 @@ public class DateCombo extends
 	protected Control createControl(Composite parent) {
 		Composite container = new Composite(parent, SWT.NONE);
 		GridLayout glContainer = new GridLayout(1, false);
-		glContainer.marginTop = 1;
+		glContainer.marginTop = 0;
 		glContainer.marginHeight = 0;
 		glContainer.marginWidth = 0;
+		glContainer.marginBottom = 0;
 		container.setLayout(glContainer);
 		GridData glReader = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
 		glReader.widthHint = 140;
+		glReader.heightHint = 15; 
 		dateList = new Combo(container, SWT.BORDER | SWT.READ_ONLY
             | SWT.DROP_DOWN);
 		dateList.setLayoutData(glReader);

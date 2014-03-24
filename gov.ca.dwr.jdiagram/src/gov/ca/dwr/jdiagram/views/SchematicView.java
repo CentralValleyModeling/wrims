@@ -2,9 +2,13 @@ package gov.ca.dwr.jdiagram.views;
 
 import gov.ca.dwr.hecdssvue.PluginCore;
 import gov.ca.dwr.hecdssvue.views.DSSCatalogView;
+import gov.ca.dwr.hecdssvue.views.DSSMonthlyView;
+import gov.ca.dwr.hecdssvue.views.DSSPlotView;
+import gov.ca.dwr.hecdssvue.views.DSSTableView;
 import gov.ca.dwr.jdiagram.Activator;
 import gov.ca.dwr.jdiagram.SchematicPluginCore;
 import gov.ca.dwr.jdiagram.toolbars.DateCombo;
+import gov.ca.dwr.jdiagram.toolbars.SearchText;
 import hec.heclib.dss.CondensedReference;
 import hec.heclib.dss.HecDss;
 import hec.heclib.util.HecTime;
@@ -30,6 +34,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.Vector;
 
 import javax.swing.JLayeredPane;
 import javax.swing.JRootPane;
@@ -57,6 +62,7 @@ import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.WorkbenchException;
 import org.eclipse.ui.part.ViewPart;
@@ -130,6 +136,8 @@ public class SchematicView extends ViewPart {
 	
 	private int baseIndex = 0;
 
+	private SearchText searchText;
+
 	/**
 	 * The constructor.
 	 */
@@ -180,8 +188,7 @@ public class SchematicView extends ViewPart {
 
 			@Override
 			public void linkDoubleClicked(LinkEvent e) {
-				openDSSPerspective(PluginCore.dssPerspectiveID, e
-						.getLink().getText());
+				showDSS(e.getLink().getTextToEdit());
 			}
 
 			@Override
@@ -192,8 +199,7 @@ public class SchematicView extends ViewPart {
 
 			@Override
 			public void nodeDoubleClicked(NodeEvent e) {
-				openDSSPerspective(PluginCore.dssPerspectiveID, e
-						.getNode().getTextToEdit());
+				showDSS(e.getNode().getTextToEdit());
 			}
 			
 			public void openDSSPerspective(final String perspectiveId, final String name) { 
@@ -221,6 +227,35 @@ public class SchematicView extends ViewPart {
 				});
 			} 
 
+			public void showDSS(String name){
+				final Vector<DataContainer> data=new Vector<DataContainer>();
+				for (int i=0; i<4; i++){
+					if (PluginCore.allSchematicVariableData[i].containsKey(name)){
+						try {
+							data.add(PluginCore.allSchematicVariableData[i].get(name).getData());
+						} catch (HecMathException e) {
+						}
+					}
+				}
+				final IWorkbench workbench = PlatformUI.getWorkbench();
+				workbench.getDisplay().asyncExec(new Runnable(){
+					public void run(){
+						IWorkbenchPage activePage = workbench.getActiveWorkbenchWindow().getActivePage();
+						try {
+							DSSMonthlyView dmv= (DSSMonthlyView)activePage.showView(DSSMonthlyView.ID);
+							dmv.showSelected(data);
+							
+							DSSPlotView dpv= (DSSPlotView)activePage.showView(DSSPlotView.ID);
+							dpv.showSelected(data);
+							
+							DSSTableView dtv= (DSSTableView)activePage.showView(DSSTableView.ID);
+							dtv.showSelected(data);
+						} catch (PartInitException e) {
+						}
+					}
+				});
+			}
+			
 			@Override
 			public void viewportChanged() {
 				refreshTask.cancel();
@@ -290,6 +325,8 @@ public class SchematicView extends ViewPart {
 		manager.add(zoomNormalAction);
 		dateCombo=new DateCombo(this);
 		manager.add(dateCombo);
+		searchText=new SearchText(this);
+		manager.add(searchText);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -1293,12 +1330,20 @@ public class SchematicView extends ViewPart {
 //		for (DiagramNode n : nodes) {	
 //			String nodeText = n.getTextToEdit();
 		for (int i_node = 1; i_node <= n_node; i_node++){
-			int index_currentnode = (i_node + index_lastnode) % n_node;
-			DiagramNode n = nodes.get(index_currentnode);
+			final int index_currentnode = (i_node + index_lastnode) % n_node;
+			final DiagramNode n = nodes.get(index_currentnode);
 			String nodeText = n.getTextToEdit();
 			if (nodeText != null && nodeText.toLowerCase().contains(text)) {
-				diagramView.bringIntoView(n);
-				index_lastnode = index_currentnode;
+				SwingUtilities.invokeLater(new Runnable(){
+
+					@Override
+					public void run() {
+						diagramView.bringIntoView(n);
+						index_lastnode = index_currentnode;
+					}
+					
+				}); 
+				
 				return true;
 			}
 		}
