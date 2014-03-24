@@ -26,6 +26,7 @@ Bundle-ClassPath: JDiagram.jar,
  .
 Bundle-Vendor: California Department of Water Resources
 Import-Package: gov.ca.dwr.hecdssvue,
+ gov.ca.dwr.hecdssvue.views,
  hec.admin,
  hec.appInterface,
  hec.client,

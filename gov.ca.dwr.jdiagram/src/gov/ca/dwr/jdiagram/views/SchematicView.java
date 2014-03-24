@@ -1,6 +1,7 @@
 package gov.ca.dwr.jdiagram.views;
 
 import gov.ca.dwr.hecdssvue.PluginCore;
+import gov.ca.dwr.hecdssvue.views.DSSCatalogView;
 import gov.ca.dwr.jdiagram.Activator;
 import gov.ca.dwr.jdiagram.SchematicPluginCore;
 import gov.ca.dwr.jdiagram.toolbars.DateCombo;
@@ -40,18 +41,24 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.WorkbenchException;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
@@ -120,6 +127,8 @@ public class SchematicView extends ViewPart {
 	private static double FACTOR = 1000. * 43560 / (24 * 60 * 60);
 	
 	private int index_lastnode = 0;
+	
+	private int baseIndex = 0;
 
 	/**
 	 * The constructor.
@@ -155,8 +164,12 @@ public class SchematicView extends ViewPart {
 				selectionProvider = new DiagramSelectionProvider());
 		diagram.addDiagramListener(new DiagramAdapter() {
 			private Timer refreshTimer = new Timer();
-			private TimerTask refreshTask;
-			private int delay = 50;
+			private TimerTask refreshTask = new TimerTask(){
+				@Override
+				public void run() {					
+				}};
+				
+			private int delay = 250;
 			
 			
 			@Override
@@ -167,6 +180,8 @@ public class SchematicView extends ViewPart {
 
 			@Override
 			public void linkDoubleClicked(LinkEvent e) {
+				openDSSPerspective(PluginCore.dssPerspectiveID, e
+						.getLink().getText());
 			}
 
 			@Override
@@ -177,10 +192,38 @@ public class SchematicView extends ViewPart {
 
 			@Override
 			public void nodeDoubleClicked(NodeEvent e) {
+				openDSSPerspective(PluginCore.dssPerspectiveID, e
+						.getNode().getTextToEdit());
 			}
+			
+			public void openDSSPerspective(final String perspectiveId, final String name) { 
+				final IWorkbench workbench = PlatformUI.getWorkbench();
+				workbench.getDisplay().asyncExec(new Runnable(){
+					public void run(){
+						IWorkbenchWindow workBenchWindow = workbench.getActiveWorkbenchWindow();
+						try {
+							workbench.showPerspective(perspectiveId, workBenchWindow);
+							DSSCatalogView dcv = (DSSCatalogView)workbench.getActiveWorkbenchWindow().getActivePage().findView(DSSCatalogView.ID);
+							Table table = dcv.getViewer().getTable();							
+							int size = table.getItemCount();
+							for (int i=0; i<size; i++){
+								TableItem ti = table.getItem(i);
+								if (ti.getText(1).equalsIgnoreCase(name)){
+									table.setSelection(i);
+									table.showItem(ti);
+								}
+							}
+							ISelectionProvider selProvider = dcv.getSite().getSelectionProvider();
+							selProvider.setSelection(selProvider.getSelection());
+						} catch (WorkbenchException e) {
+						}
+					}
+				});
+			} 
 
 			@Override
 			public void viewportChanged() {
+				refreshTask.cancel();
 				refreshTimer.cancel();
 				refreshTimer = new Timer();
 				refreshTask = new TimerTask() {
@@ -551,9 +594,9 @@ public class SchematicView extends ViewPart {
 			results[i] = new Hashtable<String, String>();
 		}
 
-		int baseIndex=5;
+		baseIndex=5;
 		
-		for (int j = 1; j < 4; j++) {
+		for (int j = 1; j < 5; j++) {
 			int k=j-1;
 			if (DebugCorePlugin.selectedStudies[k]){
 				if (baseIndex>j){
@@ -670,7 +713,7 @@ public class SchematicView extends ViewPart {
 		HecTime hecStartTime = new HecTime();
 		HecTime hecEndTime = new HecTime();
 
-		for (int i=0; i<3; i++){
+		for (int i=0; i<4; i++){
 			HashMap<String, Double> altAverage = new HashMap<String, Double>();
 			termAverage.add(altAverage);
 			
@@ -820,22 +863,19 @@ public class SchematicView extends ViewPart {
 	
 	public Hashtable<String, String>[] retrieveDebug(String date, Hashtable<String, Object> names){
 		int size=names.size();
-		Hashtable<String, String>[] results = new Hashtable[4];
+		Hashtable<String, String>[] results = new Hashtable[5];
 
-		for (int i = 0; i < 4; ++i) {
+		for (int i = 0; i < 5; ++i) {
 			results[i] = new Hashtable<String, String>();
 		}
 
-		int baseIndex=5;
+		baseIndex=0;
 		
 		Enumeration<String> variableEnum = names.keys();
-		for (int j = 1; j < 4; ++j) {
+		for (int j = 1; j < 5; ++j) {
 			int k=j-1;
 			if (DebugCorePlugin.selectedStudies[k]){
-				if (baseIndex>j){
-					baseIndex=j;
-				}
-
+				
 				while (variableEnum.hasMoreElements()) {
 					String name = variableEnum.nextElement();
 					ArrayList<String[]> pathParts = new ArrayList<String[]>();
@@ -1010,27 +1050,33 @@ public class SchematicView extends ViewPart {
 		int attachPos = AttachToNode.BottomLeft;
 		switch (studyId) {
 		case 1:
+			attachPos = AttachToNode.BottomLeft;
+			r2 = new Rectangle2D.Float(r.x, r.y + r.height / 2, r.width / 2,
+					r.height / 2);
+			tf = new TextFormat(Align.Near, Align.Far);
+			break;
+		case 2:
 			attachPos = AttachToNode.BottomRight;
 			r2 = new Rectangle2D.Float(r.x + r.width / 2, r.y + r.height / 2,
 					r.width / 2, r.height / 2);
 			tf = new TextFormat(Align.Far, Align.Far);
 			break;
-		case 2:
+		case 3:
 			attachPos = AttachToNode.TopLeft;
 			r2 = new Rectangle2D.Float(r.x, r.y, r.width / 2, r.height / 2);
 			tf = new TextFormat(Align.Near, Align.Near);
 			break;
-		case 3:
+		case 4:
 			attachPos = AttachToNode.TopRight;
 			r2 = new Rectangle2D.Float(r.x + r.width / 2, r.y, r.width / 2,
 					r.height / 2);
 			tf = new TextFormat(Align.Far, Align.Near);
 			break;
 		default:
-			attachPos = AttachToNode.BottomLeft;
+			attachPos = AttachToNode.TopCenter;
 			r2 = new Rectangle2D.Float(r.x, r.y + r.height / 2, r.width / 2,
 					r.height / 2);
-			tf = new TextFormat(Align.Near, Align.Far);
+			tf = new TextFormat(Align.Center, Align.Center);
 			break;
 		}
 
@@ -1060,19 +1106,19 @@ public class SchematicView extends ViewPart {
 				displayUnits ? fields[1] : "");
 	}
 	
-	public static String getToolTip(int index, int studyId, boolean isDiff) {
+	public String getToolTip(int index, int studyId, boolean isDiff) {
 		if (index==0){
-			switch (studyId) {
-			case 0:
+			if (studyId == baseIndex){
+				return "Alt "+studyId;
+			}else if (studyId>baseIndex){
+				if (isDiff){
+					return "Alt "+studyId+" - " +"Alt "+baseIndex;
+				}else{
+					return "Alt "+studyId;
+				}
+			}else{
 				return "";
-			case 1:
-				return "Alt 1";
-			case 2:
-				return isDiff ? "Alt 2 - Alt 1" : "Alt 2";
-			case 3:
-				return isDiff ? "Alt 3 - Alt 2" : "Alt 3";
 			}
-			return "";
 		}else{	
 			switch (studyId) {
 			case 0:
@@ -1082,7 +1128,9 @@ public class SchematicView extends ViewPart {
 			case 2:
 				return isDiff ? "Alt 2 - Debug" : "Alt 2";
 			case 3:
-				return isDiff ? "Alt 3 - Bebug" : "Alt 3";
+				return isDiff ? "Alt 3 - Debug" : "Alt 3";
+			case 4:
+				return isDiff ? "Alt 4 - Debug" : "Alt 4";
 			}
 			return "";
 		}
@@ -1166,12 +1214,12 @@ public class SchematicView extends ViewPart {
 	}
 	
 	public void loadAllSchematicVariableData(){
-		PluginCore.allSchematicVariableUnitsCFS=new HashMap[3];
-		PluginCore.allSchematicVariableUnitsTAF=new HashMap[3];
+		PluginCore.allSchematicVariableUnitsCFS=new HashMap[4];
+		PluginCore.allSchematicVariableUnitsTAF=new HashMap[4];
 		PluginCore.longTermAverageDataCFS=new ArrayList[8];
 		PluginCore.longTermAverageDataTAF=new ArrayList[8];
-		PluginCore.allSchematicVariableData = new HashMap[3];
-		for (int kk=0; kk<3; kk++){
+		PluginCore.allSchematicVariableData = new HashMap[4];
+		for (int kk=0; kk<4; kk++){
 			HashMap<String, HecMath> data= new HashMap<String, HecMath>();
 			PluginCore.allSchematicVariableData[kk]=data;
 			HashMap<String, String> cfsUnitsMap = new HashMap<String, String>();
@@ -1194,7 +1242,7 @@ public class SchematicView extends ViewPart {
 			String name = PluginCore.allSchematicVariableNames.get(j);
 			if (PluginCore.allPathName.containsKey(name)){
 				String pathName = PluginCore.allPathName.get(name);
-				for (int i=0; i<3; i++){
+				for (int i=0; i<4; i++){
 					if (DebugCorePlugin.selectedStudies[i]){
 						HecMath dataSet=null;
 						HecDss dvFile = DebugCorePlugin.dvDss[i];
