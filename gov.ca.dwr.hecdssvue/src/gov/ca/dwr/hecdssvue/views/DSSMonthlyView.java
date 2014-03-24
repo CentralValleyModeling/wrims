@@ -33,7 +33,7 @@ public class DSSMonthlyView extends AbstractDSSView {
 	/**
 	 * The ID of the view as specified by the extension.
 	 */
-	public static final String ID = "gov.ca.dwr.hecdssvue.views.DSSOpsView";
+	public static final String ID = "gov.ca.dwr.hecdssvue.views.DSSMonthlyView";
 	private MonthlyTablePanel monthly;
 
 	/**
