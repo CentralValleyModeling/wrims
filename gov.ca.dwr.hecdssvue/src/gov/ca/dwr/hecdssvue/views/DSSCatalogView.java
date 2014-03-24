@@ -281,7 +281,7 @@ public class DSSCatalogView extends AbstractDSSView {
 		ISelectionListener mylistener = new ISelectionListener() {
 
 			public void selectionChanged(IWorkbenchPart sourcepart,
-					ISelection selection) {
+					ISelection selection) {	 
 				if (selection == null) {
 					return;
 				}

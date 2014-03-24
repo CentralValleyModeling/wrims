@@ -187,12 +187,12 @@ public class DataOps {
 	}
 	
 	public static void loadAllSchematicVariableData(){
-		PluginCore.allSchematicVariableUnitsCFS=new HashMap[3];
-		PluginCore.allSchematicVariableUnitsTAF=new HashMap[3];
+		PluginCore.allSchematicVariableUnitsCFS=new HashMap[4];
+		PluginCore.allSchematicVariableUnitsTAF=new HashMap[4];
 		PluginCore.longTermAverageDataCFS=new ArrayList[8];
 		PluginCore.longTermAverageDataTAF=new ArrayList[8];
-		PluginCore.allSchematicVariableData = new HashMap[3];
-		for (int kk=0; kk<3; kk++){
+		PluginCore.allSchematicVariableData = new HashMap[4];
+		for (int kk=0; kk<4; kk++){
 			HashMap<String, HecMath> data= new HashMap<String, HecMath>();
 			PluginCore.allSchematicVariableData[kk]=data;
 			HashMap<String, String> cfsUnitsMap = new HashMap<String, String>();
@@ -216,7 +216,7 @@ public class DataOps {
 			String name = PluginCore.allSchematicVariableNames.get(j);
 			if (PluginCore.allPathName.containsKey(name)){
 				String pathName = PluginCore.allPathName.get(name);
-				for (int i=0; i<3; i++){
+				for (int i=0; i<4; i++){
 					if (DebugCorePlugin.selectedStudies[i]){
 						HecMath dataSet=null;
 						HecDss dvFile = DebugCorePlugin.dvDss[i];

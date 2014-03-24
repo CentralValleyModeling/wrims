@@ -56,9 +56,10 @@ public class PluginCore {
 	public static ArrayList<String> allStorageNames = new ArrayList<String>();
 	public static HashMap<String, String> allPathName=new HashMap<String, String>();
 	public static ArrayList<String> allSchematicVariableNames = new ArrayList<String>();
-	public static HashMap<String, HecMath>[] allSchematicVariableData=new HashMap[3];
+	public static HashMap<String, HecMath>[] allSchematicVariableData=new HashMap[4];
 	public static ArrayList<HashMap<String, Double>>[] longTermAverageDataCFS=new ArrayList[8];
 	public static ArrayList<HashMap<String, Double>>[] longTermAverageDataTAF=new ArrayList[8];
-	public static HashMap<String, String>[] allSchematicVariableUnitsCFS=new HashMap[3];
-	public static HashMap<String, String>[] allSchematicVariableUnitsTAF=new HashMap[3];
+	public static HashMap<String, String>[] allSchematicVariableUnitsCFS=new HashMap[4];
+	public static HashMap<String, String>[] allSchematicVariableUnitsTAF=new HashMap[4];
+	public static String dssPerspectiveID="DSS";
 }
