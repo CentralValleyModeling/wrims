@@ -50,6 +50,7 @@ public class DateCombo extends
 
 			@Override
 			public void modifyText(ModifyEvent e) {
+				SchematicPluginCore.selIndex=dateList.getSelectionIndex();
 				SchematicPluginCore.selDate=dateList.getText();
 				if (!DebugCorePlugin.isDebugging){
 					schematicView.refreshValues(0, true);					
@@ -81,5 +82,9 @@ public class DateCombo extends
 			}
 			j=1;
 		}
+	}
+	
+	public Combo getDateList(){
+		return dateList;
 	}
 }

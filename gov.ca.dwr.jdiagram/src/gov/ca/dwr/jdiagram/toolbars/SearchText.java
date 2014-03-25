@@ -49,7 +49,7 @@ public class SearchText extends
 		glReader1.heightHint=20;
 		search = new Button(container, SWT.BORDER|SWT.PUSH);
 		search.setText("Search");
-		Font font = new Font(container.getDisplay(), "Arial", 10, SWT.BOLD );
+		Font font = new Font(container.getDisplay(), "Arial", 10, SWT.NONE );
 		search.setFont(font);
 		search.setLayoutData(glReader1);
 		search.addMouseListener(new MouseListener(){

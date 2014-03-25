@@ -6,4 +6,6 @@ public class SchematicPluginCore {
 		"OCT1976 - SEP1977","OCT1994 - SEP2003","OCT2000 - SEP2009"};
 	
 	public static String selDate="";
+	
+	public static int selIndex=-1;
 }

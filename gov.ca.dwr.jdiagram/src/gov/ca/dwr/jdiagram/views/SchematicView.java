@@ -119,6 +119,10 @@ public class SchematicView extends ViewPart {
 	private float _zoomFactor = 100;
 
 	private Action zoomNormalAction;
+	
+	private Action forwardAction;
+	
+	private Action backwardAction;
 
 	private DiagramSelectionProvider selectionProvider;
 
@@ -325,6 +329,8 @@ public class SchematicView extends ViewPart {
 		manager.add(zoomNormalAction);
 		dateCombo=new DateCombo(this);
 		manager.add(dateCombo);
+		manager.add(backwardAction);
+		manager.add(forwardAction);
 		searchText=new SearchText(this);
 		manager.add(searchText);
 	}
@@ -390,6 +396,51 @@ public class SchematicView extends ViewPart {
 				rect.setRect(rect.x-rect.width/2, rect.y-rect.height/2, rect.width*2, rect.height*2);
 				diagramView.zoomToFit(rect);
 			};
+		};
+		
+		forwardAction = new Action("Forward", Activator.getImageDescriptor("forward.png")){
+			
+			public void run(){
+				int twSize=SchematicPluginCore._twSelections.length;
+				Combo dateList = dateCombo.getDateList();
+				int size=dateList.getItemCount();
+				if (SchematicPluginCore.selIndex<twSize){
+					if (twSize<size){
+						SchematicPluginCore.selIndex=twSize;
+						dateList.select(SchematicPluginCore.selIndex);
+					}
+				}else{
+					if (SchematicPluginCore.selIndex+1<size){
+						SchematicPluginCore.selIndex = SchematicPluginCore.selIndex+1;
+						dateList.select(SchematicPluginCore.selIndex);
+					}
+				}
+			}
+			
+		};
+		
+		backwardAction = new Action("Backward", Activator.getImageDescriptor("backward.png")){
+			
+			public void run(){
+				int twSize=SchematicPluginCore._twSelections.length;
+				Combo dateList = dateCombo.getDateList();
+				int size=dateList.getItemCount();
+				if (SchematicPluginCore.selIndex<=twSize){
+					if (twSize<size){
+						SchematicPluginCore.selIndex=twSize;
+						dateList.select(SchematicPluginCore.selIndex);
+					}
+				}else{
+					if (SchematicPluginCore.selIndex>=size){
+						SchematicPluginCore.selIndex = size-1;
+						dateList.select(SchematicPluginCore.selIndex);
+					}else{
+						SchematicPluginCore.selIndex = SchematicPluginCore.selIndex-1;
+						dateList.select(SchematicPluginCore.selIndex);
+					}
+				}
+			}
+			
 		};
 	}
 
