@@ -7,6 +7,7 @@ import gov.ca.dwr.hecdssvue.views.DSSPlotView;
 import gov.ca.dwr.hecdssvue.views.DSSTableView;
 import gov.ca.dwr.jdiagram.Activator;
 import gov.ca.dwr.jdiagram.SchematicPluginCore;
+import gov.ca.dwr.jdiagram.panel.MagnifierPanel;
 import gov.ca.dwr.jdiagram.toolbars.DateCombo;
 import gov.ca.dwr.jdiagram.toolbars.SearchText;
 import hec.heclib.dss.CondensedReference;
@@ -113,6 +114,8 @@ public class SchematicView extends ViewPart {
 	private Action zoomInAction;
 
 	private Action zoomOutAction;
+	
+	private Action zoomMagnifier;
 
 	private Action openSchematicAction;
 
@@ -327,6 +330,7 @@ public class SchematicView extends ViewPart {
 		manager.add(zoomInAction);
 		manager.add(zoomOutAction);
 		manager.add(zoomNormalAction);
+		manager.add(zoomMagnifier);
 		dateCombo=new DateCombo(this);
 		manager.add(dateCombo);
 		manager.add(backwardAction);
@@ -398,6 +402,18 @@ public class SchematicView extends ViewPart {
 			};
 		};
 		
+		zoomMagnifier = new Action("Magnifier", Activator.getImageDescriptor("zoom_magnifier.png")) {
+			private MagnifierPanel magnifier;
+
+			public void run() {
+				if (magnifier == null) {
+					magnifier = new MagnifierPanel(diagramView);
+				}
+				SchematicPluginCore.showMagnifier=!SchematicPluginCore.showMagnifier;
+				magnifier.setShowing(SchematicPluginCore.showMagnifier);
+			}
+		};
+	
 		forwardAction = new Action("Forward", Activator.getImageDescriptor("forward.png")){
 			
 			public void run(){

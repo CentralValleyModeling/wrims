@@ -8,4 +8,6 @@ public class SchematicPluginCore {
 	public static String selDate="";
 	
 	public static int selIndex=-1;
+	
+	public static boolean showMagnifier=false;
 }
