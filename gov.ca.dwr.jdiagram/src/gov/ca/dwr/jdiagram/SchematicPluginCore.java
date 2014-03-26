@@ -1,5 +1,7 @@
 package gov.ca.dwr.jdiagram;
 
+import com.mindfusion.pdf.PageSizesEnum;
+
 public class SchematicPluginCore {
 	public static String[] _twSelections = { "OCT1921 - SEP2009","OCT1921 - SEP2003",
 		"OCT1928 - SEP1934","OCT1986 - SEP1992","OCT1975 - SEP1977",
@@ -10,4 +12,6 @@ public class SchematicPluginCore {
 	public static int selIndex=-1;
 	
 	public static boolean showMagnifier=false;
+	
+	public static PageSizesEnum pageSize;
 }

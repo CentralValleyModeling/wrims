@@ -7,6 +7,7 @@ import gov.ca.dwr.hecdssvue.views.DSSPlotView;
 import gov.ca.dwr.hecdssvue.views.DSSTableView;
 import gov.ca.dwr.jdiagram.Activator;
 import gov.ca.dwr.jdiagram.SchematicPluginCore;
+import gov.ca.dwr.jdiagram.dialog.PDFOptionDialog;
 import gov.ca.dwr.jdiagram.panel.MagnifierPanel;
 import gov.ca.dwr.jdiagram.toolbars.DateCombo;
 import gov.ca.dwr.jdiagram.toolbars.SearchText;
@@ -21,6 +22,7 @@ import hec.io.TimeSeriesContainer;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Frame;
 import java.awt.Panel;
 import java.awt.geom.Rectangle2D;
@@ -54,6 +56,7 @@ import org.eclipse.swt.awt.SWT_AWT;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.ToolItem;
@@ -93,6 +96,10 @@ import com.mindfusion.diagramming.NodeEvent;
 import com.mindfusion.diagramming.Overview;
 import com.mindfusion.diagramming.ShapeNode;
 import com.mindfusion.diagramming.TextFormat;
+import com.mindfusion.diagramming.export.PdfExporter;
+import com.mindfusion.diagramming.export.SvgExporter;
+import com.mindfusion.pdf.AutoScale;
+import com.mindfusion.pdf.PageSizesEnum;
 
 /**
  * This view represents the schematic drawing
@@ -118,6 +125,8 @@ public class SchematicView extends ViewPart {
 	private Action zoomMagnifier;
 
 	private Action openSchematicAction;
+	
+	private Action saveAsSchematicAction;
 
 	private float _zoomFactor = 100;
 
@@ -327,6 +336,7 @@ public class SchematicView extends ViewPart {
 
 	private void fillLocalToolBar(IToolBarManager manager) {
 		manager.add(openSchematicAction);
+		manager.add(saveAsSchematicAction);
 		manager.add(zoomInAction);
 		manager.add(zoomOutAction);
 		manager.add(zoomNormalAction);
@@ -372,6 +382,26 @@ public class SchematicView extends ViewPart {
 				}
 			}
 		};
+		
+		saveAsSchematicAction = new Action("Save As", PlatformUI.getWorkbench()
+				.getSharedImages()
+				.getImageDescriptor(ISharedImages.IMG_ETOOL_SAVEAS_EDIT)) {
+			public void run() {
+				FileDialog dialog = new FileDialog(swingContainer.getShell(),
+						SWT.SAVE);
+				dialog.setFilterExtensions(new String[] { "*.xml", "*.pdf", "*.svg","*.*"});
+				String file = dialog.open();
+				if (file == null) {
+					return;
+				}
+				try {
+					save(file);
+				} catch (Exception e) {
+					WPPException.handleException(e);
+				}
+			}
+		};
+		
 		zoomNormalAction = new Action("Zoom 100",
 				Activator.getImageDescriptor("ZoomNormal24.gif")) {
 
@@ -1415,5 +1445,38 @@ public class SchematicView extends ViewPart {
 			}
 		}
 		return false;
+	}
+	
+	public void save(final String filename) throws Exception {
+		if (filename == null)
+			return;
+		Cursor previousCursor = diagramView.getCursor();
+		diagramView.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+		try {
+			if (filename.endsWith(".xml")) {
+				diagram.saveToXml(filename);
+			} else if (filename.endsWith(".pdf")) {
+				final IWorkbench workbench=PlatformUI.getWorkbench();
+				workbench.getDisplay().asyncExec(new Runnable(){
+					public void run(){
+						Shell shell=workbench.getActiveWorkbenchWindow().getShell();
+						PDFOptionDialog dialog= new PDFOptionDialog(shell);
+						dialog.openDialog();
+						PdfExporter pdfExp = new PdfExporter();
+						pdfExp.setPageSize(SchematicPluginCore.pageSize);
+						pdfExp.setAutoScale(AutoScale.FitToPage);
+						//pdfExp.setScale(SchematicPluginCore.scale);
+						pdfExp.export(diagram, filename);
+					}
+				});
+			} else if (filename.endsWith(".svg")) {
+				SvgExporter svgExp = new SvgExporter(diagram, filename);
+				svgExp.export();
+			} else {
+				diagram.saveTo(filename);
+			}
+		} finally {
+			diagramView.setCursor(previousCursor);
+		}
 	}
 }
