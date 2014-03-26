@@ -93,9 +93,10 @@ public class PDFOptionDialog extends Dialog {
 		super(parent);
 	}
 
-	public void openDialog(){
+	public int openDialog(){
 		create();
-		open();
+		getShell().setText("PDF Options");
+		return open();
 	}
 	
 	@Override

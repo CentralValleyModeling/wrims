@@ -1461,12 +1461,14 @@ public class SchematicView extends ViewPart {
 					public void run(){
 						Shell shell=workbench.getActiveWorkbenchWindow().getShell();
 						PDFOptionDialog dialog= new PDFOptionDialog(shell);
-						dialog.openDialog();
-						PdfExporter pdfExp = new PdfExporter();
-						pdfExp.setPageSize(SchematicPluginCore.pageSize);
-						pdfExp.setAutoScale(AutoScale.FitToPage);
-						//pdfExp.setScale(SchematicPluginCore.scale);
-						pdfExp.export(diagram, filename);
+						int index=dialog.openDialog();
+						if (index==0){
+							PdfExporter pdfExp = new PdfExporter();
+							pdfExp.setPageSize(SchematicPluginCore.pageSize);
+							pdfExp.setAutoScale(AutoScale.FitToPage);
+							//pdfExp.setScale(SchematicPluginCore.scale);
+							pdfExp.export(diagram, filename);
+						}
 					}
 				});
 			} else if (filename.endsWith(".svg")) {
