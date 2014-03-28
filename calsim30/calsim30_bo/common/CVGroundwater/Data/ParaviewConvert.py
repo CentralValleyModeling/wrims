@@ -1,7 +1,7 @@
 ####################################################################################################
 # Step 0. Install Paraview software (http://www.paraview.org/paraview/resources/software.php)
 # Step 1. Use a text editor to open this file: .\calsim3\common\CVGroundwater\Data\CVGroundwater.in
-# Step 2. Uncomment and rename the groundwater head output file to "Head.txt"
+# Step 2. Uncomment and rename the groundwater head output file to "Head.txt" (around line# 39)
 # Step 3. Modify the following path to match your CalSim3 DSS output directory
 
 outDir = r'D:\cvwrsm\trunk\calsim30\calsim30_bo\conv\DSS'
