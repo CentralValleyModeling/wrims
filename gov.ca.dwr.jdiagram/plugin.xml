@@ -21,6 +21,20 @@
             id="gov.ca.dwr.jdiagram.views.SchematicOverview"
             name="Schematic Overview">
       </view>
+      <view
+            category="gov.ca.dwr"
+            class="gov.ca.dwr.jdiagram.views.SchematicEditorViewA"
+            icon="icons/sample.gif"
+            id="gov.ca.dwr.jdiagram.views.SchematicEditorViewA"
+            name="Schematic Editor A">
+      </view>
+      <view
+            category="gov.ca.dwr"
+            class="gov.ca.dwr.jdiagram.views.SchematicEditorViewB"
+            icon="icons/sample.gif"
+            id="gov.ca.dwr.jdiagram.views.SchematicEditorViewB"
+            name="Schematic Editor B">
+      </view>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">

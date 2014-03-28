@@ -1,6 +1,7 @@
 package gov.ca.dwr.jdiagram.toolbars;
 
 import gov.ca.dwr.jdiagram.SchematicPluginCore;
+import gov.ca.dwr.jdiagram.views.SchematicBase;
 import gov.ca.dwr.jdiagram.views.SchematicView;
 
 import java.awt.geom.Rectangle2D;
@@ -28,12 +29,12 @@ import wrimsv2_plugin.tools.TimeOperation;
 public class SearchText extends
     WorkbenchWindowControlContribution {
 	
-	SchematicView schematicView;
+	SchematicBase schematicView;
 	private Text text;
 	private Button search;
 	
-	public SearchText(SchematicView schematicView) {
-		this.schematicView=schematicView;
+	public SearchText(SchematicBase schematicBase) {
+		this.schematicView=schematicBase;
 	}
 
 	@Override
