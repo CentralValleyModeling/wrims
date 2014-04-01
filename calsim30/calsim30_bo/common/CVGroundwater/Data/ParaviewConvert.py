@@ -10,6 +10,8 @@ outDir = r'D:\cvwrsm\trunk\calsim30\calsim30_bo\conv\DSS'
 # Step 5. Run ParaView
 # Step 6. Click "Tools" -> "Python Shell"
 # Step 7. Click "Run Script" and then choose this python script
+
+# In lieu of Step 6 and 7, you can click "Macros" -> "Add new macro" and then choose this script
 ####################################################################################################
 
 
