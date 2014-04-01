@@ -361,26 +361,35 @@ public abstract class SchematicBase extends ViewPart {
 				FileDialog dialog = new FileDialog(swingContainer.getShell(),
 						SWT.OPEN);
 				dialog.setFilterExtensions(new String[] { "*.xml", "*.cht" });
-				String file = dialog.open();
+				final String file = dialog.open();
 				if (file == null) {
 					return;
 				}
-				try {
-					diagramView.suspendRepaint();
-					if (file.endsWith(".xml")) {
-						diagram.loadFromXml(file);
-					} else {
-						diagram.loadFrom(file);
+				
+				SwingUtilities.invokeLater(new Runnable() {
+
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						try {
+							diagramView.suspendRepaint();
+							if (file.endsWith(".xml")) {
+								diagram.loadFromXml(file);
+							} else {
+								diagram.loadFrom(file);
+							}
+							Rectangle2D rect = diagram.getBounds();
+							setupForEditor();
+							diagramView.zoomToFit(rect);
+							diagramView.resumeRepaint();
+							collectAllSchematicVariables();
+							loadAllSchematicVariableData();
+						} catch (Exception ex) {
+							WPPException.handleException(ex);
+						}
 					}
-					Rectangle2D rect = diagram.getBounds();
-					setupForEditor();
-					diagramView.zoomToFit(rect);
-					diagramView.resumeRepaint();
-					collectAllSchematicVariables();
-					loadAllSchematicVariableData();
-				} catch (Exception ex) {
-					WPPException.handleException(ex);
-				}
+					
+				});
 			}
 		};
 		
