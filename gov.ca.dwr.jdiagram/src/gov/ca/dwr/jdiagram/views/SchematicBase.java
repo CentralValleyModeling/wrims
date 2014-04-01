@@ -373,16 +373,13 @@ public abstract class SchematicBase extends ViewPart {
 						diagram.loadFrom(file);
 					}
 					Rectangle2D rect = diagram.getBounds();
+					setupForEditor();
 					diagramView.zoomToFit(rect);
 					diagramView.resumeRepaint();
 					collectAllSchematicVariables();
 					loadAllSchematicVariableData();
-					setupForEditor();
 				} catch (Exception ex) {
-					Status status = new Status(IStatus.ERROR,
-							Activator.PLUGIN_ID, "Error Opening Schematic", ex);
-					StatusManager.getManager()
-							.handle(status, StatusManager.LOG);
+					WPPException.handleException(ex);
 				}
 			}
 		};
@@ -1349,65 +1346,69 @@ public abstract class SchematicBase extends ViewPart {
 	}
 	
 	public void collectAllSchematicVariables(){
-		Hashtable<String, Object> allNodes = getVisibleNodes(diagram.getBounds());
+		if (this instanceof SchematicView){
+			Hashtable<String, Object> allNodes = getVisibleNodes(diagram.getBounds());
 		
-		PluginCore.allSchematicVariableNames = new ArrayList<String>();
-		for (String v : allNodes.keySet()) {
-			PluginCore.allSchematicVariableNames.add(v);
+			PluginCore.allSchematicVariableNames = new ArrayList<String>();
+			for (String v : allNodes.keySet()) {
+				PluginCore.allSchematicVariableNames.add(v);
+			}
 		}
 	}
 	
 	public void loadAllSchematicVariableData(){
-		PluginCore.allSchematicVariableUnitsCFS=new HashMap[4];
-		PluginCore.allSchematicVariableUnitsTAF=new HashMap[4];
-		PluginCore.longTermAverageDataCFS=new ArrayList[8];
-		PluginCore.longTermAverageDataTAF=new ArrayList[8];
-		PluginCore.allSchematicVariableData = new HashMap[4];
-		for (int kk=0; kk<4; kk++){
-			HashMap<String, HecMath> data= new HashMap<String, HecMath>();
-			PluginCore.allSchematicVariableData[kk]=data;
-			HashMap<String, String> cfsUnitsMap = new HashMap<String, String>();
-			PluginCore.allSchematicVariableUnitsCFS[kk]=cfsUnitsMap;
-			HashMap<String, String> tafUnitsMap = new HashMap<String, String>();
-			PluginCore.allSchematicVariableUnitsTAF[kk]=tafUnitsMap;
+		if (this instanceof SchematicView){
+			PluginCore.allSchematicVariableUnitsCFS=new HashMap[4];
+			PluginCore.allSchematicVariableUnitsTAF=new HashMap[4];
+			PluginCore.longTermAverageDataCFS=new ArrayList[8];
+			PluginCore.longTermAverageDataTAF=new ArrayList[8];
+			PluginCore.allSchematicVariableData = new HashMap[4];
+			for (int kk=0; kk<4; kk++){
+				HashMap<String, HecMath> data= new HashMap<String, HecMath>();
+				PluginCore.allSchematicVariableData[kk]=data;
+				HashMap<String, String> cfsUnitsMap = new HashMap<String, String>();
+				PluginCore.allSchematicVariableUnitsCFS[kk]=cfsUnitsMap;
+				HashMap<String, String> tafUnitsMap = new HashMap<String, String>();
+				PluginCore.allSchematicVariableUnitsTAF[kk]=tafUnitsMap;
 			
-			if (DebugCorePlugin.selectedStudies[kk]){
-				if (DebugCorePlugin.dvDss[kk] !=null){
-					DebugCorePlugin.dvDss[kk].setTimeWindow(DebugCorePlugin.timeWindow);
-				}
-				if (DebugCorePlugin.svDss[kk] !=null){
-					DebugCorePlugin.svDss[kk].setTimeWindow(DebugCorePlugin.timeWindow);
-				}
-			}		
-		}
+				if (DebugCorePlugin.selectedStudies[kk]){
+					if (DebugCorePlugin.dvDss[kk] !=null){
+						DebugCorePlugin.dvDss[kk].setTimeWindow(DebugCorePlugin.timeWindow);
+					}
+					if (DebugCorePlugin.svDss[kk] !=null){
+						DebugCorePlugin.svDss[kk].setTimeWindow(DebugCorePlugin.timeWindow);
+					}
+				}		
+			}
 		
-		int size = PluginCore.allSchematicVariableNames.size();
-		for (int j=0; j<size; j++) {
-			String name = PluginCore.allSchematicVariableNames.get(j);
-			if (PluginCore.allPathName.containsKey(name)){
-				String pathName = PluginCore.allPathName.get(name);
-				for (int i=0; i<4; i++){
-					if (DebugCorePlugin.selectedStudies[i]){
-						HecMath dataSet=null;
-						HecDss dvFile = DebugCorePlugin.dvDss[i];
-						HecDss svFile = DebugCorePlugin.svDss[i];
-						if (dvFile != null){
-							try {
-								dataSet = dvFile.read(pathName);
-								if (dataSet ==null){
+			int size = PluginCore.allSchematicVariableNames.size();
+			for (int j=0; j<size; j++) {
+				String name = PluginCore.allSchematicVariableNames.get(j);
+				if (PluginCore.allPathName.containsKey(name)){
+					String pathName = PluginCore.allPathName.get(name);
+					for (int i=0; i<4; i++){
+						if (DebugCorePlugin.selectedStudies[i]){
+							HecMath dataSet=null;
+							HecDss dvFile = DebugCorePlugin.dvDss[i];
+							HecDss svFile = DebugCorePlugin.svDss[i];
+							if (dvFile != null){
+								try {
+									dataSet = dvFile.read(pathName);
+									if (dataSet ==null){
+										readFromSV(svFile, pathName, name, i);
+										continue;
+									}else{
+										PluginCore.allSchematicVariableData[i].put(name, dataSet);
+										PluginCore.allSchematicVariableUnitsCFS[i].put(name, dataSet.getUnits());
+										PluginCore.allSchematicVariableUnitsTAF[i].put(name, dataSet.getUnits());
+										continue;
+									}
+								} catch (Exception e) {
 									readFromSV(svFile, pathName, name, i);
-									continue;
-								}else{
-									PluginCore.allSchematicVariableData[i].put(name, dataSet);
-									PluginCore.allSchematicVariableUnitsCFS[i].put(name, dataSet.getUnits());
-									PluginCore.allSchematicVariableUnitsTAF[i].put(name, dataSet.getUnits());
-									continue;
 								}
-							} catch (Exception e) {
+							}else{
 								readFromSV(svFile, pathName, name, i);
 							}
-						}else{
-							readFromSV(svFile, pathName, name, i);
 						}
 					}
 				}
