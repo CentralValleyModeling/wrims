@@ -1,6 +1,7 @@
 package gov.ca.dwr.hecdssvue.components;
 
 import gov.ca.dwr.hecdssvue.PluginCore;
+import gov.ca.dwr.hecdssvue.views.DSSCatalogView;
 import hec.dataTable.HecDataTable;
 import hec.heclib.dss.HecDss;
 import hec.heclib.util.HecTime;
@@ -15,6 +16,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
+
+import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.PlatformUI;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;

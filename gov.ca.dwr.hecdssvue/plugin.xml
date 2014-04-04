@@ -138,6 +138,13 @@
              style="push">
        </action>
        <action
+             class="gov.ca.dwr.hecdssvue.menus.MathFunction"
+             id="gov.ca.dwr.hecdssvue.mathfunction"
+             label="Math Function"
+             menubarPath="gov.ca.dwr.hecdssvue.dss/operation"
+             style="push">
+       </action>
+       <action
              class="gov.ca.dwr.hecdssvue.menus.InsertRows"
              id="gov.ca.dwr.hecdssvue.insertrows"
              label="Insert Rows"

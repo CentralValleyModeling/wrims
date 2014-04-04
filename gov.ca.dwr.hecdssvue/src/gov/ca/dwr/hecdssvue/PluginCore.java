@@ -1,5 +1,6 @@
 package gov.ca.dwr.hecdssvue;
 
+import gov.ca.dwr.hecdssvue.views.DSSCatalogView;
 import hec.heclib.dss.CondensedReference;
 import hec.heclib.dss.HecDss;
 import hec.hecmath.HecMath;
@@ -9,9 +10,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
 
+import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.PlatformUI;
+
 public class PluginCore {
 	public static String ID_DSSVue_DSSTableView="gov.ca.dwr.hecdssvue.views.DSSTableView";
 	public static String ID_DSSVue_DSSCatalogView="gov.ca.dwr.hecdssvue.views.DSSCatalogView";
+	public static String ID_DSSVue_DSSMathFunctionView = "gov.ca.dwr.hecdssvue.views.DSSMathFunctionView"; 
 	
 	public static boolean dssEditable=false;
 	
@@ -30,7 +36,7 @@ public class PluginCore {
 	public static final int FEDERAL_CONTRACT_YEAR = 2;
 	public static int annualType=WATERYEAR;
 
-	public final static String DEFAULT_TIME_WINDOW = "All"; 
+	public final static String DEFAULT_TIME_WINDOW = "All";
 	public static String tw=DEFAULT_TIME_WINDOW;
 
 	public static ArrayList<Integer> months= new ArrayList<Integer>(){{
