@@ -816,6 +816,12 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 			UpdateView.updateVarMonitor(event);
 		}else if(event.startsWith("totalcycle#")){
 			DebugCorePlugin.totalNoOfCycle=Integer.parseInt(event.replace("totalcycle#", ""));
+		}else if (event.equals("terminate")){
+			try {
+				terminate();
+			} catch (DebugException e) {
+				WPPException.handleException(e);
+			}
 		}
 	}
 	
