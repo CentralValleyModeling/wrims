@@ -105,6 +105,11 @@ public class ControllerDebug extends Thread {
 			e.printStackTrace();
 		}
 		di.isDebugging=false;
+		try {
+			di.sendEvent("terminate");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void setControlData(String[] args){
