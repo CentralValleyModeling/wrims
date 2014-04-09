@@ -110,6 +110,7 @@ public class DebugInterface {
 	public int resimMonth;
 	public int resimDay;
 	private String dataDir="data";
+	private int terminateCode=0;
 	
 	public DebugInterface(int requestPort, int eventPort, String args[]){
 		try{	
@@ -150,7 +151,7 @@ public class DebugInterface {
 				requestOut.close();
 				requestSocket.close();
 				eventSocket.close();
-				System.exit(0);
+				System.exit(terminateCode);
 			}
 			catch(IOException ioException){
 				ioException.printStackTrace();
@@ -352,6 +353,7 @@ public class DebugInterface {
 				DssOperation.writeInitDvarAliasToDSS();
 				DssOperation.writeDVAliasToDSS();
 				ControlData.writer.closeDSSFile();
+				terminateCode=1;
 			}
 			System.out.println("terminated");
 			try {
