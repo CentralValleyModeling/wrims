@@ -1,5 +1,7 @@
 package wrimsv2_plugin.tools;
 
+import java.util.Date;
+
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 
 public class TimeOperation {
@@ -163,5 +165,14 @@ public class TimeOperation {
 			return "NOV";
 		}
 		return "DEC";
+	}
+	
+	public static int diffInMin(int yearA, int monthA, int dayA, int yearB, int monthB, int dayB){
+		Date dateA=new Date((yearA-1900), (monthA-1), dayA);
+		Date dateB=new Date((yearB-1900), (monthB-1), dayB);
+		long timeA=dateA.getTime();
+		long timeB=dateB.getTime();
+		int diff=Math.round((timeB-timeA)/1000f/60f);
+		return diff;
 	}
 }

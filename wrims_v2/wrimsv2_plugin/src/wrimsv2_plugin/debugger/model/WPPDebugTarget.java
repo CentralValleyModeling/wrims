@@ -556,7 +556,8 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	 */
 	@Override
 	public void terminate() throws DebugException {
-		getThread().terminate();
+		WPPThread thread = getThread();
+		if (thread != null) thread.terminate();
 		enableRunMenuWithTerminate();
 		DebugCorePlugin.isDebugging=false;
 	}

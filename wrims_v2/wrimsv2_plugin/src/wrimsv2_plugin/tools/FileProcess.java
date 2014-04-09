@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.debug.core.ILaunchConfiguration;
+
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 
@@ -90,5 +92,11 @@ public class FileProcess {
 			}
 		}
 		return tns;
+	}
+	
+	public static String procRelativePath(String path, ILaunchConfiguration config){
+		String absPath=config.getFile().getLocation().toFile().getParentFile().getAbsolutePath();
+		absPath=absPath+"\\"+path;
+		return absPath;
 	}
 }

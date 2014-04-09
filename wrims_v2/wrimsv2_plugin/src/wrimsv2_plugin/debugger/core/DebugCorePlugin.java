@@ -63,6 +63,8 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	
 	public static WPPDebugTarget target;
 	
+	public static int launchType = 0;
+	
 	@SuppressWarnings("unchecked")
 	public static Map<String, String>[] variableAltValue=new HashMap[8];
 	public static IValue[] variableStack=new WPPValue[0];	
@@ -215,6 +217,18 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	
 	public static ArrayList<String> fileFolderWreslInc=new ArrayList<String>();
 	public static String cycleWreslMainFilePath = "";
+	
+	public static String paInitFile ="";
+	public static int paStartYear=1921;
+	public static int paStartMonth=10;
+	public static int paStartDay=1;
+	public static int paEndYear=2009;
+	public static int paEndMonth=9;
+	public static int paEndDay=30;
+	public static int paDuration=12;
+	public static boolean deletePAInit=true;
+	public static boolean copyOutputToFuture=true;
+	
 	/**
 	 * The constructor.
 	 */

@@ -36,6 +36,10 @@ import org.eclipse.debug.core.model.LaunchConfigurationDelegate;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
+import wrimsv2_plugin.debugger.pa.PAProcDV;
+import wrimsv2_plugin.debugger.pa.PAProcInit;
+import wrimsv2_plugin.debugger.pa.PAProcRun;
+import wrimsv2_plugin.tools.FileProcess;
 import wrimsv2_plugin.tools.TimeOperation;
 
 import java.lang.Runtime;
@@ -68,10 +72,18 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 	 * @see org.eclipse.debug.core.model.ILaunchConfigurationDelegate#launch(org.eclipse.debug.core.ILaunchConfiguration, java.lang.String, org.eclipse.debug.core.ILaunch, org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
-	public void launch(ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException{
-		List commandList = new ArrayList();
-			
-		// if in debug mode, add debug arguments - i.e. '-debug requestPort eventPort'
+	public void launch(ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException{		
+		switch (DebugCorePlugin.launchType){
+			case 0:
+				regularLaunch(configuration, mode, launch);
+				break;
+			case 1:
+				paLaunch(configuration, mode, launch);
+				break;
+		}
+	}
+	
+	public void regularLaunch(ILaunchConfiguration configuration, String mode, ILaunch launch) throws CoreException{
 		int requestPort = -1;
 		int eventPort = -1;
 		requestPort = findFreePort();
@@ -96,6 +108,56 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 		} catch (IOException e) {
 			WPPException.handleException(e);
 		}
+	}
+	
+	public void paLaunch(ILaunchConfiguration configuration, String mode, ILaunch launch) throws CoreException{
+		PAProcInit procInit = new PAProcInit(configuration);
+		PAProcRun procRun = new PAProcRun(configuration);
+		PAProcDV procDV = new PAProcDV(configuration);
+		
+		procInit.createPAInit(configuration);
+		procRun.initialPATime();
+		procDV.deleteDVFile(configuration);
+		
+		int terminateCode=0;
+		
+		while (procRun.continueRun() && terminateCode==0){				
+			int requestPort = -1;
+			int eventPort = -1;
+			requestPort = findFreePort();
+			eventPort = findFreePort();
+			if (requestPort == -1 || eventPort == -1) {
+				abort("Unable to find free port", null);
+			}
+			
+			createBatch(configuration, requestPort, eventPort, mode);
+		
+			try {
+				if (mode.equals("debug")){
+					DebugCorePlugin.debugSet.reset();
+					Process process = Runtime.getRuntime().exec("WRIMSv2_Engine.bat");
+					IProcess p = DebugPlugin.newProcess(launch, process, "DebugWPP");
+					IDebugTarget target = new WPPDebugTarget(launch, p, requestPort, eventPort);
+					launch.addDebugTarget(target);
+					process.waitFor();
+					terminateCode=process.exitValue();
+					launch.removeDebugTarget(target);
+					process.destroy();
+				}else{
+					Process process = Runtime.getRuntime().exec("WRIMSv2_Engine.bat");
+					IProcess p = DebugPlugin.newProcess(launch, process, "RunWPP");
+					process.waitFor();
+					terminateCode=p.getExitValue();
+					process.destroy();
+				}
+			} catch (Exception e) {
+				WPPException.handleException(e);
+			}
+			
+			procRun.updatePATime();
+			procInit.createInitData(procRun);
+		}
+		procInit.deletePAInit();
 	}
 	
 	public void createBatch(ILaunchConfiguration configuration, int requestPort, int eventPort, String mode){
@@ -123,6 +185,9 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			
 			initFile = null;
 			initFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_INITFILE, (String)null);
+			if (DebugCorePlugin.launchType==1){
+				initFile=DebugCorePlugin.paInitFile;
+			}
 			
 			gwDataFolder = null;
 			gwDataFolder = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_GWDATAFOLDER, (String)null)+File.separator;
@@ -155,9 +220,17 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			
 			startDay= Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTDAY, (String)null));
 			endDay=Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDDAY, (String)null));
-				
 			DebugCorePlugin.startDay=startDay;
 			DebugCorePlugin.endDay=endDay;
+			
+			if (DebugCorePlugin.launchType==1){
+				startYear=DebugCorePlugin.paStartYear;
+				startMonth=DebugCorePlugin.paStartMonth;
+				startDay = DebugCorePlugin.paStartDay;
+				endYear=DebugCorePlugin.paEndYear;
+				endMonth=DebugCorePlugin.paEndMonth;
+				endDay = DebugCorePlugin.paEndDay;
+			}
 			
 			wreslPlus=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_WRESLPLUS, "no");
 			freeXA=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_FREEXA, "no");
@@ -171,7 +244,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			if (new File(mainFile).isAbsolute()){
 				mainFileAbsPath = mainFile;
 			}else{
-				mainFileAbsPath = procRelativePath(mainFile, configuration);
+				mainFileAbsPath = FileProcess.procRelativePath(mainFile, configuration);
 			}
 			int index = mainFileAbsPath.lastIndexOf(File.separator);
 			String mainDirectory = mainFileAbsPath.substring(0, index + 1);
@@ -256,6 +329,10 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			
 			configMap.put("WreslPlus".toLowerCase(), wreslPlus);
 			
+			if (DebugCorePlugin.launchType==1){
+				configMap.put("prefixinittodvarfile", "no");
+			}
+			
 			String studyDir = new File(mainFileAbsPath).getParentFile().getParentFile().getAbsolutePath();
 			String configName = "__study.config";
 			File f = new File(studyDir, configName);
@@ -282,7 +359,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 				out.println("DvarFile           "+dvarFile);
 				DebugCorePlugin.savedDvFileName=dvarFile;
 			}else{
-				String procDvarFile=procRelativePath(dvarFile, configuration);
+				String procDvarFile=FileProcess.procRelativePath(dvarFile, configuration);
 				out.println("DvarFile           " + procDvarFile);
 				DebugCorePlugin.savedDvFileName=procDvarFile;
 			}
@@ -290,21 +367,21 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 				out.println("SvarFile           "+svarFile);
 				DebugCorePlugin.savedSvFileName=svarFile;
 			}else{
-				String procSvarFile=procRelativePath(svarFile, configuration);
+				String procSvarFile=FileProcess.procRelativePath(svarFile, configuration);
 				out.println("SvarFile           "+procSvarFile);
 				DebugCorePlugin.savedSvFileName=procSvarFile;
 			}
 			if (new File(gwDataFolder).isAbsolute()){
 				out.println("GroundwaterDir     "+gwDataFolder);
 			}else{
-				out.println("GroundwaterDir     "+procRelativePath(gwDataFolder, configuration));
+				out.println("GroundwaterDir     "+FileProcess.procRelativePath(gwDataFolder, configuration));
 			}
 			out.println("SvarAPart          "+configMap.get("SvarAPart".toLowerCase()));
 			out.println("SvarFPart          "+configMap.get("SvarFPart".toLowerCase()));
 			if (new File(initFile).isAbsolute()){
 				out.println("InitFile           "+initFile);
 			}else{
-				out.println("InitFile           "+procRelativePath(initFile, configuration));
+				out.println("InitFile           "+FileProcess.procRelativePath(initFile, configuration));
 			}
 			out.println("InitFPart          "+configMap.get("InitFPart".toLowerCase()));
 			out.println("TimeStep           "+configMap.get("TimeStep".toLowerCase()));
@@ -325,6 +402,9 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 				out.println("LpSolveNumberOfRetries    2");				
 				
 			}
+			if (DebugCorePlugin.launchType==1){
+				out.println("prefixinittodvarfile  "+configMap.get("prefixinittodvarfile"));
+			}
 			
 			out.close();
 		
@@ -336,12 +416,6 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 
 		return configFilePath;
 			
-	}
-	
-	public String procRelativePath(String path, ILaunchConfiguration config){
-		String absPath=config.getFile().getLocation().toFile().getParentFile().getAbsolutePath();
-		absPath=absPath+"\\"+path;
-		return absPath;
 	}
 	
 	/**

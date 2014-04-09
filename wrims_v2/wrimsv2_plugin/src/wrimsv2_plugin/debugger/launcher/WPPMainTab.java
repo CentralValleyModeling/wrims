@@ -86,6 +86,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	private Combo endYearCombo;
 	private Combo endMonthCombo;
 	private Combo endDayCombo;
+	private Button pa;
 	private Button wsidigen;
 	
 	private ILaunchConfiguration launchConfig;
@@ -497,6 +498,27 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		gd = new GridData(GridData.BEGINNING);
 		day1.setLayoutData(gd);
 		day1.setFont(font);
+		
+		pa = new Button(comp, SWT.CHECK);
+		pa.setText("Position Analysis");
+		gd = new GridData(GridData.BEGINNING);
+		gd.horizontalSpan=2;
+		pa.setLayoutData(gd);
+		pa.setFont(font);
+		DebugCorePlugin.launchType=0;
+		pa.setSelection(false);
+		pa.addSelectionListener(new SelectionAdapter() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (pa.getSelection()){
+					DebugCorePlugin.launchType=1;
+				}else{
+					DebugCorePlugin.launchType=0;
+				}
+			}
+			
+		});
 		
 		wsidigen = new Button(comp, SWT.NONE);
 		wsidigen.setText("&Wsi-Di Generator");
