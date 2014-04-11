@@ -37,7 +37,7 @@ public class PAProcRun {
 	}
 	
 	public boolean continueRun(){
-		int diff=TimeOperation.diffInMin(DebugCorePlugin.paStartYear, DebugCorePlugin.paStartMonth, DebugCorePlugin.paStartDay, DebugCorePlugin.paEndYear, DebugCorePlugin.paEndMonth, DebugCorePlugin.paEndDay);
+		int diff=TimeOperation.diffInDay(DebugCorePlugin.paStartYear, DebugCorePlugin.paStartMonth, DebugCorePlugin.paStartDay, DebugCorePlugin.paEndYear, DebugCorePlugin.paEndMonth, DebugCorePlugin.paEndDay);
 		if (diff<0){
 			return false;
 		}else{
@@ -80,7 +80,7 @@ public class PAProcRun {
 			DebugCorePlugin.paEndDay=daysIn;
 		}
 		
-		int diff=TimeOperation.diffInMin(DebugCorePlugin.paEndYear, DebugCorePlugin.paEndMonth, DebugCorePlugin.paEndDay, DebugCorePlugin.endYear, DebugCorePlugin.endMonth, DebugCorePlugin.endDay);
+		int diff=TimeOperation.diffInDay(DebugCorePlugin.paEndYear, DebugCorePlugin.paEndMonth, DebugCorePlugin.paEndDay, DebugCorePlugin.endYear, DebugCorePlugin.endMonth, DebugCorePlugin.endDay);
 		if (diff<0){
 			DebugCorePlugin.paEndYear=DebugCorePlugin.endYear;
 			DebugCorePlugin.paEndMonth=DebugCorePlugin.endMonth;
@@ -93,17 +93,14 @@ public class PAProcRun {
 		prePAStartMonth=DebugCorePlugin.paStartMonth;
 		prePAStartDay=DebugCorePlugin.paStartDay;
 		
-		DebugCorePlugin.paStartYear=DebugCorePlugin.paEndYear;
-		DebugCorePlugin.paStartMonth=DebugCorePlugin.paEndMonth;
-		DebugCorePlugin.paStartDay=DebugCorePlugin.paEndDay+1;
+		int month=DebugCorePlugin.paStartMonth+DebugCorePlugin.paStartInterval;
+		int year=(month-1)/12;
+		DebugCorePlugin.paStartYear=DebugCorePlugin.paStartYear+year;
+		DebugCorePlugin.paStartMonth=month-year*12;
+		DebugCorePlugin.paStartDay=DebugCorePlugin.startDay;
 		int daysIn=TimeOperation.numberOfDays(DebugCorePlugin.paStartMonth, DebugCorePlugin.paStartYear);
 		if (DebugCorePlugin.paStartDay>daysIn){
-			DebugCorePlugin.paStartDay=1;
-			DebugCorePlugin.paStartMonth=DebugCorePlugin.paStartMonth+1;
-			if (DebugCorePlugin.paStartMonth>12){
-				DebugCorePlugin.paStartMonth=1;
-				DebugCorePlugin.paStartYear=DebugCorePlugin.paStartYear+1;
-			}
+			DebugCorePlugin.paStartDay=daysIn;
 		}
 	}
 

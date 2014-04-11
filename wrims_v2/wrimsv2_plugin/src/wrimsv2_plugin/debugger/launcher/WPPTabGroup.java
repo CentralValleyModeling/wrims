@@ -21,16 +21,50 @@ import org.eclipse.debug.ui.sourcelookup.SourceLookupTab;
  * Tab group for a WRESL/WRIMS application
  */
 public class WPPTabGroup extends AbstractLaunchConfigurationTabGroup {
+	
+	private WPPMainTab mainTab;
+	private WPPConfigTab configTab;
+	private WPPPATab paTab;
+	private SourceLookupTab sourceLookupTab;
+	private CommonTab commonTab;
+	
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.ui.ILaunchConfigurationTabGroup#createTabs(org.eclipse.debug.ui.ILaunchConfigurationDialog, java.lang.String)
 	 */
 	@Override
 	public void createTabs(ILaunchConfigurationDialog dialog, String mode) {
+		mainTab=new WPPMainTab();
+		configTab=new WPPConfigTab();
+		paTab=new WPPPATab();
+		sourceLookupTab=new SourceLookupTab();
+		commonTab=new CommonTab();
+		
 		setTabs(new ILaunchConfigurationTab[] {
-				new WPPMainTab(),
-				new WPPConfigTab(),
-				new SourceLookupTab(),
-				new CommonTab()
+				mainTab,
+				configTab,
+				paTab,
+				sourceLookupTab,
+				commonTab
 		});
+	}
+	
+	public WPPMainTab getMainTab(){
+		return mainTab;
+	}
+	
+	public WPPConfigTab getConfigTab(){
+		return configTab;
+	}
+	
+	public WPPPATab getPATab(){
+		return paTab;
+	}
+	
+	public SourceLookupTab getSourceLookupTab(){
+		return sourceLookupTab;
+	}
+	
+	public CommonTab getCommonTab(){
+		return commonTab;
 	}
 }

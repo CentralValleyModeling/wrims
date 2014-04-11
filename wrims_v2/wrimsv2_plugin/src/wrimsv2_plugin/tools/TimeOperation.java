@@ -167,12 +167,12 @@ public class TimeOperation {
 		return "DEC";
 	}
 	
-	public static int diffInMin(int yearA, int monthA, int dayA, int yearB, int monthB, int dayB){
+	public static int diffInDay(int yearA, int monthA, int dayA, int yearB, int monthB, int dayB){
 		Date dateA=new Date((yearA-1900), (monthA-1), dayA);
 		Date dateB=new Date((yearB-1900), (monthB-1), dayB);
 		long timeA=dateA.getTime();
 		long timeB=dateB.getTime();
-		int diff=Math.round((timeB-timeA)/1000f/60f);
+		int diff=Math.round((timeB-timeA)/(1000*60*60*24));
 		return diff;
 	}
 }

@@ -50,10 +50,14 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ResourceListSelectionDialog;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+import wrimsv2_plugin.debugger.dialog.WPPLoadStudyDssDialog;
 import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.tools.TimeOperation;
 
@@ -102,11 +106,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	public static String[] months = { "oct", "nov", "dec", "jan", "feb", "mar",
 		"apr", "may", "jun", "jul", "aug", "sep" };
 	public static String[] timeSteps = { "1MON", "1DAY" };
-	
-	
-	/* (non-Javadoc)
-	 * @see org.eclipse.debug.ui.ILaunchConfigurationTab#createControl(org.eclipse.swt.widgets.Composite)
-	 */
+			
 	@Override
 	public void createControl(Composite parent) {
 		Font font = parent.getFont();
@@ -505,17 +505,11 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		gd.horizontalSpan=2;
 		pa.setLayoutData(gd);
 		pa.setFont(font);
-		DebugCorePlugin.launchType=0;
-		pa.setSelection(false);
 		pa.addSelectionListener(new SelectionAdapter() {
 			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (pa.getSelection()){
-					DebugCorePlugin.launchType=1;
-				}else{
-					DebugCorePlugin.launchType=0;
-				}
+				updateLaunchConfigurationDialog();
 			}
 			
 		});
@@ -856,6 +850,13 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 			}else{
 				endDayCombo.setText(endDay);
 			}
+			String lt="0";
+			lt = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_LAUNCHTYPE, "0");
+			if (lt.equals("1")){
+				pa.setSelection(true);
+			}else{
+				pa.setSelection(false);
+			}
 		} catch (CoreException e) {
 			setErrorMessage(e.getMessage());
 		}
@@ -942,6 +943,12 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		if (endDay.length() == 0) {
 			endDay = "";
 		}
+		String lt="0";
+		if (pa.getSelection()){
+			lt="1";
+		}else{
+			lt="0";
+		}
 		
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_STUDY, studyName);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_AUTHOR, author);
@@ -962,6 +969,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_ENDYEAR, endYear);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_ENDMONTH, endMonth);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_ENDDAY, endDay);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_LAUNCHTYPE, lt);
 	}
 	
 	/* (non-Javadoc)

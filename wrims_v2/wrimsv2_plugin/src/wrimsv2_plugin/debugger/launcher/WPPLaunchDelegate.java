@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,6 +74,8 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 	 */
 	@Override
 	public void launch(ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException{		
+        String lt=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_LAUNCHTYPE, "0");
+        DebugCorePlugin.launchType=Integer.parseInt(lt);
 		switch (DebugCorePlugin.launchType){
 			case 0:
 				regularLaunch(configuration, mode, launch);
@@ -111,6 +114,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 	}
 	
 	public void paLaunch(ILaunchConfiguration configuration, String mode, ILaunch launch) throws CoreException{
+		paProcConfig(configuration);
 		PAProcInit procInit = new PAProcInit(configuration);
 		PAProcRun procRun = new PAProcRun(configuration);
 		PAProcDV procDV = new PAProcDV(configuration);
@@ -154,10 +158,77 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 				WPPException.handleException(e);
 			}
 			
+			procDV.resetDVStartDate();
 			procRun.updatePATime();
 			procInit.createInitData(procRun);
 		}
 		procInit.deletePAInit();
+	}
+	
+	
+	public void paProcConfig(ILaunchConfiguration configuration){
+		try {
+			String paStartIntervalStr = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_PASTARTINTERVAL, "12");
+			DebugCorePlugin.paStartInterval=Integer.parseInt(paStartIntervalStr);
+		} catch (CoreException e) {
+			WPPException.handleException(e);
+		}
+		
+		try {
+			String paDurationStr = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_PADURATION, "12");
+			DebugCorePlugin.paDuration=Integer.parseInt(paDurationStr);
+		} catch (CoreException e) {
+			WPPException.handleException(e);
+		}
+		
+		try {
+			String initDelStr = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_PADELINIT, "yes");
+			if (initDelStr.equals("yes")){
+				DebugCorePlugin.deletePAInit=true;
+			}else{
+				DebugCorePlugin.deletePAInit=false;
+			}
+		} catch (CoreException e) {
+			WPPException.handleException(e);
+		}
+		
+		try {
+			String defaultPADVStartYearStr;
+			if (Calendar.getInstance().get(Calendar.MONTH)<=9){
+				defaultPADVStartYearStr=String.valueOf(Calendar.getInstance().get(Calendar.YEAR)-1);
+			}else{
+				defaultPADVStartYearStr=String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+			}
+			String paDVStartYearStr = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_PADVSTARTYEAR, defaultPADVStartYearStr);
+			DebugCorePlugin.paDVStartYear=Integer.parseInt(paDVStartYearStr);
+		} catch (CoreException e) {
+			WPPException.handleException(e);
+		}
+		
+		try {
+			String paDVStartMonthStr = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_PADVSTARTMONTH, "10");
+			DebugCorePlugin.paDVStartMonth=Integer.parseInt(paDVStartMonthStr);
+		} catch (CoreException e) {
+			WPPException.handleException(e);
+		}
+		
+		try {
+			String paDVStartDayStr = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_PADVSTARTDAY, "1");
+			DebugCorePlugin.paDVStartDay=Integer.parseInt(paDVStartDayStr);
+		} catch (CoreException e) {
+			WPPException.handleException(e);
+		}
+		
+		try {
+			String resetDVStartStr = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_PARESETDVSTART, "no");
+			if (resetDVStartStr.equals("yes")){
+				DebugCorePlugin.resetOutputStart=true;
+			}else{
+				DebugCorePlugin.resetOutputStart=false;
+			}
+		} catch (CoreException e) {
+			WPPException.handleException(e);
+		}
 	}
 	
 	public void createBatch(ILaunchConfiguration configuration, int requestPort, int eventPort, String mode){

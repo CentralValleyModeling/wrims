@@ -68,21 +68,7 @@ public class PAProcInit {
 	public void deletePAInit(){
 		if (DebugCorePlugin.deletePAInit){
 			final File paInit=new File(DebugCorePlugin.paInitFile);
-			new Runnable(){
-
-				@Override
-				public void run() {
-					while (paInit.exists() && paInit !=null){
-						paInit.delete();
-						try {
-							Thread.sleep(500);
-						} catch (InterruptedException e) {
-							WPPException.handleException(e);
-						}
-					}
-				}
-				
-			}.run();
+			paInit.delete();
 		}
 	}
 	
@@ -94,14 +80,13 @@ public class PAProcInit {
 			WPPException.handleException(e);
 			return;
 		}
-		//int shiftInMin=TimeOperation.diffInMin(procRun.getPrePAStartYear(), procRun.getPrePAStartMonth(), procRun.getPrePAStartDay(), DebugCorePlugin.paStartYear, DebugCorePlugin.paStartMonth, DebugCorePlugin.paStartDay);
 		Vector<String> paPathList = paInitDss.getPathnameList();
 		for (int i=0; i<paPathList.size(); i++){
 			String path = paPathList.get(i);
 			try {
 				TimeSeriesContainer dc = (TimeSeriesContainer)paInitDss.get(path);
 				TimeSeriesMath tm = new TimeSeriesMath(dc);
-				HecMath newTm = tm.shiftInTime(DebugCorePlugin.paDuration+"MON");
+				HecMath newTm = tm.shiftInTime(DebugCorePlugin.paStartInterval+"MON");
 				paInitDss.write(newTm);
 			} catch (Exception e) {
 				WPPException.handleException(e);

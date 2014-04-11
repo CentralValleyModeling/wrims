@@ -205,6 +205,14 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static final String ATTR_WPP_ENDDAY=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_ENDDAY";
 	public static final String ATTR_WPP_WRESLPLUS=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_WRESLPLUS";
 	public static final String ATTR_WPP_FREEXA=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_FREEXA";
+	public static final String ATTR_WPP_LAUNCHTYPE=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_LAUNCHTYPE";
+	public static final String ATTR_WPP_PASTARTINTERVAL=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_PASTARTINTERVAL";
+	public static final String ATTR_WPP_PADURATION=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_PADURATION";
+	public static final String ATTR_WPP_PADELINIT=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_PADELINIT";
+	public static final String ATTR_WPP_PARESETDVSTART=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_PARESETDVSTART";
+	public static final String ATTR_WPP_PADVSTARTYEAR=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_PADVSTARTYEAR";
+	public static final String ATTR_WPP_PADVSTARTMONTH=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_PADVSTARTMONTH";
+	public static final String ATTR_WPP_PADVSTARTDAY=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_PADVSTARTDAY";
 	
 	public static final String lineSep=System.getProperty("line.separator");
 	public static final String tab="\t";
@@ -226,8 +234,12 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static int paEndMonth=9;
 	public static int paEndDay=30;
 	public static int paDuration=12;
+	public static int paStartInterval=12;
+	public static int paDVStartYear=2009;
+	public static int paDVStartMonth=10;
+	public static int paDVStartDay=31;
 	public static boolean deletePAInit=true;
-	public static boolean copyOutputToFuture=true;
+	public static boolean resetOutputStart=false;
 	
 	/**
 	 * The constructor.
