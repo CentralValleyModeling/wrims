@@ -315,7 +315,7 @@ conditionStatement returns [boolean result]
 	;
 
 relationUnary returns [boolean result]
-  : (n=NOT)? r=relationStatementSeries{
+  : (n=NOT)? r=relationOr{
       if ($n==null){
         return $r.result;
       }else{
@@ -328,9 +328,13 @@ relationUnary returns [boolean result]
   }
   ; 
 	
-relationStatementSeries returns [boolean result] 
+relationOr returns [boolean result] 
+  : r1=relationAnd {result=$r1.result;} 
+    (s=OR r2=relationAnd {result=ValueEvaluation.relationStatementSeries(result, $r2.result, $s.text);})* ;
+
+relationAnd returns [boolean result] 
   : r1=relationRangeStatement {result=$r1.result;} 
-    (((s=AND)|(s=OR)) r2=relationRangeStatement {result=ValueEvaluation.relationStatementSeries(result, $r2.result, $s.text);})* ;
+    (s=AND r2=relationRangeStatement {result=ValueEvaluation.relationStatementSeries(result, $r2.result, $s.text);})* ;
 
 relationRangeStatement returns [boolean result]
   : (r1=relationStatement{result=$r1.result;})|(r2=range_func{result=$r2.result;})
