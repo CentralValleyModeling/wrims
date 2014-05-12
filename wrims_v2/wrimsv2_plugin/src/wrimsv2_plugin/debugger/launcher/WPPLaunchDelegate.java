@@ -74,7 +74,11 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 	 */
 	@Override
 	public void launch(ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException{		
-        String lt=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_LAUNCHTYPE, "0");
+		if (DebugCorePlugin.target !=null && !DebugCorePlugin.target.isTerminated()){		
+			DebugCorePlugin.target.sendRequest("terminate");
+		}
+		
+		String lt=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_LAUNCHTYPE, "0");
         DebugCorePlugin.launchType=Integer.parseInt(lt);
 		switch (DebugCorePlugin.launchType){
 			case 0:
@@ -87,6 +91,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 	}
 	
 	public void regularLaunch(ILaunchConfiguration configuration, String mode, ILaunch launch) throws CoreException{
+		
 		int requestPort = -1;
 		int eventPort = -1;
 		requestPort = findFreePort();
