@@ -672,7 +672,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	         while((line = br.readLine())!=null){
 	              count++;
 	              if(count==28){
-	                    writer.write("        studyDvName=\""+dvarFile+"\"\n");
+	                    writer.write("        studyDvName=r\""+dvarFile+"\"\n");
 	              }else{
 	                  writer.append(line+"\n");
 	              }
