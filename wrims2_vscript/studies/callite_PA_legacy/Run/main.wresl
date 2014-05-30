@@ -2,7 +2,7 @@
 ! All variables are local in wresl+ parser 
 
 initial {
-	svar beginWY { value 1923 }
+	svar beginWY { value wateryear }
 	svar PBwheel_ON {select Option from GUI_Operations where Index=4} 
 	svar JPOD_ON {select Option from GUI_Operations where Index=2}
 	svar NDO_DLTSW {select Option from gui_Regs where Index = 3}
@@ -132,7 +132,7 @@ MODEL B2_BO_DailyWeir {         !CYCLE 3
 	else{INCLUDE 'Wheeling\wheelfixes.wresl'}
 
 	INCLUDE 'output\cycle_output.wresl'
-	INCLUDE 'Shortage\ShortWarning.wresl'
+	!INCLUDE 'Shortage\ShortWarning.wresl'
 	INCLUDE 'FlowCriteria\FlowCriteria.wresl'
 
 	INCLUDE 'output\DV_ouput.wresl'
