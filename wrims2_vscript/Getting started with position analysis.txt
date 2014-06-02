@@ -1,13 +1,13 @@
 Getting started with WRIMS2_VScript
 
 
-(1) Open command window in the installed folder, i.e., "wrims2_vscript_vX.X_rXXXX"
+(1) Extract the file "wrims2_vscript_v1.3_rXXXX.exe" into a directory with no spaces in the directory name
 
-(2) Type "vscript example_positionAnalysis.py" in the command window to run the example
+(2) Press Shift + right click to open command window in the installed folder, i.e., "wrims2_vscript_v1.3_rXXXX"
 
-(3) A batch file named "CalLitePA_demo.bat" will be generated. Double click this batch file to run the project
+(3) Type "vscript example_positionAnalysis.py" in the command window to run the example
 
-(4) Open ./studies/callite_XXXX/Run/DSS/CalLitePA_demo_DV.dss to see results
+(4) Open ./studies/callite_PA/Run/DSS/D1641_PA_result.DSS to see results
 
 
 
