@@ -17,7 +17,7 @@ studyRunDir = path.join(Param.mainScriptDir,'studies/callite_PA/Run')
 
 
 s = Study('testStudy', studyRunDir) # 'testStudy' is the name of the study
-s.importConfig('D1641_PA_legacy.config')    # a config file named 'testStudy' is created from the imported config
+s.importConfig('D1641_PA.config')    # a config file named 'testStudy' is created from the imported config
 #s.writeBatch(pause=True)  # set pause=True to inspect error message. Default setting is false.
 
 
