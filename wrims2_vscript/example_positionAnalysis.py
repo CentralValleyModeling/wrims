@@ -13,7 +13,7 @@ LogUtils.initLogging()
 
 
 
-studyRunDir = path.join(Param.mainScriptDir,'studies/callite_PA_legacy/Run')
+studyRunDir = path.join(Param.mainScriptDir,'studies/callite_PA/Run')
 
 
 s = Study('testStudy', studyRunDir) # 'testStudy' is the name of the study
