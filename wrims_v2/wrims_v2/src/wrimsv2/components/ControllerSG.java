@@ -108,6 +108,12 @@ public class ControllerSG {
 		cd.currYear=cd.startYear;
 		cd.currMonth=cd.startMonth;
 		cd.currDay=cd.startDay;
+		if (args.length>17){
+			StudyUtils.useWreslPlus = false;
+			if (args[17].equalsIgnoreCase("wreslplus")){
+				StudyUtils.useWreslPlus = true;
+			}
+		}
 	}
 	
 	public void generateStudyFile(){
