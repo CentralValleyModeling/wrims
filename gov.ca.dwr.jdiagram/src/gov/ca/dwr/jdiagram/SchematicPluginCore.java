@@ -2,6 +2,7 @@ package gov.ca.dwr.jdiagram;
 
 import java.util.ArrayList;
 
+import com.mindfusion.diagramming.Diagram;
 import com.mindfusion.diagramming.DiagramItem;
 import com.mindfusion.pdf.PageSizesEnum;
 
@@ -19,4 +20,6 @@ public class SchematicPluginCore {
 	public static PageSizesEnum pageSize;
 	
 	public static ArrayList<DiagramItem> copiedItems = new ArrayList<DiagramItem>();
+	
+	public static Diagram copyDiagram = null;
 }

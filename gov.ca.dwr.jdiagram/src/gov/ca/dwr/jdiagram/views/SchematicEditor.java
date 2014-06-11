@@ -19,6 +19,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -511,6 +512,15 @@ public abstract class SchematicEditor extends SchematicBase {
 				"CopyALot");
 		onCopy(d);
 		compositeCmd.execute();
+		
+		DiagramView diagramView=getDiagramView();
+		try {
+			diagramView.copyToClipboard(true);
+		} catch (IOException e) {
+			WPPException.handleException(e);
+		}
+		
+		SchematicPluginCore.copyDiagram=d;
 	}
 
 	public void onCopy(Diagram d) {
@@ -573,6 +583,7 @@ public abstract class SchematicEditor extends SchematicBase {
 		float delX = (float) lastMouseClickedPosition.getX() - bounds.x;
 		float delY = (float) lastMouseClickedPosition.getY() - bounds.y;
 
+		if (SchematicPluginCore.copyDiagram.equals(diagram)){
 		//first add all nodes
 		HashMap<DiagramNode, DiagramNode> selectedToAddedMap = new HashMap<DiagramNode, DiagramNode>();
 		for (DiagramItem itemOriginal : SchematicPluginCore.copiedItems) {
@@ -632,6 +643,13 @@ public abstract class SchematicEditor extends SchematicBase {
 		}
 
 		compositeCmd.execute();
+		}else{
+			try {
+				diagramView.pasteFromClipboard(delX, delY, false);
+			} catch (IOException e) {
+				WPPException.handleException(e);
+			}
+		}
 	}
 	
 	public void boxClicked(NodeEvent e) {

@@ -96,7 +96,7 @@ public class MagnifierPanel extends JPanel {
 			layeredPane.add(pane, new Integer(1), 0);
 			layeredPane.moveToFront(pane);
 		} else {
-			layeredPane.moveToBack(pane);
+			layeredPane.remove(pane);
 		}
 
 	}
