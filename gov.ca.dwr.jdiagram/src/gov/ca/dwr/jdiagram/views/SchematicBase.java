@@ -6,6 +6,7 @@ import gov.ca.dwr.hecdssvue.views.DSSMonthlyView;
 import gov.ca.dwr.hecdssvue.views.DSSPlotView;
 import gov.ca.dwr.hecdssvue.views.DSSTableView;
 import gov.ca.dwr.jdiagram.Activator;
+import gov.ca.dwr.jdiagram.FontUtil;
 import gov.ca.dwr.jdiagram.SchematicPluginCore;
 import gov.ca.dwr.jdiagram.dialog.PDFOptionDialog;
 import gov.ca.dwr.jdiagram.panel.MagnifierPanel;
@@ -24,6 +25,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Panel;
 import java.awt.geom.Rectangle2D;
@@ -50,13 +52,20 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.resource.DeviceResourceManager;
+import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
+import org.eclipse.swt.graphics.Device;
+import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.FontDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
@@ -134,6 +143,8 @@ public abstract class SchematicBase extends ViewPart {
 	private float _zoomFactor = 100;
 
 	private Action zoomNormalAction;
+	
+	private Action fontAction;
 	
 	private Action forwardAction;
 	
@@ -344,6 +355,7 @@ public abstract class SchematicBase extends ViewPart {
 		manager.add(zoomOutAction);
 		manager.add(zoomNormalAction);
 		manager.add(zoomMagnifier);
+		manager.add(fontAction);
 		dateCombo=new DateCombo(this);
 		manager.add(dateCombo);
 		manager.add(backwardAction);
@@ -454,6 +466,38 @@ public abstract class SchematicBase extends ViewPart {
 			}
 		};
 	
+		fontAction = new Action("Font", Activator.getImageDescriptor("font.png")){
+			
+			public void run(){
+				final Font font = getDiagram().getFont();
+				final IWorkbench workbench=PlatformUI.getWorkbench();
+				workbench.getDisplay().asyncExec(new Runnable(){
+					public void run(){
+						Shell shell=workbench.getActiveWorkbenchWindow().getShell();
+						Display display=shell.getDisplay();
+						Font oldFont = getDiagram().getFont();
+						FontData oldFontData=FontUtil.toSwtFontData(display, oldFont, true);
+						FontDialog fontDialog = new FontDialog(shell);
+						fontDialog.setFontData(oldFontData);
+						FontData fontData = fontDialog.open();
+						if (fontData!=null){
+							Font newFont = FontUtil.toAwtFont(display, fontData, true);
+							//getDiagramView().suspendRepaint();
+							getDiagram().setFont(newFont);
+							Diagram diagram = getDiagram();
+							for (DiagramItem item : diagram.items(DiagramItem.class)) {
+								item.setFont(newFont);
+								if (item instanceof ShapeNode) {
+									ShapeNode snode = (ShapeNode) item;
+								}
+							}
+							//getDiagramView().resumeRepaint();
+						}
+					}
+				});
+			};
+		};
+		
 		forwardAction = new Action("Forward", Activator.getImageDescriptor("forward.png")){
 			
 			public void run(){
