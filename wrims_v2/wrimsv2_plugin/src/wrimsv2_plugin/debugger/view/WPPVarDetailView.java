@@ -338,6 +338,10 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 			property=DebugCorePlugin.watchProperty.get(vn);
 			partC=property.getPartC();
 			partE=property.getPartE();
+		}else if (DebugCorePlugin.allVariableProperty.containsKey(vn)){
+			property=DebugCorePlugin.allVariableProperty.get(vn);
+			partC=property.getPartC();
+			partE=property.getPartE();
 		}else{
 			return;
 		}
