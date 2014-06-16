@@ -160,6 +160,7 @@ public class ControllerSG {
 			out.write("TRUE\n");
 			out.write("FALSE\n");
 			out.write("SINGLE\n");
+			out.write("NODEBUG\n");
 			out.close();
 		
 		} catch (IOException e) {
