@@ -511,6 +511,10 @@ public class ValueEvaluation {
 		int index=indexValue+ControlData.currTimeStep.get(ControlData.currCycleIndex);
 		if (index>=0){
 			DssDataSetFixLength dds=DataTimeSeries.dvAliasTS.get(entryNameTS);
+			if (dds==null){
+				Error.addEvaluationError(ident + " at timestep " +indexValue+" doesn't have value");
+				return 1.0;
+			}
 			double[] data=dds.getData();
 			return data[index];
 		}
