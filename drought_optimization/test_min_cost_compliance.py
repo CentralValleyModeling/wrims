@@ -1,6 +1,54 @@
 import os
-from min_cost_compliance2 import np, dtm, days, standards, alt, dss_retrieve_ts, plt, number_intervals, ticks_to_time, logging, ComplianceConstraint, time_sequence, WaterCost, ControlLowerBound
+from min_cost_compliance2 import np, dtm, days, alt, dss_retrieve_ts, plt, number_intervals, ticks_to_time, logging, ComplianceConstraint, time_sequence, WaterCost, ControlLowerBound
 
+def standards():
+    # "file "output/for1_%s_cu4_dxc0.dss"
+    # "path": "/QUAL8.1.2/RSAC092/EC//15MIN/FOR1_%s_CU4_DXC0+FROM-ALL/
+    outfile = "output/%s.dss" % alt
+    fpart = "%s+FROM-ALL" % alt.upper()
+    return [
+      {"name": "CCC Rock Slough",
+      "file": outfile,\
+       "path": "/QUAL8.1.2/CHCCC006/EC//15MIN/%s/" % fpart,\
+       "value": 1000.,\
+       "active":True},
+      {"name": "CVP Intake",
+       "file": outfile,\
+       "path": "/QUAL8.1.2/CHDMC004/EC//15MIN/%s/" % fpart,\
+       "value": 1000.,
+       "active":True},
+      {"name": "SF Mokelumne at Terminous",
+       "file": outfile,\
+       "path": "/QUAL8.1.2/RSMKL008/EC//15MIN/%s/" % fpart,\
+       "value": 540.,
+       "active": True},       
+       {"name": "SJR @ San Andreas",
+        "file": outfile,\
+        "path": "/QUAL8.1.2/SJR_SAN_ANDREAS/EC//15MIN/%s/" % fpart,\
+       "value": 870.,\
+       "active":True},
+      {"name": "Northbay/Barker",
+       "file": outfile,\
+       "path": "/QUAL8.1.2/SLBAR002/EC//15MIN/%s/" % fpart,\
+       "value": 1000.,\
+       "active":True},        
+      {"name": "SWP",
+      "file": outfile,\
+       "path": "/QUAL8.1.2/CHSWP003/EC//15MIN/%s/" % fpart,\
+       "value": 500.,\
+       "active":dtm.datetime(2014,6,15)},
+      #{"name": "Threemile",
+      #"file": outfile,\
+      #"path": "/QUAL8.1.2/3MILE_SL/EC//15MIN/%s/" % fpart,\
+      #"value": 2780.,\
+      #"active": True},
+      {"name": "Emmaton",
+      "file": outfile,\
+       "path": "/QUAL8.1.2/RSAC092/EC//15MIN/%s/" % fpart,\
+       "value": 2780.,\
+       "active": True},       
+      ]  
+    
 def min_cost_compliance():
     from scipy.optimize import fmin_cobyla
     
@@ -26,7 +74,7 @@ def min_cost_compliance():
                            "/FILL+CHAN/RSAC155/FLOW//1DAY/OPTIMIZER/")
     salt_standards = standards()
     #constraint_period = (m.dtm.datetime(2014,4,27),m.dtm.datetime(2014,11,1))
-    constraint_period = (dtm.datetime(2014,4,27),dtm.datetime(2014,5,17))
+    constraint_period = control_period
     
     min_flow = 1000.
 
@@ -95,7 +143,7 @@ def min_cost_compliance():
 if __name__ == '__main__':
     #test_ndo_control_to_flow()
     logfilename = os.path.join(os.path.dirname("."),"cobyla_log.txt")
-    logging.basicConfig(filename=logfilename,filemode='w',level=logging.INFO)
+    logging.basicConfig(filename=logfilename,filemode='w',level=logging.DEBUG)
     logging.info("logging enabled")    
     min_cost_compliance()
     

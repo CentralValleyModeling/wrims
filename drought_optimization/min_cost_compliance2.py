@@ -341,62 +341,16 @@ def ndo_controls_to_flow(qcontrol,base_flows,min_flow,\
         #plt.show()
     return sac_copy,ndo_copy
     
-def standards():
-    # "file "output/for1_%s_cu4_dxc0.dss"
-    # "path": "/QUAL8.1.2/RSAC092/EC//15MIN/FOR1_%s_CU4_DXC0+FROM-ALL/
-    outfile = "output/%s.dss" % alt
-    fpart = "%s+FROM-ALL" % alt.upper()
-    return [
-      {"name": "CCC Rock Slough",
-      "file": outfile,\
-       "path": "/QUAL8.1.2/CHCCC006/EC//15MIN/%s/" % fpart,\
-       "value": 1000.,\
-       "active":True},
-      {"name": "CVP Intake",
-       "file": outfile,\
-       "path": "/QUAL8.1.2/CHDMC004/EC//15MIN/%s/" % fpart,\
-       "value": 1000.,
-       "active":True},
-      {"name": "SF Mokelumne at Terminous",
-       "file": outfile,\
-       "path": "/QUAL8.1.2/RSMKL008/EC//15MIN/%s/" % fpart,\
-       "value": 540.,
-       "active": True},       
-       {"name": "SJR @ San Andreas",
-        "file": outfile,\
-        "path": "/QUAL8.1.2/SJR_SAN_ANDREAS/EC//15MIN/%s/" % fpart,\
-       "value": 870.,\
-       "active":True},
-      {"name": "Northbay/Barker",
-       "file": outfile,\
-       "path": "/QUAL8.1.2/SLBAR002/EC//15MIN/%s/" % fpart,\
-       "value": 1000.,\
-       "active":True},        
-      {"name": "SWP",
-      "file": outfile,\
-       "path": "/QUAL8.1.2/CHSWP003/EC//15MIN/%s/" % fpart,\
-       "value": 500.,\
-       "active":dtm.datetime(2014,6,15)},
-      #{"name": "Threemile",
-      #"file": outfile,\
-      #"path": "/QUAL8.1.2/3MILE_SL/EC//15MIN/%s/" % fpart,\
-      #"value": 2780.,\
-      #"active": True},
-      {"name": "Emmaton",
-      "file": outfile,\
-       "path": "/QUAL8.1.2/RSAC092/EC//15MIN/%s/" % fpart,\
-       "value": 2780.,\
-       "active": True},       
-      ]    
+  
     
-if __name__ == "__main__":
-    logfilename = os.path.join(os.path.dirname("."),"log.txt")
-    logging.basicConfig(filename=logfilename,filemode='w',level=logging.INFO)
-    logging.info("logging enabled")
-    #test_controls_to_flow()
-    run_models()
-    optimize_monotonic()
-    #test_ndo_control_to_flow()
+# if __name__ == "__main__":
+#     logfilename = os.path.join(os.path.dirname("."),"log.txt")
+#     logging.basicConfig(filename=logfilename,filemode='w',level=logging.INFO)
+#     logging.info("logging enabled")
+#     #test_controls_to_flow()
+#     run_models()
+#     optimize_monotonic()
+#     #test_ndo_control_to_flow()
   
 
     
