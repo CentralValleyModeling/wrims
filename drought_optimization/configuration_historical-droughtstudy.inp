@@ -44,7 +44,7 @@ FLOWPATTERN              ./output/FLOWPATTERN.dss
 HYDROOUTDSSFILE          ${DSM2OUTPUTDIR}/${OUTPUTFILE}
 HYDROOUTFILE             ${DSM2OUTPUTDIR}/${DSM2MODIFIER}.hof
 HYDRORSTFILE             ${DSM2OUTPUTDIR}/${DSM2MODIFIER}.hrf
-HYDROTIDEFILE            ${DSM2OUTPUTDIR}/${DSM2MODIFIER}.h5
+HYDROTIDEFILE            z:/${DSM2MODIFIER}.h5
 GATEOUTPUTFILE           ${DSM2OUTPUTDIR}/${OUTPUTFILE}                                                           
 #Qual                   
 QUALOUTDSSFILE           ${DSM2OUTPUTDIR}/${OUTPUTFILE}
