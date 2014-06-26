@@ -71,11 +71,13 @@
 				<exclude name="**/*.log"/>
 				<exclude name="**/*.dsc"/>
 				<exclude name="**/*.dsd"/>	
-				
+				<exclude name="**/*.batch"/>	
+				<exclude name="**/*.bak"/>	
+					
 				<exclude name="**/lib/vista/*.py"/>
 				<exclude name="**/lib/vista/*.dss"/>
 				<exclude name="TODO.txt"/>
-				<exclude name="doc/**"/>				
+				<exclude name="doc/**"/>	
 				<exclude name="studies/NAA_ROA0_SLR15_CC0/**"/>
 				
 				<include name="lib/**"/>
