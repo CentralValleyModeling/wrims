@@ -32,7 +32,7 @@ END
 
 IO_FILE
 MODEL      TYPE     IO    INTERVAL FILE                            
-qual       restart  in    1day     qual_ic_02mar.qrf
+qual       restart  in    1day     qual_ic_05jun.qrf
 #Initial condition a restart is required
 #${DSM2OUTPUTDIR}/FOR1_DB0_CU4_DXC0_May09.qrf   
 qual       output   out              none     ${QUALOUTFILE}                   #Echoed run status                      

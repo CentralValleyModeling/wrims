@@ -3,23 +3,23 @@ ENVVAR
 NAME                     VALUE
 DCUNo    cu5
 DXCNo    dxc0
-ForNo    for3
+ForNo    for5
 RunNo    DB3-JUN
 DSM2MODIFIER             ${ForNo}_${RunNo}_${DCUNo}_${DXCNo}  #Study name used for DSM2 output                  
 #DSM2OUTPUTFILE           Drough_Res_${RunNo}               #Study name used for DSM2 output                  
 DSM2INPUTDIR             ../../common_input                                           
 DSM2AGENCY               dwr
-VERSIONDATE              201403_FORECAST                                                       
+VERSIONDATE              201405_FORECAST                                                       
 HISTFLOWVERSION DWR-DMS-${VERSIONDATE}_${ForNo}                                    
 HISTSTAGEVERSION         DWR-DMS-${VERSIONDATE}
 #HISTQUALVERSION          DWR-DMS-${VERSIONDATE}
 HISTQUALVERSION DWR-DMS-${VERSIONDATE}_${ForNo}
 #runtime                
-START_DATE               28FEB2014
+START_DATE               04JUN2014
 START_TIME               0000
-QUAL_START_DATE          02MAR2014
+QUAL_START_DATE          05JUN2014
 PTM_START_DATE           ${QUAL_START_DATE}
-END_DATE                 17MAY2014
+END_DATE                 02AUG2014
 END_TIME                 0000
 TEMPDIR                  z:/temp #Spacious directory for scratch files             
 #Input envvars          
