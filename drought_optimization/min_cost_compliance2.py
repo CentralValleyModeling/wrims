@@ -8,7 +8,7 @@ from ec_gen.ec_planning_drought import logging, gen_ec, subprocess
 from scipy.optimize import brentq
 from scipy.ndimage.filters import *
 from scipy.stats import nanmean
-alt = "FOR3_DB3-JUN_CU5_DXC0"
+#alt = "FOR3_DB3-JUN_CU5_DXC0"
 
 import collections
 
