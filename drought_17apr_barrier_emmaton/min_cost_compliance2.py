@@ -215,51 +215,6 @@ def max_salinity_exceed(q,base_flows,control_description,\
         plt.close()
     return max_so_far
     
-def optimize_monotonic():
-    control_period = (dtm.datetime(2014,4,1),dtm.datetime(2014,8,1))
-    control_step = days(1)    
-    base_file = "ndo_echo.dss"
-    base_path_ndo = "/DSM2/NDO_BASE/FLOW//1DAY/%s/" % alt.upper()
-    base_ndo = dss_retrieve_ts(base_file,base_path_ndo,unique = True)
-    
-    # Retrieve original Sac flow. We do the optimization in terms of ndo, but
-    # achieve the ndo by manipulating the Sacramento inflow.
-    base_path_sac = "/DSM2/RSAC155/FLOW_BASE//1DAY/%s/" % alt
-    sac = dss_retrieve_ts(base_file,base_path_sac,unique = True)
-    do_plot = False
-    if do_plot:
-        plt.plot(sac.times,sac.data,label="Sac")
-        plt.plot(base_ndo.times,base_ndo.data,label="NDO")
-        plt.legend()
-        plt.show()
-    ndo = base_ndo   
-    base_flows = {"sac":sac,"ndo":ndo}
-    
-    # Give a reasonable lower and upper bound for ndo flow. 
-    # The lower bound should be low enough to ensure it is non-compliant
-    # Similarly, upper value must be surely compliant. 
-    # Make the interval on the wide side -- the algorithm will 
-    # chop it down quickly.
-
-    min_ndo = 3300
-    max_ndo = 3400    
-    #min_ndo = 3679
-    #max_ndo = 3681
-    
-    # We will use the min_sac_flow in all the runs, so the optimization is in
-    # terms of the flow *addition* to min_sac_flow
-    ndo_flow_bracket = (min_ndo,max_ndo)    
-    xtol = 10
-    control_description = ("timeseries/optimizer.dss",\
-                           "/FILL+CHAN/RSAC155/FLOW//1DAY/OPTIMIZER/")
-    salt_standards = standards()
-
-    min_flow = 1000.
-    q,res = brentq( max_salinity_exceed, *ndo_flow_bracket,\
-                    args=(base_flows,control_description,salt_standards,min_flow,control_period,control_step,True))
-                        
-    print "Minumum sac flow within a tolerance of %s is %s" %(xtol,qmin)
-
 def control(x,sac0,ndo0,sac_min):
     ndofilt = ndo0.copy()
     ndofilt.data = gaussian_filter1d(ndofilt.data,sigma=6)
@@ -387,14 +342,6 @@ def standards():
        "active": True},       
       ]    
     
-if __name__ == "__main__":
-    logfilename = os.path.join(os.path.dirname("."),"log.txt")
-    logging.basicConfig(filename=logfilename,filemode='w',level=logging.INFO)
-    logging.info("logging enabled")
-    #test_controls_to_flow()
-    run_models()
-    optimize_monotonic()
-    #test_ndo_control_to_flow()
   
 
     

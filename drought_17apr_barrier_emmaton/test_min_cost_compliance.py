@@ -1,51 +1,28 @@
 from min_cost_compliance2 import *
 
-def test_ndo_control_to_flow():
-    control_period = (dtm.datetime(2014,6,1),dtm.datetime(2014,10,5))
-    control_step = days(7)
-    qcontrol = np.ones(18)*3000.
-    control_ts = rts(qcontrol,control_period[0],control_step)
-    print "control end: %s" % control_ts.end
-    
-    orig_hydro_dss="timeseries/hist19902014_droughtstudy.dss"
-    orig_ndo_path = "/FILL+CHAN/NDOI/FLOW//1DAY/DWR-DMS-201403_FORECAST_FOR3/"
-    ndo = dss_retrieve_ts(orig_hydro_dss,orig_ndo_path,unique = True)
-
-    orig_sac_path = "/FILL+CHAN/RSAC155/FLOW//1DAY/DWR-DMS-201403_FORECAST_FOR3/"
-    
-    sac = dss_retrieve_ts(orig_hydro_dss,orig_sac_path,\
-          unique = True)
-    base_flows = {}
-    base_flows["sac"] = sac
-    base_flows["ndo"] = ndo
-    min_flow = 3000.
-    sac_new,ndo_new = ndo_controls_to_flow(qcontrol,\
-                                           base_flows,\
-                                           min_flow,\
-                                           control_period,\
-                                           control_step)
-
-    plt.plot(ndo_new.times,ndo_new.data,label = "ndo_new")
-    plt.plot(sac_new.times,sac_new.data,color="black",label = "sac_new")
-    plt.xlim(*control_period)
-    plt.ylim(0,10000)
-    plt.legend()
-    plt.show()
 
 def min_cost_compliance():
     from scipy.optimize import fmin_cobyla
 
-    control_period = (dtm.datetime(2014,4,27),dtm.datetime(2014,10,5))
+
+    no_of_weeks = 2    
+    d0 = dtm.datetime(2014,4,27)
+    d1 = d0 + dtm.timedelta(days=no_of_weeks*7)
+    
+    control_period = (d0,d1)
     control_step = days(7)
-    x0 = np.ones(23)*3500.
-    qmin = [2925.] + 4*[4157]+4*[2800]+14*[2800.]
+    x0 = np.ones(no_of_weeks)*3500.
+    
+    #qmin = [2925.] + 4*[4157]+4*[2800]+14*[2800.]
+    qmin = [2925.] + [4157.]
     assert len(x0) == len(qmin)
-    x0 = np.array([2925.000,4157.000,4159.286,5041.825,4157.000,4000.000,4047.321,4602.426,4000.000,3975.054,4245.750,4751.072,3603.672,3570.053,4386.907,4650.922,3344.813,3577.872,3764.932,3572.622,3322.971,3934.002,7410.723])
-    x0 = np.maximum(x0,qmin)+1000.
+    #x0 = np.array([2925.000,4157.000,4159.286,5041.825,4157.000,4000.000,4047.321,4602.426,4000.000,3975.054,4245.750,4751.072,3603.672,3570.053,4386.907,4650.922,3344.813,3577.872,3764.932,3572.622,3322.971,3934.002,7410.723])
+    x0 = np.array([2925.0, 4157.0])
+    x0 = np.maximum(x0,qmin)+2000.
     control_description = ("timeseries/optimizer.dss",\
                            "/FILL+CHAN/RSAC155/FLOW//1DAY/OPTIMIZER/")
     salt_standards = standards()
-    constraint_period = (dtm.datetime(2014,4,27),dtm.datetime(2014,11,1))
+    constraint_period = control_period #(dtm.datetime(2014,4,27),dtm.datetime(2014,11,1))
     
     min_flow = 1000.
 
@@ -114,7 +91,7 @@ def min_cost_compliance():
 if __name__ == '__main__':
     #test_ndo_control_to_flow()
     logfilename = os.path.join(os.path.dirname("."),"cobyla_log.txt")
-    logging.basicConfig(filename=logfilename,filemode='w',level=logging.INFO)
+    logging.basicConfig(filename=logfilename,filemode='w',level=logging.DEBUG)
     logging.info("logging enabled")    
     min_cost_compliance()
     

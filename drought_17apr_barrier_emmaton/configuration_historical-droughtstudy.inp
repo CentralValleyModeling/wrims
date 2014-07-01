@@ -19,7 +19,7 @@ START_DATE               28FEB2014
 START_TIME               0000
 QUAL_START_DATE          02MAR2014
 PTM_START_DATE           ${QUAL_START_DATE}
-END_DATE                 01NOV2014
+END_DATE                 01JUN2014
 END_TIME                 0000
 TEMPDIR                  z:/temp #Spacious directory for scratch files             
 #Input envvars          
