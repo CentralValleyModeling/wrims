@@ -1,0 +1,14 @@
+
+1. Get realtime run. Note that the DSS files should stay in the realtime directory, not be put in timeseries because they don't change names. Realtime /input directory should have a name that identifies the date.
+2. Establish the run parameters in the config file:
+   CU5
+   FOR2
+   DXC0
+   DB3-JUN
+3. Run hydro pointing to the original realtime inputs for Sac flow and Martinez EC. Create a restart exactly on the start of the hydro realtime period (end of historical data). Then rerun it and go all the way to the start of the qual realtime period, typically one day later. 
+4. Run *** to extract NDO. Compare it to the provided NDO. 
+5. Generate EC for Martinez.
+6. Run qual pointing to the original realtime inputs except for the EC generated in step 4. If the NDO is identical, this may  not be necessary. Create a restart for the beginning of the qual realtime period.
+7. Comment out the Sac and Martinez inputs so that they point to the optimization
+file and paths.
+8. Run optimizer.
