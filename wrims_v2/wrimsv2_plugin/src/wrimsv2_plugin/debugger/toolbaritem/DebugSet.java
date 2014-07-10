@@ -291,6 +291,10 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 	}
 	
 	public void moveSliderBar(){
+		startDebugYear=DebugCorePlugin.startYear;
+		startDebugMonth=DebugCorePlugin.startMonth;
+		endDebugYear=DebugCorePlugin.endYear;
+		endDebugMonth=DebugCorePlugin.endMonth;
 		int debugYear=Integer.valueOf(_year.getText());
 		int debugMonth=Integer.valueOf(_month.getText());
 		int selection=TimeOperation.findMonthInBetween(startDebugYear, startDebugMonth, debugYear, debugMonth)-1;
