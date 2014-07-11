@@ -102,6 +102,8 @@ class ComplianceConstraint(object):
                 logging.debug("Done running models")
                 ComplianceConstraint.cache.set_last_simulated(x)
                 logging.debug("Set last_simulated to %s" % x)
+                
+            # just simulated    
             file    = self.standard["file"]
             path    = self.standard["path"]
             station = self.standard["name"]
