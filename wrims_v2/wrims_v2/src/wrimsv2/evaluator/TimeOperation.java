@@ -216,4 +216,21 @@ public class TimeOperation {
 		return days;
 	}
 	
+	public static int getNumberOfTimestep(Date dateA, Date dateB, String timeStep){
+		if (timeStep.equals("1MON")){
+			int monthA=dateA.getMonth();
+			int yearA=dateA.getYear();
+			int monthB=dateB.getMonth();
+			int yearB=dateB.getYear();
+			int diff=(yearB-yearA)*12+(monthB-monthA)+1;
+			if (diff<=0) diff=0;
+			return diff;
+		}else{
+			long timeA=dateA.getTime();
+			long timeB=dateB.getTime();
+			int diff=Math.round((timeB-timeA)/(1000*60*60*24))+1;
+			if (diff<=0) diff=0;
+			return diff;
+		}
+	}
 }

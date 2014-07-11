@@ -237,16 +237,18 @@ public class DssOperation {
 			for (int i=0; i<size; i++){
 				values[i]=data.get(i);
 			}
+			String timeStep=dds.getTimeStep();
 			DSSData ds = new DSSData();
-			ds._dataType=DSSUtil.REGULAR_TIME_SERIES;
-			ds._yType="PER-AVER";
-			ds._numberRead=values.length;
-			ds._yUnits=dds.getUnits().toUpperCase();
-			ds._yValues = values;
 			Date startDate=dds.getStartTime();
 			long startJulmin = TimeFactory.getInstance().createTime(startDate).getTimeInMinutes();
+			Date modelStartDate=new Date(ControlData.startYear-1900, ControlData.startMonth, ControlData.startDay);
+			ds._dataType=DSSUtil.REGULAR_TIME_SERIES;
+			ds._yType="PER-AVER";
+			ds._numberRead=TimeOperation.getNumberOfTimestep(startDate, modelStartDate, timeStep);
+			ds._yUnits=dds.getUnits().toUpperCase();
+			ds._yValues = values;
 			boolean storeFlags = false;
-			String pathName="/"+ControlData.partA+"/"+DssOperation.getTSName(initName)+"/"+dds.getKind()+"//"+dds.getTimeStep()+"/"+ControlData.svDvPartF+"/";
+			String pathName="/"+ControlData.partA+"/"+DssOperation.getTSName(initName)+"/"+dds.getKind()+"//"+timeStep+"/"+ControlData.svDvPartF+"/";
 			ControlData.writer.storeTimeSeriesData(pathName, startJulmin, ds,
 				storeFlags);
 		}
@@ -298,16 +300,18 @@ public class DssOperation {
 			for (int i=0; i<size; i++){
 				values[i]=data.get(i);
 			}
+			String timeStep=dds.getTimeStep();
 			DSSData ds = new DSSData();
-			ds._dataType=DSSUtil.REGULAR_TIME_SERIES;
-			ds._yType="PER-AVER";
-			ds._numberRead=values.length;
-			ds._yUnits=dds.getUnits().toUpperCase();
-			ds._yValues = values;
 			Date startDate=dds.getStartTime();
 			long startJulmin = TimeFactory.getInstance().createTime(startDate).getTimeInMinutes();
+			Date modelStartDate=new Date(ControlData.startYear-1900, ControlData.startMonth, ControlData.startDay);
+			ds._dataType=DSSUtil.REGULAR_TIME_SERIES;
+			ds._yType="PER-AVER";
+			ds._numberRead=TimeOperation.getNumberOfTimestep(startDate, modelStartDate, timeStep);;
+			ds._yUnits=dds.getUnits().toUpperCase();
+			ds._yValues = values;
 			boolean storeFlags = false;
-			String pathName="/"+ControlData.partA+"/"+DssOperation.getTSName(initName)+"/"+dds.getKind()+"//"+dds.getTimeStep()+"/"+ControlData.svDvPartF+"/";
+			String pathName="/"+ControlData.partA+"/"+DssOperation.getTSName(initName)+"/"+dds.getKind()+"//"+timeStep+"/"+ControlData.svDvPartF+"/";
 			writer.storeTimeSeriesData(pathName, startJulmin, ds,
 				storeFlags);
 		}
