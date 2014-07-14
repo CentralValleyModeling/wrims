@@ -25,6 +25,7 @@ public class WPPTabGroup extends AbstractLaunchConfigurationTabGroup {
 	private WPPMainTab mainTab;
 	private WPPConfigTab configTab;
 	private WPPPATab paTab;
+	private WPPMSTab msTab;
 	private SourceLookupTab sourceLookupTab;
 	private CommonTab commonTab;
 	
@@ -36,6 +37,7 @@ public class WPPTabGroup extends AbstractLaunchConfigurationTabGroup {
 		mainTab=new WPPMainTab();
 		configTab=new WPPConfigTab();
 		paTab=new WPPPATab();
+		msTab=new WPPMSTab();
 		sourceLookupTab=new SourceLookupTab();
 		commonTab=new CommonTab();
 		
@@ -43,6 +45,7 @@ public class WPPTabGroup extends AbstractLaunchConfigurationTabGroup {
 				mainTab,
 				configTab,
 				paTab,
+				msTab,
 				sourceLookupTab,
 				commonTab
 		});
@@ -58,6 +61,10 @@ public class WPPTabGroup extends AbstractLaunchConfigurationTabGroup {
 	
 	public WPPPATab getPATab(){
 		return paTab;
+	}
+	
+	public WPPMSTab getMSTab(){
+		return msTab;
 	}
 	
 	public SourceLookupTab getSourceLookupTab(){

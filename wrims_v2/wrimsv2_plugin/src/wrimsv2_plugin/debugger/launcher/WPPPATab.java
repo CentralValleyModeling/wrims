@@ -212,7 +212,7 @@ public class WPPPATab extends AbstractLaunchConfigurationTab {
 
 	@Override
 	public void setDefaults(ILaunchConfigurationWorkingCopy configuration) {
-		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_WRESLPLUS, "no");
+		
 	}
 
 	@Override
@@ -221,14 +221,14 @@ public class WPPPATab extends AbstractLaunchConfigurationTab {
 			String paStartInterval = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_PASTARTINTERVAL, "12");
 			paStartIntervalText.setText(paStartInterval);
 		} catch (CoreException e) {
-			WPPException.handleException(e);
+			setErrorMessage(e.getMessage());
 		}
 		
 		try {
 			String paDuration = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_PADURATION, "12");
 			paDurationText.setText(paDuration);
 		} catch (CoreException e) {
-			WPPException.handleException(e);
+			setErrorMessage(e.getMessage());
 		}
 		
 		try {
@@ -239,7 +239,7 @@ public class WPPPATab extends AbstractLaunchConfigurationTab {
 				initDelBut.setSelection(false);
 			}
 		} catch (CoreException e) {
-			WPPException.handleException(e);
+			setErrorMessage(e.getMessage());
 		}
 		
 		try {
@@ -252,21 +252,21 @@ public class WPPPATab extends AbstractLaunchConfigurationTab {
 			String paDVStartYear = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_PADVSTARTYEAR, defaultPADVStartYear);
 			dvYearCombo.setText(paDVStartYear);
 		} catch (CoreException e) {
-			WPPException.handleException(e);
+			setErrorMessage(e.getMessage());
 		}
 		
 		try {
 			String paDVStartMonth = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_PADVSTARTMONTH, "10");
 			dvMonthCombo.setText(paDVStartMonth);
 		} catch (CoreException e) {
-			WPPException.handleException(e);
+			setErrorMessage(e.getMessage());
 		}
 		
 		try {
 			String paDVStartDay = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_PADVSTARTDAY, "1");
 			dvDayCombo.setText(paDVStartDay);
 		} catch (CoreException e) {
-			WPPException.handleException(e);
+			setErrorMessage(e.getMessage());
 		}
 		
 		try {
@@ -279,7 +279,7 @@ public class WPPPATab extends AbstractLaunchConfigurationTab {
 				enableDVStartDate(false);
 			}
 		} catch (CoreException e) {
-			WPPException.handleException(e);
+			setErrorMessage(e.getMessage());
 		}
 	}
 

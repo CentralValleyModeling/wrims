@@ -91,6 +91,8 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	private Combo endMonthCombo;
 	private Combo endDayCombo;
 	private Button pa;
+	private Label msl;
+	private Combo ms;
 	private Button wsidigen;
 	
 	private ILaunchConfiguration launchConfig;
@@ -513,6 +515,30 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 			}
 			
 		});
+
+		msl = new Label(comp, SWT.NONE);
+		msl.setText("Multi-Study");
+		gd = new GridData(GridData.BEGINNING);
+		gd.horizontalSpan=1;
+		msl.setLayoutData(gd);
+		
+		ms = new Combo(comp, SWT.NONE);
+		for (int i=1; i<=9; i++){
+			ms.add(String.valueOf(i));
+		}
+		gd = new GridData(GridData.BEGINNING);
+		gd.horizontalSpan=1;
+		ms.select(0);
+		ms.setLayoutData(gd);
+		ms.setFont(font);
+		ms.addSelectionListener(new SelectionAdapter() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				updateLaunchConfigurationDialog();
+			}
+			
+		});
 		
 		wsidigen = new Button(comp, SWT.NONE);
 		wsidigen.setText("&Wsi-Di Generator");
@@ -857,6 +883,14 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 			}else{
 				pa.setSelection(false);
 			}
+			String msr="1";
+			msr = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_MULTISTUDY, "1");
+			int msv = Integer.parseInt(msr);
+			if (msv>9){
+				ms.select(8);
+			}else{
+				ms.select(msv-1);
+			}
 		} catch (CoreException e) {
 			setErrorMessage(e.getMessage());
 		}
@@ -949,6 +983,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		}else{
 			lt="0";
 		}
+		String msr=ms.getText().trim(); 
 		
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_STUDY, studyName);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_AUTHOR, author);
@@ -970,6 +1005,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_ENDMONTH, endMonth);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_ENDDAY, endDay);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_LAUNCHTYPE, lt);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_MULTISTUDY, msr);
 	}
 	
 	/* (non-Javadoc)
