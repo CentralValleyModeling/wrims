@@ -330,7 +330,7 @@ def standards():
       {"name": "SWP",
       "file": outfile,\
        "path": "/QUAL8.1.2/CHSWP003/EC//15MIN/%s/" % fpart,\
-       "value": 500.,\
+       "value": 1000.,\
        "active":dtm.datetime(2014,6,15)},
       #{"name": "Threemile",
       #"file": outfile,\
