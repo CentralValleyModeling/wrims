@@ -13,27 +13,7 @@ public class PAProcRun {
 	private int prePAStartMonth=10;
 	private int prePAStartDay=1;
 	
-	public PAProcRun(ILaunchConfiguration configuration){
-		try {
-			int startYear = Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTYEAR, (String)null));
-			int startMonth = TimeOperation.monthValue(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTMONTH, (String)null));
-			DebugCorePlugin.startYear=startYear;
-			DebugCorePlugin.startMonth=startMonth;
-		
-			int endYear = Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDYEAR, (String)null));
-			int endMonth = TimeOperation.monthValue(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDMONTH, (String)null));
-			DebugCorePlugin.endYear=endYear;
-			DebugCorePlugin.endMonth=endMonth;
-		
-			int startDay = Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTDAY, (String)null));
-			int endDay = Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDDAY, (String)null));
-			DebugCorePlugin.startDay=startDay;
-			DebugCorePlugin.endDay=endDay;
-		} catch (NumberFormatException e) {
-			WPPException.handleException(e);
-		} catch (CoreException e) {
-			WPPException.handleException(e);
-		}
+	public PAProcRun(){
 	}
 	
 	public boolean continueRun(){

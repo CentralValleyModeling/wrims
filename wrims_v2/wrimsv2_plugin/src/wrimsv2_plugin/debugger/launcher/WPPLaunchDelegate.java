@@ -37,6 +37,7 @@ import org.eclipse.debug.core.model.LaunchConfigurationDelegate;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
+import wrimsv2_plugin.debugger.msr.MSRProcRun;
 import wrimsv2_plugin.debugger.pa.PAProcDV;
 import wrimsv2_plugin.debugger.pa.PAProcInit;
 import wrimsv2_plugin.debugger.pa.PAProcRun;
@@ -68,6 +69,8 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 	private String wreslPlus;
 	private String freeXA;
 	private String jarXA="XAOptimizer.jar";
+	private int sid=1;
+	private boolean isDvAsInit=false;
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.ILaunchConfigurationDelegate#launch(org.eclipse.debug.core.ILaunchConfiguration, java.lang.String, org.eclipse.debug.core.ILaunch, org.eclipse.core.runtime.IProgressMonitor)
@@ -78,20 +81,31 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			DebugCorePlugin.target.sendRequest("terminate");
 		}
 		
+		int ms=Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_MULTISTUDY, "1"));
 		String lt=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_LAUNCHTYPE, "0");
-        DebugCorePlugin.launchType=Integer.parseInt(lt);
-		switch (DebugCorePlugin.launchType){
-			case 0:
-				regularLaunch(configuration, mode, launch);
-				break;
-			case 1:
-				paLaunch(configuration, mode, launch);
-				break;
+		DebugCorePlugin.launchType=Integer.parseInt(lt);
+		
+		getStartEndDate(configuration);
+		isDvAsInit=false;
+		sid=1;
+		
+		if (ms==1){	
+			switch (DebugCorePlugin.launchType){
+				case 0:
+					regularLaunch(configuration, mode, launch);
+					break;
+				case 1:
+					paLaunch(configuration, mode, launch);
+					break;
+			}
+		}else{
+			multiStudyRun(configuration, mode, launch, ms);
 		}
 	}
 	
-	public void regularLaunch(ILaunchConfiguration configuration, String mode, ILaunch launch) throws CoreException{
+	public int regularLaunch(ILaunchConfiguration configuration, String mode, ILaunch launch) throws CoreException{
 		
+		int terminateCode=0;
 		int requestPort = -1;
 		int eventPort = -1;
 		requestPort = findFreePort();
@@ -109,19 +123,25 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 				IProcess p = DebugPlugin.newProcess(launch, process, "DebugWPP");
 				IDebugTarget target = new WPPDebugTarget(launch, p, requestPort, eventPort);
 				launch.addDebugTarget(target);
+				process.waitFor();
+				terminateCode=process.exitValue();
 			}else{
 				Process process = Runtime.getRuntime().exec("WRIMSv2_Engine.bat");
 				IProcess p = DebugPlugin.newProcess(launch, process, "RunWPP");
+				process.waitFor();
+				terminateCode=p.getExitValue();
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			WPPException.handleException(e);
 		}
+		
+		return terminateCode;
 	}
 	
-	public void paLaunch(ILaunchConfiguration configuration, String mode, ILaunch launch) throws CoreException{
+	public int paLaunch(ILaunchConfiguration configuration, String mode, ILaunch launch) throws CoreException{
 		paProcConfig(configuration);
-		PAProcInit procInit = new PAProcInit(configuration);
-		PAProcRun procRun = new PAProcRun(configuration);
+		PAProcInit procInit = new PAProcInit(configuration, sid);
+		PAProcRun procRun = new PAProcRun();
 		PAProcDV procDV = new PAProcDV(configuration);
 		
 		procInit.createPAInit(configuration);
@@ -168,8 +188,46 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			procInit.createInitData(procRun);
 		}
 		procInit.deletePAInit();
+		
+		return terminateCode;
 	}
 	
+	public void multiStudyRun(ILaunchConfiguration configuration, String mode, ILaunch launch, int ms) throws CoreException{
+		
+		int terminateCode=0;
+		
+		DebugCorePlugin.msDuration=Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_MSDURATION, "12"));
+		
+		MSRProcRun msr=new MSRProcRun();
+		msr.initialMSTime();
+		startYear=DebugCorePlugin.msStartYear;
+		startMonth=DebugCorePlugin.msStartMonth;
+		startDay=DebugCorePlugin.msStartDay;
+		endYear=DebugCorePlugin.msEndYear;
+		endMonth=DebugCorePlugin.msEndMonth;
+		endDay=DebugCorePlugin.msEndDay;
+		
+		while (msr.continueRun() && terminateCode==0){
+			for (sid=1; sid<=ms; sid++){
+				switch (DebugCorePlugin.launchType){
+				case 0:
+					terminateCode=regularLaunch(configuration, mode, launch);
+					break;
+				case 1:
+					terminateCode=paLaunch(configuration, mode, launch);
+					break;
+				}
+			}
+			msr.updateMSTime();
+			startYear=DebugCorePlugin.msStartYear;
+			startMonth=DebugCorePlugin.msStartMonth;
+			startDay=DebugCorePlugin.msStartDay;
+			endYear=DebugCorePlugin.msEndYear;
+			endMonth=DebugCorePlugin.msEndMonth;
+			endDay=DebugCorePlugin.msEndDay;
+			isDvAsInit=true;
+		}
+	}
 	
 	public void paProcConfig(ILaunchConfiguration configuration){
 		try {
@@ -236,7 +294,32 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 		}
 	}
 	
+	public void getStartEndDate(ILaunchConfiguration configuration){
+		try{	
+			startYear = Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTYEAR, (String)null));
+			startMonth = TimeOperation.monthValue(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTMONTH, (String)null));
+			DebugCorePlugin.startYear=startYear;
+			DebugCorePlugin.startMonth=startMonth;
+		
+			endYear = Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDYEAR, (String)null));
+			endMonth = TimeOperation.monthValue(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDMONTH, (String)null));
+			DebugCorePlugin.endYear=endYear;
+			DebugCorePlugin.endMonth=endMonth;
+		
+			startDay= Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTDAY, (String)null));
+			endDay=Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDDAY, (String)null));
+			DebugCorePlugin.startDay=startDay;
+			DebugCorePlugin.endDay=endDay;
+		} catch (CoreException e) {
+			WPPException.handleException(e);
+		}
+	}
+	
 	public void createBatch(ILaunchConfiguration configuration, int requestPort, int eventPort, String mode){
+		
+		String suffix="";
+		if (sid>1) suffix="_MS"+sid;
+		
 		try {
 			String studyName=null;
 			studyName = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STUDY, (String)null);
@@ -251,54 +334,41 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			description = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_DESCRIPTION, (String)null);
 				
 			mainFile = null;
-			mainFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_PROGRAM, (String)null);
+			mainFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_PROGRAM+suffix, (String)null);
 			
 			dvarFile = null;
-			dvarFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_DVARFILE, (String)null);
+			dvarFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_DVARFILE+suffix, (String)null);
 			
 			svarFile = null;
-			svarFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SVARFILE, (String)null);
+			svarFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SVARFILE+suffix, (String)null);
 			
 			initFile = null;
-			initFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_INITFILE, (String)null);
+			initFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_INITFILE+suffix, (String)null);
 			if (DebugCorePlugin.launchType==1){
 				initFile=DebugCorePlugin.paInitFile;
+			}else{
+				if (isDvAsInit) initFile=dvarFile;
 			}
 			
 			gwDataFolder = null;
-			gwDataFolder = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_GWDATAFOLDER, (String)null)+File.separator;
+			gwDataFolder = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_GWDATAFOLDER+suffix, (String)null)+File.separator;
 			
 			aPart = null;
-			aPart = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_APART, (String)null);
+			aPart = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_APART+suffix, (String)null);
 			DebugCorePlugin.aPart=aPart;
 			
 			svFPart = null;
-			svFPart = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SVFPART, (String)null);
+			svFPart = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SVFPART+suffix, (String)null);
 			DebugCorePlugin.svFPart=svFPart;
 			
 			initFPart = null;
-			initFPart = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_INITFPART, (String)null);
+			initFPart = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_INITFPART+suffix, (String)null);
 			DebugCorePlugin.initFPart=initFPart;
 			
 			timeStep = null;
-			timeStep = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_TIMESTEP, (String)null);
+			timeStep = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_TIMESTEP+suffix, (String)null);
 			DebugCorePlugin.timeStep=timeStep;
-			
-			startYear = Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTYEAR, (String)null));
-			startMonth = TimeOperation.monthValue(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTMONTH, (String)null));
-			DebugCorePlugin.startYear=startYear;
-			DebugCorePlugin.startMonth=startMonth;
-			
-			endYear = Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDYEAR, (String)null));
-			endMonth = TimeOperation.monthValue(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDMONTH, (String)null));
-			DebugCorePlugin.endYear=endYear;
-			DebugCorePlugin.endMonth=endMonth;
-			
-			startDay= Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTDAY, (String)null));
-			endDay=Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDDAY, (String)null));
-			DebugCorePlugin.startDay=startDay;
-			DebugCorePlugin.endDay=endDay;
-			
+						
 			if (DebugCorePlugin.launchType==1){
 				startYear=DebugCorePlugin.paStartYear;
 				startMonth=DebugCorePlugin.paStartMonth;

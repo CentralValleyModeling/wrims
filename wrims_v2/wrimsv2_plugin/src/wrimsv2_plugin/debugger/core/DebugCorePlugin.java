@@ -244,6 +244,14 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static boolean deletePAInit=true;
 	public static boolean resetOutputStart=false;
 	
+	public static int msStartYear=1921;
+	public static int msStartMonth=10;
+	public static int msStartDay=1;
+	public static int msEndYear=2009;
+	public static int msEndMonth=9;
+	public static int msEndDay=30;
+	public static int msDuration=12;
+	
 	/**
 	 * The constructor.
 	 */

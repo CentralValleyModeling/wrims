@@ -25,9 +25,11 @@ public class PAProcInit {
 	
 	private String initFile="";
 	
-	public PAProcInit(ILaunchConfiguration configuration){
+	public PAProcInit(ILaunchConfiguration configuration, int sid){
+		String suffix="";
+		if (sid>1) suffix="_MS"+sid;
 		try {
-			initFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_INITFILE, (String)null);
+			initFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_INITFILE+suffix, (String)null);
 		} catch (CoreException e) {
 			WPPException.handleException(e);
 		}
