@@ -83,7 +83,7 @@ def min_cost_compliance():
                     args=(base_flows,min_flow,control_period,control_step), 
                     consargs=(base_flows,min_flow,control_description,control_period,control_step),
                     rhobeg=400.0, 
-                    rhoend=5.0,
+                    rhoend=2.0,
                     maxfun=1000, 
                     disp=2)
 
