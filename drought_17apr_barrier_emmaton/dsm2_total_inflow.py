@@ -51,10 +51,11 @@ def dsm2_total_inflow(echofile,outfile,alt,start_date):
     sac_ts.props[AGGREGATION] = MEAN    
     sac_ts.props[UNIT]="CFS"
     dss_store_ts(sac_ts,outfile,"/DSM2/RSAC155/FLOW_BASE//1DAY/%s/" % alt)
+    dicu = -dicu
     dicu.props[TIMESTAMP]=PERIOD_START
     dicu.props[AGGREGATION] = MEAN    
     dicu.props[UNIT]="CFS"
-    dss_store_ts(-dicu,outfile,"/DSM2/CU/FLOW_BASE//1DAY/%s/" % alt)
+    dss_store_ts(dicu,outfile,"/DSM22/CU/FLOW_BASE//1DAY/%s/" % alt)
     
 if __name__=='__main__':
     import sys
