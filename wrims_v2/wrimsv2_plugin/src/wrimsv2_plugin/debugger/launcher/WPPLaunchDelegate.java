@@ -37,6 +37,7 @@ import org.eclipse.debug.core.model.LaunchConfigurationDelegate;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
+import wrimsv2_plugin.debugger.msr.MSRDataTransfer;
 import wrimsv2_plugin.debugger.msr.MSRProcRun;
 import wrimsv2_plugin.debugger.pa.PAProcDV;
 import wrimsv2_plugin.debugger.pa.PAProcInit;
@@ -70,7 +71,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 	private String freeXA;
 	private String jarXA="XAOptimizer.jar";
 	private int sid=1;
-	private boolean isDvAsInit=false;
+	private boolean afterFirstRound=false;
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.ILaunchConfigurationDelegate#launch(org.eclipse.debug.core.ILaunchConfiguration, java.lang.String, org.eclipse.debug.core.ILaunch, org.eclipse.core.runtime.IProgressMonitor)
@@ -86,7 +87,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 		DebugCorePlugin.launchType=Integer.parseInt(lt);
 		
 		getStartEndDate(configuration);
-		isDvAsInit=false;
+		afterFirstRound=false;
 		sid=1;
 		
 		if (ms==1){	
@@ -198,6 +199,9 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 		
 		DebugCorePlugin.msDuration=Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_MSDURATION, "12"));
 		
+		MSRDataTransfer dataTxfr=new MSRDataTransfer();
+		dataTxfr.procDataTxfrFile(configuration, ms);
+		
 		MSRProcRun msr=new MSRProcRun();
 		msr.initialMSTime();
 		startYear=DebugCorePlugin.msStartYear;
@@ -208,7 +212,8 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 		endDay=DebugCorePlugin.msEndDay;
 		
 		while (msr.continueRun() && terminateCode==0){
-			for (sid=1; sid<=ms; sid++){
+			sid=1;
+			while (sid<=ms && terminateCode==0){
 				switch (DebugCorePlugin.launchType){
 				case 0:
 					terminateCode=regularLaunch(configuration, mode, launch);
@@ -217,6 +222,8 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 					terminateCode=paLaunch(configuration, mode, launch);
 					break;
 				}
+				if (sid<ms) dataTxfr.dataTxfr(sid);
+				sid++;
 			}
 			msr.updateMSTime();
 			startYear=DebugCorePlugin.msStartYear;
@@ -225,7 +232,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			endYear=DebugCorePlugin.msEndYear;
 			endMonth=DebugCorePlugin.msEndMonth;
 			endDay=DebugCorePlugin.msEndDay;
-			isDvAsInit=true;
+			afterFirstRound=true;
 		}
 	}
 	
@@ -347,7 +354,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			if (DebugCorePlugin.launchType==1){
 				initFile=DebugCorePlugin.paInitFile;
 			}else{
-				if (isDvAsInit) initFile=dvarFile;
+				if (afterFirstRound) initFile=dvarFile;
 			}
 			
 			gwDataFolder = null;
@@ -363,6 +370,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			
 			initFPart = null;
 			initFPart = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_INITFPART+suffix, (String)null);
+			if (afterFirstRound) initFPart=svFPart;
 			DebugCorePlugin.initFPart=initFPart;
 			
 			timeStep = null;
