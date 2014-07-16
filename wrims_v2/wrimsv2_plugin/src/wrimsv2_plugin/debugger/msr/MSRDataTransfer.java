@@ -22,15 +22,18 @@ import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.goal.FilterGoal;
 import wrimsv2_plugin.tools.DssOperations;
 import wrimsv2_plugin.tools.FileProcess;
+import wrimsv2_plugin.tools.TimeOperation;
 
 public class MSRDataTransfer {
 	
-	String[] dvFNs=new String[8];
-	String[] svFNs=new String[8];
-	String[] initFNs=new String[8];
+	private String[] dvFNs=new String[8];
+	private String[] svFNs=new String[8];
+	private String[] initFNs=new String[8];
 	
-	Map<String, String>[] dvToInitPN=new HashMap[8];
-	Map<String, String>[] dvToSvPN=new HashMap[8];
+	private Map<String, String>[] dvToInitPN=new HashMap[8];
+	private Map<String, String>[] dvToSvPN=new HashMap[8];
+	
+	private String timestep="1MON";
 	
 	public void procDataTxfrFile (ILaunchConfiguration configuration, int ms){
 		int size=ms-1;
@@ -181,7 +184,7 @@ public class MSRDataTransfer {
 			return;
 		}
 		
-		Vector v = dvDss.getPathnameList();
+		Vector v = dvDss.getCatalogedPathnames();
 		
 		Map<String, String> dvToInitPNMap=dvToInitPN[i];
 		Set<String> keys = dvToInitPNMap.keySet();
@@ -193,7 +196,9 @@ public class MSRDataTransfer {
 			String dvPNFull=DssOperations.matchPathName(v, dvPNParts[0], dvPNParts[1]);
 			String initPNFull=addPathD(dvPNFull, initPN);
 			try {
-				TimeSeriesContainer tsc = (TimeSeriesContainer)dvDss.get(dvPNFull);
+				String startTime=TimeOperation.createStartTime(DebugCorePlugin.msStartYear, DebugCorePlugin.msStartMonth, DebugCorePlugin.msStartDay, timestep);
+				String endTime=TimeOperation.createEndTime(DebugCorePlugin.msEndYear, DebugCorePlugin.msEndMonth, DebugCorePlugin.msEndDay, timestep);
+				TimeSeriesContainer tsc = (TimeSeriesContainer)dvDss.get(dvPNFull, startTime, endTime);
 				TimeSeriesMath tsm = new TimeSeriesMath(tsc);
 				tsm.setPathname(initPNFull);
 				initDss.write(tsm);
@@ -212,7 +217,9 @@ public class MSRDataTransfer {
 			String dvPNFull=DssOperations.matchPathName(v, dvPNParts[0], dvPNParts[1]);
 			String svPNFull=addPathD(dvPNFull, svPN);
 			try {
-				TimeSeriesContainer tsc = (TimeSeriesContainer)dvDss.get(dvPNFull);
+				String startTime=TimeOperation.createStartTime(DebugCorePlugin.msStartYear, DebugCorePlugin.msStartMonth, DebugCorePlugin.msStartDay, timestep);
+				String endTime=TimeOperation.createEndTime(DebugCorePlugin.msEndYear, DebugCorePlugin.msEndMonth, DebugCorePlugin.msEndDay, timestep);
+				TimeSeriesContainer tsc = (TimeSeriesContainer)dvDss.get(dvPNFull, startTime, endTime);
 				TimeSeriesMath tsm = new TimeSeriesMath(tsc);
 				tsm.setPathname(svPNFull);
 				svDss.write(tsm);
@@ -229,7 +236,8 @@ public class MSRDataTransfer {
 	public String addPathD(String dvPNFull, String pn){
 		String[] parts1 = dvPNFull.split("/");
 		String[] parts2 = pn.split("/");
-
+		timestep=parts1[5];
+		
 		return "/"+parts2[1]+"/"+parts2[2]+"/"+parts2[3]+"/"+parts1[4]+"/"+parts2[5]+"/"+parts2[6]+"/";
 	}
 }
