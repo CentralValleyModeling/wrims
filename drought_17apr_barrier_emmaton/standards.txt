@@ -4,4 +4,5 @@ RSMKL008          540    SF Mokelumne at Terminus
 SJR_SAN_ANDREAS   870    SJR @ San Andreas  
 SLBAR002         1000    NorthbayBarker  
 CHSWP003         1000    SWP, active from June 15  
-RSAC092          2780    Emmaton   
+# RSAC092          2780    Emmaton   
+3MILE_SL         2780    Emmaton

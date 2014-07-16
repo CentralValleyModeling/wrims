@@ -83,7 +83,7 @@ def min_cost_compliance():
                     args=(base_flows,min_flow,control_period,control_step), 
                     consargs=(base_flows,min_flow,control_description,control_period,control_step),
                     rhobeg=400.0, 
-                    rhoend=2.0,
+                    rhoend=5.0,
                     maxfun=1000, 
                     disp=2)
 
@@ -91,7 +91,7 @@ def min_cost_compliance():
 if __name__ == '__main__':
     #test_ndo_control_to_flow()
     logfilename = os.path.join(os.path.dirname("."),"cobyla_log.txt")
-    logging.basicConfig(filename=logfilename,filemode='w',level=logging.DEBUG)
+    logging.basicConfig(filename=logfilename,filemode='w',level=logging.INFO)
     logging.info("logging enabled")    
     min_cost_compliance()
     

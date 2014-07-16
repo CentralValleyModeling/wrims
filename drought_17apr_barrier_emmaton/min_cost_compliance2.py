@@ -332,16 +332,16 @@ def standards():
        "path": "/QUAL8.1.2/CHSWP003/EC//15MIN/%s/" % fpart,\
        "value": 1000.,\
        "active":dtm.datetime(2014,6,15)},
-      #{"name": "Threemile",
-      #"file": outfile,\
-      #"path": "/QUAL8.1.2/3MILE_SL/EC//15MIN/%s/" % fpart,\
-      #"value": 2780.,\
-      #"active": True},
-      {"name": "Emmaton",
+      {"name": "Threemile",
       "file": outfile,\
-       "path": "/QUAL8.1.2/RSAC092/EC//15MIN/%s/" % fpart,\
-       "value": 2780.,\
-       "active": True},       
+      "path": "/QUAL8.1.2/3MILE_SL/EC//15MIN/%s/" % fpart,\
+      "value": 2780.,\
+      "active": True},
+#       {"name": "Emmaton",
+#       "file": outfile,\
+#        "path": "/QUAL8.1.2/RSAC092/EC//15MIN/%s/" % fpart,\
+#        "value": 2780.,\
+#        "active": True},       
       ]    
     
   
