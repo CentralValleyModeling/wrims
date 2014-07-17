@@ -88,7 +88,7 @@ class Study:
 				print '=> ' + key + ':' + self._cMap.get(key)	
 		
 	
-	def _run_wrims(self,startYear=None,startMonth=None, numberOfSteps=None):
+	def _run_wrims(self,startYear=None,startMonth=None, numberOfSteps=None, pause=False):
 
 # 	
 # 			self._logger.info("Write study config:  "+self.ms_configPath)
@@ -117,9 +117,12 @@ class Study:
 			cf.close()
 		
 			
-		self._logger.info("Run study config: "+self._configPath)	
-		subprocess.call(["cmd.exe", "/c", "start", self._batFileName, self._configPath])
-
+		self._logger.info("Run study config: "+self._configPath)
+		
+		if pause:	
+			subprocess.call(["cmd.exe", "/c", "start", self._batFileName, self._configPath, "-pause"])
+		else:
+			subprocess.call(["cmd.exe", "/c", "start", self._batFileName, self._configPath])
 
 	def _run_process(self,processName,startYear,numberOfSteps):
 		
@@ -133,7 +136,7 @@ class Study:
 		process.run()
 		
 		
-	def run(self,startYear=None, startMonth=None, numberOfSteps=None):
+	def run(self,startYear=None, startMonth=None, numberOfSteps=None, pause=False):
 	
 		#self._startYear=startYear
 		#self._numberOfSteps=numberOfSteps
@@ -144,7 +147,7 @@ class Study:
 # 		if NumberOfSteps == None:
 # 			NumberOfSteps = self._NumberOfSteps
 		
-		self._run_wrims(startYear, startMonth, numberOfSteps)
+		self._run_wrims(startYear, startMonth, numberOfSteps, pause)
 		
 # 		for pn in self.processDict.keys():
 # 			self._run_process(pn, StartYear, NumberOfSteps)
