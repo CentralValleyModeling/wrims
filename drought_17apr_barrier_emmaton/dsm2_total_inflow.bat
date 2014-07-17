@@ -1,1 +1,1 @@
-python dsm2_total_inflow.py output\hydro_echo_for3_DB3-JUN_cu5_dxc0.inp test.dss 2014-03-01
+python dsm2_total_inflow.py output\hydro_echo_for3_DB3-JUN_cu5_dxc0.inp result_check.dss 2014-03-01
