@@ -80,6 +80,10 @@
 				<exclude name="doc/**"/>	
 				<exclude name="studies/NAA_ROA0_SLR15_CC0/**"/>
 				
+				<exclude name="runConfig_limitedLicense_ctrlLog_pause.bat"/>
+				<exclude name="runConfig_limitedLicense_pause.bat"/>
+				<exclude name="runConfig_pause.bat"/>				
+				
 				<include name="lib/**"/>
 				<include name="license/**"/>
 				<include name="scripts/**"/>
