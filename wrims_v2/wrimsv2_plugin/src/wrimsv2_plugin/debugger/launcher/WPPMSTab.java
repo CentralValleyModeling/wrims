@@ -115,9 +115,8 @@ public class WPPMSTab extends AbstractLaunchConfigurationTab {
 
 			@Override
 			public void modifyText(ModifyEvent e) {
-				preSid=sid;
-				sid=studies.getItem(studies.getSelectionIndex());
 				updateLaunchConfigurationDialog();
+				sid=studies.getItem(studies.getSelectionIndex());
 				setupForm(currConfiguration);
 			}
 			
@@ -524,16 +523,16 @@ public class WPPMSTab extends AbstractLaunchConfigurationTab {
 		}
 		
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_MSDURATION, msDurationText.getText());
-		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_DATATRANSFER+"_MS"+preSid, dataTransferFile);		
-		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_PROGRAM+"_MS"+preSid, mainFile);
-		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_DVARFILE+"_MS"+preSid, dvarFile);
-		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_SVARFILE+"_MS"+preSid, svarFile);
-		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_INITFILE+"_MS"+preSid, initFile);
-		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_GWDATAFOLDER+"_MS"+preSid, gwDataFolder);
-		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_APART+"_MS"+preSid, aPart);
-		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_SVFPART+"_MS"+preSid, svFPart);
-		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_INITFPART+"_MS"+preSid, initFPart);
-		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_TIMESTEP+"_MS"+preSid, timeStep);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_DATATRANSFER+"_MS"+sid, dataTransferFile);		
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_PROGRAM+"_MS"+sid, mainFile);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_DVARFILE+"_MS"+sid, dvarFile);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_SVARFILE+"_MS"+sid, svarFile);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_INITFILE+"_MS"+sid, initFile);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_GWDATAFOLDER+"_MS"+sid, gwDataFolder);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_APART+"_MS"+sid, aPart);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_SVFPART+"_MS"+sid, svFPart);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_INITFPART+"_MS"+sid, initFPart);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_TIMESTEP+"_MS"+sid, timeStep);
 	}
 
 	@Override
