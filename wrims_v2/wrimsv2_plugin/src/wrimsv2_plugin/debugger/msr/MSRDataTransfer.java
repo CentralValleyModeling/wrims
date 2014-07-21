@@ -194,16 +194,18 @@ public class MSRDataTransfer {
 			String initPN = dvToInitPNMap.get(dvPN);
 			String[] dvPNParts = dvPN.split("//");
 			String dvPNFull=DssOperations.matchPathName(v, dvPNParts[0], dvPNParts[1]);
-			String initPNFull=addPathD(dvPNFull, initPN);
-			try {
-				String startTime=TimeOperation.createStartTime(DebugCorePlugin.msStartYear, DebugCorePlugin.msStartMonth, DebugCorePlugin.msStartDay, timestep);
-				String endTime=TimeOperation.createEndTime(DebugCorePlugin.msEndYear, DebugCorePlugin.msEndMonth, DebugCorePlugin.msEndDay, timestep);
-				TimeSeriesContainer tsc = (TimeSeriesContainer)dvDss.get(dvPNFull, startTime, endTime);
-				TimeSeriesMath tsm = new TimeSeriesMath(tsc);
-				tsm.setPathname(initPNFull);
-				initDss.write(tsm);
-			} catch (Exception e) {
-				WPPException.handleException(e);
+			if (dvPNFull !=null){
+				String initPNFull=addPathD(dvPNFull, initPN);
+				try {
+					String startTime=TimeOperation.createStartTime(DebugCorePlugin.msStartYear, DebugCorePlugin.msStartMonth, DebugCorePlugin.msStartDay, timestep);
+					String endTime=TimeOperation.createEndTime(DebugCorePlugin.msEndYear, DebugCorePlugin.msEndMonth, DebugCorePlugin.msEndDay, timestep);
+					TimeSeriesContainer tsc = (TimeSeriesContainer)dvDss.get(dvPNFull, startTime, endTime);
+					TimeSeriesMath tsm = new TimeSeriesMath(tsc);
+					tsm.setPathname(initPNFull);
+					initDss.write(tsm);
+				} catch (Exception e) {
+					WPPException.handleException(e);
+				}
 			}
 		}
 		
@@ -215,16 +217,18 @@ public class MSRDataTransfer {
 			String svPN = dvToSvPNMap.get(dvPN);
 			String[] dvPNParts = dvPN.split("//");
 			String dvPNFull=DssOperations.matchPathName(v, dvPNParts[0], dvPNParts[1]);
-			String svPNFull=addPathD(dvPNFull, svPN);
-			try {
-				String startTime=TimeOperation.createStartTime(DebugCorePlugin.msStartYear, DebugCorePlugin.msStartMonth, DebugCorePlugin.msStartDay, timestep);
-				String endTime=TimeOperation.createEndTime(DebugCorePlugin.msEndYear, DebugCorePlugin.msEndMonth, DebugCorePlugin.msEndDay, timestep);
-				TimeSeriesContainer tsc = (TimeSeriesContainer)dvDss.get(dvPNFull, startTime, endTime);
-				TimeSeriesMath tsm = new TimeSeriesMath(tsc);
-				tsm.setPathname(svPNFull);
-				svDss.write(tsm);
-			} catch (Exception e) {
-				WPPException.handleException(e);
+			if (dvPNFull !=null){
+				String svPNFull=addPathD(dvPNFull, svPN);
+				try {
+					String startTime=TimeOperation.createStartTime(DebugCorePlugin.msStartYear, DebugCorePlugin.msStartMonth, DebugCorePlugin.msStartDay, timestep);
+					String endTime=TimeOperation.createEndTime(DebugCorePlugin.msEndYear, DebugCorePlugin.msEndMonth, DebugCorePlugin.msEndDay, timestep);
+					TimeSeriesContainer tsc = (TimeSeriesContainer)dvDss.get(dvPNFull, startTime, endTime);
+					TimeSeriesMath tsm = new TimeSeriesMath(tsc);
+					tsm.setPathname(svPNFull);
+					svDss.write(tsm);
+				} catch (Exception e) {
+					WPPException.handleException(e);
+				}
 			}
 		}
 		

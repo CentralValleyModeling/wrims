@@ -24,9 +24,11 @@ public class DssOperations {
 		String pn=null;
 		int i=0;
 		int size=v.size();
+		partABC=partABC.toUpperCase();
+		partEF=partEF.toUpperCase();
 		while (pn == null && i<size){
 			String pnv=v.get(i).toString();
-			if (pnv.startsWith(partABC.toUpperCase()) && pnv.endsWith(partEF.toUpperCase()) ){
+			if (pnv.startsWith(partABC) && pnv.endsWith(partEF) ){
 				pn=pnv;
 			}
 			i++;
