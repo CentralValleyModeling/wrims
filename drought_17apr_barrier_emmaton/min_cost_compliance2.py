@@ -332,6 +332,11 @@ def standards():
        "path": "/QUAL8.1.2/CHSWP003/EC//15MIN/%s/" % fpart,\
        "value": 1000.,\
        "active":dtm.datetime(2014,6,15)},
+      {"name": "JerseyPoint",
+      "file": outfile,\
+      "path": "/QUAL8.1.2/RSAN018/EC//15MIN/%s/" % fpart,\
+      "value": 2200.,\
+      "active": True},
       {"name": "Threemile",
       "file": outfile,\
       "path": "/QUAL8.1.2/3MILE_SL/EC//15MIN/%s/" % fpart,\
