@@ -72,6 +72,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 	private String jarXA="XAOptimizer.jar";
 	private int sid=1;
 	private boolean afterFirstRound=false;
+	int ms=1;
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.ILaunchConfigurationDelegate#launch(org.eclipse.debug.core.ILaunchConfiguration, java.lang.String, org.eclipse.debug.core.ILaunch, org.eclipse.core.runtime.IProgressMonitor)
@@ -82,7 +83,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			DebugCorePlugin.target.sendRequest("terminate");
 		}
 		
-		int ms=Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_MULTISTUDY, "1"));
+		ms=Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_MULTISTUDY, "1"));
 		String lt=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_LAUNCHTYPE, "0");
 		DebugCorePlugin.launchType=Integer.parseInt(lt);
 		
@@ -100,7 +101,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 					break;
 			}
 		}else{
-			multiStudyRun(configuration, mode, launch, ms);
+			multiStudyRun(configuration, mode, launch);
 		}
 	}
 	
@@ -193,7 +194,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 		return terminateCode;
 	}
 	
-	public void multiStudyRun(ILaunchConfiguration configuration, String mode, ILaunch launch, int ms) throws CoreException{
+	public void multiStudyRun(ILaunchConfiguration configuration, String mode, ILaunch launch) throws CoreException{
 		
 		int terminateCode=0;
 		
@@ -328,6 +329,8 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 		if (sid>1) suffix="_MS"+sid;
 		
 		try {
+			String lastSuffix="_MS"+ms;
+			
 			String studyName=null;
 			studyName = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STUDY, (String)null);
 					
@@ -354,7 +357,10 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			if (DebugCorePlugin.launchType==1){
 				initFile=DebugCorePlugin.paInitFile;
 			}else{
-				if (afterFirstRound) initFile=dvarFile;
+				if (afterFirstRound) {
+					String lastDvarFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_DVARFILE+lastSuffix, (String)null);
+					initFile=lastDvarFile;
+				}
 			}
 			
 			gwDataFolder = null;
@@ -370,7 +376,10 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			
 			initFPart = null;
 			initFPart = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_INITFPART+suffix, (String)null);
-			if (afterFirstRound) initFPart=svFPart;
+			if (afterFirstRound){
+				String lastSvFPart=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SVFPART+lastSuffix, (String)null);
+				initFPart=lastSvFPart;
+			}
 			DebugCorePlugin.initFPart=initFPart;
 			
 			timeStep = null;
@@ -483,7 +492,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			
 			configMap.put("WreslPlus".toLowerCase(), wreslPlus);
 			
-			if (DebugCorePlugin.launchType==1){
+			if (DebugCorePlugin.launchType==1 || (ms>1 && afterFirstRound)){
 				configMap.put("prefixinittodvarfile", "no");
 			}
 			
@@ -556,7 +565,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 				out.println("LpSolveNumberOfRetries    2");				
 				
 			}
-			if (DebugCorePlugin.launchType==1){
+			if (DebugCorePlugin.launchType==1 || (ms>1 && afterFirstRound)){
 				out.println("prefixinittodvarfile  "+configMap.get("prefixinittodvarfile"));
 			}
 			
