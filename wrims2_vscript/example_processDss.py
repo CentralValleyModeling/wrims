@@ -16,32 +16,22 @@ LogUtils.initLogging()
 # parts are exact except for the blank parts
 def getDataRef(group, path, timewindow):
     
-    p = getExactPartsFromPath(path)
-    
-    
-    data = vu.findparts(g, a=p[0] , b=p[1] , c=p[2] , d=p[3] , e=p[4], f=p[5])[0]
-    
+    p = getExactPartsFromPath(path)    
+    data = vu.findparts(group, a=p[0] , b=p[1] , c=p[2] , d=p[3] , e=p[4], f=p[5])[0]
     dataReference = vu.DataReference.create(data,timewindow)
-    
     return dataReference
-
-
 
 # parts are exact except for the blank parts
 def getExactPartsFromPath(path):
     
     p_in = path.split('/')[1:-1]
     print p_in
-    
     p = []
     for part in p_in:
         if part:
             part = "^"+part+"$"
-
         p.append(part)
-        
     print p
-    
     return p
 
 beginYR = 2012
