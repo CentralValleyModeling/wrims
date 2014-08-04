@@ -6,28 +6,23 @@ import vutils as vu
 from scripts.tool import DssVista
 
 text_file = open("./data.txt", "r")
-dss_file ="./txt2DSS.dss"
+dss_file ="./dss_from_txt.dss"
 
 lines = text_file.readlines()
 
 pathname  = lines[0].strip()
 begin_time = lines[1].strip()
-interval  = lines[2].strip()
-units = lines[3].strip()
+units = lines[2].strip()
 
-print pathname, begin_time, interval, units
+print pathname, begin_time, units
 
-#beginTime = "31OCT2012 2400"
-interval = "1MON"
-pathname = "/CALLITE/X/FLOW///SCENARIO_101/"
-
-array = map(float, lines[4:])
+array = map(float, lines[3:])
 
 print array
 
-attr = vu.DataSetAttr(vu.DataType.REGULAR_TIME_SERIES, "TIME", "CFS", "", "PER-AVER");
-      
-DssVista.arr2dss(dss_file, array, interval, begin_time, pathname, attr)
+DssVista.array2dss(dss_file, array, begin_time, pathname, "CFS")
+
+text_file.close()
 
 print 'completed.'
 
