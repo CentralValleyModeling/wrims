@@ -28,7 +28,8 @@ configKeyList = [
              "SendAliasToDvar",
              "IlpLog",
              "IlpLogFormat",
-             "IlpLogVarValue"
+             "IlpLogVarValue",
+             "IlpLogAllCycles"
              ]
 
 def  newConfigMap():
