@@ -229,7 +229,9 @@ class Study:
 					DvarFile, 
 					StartYear, 
 					StartMonth, 
-					NumberOfSteps, 
+					NumberOfSteps=None, 
+					StopYear=None,
+			 		StopMonth=None,
 					LookupSubDir=None,
 					ShowWreslLog='Yes',
 					PrefixInitToDvarFile='Yes',
@@ -283,6 +285,9 @@ class Study:
 			
 		if NumberOfSteps:
 			self._cMap.put('NumberOfSteps', NumberOfSteps)
+		else:
+			self._cMap.put('StopYear', StopYear)
+			self._cMap.put('StopMonth', StopMonth)
 
 		if SvarFPart:
 			self._cMap.put('SvarFPart', SvarFPart)
