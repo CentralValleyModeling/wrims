@@ -235,7 +235,8 @@ class Study:
 					PrefixInitToDvarFile='Yes',
 					IlpLog='No',
 					IlpLogFormat='CplexLp',
-					IlpLogVarValue='no'
+					IlpLogVarValue='no',
+					IlpLogAllCycles='no'
 					):
 		
 		self._configPath = P.join(self._configDir, self._studyName+'.config')
@@ -256,7 +257,7 @@ class Study:
 		self._cMap.put('IlpLog', IlpLog)
 		self._cMap.put('IlpLogFormat', IlpLogFormat)		
 		self._cMap.put('IlpLogVarValue', IlpLogVarValue)
-
+		self._cMap.put('IlpLogAllCycles', IlpLogAllCycles)
 		
 				
 		if InitFile:
