@@ -131,7 +131,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 				Process process = Runtime.getRuntime().exec("WRIMSv2_Engine.bat");
 				IProcess p = DebugPlugin.newProcess(launch, process, "RunWPP");
 				process.waitFor();
-				terminateCode=p.getExitValue();
+				terminateCode=process.exitValue();
 			}
 		} catch (Exception e) {
 			WPPException.handleException(e);

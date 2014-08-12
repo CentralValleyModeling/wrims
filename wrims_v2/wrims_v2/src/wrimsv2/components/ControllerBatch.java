@@ -62,7 +62,7 @@ public class ControllerBatch {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if (!System.getenv().containsKey("WRIMS_DEBUG")) System.exit(0);
+		System.exit(0);
 	}
 
 	public void processArgs(String[] args){
