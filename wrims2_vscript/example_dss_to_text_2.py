@@ -68,8 +68,7 @@ for i in range(0,len(y_arr[pathnames[0]])):
         
 text_file.close()
 
-
-
+print 'completed.'
 
 
     
