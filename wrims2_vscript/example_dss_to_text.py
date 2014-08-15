@@ -29,30 +29,36 @@ def getExactPartsFromPath(path):
 
 text_file = open("./dss_to_txt.txt",'w')
 
-dss_file =  "./dss_from_txt.dss"
+dss_file =  "./dss_from_txt_2.dss"
 vu.DSSUtil.generateCatalog(dss_file)
 
-pathname = "/CALLITE/X/FLOW//1MON/SCENARIO_201/"
+g = vu.opendss(dss_file)
 
 begin_time = "31OCT2014 2400"
 end_time =   "31MAR2015 2400"
 tw = vu.timewindow(begin_time + " - " + end_time)  
 
-g = vu.opendss(dss_file)
+pathnames = []
 
-da = getDataRef(g, pathname, tw)
+pathnames.append("/CALLITE/X/FLOW//1MON/SCENARIO_201/")
+pathnames.append("/CALLITE/Y/STORAGE//1MON/SCENARIO_201/")
 
-ds = da.getData()
+for pathname in pathnames:
 
+    print pathname
+    da = getDataRef(g, pathname, tw)
 
-y_arr = ds.getYArray()
+    ds = da.getData()
 
-print y_arr
+    y_arr = ds.getYArray()
 
-for number in y_arr:
+    text_file.write(pathname)
 
-    text_file.write(str(number)+'\n')
+    for number in y_arr:
 
+        text_file.write(','+str(number))
+    text_file.write('\n')
+        
 text_file.close()
 
 
