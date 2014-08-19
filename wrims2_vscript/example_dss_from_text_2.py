@@ -30,6 +30,8 @@ for col in per_column:
 
 text_file.close()
 
+vu.DSSUtil.generateCatalog(dss_file)
+
 print 'completed.'
 
 
