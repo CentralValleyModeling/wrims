@@ -1,0 +1,149 @@
+DICU MODEL SUBAREA INFO FOR INCORPORATING NEW SEEPAGE AND IRRIGATION EFFICIENCY ESTIMATES
+(PH DOCUMENTED IN CHAPTER 5 OF 16TH ANNUAL REPORT ESTIMATES) INTO NODCU PROGRAM. NM (8/7/95)
+
+ SUBAREA                                        Uplands/Lowlands  Acreage       MWQI DOC subregion
+NO.  NAME                                      1=LOWLANDS,2= UP USGS digitized  Low/Mid/High
+
+  1  UNION ISLAND  (EAST)                                1          11782        Lower
+  2  UNION ISLAND  (WEST)                                1          13752        Lower
+  3  GRAND ISLAND                                        1          16928        Midrange
+  4  MOSSDALE                                            2           7664        Lower
+  5  MERRITT ISLAND                                      1           4912        Lower
+  6  LISBON DISTRICT                                     1           5857        Lower
+  7  ANDRUS ISLAND (LOWER)                               1           3432        Midrange
+  8  SHERMAN ISLAND                                      1          10436        High
+  9  NEW HOPE TRACT                                      1           9973        Midrange
+ 10  SUTTER ISLAND                                       1           2613        Lower
+ 11  ROUGH AND READY                                     1           1638        Midrange
+ 12  MOSS TRACT  (BOGGS)                                 1           2680        Midrange
+ 13  ANDRUS ISLAND (MIDDLE)                              1           1728        Midrange
+ 14  RYER ISLAND                                         1          11977        Midrange
+ 15  ROBERTS ISLAND  (MIDDLE)                            1          11978        Midrange
+ 16  EGBERT TRACT                                        1           5550        High
+ 17  EGBERT TRACT                                        2            571        High
+ 18  ROBERTS ISLAND  (UPPER)                             1           7715        Midrange
+ 19  TERMINOUS TRACT                                     1          11040        High
+ 20  PIERSON DISTRICT                                    1           8820        Midrange
+ 21  WALNUT GROVE                                        1            502        Midrange
+ 22  ANDRUS ISLAND (UPPER)                               1           2432        Midrange
+ 23  TYLER ISLAND                                        1           8936        Midrange
+ 24  POCKET DISTRICT                                     1           3257        Lower
+ 25  ROBERTS ISLAND  (LOWER)                             1          11580        Midrange
+ 26  SCRIBNER                                            1           1590        Lower
+ 27  HOOD JUNCTION                                       1            129        Midrange
+ 28  RANDALL ISLAND                                      1            424        Midrange
+ 29  BOULDIN ISLAND                                      1           6914        High
+ 30  GLIDE DISTRICT                                      1           1371        Lower
+ 31  EL PESCADERO                                        1           6856        Lower
+ 32  HOTCHKISS TRACT                                     1           3395        High
+ 33  BRYON TRACT                                         1           6370        High
+ 34  CLIFTON COURT                                       1           3426        High
+ 35  INACTIVE                                            1           2162        Midrange
+ 36  WEBER TRACT                                         2            771        Lower
+ 37  JERSEY ISLAND                                       1           3558        High
+ 38  WEST SACRAMENTO                                     1          10976        Lower
+ 39  NETHERLANDS (COUNTIES 48 & 57)                      1          25829        Lower
+ 40  UNNAMED                                             1           6557        Midrange
+ 41  PICO AND NAGLEE                                     2           9609        Lower
+ 42  TWITCHELL ISLAND                                    1           3631        High
+ 43  SMITH RANCH                                         1            971        High
+ 44  PRIVATELY OWNED                                     2           1769        Midrange
+ 45  SMITH TRACT                                         2           2060        Lower
+ 46  PROSPECT ISLAND                                     1           2353        Midrange
+ 47  MILDRED ISLAND                                      1           1303        Midrange
+ 48  VENICE ISLAND                                       1           4577        High
+ 49  ORWOOD TRACT                                        1           2426        High
+ 50  HOLLAND TRACT                                       1           4230        High
+ 51  WEBB TRACT                                          1           5449        High
+ 52  MANDEVILLE ISLAND                                   1           7774        Midrange
+ 53  BACON ISLAND                                        1           6676        Midrange
+ 54  EMPIRE TRACT                                        1           4433        High
+ 55  MCDONALD TRACT                                      1           3722        Midrange
+ 56  BRACK TRACT                                         1           5079        Midrange
+ 57  PALM TRACT                                          1           2565        High
+ 58  RINDGE TRACT                                        1           7125        High
+ 59  JONES TRACT  (LOWER)                                1           5951        Midrange
+ 60  JONES TRACT  (UPPER)                                1           6837        Midrange
+ 61  VICTORIA ISLAND                                     1           7778        Midrange
+ 62  MEDFORD ISLAND                                      1           1809        Midrange
+ 63  BISHOP TRACT                                        1           2271        High
+ 64  KING ISLAND                                         1           3860        High
+ 65  PESCADERO DISTRICT                                  1           4918        Lower
+ 66  PESCADERO DISTRICT                                  2           4100        Lower
+ 67  BRADFORD ISLAND                                     1           2173        High
+ 68  HASTINGS TRACT                                      1           7475        High
+ 69  STEWART TRACT                                       1           4235        Lower
+ 70  RIVER JUNCTION                                      2           1090        Lower
+ 71  VEALE TRACT                                         1           1360        High
+ 72  BRANNON ISLAND                                      1           7743        High
+ 73  YOLANO (COUNTIES 48 & 57)                           2          13308        Lower
+ 74  WOODWARD ISLAND                                     1           2157        Midrange
+ 75  SARGENT-BARNHART TRACT                              1           1336        High
+ 76  MCMULLIN RANCH                                      2           1877        Lower
+ 77  INACTIVE                                            2          19833        Lower
+ 78  UNNAMED                                             1           2807        High
+ 79  KASSON                                              2           2471        Lower
+ 80  CANAL RANCH                                         1           3127        Midrange
+ 81  CANAL RANCH                                         2            166        Midrange
+ 82  STARK TRACT                                         1            743        Lower
+ 83  LIBERTY ISLAND (COUNTIES 48 & 57)                   1           4598        Midrange
+ 84  WALTHALL TRACT                                      2           1318        Lower
+ 85  PARADISE JUNCTION                                   2           6159        Lower
+ 86  WETHERBEE LAKE                                      2            215        Lower
+ 87  CACHE-HAAS AREA                                     1           3485        Midrange
+ 88  CACHE-HAAS AREA                                     2           2110        Midrange
+ 89  PETER POCKET                                        2           1515        High
+ 90  MOSSDALE 2                                          1            467        Lower
+ 91  MOSSDALE 2                                          2            930        Lower
+ 92  UNDESIGNATED AREA                                   1          15837        Lower
+ 93  UNDESIGNATED AREA                                   2           7559        Lower
+ 94  EHRHARDT CLUB  (ARD)                                1            533        Midrange
+ 95  COSUMNES-MOKELUMNE                                  2           4264        Midrange
+ 96  DEAD HORSE ISLAND                                   1            226        Midrange
+ 97  HOOD AREA                                           1            252        Midrange
+ 98  IDA ISLAND                                          1             59        High
+ 99  LOCKE AREA                                          1            751        Midrange
+100  MCCORMACK-WILLIAMSON TRACT                          1           1589        Midrange
+101  STONE LAKE AREA                                     2           5067        Midrange
+102  UNDESIGNATED AREA                                   1           3243        High
+103  UNDESIGNATED AREA                                   2          54829        High
+104  ACKER ISLAND                                        1             89        High
+105  ATLAS TRACT                                         1            377        High
+106  ATLAS TRACT                                         2            107        High
+107  DREXLER TRACT                                       1           3291        Midrange
+108  ELMWOOD TRACT                                       1            883        High
+109  FERN ISLAND                                         1            130        Midrange
+110  HEADREACH ISLAND                                    1            194        Midrange
+111  HENNING TRACT                                       1           2888        Midrange
+112  HOG ISLAND                                          1            249        High
+113  HONKER LAKE TRACT                                   1           2260        Midrange
+114  MORRISON ISLAND                                     1             86        High
+115  RIO BLANCO TRACT                                    1            728        High
+116  SHIMA TRACT                                         1           1941        High
+117  SHIN KEE TRACT                                      1           1096        High
+118  SPUD ISLAND                                         1            182        Midrange
+119  STATEN ISLAND                                       1           9848        High
+120  WRIGHT TRACT                                        1           1484        High
+121  UNDESIGNATED AREA                                   1           6545        High
+122  UNDESIGNATED AREA                                   2           8955        High
+123  DECKER ISLAND                                       1            635        High
+124  LITTLE HOLLAND TRACT                                1            552        Midrange
+125  UNDESIGNATED AREA                                   1           1124        Lower
+126  UNDESIGNATED AREA                                   2          14655        Lower
+127  LITTLE HOLLAND TRACT                                1           2246        Midrange
+128  UNDESIGNATED AREA                                   2           4692        Lower
+129  UNDESINATED AREA                                    1           5963        High
+130  UNDESIGNATED AREA                                   2          32771        Lower
+131  BETHEL ISLAND                                       1           3501        High
+132  CONEY ISLAND                                        1           1220        Lower
+133  DUTCH SLOUGH AND PORTION OF SAND MOUND SLOUGH       1            359        High
+134  FALSE RIVERPIPER SL.SAND MOUND SL.& ROCK SLOUGH     1           1365        High
+135  FISHERMAN CUT WATERWAY                              1            122        High
+136  FRANKS TRACT                                        1           3602        High
+137  OLD RIVER HOLLAND CUT AND INDIAN SLOUGH             1           1532        High
+138  QUIMBY ISLAND                                       1            805        High
+139  RHODE ISLAND                                        1             85        High
+140  SAN JOAQUIN RIVER WATERWAY                          1           2144        High
+141  SAN JOAQUIN WATERWAY NORTH OF INDUSTRIAL STRIP      1           1603        High
+142  TAYLOR SLOUGH WATERWAY                              1            174        High
+

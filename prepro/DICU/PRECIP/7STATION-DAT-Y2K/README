@@ -1,0 +1,13 @@
+DICU for 2003 was updated by Jamie Anderson (jamiea@water.ca.gov) and Michael Mierzwa (mmierzwa@water.ca.gov)
+1/16/04
+
+HISTORICAL DATA ARE THROUGH CALENDAR YEAR 2003 ONLY.  Values for 2004 and 2005 are monthly averages of the values for 
+1922-1997 (CALSIM data).
+
+The DICU input are based on water years.  In order to include data for calendar year 2003,
+data for water year 2003 were used as follows:
+	October-December 2003: Historical data were used
+	January-September 2004: Monthly average data from 1922-1997 were used
+	WY2005 (Oct 2004-Sep 2005): Monthly average data from 1922-1997 were used
+	
+

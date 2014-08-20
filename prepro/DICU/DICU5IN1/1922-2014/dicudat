@@ -1,0 +1,61 @@
+          15        DICU5-1MAR96 1996 -
+        DELTA ISLAND CU STUDY FOR HYDRO MODEL CHNL DIV/RET DATA SET
+        ISLAND LU DATA(CD); MEAN ET DATA(DOP); NC & C WY IRR SCHED(CD);
+        ET ADJ BY HIST PAN EVAP(CD-4/81); 1969 SOIL MOIST DATA(DOP).
+PA    PASTURE
+AL    ALFALFA
+FI    FIELD
+SB    SUGAR BEETS
+GR    GRAIN
+RI    RICE
+TR    TRUCK
+TO    TOMATOES
+OR    ORCHARD
+VI    VINEYARD
+SF    SAFFLOWER
+CR    CORN
+PP    NI PASTURE
+VV    NI VINEYARD
+OO    NI ORCHARD
+PAET    2.80  1.40  0.60  0.70  1.50  2.70  4.10  5.50  6.40  7.60  6.60  4.80
+ALET    2.80  1.40  0.60  0.70  1.50  2.70  4.10  5.50  6.40  7.60  6.60  4.80
+FIET    1.10  1.10  0.60  0.70  1.50  1.70  1.60  2.60  5.50  7.30  4.90  2.20
+SBET    2.30  1.10  0.60  0.70  1.50  1.70  1.30  3.20  6.00  7.90  6.60  4.80
+GRET    1.00  1.10  0.60  0.70  1.50  2.70  4.60  5.00  2.20  1.00  1.00  1.00
+RIET    1.90  1.40  0.60  0.70  1.50  2.10  2.10  6.40  8.20  9.70  8.40  5.40
+TRET    1.00  1.10  0.60  0.70  1.50  1.60  1.30  3.20  6.40  8.30  5.50  1.70
+TOET    1.00  1.10  0.60  0.70  1.50  1.60  1.30  3.20  6.40  8.30  5.50  1.70
+ORET    2.50  1.20  0.60  0.70  1.50  1.70  2.70  4.90  5.90  7.00  6.10  4.40
+VIET    1.10  1.10  0.60  0.70  1.50  1.70  1.50  3.60  4.90  6.40  5.30  3.60
+SFET    1.90  1.50  1.00  0.70  1.50  1.90  2.50  4.80  8.70  7.70  4.40  2.50
+CRET    1.10  1.10  0.60  0.70  1.50  1.70  1.60  2.60  5.50  7.30  4.90  2.20
+PPET    2.80  1.40  0.60  0.70  1.50  2.70  4.10  5.50  6.40  7.60  6.60  4.80
+VVET    1.10  1.10  0.60  0.70  1.50  1.70  1.50  3.60  4.90  6.40  5.30  3.60
+OOET    2.50  1.20  0.60  0.70  1.50  1.70  2.70  4.90  5.90  7.00  6.10  4.40
+DGET    1.00  1.10  0.60  0.70  1.50  2.70  4.60  5.00  2.20  1.00  1.00  1.00
+NVET    2.80  1.40  0.60  0.70  1.50  2.70  4.10  5.50  6.40  7.60  6.60  4.80
+RVET    3.70  1.70  0.90  1.00  1.90  3.40  5.10  6.90  7.90  9.00  8.00  5.90
+WSET    3.70  1.70  0.90  1.00  1.90  3.40  5.10  6.90  7.90  9.00  8.00  5.90
+PCTLS    .00
+PRT1    WEIGHTED AVERAGE OF CLOSEST PRECIP STATIONS---DETERMINED 10/92
+PRT2    AS DESIGNATED BY 7-STATION THEISSEN POLYGONS
+PINDX   1.00
+URPCT     25    34    37    19    38    47
+PLV        4  1980  1990  2000  2010
+Z           UR    PA    AL     F    SB    GR    RI    TR    TO    OR    VI    SF    CR    PP    VV    OO
+LL 80      0     0     0     0     0     0     0     0     0     0     0     0
+LL 90      0     0     0     0     0     0     0     0     0     0     0     0
+LL 00      0     0     0     0     0     0     0     0     0     0     0     0
+LL 10      0     0     0     0     0     0     0     0     0     0     0     0
+PURF
+HPL 01  00.0     0
+PPL 80
+PPL 90
+PPL 00
+PPL 10
+RWL21      0
+RWL80      0     0     0
+RWL90      0     0     0
+RWL00      0     0     0
+RWL10      0     0     0
+EV  21   100   100   100   100   100   100   100   100   100   100   100   100
