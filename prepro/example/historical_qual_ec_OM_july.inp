@@ -55,12 +55,17 @@ mtz           361 ec       last   ${QUALBNDINP} /FILL+CHAN/RSAC054/EC//1HOUR/${H
 sac           330 ec       last   ${QUALBNDINP} /FILL+CHAN/RSAC139/EC//1DAY/${HISTQUALVERSION}/  
 vernalis       17 ec       last   ${QUALBNDINP} /FILL+CHAN/RSAN112/EC//1DAY/${HISTQUALVERSION}/  
 yolo          317 ec       last   ${QUALBNDINP} /FILL+CHAN/RSAC139/EC//1DAY/${HISTQUALVERSION}/  
+jones_out         118 ec       last   ${EVENTSINPUT} /HIST+CHAN/JONES/EC//1DAY/DWR-DMS/  
+jones_pumpout     121 ec       last   ${EVENTSINPUT} /HIST+CHAN/JONES/EC//1DAY/DWR-DMS/  
+END
+
+RESERVOIR_CONCENTRATION
+NAME            RES_NAME      VARIABLE FILLIN FILE            PATH                                        
+dicu_drain_bbid clifton_court ec       last   ${DICUFILE_ECE} /DICU-HIST+RSVR/BBID/DRAIN-EC//1MON/DWR-BDO/ 
 END
 
 QUAL_TIME_SERIES
 ${DSM2INPUTDIR}/node_concentration_dicu_ec_20090715.inp
-${DSM2INPUTDIR}/reservoir_concentration_dicu_ec_20090715.inp
-${DSM2INPUTDIR}/node_concentration_jones_qual_20090715.inp
 END
 
 OUTPUT_TIME_SERIES

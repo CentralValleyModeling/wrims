@@ -49,8 +49,6 @@ HYDROOUTFILE                        ./output/historical_OM_july.hof
 HYDRORSTFILE                        ./output/historical_OM_july.hrf    
 HYDROTIDEFILE                       z:/historical_OM_july.h5    
 OUTPUTFILE                          historical_OM_july.dss    
-PTMOUTFILE                          ./output/historical_OM_july.pof    
-PTMOUTPUTFILE                       ./output/ptmout.dss    
 PTM_START_DATE                      05JAN2014    
 QUALBNDINP                          ./201407_Historical_Files/hist_19902014_extract.dss    
 QUALOUTDSSFILE                      ./output/historical_OM_july.dss    
@@ -11583,7 +11581,7 @@ END
 
 GATE_WEIR_DEVICE
 GATE_NAME  DEVICE  NDUPLICATE  WIDTH  ELEV  HEIGHT  CF_FROM_NODE  CF_TO_NODE  DEFAULT_OP  
-clifton_court       reservoir_gates     5           20.000    -7.748    9999.000  1.0000        1.0000        unidir_from_node      
+clifton_court       reservoir_gates     5           20.000    -7.748    9999.000  1.0000        1.0000        unidir_from_node         
 delta_cross_channel    cross_channel_gates    2           60.000    -11.218   9999.000  2.0000        2.0000        gate_open             
 grant_line_barrier    barrier             1           180.000   3.313     9999.000  0.8000        0.8000        gate_open             
 middle_r_barrier    barrier             1           140.000   3.267     9999.000  0.7000        0.7000        gate_open             
