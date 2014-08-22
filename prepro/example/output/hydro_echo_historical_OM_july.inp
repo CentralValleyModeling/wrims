@@ -33,7 +33,7 @@ DSM2AGENCY                          dwr
 DSM2INPUTDIR                        ../../common_input    
 DSM2MODIFIER                        historical_OM_july    
 DSM2OUTPUTDIR                       ./output    
-END_DATE                            01JUL2014    
+END_DATE                            30JUL2014    
 END_TIME                            0000    
 EVENTSINPUT                         ./201407_Historical_Files/events.dss    
 FINE_OUT                            15MIN    
@@ -44,19 +44,18 @@ GATEOUTPUTFILE                      ./output/historical_OM_july.dss
 HISTFLOWVERSION                     DWR-DMS-201407    
 HISTQUALVERSION                     DWR-DMS-201407    
 HISTSTAGEVERSION                    DWR-DMS-201407    
-HYDROOUTDSSFILE                     ./output/historical_OM_july.dss    
+HYDROOUTDSSFILE                     z:/historical_OM_july.dss    
 HYDROOUTFILE                        ./output/historical_OM_july.hof    
 HYDRORSTFILE                        ./output/historical_OM_july.hrf    
 HYDROTIDEFILE                       z:/historical_OM_july.h5    
 OUTPUTFILE                          historical_OM_july.dss    
-PTM_START_DATE                      05JAN2014    
 QUALBNDINP                          ./201407_Historical_Files/hist_19902014_extract.dss    
 QUALOUTDSSFILE                      ./output/historical_OM_july.dss    
 QUALOUTFILE                         ./output/historical_OM_july.qof    
-QUALRSTFILE                         ./output/historical_OM_july.qrf    
+QUALRSTFILE                         z:/historical_OM_july.qrf    
 QUALTIDEFILE                        ./output/historical_OM_july_ec.h5    
 QUAL_START_DATE                     05JAN2014    
-START_DATE                          02JAN2014    
+START_DATE                          02NOV2013    
 START_TIME                          0000    
 STOCKTON_EFF_FLOW                   0.0    
 STOCKTON_FLOW_FILE                  constant    
@@ -83,8 +82,8 @@ hydro_time_step                     15min
 levee_slope                         0.33    
 maxiter                             20    
 printlevel                          1    
-run_end_date                        01JUL2014    
-run_start_date                      02JAN2014    
+run_end_date                        30JUL2014    
+run_start_date                      02NOV2013    
 run_start_time                      0000    
 temp_dir                            z:/temp    
 theta                               0.6    
@@ -11600,16 +11599,16 @@ GATE_NAME  DEVICE  NDUPLICATE  RADIUS  ELEV  CF_FROM_NODE  CF_TO_NODE  DEFAULT_O
 7_mile@3_mile       pipes               2           2.000     -4.595    0.5000        0.5000        gate_open             
 7_mile@sjr          pipes               1           2.000     -4.628    0.0000        0.0000        gate_close            
 goodyear_sl         pipes               4           2.000     -0.408    0.4000        0.4000        unidir_to_node        
-grant_line_barrier    pipes               6           2.000     -4.187    0.6000        0.6000        unidir_from_node         
+grant_line_barrier    pipes               6           2.000     -4.187    0.6000        0.6000        unidir_from_node      
 middle_r_barrier    pipes               6           2.000     -1.733    0.6000        0.6000        unidir_to_node        
 morrow_c_line_outfall    pipes               2           1.500     0.059     0.5000        0.5000        unidir_to_node        
 morrow_m_line_outfall    pipes               3           2.000     -2.321    0.5000        0.5000        unidir_to_node        
-morrow_sys_intake    pipes               3           2.000     -2.598    0.2000        0.2000        unidir_from_node         
+morrow_sys_intake    pipes               3           2.000     -2.598    0.2000        0.2000        unidir_from_node      
 old_r@head_barrier    pipes               8           2.000     -5.674    0.6000        0.6000        gate_open             
-old_r@tracy_barrier    pipes               9           2.000     -3.641    0.6000        0.6000        unidir_from_node         
-roaring_river_slough_intake    pipes               8           2.500     -2.510    0.5000        0.5000        unidir_from_node         
-sandmound_sl        pipes               2           2.750     -0.661    0.5000        0.5000        unidir_from_node         
-tom_paine_sl        pipes               6           1.880     -1.161    0.6000        0.6000        unidir_from_node         
+old_r@tracy_barrier    pipes               9           2.000     -3.641    0.6000        0.6000        unidir_from_node      
+roaring_river_slough_intake    pipes               8           2.500     -2.510    0.5000        0.5000        unidir_from_node      
+sandmound_sl        pipes               2           2.750     -0.661    0.5000        0.5000        unidir_from_node      
+tom_paine_sl        pipes               6           1.880     -1.161    0.6000        0.6000        unidir_from_node      
 END
 
 TRANSFER
@@ -13564,148 +13563,148 @@ END
 
 OUTPUT_CHANNEL
 NAME  CHAN_NO  DISTANCE  VARIABLE  INTERVAL  PERIOD_OP  FILE  
-calaveras           560      0               flow            15MIN         inst          ./output/historical_OM_july.dss    
-calaveras           560      0               stage           15MIN         inst          ./output/historical_OM_july.dss    
-cftrn000            172      727             flow            15MIN         inst          ./output/historical_OM_july.dss    
-cftrn000            172      727             stage           15MIN         inst          ./output/historical_OM_july.dss    
-chccc006            247      0               flow            15MIN         inst          ./output/historical_OM_july.dss    
-chccc006            247      0               stage           15MIN         inst          ./output/historical_OM_july.dss    
-chdmc004            216      0               flow            15MIN         inst          ./output/historical_OM_july.dss    
-chdmc004            216      0               stage           15MIN         inst          ./output/historical_OM_july.dss    
-chgrl009            207      36              flow            15MIN         inst          ./output/historical_OM_july.dss    
-chgrl009            207      36              stage           15MIN         inst          ./output/historical_OM_july.dss    
-chvct000            229      1328            flow            15MIN         inst          ./output/historical_OM_july.dss    
-chvct000            229      1328            stage           15MIN         inst          ./output/historical_OM_july.dss    
-chwst000            232      3084            flow            15MIN         inst          ./output/historical_OM_july.dss    
-chwst000            232      3084            stage           15MIN         inst          ./output/historical_OM_july.dss    
-cosumnes            549      0               flow            15MIN         inst          ./output/historical_OM_july.dss    
-cosumnes            549      0               stage           15MIN         inst          ./output/historical_OM_july.dss    
-cvp                 216      0               flow            15MIN         inst          ./output/historical_OM_july.dss    
-cvp                 216      0               stage           15MIN         inst          ./output/historical_OM_july.dss    
-dlc                 365      1510            flow            15MIN         inst          ./output/historical_OM_july.dss    
-dlc                 365      1510            stage           15MIN         inst          ./output/historical_OM_july.dss    
-fal                 279      4500            flow            15MIN         inst          ./output/historical_OM_july.dss    
-fal                 279      4500            stage           15MIN         inst          ./output/historical_OM_july.dss    
-fishermans          280      2000            flow            15MIN         inst          ./output/historical_OM_july.dss    
-fishermans          280      2000            stage           15MIN         inst          ./output/historical_OM_july.dss    
-glc                 213      0               flow            15MIN         inst          ./output/historical_OM_july.dss    
-glc                 213      0               stage           15MIN         inst          ./output/historical_OM_july.dss    
-gss                 366      990             flow            15MIN         inst          ./output/historical_OM_july.dss    
-gss                 366      990             stage           15MIN         inst          ./output/historical_OM_july.dss    
-hol                 117      2670            flow            15MIN         inst          ./output/historical_OM_july.dss    
-hol                 117      2670            stage           15MIN         inst          ./output/historical_OM_july.dss    
-hwb                 388      8306            flow            15MIN         inst          ./output/historical_OM_july.dss    
-hwb                 388      8306            stage           15MIN         inst          ./output/historical_OM_july.dss    
-lps                 324      3715            flow            15MIN         inst          ./output/historical_OM_july.dss    
-lps                 324      3715            stage           15MIN         inst          ./output/historical_OM_july.dss    
-mandeville          119      8000            flow            15MIN         inst          ./output/historical_OM_july.dss    
-mandeville          119      8000            stage           15MIN         inst          ./output/historical_OM_july.dss    
-mok                 349      1474            flow            15MIN         inst          ./output/historical_OM_july.dss    
-mok                 349      1474            stage           15MIN         inst          ./output/historical_OM_july.dss    
-mtz                 441      5398            flow            15MIN         inst          ./output/historical_OM_july.dss    
-mtz                 441      5398            stage           15MIN         inst          ./output/historical_OM_july.dss    
-orq                 119      4560            flow            15MIN         inst          ./output/historical_OM_july.dss    
-orq                 119      4560            stage           15MIN         inst          ./output/historical_OM_july.dss    
-osj                 124      4080            flow            15MIN         inst          ./output/historical_OM_july.dss    
-osj                 124      4080            stage           15MIN         inst          ./output/historical_OM_july.dss    
-rmid005_155         155      0               flow            15MIN         inst          ./output/historical_OM_july.dss    
-rmid005_155         155      0               stage           15MIN         inst          ./output/historical_OM_july.dss    
-rmid005_156         156      0               flow            15MIN         inst          ./output/historical_OM_july.dss    
-rmid005_156         156      0               stage           15MIN         inst          ./output/historical_OM_july.dss    
-rmid015             144      838             flow            15MIN         inst          ./output/historical_OM_july.dss    
-rmid015             144      838             stage           15MIN         inst          ./output/historical_OM_july.dss    
-rmid015_144         144      838             flow            15MIN         inst          ./output/historical_OM_july.dss    
-rmid015_144         144      838             stage           15MIN         inst          ./output/historical_OM_july.dss    
-rmid015_145         145      2114            flow            15MIN         inst          ./output/historical_OM_july.dss    
-rmid015_145         145      2114            stage           15MIN         inst          ./output/historical_OM_july.dss    
-rmid027             133      3641            flow            15MIN         inst          ./output/historical_OM_july.dss    
-rmid027             133      3641            stage           15MIN         inst          ./output/historical_OM_july.dss    
-rmid040             126      3951            flow            15MIN         inst          ./output/historical_OM_july.dss    
-rmid040             126      3951            stage           15MIN         inst          ./output/historical_OM_july.dss    
-rold024             106      2718            flow            15MIN         inst          ./output/historical_OM_july.dss    
-rold024             106      2718            stage           15MIN         inst          ./output/historical_OM_july.dss    
-rold034             90       3021            flow            15MIN         inst          ./output/historical_OM_july.dss    
-rold034             90       3021            stage           15MIN         inst          ./output/historical_OM_july.dss    
-rold040             82       2609            flow            15MIN         inst          ./output/historical_OM_july.dss    
-rold040             82       2609            stage           15MIN         inst          ./output/historical_OM_july.dss    
-rold046             80       1431            flow            15MIN         inst          ./output/historical_OM_july.dss    
-rold046             80       1431            stage           15MIN         inst          ./output/historical_OM_july.dss    
-rold047             79       2766            flow            15MIN         inst          ./output/historical_OM_july.dss    
-rold047             79       2766            stage           15MIN         inst          ./output/historical_OM_july.dss    
-rold059             71       3116            flow            15MIN         inst          ./output/historical_OM_july.dss    
-rold059             71       3116            stage           15MIN         inst          ./output/historical_OM_july.dss    
-rold074             54       0               flow            15MIN         inst          ./output/historical_OM_july.dss    
-rold074             54       0               stage           15MIN         inst          ./output/historical_OM_july.dss    
-rsac054             441      5398            flow            15MIN         inst          ./output/historical_OM_july.dss    
-rsac054             441      5398            stage           15MIN         inst          ./output/historical_OM_july.dss    
-rsac075             437      11108           flow            15MIN         inst          ./output/historical_OM_july.dss    
-rsac075             437      11108           stage           15MIN         inst          ./output/historical_OM_july.dss    
-rsac081             436      5733            flow            15MIN         inst          ./output/historical_OM_july.dss    
-rsac081             436      5733            stage           15MIN         inst          ./output/historical_OM_july.dss    
-rsac101             430      9684            flow            15MIN         inst          ./output/historical_OM_july.dss    
-rsac101             430      9684            stage           15MIN         inst          ./output/historical_OM_july.dss    
-rsac123             423      1358            flow            15MIN         inst          ./output/historical_OM_july.dss    
-rsac123             423      1358            stage           15MIN         inst          ./output/historical_OM_july.dss    
-rsac128             421      8585            flow            15MIN         inst          ./output/historical_OM_july.dss    
-rsac128             421      8585            stage           15MIN         inst          ./output/historical_OM_july.dss    
-rsac155             414      11921           flow            15MIN         inst          ./output/historical_OM_july.dss    
-rsac155             414      11921           stage           15MIN         inst          ./output/historical_OM_july.dss    
-rsan007             52       366             flow            15MIN         inst          ./output/historical_OM_july.dss    
-rsan007             52       366             stage           15MIN         inst          ./output/historical_OM_july.dss    
-rsan018             83       4213            flow            15MIN         inst          ./output/historical_OM_july.dss    
-rsan018             83       4213            stage           15MIN         inst          ./output/historical_OM_july.dss    
-rsan037             42       286             flow            15MIN         inst          ./output/historical_OM_july.dss    
-rsan037             42       286             stage           15MIN         inst          ./output/historical_OM_july.dss    
-rsan043             319      8571            flow            15MIN         inst          ./output/historical_OM_july.dss    
-rsan043             319      8571            stage           15MIN         inst          ./output/historical_OM_july.dss    
-rsan046             31       5628            flow            15MIN         inst          ./output/historical_OM_july.dss    
-rsan046             31       5628            stage           15MIN         inst          ./output/historical_OM_july.dss    
-rsan052             24       2643            flow            15MIN         inst          ./output/historical_OM_july.dss    
-rsan052             24       2643            stage           15MIN         inst          ./output/historical_OM_july.dss    
-rsan058             20       2520            flow            15MIN         inst          ./output/historical_OM_july.dss    
-rsan058             20       2520            stage           15MIN         inst          ./output/historical_OM_july.dss    
-rsan063             14       3281            flow            15MIN         inst          ./output/historical_OM_july.dss    
-rsan063             14       3281            stage           15MIN         inst          ./output/historical_OM_july.dss    
-rsan072             10       9400            flow            15MIN         inst          ./output/historical_OM_july.dss    
-rsan072             10       9400            stage           15MIN         inst          ./output/historical_OM_july.dss    
-rsan087             6        3930            flow            15MIN         inst          ./output/historical_OM_july.dss    
-rsan087             6        3930            stage           15MIN         inst          ./output/historical_OM_july.dss    
-rsan112             17       4744            flow            15MIN         inst          ./output/historical_OM_july.dss    
-rsan112             17       4744            stage           15MIN         inst          ./output/historical_OM_july.dss    
-ryi                 398      7500            flow            15MIN         inst          ./output/historical_OM_july.dss    
-ryi                 398      7500            stage           15MIN         inst          ./output/historical_OM_july.dss    
-sac                 410      0               flow            15MIN         inst          ./output/historical_OM_july.dss    
-sac                 410      0               stage           15MIN         inst          ./output/historical_OM_july.dss    
-sjl                 8        1250            flow            15MIN         inst          ./output/historical_OM_july.dss    
-sjl                 8        1250            stage           15MIN         inst          ./output/historical_OM_july.dss    
-slbar002            406      0               flow            15MIN         inst          ./output/historical_OM_july.dss    
-slbar002            406      0               stage           15MIN         inst          ./output/historical_OM_july.dss    
-sldut007            274      7351            flow            15MIN         inst          ./output/historical_OM_july.dss    
-sldut007            274      7351            stage           15MIN         inst          ./output/historical_OM_july.dss    
-slmzu011            517      7662            flow            15MIN         inst          ./output/historical_OM_july.dss    
-slmzu011            517      7662            stage           15MIN         inst          ./output/historical_OM_july.dss    
-slmzu025            513      13883           flow            15MIN         inst          ./output/historical_OM_july.dss    
-slmzu025            513      13883           stage           15MIN         inst          ./output/historical_OM_july.dss    
-sltrm004            310      540             flow            15MIN         inst          ./output/historical_OM_july.dss    
-sltrm004            310      540             stage           15MIN         inst          ./output/historical_OM_july.dss    
-sss                 383      9454            flow            15MIN         inst          ./output/historical_OM_july.dss    
-sss                 383      9454            stage           15MIN         inst          ./output/historical_OM_july.dss    
-sut                 379      500             flow            15MIN         inst          ./output/historical_OM_july.dss    
-sut                 379      500             stage           15MIN         inst          ./output/historical_OM_july.dss    
-taylorsl            272      7000            flow            15MIN         inst          ./output/historical_OM_july.dss    
-taylorsl            272      7000            stage           15MIN         inst          ./output/historical_OM_july.dss    
-trn                 172      990             flow            15MIN         inst          ./output/historical_OM_july.dss    
-trn                 172      990             stage           15MIN         inst          ./output/historical_OM_july.dss    
-vernalis            17       0               flow            15MIN         inst          ./output/historical_OM_july.dss    
-vernalis            17       0               stage           15MIN         inst          ./output/historical_OM_july.dss    
-yolo                398      0               flow            15MIN         inst          ./output/historical_OM_july.dss    
-yolo                398      0               stage           15MIN         inst          ./output/historical_OM_july.dss    
+calaveras           560      0               flow            15MIN         inst          z:/historical_OM_july.dss    
+calaveras           560      0               stage           15MIN         inst          z:/historical_OM_july.dss    
+cftrn000            172      727             flow            15MIN         inst          z:/historical_OM_july.dss    
+cftrn000            172      727             stage           15MIN         inst          z:/historical_OM_july.dss    
+chccc006            247      0               flow            15MIN         inst          z:/historical_OM_july.dss    
+chccc006            247      0               stage           15MIN         inst          z:/historical_OM_july.dss    
+chdmc004            216      0               flow            15MIN         inst          z:/historical_OM_july.dss    
+chdmc004            216      0               stage           15MIN         inst          z:/historical_OM_july.dss    
+chgrl009            207      36              flow            15MIN         inst          z:/historical_OM_july.dss    
+chgrl009            207      36              stage           15MIN         inst          z:/historical_OM_july.dss    
+chvct000            229      1328            flow            15MIN         inst          z:/historical_OM_july.dss    
+chvct000            229      1328            stage           15MIN         inst          z:/historical_OM_july.dss    
+chwst000            232      3084            flow            15MIN         inst          z:/historical_OM_july.dss    
+chwst000            232      3084            stage           15MIN         inst          z:/historical_OM_july.dss    
+cosumnes            549      0               flow            15MIN         inst          z:/historical_OM_july.dss    
+cosumnes            549      0               stage           15MIN         inst          z:/historical_OM_july.dss    
+cvp                 216      0               flow            15MIN         inst          z:/historical_OM_july.dss    
+cvp                 216      0               stage           15MIN         inst          z:/historical_OM_july.dss    
+dlc                 365      1510            flow            15MIN         inst          z:/historical_OM_july.dss    
+dlc                 365      1510            stage           15MIN         inst          z:/historical_OM_july.dss    
+fal                 279      4500            flow            15MIN         inst          z:/historical_OM_july.dss    
+fal                 279      4500            stage           15MIN         inst          z:/historical_OM_july.dss    
+fishermans          280      2000            flow            15MIN         inst          z:/historical_OM_july.dss    
+fishermans          280      2000            stage           15MIN         inst          z:/historical_OM_july.dss    
+glc                 213      0               flow            15MIN         inst          z:/historical_OM_july.dss    
+glc                 213      0               stage           15MIN         inst          z:/historical_OM_july.dss    
+gss                 366      990             flow            15MIN         inst          z:/historical_OM_july.dss    
+gss                 366      990             stage           15MIN         inst          z:/historical_OM_july.dss    
+hol                 117      2670            flow            15MIN         inst          z:/historical_OM_july.dss    
+hol                 117      2670            stage           15MIN         inst          z:/historical_OM_july.dss    
+hwb                 388      8306            flow            15MIN         inst          z:/historical_OM_july.dss    
+hwb                 388      8306            stage           15MIN         inst          z:/historical_OM_july.dss    
+lps                 324      3715            flow            15MIN         inst          z:/historical_OM_july.dss    
+lps                 324      3715            stage           15MIN         inst          z:/historical_OM_july.dss    
+mandeville          119      8000            flow            15MIN         inst          z:/historical_OM_july.dss    
+mandeville          119      8000            stage           15MIN         inst          z:/historical_OM_july.dss    
+mok                 349      1474            flow            15MIN         inst          z:/historical_OM_july.dss    
+mok                 349      1474            stage           15MIN         inst          z:/historical_OM_july.dss    
+mtz                 441      5398            flow            15MIN         inst          z:/historical_OM_july.dss    
+mtz                 441      5398            stage           15MIN         inst          z:/historical_OM_july.dss    
+orq                 119      4560            flow            15MIN         inst          z:/historical_OM_july.dss    
+orq                 119      4560            stage           15MIN         inst          z:/historical_OM_july.dss    
+osj                 124      4080            flow            15MIN         inst          z:/historical_OM_july.dss    
+osj                 124      4080            stage           15MIN         inst          z:/historical_OM_july.dss    
+rmid005_155         155      0               flow            15MIN         inst          z:/historical_OM_july.dss    
+rmid005_155         155      0               stage           15MIN         inst          z:/historical_OM_july.dss    
+rmid005_156         156      0               flow            15MIN         inst          z:/historical_OM_july.dss    
+rmid005_156         156      0               stage           15MIN         inst          z:/historical_OM_july.dss    
+rmid015             144      838             flow            15MIN         inst          z:/historical_OM_july.dss    
+rmid015             144      838             stage           15MIN         inst          z:/historical_OM_july.dss    
+rmid015_144         144      838             flow            15MIN         inst          z:/historical_OM_july.dss    
+rmid015_144         144      838             stage           15MIN         inst          z:/historical_OM_july.dss    
+rmid015_145         145      2114            flow            15MIN         inst          z:/historical_OM_july.dss    
+rmid015_145         145      2114            stage           15MIN         inst          z:/historical_OM_july.dss    
+rmid027             133      3641            flow            15MIN         inst          z:/historical_OM_july.dss    
+rmid027             133      3641            stage           15MIN         inst          z:/historical_OM_july.dss    
+rmid040             126      3951            flow            15MIN         inst          z:/historical_OM_july.dss    
+rmid040             126      3951            stage           15MIN         inst          z:/historical_OM_july.dss    
+rold024             106      2718            flow            15MIN         inst          z:/historical_OM_july.dss    
+rold024             106      2718            stage           15MIN         inst          z:/historical_OM_july.dss    
+rold034             90       3021            flow            15MIN         inst          z:/historical_OM_july.dss    
+rold034             90       3021            stage           15MIN         inst          z:/historical_OM_july.dss    
+rold040             82       2609            flow            15MIN         inst          z:/historical_OM_july.dss    
+rold040             82       2609            stage           15MIN         inst          z:/historical_OM_july.dss    
+rold046             80       1431            flow            15MIN         inst          z:/historical_OM_july.dss    
+rold046             80       1431            stage           15MIN         inst          z:/historical_OM_july.dss    
+rold047             79       2766            flow            15MIN         inst          z:/historical_OM_july.dss    
+rold047             79       2766            stage           15MIN         inst          z:/historical_OM_july.dss    
+rold059             71       3116            flow            15MIN         inst          z:/historical_OM_july.dss    
+rold059             71       3116            stage           15MIN         inst          z:/historical_OM_july.dss    
+rold074             54       0               flow            15MIN         inst          z:/historical_OM_july.dss    
+rold074             54       0               stage           15MIN         inst          z:/historical_OM_july.dss    
+rsac054             441      5398            flow            15MIN         inst          z:/historical_OM_july.dss    
+rsac054             441      5398            stage           15MIN         inst          z:/historical_OM_july.dss    
+rsac075             437      11108           flow            15MIN         inst          z:/historical_OM_july.dss    
+rsac075             437      11108           stage           15MIN         inst          z:/historical_OM_july.dss    
+rsac081             436      5733            flow            15MIN         inst          z:/historical_OM_july.dss    
+rsac081             436      5733            stage           15MIN         inst          z:/historical_OM_july.dss    
+rsac101             430      9684            flow            15MIN         inst          z:/historical_OM_july.dss    
+rsac101             430      9684            stage           15MIN         inst          z:/historical_OM_july.dss    
+rsac123             423      1358            flow            15MIN         inst          z:/historical_OM_july.dss    
+rsac123             423      1358            stage           15MIN         inst          z:/historical_OM_july.dss    
+rsac128             421      8585            flow            15MIN         inst          z:/historical_OM_july.dss    
+rsac128             421      8585            stage           15MIN         inst          z:/historical_OM_july.dss    
+rsac155             414      11921           flow            15MIN         inst          z:/historical_OM_july.dss    
+rsac155             414      11921           stage           15MIN         inst          z:/historical_OM_july.dss    
+rsan007             52       366             flow            15MIN         inst          z:/historical_OM_july.dss    
+rsan007             52       366             stage           15MIN         inst          z:/historical_OM_july.dss    
+rsan018             83       4213            flow            15MIN         inst          z:/historical_OM_july.dss    
+rsan018             83       4213            stage           15MIN         inst          z:/historical_OM_july.dss    
+rsan037             42       286             flow            15MIN         inst          z:/historical_OM_july.dss    
+rsan037             42       286             stage           15MIN         inst          z:/historical_OM_july.dss    
+rsan043             319      8571            flow            15MIN         inst          z:/historical_OM_july.dss    
+rsan043             319      8571            stage           15MIN         inst          z:/historical_OM_july.dss    
+rsan046             31       5628            flow            15MIN         inst          z:/historical_OM_july.dss    
+rsan046             31       5628            stage           15MIN         inst          z:/historical_OM_july.dss    
+rsan052             24       2643            flow            15MIN         inst          z:/historical_OM_july.dss    
+rsan052             24       2643            stage           15MIN         inst          z:/historical_OM_july.dss    
+rsan058             20       2520            flow            15MIN         inst          z:/historical_OM_july.dss    
+rsan058             20       2520            stage           15MIN         inst          z:/historical_OM_july.dss    
+rsan063             14       3281            flow            15MIN         inst          z:/historical_OM_july.dss    
+rsan063             14       3281            stage           15MIN         inst          z:/historical_OM_july.dss    
+rsan072             10       9400            flow            15MIN         inst          z:/historical_OM_july.dss    
+rsan072             10       9400            stage           15MIN         inst          z:/historical_OM_july.dss    
+rsan087             6        3930            flow            15MIN         inst          z:/historical_OM_july.dss    
+rsan087             6        3930            stage           15MIN         inst          z:/historical_OM_july.dss    
+rsan112             17       4744            flow            15MIN         inst          z:/historical_OM_july.dss    
+rsan112             17       4744            stage           15MIN         inst          z:/historical_OM_july.dss    
+ryi                 398      7500            flow            15MIN         inst          z:/historical_OM_july.dss    
+ryi                 398      7500            stage           15MIN         inst          z:/historical_OM_july.dss    
+sac                 410      0               flow            15MIN         inst          z:/historical_OM_july.dss    
+sac                 410      0               stage           15MIN         inst          z:/historical_OM_july.dss    
+sjl                 8        1250            flow            15MIN         inst          z:/historical_OM_july.dss    
+sjl                 8        1250            stage           15MIN         inst          z:/historical_OM_july.dss    
+slbar002            406      0               flow            15MIN         inst          z:/historical_OM_july.dss    
+slbar002            406      0               stage           15MIN         inst          z:/historical_OM_july.dss    
+sldut007            274      7351            flow            15MIN         inst          z:/historical_OM_july.dss    
+sldut007            274      7351            stage           15MIN         inst          z:/historical_OM_july.dss    
+slmzu011            517      7662            flow            15MIN         inst          z:/historical_OM_july.dss    
+slmzu011            517      7662            stage           15MIN         inst          z:/historical_OM_july.dss    
+slmzu025            513      13883           flow            15MIN         inst          z:/historical_OM_july.dss    
+slmzu025            513      13883           stage           15MIN         inst          z:/historical_OM_july.dss    
+sltrm004            310      540             flow            15MIN         inst          z:/historical_OM_july.dss    
+sltrm004            310      540             stage           15MIN         inst          z:/historical_OM_july.dss    
+sss                 383      9454            flow            15MIN         inst          z:/historical_OM_july.dss    
+sss                 383      9454            stage           15MIN         inst          z:/historical_OM_july.dss    
+sut                 379      500             flow            15MIN         inst          z:/historical_OM_july.dss    
+sut                 379      500             stage           15MIN         inst          z:/historical_OM_july.dss    
+taylorsl            272      7000            flow            15MIN         inst          z:/historical_OM_july.dss    
+taylorsl            272      7000            stage           15MIN         inst          z:/historical_OM_july.dss    
+trn                 172      990             flow            15MIN         inst          z:/historical_OM_july.dss    
+trn                 172      990             stage           15MIN         inst          z:/historical_OM_july.dss    
+vernalis            17       0               flow            15MIN         inst          z:/historical_OM_july.dss    
+vernalis            17       0               stage           15MIN         inst          z:/historical_OM_july.dss    
+yolo                398      0               flow            15MIN         inst          z:/historical_OM_july.dss    
+yolo                398      0               stage           15MIN         inst          z:/historical_OM_july.dss    
 END
 
 OUTPUT_RESERVOIR
 NAME  RES_NAME  NODE  VARIABLE  INTERVAL  PERIOD_OP  FILE  
-clifton_court       clifton_court       72          flow            15MIN         inst          ./output/historical_OM_july.dss    
-clifton_court       clifton_court       none        stage           15MIN         inst          ./output/historical_OM_july.dss    
+clifton_court       clifton_court       72          flow            15MIN         inst          z:/historical_OM_july.dss    
+clifton_court       clifton_court       none        stage           15MIN         inst          z:/historical_OM_july.dss    
 END
 
 OUTPUT_GATE

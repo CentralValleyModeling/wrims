@@ -9,11 +9,10 @@ HISTFLOWVERSION          DWR-DMS-${VERSIONDATE}
 HISTSTAGEVERSION         ${HISTFLOWVERSION}
 HISTQUALVERSION          DWR-DMS-${VERSIONDATE}
 #runtime                
-START_DATE               02JAN2014
+START_DATE               02NOV2013
 START_TIME               0000
 QUAL_START_DATE          05JAN2014
-PTM_START_DATE           ${QUAL_START_DATE}
-END_DATE                 01JUL2014
+END_DATE                 30JUL2014
 END_TIME                 0000
 TEMPDIR                  z:/temp                                #Spacious directory for scratch files             
 #Input envvars          
@@ -31,15 +30,15 @@ DSM2OUTPUTDIR            ${STUDYDIR}/output
 OUTPUTFILE               ${DSM2MODIFIER}.dss                                                                      
 #hydro                  
 FLOWPATTERN              ./output/FLOWPATTERN.dss
-HYDROOUTDSSFILE          ${DSM2OUTPUTDIR}/${OUTPUTFILE}
+HYDROOUTDSSFILE          z:/${OUTPUTFILE}   #${DSM2OUTPUTDIR}/${OUTPUTFILE}
 HYDROOUTFILE             ${DSM2OUTPUTDIR}/${DSM2MODIFIER}.hof
 HYDRORSTFILE             ${DSM2OUTPUTDIR}/${DSM2MODIFIER}.hrf
 HYDROTIDEFILE            z:/${DSM2MODIFIER}.h5
 GATEOUTPUTFILE           ${DSM2OUTPUTDIR}/${OUTPUTFILE}                                                           
 #Qual                   
-QUALOUTDSSFILE           ${DSM2OUTPUTDIR}/${OUTPUTFILE}
+QUALOUTDSSFILE           z:/${OUTPUTFILE}   #${DSM2OUTPUTDIR}/${OUTPUTFILE}
 QUALOUTFILE              ${DSM2OUTPUTDIR}/${DSM2MODIFIER}.qof
-QUALRSTFILE              ${DSM2OUTPUTDIR}/${DSM2MODIFIER}.qrf
+QUALRSTFILE              z:/${DSM2MODIFIER}.qrf #${DSM2OUTPUTDIR}/${DSM2MODIFIER}.qrf
 QUALTIDEFILE             ${DSM2OUTPUTDIR}/${DSM2MODIFIER}_ec.h5
 FINE_OUT                 15MIN
 FINE_OUT_DAY             1DAY                                                                                     

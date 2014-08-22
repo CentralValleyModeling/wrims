@@ -24,7 +24,7 @@ DSM2AGENCY                          dwr
 DSM2INPUTDIR                        ../../common_input    
 DSM2MODIFIER                        historical_OM_july    
 DSM2OUTPUTDIR                       ./output    
-END_DATE                            01JUL2014    
+END_DATE                            30JUL2014    
 END_TIME                            0000    
 EVENTSINPUT                         ./201407_Historical_Files/events.dss    
 FINE_OUT                            15MIN    
@@ -35,19 +35,18 @@ GATEOUTPUTFILE                      ./output/historical_OM_july.dss
 HISTFLOWVERSION                     DWR-DMS-201407    
 HISTQUALVERSION                     DWR-DMS-201407    
 HISTSTAGEVERSION                    DWR-DMS-201407    
-HYDROOUTDSSFILE                     ./output/historical_OM_july.dss    
+HYDROOUTDSSFILE                     z:/historical_OM_july.dss    
 HYDROOUTFILE                        ./output/historical_OM_july.hof    
 HYDRORSTFILE                        ./output/historical_OM_july.hrf    
 HYDROTIDEFILE                       z:/historical_OM_july.h5    
 OUTPUTFILE                          historical_OM_july.dss    
-PTM_START_DATE                      05JAN2014    
 QUALBNDINP                          ./201407_Historical_Files/hist_19902014_extract.dss    
-QUALOUTDSSFILE                      ./output/historical_OM_july.dss    
+QUALOUTDSSFILE                      z:/historical_OM_july.dss    
 QUALOUTFILE                         ./output/historical_OM_july.qof    
-QUALRSTFILE                         ./output/historical_OM_july.qrf    
+QUALRSTFILE                         z:/historical_OM_july.qrf    
 QUALTIDEFILE                        ./output/historical_OM_july_ec.h5    
 QUAL_START_DATE                     05JAN2014    
-START_DATE                          02JAN2014    
+START_DATE                          02NOV2013    
 START_TIME                          0000    
 STOCKTON_EFF_FLOW                   0.0    
 STOCKTON_FLOW_FILE                  constant    
@@ -72,7 +71,7 @@ flush_output                        20day
 init_conc                           0.0    
 printlevel                          1    
 qual_time_step                      15min    
-run_end_date                        01JUL2014    
+run_end_date                        30JUL2014    
 run_end_time                        0000    
 run_start_date                      05JAN2014    
 run_start_time                      0000    
@@ -86,7 +85,7 @@ IO_FILE
 MODEL  TYPE  IO  INTERVAL  FILE  
 qual        echo        out         none          ./output/qual_ec_echo_historical_OM_july.inp    
 qual        output      out         none          ./output/historical_OM_july.qof    
-qual        restart     out         1mon          ./output/historical_OM_july.qrf    
+qual        restart     out         1day          z:/historical_OM_july.qrf    
 END
 
 TIDEFILE
@@ -399,81 +398,81 @@ END
 
 OUTPUT_CHANNEL
 NAME  CHAN_NO  DISTANCE  VARIABLE  INTERVAL  PERIOD_OP  FILE  
-14ml_sl             312      11385           ec              15MIN         inst          ./output/historical_OM_july.dss    
-3mile_sl            309      7593            ec              15MIN         inst          ./output/historical_OM_july.dss    
-CHSWP003            82       length          ec              15MIN         inst          ./output/historical_OM_july.dss    
-SLPPR003            269      8333            ec              15MIN         inst          ./output/historical_OM_july.dss    
-cftrn000            172      727             ec              15MIN         inst          ./output/historical_OM_july.dss    
-chccc006            247      0               ec              15MIN         inst          ./output/historical_OM_july.dss    
-chdmc004            216      0               ec              15MIN         inst          ./output/historical_OM_july.dss    
-chdmc006            216      0               ec              15MIN         inst          ./output/historical_OM_july.dss    
-chgrl009            207      36              ec              15MIN         inst          ./output/historical_OM_july.dss    
-chipps_s_442        442      10700           ec              15MIN         inst          ./output/historical_OM_july.dss    
-chvct000            229      1328            ec              15MIN         inst          ./output/historical_OM_july.dss    
-chwst000            232      3084            ec              15MIN         inst          ./output/historical_OM_july.dss    
-dcc                 365      0               ec              15MIN         inst          ./output/historical_OM_july.dss    
-disappointment_sl    314      8130            ec              15MIN         inst          ./output/historical_OM_july.dss    
-emptract_sl         37       0               ec              15MIN         inst          ./output/historical_OM_july.dss    
-false_r             279      8937            ec              15MIN         inst          ./output/historical_OM_july.dss    
-fish_cut            280      11364           ec              15MIN         inst          ./output/historical_OM_july.dss    
-georgiana_sl        366      0               ec              15MIN         inst          ./output/historical_OM_july.dss    
-midr_sjr            161      0               ec              15MIN         inst          ./output/historical_OM_july.dss    
-mtzma_sl_us_scg_    512      6038            ec              15MIN         inst          ./output/historical_OM_july.dss    
-oldr_midr           59       0               ec              15MIN         inst          ./output/historical_OM_july.dss    
-oldr_mouth          124      7062            ec              15MIN         inst          ./output/historical_OM_july.dss    
-potato_sl           328      7158            ec              15MIN         inst          ./output/historical_OM_july.dss    
-rmid005             156      140             ec              15MIN         inst          ./output/historical_OM_july.dss    
-rmid015             144      838             ec              15MIN         inst          ./output/historical_OM_july.dss    
-rmid023             135      719             ec              15MIN         inst          ./output/historical_OM_july.dss    
-rmid027             133      3641            ec              15MIN         inst          ./output/historical_OM_july.dss    
-rmid040             126      3951            ec              15MIN         inst          ./output/historical_OM_july.dss    
-rock_sl_pp1         247      0               ec              15MIN         inst          ./output/historical_OM_july.dss    
-rold014             117      0               ec              15MIN         inst          ./output/historical_OM_july.dss    
-rold024             106      2718            ec              15MIN         inst          ./output/historical_OM_july.dss    
-rold034             90       3021            ec              15MIN         inst          ./output/historical_OM_july.dss    
-rold040             82       2609            ec              15MIN         inst          ./output/historical_OM_july.dss    
-rold046             80       1431            ec              15MIN         inst          ./output/historical_OM_july.dss    
-rold047             79       2766            ec              15MIN         inst          ./output/historical_OM_july.dss    
-rold059             71       3116            ec              15MIN         inst          ./output/historical_OM_july.dss    
-rold074             54       0               ec              15MIN         inst          ./output/historical_OM_july.dss    
-rsac054             441      length          ec              15MIN         inst          ./output/historical_OM_july.dss    
-rsac064             452      190             ec              15MIN         inst          ./output/historical_OM_july.dss    
-rsac075             437      11108           ec              15MIN         inst          ./output/historical_OM_july.dss    
-rsac077             437      1870            ec              15MIN         inst          ./output/historical_OM_july.dss    
-rsac081             436      5733            ec              15MIN         inst          ./output/historical_OM_july.dss    
-rsac092             433      12134           ec              15MIN         inst          ./output/historical_OM_july.dss    
-rsac101             430      9684            ec              15MIN         inst          ./output/historical_OM_july.dss    
-rsac123             423      1358            ec              15MIN         inst          ./output/historical_OM_july.dss    
-rsac128             421      8585            ec              15MIN         inst          ./output/historical_OM_july.dss    
-rsac139             418      4814            ec              15MIN         inst          ./output/historical_OM_july.dss    
-rsac155             414      11921           ec              15MIN         inst          ./output/historical_OM_july.dss    
-rsan007             52       366             ec              15MIN         inst          ./output/historical_OM_july.dss    
-rsan018             83       4213            ec              15MIN         inst          ./output/historical_OM_july.dss    
-rsan032             349      9672            ec              15MIN         inst          ./output/historical_OM_july.dss    
-rsan037             42       286             ec              15MIN         inst          ./output/historical_OM_july.dss    
-rsan043             319      8571            ec              15MIN         inst          ./output/historical_OM_july.dss    
-rsan046             31       5628            ec              15MIN         inst          ./output/historical_OM_july.dss    
-rsan052             24       2643            ec              15MIN         inst          ./output/historical_OM_july.dss    
-rsan058             20       2520            ec              15MIN         inst          ./output/historical_OM_july.dss    
-rsan063             14       3281            ec              15MIN         inst          ./output/historical_OM_july.dss    
-rsan072             10       9400            ec              15MIN         inst          ./output/historical_OM_july.dss    
-rsan087             6        3930            ec              15MIN         inst          ./output/historical_OM_july.dss    
-rsan112             17       4744            ec              15MIN         inst          ./output/historical_OM_july.dss    
-sac_emmaton         433      12134           ec              15MIN         inst          ./output/historical_OM_july.dss    
-sjr_san_andreas     45       12421           ec              15MIN         inst          ./output/historical_OM_july.dss    
-slbar002            406      0               ec              15MIN         inst          ./output/historical_OM_july.dss    
-sldut007            274      7351            ec              15MIN         inst          ./output/historical_OM_july.dss    
-sldut009            273      4026            ec              15MIN         inst          ./output/historical_OM_july.dss    
-slmzu011            517      0               ec              15MIN         inst          ./output/historical_OM_july.dss    
-slmzu025            513      13883           ec              15MIN         inst          ./output/historical_OM_july.dss    
-sltrm004            310      540             ec              15MIN         inst          ./output/historical_OM_july.dss    
-steamboat_sl        383      12528           ec              15MIN         inst          ./output/historical_OM_july.dss    
-sutter_sl           379      3300            ec              15MIN         inst          ./output/historical_OM_july.dss    
+14ml_sl             312      11385           ec              15MIN         inst          z:/historical_OM_july.dss    
+3mile_sl            309      7593            ec              15MIN         inst          z:/historical_OM_july.dss    
+CHSWP003            82       length          ec              15MIN         inst          z:/historical_OM_july.dss    
+SLPPR003            269      8333            ec              15MIN         inst          z:/historical_OM_july.dss    
+cftrn000            172      727             ec              15MIN         inst          z:/historical_OM_july.dss    
+chccc006            247      0               ec              15MIN         inst          z:/historical_OM_july.dss    
+chdmc004            216      0               ec              15MIN         inst          z:/historical_OM_july.dss    
+chdmc006            216      0               ec              15MIN         inst          z:/historical_OM_july.dss    
+chgrl009            207      36              ec              15MIN         inst          z:/historical_OM_july.dss    
+chipps_s_442        442      10700           ec              15MIN         inst          z:/historical_OM_july.dss    
+chvct000            229      1328            ec              15MIN         inst          z:/historical_OM_july.dss    
+chwst000            232      3084            ec              15MIN         inst          z:/historical_OM_july.dss    
+dcc                 365      0               ec              15MIN         inst          z:/historical_OM_july.dss    
+disappointment_sl    314      8130            ec              15MIN         inst          z:/historical_OM_july.dss    
+emptract_sl         37       0               ec              15MIN         inst          z:/historical_OM_july.dss    
+false_r             279      8937            ec              15MIN         inst          z:/historical_OM_july.dss    
+fish_cut            280      11364           ec              15MIN         inst          z:/historical_OM_july.dss    
+georgiana_sl        366      0               ec              15MIN         inst          z:/historical_OM_july.dss    
+midr_sjr            161      0               ec              15MIN         inst          z:/historical_OM_july.dss    
+mtzma_sl_us_scg_    512      6038            ec              15MIN         inst          z:/historical_OM_july.dss    
+oldr_midr           59       0               ec              15MIN         inst          z:/historical_OM_july.dss    
+oldr_mouth          124      7062            ec              15MIN         inst          z:/historical_OM_july.dss    
+potato_sl           328      7158            ec              15MIN         inst          z:/historical_OM_july.dss    
+rmid005             156      140             ec              15MIN         inst          z:/historical_OM_july.dss    
+rmid015             144      838             ec              15MIN         inst          z:/historical_OM_july.dss    
+rmid023             135      719             ec              15MIN         inst          z:/historical_OM_july.dss    
+rmid027             133      3641            ec              15MIN         inst          z:/historical_OM_july.dss    
+rmid040             126      3951            ec              15MIN         inst          z:/historical_OM_july.dss    
+rock_sl_pp1         247      0               ec              15MIN         inst          z:/historical_OM_july.dss    
+rold014             117      0               ec              15MIN         inst          z:/historical_OM_july.dss    
+rold024             106      2718            ec              15MIN         inst          z:/historical_OM_july.dss    
+rold034             90       3021            ec              15MIN         inst          z:/historical_OM_july.dss    
+rold040             82       2609            ec              15MIN         inst          z:/historical_OM_july.dss    
+rold046             80       1431            ec              15MIN         inst          z:/historical_OM_july.dss    
+rold047             79       2766            ec              15MIN         inst          z:/historical_OM_july.dss    
+rold059             71       3116            ec              15MIN         inst          z:/historical_OM_july.dss    
+rold074             54       0               ec              15MIN         inst          z:/historical_OM_july.dss    
+rsac054             441      length          ec              15MIN         inst          z:/historical_OM_july.dss    
+rsac064             452      190             ec              15MIN         inst          z:/historical_OM_july.dss    
+rsac075             437      11108           ec              15MIN         inst          z:/historical_OM_july.dss    
+rsac077             437      1870            ec              15MIN         inst          z:/historical_OM_july.dss    
+rsac081             436      5733            ec              15MIN         inst          z:/historical_OM_july.dss    
+rsac092             433      12134           ec              15MIN         inst          z:/historical_OM_july.dss    
+rsac101             430      9684            ec              15MIN         inst          z:/historical_OM_july.dss    
+rsac123             423      1358            ec              15MIN         inst          z:/historical_OM_july.dss    
+rsac128             421      8585            ec              15MIN         inst          z:/historical_OM_july.dss    
+rsac139             418      4814            ec              15MIN         inst          z:/historical_OM_july.dss    
+rsac155             414      11921           ec              15MIN         inst          z:/historical_OM_july.dss    
+rsan007             52       366             ec              15MIN         inst          z:/historical_OM_july.dss    
+rsan018             83       4213            ec              15MIN         inst          z:/historical_OM_july.dss    
+rsan032             349      9672            ec              15MIN         inst          z:/historical_OM_july.dss    
+rsan037             42       286             ec              15MIN         inst          z:/historical_OM_july.dss    
+rsan043             319      8571            ec              15MIN         inst          z:/historical_OM_july.dss    
+rsan046             31       5628            ec              15MIN         inst          z:/historical_OM_july.dss    
+rsan052             24       2643            ec              15MIN         inst          z:/historical_OM_july.dss    
+rsan058             20       2520            ec              15MIN         inst          z:/historical_OM_july.dss    
+rsan063             14       3281            ec              15MIN         inst          z:/historical_OM_july.dss    
+rsan072             10       9400            ec              15MIN         inst          z:/historical_OM_july.dss    
+rsan087             6        3930            ec              15MIN         inst          z:/historical_OM_july.dss    
+rsan112             17       4744            ec              15MIN         inst          z:/historical_OM_july.dss    
+sac_emmaton         433      12134           ec              15MIN         inst          z:/historical_OM_july.dss    
+sjr_san_andreas     45       12421           ec              15MIN         inst          z:/historical_OM_july.dss    
+slbar002            406      0               ec              15MIN         inst          z:/historical_OM_july.dss    
+sldut007            274      7351            ec              15MIN         inst          z:/historical_OM_july.dss    
+sldut009            273      4026            ec              15MIN         inst          z:/historical_OM_july.dss    
+slmzu011            517      0               ec              15MIN         inst          z:/historical_OM_july.dss    
+slmzu025            513      13883           ec              15MIN         inst          z:/historical_OM_july.dss    
+sltrm004            310      540             ec              15MIN         inst          z:/historical_OM_july.dss    
+steamboat_sl        383      12528           ec              15MIN         inst          z:/historical_OM_july.dss    
+sutter_sl           379      3300            ec              15MIN         inst          z:/historical_OM_july.dss    
 END
 
 OUTPUT_RESERVOIR
 NAME  RES_NAME  NODE  VARIABLE  INTERVAL  PERIOD_OP  FILE  
-clifton_court       clifton_court       none        ec              15MIN         inst          ./output/historical_OM_july.dss    
+clifton_court       clifton_court       none        ec              15MIN         inst          z:/historical_OM_july.dss    
 END
 
 OUTPUT_CHANNEL_SOURCE_TRACK
