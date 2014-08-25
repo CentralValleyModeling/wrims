@@ -196,7 +196,7 @@ def createrts(infilename,start,interval,props):
     
 def gen_ec(argv=None,ndo=None):
 
-    global cdecdss,wkdss,updss,histdss,astrodss
+    global wkdss,updss,histdss,astrodss
     global REAL,bindir,histdir,tempdir,tsdir
     global dicudir,dicu5file,dicu5in1file,nodcufile,precipfile,panevapfile
     global sdatetime,edatetime,twin
@@ -238,7 +238,7 @@ def gen_ec(argv=None,ndo=None):
     #Planning_Gate_File = paradic["Planning_Gate_File"]
     End_Planning_Date = paradic["End_Planning_Date"]
     #DCU_values = paradic["DCU"].strip().split()
-    cdecdss = os.path.join("./input/cdec.dss")
+    #cdecdss = os.path.join("./input/cdec.dss")
     astrodss = os.path.join("./input/astro-20years.dss")
 
     #HIST_DIR_Timeseries = HIST_DIR +"timeseries/"
