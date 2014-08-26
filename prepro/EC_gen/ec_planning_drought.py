@@ -73,7 +73,7 @@ def ec_doc(ndo,startdt,enddt):
     ts_1hr_rsac075_ec = merge(ts_1hr_rsac075,ts_1hr_int_rsac075,ts_1hour_empty)
     logging.debug("Loaded MAL EC")
     
-    logging.debug("Loading Carquinez stage")
+
     props={UNIT:"UMHOS/CM",INST:"INST-VAL"}
     if not startdt:
         logging.warning("No start date")
@@ -82,10 +82,10 @@ def ec_doc(ndo,startdt,enddt):
     edt = increment(enddt,-minutes(195),1)
     twindow = (sdt,edt)
     logging.debug("Carquinez, MRZ, MAL stage, astrodss = %s time window = %s %s " % (astrodss,sdt,edt))
+
+    logging.debug("Loading Carquinez stage")
     path1 = "/DELTA/RSAC045/STAGE//15MIN/DWR_ASTRO_88_98/" 
-    logging.debug("Retrieving data")
     ts_15min = dss_retrieve_ts(astrodss,path1,time_window =twindow )
-    logging.debug("Successfully retrieved data")
     ts_15min_shift = shift(ts_15min,minutes(195))  
     #the original code is supposed to move 4 hour
     ts_1hr_rsac045_stg = resample(ts_15min_shift,hours(1))   #column #4
