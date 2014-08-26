@@ -15,23 +15,23 @@ INST="inst"
 
 
 
-def working_ndo(startdt,enddt):
-    """Retrieves daily NDO from historical and realtime forecasts.
-       Interpolates them and merges them with historical taking precedent
-    """
-    twindow=(startdt,enddt)
-    path1 = "/HIST+CHAN/NDOI/FLOW//1DAY/DWR-DMS/"
-    logging.debug("Loading historical NDOI (net delta outflow) from file %s" % histdss)
-    ts_1day_NDOI = dss_retrieve_ts(histdss,path1,time_window = twindow)   #d:/delta/dsm2_v81/studies/historical//prepro/DSM2working.dss
-    ts_1hr_NDOI_flow = interpolate_ts(ts_1day_NDOI,"1HOUR",method=PREVIOUS)
-    ts_1hr_NDOI_flow = merge(ts_1hr_NDOI_flow,ts_1hour_empty)
-    path1 = "/FILL+CHAN/NDOI/FLOW//1DAY/"+YEAR+"/"
-    logging.debug("Loading predicted NDOI from file %s path %s" % (wkdss,path1))
-    ts_1day_NDOI = dss_retrieve_ts(wkdss,path1,time_window = (startdt,enddt+days(1)))  #'d:/delta/dsm2_v81/studies/Planning/prepro/planning-update.dss'
-    ts_1hr_NDOI_flow_forecast = interpolate_ts(ts_1day_NDOI,"1HOUR",method=PREVIOUS)
-    ts_1hr_NDOI_flow = merge(ts_1hr_NDOI_flow, ts_1hr_NDOI_flow_forecast)
-    ts_1hr_NDOI_flow = ts_1hr_NDOI_flow.window(startdt, enddt)
-    return ts_1hr_NDOI_flow
+# def working_ndo(startdt,enddt):
+#     """Retrieves daily NDO from historical and realtime forecasts.
+#        Interpolates them and merges them with historical taking precedent
+#     """
+#     twindow=(startdt,enddt)
+#     path1 = "/HIST+CHAN/NDOI/FLOW//1DAY/DWR-DMS/"
+#     logging.debug("Loading historical NDOI (net delta outflow) from file %s" % histdss)
+#     ts_1day_NDOI = dss_retrieve_ts(histdss,path1,time_window = twindow)   #d:/delta/dsm2_v81/studies/historical//prepro/DSM2working.dss
+#     ts_1hr_NDOI_flow = interpolate_ts(ts_1day_NDOI,"1HOUR",method=PREVIOUS)
+#     ts_1hr_NDOI_flow = merge(ts_1hr_NDOI_flow,ts_1hour_empty)
+#     path1 = "/FILL+CHAN/NDOI/FLOW//1DAY/"+YEAR+"/"
+#     logging.debug("Loading predicted NDOI from file %s path %s" % (wkdss,path1))
+#     ts_1day_NDOI = dss_retrieve_ts(wkdss,path1,time_window = (startdt,enddt+days(1)))  #'d:/delta/dsm2_v81/studies/Planning/prepro/planning-update.dss'
+#     ts_1hr_NDOI_flow_forecast = interpolate_ts(ts_1day_NDOI,"1HOUR",method=PREVIOUS)
+#     ts_1hr_NDOI_flow = merge(ts_1hr_NDOI_flow, ts_1hr_NDOI_flow_forecast)
+#     ts_1hr_NDOI_flow = ts_1hr_NDOI_flow.window(startdt, enddt)
+#     return ts_1hr_NDOI_flow
 
     
     
@@ -51,6 +51,7 @@ def ec_doc(ndo,startdt,enddt):
     # RSAC054 1hr ec, RSAC054 1hr EC, RSAC075 1hr EC, RSAC045 1 hr stage
     #RSAC054 1 hour stage # RSAc075 1 hour stage, /smooth/data/ 1 hour
     #for planning columns 1, 2, and 3 are all empty
+    logging.debug("MRZ MAL EC = %s time window = %s %s " % (histdss,startdt,enddt))
     logging.debug("Loading MRZ EC") 
     path1 = "/HIST+CHAN/RSAC054/EC//1HOUR/DWR-DMS/"
     path2 = "/HIST+CHAN/RSAC054/EC//15MIN/DWR-DMS/"
@@ -76,10 +77,11 @@ def ec_doc(ndo,startdt,enddt):
     props={UNIT:"UMHOS/CM",INST:"INST-VAL"}
     if not startdt:
         logging.warning("No start date")
+        logging.debug("No start date")
     sdt = increment(startdt,-minutes(195),1)
     edt = increment(enddt,-minutes(195),1)
     twindow = (sdt,edt)
-    logging.debug("astrodss = %s time window = %s %s " % (astrodss,sdt,edt))
+    logging.debug("Carquinez, MRZ, MAL stage, astrodss = %s time window = %s %s " % (astrodss,sdt,edt))
     path1 = "/DELTA/RSAC045/STAGE//15MIN/DWR_ASTRO_88_98/" 
     logging.debug("Retrieving data")
     ts_15min = dss_retrieve_ts(astrodss,path1,time_window =twindow )
@@ -196,7 +198,7 @@ def createrts(infilename,start,interval,props):
     
 def gen_ec(argv=None,ndo=None):
 
-    global wkdss,updss,histdss,astrodss
+    global updss,histdss,astrodss
     global REAL,bindir,histdir,tempdir,tsdir
     global dicudir,dicu5file,dicu5in1file,nodcufile,precipfile,panevapfile
     global sdatetime,edatetime,twin
@@ -232,24 +234,8 @@ def gen_ec(argv=None,ndo=None):
     logging.debug("Loaded configuration parameters")                
     #dsm2 dir
     Start_Planning_Date  = paradic["Start_Planning_Date"]
-    #Start_Run_Date = paradic["Start_Run_Date"]
-    #HIST_DIR = paradic["HIST_DIR"]
-    #HIST_DSS_FILE = paradic["HIST_DSS_FILE"]
-    #Planning_Gate_File = paradic["Planning_Gate_File"]
-    End_Planning_Date = paradic["End_Planning_Date"]
-    #DCU_values = paradic["DCU"].strip().split()
-    #cdecdss = os.path.join("./input/cdec.dss")
-    astrodss = os.path.join("./input/astro-20years.dss")
 
-    #HIST_DIR_Timeseries = HIST_DIR +"timeseries/"
-    # if there exist any data for newrun, delete them first  
-    '''selector="/*/*/*//*/"+YEAR+"/"
-    try:
-        dss_delete_ts(wkdss,selector)
-    except:
-        pass'''
-    #histdss = os.path.join(PREPRO_DIR,"DSM2working.dss")  #historical working dss file includes EC and all other data
-    histdss = "./input/DSM2working.dss"  #historical working dss file includes EC and all other data
+    End_Planning_Date = paradic["End_Planning_Date"]
     
     logging.debug("Processing dates")
 
@@ -262,8 +248,6 @@ def gen_ec(argv=None,ndo=None):
     #edatetime = "1/1/" + str(syear+1) + " 00:00"
     edatetime = End_Planning_Date + " 00:00"
     
-
-    #twin = (sdatetime, edatetime) #23:45")
     #first create some empty timeseries so they can use in the future months(1)
     startdt = parse_time(sdatetime)
     enddt = parse_time(edatetime)
@@ -276,13 +260,7 @@ def gen_ec(argv=None,ndo=None):
     twin=(startdt,enddt)
 
     logging.debug("Begin retrieving data")
-    #retrieve data from astro, and save it to file
-    #print "processing stage..."
-    #RSAC054astro = "/DELTA/RSAC054/STAGE//15MIN/DWR_ASTRO_90_08/"
-    #ts_RSAC054astro = dss_retrieve_ts(astrodss,RSAC054astro,time_window = twindow)
-    #path = "/FILL+CHAN/RSAC054/STAGE//15MIN/"+YEAR+"/"
-    #dss_store_ts(ts_RSAC054astro,wkdss,path)
-
+ 
     #create empty hour time series
     #startdt = startdt - parse_interval("4hour")
     numinterval = number_intervals(startdt,enddt,hours(1))+1
@@ -300,9 +278,7 @@ def gen_ec(argv=None,ndo=None):
     
     logging.info("Processing EC")
     print "processing EC..."
-    if not ndo:
-        logging.info("Looking up working_ndo")
-        ndo = working_ndo(startdt,enddt)
+
     logging.debug("Calling ec_doc")
     ec_doc(ndo,startdt,enddt)
     logging.debug("Back from ec_doc")
@@ -314,19 +290,20 @@ def echo_outflow(echofile,alt):
     return ndo
     
 if __name__ == "__main__":
-    
-#     base_file = "ndo_echo.dss"
-#     alt = "FOR2_DB3-JUN_CU5_DXC0"
-#     base_path_ndo = "/DSM2/NDO_BASE/FLOW//1DAY/%s/" % alt.upper()
-#     base_ndo = dss_retrieve_ts(base_file,base_path_ndo,unique = True)    
-#     ec=gen_ec([None,"./ec_gen/runpara.txt"],base_ndo)
 
     logfilename = os.path.join(os.path.dirname("."),"ec_gen.log")
-    logging.basicConfig(filename=logfilename,filemode='w',level=logging.INFO)
+    logging.basicConfig(filename=logfilename,filemode='w',level=logging.DEBUG)
     logging.info("logging enabled")   
     
     echo = "./input/ndo_echo.dss"
     alt = "FOR3_DB3-JUN_CU5_DXC0"
+    
+    astrodss = os.path.join("./input/astro-20years.dss")
+
+    #HIST_DIR_Timeseries = HIST_DIR +"timeseries/"
+    # if there exist any data for newrun, delete them first  
+
+    histdss = "./input/DSM2working_extract.dss"  #historical working dss file includes EC and all other data
     ndo = echo_outflow(echo,alt)
     gen_ec([None,"./runpara.txt"],ndo)
     #sys.exit(gen_ec())
