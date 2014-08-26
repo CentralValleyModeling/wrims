@@ -39,7 +39,10 @@ public class ControllerBatch {
 		long startTimeInMillis = Calendar.getInstance().getTimeInMillis();
 		try {
 			processArgs(args);
-			StudyDataSet sds = parse(); 
+			StudyDataSet sds = parse();
+			if (!StudyUtils.loadParserData){
+				StudyUtils.writeObj(sds, FilePaths.fullMainPath+".par");
+			}
 			long afterParsing = Calendar.getInstance().getTimeInMillis();
 			int parsingPeriod=(int) (afterParsing-startTimeInMillis);
 			System.out.println("Parsing Time is "+parsingPeriod/60000+"min"+Math.round((parsingPeriod/60000.0-parsingPeriod/60000)*60)+"sec");

@@ -240,7 +240,7 @@ public class StudyUtils {
 		return null;
 	}
 
-	private static void writeObj(StudyDataSet sds, String objFilePath) {
+	public static void writeObj(StudyDataSet sds, String objFilePath) {
 
 		FileOutputStream f_out = null;
 		ObjectOutputStream obj_out = null;

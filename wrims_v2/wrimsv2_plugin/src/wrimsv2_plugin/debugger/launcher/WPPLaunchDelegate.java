@@ -72,7 +72,8 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 	private String jarXA="XAOptimizer.jar";
 	private int sid=1;
 	private boolean afterFirstRound=false;
-	int ms=1;
+	private int ms=1;
+	private boolean useMainFile=true;
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.ILaunchConfigurationDelegate#launch(org.eclipse.debug.core.ILaunchConfiguration, java.lang.String, org.eclipse.debug.core.ILaunch, org.eclipse.core.runtime.IProgressMonitor)
@@ -151,6 +152,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 		procDV.deleteDVFile(configuration);
 		
 		int terminateCode=0;
+		useMainFile=true;
 		
 		while (procRun.continueRun() && terminateCode==0){				
 			int requestPort = -1;
@@ -188,6 +190,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			procDV.resetDVStartDate();
 			procRun.updatePATime();
 			procInit.createInitData(procRun);
+			useMainFile=false;
 		}
 		procInit.deletePAInit();
 		
@@ -212,6 +215,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 		endMonth=DebugCorePlugin.msEndMonth;
 		endDay=DebugCorePlugin.msEndDay;
 		
+		useMainFile=true;
 		while (msr.continueRun() && terminateCode==0){
 			sid=1;
 			while (sid<=ms && terminateCode==0){
@@ -234,6 +238,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			endMonth=DebugCorePlugin.msEndMonth;
 			endDay=DebugCorePlugin.msEndDay;
 			afterFirstRound=true;
+			useMainFile=false;
 		}
 	}
 	
@@ -516,7 +521,11 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			out.println("");
 			out.println("");
 			
-			out.println("MainFile           "+mainFileAbsPath);
+			if (useMainFile){
+				out.println("MainFile           "+mainFileAbsPath);
+			}else{
+				out.println("MainFile           "+mainFileAbsPath+".par");
+			}
 			out.println("Solver             "+configMap.get("solver".toLowerCase()));
 			if (new File(dvarFile).isAbsolute()){
 				out.println("DvarFile           "+dvarFile);

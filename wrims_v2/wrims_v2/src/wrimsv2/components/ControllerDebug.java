@@ -93,6 +93,9 @@ public class ControllerDebug extends Thread {
 		generateStudyFile();
 		try {
 			StudyDataSet sds = parse();
+			if (!StudyUtils.loadParserData){
+				StudyUtils.writeObj(sds, FilePaths.fullMainPath+".par");
+			}
 			if (StudyParser.total_errors==0){
 				totalCycles=sds.getModelList().size();
 				di.sendEvent("totalcycle#"+totalCycles);
@@ -188,8 +191,12 @@ public class ControllerDebug extends Thread {
 		}
 	}
 	
-	public StudyDataSet parse()throws RecognitionException, IOException{	
-		return StudyUtils.checkStudy(FilePaths.fullMainPath);	
+	public StudyDataSet parse()throws RecognitionException, IOException{
+		if(StudyUtils.loadParserData) {
+			return StudyUtils.loadObject(StudyUtils.parserDataPath);
+		}else{
+			return StudyUtils.checkStudy(FilePaths.fullMainPath);
+		}
 	}
 	
 	public void runModel(StudyDataSet sds){
