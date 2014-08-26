@@ -2,6 +2,7 @@ package wrimsv2.wreslparser.elements;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -12,6 +13,10 @@ import java.util.Properties;
 
 import org.antlr.runtime.RecognitionException;
 import org.apache.commons.io.FilenameUtils;
+
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
 
 import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.commondata.wresldata.StudyDataSet;
@@ -241,40 +246,33 @@ public class StudyUtils {
 	}
 
 	public static void writeObj(StudyDataSet sds, String objFilePath) {
-
-		FileOutputStream f_out = null;
-		ObjectOutputStream obj_out = null;
-
+		
+		Kryo kryo = new Kryo();
 		try {
-			f_out = new FileOutputStream(objFilePath);
-			obj_out = new ObjectOutputStream(f_out);
-			obj_out.writeObject(sds);
-		}
-		catch (IOException e) {
+			Output output = new Output(new FileOutputStream(objFilePath));
+		    kryo.writeObject(output, sds);
+		    output.close();
+		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 
 	private static StudyDataSet readObj(String objFilePath) {
 
-		FileInputStream f_in = null;
-		StudyDataSet obj_in = null;
-
+		StudyDataSet sds=new StudyDataSet();
+		Kryo kryo = new Kryo();
 		try {
-			f_in = new FileInputStream(objFilePath);
-			obj_in = (StudyDataSet) (new ObjectInputStream(f_in).readObject());
-		}
-		catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		catch (ClassNotFoundException e) {
+			Input input = new Input(new FileInputStream(objFilePath));
+			sds = kryo.readObject(input, StudyDataSet.class);
+		    input.close();
+		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		return obj_in;
+		return sds;
 
 	}
 }

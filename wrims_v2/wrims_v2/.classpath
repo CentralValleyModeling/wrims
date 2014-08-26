@@ -19,5 +19,8 @@
 	<classpathentry kind="lib" path="src/wrimsv2/lib/xstream-1.4.3.jar"/>
 	<classpathentry kind="lib" path="libs/testng-6.3.jar"/>
 	<classpathentry kind="lib" path="src/wrimsv2/lib/com.google.ortools.linearsolver.jar"/>
+	<classpathentry kind="lib" path="src/wrimsv2/lib/kryo-2.24.0.jar"/>
+	<classpathentry kind="lib" path="src/wrimsv2/lib/minlog-1.2.jar"/>
+	<classpathentry kind="lib" path="src/wrimsv2/lib/objenesis-1.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
