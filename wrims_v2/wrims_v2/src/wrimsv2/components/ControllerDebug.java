@@ -93,7 +93,7 @@ public class ControllerDebug extends Thread {
 		generateStudyFile();
 		try {
 			StudyDataSet sds = parse();
-			if (!StudyUtils.loadParserData){
+			if (!StudyUtils.loadParserData && !FilePaths.fullMainPath.endsWith(".par")){
 				StudyUtils.writeObj(sds, FilePaths.fullMainPath+".par");
 			}
 			if (StudyParser.total_errors==0){

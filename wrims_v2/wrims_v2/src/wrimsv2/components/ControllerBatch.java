@@ -40,7 +40,7 @@ public class ControllerBatch {
 		try {
 			processArgs(args);
 			StudyDataSet sds = parse();
-			if (!StudyUtils.loadParserData){
+			if (!StudyUtils.loadParserData && !FilePaths.fullMainPath.endsWith(".par")){
 				StudyUtils.writeObj(sds, FilePaths.fullMainPath+".par");
 			}
 			long afterParsing = Calendar.getInstance().getTimeInMillis();

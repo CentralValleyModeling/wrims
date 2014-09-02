@@ -31,6 +31,9 @@ public class Controller {
 		generateStudyFile();
 		try {
 			StudyDataSet sds = parse();
+			if (!StudyUtils.loadParserData && !FilePaths.fullMainPath.endsWith(".par")){
+				StudyUtils.writeObj(sds, FilePaths.fullMainPath+".par");
+			}
 			if (StudyUtils.total_errors==0){
 				new PreEvaluator(sds);
 				runModel(sds);
@@ -168,7 +171,11 @@ public class Controller {
 
 	
 	public StudyDataSet parse()throws RecognitionException, IOException{
-		return StudyUtils.checkStudy(FilePaths.fullMainPath);
+		if(StudyUtils.loadParserData) {
+			return StudyUtils.loadObject(StudyUtils.parserDataPath);
+		}else{
+			return StudyUtils.checkStudy(FilePaths.fullMainPath);
+		}
 	}
 
 	public void runModel(StudyDataSet sds){
