@@ -552,8 +552,11 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			out.println("SvarFPart          "+configMap.get("SvarFPart".toLowerCase()));
 			if (new File(initFile).isAbsolute()){
 				out.println("InitFile           "+initFile);
+				DebugCorePlugin.savedInitFileName=initFile;
 			}else{
-				out.println("InitFile           "+FileProcess.procRelativePath(initFile, configuration));
+				String procInitFile=FileProcess.procRelativePath(initFile, configuration);
+				out.println("InitFile           "+procInitFile);
+				DebugCorePlugin.savedInitFileName=procInitFile;
 			}
 			out.println("InitFPart          "+configMap.get("InitFPart".toLowerCase()));
 			out.println("TimeStep           "+configMap.get("TimeStep".toLowerCase()));

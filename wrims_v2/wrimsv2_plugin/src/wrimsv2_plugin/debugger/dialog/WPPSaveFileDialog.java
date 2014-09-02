@@ -64,7 +64,11 @@ public class WPPSaveFileDialog extends Dialog {
 		fl.marginHeight=15;
 		
 		Label label1=new Label(dialogArea, SWT.NONE);
-		if (flag==1){
+		if (flag==0){
+			label1.setText("Please select an initial file to save the data in memory:");
+			fileName=DebugCorePlugin.savedInitFileName;
+		}
+		else if (flag==1){
 			label1.setText("Please select a SV file to save the data in memory:");
 			fileName=DebugCorePlugin.savedSvFileName;
 		}else{
@@ -132,7 +136,9 @@ public class WPPSaveFileDialog extends Dialog {
 	
 	public void saveDssFile(){
 		String request;
-		if (flag==1){
+		if (flag==0){
+			request="saveinitdss:"+fileName;
+		}else if (flag==1){
 			request="savesvdss:"+fileName;
 		}else{
 			request="savedvdss:"+fileName;

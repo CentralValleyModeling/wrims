@@ -506,6 +506,20 @@ public class DebugInterface {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}else if(request.startsWith("saveinitdss:")){
+			int index=request.indexOf(":");
+			String fileName=request.substring(index+1);
+			boolean saveSucceed=saveInitDss(fileName);
+			try {
+				if (saveSucceed) {
+					sendRequest("initdsssaved");
+				}else{
+					sendRequest("dsssavefailed");
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}else if (request.startsWith("conditional_breakpoint:")){
 			setConditionalBreakpoint(request);
 			try {
@@ -2202,6 +2216,20 @@ public class DebugInterface {
 			}
 			ILP.initializeIlp();
 		}
+	}
+	
+	public boolean saveInitDss(String fileName){
+		DSSDataWriter writer = new DSSDataWriter(fileName);
+		try {
+			writer.openDSSFile();
+		} catch (Exception e) {
+			writer.closeDSSFile();
+			return false;
+		}
+		DssOperation.saveDVInitialData(writer, fileName);
+		DssOperation.saveSVInitialData(writer, fileName);
+		writer.closeDSSFile();
+		return true;
 	}
 	
 	public boolean saveSvDss(String fileName){

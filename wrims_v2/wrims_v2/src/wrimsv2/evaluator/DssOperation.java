@@ -146,6 +146,8 @@ public class DssOperation {
 				dataArray.add(dataEntry);
 			}
 		}
+		dds.setUnits(ts.units);
+		dds.setKind(ts.kind);
         dds.setData(dataArray);
         dds.setTimeStep(rts.getTimeInterval().toString());
         dds.setStartTime(startDate);
@@ -315,6 +317,68 @@ public class DssOperation {
 			writer.storeTimeSeriesData(pathName, startJulmin, ds,
 				storeFlags);
 		}
+	}
+	
+	public static void saveDVInitialData(DSSDataWriter writer, String fileName){
+		System.out.println("write initial data for dvar and alias to "+fileName);
+		Set initSet=DataTimeSeries.dvAliasInit.keySet();
+		Iterator iterator = initSet.iterator();
+		while(iterator.hasNext()){
+			String initName=(String)iterator.next();
+			DssDataSet dds=DataTimeSeries.dvAliasInit.get(initName);
+			ArrayList<Double> data=dds.getData();
+			int size=data.size();
+			double[] values=new double[size];
+			for (int i=0; i<size; i++){
+				values[i]=data.get(i);
+			}
+			String timeStep=dds.getTimeStep();
+			DSSData ds = new DSSData();
+			Date startDate=dds.getStartTime();
+			long startJulmin = TimeFactory.getInstance().createTime(startDate).getTimeInMinutes();
+			Date modelStartDate=new Date(ControlData.startYear-1900, ControlData.startMonth, ControlData.startDay);
+			ds._dataType=DSSUtil.REGULAR_TIME_SERIES;
+			ds._yType="PER-AVER";
+			ds._numberRead=TimeOperation.getNumberOfTimestep(startDate, modelStartDate, timeStep);;
+			ds._yUnits=dds.getUnits().toUpperCase();
+			ds._yValues = values;
+			boolean storeFlags = false;
+			String pathName="/"+ControlData.partA+"/"+DssOperation.getTSName(initName)+"/"+dds.getKind()+"//"+timeStep+"/"+ControlData.initPartF+"/";
+			writer.storeTimeSeriesData(pathName, startJulmin, ds,
+				storeFlags);
+		}
+		System.out.println("Initial file saved.");
+	}
+	
+	public static void saveSVInitialData(DSSDataWriter writer, String fileName){
+		System.out.println("write initial data for svar to "+fileName);
+		Set initSet=DataTimeSeries.svInit.keySet();
+		Iterator iterator = initSet.iterator();
+		while(iterator.hasNext()){
+			String initName=(String)iterator.next();
+			DssDataSet dds=DataTimeSeries.svInit.get(initName);
+			ArrayList<Double> data=dds.getData();
+			int size=data.size();
+			double[] values=new double[size];
+			for (int i=0; i<size; i++){
+				values[i]=data.get(i);
+			}
+			String timeStep=dds.getTimeStep();
+			DSSData ds = new DSSData();
+			Date startDate=dds.getStartTime();
+			long startJulmin = TimeFactory.getInstance().createTime(startDate).getTimeInMinutes();
+			Date modelStartDate=new Date(ControlData.startYear-1900, ControlData.startMonth, ControlData.startDay);
+			ds._dataType=DSSUtil.REGULAR_TIME_SERIES;
+			ds._yType="PER-AVER";
+			ds._numberRead=TimeOperation.getNumberOfTimestep(startDate, modelStartDate, timeStep);;
+			ds._yUnits=dds.getUnits().toUpperCase();
+			ds._yValues = values;
+			boolean storeFlags = false;
+			String pathName="/"+ControlData.partA+"/"+DssOperation.getTSName(initName)+"/"+dds.getKind()+"//"+timeStep+"/"+ControlData.initPartF+"/";
+			writer.storeTimeSeriesData(pathName, startJulmin, ds,
+				storeFlags);
+		}
+		System.out.println("Initial file saved.");
 	}
 	
 	public static void saveDvarData(DSSDataWriter writer, String fileName){
