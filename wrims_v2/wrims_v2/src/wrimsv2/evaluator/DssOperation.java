@@ -354,29 +354,70 @@ public class DssOperation {
 		System.out.println("write initial data for svar to "+fileName);
 		Set initSet=DataTimeSeries.svInit.keySet();
 		Iterator iterator = initSet.iterator();
+		Map<String, Timeseries> allTsMap = ControlData.allTsMap;
 		while(iterator.hasNext()){
 			String initName=(String)iterator.next();
 			DssDataSet dds=DataTimeSeries.svInit.get(initName);
 			ArrayList<Double> data=dds.getData();
-			int size=data.size();
-			double[] values=new double[size];
-			for (int i=0; i<size; i++){
-				values[i]=data.get(i);
+			String ctu = "none";
+			String units="none";
+			if (allTsMap.containsKey(initName)){
+				Timeseries ts=allTsMap.get(initName);
+				units = ts.units;
+				ctu=ts.convertToUnits;
 			}
-			String timeStep=dds.getTimeStep();
-			DSSData ds = new DSSData();
+			ArrayList<Double> values=dds.getData();
+			DSSData dd = new DSSData();
+			dd._dataType=DSSUtil.REGULAR_TIME_SERIES;
+			dd._yType="PER-AVER";
+			int size=values.size();
+			dd._numberRead=size;
+			dd._yUnits=dds.getUnits().toUpperCase();
+			dd._yValues=new double[size];
 			Date startDate=dds.getStartTime();
-			long startJulmin = TimeFactory.getInstance().createTime(startDate).getTimeInMinutes();
-			Date modelStartDate=new Date(ControlData.startYear-1900, ControlData.startMonth, ControlData.startDay);
-			ds._dataType=DSSUtil.REGULAR_TIME_SERIES;
-			ds._yType="PER-AVER";
-			ds._numberRead=TimeOperation.getNumberOfTimestep(startDate, modelStartDate, timeStep);;
-			ds._yUnits=dds.getUnits().toUpperCase();
-			ds._yValues = values;
+			startDate.setTime(startDate.getTime()-1*24*60*60);
+			int year=startDate.getYear()+1900;
+			int month=startDate.getMonth()+1;
+			int day=startDate.getDate();
+			String startDateStr=TimeOperation.dssTimeEndDay(year, month, day);
+			long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
+			if (units.equals("taf") && ctu.equals("cfs")){			
+				for (int i=0; i<size; i++){
+					Double value=values.get(i);
+					if (value == null){
+						dd._yValues[i]=-901.0;
+					}else{
+						if (value == -901.0 || value == -902.0){
+							dd._yValues[i]=value;
+						}else{
+							TimeOperation.findTime(i, year, month, day);
+							dd._yValues[i]=value/Evaluation.tafcfs("taf_cfs");;
+						}
+					}
+				}
+			}else if (units.equals("cfs") && ctu.equals("taf")){			
+				for (int i=0; i<size; i++){
+					Double value=values.get(i);
+					if (value == null){
+						dd._yValues[i]=-901.0;
+					}else{
+						if (value == -901.0 || value == -902.0){
+							dd._yValues[i]=value;
+						}else{
+							TimeOperation.findTime(i, year, month, day);
+							dd._yValues[i]=value/Evaluation.tafcfs("cfs_taf");;
+						}
+					}
+				}
+			}else{
+				for (int i=0; i<size; i++){
+					Double value=values.get(i);
+					dd._yValues[i]=value;
+				}
+			}
 			boolean storeFlags = false;
-			String pathName="/"+ControlData.partA+"/"+DssOperation.getTSName(initName)+"/"+dds.getKind()+"//"+timeStep+"/"+ControlData.initPartF+"/";
-			writer.storeTimeSeriesData(pathName, startJulmin, ds,
-				storeFlags);
+			String pathName="/"+ControlData.partA+"/"+initName+"/"+dds.getKind()+"//"+dds.getTimeStep()+"/"+ControlData.initPartF+"/";
+			writer.storeTimeSeriesData(pathName, startJulmin, dd, storeFlags);
 		}
 		System.out.println("Initial file saved.");
 	}
