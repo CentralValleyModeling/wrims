@@ -108,6 +108,8 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 	
 	public int regularLaunch(ILaunchConfiguration configuration, String mode, ILaunch launch) throws CoreException{
 		
+		useMainFile=true;
+		
 		int terminateCode=0;
 		int requestPort = -1;
 		int eventPort = -1;
