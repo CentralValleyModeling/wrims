@@ -28,6 +28,9 @@ public class ControllerSG {
 		try {
 			StudyDataSet sds = parse();
 			if (StudyUtils.total_errors==0){
+				if (!StudyUtils.loadParserData && !FilePaths.fullMainPath.endsWith(".par")){
+					StudyUtils.writeObj(sds, FilePaths.fullMainPath+".par");
+				}
 				new PreEvaluator(sds);
 				runModel(sds);
 			}
@@ -48,6 +51,9 @@ public class ControllerSG {
 		try {
 			StudyDataSet sds = parse();
 			if (StudyUtils.total_errors==0){
+				if (!StudyUtils.loadParserData && !FilePaths.fullMainPath.endsWith(".par")){
+					StudyUtils.writeObj(sds, FilePaths.fullMainPath+".par");
+				}
 				new PreEvaluator(sds);
 				runModel(sds);
 			}
@@ -170,7 +176,11 @@ public class ControllerSG {
 	}
 	
 	public StudyDataSet parse()throws RecognitionException, IOException{		
-		return StudyUtils.checkStudy(FilePaths.fullMainPath);
+		if(StudyUtils.loadParserData) {
+			return StudyUtils.loadObject(StudyUtils.parserDataPath);
+		}else{
+			return StudyUtils.checkStudy(FilePaths.fullMainPath);
+		}
 	}
 	
 	public void runModel(StudyDataSet sds){

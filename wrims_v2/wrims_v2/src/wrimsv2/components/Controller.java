@@ -31,10 +31,10 @@ public class Controller {
 		generateStudyFile();
 		try {
 			StudyDataSet sds = parse();
-			if (!StudyUtils.loadParserData && !FilePaths.fullMainPath.endsWith(".par")){
-				StudyUtils.writeObj(sds, FilePaths.fullMainPath+".par");
-			}
 			if (StudyUtils.total_errors==0){
+				if (!StudyUtils.loadParserData && !FilePaths.fullMainPath.endsWith(".par")){
+					StudyUtils.writeObj(sds, FilePaths.fullMainPath+".par");
+				}
 				new PreEvaluator(sds);
 				runModel(sds);
 			}

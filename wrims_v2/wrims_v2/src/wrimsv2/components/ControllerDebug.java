@@ -93,10 +93,10 @@ public class ControllerDebug extends Thread {
 		generateStudyFile();
 		try {
 			StudyDataSet sds = parse();
-			if (!StudyUtils.loadParserData && !FilePaths.fullMainPath.endsWith(".par")){
-				StudyUtils.writeObj(sds, FilePaths.fullMainPath+".par");
-			}
 			if (StudyParser.total_errors==0){
+				if (!StudyUtils.loadParserData && !FilePaths.fullMainPath.endsWith(".par")){
+					StudyUtils.writeObj(sds, FilePaths.fullMainPath+".par");
+				}
 				totalCycles=sds.getModelList().size();
 				di.sendEvent("totalcycle#"+totalCycles);
 				new PreEvaluator(sds);
