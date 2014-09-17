@@ -58,6 +58,7 @@ public class ControllerBatch {
 
 			} else {
 				System.out.println("=================Run ends with errors=================");
+				System.exit(1);
 			}
 			
 		} catch (RecognitionException e) {
