@@ -202,6 +202,7 @@ public class ControllerBatch {
 
 		if (Error.getTotalError()>0){
 			System.out.println("=================Run ends with errors====");
+			System.exit(1);
 		} else {
 			System.out.println("=================Run ends!================");
 		}
