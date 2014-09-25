@@ -678,14 +678,14 @@ public class Evaluation {
 					}
 				}
 			}
-			value=svarTimeSeries(ident);
+			value=svarTimeSeries(ident, idValue);
 		}
 		
 		result=new IntDouble (value, false);
 		return new EvalExpression(result);
 	}
 	
-	public static double svarTimeSeries(String ident){
+	public static double svarTimeSeries(String ident, int idValue){
 		int index;
 		String entryNameTS=DssOperation.entryNameTS(ident, ControlData.timeStep);
 		if (DataTimeSeries.svTS.containsKey(entryNameTS)){
@@ -717,6 +717,7 @@ public class Evaluation {
 			DataTimeSeries.lookInitDss.add(entryNameTS);
 			if (DssOperation.getSVInitTimeseries(ident)){
 				DssDataSet dds=DataTimeSeries.svInit.get(entryNameTS);
+				TimeOperation.findTime(idValue);
 				index =timeSeriesIndex(dds);
 				ArrayList<Double> data=dds.getData();
 				if (index>=0 && index<data.size()){
@@ -855,14 +856,14 @@ public class Evaluation {
 	public static EvalExpression timeseries(){
 		String svName=ControlData.currEvalName;
 		TimeOperation.findTime(0);
-		double value=svarTimeSeries(svName);
+		double value=svarTimeSeries(svName, 0);
 		IntDouble id=new IntDouble(value,false);
 		return new EvalExpression(id);
 	}
 	
 	public static double timeseries(String tsName){
 		TimeOperation.findTime(0);
-		return svarTimeSeries(tsName);
+		return svarTimeSeries(tsName, 0);
 	}
 	
 	public static IntDouble pastCycleNoTimeArray(String ident, String cycle){
