@@ -86,6 +86,7 @@ public class DssOperation {
         dds.setTimeStep(rts.getTimeInterval().toString());
         dds.setStartTime(startDate);
         dds.setFromDssFile(true);
+        dds.generateStudyStartIndex();
         String entryNameTS=DssOperation.entryNameTS(name, timeStep);
         DataTimeSeries.svTS.put(entryNameTS, dds);
 		return true;

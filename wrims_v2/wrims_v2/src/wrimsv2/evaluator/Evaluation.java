@@ -692,7 +692,7 @@ public class Evaluation {
 			DssDataSet dds=DataTimeSeries.svTS.get(entryNameTS);
 			index =timeSeriesIndex(dds);
 			ArrayList<Double> data=dds.getData();
-			if (index>=0 && index<data.size()){
+			if (index>=0 && index<data.size() && index>=dds.getStudyStartIndex()){
 				double value=data.get(index);
 				if (dds.fromDssFile()){
 					if (value != -901.0 && value != -902.0){
