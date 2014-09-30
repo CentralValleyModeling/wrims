@@ -9,6 +9,7 @@ import hec.io.TimeSeriesContainer;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Vector;
 
 import org.apache.commons.io.FileDeleteStrategy;
@@ -83,6 +84,7 @@ public class PAProcInit {
 			return;
 		}
 		Vector<String> paPathList = paInitDss.getPathnameList();
+		Collections.sort(paPathList, Collections.reverseOrder());
 		for (int i=0; i<paPathList.size(); i++){
 			String path = paPathList.get(i);
 			try {
