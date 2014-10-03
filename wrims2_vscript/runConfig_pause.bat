@@ -41,7 +41,7 @@ set temp_wrims2=%~dp0_temp\%t%\
 : wrims2 lib jars  :
 :------------------:
 set JarDir=%~dp0%lib\wrims2
-set HecJarDir=%~dp0%lib\hecdss
+set HecJarDir=%~dp0%lib\vista_hec\lib
 set AppJars=%JarDir%\WRIMSv2.jar
 set AppJars=%AppJars%;%HecJarDir%\heclib.jar
 set AppJars=%AppJars%;%JarDir%\jnios.jar
