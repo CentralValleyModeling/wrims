@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project default="distro" name="Create Zip for WRIMSv2 VScript">
        		
-	<property name="version" value="v1.3"/>
+	<property name="version" value="v1.4"/>
 	<property name="7za.path" location="distro/lib/7za.exe"/>
 	<property name="jre.dir" location="jre/"/>
 	<property name="src.dir" location="../wrims2_vscript/"/>
