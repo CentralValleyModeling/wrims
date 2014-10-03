@@ -75,16 +75,15 @@ configItem returns[String key, String val ]
 
     k=configKey         { $key=configKeyMap.get($k.text.toLowerCase()); } 
                         //{ System.out.print("key: "+$key);System.out.print("\t");} 
-    ( v1=integer        { $val=$v1.text;} //System.out.println($v1.text);}  
-    | v2=complex        { $val=$v2.text;} //System.out.println($v2.text);} 
-    ) 
+     
+    v2=complex        { $val=$v2.text;} //System.out.println($v2.text);} 
+     
     ENDLINE+
    
 
    ;
 
-integer : INT ;
-complex : ( ID | '.' | '-' | '_' | '\"' | '\\' | ':' )+ ;
+complex : ( ID | ID_preINT | INT | '.' | '-' | '_' | '\"' | '\\' | ':' )+ ;
 
 
 
@@ -101,13 +100,15 @@ configKey : ke=ID
 SL_COMMENT : '#' ~('\r'|'\n')*  {$channel=HIDDEN;} ;
 
 
-INT : Digit+ ;
+
 
 Begin  : 'Begin' | 'begin' | 'BEGIN'  ;
 End    : 'End' | 'end' | 'END'    ;
 Config : 'Config' | 'config' | 'CONFIG' ;
 
-ID : ( Letter | Digit | '_' )*;
+INT :        Digit+ ;
+ID_preINT :  Digit ( Letter | Digit | '_' )*;
+ID :        Letter ( Letter | Digit | '_' )*;
 
 
 fragment Letter : 'a'..'z' | 'A'..'Z';
