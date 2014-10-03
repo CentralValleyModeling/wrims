@@ -4,19 +4,18 @@
 <pydev_property name="org.python.pydev.PYTHON_PROJECT_VERSION">jython 2.5</pydev_property>
 
 <pydev_pathproperty name="org.python.pydev.PROJECT_SOURCE_PATH">
-<path>/wrims2_vscript/bin_dev</path>
-<path>/wrims2_vscript/lib/wrims2/WRIMSv2.jar</path>
-<path>/wrims2_vscript</path>
-<path>/wrims2_vscript/lib/hecdss/rma.jar</path>
-<path>/wrims2_vscript/lib/hecdss/hec.jar</path>
-<path>/wrims2_vscript/lib/hecdss/hecData.jar</path>
-<path>/wrims2_vscript/lib/hecdss/heclib.jar</path>
-<path>/wrims2_vscript/lib/vista/lib/vista.jar</path>
-<path>/wrims2_vscript/lib/vista/lib/Lib</path>
-<path>/wrims2_vscript/lib/vista/lib/jakarta-oro-2.0.8.jar</path>
-<path>/wrims2_vscript/lib/vista/lib/misc.jar</path>
-<path>/wrims2_vscript/lib/vista/lib/jhall.jar</path>
-<path>/wrims2_vscript/lib/vista/lib/jnios.jar</path>
-<path>/wrims2_vscript/lib/vista/lib/pd.jar</path>
+<path>/${PROJECT_DIR_NAME}/bin_dev</path>
+<path>/${PROJECT_DIR_NAME}/lib/wrims2/WRIMSv2.jar</path>
+<path>/${PROJECT_DIR_NAME}</path>
+<path>/${PROJECT_DIR_NAME}/lib/vista_hec/lib/rma.jar</path>
+<path>/${PROJECT_DIR_NAME}/lib/vista_hec/lib/hec.jar</path>
+<path>/${PROJECT_DIR_NAME}/lib/vista_hec/lib/hecData.jar</path>
+<path>/${PROJECT_DIR_NAME}/lib/vista_hec/lib/heclib.jar</path>
+<path>/${PROJECT_DIR_NAME}/lib/vista_hec/lib/Lib</path>
+<path>/${PROJECT_DIR_NAME}/lib/vista_hec/lib/vista.jar</path>
+<path>/${PROJECT_DIR_NAME}/lib/vista_hec/lib/jhall.jar</path>
+<path>/${PROJECT_DIR_NAME}/lib/vista_hec/lib/misc.jar</path>
+<path>/${PROJECT_DIR_NAME}/lib/vista_hec/lib/jnios.jar</path>
+<path>/${PROJECT_DIR_NAME}/lib/vista_hec/lib/pd.jar</path>
 </pydev_pathproperty>
 </pydev_project>
