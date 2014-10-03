@@ -84,7 +84,7 @@ configItem returns[String key, String val ]
    ;
 
 integer : INT ;
-complex : INT?  ( ID | '.' | '-' | '\"' | '\\' | ':' )+ ;
+complex : ( ID | '.' | '-' | '_' | '\"' | '\\' | ':' )+ ;
 
 
 
@@ -107,7 +107,7 @@ Begin  : 'Begin' | 'begin' | 'BEGIN'  ;
 End    : 'End' | 'end' | 'END'    ;
 Config : 'Config' | 'config' | 'CONFIG' ;
 
-ID : Letter ( Letter | Digit | '_' )*;
+ID : ( Letter | Digit | '_' )*;
 
 
 fragment Letter : 'a'..'z' | 'A'..'Z';
