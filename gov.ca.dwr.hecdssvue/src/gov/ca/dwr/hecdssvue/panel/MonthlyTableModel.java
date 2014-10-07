@@ -953,12 +953,17 @@ public final class MonthlyTableModel extends AbstractTableModel { // extends
 																// check if null
 				}
 
+				int numOnFirstRow=0;
 				if (firstDisplayMonth < 0 || firstDisplayMonth > 11)
 					firstDisplayMonth = 0;
 				for (int i = firstDisplayMonth; i < months.length
 						+ firstDisplayMonth; ++i) {
-					if (displayMonths.get(i % 12) != null)
+					if (displayMonths.get(i % 12) != null){
 						_columnNames.add(months[i % 12]);
+						if (i<12){
+							numOnFirstRow = numOnFirstRow + 1;
+						}
+					}
 				}
 				_columnNames.add("TTL"); // the last column is the line total/#
 											// of values on the line
@@ -974,10 +979,9 @@ public final class MonthlyTableModel extends AbstractTableModel { // extends
 				hecEndTime.set(endTime);
 				// int startYear = hecStartTime.year();
 				int numValues = _tsc.numberValues;
-				int numOnFirstRow = firstDisplayMonth - startMonthIndex;
-				if (numOnFirstRow <= 0) {
+				if (firstDisplayMonth - startMonthIndex <= 0) {
 					// numOnFirstRow += months.length;
-					numOnFirstRow += displayMonths.size();
+					numOnFirstRow = 0;
 				}
 				_hdaValues = new HecDoubleArray(_tsc.values);
 				_hdaValues.setPrecision(precision);
@@ -986,7 +990,7 @@ public final class MonthlyTableModel extends AbstractTableModel { // extends
 				for (int j = 0; j < numValues; ++j) {
 					// int column = ((months.length - numOnFirstRow) + j) %
 					// months.length;
-					int column = ((displayMonths.size() - numOnFirstRow) + j)
+					int column = (numOnFirstRow + j)
 							% displayMonths.size();
 					if (column == 0 || j == 0) {
 						row = new Object[2]; // NO row header
