@@ -32,6 +32,7 @@ mkdir %temp_wrims2%
 : wrims2 lib jars  :
 :------------------:
 set JarDir=D:\cvwrsm\trunk\wrims_schematics\lib
+set JarDir2=D:\cvwrsm\trunk\wrims_v2\wrims_v2\src\wrimsv2\lib
 
 set AppJars=%~dp0..\bin\
 set AppJars=%AppJars%;D:\cvwrsm\trunk\wrims_v2\wrims_v2\src\wrimsv2\lib\antlr-runtime-3.2.jar
@@ -48,6 +49,10 @@ set AppJars=%AppJars%;%JarDir%\commons-io-2.1.jar
 set AppJars=%AppJars%;%JarDir%\javatuples-1.2.jar
 set AppJars=%AppJars%;%JarDir%\guava-11.0.2.jar
 set AppJars=%AppJars%;%JarDir%\XAOptimizer.jar
+set AppJars=%AppJars%;%JarDir2%\kryo-2.24.0.jar
+set AppJars=%AppJars%;%JarDir2%\objenesis-1.2.jar
+set AppJars=%AppJars%;%JarDir2%\minlog-1.2.jar
+
 
 :---------------------------------:
 : user defined java class and dll :
