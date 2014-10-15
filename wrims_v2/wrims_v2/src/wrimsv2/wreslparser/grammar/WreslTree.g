@@ -386,7 +386,10 @@ svar_timeArray_sum : '(' ta=timeArraySize ')' ( '[' sc=LOCAL ']' )? IDENT '{' su
 	->  ^(Svar_sum  TimeArraySize[$ta.text] Scope[$sc.text] IDENT sum_content )  
 	;
 
-sum_content :SUM hdr=sum_header e=expression 
+sum_content returns[Set<String> setVarInCycle] :SUM hdr=sum_header e=expression 
+{
+  $setVarInCycle = $e.setVarInCycle;
+}
 -> ^( Sum_hdr[$hdr.text] Expression[$e.text] Dependants[$hdr.dependants+" "+$e.dependants] VarInCycle[$e.strVarInCycle])
 ;
 
@@ -481,7 +484,7 @@ term :	      i=ident {$expression::SV.add($i.text.toLowerCase());}
 	 |         number 
 	 |        function 
 	 |       '(' e=expression ')' {$expression::SV.addAll($e.members);$expression::varInCycle.addAll($e.setVarInCycle);}
-	 |       '(' sum_content ')' 
+	 |       '(' s=sum_content ')'  {$expression::varInCycle.addAll($s.setVarInCycle);}
 	 ;
 	
 unary :	('+'! | negation)? term 	;
