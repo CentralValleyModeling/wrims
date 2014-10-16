@@ -179,8 +179,6 @@ public class IncFileCollector {
 	
 	public static void main(String[] args){
 		
-		args = new String[2];
-		
 		new IncFileCollector(args);
 		
 	}
