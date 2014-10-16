@@ -180,9 +180,6 @@ public class IncFileCollector {
 	public static void main(String[] args){
 		
 		args = new String[2];
-		args[0]="Z:\\study\\test\\what\\Run\\mainCONV_30_SA.wresl";
-		//args[0]="D:\\cvwrsm\\trunk\\CalGUI\\Scenarios\\Run_Details\\DEFAULT\\Run\\SanJoaquin\\IntegratedOperations\\IntegratedOperationsCommon1.wresl";
-		args[1]="z:\\study2\\test\\here\\";
 		
 		new IncFileCollector(args);
 		
