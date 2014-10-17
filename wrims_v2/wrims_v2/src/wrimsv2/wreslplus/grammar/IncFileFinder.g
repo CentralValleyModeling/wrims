@@ -11,6 +11,7 @@ options {
   package wrimsv2.wreslplus.grammar;
   import wrimsv2.wreslparser.elements.LogUtils; 
   import wrimsv2.wreslplus.elements.IncFileSimple; 
+  import wrimsv2.wreslplus.elements.LookupTableSimple; 
   import java.util.HashMap;
   import java.util.Set;
   import java.util.HashSet;
@@ -23,8 +24,9 @@ options {
 }
 
 @members {
-    public ArrayList<String> incFileList;
+    //public ArrayList<String> incFileList;
     public ArrayList<IncFileSimple> incFileSimpleList;
+    public ArrayList<LookupTableSimple> lookupTableSimpleList;
 	  //public CommonTree commonTree;
 	  public String currentAbsolutePath;
   	public String currentAbsoluteParent;
@@ -51,22 +53,26 @@ options {
                                         RecognitionException e) {
         String hdr = getErrorHeader(e);
         String msg = getErrorMessage(e, tokenNames);
-        System.out.println("@lexer "+ currentAbsolutePath + " "+ hdr + " " + msg);
+        LogUtils.errMsgLocation(currentAbsolutePath, e.line, msg);
         number_of_errors++;
     }
 }
 
 
 wreslFile 
-@init{ incFileList = new ArrayList<String>(); 
-       incFileSimpleList = new ArrayList<IncFileSimple>(); }
+@init{ //incFileList = new ArrayList<String>(); 
+       incFileSimpleList = new ArrayList<IncFileSimple>();
+       lookupTableSimpleList = new ArrayList<LookupTableSimple>(); }
   : .*  (  
       ( f=include_file 
-        { incFileList.add(new File(currentAbsoluteParent, $f.fp_string).toString());
+        { //incFileList.add(new File(currentAbsoluteParent, $f.fp_string).toString());
           $f.incFileObj.absPath=new File(currentAbsoluteParent, $f.fp_string).toString();
           incFileSimpleList.add($f.incFileObj);
         }
-      | include_model) 
+      | include_model
+      | l=lookup 
+        { lookupTableSimpleList.add($l.lookupTableObj);
+        }) 
       .*  ) * ;
 
 
@@ -86,6 +92,19 @@ file_path : QUOTE  ;
 local_deprecated
   : '[' LOCAL ']' ;
 
+
+lookup returns[String tp_string, LookupTableSimple lookupTableObj]
+@init {$lookupTableObj = new LookupTableSimple();
+       $lookupTableObj.fromWresl = this.currentAbsolutePath; 
+       }
+       
+@after{$lookupTableObj.line=line;
+       } 
+: SELECT ID i=FROM {line=$i.line;} ft=fromTable {$lookupTableObj.tableName=$ft.text;} ;
+
+fromTable :
+ID ;
+
 QUOTE : '\''  (Letter | Digit | '\\' | '_' | '.' | '-' | '/' )+  '\'' ;
 
 ML_COMMENT : '/*' .* '*/' {skip();}; 
@@ -96,6 +115,10 @@ INCLUDE :   'include' | 'INCLUDE' | 'Include' ;
 LOCAL : 'local' | 'LOCAL' | 'Local' ; 
 MODEL : 'model' | 'MODEL' | 'Model' ;
 
+SELECT : 'select'|'SELECT'|'Select';
+FROM : 'from'|'FROM'|'From';
+WHERE: 'where'|'WHERE'|'Where';
+
 WS : (' ' | '\t' | '\n' | '\r' | '\f')+ {skip();}; //{$channel = HIDDEN;};
 
 ID : Letter ( Letter | Digit | '_' )* ;
@@ -105,4 +128,4 @@ fragment Letter : 'a'..'z' | 'A'..'Z';
 
 fragment Digit : '0'..'9';
 
-Others : '{'|'}'|'\\'|'.'|'='|'('|')'|'\r'|'\n'|'<'|'>'|'+'|'-'|'*'|'/'|',' {skip();};
+Others : '{'|'}'|'\\'|'.'|'='|'('|')'|'\r'|'\n'|'<'|'>'|'+'|'-'|'*'|'/'|','|'$' {skip();};
