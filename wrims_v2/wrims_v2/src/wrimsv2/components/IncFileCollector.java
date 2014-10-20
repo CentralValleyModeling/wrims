@@ -29,35 +29,44 @@ public class IncFileCollector {
 	private static String mainFilePath;
 	private static final String logFileName = "=FileCollector=.log";
 	private static String lookupSubDir="";
+
 	
-	public IncFileCollector(String[] args){
+	public IncFileCollector(String mainWreslPath, String targetDir){
+		
+		new IncFileCollector(mainWreslPath,targetDir,null);
+	}
+	
+	
+	public IncFileCollector(String mainWreslPath, String targetDir, String lookupSubDir){
 		
 		// args[0] is main wresl file absolute path
 		// args[1] is optional. If specified, this is the target folder where all the include files will be copied into.
 		// args[2] is optional. If specified, this is the subfolder where lookup tables reside.
 					
-		initialize(args);
+		initialize(mainWreslPath);
 		collect();
 		
 		// if the target folder (second argument) is specified, 
 		// then the inc files will be copy to the target folder.
-		if (args.length >1 ) {
-			String targetDir = args[1];
+		
+		if (targetDir!=null && targetDir.trim().length()>0 ) {
 			
-			if (args.length>2 && args[2]!=null) lookupSubDir = args[2];
+			if (lookupSubDir!=null && lookupSubDir.trim().length()>0) {
+				IncFileCollector.lookupSubDir = lookupSubDir.trim();
+			}
 			
-			copyWreslsAndLookupTablesTo(targetDir);
+			copyWreslsAndLookupTablesTo(targetDir.trim());
 		}
 		
 		if (number_of_errors==0) {
 			LogUtils.importantMsg("IncFileFinder completed successfully.");
 		}
 	}
-	
-	public static void initialize(String[] args){
+
+	public static void initialize(String mainFilePath){
 		
 		number_of_errors = 0;
-		mainFilePath = args[0];	
+		IncFileCollector.mainFilePath = mainFilePath;	
 
 		
 		try {
@@ -99,7 +108,7 @@ public class IncFileCollector {
 		
 			tempList = parseWresl(ifs);
 			
-			if (tempList.size()>0) {	
+			if (tempList!=null && tempList.size()>0) {	
 			
 				searchIncFiles(tempList);		
 			} 
@@ -117,7 +126,8 @@ public class IncFileCollector {
 			if (parser !=null){
 				parser.wreslFile();
 			} else {
-				System.exit(1);
+				return null;
+				//System.exit(1);
 			}
 			
 			for (IncFileSimple fs: parser.incFileSimpleList){
@@ -146,7 +156,7 @@ public class IncFileCollector {
 		try {
 			stream = new ANTLRFileStream(ifs.absPath, "UTF8");
 		} catch (IOException e) {
-			LogUtils.errMsgLocation(ifs.fromWresl, ifs.line, "File not found: "+ifs.absPath);
+			LogUtils.warningMsgLocation(ifs.fromWresl, ifs.line, "File not found: "+ifs.absPath);
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -197,8 +207,7 @@ public class IncFileCollector {
 				File targetPath = new File(targetDir,relativePath);
 				FileUtils.copyFile(new File(s), targetPath);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				LogUtils.warningMsg("File not found: "+s);
 			}			
 		}
 		
@@ -223,7 +232,7 @@ public class IncFileCollector {
 		//args[1]="z:\\hhh";             // optional. target folder
 		//args[2]="lookupSubFolderName"; // optional. 
 				
-		new IncFileCollector(args);
+		new IncFileCollector(args[0],args[1],args[2]);
 		
 	}
 

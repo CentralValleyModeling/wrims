@@ -264,6 +264,14 @@ public class LogUtils {
 		 _logFile.flush();
 		
 	}
+	
+	public static void warningMsgLocation(String filePath, int lineNumber, String msg){
+
+		if (ControlData.showWreslLog) System.out.println( "("+filePath+":"+lineNumber+") "+msg );
+		 _logFile.println("# Warning: " + "("+filePath+":"+lineNumber+") "+msg );
+		 _logFile.flush();
+		
+	}
 
 	public static void typeRedefinedErrMsg(String msg) throws TypeRedefinedException {
 		
@@ -276,7 +284,7 @@ public class LogUtils {
 		 throw new TypeRedefinedException();
 		 //if (!Param.debug) System.exit(0);
 	}	
-
+	
 	public static void errMsgLocation(String filePath, int lineNumber, String msg){
 		
 		 StudyParser.total_errors++;
