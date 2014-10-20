@@ -77,7 +77,7 @@ public class IncFileCollector {
 			e.printStackTrace();
 		}
 		
-		baseDir= new File(mainFilePath).getParentFile().getParent();
+		//baseDir= new File(mainFilePath).getParentFile().getParent();
 		runDir =new File(mainFilePath).getParent();
 		
 		incFileList_all = new LinkedHashSet<String>();
@@ -188,8 +188,16 @@ public class IncFileCollector {
 	private static void copyWreslsAndLookupTablesTo(String targetDir) {	
 		
 		File targetDirF = new File(targetDir);
-		File targetLookupDirF = new File(targetDir+"\\run\\Lookup", lookupSubDir);
-		File srcLookupDirF = new File(runDir+"\\Lookup", lookupSubDir);
+		
+		int idex = runDir.indexOf(":");
+		
+		File targetLookupDirF = new File(new File(targetDir, runDir.substring(idex+1)), "Lookup" );
+		File srcLookupDirF = new File(runDir, "Lookup");
+		
+		if (lookupSubDir.length()>0) {
+			 targetLookupDirF = new File(targetLookupDirF, lookupSubDir);
+			 srcLookupDirF = new File(srcLookupDirF, lookupSubDir);
+		}
 		
 		try {
 			LogUtils.importantMsg("Wresl files will be copied to: "+ targetDirF.getCanonicalPath());
@@ -201,10 +209,13 @@ public class IncFileCollector {
 		
 		for (String s: incFileList_all){
 			
-			String relativePath = ResourceUtils.getRelativePath(s, baseDir, File.separator);
+			//String relativePath = ResourceUtils.getRelativePath(s, baseDir, File.separator);
+			int idx = s.indexOf(":");
+			String absPathWithoutDrive = s.substring(idx+1);
+			//System.out.println(absPathWithoutDrive);
 			
 			try {
-				File targetPath = new File(targetDir,relativePath);
+				File targetPath = new File(targetDir,absPathWithoutDrive);
 				FileUtils.copyFile(new File(s), targetPath);
 			} catch (IOException e) {
 				LogUtils.warningMsg("File not found: "+s);
@@ -229,7 +240,8 @@ public class IncFileCollector {
 		
 		//args = new String[3];
 		//args[0]="D:\\cvwrsm\\trunk\\CalGUI\\Scenarios\\Run_Details\\DEFAULT\\Run\\main.wresl";
-		//args[1]="z:\\hhh";             // optional. target folder
+		//args[0]="D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\conv\\Run\\mainCONV_30_SA.wresl";
+		//args[1]="z:\\cs3";             // optional. target folder
 		//args[2]="lookupSubFolderName"; // optional. 
 				
 		new IncFileCollector(args[0],args[1],args[2]);
