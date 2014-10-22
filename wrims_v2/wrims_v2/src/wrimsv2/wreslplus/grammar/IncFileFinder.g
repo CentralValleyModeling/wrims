@@ -69,13 +69,14 @@ wreslFile
           $f.incFileObj.absPath=new File(currentAbsoluteParent, $f.fp_string).toString();
           incFileSimpleList.add($f.incFileObj);
         }
+      | include_group  
       | include_model
       | l=lookup 
         { lookupTableSimpleList.add($l.lookupTableObj);
         }) 
       .*  ) * ;
 
-
+include_group : INCLUDE GROUP ID ;
 include_model : INCLUDE MODEL ID ;
 include_file returns[String fp_string, IncFileSimple incFileObj]
 @init {$incFileObj = new IncFileSimple();
@@ -114,7 +115,7 @@ SL_COMMENT : ('#'|'!') ~('\r'|'\n')*  '\r'? ( '\n' | EOF ) {skip();};  //{$chann
 INCLUDE :   'include' | 'INCLUDE' | 'Include' ;
 LOCAL : 'local' | 'LOCAL' | 'Local' ; 
 MODEL : 'model' | 'MODEL' | 'Model' ;
-
+GROUP : 'group' | 'GROUP' | 'Group' ;
 SELECT : 'select'|'SELECT'|'Select';
 FROM : 'from'|'FROM'|'From';
 WHERE: 'where'|'WHERE'|'Where';
