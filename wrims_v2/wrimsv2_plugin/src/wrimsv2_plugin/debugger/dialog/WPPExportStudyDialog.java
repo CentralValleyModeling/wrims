@@ -2,12 +2,14 @@ package wrimsv2_plugin.debugger.dialog;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.debug.core.DebugException;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunchConfiguration;
@@ -15,6 +17,8 @@ import org.eclipse.debug.core.ILaunchConfigurationType;
 import org.eclipse.debug.core.ILaunchManager;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -46,7 +50,10 @@ import wrimsv2.components.IncFileCollector;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.menuitem.EnableMenus;
+import wrimsv2_plugin.debugger.model.WPPValue;
+import wrimsv2_plugin.debugger.view.WPPAllGoalView;
 import wrimsv2_plugin.debugger.view.WPPVarDetailView;
+import wrimsv2_plugin.tools.DataProcess;
 
 public class WPPExportStudyDialog extends Dialog {
 	private String selFilePath;
@@ -131,39 +138,60 @@ public class WPPExportStudyDialog extends Dialog {
         // check for an existing launch config for the WPP file
         String path = selFile.getFullPath().toString(); 
         ILaunchManager launchManager = DebugPlugin.getDefault().getLaunchManager();
-        ILaunchConfigurationType type = launchManager.getLaunchConfigurationType(DebugCorePlugin.ID_WPP_LAUNCH_CONFIGURATION_TYPE);
-        ILaunchConfiguration[] configurations;
+        final ILaunchConfiguration configuration;
 		try {
-			configurations = launchManager.getLaunchConfigurations(type);
+			configuration = launchManager.getLaunchConfiguration(selFile);
 			
-			for (int j = 0; j < configurations.length; j++) {
-				ILaunchConfiguration configuration = configurations[j];
-				String configPath=configuration.getFile().getFullPath().toString();
+			String msr = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_MULTISTUDY, "1");
+			final int msv = Integer.parseInt(msr);
+			
+			collectLaunchFile(selFilePath, targetFolder);
+			
+			final IWorkbench workbench=PlatformUI.getWorkbench();
+			workbench.getDisplay().asyncExec(new Runnable(){
+				public void run(){
+					Shell shell=workbench.getActiveWorkbenchWindow().getShell();
+					ProgressMonitorDialog dialog = new ProgressMonitorDialog(shell);  
+					try {
+						dialog.run(true,false, new IRunnableWithProgress() {
+							@Override
+							public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+								try{
 								
-				if (path.equals(configPath)) {
-					String msr = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_MULTISTUDY, "1");
-					int msv = Integer.parseInt(msr);
-			
-					String sid="";
-					for (int i=1; i<=msv; i++){
-						if (i>1){
-							sid="_MS"+String.valueOf(i);
-						}
-						
-						collectModelFiles(configuration, sid);
-						collectDSSFiles(configuration, sid, 0);
-						collectDSSFiles(configuration, sid, 1);
-						collectDSSFiles(configuration, sid, 2);
-						
-						
+									monitor.beginTask("Export Studies", 100);
+								
+									String sid="";
+									for (int i=1; i<=msv; i++){
+										if (i>1){
+											sid="_MS"+String.valueOf(i);
+										}
+											
+										collectModelFiles(configuration, sid);
+										collectDSSFiles(configuration, sid, 0);
+										collectDSSFiles(configuration, sid, 1);
+										collectDSSFiles(configuration, sid, 2);	
+									
+										int progress=Math.round(100.0f/msv);
+										monitor.worked(progress);
+									}
+								}
+								finally{
+									monitor.done();
+								}
+							}
+						});
+					} catch (InvocationTargetException e) {
+						WPPException.handleException(e);
+					} catch (InterruptedException e) {
+						WPPException.handleException(e);
 					}
 				}
-            }
+			});
+			
 		} catch (Exception e) {
 			WPPException.handleException(e);
 		}
 		
-		collectLaunchFile(selFilePath, targetFolder);
 	}
 	
 	protected void collectDSSFiles(ILaunchConfiguration configuration, String sid, int flag) {
