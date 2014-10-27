@@ -95,6 +95,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 		if (ms==1){	
 			switch (DebugCorePlugin.launchType){
 				case 0:
+					useMainFile=true;
 					regularLaunch(configuration, mode, launch);
 					break;
 				case 1:
@@ -107,8 +108,6 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 	}
 	
 	public int regularLaunch(ILaunchConfiguration configuration, String mode, ILaunch launch) throws CoreException{
-		
-		useMainFile=true;
 		
 		int terminateCode=0;
 		int requestPort = -1;
