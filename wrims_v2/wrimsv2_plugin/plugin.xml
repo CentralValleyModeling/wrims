@@ -489,6 +489,12 @@
 		visible="true"
 		id="wpp.debugcontrol">
 		<action
+			label="Batch Run"
+			class="wrimsv2_plugin.debugger.menuitem.BatchRunMenu"
+			menubarPath="org.eclipse.ui.run/debug"
+			id="wpp.batchrun">
+		</action>
+		<action
 			label="Clear Conditional Breakpoint"
 			class="wrimsv2_plugin.debugger.menuitem.ClearConditionalBreakpointMenu"
 			menubarPath="org.eclipse.ui.run/debug"

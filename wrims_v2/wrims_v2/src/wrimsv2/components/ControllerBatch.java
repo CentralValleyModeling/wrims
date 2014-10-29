@@ -32,6 +32,7 @@ import wrimsv2.wreslplus.elements.procedures.ErrorCheck;
 public class ControllerBatch {
 	
 	public boolean enableProgressLog = false;
+	public boolean enableConfigProgress = false;
 	
 	public ControllerBatch() {} // do nothing
 	
@@ -39,6 +40,16 @@ public class ControllerBatch {
 		long startTimeInMillis = Calendar.getInstance().getTimeInMillis();
 		try {
 			processArgs(args);
+			if (enableConfigProgress) {
+				try {
+					FileWriter progressFile= new FileWriter(StudyUtils.configFilePath+".prgss");
+					PrintWriter pw = new PrintWriter(progressFile);
+					pw.println("Parsing and preprocessing the model ...");
+					pw.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 			StudyDataSet sds = parse();
 			long afterParsing = Calendar.getInstance().getTimeInMillis();
 			int parsingPeriod=(int) (afterParsing-startTimeInMillis);
@@ -73,6 +84,9 @@ public class ControllerBatch {
 	
 		if(args[0].startsWith("-")) {
 			ConfigUtils.loadArgs(args);
+			if (args[0].toLowerCase().endsWith(".launch.config")){
+				enableConfigProgress=true;
+			}
 		} else {		
 			setControlData(args);
 		}	
@@ -306,10 +320,14 @@ public class ControllerBatch {
 			}
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
-			if (enableProgressLog) {
-				try {
-					//FileWriter progressFile = new FileWriter(FilePaths.mainDirectory + "progress.txt", true);
-					FileWriter progressFile = new FileWriter(FilePaths.mainDirectory + "progress.txt");
+			try{
+				if (enableConfigProgress) {
+					FileWriter progressFile = progressFile= new FileWriter(StudyUtils.configFilePath+".prgss");
+					PrintWriter pw = new PrintWriter(progressFile);
+					pw.println("Run to "+ControlData.currYear +"/"+ ControlData.currMonth +"/"+ ControlData.currDay);
+					pw.close();
+				}else if(enableProgressLog){
+					FileWriter progressFile= new FileWriter(FilePaths.mainDirectory + "progress.txt");
 					PrintWriter pw = new PrintWriter(progressFile);
 					int cy = 0;
 					if (ControlData.currYear > cy) {
@@ -317,10 +335,9 @@ public class ControllerBatch {
 						pw.println(ControlData.startYear + " " + ControlData.endYear + " " + ControlData.currYear +" "+ ControlData.currMonth);
 						pw.close();
 					}
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
+			}catch(IOException e){
+				e.printStackTrace();
 			}
 		}
 		ControlData.xasolver.close();
@@ -331,9 +348,14 @@ public class ControllerBatch {
 		ControlData.writer.closeDSSFile();
 		
 		// write complete or fail
-		if (enableProgressLog) {
+		if (enableProgressLog || enableConfigProgress) {
 			try {
-				FileWriter progressFile = new FileWriter(FilePaths.mainDirectory + "progress.txt", true);
+				FileWriter progressFile;
+				if (enableConfigProgress){
+					progressFile= new FileWriter(StudyUtils.configFilePath+".prgss");
+				}else{
+					progressFile= new FileWriter(FilePaths.mainDirectory + "progress.txt", true);
+				}
 				PrintWriter pw = new PrintWriter(progressFile);
 				if (Error.getTotalError() > 0) {
 					pw.println("Run failed.");
@@ -342,7 +364,6 @@ public class ControllerBatch {
 				}
 				pw.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

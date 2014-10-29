@@ -9,6 +9,7 @@ import org.eclipse.debug.core.ILaunchConfiguration;
 
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.StudyDataSet;
+import wrimsv2_plugin.batchrun.LaunchConfigInfo;
 
 public class FileProcess {
 	public static ArrayList<String> retrieveFileNames(ArrayList<String> fns){
@@ -96,6 +97,12 @@ public class FileProcess {
 	
 	public static String procRelativePath(String path, ILaunchConfiguration config){
 		String absPath=config.getFile().getLocation().toFile().getParentFile().getAbsolutePath();
+		absPath=absPath+"\\"+path;
+		return absPath;
+	}
+	
+	public static String procRelativePath(String path, String launchFilePath){
+		String absPath=new File(launchFilePath).getParentFile().getAbsolutePath();
 		absPath=absPath+"\\"+path;
 		return absPath;
 	}

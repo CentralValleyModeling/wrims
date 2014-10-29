@@ -13,29 +13,27 @@ import org.apache.commons.io.FileUtils;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
 
+import wrimsv2_plugin.batchrun.BatchRunProcess;
+import wrimsv2_plugin.batchrun.LaunchConfigInfo;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.tools.FileProcess;
 import wrimsv2_plugin.tools.TimeOperation;
 
-public class PAProcDV {
+public class PAProcDVBR {
 
 	private String dvFile="";
 	
-	public PAProcDV(ILaunchConfiguration configuration){
-		try {
-			dvFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_DVARFILE, (String)null);
-		} catch (CoreException e) {
-			WPPException.handleException(e);
-		}
+	public PAProcDVBR(LaunchConfigInfo configuration){
+		dvFile = configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_DVARFILE, (String)null);
 	}
 	
-	public void deleteDVFile(ILaunchConfiguration configuration){
+	public void deleteDVFile(String launchFilePath){
 		try {
 			File dvDSSFile=new File(dvFile);
 			if (dvFile !=null){
 				if (!dvDSSFile.isAbsolute()){
-					dvFile=FileProcess.procRelativePath(dvFile, configuration);
+					dvFile=FileProcess.procRelativePath(dvFile, launchFilePath);
 					dvDSSFile=new File(dvFile);
 				}
 				if (dvDSSFile.exists() && dvDSSFile !=null){
@@ -47,8 +45,8 @@ public class PAProcDV {
 		}
 	}
 	
-	public void resetDVStartDate(){
-		if (!DebugCorePlugin.resetOutputStart) return;
+	public void resetDVStartDate(BatchRunProcess brp){
+		if (!brp.resetOutputStart) return;
 		
 		HecDss dvDss;
 		try {
@@ -57,21 +55,21 @@ public class PAProcDV {
 			WPPException.handleException(e);
 			return;
 		}
-		String shiftInDay=TimeOperation.diffInDay(DebugCorePlugin.paStartYear, DebugCorePlugin.paStartMonth, DebugCorePlugin.paStartDay, DebugCorePlugin.paDVStartYear, DebugCorePlugin.paDVStartMonth, DebugCorePlugin.paDVStartDay)+"DAY";
-		String startTime=TimeOperation.createStartTime(DebugCorePlugin.paStartYear, DebugCorePlugin.paStartMonth, DebugCorePlugin.paStartDay, "1DAY");
-		String endTime=TimeOperation.createEndTime(DebugCorePlugin.paEndYear, DebugCorePlugin.paEndMonth, DebugCorePlugin.paEndDay, "1DAY");
+		String shiftInDay=TimeOperation.diffInDay(brp.paStartYear, brp.paStartMonth, brp.paStartDay, brp.paDVStartYear, brp.paDVStartMonth, brp.paDVStartDay)+"DAY";
+		String startTime=TimeOperation.createStartTime(brp.paStartYear, brp.paStartMonth, brp.paStartDay, "1DAY");
+		String endTime=TimeOperation.createEndTime(brp.paEndYear, brp.paEndMonth, brp.paEndDay, "1DAY");
 		dvDss.setTimeWindow(startTime, endTime);
 		Vector<String> pathList = dvDss.getPathnameList();
 		Collections.sort(pathList, Collections.reverseOrder());
 		for (int i=0; i<pathList.size(); i++){
 			String path = pathList.get(i);
 			String[] parts = path.split("/");
-			if (parts[parts.length-1].equals(DebugCorePlugin.svFPart)){
+			if (parts[parts.length-1].equals(brp.svFPart)){
 				try {
 					TimeSeriesContainer dc = (TimeSeriesContainer)dvDss.get(path);
 					TimeSeriesMath tm = new TimeSeriesMath(dc);
 					TimeSeriesMath newTm = (TimeSeriesMath) tm.shiftInTime(shiftInDay);
-					String newPath=regeneratePath(tm.getPath());
+					String newPath=regeneratePath(tm.getPath(), brp);
 					newTm.setPathname(newPath);
 					dvDss.write(newTm);
 				} catch (Exception e) {
@@ -81,10 +79,10 @@ public class PAProcDV {
 		dvDss.close();
 	}
 	
-	public String regeneratePath(String path){
+	public String regeneratePath(String path, BatchRunProcess brp){
 		String[] parts = path.split("/");
 		int size = parts.length;
-		parts[size-1]=parts[size-1]+"_"+DebugCorePlugin.paStartYear+TimeOperation.getMonthText(DebugCorePlugin.paStartMonth)+DebugCorePlugin.paStartDay;
+		parts[size-1]=parts[size-1]+"_"+brp.paStartYear+TimeOperation.getMonthText(brp.paStartMonth)+brp.paStartDay;
 		String newPath="";
 		for (int i=0; i<size; i++){
 			newPath=newPath+parts[i]+"/";
