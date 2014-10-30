@@ -17,6 +17,7 @@ import wrimsv2_plugin.batchrun.BatchRunProcess;
 import wrimsv2_plugin.batchrun.LaunchConfigInfo;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.tools.DssOperations;
 import wrimsv2_plugin.tools.FileProcess;
 import wrimsv2_plugin.tools.TimeOperation;
 
@@ -46,13 +47,17 @@ public class PAProcDVBR {
 	}
 	
 	public void resetDVStartDate(BatchRunProcess brp){
+		
 		if (!brp.resetOutputStart) return;
+
+		DssOperations.waitForDSSOp();
 		
 		HecDss dvDss;
 		try {
 			dvDss=HecDss.open(dvFile);
 		} catch (Exception e) {
 			WPPException.handleException(e);
+			DssOperations.setIsDssInOp(false);
 			return;
 		}
 		String shiftInDay=TimeOperation.diffInDay(brp.paStartYear, brp.paStartMonth, brp.paStartDay, brp.paDVStartYear, brp.paDVStartMonth, brp.paDVStartDay)+"DAY";
@@ -77,6 +82,8 @@ public class PAProcDVBR {
 			}
 		}
 		dvDss.close();
+		
+		DssOperations.setIsDssInOp(false);
 	}
 	
 	public String regeneratePath(String path, BatchRunProcess brp){

@@ -15,6 +15,7 @@ import org.eclipse.debug.core.ILaunchConfiguration;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.tools.DssOperations;
 import wrimsv2_plugin.tools.FileProcess;
 import wrimsv2_plugin.tools.TimeOperation;
 
@@ -48,13 +49,17 @@ public class PAProcDV {
 	}
 	
 	public void resetDVStartDate(){
+		
 		if (!DebugCorePlugin.resetOutputStart) return;
+		
+		DssOperations.waitForDSSOp();
 		
 		HecDss dvDss;
 		try {
 			dvDss=HecDss.open(dvFile);
 		} catch (Exception e) {
 			WPPException.handleException(e);
+			DssOperations.setIsDssInOp(false);
 			return;
 		}
 		String shiftInDay=TimeOperation.diffInDay(DebugCorePlugin.paStartYear, DebugCorePlugin.paStartMonth, DebugCorePlugin.paStartDay, DebugCorePlugin.paDVStartYear, DebugCorePlugin.paDVStartMonth, DebugCorePlugin.paDVStartDay)+"DAY";
@@ -79,6 +84,8 @@ public class PAProcDV {
 			}
 		}
 		dvDss.close();
+		
+		DssOperations.setIsDssInOp(false);
 	}
 	
 	public String regeneratePath(String path){

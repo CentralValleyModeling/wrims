@@ -2,6 +2,9 @@ package wrimsv2_plugin.tools;
 
 import java.util.Vector;
 
+import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+import wrimsv2_plugin.debugger.exception.WPPException;
+
 public class DssOperations {
 	public static String matchPathName(Vector v, String partB, String partC, String partE){
 		String pn=null;
@@ -34,5 +37,28 @@ public class DssOperations {
 			i++;
 		}
 		return pn;
+	}
+	
+	public static synchronized boolean isDssInOperation(){
+		if (DebugCorePlugin.isDssInOp){
+			return true;
+		}else{
+			setIsDssInOp(true);
+			return false;
+		}
+	}
+	
+	public static synchronized void setIsDssInOp(boolean isDssInOp){
+		DebugCorePlugin.isDssInOp=isDssInOp;
+	}
+	
+	public static void waitForDSSOp(){
+		try {
+			while(isDssInOperation()){
+				Thread.sleep(100);
+			}
+		} catch (InterruptedException e) {
+			WPPException.handleException(e);
+		}
 	}
 }

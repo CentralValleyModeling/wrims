@@ -168,8 +168,9 @@ public class MSRDataTransferBR {
 	}
 	
 	public void dataTxfr(int sid, BatchRunProcess brp){
-		int i=sid-1;
+		DssOperations.waitForDSSOp();
 		
+		int i=sid-1;
 		HecDss dvDss, svDss, initDss;
 		try {
 			dvDss=HecDss.open(dvFNs[i]);
@@ -177,6 +178,7 @@ public class MSRDataTransferBR {
 			initDss=HecDss.open(initFNs[i]);
 		} catch (Exception e) {
 			WPPException.handleException(e);
+			DssOperations.setIsDssInOp(false);
 			return;
 		}
 		
@@ -231,6 +233,8 @@ public class MSRDataTransferBR {
 		dvDss.close();
 		svDss.close();
 		initDss.close();
+		
+		DssOperations.setIsDssInOp(false);
 	}
 	
 	public String addPathD(String dvPNFull, String pn){

@@ -19,6 +19,7 @@ import org.eclipse.debug.core.ILaunchConfiguration;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.tools.DssOperations;
 import wrimsv2_plugin.tools.FileProcess;
 import wrimsv2_plugin.tools.TimeOperation;
 
@@ -76,11 +77,13 @@ public class PAProcInit {
 	}
 	
 	public void createInitData(PAProcRun procRun){
+		DssOperations.waitForDSSOp();
 		HecDss paInitDss;
 		try {
 			paInitDss=HecDss.open(DebugCorePlugin.paInitFile);
 		} catch (Exception e) {
 			WPPException.handleException(e);
+			DssOperations.setIsDssInOp(false);
 			return;
 		}
 		Vector<String> paPathList = paInitDss.getPathnameList();
@@ -97,6 +100,7 @@ public class PAProcInit {
 			}
 		}
 		paInitDss.close();
+		DssOperations.setIsDssInOp(false);
 	}
 
 }

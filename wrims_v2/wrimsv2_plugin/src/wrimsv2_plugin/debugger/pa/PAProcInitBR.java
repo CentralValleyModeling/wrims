@@ -16,6 +16,7 @@ import wrimsv2_plugin.batchrun.BatchRunProcess;
 import wrimsv2_plugin.batchrun.LaunchConfigInfo;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.tools.DssOperations;
 import wrimsv2_plugin.tools.FileProcess;
 
 public class PAProcInitBR {
@@ -68,11 +69,13 @@ public class PAProcInitBR {
 	}
 	
 	public void createInitData(PAProcRunBR procRun, BatchRunProcess brp){
+		DssOperations.waitForDSSOp();
 		HecDss paInitDss;
 		try {
 			paInitDss=HecDss.open(brp.paInitFile);
 		} catch (Exception e) {
 			WPPException.handleException(e);
+			DssOperations.setIsDssInOp(false);
 			return;
 		}
 		Vector<String> paPathList = paInitDss.getPathnameList();
@@ -89,6 +92,7 @@ public class PAProcInitBR {
 			}
 		}
 		paInitDss.close();
+		DssOperations.setIsDssInOp(false);
 	}
 
 }

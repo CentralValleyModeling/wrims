@@ -253,6 +253,8 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static int msEndDay=30;
 	public static int msDuration=12;
 	
+	public static boolean isDssInOp=false;
+	
 	/**
 	 * The constructor.
 	 */
