@@ -90,7 +90,7 @@ public class ControllerDebug extends Thread {
 	@Override
 	public void run() {
 		ConfigUtils.loadArgs(args);
-		generateStudyFile();
+		//generateStudyFile();
 		try {
 			StudyDataSet sds = parse();
 			if (StudyParser.total_errors==0){

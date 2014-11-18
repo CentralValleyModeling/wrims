@@ -24,7 +24,7 @@ public class ControllerSG {
 	public ControllerSG() {
 		long startTimeInMillis = Calendar.getInstance().getTimeInMillis();
 		setControlData();
-		generateStudyFile();
+		//generateStudyFile();
 		try {
 			StudyDataSet sds = parse();
 			if (StudyUtils.total_errors==0){
@@ -47,7 +47,7 @@ public class ControllerSG {
 	public ControllerSG(String[] args) {
 		long startTimeInMillis = Calendar.getInstance().getTimeInMillis();
 		setControlData(args);
-		generateStudyFile();
+		//generateStudyFile();
 		try {
 			StudyDataSet sds = parse();
 			if (StudyUtils.total_errors==0){

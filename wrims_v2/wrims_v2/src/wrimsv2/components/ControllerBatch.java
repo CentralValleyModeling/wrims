@@ -61,7 +61,7 @@ public class ControllerBatch {
 				}
 				new PreEvaluator(sds);
 				new PreRunModel(sds);
-				generateStudyFile();
+				//generateStudyFile();
 				runModel(sds);
 				long endTimeInMillis = Calendar.getInstance().getTimeInMillis();
 				int runPeriod=(int) (endTimeInMillis-startTimeInMillis);
