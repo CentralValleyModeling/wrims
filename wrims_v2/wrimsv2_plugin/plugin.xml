@@ -553,14 +553,20 @@
  <extension
 	point="org.eclipse.ui.actionSets">
 	<actionSet
-		label="other"
+		label="WRIMS"
 		visible="true"
-		id="wpp.other">
+		id="wpp.wrims">
 		<action
 			label="Option"
 			class="wrimsv2_plugin.debugger.menuitem.SolverOptionMenu"
 			menubarPath="org.eclipse.ui.run/other"
 			id="wpp.solveroption">
+		</action>
+		<action
+			label="Load Zip File"
+			class="wrimsv2_plugin.debugger.menuitem.LoadZipFileMenu"
+			menubarPath="File/other"
+			id="wpp.loadzipfile">
 		</action>
 	</actionSet>
 </extension>
