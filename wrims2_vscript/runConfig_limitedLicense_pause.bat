@@ -53,6 +53,9 @@ set AppJars=%AppJars%;%JarDir%\commons-io-2.1.jar
 set AppJars=%AppJars%;%JarDir%\javatuples-1.2.jar
 set AppJars=%AppJars%;%JarDir%\guava-11.0.2.jar
 set AppJars=%AppJars%;%JarDir%\CalLiteV16.jar
+set AppJars=%AppJars%;%JarDir%\kryo-2.24.0.jar
+set AppJars=%AppJars%;%JarDir%\objenesis-1.2.jar
+set AppJars=%AppJars%;%JarDir%\minlog-1.2.jar
 
 :---------------------------------:
 : user defined java class and dll :
