@@ -1,0 +1,41 @@
+/*
+ ASSURE MINIMUM FLOW REQUIREMENTS ARE MET
+ 
+  NAMING TAKES THE FOLLOWING FORMS:
+  C_{location}_MIF - minflow requirement for 'location'
+  C_{location}_EXC - flow exceeding requirement at 'location'
+  
+Original formulation: C. Olson (MWH) December 2007
+*/
+
+! Minimum Mokulumne Instream Flow Requirements
+define QminCMCHE  {select minflow from minflow_EastSide where C_arc=91,wateryear=wyt_SJR,month=month}
+define QminMOK050 {select minflow from minflow_EastSide where C_arc=502,wateryear=wyt_SJR,month=month}
+define QminMOK035 {select minflow from minflow_EastSide where C_arc=503,wateryear=wyt_SJR,month=month}
+
+!==============================
+! Mokelumne River below Camanche Reservoir
+!==============================
+!define QminCMCHE {value 20.} ! placeholder value, please update
+define C_CMCHE_MIF {std kind 'FLOW-MIN-INSTREAM' units 'CFS'}
+define C_CMCHE_EXC {std kind 'FLOW-EXCESS-INSTREAM' units 'CFS'}
+goal C_CMCHEmif	{C_CMCHE_MIF < QminCMCHE*taf_cfs}
+goal C_CMCHEtotal  {C_CMCHE=C_CMCHE_MIF+C_CMCHE_EXC}
+
+!==============================
+! Mokelumne River below RiverMile 50
+!==============================
+!define QminMOK050 {value 20.} ! placeholder value, please update
+define C_MOK050_MIF {std kind 'FLOW-MIN-INSTREAM' units 'CFS'}
+define C_MOK050_EXC {std kind 'FLOW-EXCESS-INSTREAM' units 'CFS'}
+goal C_MOK050mif {C_MOK050_MIF < QminMOK050*taf_cfs}
+goal C_MOK050total  {C_MOK050=C_MOK050_MIF+C_MOK050_EXC}
+
+!==============================
+! Mokelumne River below RiverMile 35
+!==============================
+!define QminMOK035 {value 20.} ! placeholder value, please update
+define C_MOK035_MIF {std kind 'FLOW-MIN-INSTREAM' units 'CFS'}
+define C_MOK035_EXC {std kind 'FLOW-EXCESS-INSTREAM' units 'CFS'}
+goal C_MOK035mif {C_MOK035_MIF < QminMOK035*taf_cfs}
+goal C_MOK035total  {C_MOK035=C_MOK035_MIF+C_MOK035_EXC}

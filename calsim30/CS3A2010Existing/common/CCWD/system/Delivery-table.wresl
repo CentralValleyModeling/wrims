@@ -1,0 +1,13 @@
+define D406A_MS {std kind 'FLOW-DELIVERY' units 'CFS'} !CCWD Mallard Slough Intake
+define D408_RS {std kind 'FLOW-DELIVERY' units 'CFS'} !CCWD Rock Slough Intake
+define D408_OR {std kind 'FLOW-DELIVERY' units 'CFS'} !CCWD Old River Intake
+define D408_VC {std kind 'FLOW-DELIVERY' units 'CFS'} !CCWD Victoria Canal Intake
+define D420 {std kind 'FLOW-DELIVERY' units 'CFS'} !CCWD delivery
+define D810_LV {std kind 'FLOW-DELIVERY' units 'CFS'} !ACFC
+define D813_LV {std kind 'FLOW-DELIVERY' units 'CFS'} !ACFC
+define D814_LV {std kind 'FLOW-DELIVERY' units 'CFS'} !ACWD
+define D815_LV {std kind 'FLOW-DELIVERY' units 'CFS'} !SCVWD
+define D710_LV {std kind 'FLOW-DELIVERY' units 'CFS'} !SCVWD
+define D711_LV {std kind 'FLOW-DELIVERY' units 'CFS'} !SCVWD
+define D856_LV {std kind 'FLOW-DELIVERY' units 'CFS'} !Kern Refuge
+define D708_LV {std kind 'FLOW-DELIVERY' units 'CFS'} !Mendota Refuge

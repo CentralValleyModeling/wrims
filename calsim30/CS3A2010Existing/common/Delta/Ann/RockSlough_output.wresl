@@ -1,0 +1,257 @@
+! R.Wilbur & S. Wu 5/10/05
+
+!****************************************************************************************
+
+! maximum export given the sacramento river flow
+
+define RS_MaxExport_1 {lower unbounded upper unbounded kind 'FLOW' units 'CFS'}
+goal setRSMax1 {
+  lhs RS_MaxExport_1
+  case LowCL{
+    condition C_SAC041_ANN(-1) >=40000.
+    rhs 999999.}
+    case NoSalinityControlPossible{
+    condition abs(RS_m_1_sv) <= 0.001 .and. int(RS_b_1_sv) == 0
+    rhs 999999.}
+  case NegSlope{
+    condition RS_m_1_sv <= 0.0
+    rhs 999999.}
+  case HighCost{
+    condition RS_Sac_ZeroExp_sv2 >= ANNcap
+    rhs ExportCap}
+  case LargeNegInt{
+      condition RS_b_1_sv < -10000.0
+    rhs 999999.}
+  case Normal {
+    condition always
+    rhs RS_m_1_sv*C_SACtot_ANN /*+ RS_m_1_sv*C_CSL005*/ + RS_b_1_sv} !removed double accounting
+}
+
+define RS_MaxExport_2 {lower unbounded upper unbounded kind 'FLOW' units 'CFS'}
+goal setRSMax2 {
+  lhs RS_MaxExport_2
+  case LowCL{
+    condition C_SAC041_ANN(-1) >=40000.
+    rhs 999999.}
+  case NoSalinityControlPossible{
+    condition abs(RS_m_2_sv) <= 0.001 .and. int(RS_b_2_sv) == 0
+    rhs ExportCap}
+  case NegSlope{
+    condition RS_m_2_sv <= 0.0
+    rhs 999999.}
+  case HighCost{
+    condition RS_Sac_ZeroExp_sv2 >= ANNcap
+    rhs ExportCap}
+  case LargeNegInt{
+    condition RS_b_2_sv < -10000.0
+    rhs 999999.}
+  case NegCarriage{
+    condition RS_m_2_sv >= 1.0
+    rhs 999999.}
+  case Normal {
+    condition always
+    rhs RS_m_2_sv*C_SACtot_ANN /*+ RS_m_2_sv*C_CSL005*/ + RS_b_2_sv} !removed double accounting
+}
+
+define RS_MaxExport_3 {lower unbounded upper unbounded kind 'FLOW' units 'CFS'}
+goal setRSMax3 {
+  lhs RS_MaxExport_3
+  case LowCL{
+    condition C_SAC041_ANN(-1) >=40000.
+    rhs 999999.}
+  case NoSalinityControlPossible{
+    condition abs(RS_m_3_sv) <= 0.001 .and. int(RS_b_3_sv) == 0
+    rhs ExportCap}
+  case NegSlope{
+    condition RS_m_3_sv <= 0.0
+    rhs 999999.}
+  case HighCost{
+    condition RS_Sac_ZeroExp_sv2 >= ANNcap
+    rhs ExportCap}
+  case LargeNegInt{
+    condition RS_b_3_sv < -10000.0
+    rhs 999999.}  
+  case NegCarriage{
+    condition RS_m_3_sv >= 1.0
+    rhs 999999.}
+  case Normal {
+    condition always
+    rhs RS_m_3_sv*C_SACtot_ANN /*+ RS_m_3_sv*C_CSL005*/ + RS_b_3_sv} !removed double accounting
+}
+
+
+!****************************************************************************************
+
+! required delta outflow given exports
+
+define RS_MRDO_1 {lower unbounded upper unbounded kind 'FLOW' units 'CFS'}
+goal setRSmrdo1 {
+  lhs RS_MRDO_1
+  case LowCL{
+    condition C_SAC041_ANN(-1) >=40000.
+    rhs 0.}
+  case NoSalinityControlPossible{
+    condition abs(RS_m_1_sv) <= 0.001 .and. int(RS_b_1_sv) == 0
+    rhs 0.}
+  case NegSlope{
+    condition RS_m_1_sv <= 0.0
+    rhs 0.}
+  case HighCost{
+    condition RS_Sac_ZeroExp_sv2 >= ANNcap
+    rhs 0.}
+  case LargeNegInt{
+    condition RS_b_1_sv < -10000.0
+    rhs 0.}
+  case Normal {
+    condition always
+    rhs ((1-RS_m_1_sv)/RS_m_1_sv)*ExportActualTD - ((1-RS_m_1_sv)/RS_m_1_sv)*D419_wts_stg1 - ((1-RS_m_1_sv)/RS_m_1_sv)*D419_cvcrels
+    - ((1-RS_m_1_sv)/RS_m_1_sv)*D419_whlrels - RS_b_1_sv/RS_m_1_sv + C_SJR056 + SR_61_SJR053 + SG_SJR048_576 + C_FCS006 + SR_61_SJR043 + SG_SJR042_567 + R_STWWTP_SJR042 + SG_SJR038_558
+    + C_CLV004 + R514 + SR_60N_SJR038 + SR_60S_SJR038 + SG_SJR033_553 + SG_SJR028_543 + R_60N_NA3_SJR028 + R_WSWWTP_SJR028
+    + SR_60N_SJR028 + SR_60S_SJR028 - D_SJR028_WTPDWS + SG_SJR023_540 + SG_SJR022_520 + R_60N_NA4_SJR022 + SR_60N_SJR022
+    + SG_SJR013_534 + SG_SJR009_533 + SG_SJR006_532 - D_SJR006_ANTOC + SR_71_OMR039 + R_TCWWTP_OMR039 + R_RFS71A_OMR039 + C_LOSVQ
+    + C_MOK019 + SR_26S_MOK014 + SG_MOK014_494 + SG_MOK004_495 + SG_SAC036_475 + SG_SAC030_476 + SG_SAC022_493 + SG_SAC017_492
+    + CT_Woodland - C_CSL004B + SG_SAC011_527 + SG_SAC007_526 + SG_SAC003_525 + SG_SAC000_531 + I_MSH015 - D408 - net_delta_cu}
+}
+
+define RS_MRDO_2 {lower unbounded upper unbounded kind 'FLOW' units 'CFS'}
+goal setRSmrdo2 {
+  lhs RS_MRDO_2
+  case LowCL{
+    condition C_SAC041_ANN(-1) >=40000.
+    rhs 0.}
+  case NoSalinityControlPossible{
+    condition abs(RS_m_2_sv) <= 0.001 .and. int(RS_b_2_sv) == 0
+    rhs 0.}
+  case NegSlope{
+    condition RS_m_2_sv <= 0.0
+    rhs 0.}
+  case HighCost{
+    condition RS_Sac_ZeroExp_sv2 >= ANNcap
+    rhs 0.}
+  case LargeNegInt{
+    condition RS_b_2_sv < -10000.0
+    rhs 0.}  
+  case NegCarriage{
+    condition RS_m_2_sv >= 1.0
+    rhs 0.}
+  case Normal {
+    condition always
+    rhs ((1-RS_m_2_sv)/RS_m_2_sv)*ExportActualTD - ((1-RS_m_2_sv)/RS_m_2_sv)*D419_wts_stg1 - ((1-RS_m_2_sv)/RS_m_2_sv)*D419_cvcrels
+    - ((1-RS_m_2_sv)/RS_m_2_sv)*D419_whlrels - RS_b_2_sv/RS_m_2_sv + C_SJR056 + SR_61_SJR053 + SG_SJR048_576 + C_FCS006 + SR_61_SJR043 + SG_SJR042_567 + R_STWWTP_SJR042 + SG_SJR038_558
+    + C_CLV004 + R514 + SR_60N_SJR038 + SR_60S_SJR038 + SG_SJR033_553 + SG_SJR028_543 + R_60N_NA3_SJR028 + R_WSWWTP_SJR028
+    + SR_60N_SJR028 + SR_60S_SJR028 - D_SJR028_WTPDWS + SG_SJR023_540 + SG_SJR022_520 + R_60N_NA4_SJR022 + SR_60N_SJR022
+    + SG_SJR013_534 + SG_SJR009_533 + SG_SJR006_532 - D_SJR006_ANTOC + SR_71_OMR039 + R_TCWWTP_OMR039 + R_RFS71A_OMR039 + C_LOSVQ
+    + C_MOK019 + SR_26S_MOK014 + SG_MOK014_494 + SG_MOK004_495 + SG_SAC036_475 + SG_SAC030_476 + SG_SAC022_493 + SG_SAC017_492
+    + CT_Woodland - C_CSL004B + SG_SAC011_527 + SG_SAC007_526 + SG_SAC003_525 + SG_SAC000_531 + I_MSH015 - D408 - net_delta_cu}
+}
+
+define RS_MRDO_3 {lower unbounded upper unbounded kind 'FLOW' units 'CFS'}
+goal setRSmrdo3 {
+  lhs RS_MRDO_3
+  case LowCL{
+    condition C_SAC041_ANN(-1) >=40000.
+    rhs 0.}
+  case NoSalinityControlPossible{
+    condition abs(RS_m_3_sv) <= 0.001 .and. int(RS_b_3_sv) == 0
+    rhs 0.}
+  case NegSlope{
+    condition RS_m_3_sv <= 0.0
+    rhs 0.}
+  case HighCost{
+    condition RS_Sac_ZeroExp_sv2 >= ANNcap
+    rhs 0.}
+  case LargeNegInt{
+    condition RS_b_3_sv < -10000.0
+    rhs 0.}  
+  case NegCarriage{
+    condition RS_m_3_sv >= 1.0
+    rhs 0.}
+  case Normal {
+    condition always
+    rhs ((1-RS_m_3_sv)/RS_m_3_sv)*ExportActualTD - ((1-RS_m_3_sv)/RS_m_3_sv)*D419_wts_stg1 - ((1-RS_m_3_sv)/RS_m_3_sv)*D419_cvcrels
+    - ((1-RS_m_3_sv)/RS_m_3_sv)*D419_whlrels - RS_b_3_sv/RS_m_3_sv + C_SJR056 + SR_61_SJR053 + SG_SJR048_576 + C_FCS006 + SR_61_SJR043 + SG_SJR042_567 + R_STWWTP_SJR042 + SG_SJR038_558
+    + C_CLV004 + R514 + SR_60N_SJR038 + SR_60S_SJR038 + SG_SJR033_553 + SG_SJR028_543 + R_60N_NA3_SJR028 + R_WSWWTP_SJR028
+    + SR_60N_SJR028 + SR_60S_SJR028 - D_SJR028_WTPDWS + SG_SJR023_540 + SG_SJR022_520 + R_60N_NA4_SJR022 + SR_60N_SJR022
+    + SG_SJR013_534 + SG_SJR009_533 + SG_SJR006_532 - D_SJR006_ANTOC + SR_71_OMR039 + R_TCWWTP_OMR039 + R_RFS71A_OMR039 + C_LOSVQ
+    + C_MOK019 + SR_26S_MOK014 + SG_MOK014_494 + SG_MOK004_495 + SG_SAC036_475 + SG_SAC030_476 + SG_SAC022_493 + SG_SAC017_492
+    + CT_Woodland - C_CSL004B + SG_SAC011_527 + SG_SAC007_526 + SG_SAC003_525 + SG_SAC000_531 + I_MSH015 - D408 - net_delta_cu}
+}
+
+!****************************************************************************************
+
+! required sac flow given exports
+
+define RS_ReqSac1{lower unbounded upper unbounded kind 'FLOW' units 'cfs'}
+goal set_RS_ReqSac1 {
+  lhs RS_ReqSac1
+  case LowCL{
+    condition C_SAC041_ANN(-1) >=40000.
+    rhs 0.}
+  case NoSalinityControlPossible{
+    condition abs(RS_m_1_sv) <= 0.001 .and. int(RS_b_1_sv) == 0
+    rhs 0.}
+  case NegSlope{
+    condition RS_m_1_sv <= 0.0
+    rhs 0.}
+  case HighCost{
+    condition RS_Sac_ZeroExp_sv2 >= ANNcap
+    rhs 0.}
+  case LargeNegInt{
+      condition RS_b_1_sv < -10000.0
+    rhs 0.}
+  case Normal {
+    condition always
+    rhs ExportActualTD/RS_m_1_sv - RS_b_1_sv/RS_m_1_sv}
+}
+
+define RS_ReqSac2 {lower unbounded upper unbounded kind 'FLOW' units 'cfs'}
+goal set_RS_ReqSac2 {
+  lhs RS_ReqSac2
+  case LowCL{
+    condition C_SAC041_ANN(-1) >=40000.
+    rhs 0.}
+  case NoSalinityControlPossible{
+    condition abs(RS_m_2_sv) <= 0.001 .and. int(RS_b_2_sv) == 0
+    rhs 0.}
+  case NegSlope{
+    condition RS_m_2_sv <= 0.0
+    rhs 0.}
+  case HighCost{
+    condition RS_Sac_ZeroExp_sv2 >= ANNcap
+    rhs 0.}
+  case LargeNegInt{
+    condition RS_b_2_sv < -10000.0
+    rhs 0.}    
+  case NegCarriage{
+    condition RS_m_2_sv >= 1.0
+    rhs 0.}
+  case Normal {
+    condition always
+    rhs ExportActualTD/RS_m_2_sv - RS_b_2_sv/RS_m_2_sv}
+}
+
+define RS_ReqSac3 {lower unbounded upper unbounded kind 'FLOW' units 'cfs'}
+goal set_RS_ReqSac3 {
+  lhs RS_ReqSac3
+  case LowCL{
+    condition C_SAC041_ANN(-1) >=40000.
+    rhs 0.}
+  case NoSalinityControlPossible{
+    condition abs(RS_m_3_sv) <= 0.001 .and. int(RS_b_3_sv) == 0
+    rhs 0.}
+  case NegSlope{
+    condition RS_m_3_sv <= 0.0
+    rhs 0.}
+  case HighCost{
+    condition RS_Sac_ZeroExp_sv2 >= ANNcap
+    rhs 0.}
+  case LargeNegInt{
+    condition RS_b_3_sv < -10000.0
+    rhs 0.}    
+  case NegCarriage{
+    condition RS_m_3_sv >= 1.0
+    rhs 0.}
+  case Normal {
+    condition always
+    rhs ExportActualTD/RS_m_3_sv - RS_b_3_sv/RS_m_3_sv}
+}

@@ -1,0 +1,10 @@
+!origninal test3 done at 100 cfs buffer
+
+goal restrict_C_NTOMA { 
+     lhs C_NTOMA
+     case Hst_below {
+     	condition  C_AMR004_ADD[MONTHLYWEIGHTED] < 1.0
+     rhs C_NTOMA[MONTHLYWEIGHTED] - D_AMR007_WTPFBN[MONTHLYWEIGHTED]
+     lhs>rhs    penalty 999999
+     lhs<rhs    penalty 0}
+}

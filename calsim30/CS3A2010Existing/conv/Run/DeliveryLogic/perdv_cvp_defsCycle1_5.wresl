@@ -1,0 +1,5 @@
+    	define perdv_cvpag_sys { std kind 'percent-delivery' units 'none'}
+    	define perdv_cvpmi_sys { std kind 'percent-delivery' units 'none'}
+    	define perdv_cvpex_sys { std kind 'percent-delivery' units 'none'}
+    	define perdv_cvpsc_sys { std kind 'percent-delivery' units 'none'}
+    	define perdv_cvprf_sys { std kind 'percent-delivery' units 'none'}   

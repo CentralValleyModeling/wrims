@@ -1,0 +1,96 @@
+/*
+WestBranchFeather.wresl
+
+Purpose:
+	Operation of Round Valley and Philbrook Reservoirs
+	Operation of Hendricks and Miocene Diversion Dams
+
+Created A Draper, MWH, 07.10.11 
+ */
+
+
+! Pre-operate storage
+define S_RVPHB_TGT {std kind 'storage' units 'taf'}
+goal setS_RVPHB_TGT {
+	lhs S_RVPHB_TGT
+	case Jan {
+	condition month == JAN
+	rhs 3.500 }
+	case Feb {
+		condition month == FEB
+	rhs 3.621 }
+	case Mar {
+		condition month == MAR
+	rhs 4.270 }
+	case Apr {
+		condition month == APR
+	rhs 5.785 }
+	case May {
+		condition month == MAY
+	rhs 6.205 }
+	case Jun {
+		condition month == JUN
+	rhs 6.205 }
+	case Jul {
+		condition month == JUL
+	rhs 3.695 }
+	case Aug {
+		condition month == AUG
+	rhs 1.876 }
+	case Sep {
+		condition month == SEP
+	rhs 0.728 }
+	case Oct {
+		condition month == OCT
+	rhs 0.640 }
+	case Nov {
+		condition month == NOV
+	rhs 0.111 }
+	case other {
+		condition always
+	rhs 0.250 }}
+	
+goal set_S_RVPHB {lhs S_RVPHB rhs S_RVPHB_TGT lhs>rhs penalty 99999 lhs<rhs penalty 99999}
+
+define D_WBF030_HKC002_TGT {
+	case OctFeb { 
+		condition month >= OCT .and. month <= FEB
+		value 100. * 0.9 }
+	case MarJul {
+		condition month >= MAR .and. month<= JUL
+		value 115. * 0.9 }
+	case Aug {
+		condition month == AUG
+		value 95. * 0.9 }
+	case other {
+		condition always
+	value 100. * 0.9 }}
+
+goal set_D_WBF030_HKC002 {D_WBF030_HKC002 < D_WBF030_HKC002_TGT}
+
+define D_WBF015_MIO023_TGT {
+	case OctNov { 
+		condition month >= OCT .and. month<= NOV
+		value 25. }
+	case DecFeb {
+		condition month >= DEC .and. month<= FEB
+		value 20. }
+	case Mar {
+		condition month == MAR
+		value 8. }
+	case Apr {
+		condition month == APR
+		value 14. }
+	case May {
+		condition month == MAY
+		value 26. }
+	case JunJul { 
+		condition month >= JUN .and. month<= JUL
+		value 28. }
+	case other {
+		condition always
+	value 25. }}
+
+goal set_D_WBF015_MIO023 {D_WBF015_MIO023 < D_WBF015_MIO023_TGT}
+
+
