@@ -1,5 +1,7 @@
 package wrimsv2_plugin.tools;
 
+import hec.heclib.util.Heclib;
+
 import java.util.Vector;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
@@ -39,24 +41,12 @@ public class DssOperations {
 		return pn;
 	}
 	
-	public static synchronized boolean isDssInOperation(){
-		if (DebugCorePlugin.isDssInOp){
-			return true;
-		}else{
-			setIsDssInOp(true);
-			return false;
-		}
-	}
-	
-	public static synchronized void setIsDssInOp(boolean isDssInOp){
-		DebugCorePlugin.isDssInOp=isDssInOp;
-	}
-	
-	public static void waitForDSSOp(){
+	public static synchronized void waitForDSSOp(){
 		try {
-			while(isDssInOperation()){
+			while(DebugCorePlugin.isDssInOp){
 				Thread.sleep(100);
 			}
+			DebugCorePlugin.isDssInOp=true;
 		} catch (InterruptedException e) {
 			WPPException.handleException(e);
 		}

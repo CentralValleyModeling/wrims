@@ -429,6 +429,7 @@ public class WPPBatchRunDialog extends Dialog {
 						addButton.setEnabled(true);
 						deleteButton.setEnabled(true);
 						seqButton.setEnabled(true);
+						DebugCorePlugin.isDssInOp=false;
 					}
 				});
 			}

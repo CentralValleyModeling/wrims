@@ -1,6 +1,7 @@
 package wrimsv2_plugin.debugger.pa;
 
 import hec.heclib.dss.HecDss;
+import hec.heclib.util.Heclib;
 import hec.hecmath.HecMath;
 import hec.hecmath.TimeSeriesMath;
 import hec.io.TimeSeriesContainer;
@@ -75,7 +76,7 @@ public class PAProcInitBR {
 			paInitDss=HecDss.open(brp.paInitFile);
 		} catch (Exception e) {
 			WPPException.handleException(e);
-			DssOperations.setIsDssInOp(false);
+			DebugCorePlugin.isDssInOp=false;
 			return;
 		}
 		Vector<String> paPathList = paInitDss.getPathnameList();
@@ -92,7 +93,7 @@ public class PAProcInitBR {
 			}
 		}
 		paInitDss.close();
-		DssOperations.setIsDssInOp(false);
+		DebugCorePlugin.isDssInOp=false;
 	}
 
 }

@@ -83,7 +83,7 @@ public class PAProcInit {
 			paInitDss=HecDss.open(DebugCorePlugin.paInitFile);
 		} catch (Exception e) {
 			WPPException.handleException(e);
-			DssOperations.setIsDssInOp(false);
+			DebugCorePlugin.isDssInOp=false;
 			return;
 		}
 		Vector<String> paPathList = paInitDss.getPathnameList();
@@ -100,7 +100,7 @@ public class PAProcInit {
 			}
 		}
 		paInitDss.close();
-		DssOperations.setIsDssInOp(false);
+		DebugCorePlugin.isDssInOp=false;
 	}
 
 }

@@ -178,7 +178,7 @@ public class MSRDataTransferBR {
 			initDss=HecDss.open(initFNs[i]);
 		} catch (Exception e) {
 			WPPException.handleException(e);
-			DssOperations.setIsDssInOp(false);
+			DebugCorePlugin.isDssInOp=false;
 			return;
 		}
 		
@@ -234,7 +234,7 @@ public class MSRDataTransferBR {
 		svDss.close();
 		initDss.close();
 		
-		DssOperations.setIsDssInOp(false);
+		DebugCorePlugin.isDssInOp=false;
 	}
 	
 	public String addPathD(String dvPNFull, String pn){

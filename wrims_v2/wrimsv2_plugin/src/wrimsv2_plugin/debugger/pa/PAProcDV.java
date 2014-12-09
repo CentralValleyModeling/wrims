@@ -59,7 +59,7 @@ public class PAProcDV {
 			dvDss=HecDss.open(dvFile);
 		} catch (Exception e) {
 			WPPException.handleException(e);
-			DssOperations.setIsDssInOp(false);
+			DebugCorePlugin.isDssInOp=false;
 			return;
 		}
 		String shiftInDay=TimeOperation.diffInDay(DebugCorePlugin.paStartYear, DebugCorePlugin.paStartMonth, DebugCorePlugin.paStartDay, DebugCorePlugin.paDVStartYear, DebugCorePlugin.paDVStartMonth, DebugCorePlugin.paDVStartDay)+"DAY";
@@ -85,7 +85,7 @@ public class PAProcDV {
 		}
 		dvDss.close();
 		
-		DssOperations.setIsDssInOp(false);
+		DebugCorePlugin.isDssInOp=false;
 	}
 	
 	public String regeneratePath(String path){

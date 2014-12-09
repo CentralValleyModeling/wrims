@@ -57,7 +57,7 @@ public class PAProcDVBR {
 			dvDss=HecDss.open(dvFile);
 		} catch (Exception e) {
 			WPPException.handleException(e);
-			DssOperations.setIsDssInOp(false);
+			DebugCorePlugin.isDssInOp=false;
 			return;
 		}
 		String shiftInDay=TimeOperation.diffInDay(brp.paStartYear, brp.paStartMonth, brp.paStartDay, brp.paDVStartYear, brp.paDVStartMonth, brp.paDVStartDay)+"DAY";
@@ -83,7 +83,7 @@ public class PAProcDVBR {
 		}
 		dvDss.close();
 		
-		DssOperations.setIsDssInOp(false);
+		DebugCorePlugin.isDssInOp=false;
 	}
 	
 	public String regeneratePath(String path, BatchRunProcess brp){
