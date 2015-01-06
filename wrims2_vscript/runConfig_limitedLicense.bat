@@ -20,26 +20,6 @@ set RunDir=%dirname%run\
 
 echo off
 
-:-------------------------------------------------------:
-: dir for sty file generation (read by groundwater.dll) :
-:-------------------------------------------------------:
-
-set t=%ConfigFilePath%
-set t=%t::=@%
-set t=%t:\=$%
-
-set temp_wrims2=%~dp0_temp\%t%
-
-IF EXIST %temp_wrims2%\study.sty (
-	del /F /Q %temp_wrims2%\study.sty
-)
-
-IF NOT EXIST %temp_wrims2% (
-	mkdir %temp_wrims2%
-) 
-
-set temp_wrims2=%~dp0_temp\%t%\
-
 :------------------:
 : wrims2 lib jars  :
 :------------------:
