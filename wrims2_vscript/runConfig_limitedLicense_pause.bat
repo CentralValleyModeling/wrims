@@ -1,3 +1,5 @@
+set CLP0_BAT_PATH=%~dp0\call_clp.bat
+
 echo off
 
 IF [%1]==[] (
