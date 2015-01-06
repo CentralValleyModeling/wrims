@@ -1,3 +1,4 @@
+set javahome=%~dp0\jre6\bin
 set CLP0_BAT_PATH=%~dp0\call_clp.bat
 
 echo off
@@ -81,7 +82,7 @@ set PATH=%ExternalDir%;%JarDir%
 
 
 
-%temp_wrims2%/../../jre/bin/java -Xmx1000m -Xss1280K -Djava.library.path=%PATH% %CLASSPATH% wrimsv2.components.ControllerBatch -config="%configFilePath%"
+%javahome%/java -Xmx1472m -Xss1280K -Djava.library.path=%PATH% %CLASSPATH% wrimsv2.components.ControllerBatch -config="%configFilePath%"
 
 IF /I [%2]==[-pause] GOTO pause
 
