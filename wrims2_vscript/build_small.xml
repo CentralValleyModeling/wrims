@@ -58,6 +58,7 @@
 		<copy todir="${temp.dir}">
 			<fileset dir="${src.dir}">
 				
+				<exclude name="**/=ILP=/**"/>
 				<exclude name="**/vista/jython/cachedir/packages/**"/>
 				<exclude name="**/vista/jython/bin/**"/> 
 				<exclude name="**/vista/jython/src/**"/> 
