@@ -74,11 +74,14 @@
 				<exclude name="**/*.dsd"/>	
 				<exclude name="**/*.batch"/>	
 				<exclude name="**/*.bak"/>	
+				<exclude name="**/*.config_bac_*"/>	
+
 				
 				<exclude name="**/lib/vista/*.py"/>
 				<exclude name="**/lib/vista/*.dss"/>
 				<exclude name="TODO.txt"/>
 				<exclude name="doc/**"/>				
+				<exclude name="studies/NAA_ROA0_SLR15_CC0/**"/>
 				
 				<exclude name="runConfig_limitedLicense_ctrlLog_pause.bat"/>
 				<exclude name="runConfig_pause.bat"/>				
