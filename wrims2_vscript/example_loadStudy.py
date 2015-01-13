@@ -18,6 +18,6 @@ configFile = 'D1641.config'
 
 s = Study('testStudy', studyRunDir) # 'testStudy' is the name of the study
 s.importConfig(configFile)    # a config file named 'testStudy' is created from the imported config
-# s.run(pause=True) # set pause=True to inspect error message. Default setting is false.
-s.run()
+s.run(pause=True) # set pause=True to inspect error message. Default setting is false.
+# s.run()
 
