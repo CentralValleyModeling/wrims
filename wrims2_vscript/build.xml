@@ -70,6 +70,9 @@
 				<exclude name="**/lib/vista/lib/**/*$py.class"/>
 				<exclude name="scripts/**/*$py.class"/>
 				<exclude name="**/*.log"/>
+				<exclude name="**/Error_solving.txt"/> 
+				<exclude name="**/Error_evaluation.txt"/>
+				<exclude name="**/*.par"/>
 				<exclude name="**/*.dsc"/>
 				<exclude name="**/*.dsd"/>	
 				<exclude name="**/*.batch"/>	
