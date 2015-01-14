@@ -953,21 +953,6 @@ public final class MonthlyTableModel extends AbstractTableModel { // extends
 																// check if null
 				}
 
-				int numOnFirstRow=0;
-				if (firstDisplayMonth < 0 || firstDisplayMonth > 11)
-					firstDisplayMonth = 0;
-				for (int i = firstDisplayMonth; i < months.length
-						+ firstDisplayMonth; ++i) {
-					if (displayMonths.get(i % 12) != null){
-						_columnNames.add(months[i % 12]);
-						if (i<12){
-							numOnFirstRow = numOnFirstRow + 1;
-						}
-					}
-				}
-				_columnNames.add("TTL"); // the last column is the line total/#
-											// of values on the line
-
 				_numberHeaderRows = 4; // CB to do: eliminate hard-coding
 				int startTime = _tsc.startTime; // minutes since Dec 31 1900
 												// 24:00
@@ -979,10 +964,24 @@ public final class MonthlyTableModel extends AbstractTableModel { // extends
 				hecEndTime.set(endTime);
 				// int startYear = hecStartTime.year();
 				int numValues = _tsc.numberValues;
-				if (firstDisplayMonth - startMonthIndex <= 0) {
-					// numOnFirstRow += months.length;
-					numOnFirstRow = 0;
+
+				int numOnFirstRow=0;
+				if (firstDisplayMonth < 0 || firstDisplayMonth > 11)
+					firstDisplayMonth = 0;
+				for (int i = firstDisplayMonth; i < months.length
+						+ firstDisplayMonth; ++i) {
+					if (displayMonths.get(i % 12) != null){
+						_columnNames.add(months[i % 12]);
+						if (firstDisplayMonth<=startMonthIndex && i<startMonthIndex){
+							numOnFirstRow = numOnFirstRow + 1;
+						}else if (firstDisplayMonth>startMonthIndex && i<startMonthIndex+12){
+							numOnFirstRow = numOnFirstRow + 1;
+						}
+					}
 				}
+				_columnNames.add("TTL"); // the last column is the line total/#
+											// of values on the line
+				
 				_hdaValues = new HecDoubleArray(_tsc.values);
 				_hdaValues.setPrecision(precision);
 				double totalSum = 0;
