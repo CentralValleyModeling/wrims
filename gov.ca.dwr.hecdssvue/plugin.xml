@@ -10,7 +10,6 @@
       </category>
       <view
             name="DSS Catalog View"
-            icon="icons/sample.gif"
             category="gov.ca.dwr.hecdssvue"
             class="gov.ca.dwr.hecdssvue.views.DSSCatalogView"
             id="gov.ca.dwr.hecdssvue.views.DSSCatalogView">
@@ -18,42 +17,36 @@
       <view
             category="gov.ca.dwr.hecdssvue"
             class="org.eclipse.ui.navigator.CommonNavigator"
-            icon="icons/sample.gif"
             id="gov.ca.dwr.view.navigator"
             name="Navigator">
       </view>
       <view
             category="gov.ca.dwr.hecdssvue"
             class="gov.ca.dwr.hecdssvue.views.DSSMonthlyView"
-            icon="icons/sample.gif"
             id="gov.ca.dwr.hecdssvue.views.DSSMonthlyView"
             name="DSS Monthly">
       </view>
       <view
             category="gov.ca.dwr.hecdssvue"
             class="gov.ca.dwr.hecdssvue.views.DSSPlotView"
-            icon="icons/sample.gif"
             id="gov.ca.dwr.hecdssvue.views.DSSPlotView"
             name="DSS Plot">
       </view>
       <view
             category="gov.ca.dwr.hecdssvue"
             class="gov.ca.dwr.hecdssvue.views.DSSTableView"
-            icon="icons/sample.gif"
             id="gov.ca.dwr.hecdssvue.views.DSSTableView"
             name="DSS Table">
       </view>
       <view
             category="gov.ca.dwr.hecdssvue"
             class="gov.ca.dwr.hecdssvue.views.DSSFileView"
-            icon="icons/sample.gif"
             id="gov.ca.dwr.hecdssvue.views.DSSFileView"
             name="DSS Files Compare">
       </view>
       <view
             category="gov.ca.dwr.hecdssvue"
             class="gov.ca.dwr.hecdssvue.views.DSSOpsView"
-            icon="icons/sample.gif"
             id="gov.ca.dwr.hecdssvue.views.DSSOpsView"
             name="DSS Options">
       </view>
