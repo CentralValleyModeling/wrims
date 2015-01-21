@@ -114,7 +114,7 @@
 
 	
 	<target name="Zip">
-	    <zip destfile="${dist.dir}/wrims2_vscript_${version}_${svnversion}.zip" basedir="${temp.dir}">
+	    <zip destfile="${dist.dir}/wrims2_vscript_${version}_r${svnversion}.zip" basedir="${temp.dir}">
 	    </zip>
 	</target>
 	
