@@ -28,5 +28,7 @@ rem ###############
 
 %callite_home%/jre6/bin/java -mx512m  -Djava.library.path="%callite_home%/lib" -classpath "%callite_home%/lib/callite_report.jar;%callite_home%/lib/vista.jar;%callite_home%/lib/crimson.jar;%callite_home%/jython/dom4j-1.6.1.jar;%callite_home%/lib/dsm2-input-model.jar;%callite_home%/lib/heclib.jar;%callite_home%/lib/itext-hyph-xml.jar;%callite_home%/lib/iText.jar;%callite_home%/lib/jfreechart.jar;%callite_home%/lib/jpy.jar;%callite_home%/lib/pdf-renderer.jar"  gov.ca.dwr.callite.Batch %1%
 
-pause
+exit
+
+
 
