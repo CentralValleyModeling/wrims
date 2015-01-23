@@ -166,6 +166,13 @@
              style="push">
        </action>
        <action
+             class="gov.ca.dwr.hecdssvue.menus.ManualTimeseries"
+             id="gov.ca.dwr.hecdssvue.manualtimeseries"
+             label="Manual Time Series"
+             menubarPath="gov.ca.dwr.hecdssvue.dss/operation"
+             style="push">
+       </action>
+       <action
              class="gov.ca.dwr.hecdssvue.menus.AllowEdit"
              id="gov.ca.dwr.hecdssvue.allowedit"
              label="Allow Editing"
