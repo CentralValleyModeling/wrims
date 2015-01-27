@@ -22,7 +22,7 @@
 	        <format property="builtat" pattern="MM/dd/yyyy hh:mm aa" timezone="America/Los_Angeles"/>
 	    </tstamp>        
        	<exec executable="svnversion" outputproperty="svnversion"/>
-		<property name="temp.dir" location="z:/distro/wrims2_vscript_${version}_${svnversion}/"/>
+		<property name="temp.dir" location="z:/distro/wrims2_vscript_${version}_r${svnversion}/"/>
 		<echo message="SVN: ${svnversion}"/>
 	</target>
 	    	
