@@ -10,8 +10,10 @@ import hec.dssgui.DataReferenceSet;
 import hec.heclib.dss.HecDss;
 
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -25,6 +27,38 @@ public class DeleteRecords implements IWorkbenchWindowActionDelegate{
 
 	@Override
 	public void run(IAction action) {
+		
+		final IWorkbench workbench=PlatformUI.getWorkbench();
+		workbench.getDisplay().asyncExec(new Runnable(){
+			public void run(){
+				Shell shell=workbench.getActiveWorkbenchWindow().getShell();
+				boolean delete = MessageDialog.openConfirm(shell, "Delete Confirmation", "Do you want to delete selected timeseries?");
+				if (delete){
+					deleteSelected();
+				}
+			}
+		}); 
+	}
+
+	@Override
+	public void selectionChanged(IAction action, ISelection selection) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void init(IWorkbenchWindow window) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void deleteSelected(){
 		IWorkbench workbench=PlatformUI.getWorkbench();
 		IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
 		DSSCatalogView dssCatalogView=(DSSCatalogView) workBenchPage.findView(PluginCore.ID_DSSVue_DSSCatalogView);
@@ -70,24 +104,6 @@ public class DeleteRecords implements IWorkbenchWindowActionDelegate{
 		}
 		TableViewer viewer = dssCatalogView.getViewer();
 		viewer.setInput(viewer.getInput());
-	}
-
-	@Override
-	public void selectionChanged(IAction action, ISelection selection) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void init(IWorkbenchWindow window) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	public boolean containParts(String pathName, String[] parts){
