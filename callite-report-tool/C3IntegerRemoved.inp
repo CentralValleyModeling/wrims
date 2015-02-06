@@ -19,8 +19,8 @@ VARIABLE				VAR_CATEGORY	REPORT_TYPE 	PATH_BASE 						PATH_ALT						ROW_TYPE	PLO
 "FolSom Storage"			S_SEPT		Exceedance	//S_Folsm/STORAGE//1MON//				//S_Folsm/STORAGE//1MON//				N		Y		DEFAULT
 "NOD Storage"				S_SEPT		Exceedance_Post	//S_Trnty+S_Shsta+S_Folsm/STORAGE//1MON//		//S_Trnty+S_Shsta+S_Folsm/STORAGE//1MON//		N		Y		DEFAULT
 "Oroville Storage"			S_SEPT		Exceedance	//S_Orovl/STORAGE//1MON//				//S_Orovl/STORAGE//1MON//				N		Y		DEFAULT
-"CVP SanLuis Storage"			S_SEPT		Exceedance	//S_SLCVP/STORAGE//1MON//				//S_SLCVP/STORAGE//1MON//				N		Y		DEFAULT
-"SWP SanLuis Storage"			S_SEPT		Exceedance	//S_SLSWP/STORAGE//1MON//				//S_SLSWP/STORAGE//1MON//				N		Y		DEFAULT
+"CVP SanLuis Storage"			S_SEPT		Exceedance	//S11/STORAGE//1MON//				//S11/STORAGE//1MON//				N		Y		DEFAULT
+"SWP SanLuis Storage"			S_SEPT		Exceedance	//S12/STORAGE//1MON//				//S12/STORAGE//1MON//				N		Y		DEFAULT
 "River Flow"				RF		Average		IGNORE							IGNORE							B		N		DEFAULT
 "Trinity R blw Lewiston"		RF		Average		//C_Lwstn/CHANNEL//1MON//				//C_Lwstn/CHANNEL//1MON//				N		N		DEFAULT
 #?Clear Creek Tunnel
@@ -35,9 +35,9 @@ VARIABLE				VAR_CATEGORY	REPORT_TYPE 	PATH_BASE 						PATH_ALT						ROW_TYPE	PLO
 "Yolo Bypass(C_YBP002?)"				DI		Average		//C_YBP002/CHANNEL//1MON//				//C_YBP002/CHANNEL//1MON//				N		N		DEFAULT
 "Mokelumne R(C_MOK004?)"				DI		Average		//C_MOK004/CHANNEL//1MON//			//C_MOK004/CHANNEL//1MON//			N		N		DEFAULT
 "San Joaquin R d/s Vernalis(C_SJR070?)"		DI		Average		//C_SJR070/CHANNEL//1MON//				//C_SJR070/CHANNEL//1MON//				N		N		DEFAULT
-"Total Delta Outflow"				DO		Average		//C_SACSJR/CHANNEL//1MON//				//C_SACSJR/CHANNEL//1MON//				B		N		DEFAULT
+"Total Delta Outflow"				DO		Average		//C_SAC000_ADD + C_SAC000_MIN/CHANNEL//1MON//				//C_SAC000_ADD + C_SAC000_MIN/CHANNEL//1MON//				B		N		DEFAULT
 "Surplus Outflow"				DO		Average		//C407/CHANNEL//1MON//				//C407/CHANNEL//1MON//				N		N		DEFAULT
-"Delta Outflow for X2 and NDO"		DO		Average		//D_DeltaReqd/FLOW-DELIVERY//1MON//			//D_DeltaReqd/FLOW-DELIVERY//1MON//			N		N		DEFAULT
+"Delta Outflow for X2 and NDO"		DO		Average		//D407/FLOW-DELIVERY//1MON//			//D407/FLOW-DELIVERY//1MON//			N		N		DEFAULT
 "Delta Exports"				DE		Average_post	//D419_SWP+D419_CVP+D418/FLOW-DELIVERY//1MON//	//D419_SWP+D419_CVP+D418/FLOW-DELIVERY//1MON//	B		N		CFS2TAF
 "Banks SWP(D419_SWP)"				DE		Average		//D419_SWP/FLOW-DELIVERY//1MON//			//D419_SWP/FLOW-DELIVERY//1MON//			N		N		CFS2TAF
 "Banks CVP(D419_CVP)"				DE		Average		//D419_CVP/FLOW-DELIVERY//1MON//			//D419_CVP/FLOW-DELIVERY//1MON//			N		N		CFS2TAF
