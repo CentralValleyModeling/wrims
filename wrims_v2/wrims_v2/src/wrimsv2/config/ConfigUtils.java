@@ -453,6 +453,14 @@ public class ConfigUtils {
 		}
 		System.out.println("WreslPlus:         " + StudyUtils.useWreslPlus);
 		
+		String allowSvTsInit = configMap.get("allowsvtsinit");
+		if (allowSvTsInit.equalsIgnoreCase("yes") || allowSvTsInit.equalsIgnoreCase("true")){
+			ControlData.allowSvTsInit = true;	
+		} else {
+			ControlData.allowSvTsInit  = false;	
+		}
+		System.out.println("AllowSvTsInit:    " + ControlData.allowSvTsInit);
+		
 
 		//if (Error.getTotalError()<1) readParameter(configFile);
 		
@@ -711,7 +719,7 @@ public class ConfigUtils {
 		configMap.put("IlpLog".toLowerCase(), "no");
 		configMap.put("IlpLogVarValue".toLowerCase(), "no");
 		configMap.put("WreslPlus".toLowerCase(), "no");
-
+		configMap.put("AllowSvTsInit".toLowerCase(), "no");
 
 		return configMap;
 

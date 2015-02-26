@@ -24,6 +24,7 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 	
 	private Button wpButton;
 	private Button xaButton;
+	private Button allowSvTsInitButton;
 	
 	@Override
 	public void createControl(Composite parent) {
@@ -88,11 +89,37 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 				updateLaunchConfigurationDialog();			
 			}
 		});
+		
+		Label allowSvTsInitLabel = new Label(comp, SWT.NONE);
+		allowSvTsInitLabel.setText("&Allow SV File Provide Timeseries Initial Data:");
+		gd = new GridData(GridData.BEGINNING);
+		gd.horizontalSpan=2;
+		allowSvTsInitLabel.setLayoutData(gd);
+		allowSvTsInitLabel.setFont(font);
+		
+		allowSvTsInitButton = new Button(comp, SWT.CHECK);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 1;
+		allowSvTsInitButton.setLayoutData(gd);
+		allowSvTsInitButton.setFont(font);
+		allowSvTsInitButton.addSelectionListener(new SelectionListener(){
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				updateLaunchConfigurationDialog();	
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				updateLaunchConfigurationDialog();			
+			}
+		});
 	}
 
 	@Override
 	public void setDefaults(ILaunchConfigurationWorkingCopy configuration) {
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_WRESLPLUS, "no");
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_ALLOWSVTSINIT, "no");
 	}
 
 	@Override
@@ -120,11 +147,23 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 		} catch (CoreException e) {
 			WPPException.handleException(e);
 		}
+		
+		String allowSvTsInit = null;
+		try {
+			allowSvTsInit = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ALLOWSVTSINIT, "no");
+			if (allowSvTsInit.equalsIgnoreCase("yes")){
+				allowSvTsInitButton.setSelection(true);
+			}else{
+				allowSvTsInitButton.setSelection(false);
+			}
+		} catch (CoreException e) {
+			WPPException.handleException(e);
+		}
 	}
 
 	@Override
 	public void performApply(ILaunchConfigurationWorkingCopy configuration) {
-		String wreslPlus="yes";
+		String wreslPlus="no";
 		if (wpButton.getSelection()){
 			wreslPlus="yes";
 		}else{
@@ -132,13 +171,21 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 		}
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_WRESLPLUS, wreslPlus);
 		
-		String freeXA="yes";
+		String freeXA="no";
 		if (xaButton.getSelection()){
 			freeXA="yes";
 		}else{
 			freeXA="no";
 		}
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_FREEXA, freeXA);
+		
+		String allowSvTsInit="no";
+		if (allowSvTsInitButton.getSelection()){
+			allowSvTsInit="yes";
+		}else{
+			allowSvTsInit="no";
+		}
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_ALLOWSVTSINIT, allowSvTsInit);
 	}
 
 	@Override

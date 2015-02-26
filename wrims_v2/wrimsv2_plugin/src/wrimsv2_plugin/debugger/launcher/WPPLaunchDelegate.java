@@ -69,6 +69,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 	private int endDay;
 	private String wreslPlus;
 	private String freeXA;
+	private String allowSvTsInit;
 	private String jarXA="XAOptimizer.jar";
 	private int sid=1;
 	private boolean afterFirstRound=false;
@@ -408,6 +409,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			}else{
 				jarXA="XAOptimizer.jar";
 			}
+			allowSvTsInit=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ALLOWSVTSINIT, "no");
 			
 			String mainFileAbsPath;
 			if (new File(mainFile).isAbsolute()){
@@ -497,6 +499,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			}
 			
 			configMap.put("WreslPlus".toLowerCase(), wreslPlus);
+			configMap.put("AllowSvTsInit".toLowerCase(), allowSvTsInit);
 			
 			if (DebugCorePlugin.launchType==1 || (ms>1 && afterFirstRound)){
 				configMap.put("prefixinittodvarfile", "no");
@@ -571,6 +574,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			out.println("IlpLogFormat       "+configMap.get("IlpLogFormat".toLowerCase()));
 			out.println("IlpLogVarValue     "+configMap.get("IlpLogVarValue".toLowerCase()));
 			out.println("WreslPlus          "+configMap.get("WreslPlus".toLowerCase()));
+			out.println("AllowSvTsInit      "+configMap.get("AllowSvTsInit".toLowerCase()));
 			
 			if (DebugCorePlugin.solver.equalsIgnoreCase("LpSolve")) {
 				

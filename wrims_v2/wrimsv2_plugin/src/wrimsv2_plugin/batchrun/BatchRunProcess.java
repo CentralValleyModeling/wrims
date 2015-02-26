@@ -62,6 +62,7 @@ public class BatchRunProcess {
 	private int runEndDay;
 	private String wreslPlus;
 	private String freeXA;
+	private String allowSvTsInit;
 	private String jarXA="XAOptimizer.jar";
 	private int sid=1;
 	private boolean afterFirstRound=false;
@@ -349,6 +350,7 @@ public class BatchRunProcess {
 		}else{
 			jarXA="XAOptimizer.jar";
 		}
+		allowSvTsInit=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_ALLOWSVTSINIT, "no");
 		
 		String mainFileAbsPath;
 		if (new File(mainFile).isAbsolute()){
@@ -430,6 +432,7 @@ public class BatchRunProcess {
 			}
 			
 			configMap.put("WreslPlus".toLowerCase(), wreslPlus);
+			configMap.put("AllowSvTsInit".toLowerCase(), allowSvTsInit);
 			
 			if (launchType==1 || (ms>1 && afterFirstRound)){
 				configMap.put("prefixinittodvarfile", "no");
@@ -494,6 +497,7 @@ public class BatchRunProcess {
 			out.println("IlpLogFormat       "+configMap.get("IlpLogFormat".toLowerCase()));
 			out.println("IlpLogVarValue     "+configMap.get("IlpLogVarValue".toLowerCase()));
 			out.println("WreslPlus          "+configMap.get("WreslPlus".toLowerCase()));
+			out.println("AllowSvTsInit      "+configMap.get("AllowSvTsInit".toLowerCase()));
 			
 			if (DebugCorePlugin.solver.equalsIgnoreCase("LpSolve")) {
 				

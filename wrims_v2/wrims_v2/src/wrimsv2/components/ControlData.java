@@ -95,6 +95,7 @@ public class ControlData {
 	public static int solverType;
 	public static boolean isParseStudy=true;
 	public static boolean ignoreError=false;
+	public static boolean allowSvTsInit=false;
 	
 	public ControlData(){
 	}

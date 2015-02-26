@@ -649,6 +649,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 			out.println("IlpLogFormat       "+"none");
 			out.println("IlpLogVarValue     "+"no");
 			out.println("WreslPlus          "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_WRESLPLUS, "no"));
+			out.println("AllowSvTsInit      "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_ALLOWSVTSINIT, "no"));
 			
 			if (DebugCorePlugin.solver.equalsIgnoreCase("LpSolve")) {
 				out.println("LpSolveConfigFile         callite.lpsolve");

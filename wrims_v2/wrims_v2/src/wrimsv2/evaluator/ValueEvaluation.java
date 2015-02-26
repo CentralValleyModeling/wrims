@@ -440,6 +440,21 @@ public class ValueEvaluation {
 				}
 			}
 		}
+		if (ControlData.allowSvTsInit && DataTimeSeries.svTS.containsKey(entryNameTS)){
+			DssDataSet dds=DataTimeSeries.svTS.get(entryNameTS);
+			index =timeSeriesIndex(dds);
+			ArrayList<Double> data=dds.getData();
+			if (index>=0 && index<data.size() && index<dds.getStudyStartIndex()){
+				double value=data.get(index);
+				if (dds.fromDssFile()){
+					if (value != -901.0 && value != -902.0){
+						return value;
+					}
+				}else{
+					return value;
+				}
+			}
+		}
 		Error.addEvaluationError("The data requested for timeseries "+ident+" is outside of the time frame provided in dss file.");
 		return 1.0;
 	}
