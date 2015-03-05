@@ -2,11 +2,11 @@
 SCALAR
 NAME		VALUE
 TABLE_FONT_SIZE   7
-FILE_BASE	Existing_BO_CS3A2010dv_plus.DSS #input file 1
-NAME_BASE	Version_A
+FILE_BASE	Existing_BO_CS3A2010dv_plus_integer_vars_removed_XA.DSS #input file 1
+NAME_BASE	Version_C_XA
 FILE_ALT	Existing_BO_CS3A2010dv_plus_integer_vars_removed_CLP_tol.DSS # input file 2
 NAME_ALT	Version_C_CLP
-OUTFILE		C3VsIntRemoved_CLP_20150305.pdf
+OUTFILE		C3VsIntRemoved_XA_vs_CLP_20150305.pdf
 NOTE		"Note: "
 ASSUMPTIONS "Assumptions: "
 MODELER 	"DWR"
