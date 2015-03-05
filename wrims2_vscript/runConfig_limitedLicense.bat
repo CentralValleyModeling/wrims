@@ -1,5 +1,5 @@
 set javahome=%~dp0\jre6\bin
-set CLP0_BAT_PATH=%~dp0\call_clp.bat
+set CLP0_PATH=%~dp0\clp.exe
 
 echo off
 
