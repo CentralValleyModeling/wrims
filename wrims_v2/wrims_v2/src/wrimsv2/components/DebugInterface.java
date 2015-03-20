@@ -615,7 +615,7 @@ public class DebugInterface {
 			}
 			
 			IntDouble intDouble;
-			Collections.sort(sortedList);
+			Collections.sort(sortedList, String.CASE_INSENSITIVE_ORDER);
 			for (String variable: sortedList){
 				if (svMap.containsKey(variable)){
 					Svar sv = svMap.get(variable);
@@ -803,7 +803,7 @@ public class DebugInterface {
 			sortedList.addAll(varIfInc);
 		}
 		IntDouble intDouble;
-		Collections.sort(sortedList);
+		Collections.sort(sortedList, String.CASE_INSENSITIVE_ORDER);
 		for (String variable: sortedList){
 			variable=variable.toLowerCase();
 			if (svMap.containsKey(variable)){
@@ -950,7 +950,7 @@ public class DebugInterface {
 			SimulationDataSet fileDataSet = walker.thisFileDataSet;	
 			ArrayList<String> sortedGoalList = fileDataSet.gList;
 			
-			Collections.sort(sortedGoalList);
+			Collections.sort(sortedGoalList, String.CASE_INSENSITIVE_ORDER);
 			for (int i=0; i<sortedGoalList.size(); i++){
 				double lhs=0;
 				String goalName=sortedGoalList.get(i);
@@ -1082,7 +1082,7 @@ public class DebugInterface {
 			}
 		}
 		
-		Collections.sort(sortedGoalList);
+		Collections.sort(sortedGoalList, String.CASE_INSENSITIVE_ORDER);
 		for (int i=0; i<sortedGoalList.size(); i++){
 			double lhs=0;
 			String goalName=sortedGoalList.get(i);
@@ -1403,7 +1403,7 @@ public class DebugInterface {
 			}
 		}
 		
-		Collections.sort(allDataNames);
+		Collections.sort(allDataNames, String.CASE_INSENSITIVE_ORDER);
 		for (String variable: allDataNames){
 			dataString=dataString+variable+":"+df.format(allData.get(variable))+"#";
 		}
@@ -1571,7 +1571,7 @@ public class DebugInterface {
 			OutputStreamWriter allDataWriter = new OutputStreamWriter(allDataStream);    
 			BufferedWriter allDataBuffer = new BufferedWriter(allDataWriter);
 
-			Collections.sort(allDataNames);
+			Collections.sort(allDataNames, String.CASE_INSENSITIVE_ORDER);
 			for (String variable: allDataNames){
 				allDataBuffer.write(variable+":"+df.format(allData.get(variable))+System.getProperty("line.separator"));
 			}
@@ -1632,7 +1632,7 @@ public class DebugInterface {
 		while (ki.hasNext()){
 			gKeyArrayList.add((String) ki.next());
 		}
-		Collections.sort(gKeyArrayList);
+		Collections.sort(gKeyArrayList, String.CASE_INSENSITIVE_ORDER);
 		for (int i=0; i<gKeyArrayList.size(); i++){
 			String goalName=gKeyArrayList.get(i);
 			goalString=goalString+goalName+":";
@@ -1690,7 +1690,7 @@ public class DebugInterface {
 		while (ki.hasNext()){
 			gKeyArrayList.add((String) ki.next());
 		}
-		Collections.sort(gKeyArrayList);
+		Collections.sort(gKeyArrayList, String.CASE_INSENSITIVE_ORDER);
 		
 		try{
 			File dataFolder= new File(dataDir);
