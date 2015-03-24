@@ -4,9 +4,9 @@ NAME		VALUE
 TABLE_FONT_SIZE   7
 FILE_BASE	Existing_BO_CS3A2010dv_plus_integer_vars_removed_XA.DSS #input file 1
 NAME_BASE	Version_C_XA
-FILE_ALT	Existing_BO_CS3A2010dv_plus_integer_vars_removed_CLP_tol.DSS # input file 2
-NAME_ALT	Version_C_CLP
-OUTFILE		C3VsIntRemoved_XA_vs_CLP_20150305.pdf
+FILE_ALT	Existing_BO_CS3A2010dv_plus_integer_vars_removed_CLP_gcc.DSS # input file 2
+NAME_ALT	Version_C_CLP_filePassing
+OUTFILE		C3VsIntRemoved_XA_vs_CLP_20150316_tolerance_vary.pdf
 NOTE		"Note: "
 ASSUMPTIONS "Assumptions: "
 MODELER 	"DWR"
@@ -14,6 +14,10 @@ END
 
 PATHNAME_MAPPING
 VARIABLE				VAR_CATEGORY	REPORT_TYPE 	PATH_BASE 						PATH_ALT						ROW_TYPE	PLOT		UNIT
+"Trinity Storage"			S_SEPT		Timeseries	//S_Trnty/STORAGE//1MON//				//S_Trnty/STORAGE//1MON//				N		Y		DEFAULT
+"Shasta Storage"			S_SEPT		Timeseries	//S_Shsta/STORAGE//1MON//				//S_Shsta/STORAGE//1MON//				N		Y		DEFAULT		
+"FolSom Storage"			S_SEPT		Timeseries	//S_Folsm/STORAGE//1MON//				//S_Folsm/STORAGE//1MON//				N		Y		DEFAULT
+"Oroville Storage"			S_SEPT		Timeseries	//S_Orovl/STORAGE//1MON//				//S_Orovl/STORAGE//1MON//				N		Y		DEFAULT
 "Trinity Storage"			S_SEPT		Exceedance	//S_Trnty/STORAGE//1MON//				//S_Trnty/STORAGE//1MON//				N		Y		DEFAULT
 "Shasta Storage"			S_SEPT		Exceedance	//S_Shsta/STORAGE//1MON//				//S_Shsta/STORAGE//1MON//				N		Y		DEFAULT		
 "FolSom Storage"			S_SEPT		Exceedance	//S_Folsm/STORAGE//1MON//				//S_Folsm/STORAGE//1MON//				N		Y		DEFAULT
