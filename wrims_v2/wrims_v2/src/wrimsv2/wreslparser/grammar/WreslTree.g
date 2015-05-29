@@ -576,7 +576,7 @@ bin : OR -> OR[".OR."] | AND -> AND[".AND."] ;
 //range_func
 //	: RANGE '(' MONTH ',' MONTH_CONST ',' MONTH_CONST ')' ;
 
-function : external_func | max_func | min_func | int_func | var_model ;
+function : external_func | max_func | min_func | int_func | round_func | var_model ;
 
 function_logical : range_func ;
 
@@ -651,6 +651,13 @@ int_func
 	} 
 	;
 
+round_func 
+  : ROUND '(' e=expression ')' 
+  {
+    $expression::SV.addAll($e.members);
+    $expression::varInCycle.addAll($e.setVarInCycle);
+  } 
+  ;
 	
 /// End Intrinsic functions ///	
 
@@ -672,6 +679,7 @@ NOT : '.not.' | '.NOT.' ;
 PENALTY : 'penalty' | 'PENALTY' | 'Penalty';
 CONSTRAIN : 'constrain' | 'CONSTRAIN' | 'Constrain';
 INT : 'int' | 'INT' | 'Int' ;
+ROUND : 'round' | 'ROUND' | 'Round' ;
 SUM :  'sum' | 'SUM' | 'Sum' ;
 RANGE : 'range' | 'RANGE' | 'Range' ;
 MAX :   'max' | 'MAX' | 'Max' ;

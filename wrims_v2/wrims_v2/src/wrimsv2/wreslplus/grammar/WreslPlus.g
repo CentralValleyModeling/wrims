@@ -896,6 +896,7 @@ intrinsicFunc_simple
 mathFunc_simple 
   :  LOG '(' expr_add_simple ')' 
   |  INT_word '(' expr_add_simple ')' 
+  |  ROUND '(' expr_add_simple ')' 
   |  MOD '(' expr_add_simple ',' expr_add_simple ')' 
   ;
   
@@ -1018,6 +1019,7 @@ id_domain : ( ID '.' )?  ID ;
 mathFunc 
   :  LOG '(' expr_add ')' 
   |	 INT_word '(' expr_add ')' 
+  |  ROUND '(' expr_add ')' 
   |  MOD '(' expr_add ',' expr_add ')' 
   ;
   
@@ -1129,6 +1131,7 @@ RANGE : 'range' | 'RANGE' | 'Range' ;
 
 // intrinsic function
 INT_word : 'int' | 'INT' ;
+ROUND : 'round' | 'ROUND' ;
 LOG : 'log' | 'LOG' ;
 MAX : 'max' | 'MAX' ;
 MIN : 'min' | 'MIN' ;
