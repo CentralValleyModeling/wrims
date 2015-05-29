@@ -84,7 +84,14 @@ func returns[IntDouble id]:
   (log_func{id=$log_func.id;})|
   (log10_func{id=$log10_func.id;})|
   (pow_func{id=$pow_func.id;})|
-  (mod_func{id=$mod_func.id;});
+  (mod_func{id=$mod_func.id;})|
+  (round_func{id=$round_func.id;});
+
+round_func returns[IntDouble id]
+  : ROUND '(' (e1=expression) ')'{
+     id=ValueEvaluation.round($e1.id);
+  }
+  ;
 
 mod_func returns[IntDouble id]
   : MOD '(' (e1=expression) (';' (e2=expression)) ')'{
@@ -161,7 +168,7 @@ timeseries returns [IntDouble id]
 	
 partC: 	(IDENT|IDENT1|usedKeywords) ('-' (IDENT|IDENT1|usedKeywords))*;
   
-usedKeywords: YEAR|MONTH|MONTH_CONST|DAY|PASTMONTH|RANGE|TAFCFS|DAYSIN|DAYSINTIMESTEP|SUM|MAX|MIN|INT|REAL|ABS|EXP|LOG|LOG10|POW|MOD|SELECT|FROM|GIVEN|USE|WHERE
+usedKeywords: YEAR|MONTH|MONTH_CONST|DAY|PASTMONTH|RANGE|TAFCFS|DAYSIN|DAYSINTIMESTEP|SUM|MAX|MIN|INT|REAL|ABS|EXP|LOG|LOG10|POW|MOD|ROUND|SELECT|FROM|GIVEN|USE|WHERE
 |CONSTRAIN|ALWAYS|NAME|DVAR|CYCLE|FILE|CONDITION|INCLUDE|LOWERBOUND|UPPERBOUND|INTEGERTYPE|UNITS|CONVERTUNITS|TYPE|OUTPUT
 |CASE|ORDER|EXPRESSION|LHSGTRHS|LHSLTRHS|WEIGHT|FUNCTION|FROM_WRESL_FILE|UPPERUNBOUNDED|LOWERUNBOUNDED|AND|OR|NOT;
 
@@ -400,6 +407,7 @@ LOG: 'log';
 LOG10: 'log10';
 POW: 'pow';
 MOD: 'mod';
+ROUND: 'round';
 
 SELECT: 'select';
 FROM: 'from';

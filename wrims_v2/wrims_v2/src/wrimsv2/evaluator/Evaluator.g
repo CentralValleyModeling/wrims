@@ -90,7 +90,14 @@ func returns[EvalExpression ee]:
   (log_func{ee=$log_func.ee;})|
   (log10_func{ee=$log10_func.ee;})|
   (pow_func{ee=$pow_func.ee;})|
-  (mod_func{ee=$mod_func.ee;})
+  (mod_func{ee=$mod_func.ee;})|
+  (round_func{ee=$round_func.ee;})
+  ;
+
+round_func returns[EvalExpression ee]
+  : ROUND '(' (e1=expression)')'{
+     ee=Evaluation.round($e1.ee);
+  }
   ;
 
 mod_func returns[EvalExpression ee]
@@ -168,7 +175,7 @@ timeseries returns [EvalExpression ee]
 	
 partC: 	(IDENT|IDENT1|usedKeywords) ('-' (IDENT|IDENT1|usedKeywords))*;
   
-usedKeywords: YEAR|MONTH|MONTH_CONST|DAY|PASTMONTH|RANGE|TAFCFS|DAYSIN|DAYSINTIMESTEP|SUM|MAX|MIN|INT|REAL|ABS|EXP|LOG|LOG10|POW|MOD|SELECT|FROM|GIVEN|USE|WHERE
+usedKeywords: YEAR|MONTH|MONTH_CONST|DAY|PASTMONTH|RANGE|TAFCFS|DAYSIN|DAYSINTIMESTEP|SUM|MAX|MIN|INT|REAL|ABS|EXP|LOG|LOG10|POW|MOD|ROUND|SELECT|FROM|GIVEN|USE|WHERE
 |CONSTRAIN|ALWAYS|NAME|DVAR|CYCLE|FILE|CONDITION|INCLUDE|LOWERBOUND|UPPERBOUND|INTEGERTYPE|UNITS|CONVERTUNITS|TYPE|OUTPUT
 |CASE|ORDER|EXPRESSION|LHSGTRHS|LHSLTRHS|WEIGHT|FUNCTION|FROM_WRESL_FILE|UPPERUNBOUNDED|LOWERUNBOUNDED|AND|OR|NOT;
 
@@ -408,6 +415,7 @@ LOG: 'log';
 LOG10: 'log10';
 POW: 'pow';
 MOD: 'mod';
+ROUND: 'round';
 
 SELECT: 'select';
 FROM: 'from';

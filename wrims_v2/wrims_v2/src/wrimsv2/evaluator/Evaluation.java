@@ -380,6 +380,17 @@ public class Evaluation {
 		return id;		
 	}
 	
+	public static EvalExpression round(EvalExpression ee1){
+		if (ee1.isNumeric()){
+			IntDouble id1=ee1.getValue();
+			ee1.setValue(ValueEvaluation.round(id1));			
+			return ee1;
+		}else{
+			Error.addEvaluationError("The arguement for the rounded variable is not numeric.");
+			return ee1;
+		}
+	}
+	
 	public static EvalExpression add(EvalExpression ee1, EvalExpression ee2){
 		IntDouble id1=ee1.getValue();
 		IntDouble id2=ee2.getValue();

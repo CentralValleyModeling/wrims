@@ -232,7 +232,13 @@ public class ValueEvaluation {
 		}
 		return id;		
 	}
-		
+	
+	public static IntDouble round(IntDouble id1){
+		IntDouble id;
+		id=new IntDouble(Math.round(id1.getData().doubleValue()), true);
+		return id;		
+	}
+	
 	public static IntDouble add(IntDouble id1, IntDouble id2){
 		IntDouble id;
 		if (!id1.isInt() && !id2.isInt()){
