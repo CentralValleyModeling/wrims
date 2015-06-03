@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry excluding="**/.svn/|.svn/" kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre6"/>
 	<classpathentry kind="lib" path="libs/antlr-3.2.jar"/>
 	<classpathentry kind="lib" path="D:/cvwrsm/trunk/3rd_party/vista/lib/heclib.jar"/>
 	<classpathentry kind="lib" path="D:/cvwrsm/trunk/3rd_party/vista/lib/jpy.jar"/>
@@ -22,5 +21,11 @@
 	<classpathentry kind="lib" path="src/wrimsv2/lib/kryo-2.24.0.jar"/>
 	<classpathentry kind="lib" path="src/wrimsv2/lib/minlog-1.2.jar"/>
 	<classpathentry kind="lib" path="src/wrimsv2/lib/objenesis-1.2.jar"/>
+	<classpathentry kind="lib" path="src/wrimsv2/lib/jarh5obj.jar"/>
+	<classpathentry kind="lib" path="src/wrimsv2/lib/jarhdf5-2.11.0.jar"/>
+	<classpathentry kind="lib" path="src/wrimsv2/lib/jarhdfobj.jar"/>
+	<classpathentry kind="lib" path="src/wrimsv2/lib/slf4j-api-1.7.5.jar"/>
+	<classpathentry kind="lib" path="src/wrimsv2/lib/slf4j-nop-1.7.5.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre6"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
