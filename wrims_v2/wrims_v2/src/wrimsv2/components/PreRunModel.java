@@ -19,6 +19,7 @@ import wrimsv2.evaluator.DssDataSetFixLength;
 import wrimsv2.evaluator.DssOperation;
 import wrimsv2.evaluator.TimeOperation;
 import wrimsv2.external.LoadAllDll;
+import wrimsv2.hdf5.HDF5Writer;
 
 public class PreRunModel {
 	public PreRunModel(StudyDataSet sds){
@@ -63,6 +64,12 @@ public class PreRunModel {
 			ControlData.currModelDataSet=mds;
 			ControlData.currCycleIndex=i;
 			processExternal();
+		}
+		
+		if (ControlData.outputHDF5){
+			System.out.println("Create HDF5 output data structure.");
+			HDF5Writer.createDataStructure();
+			System.out.println("HDF5 output data structure is created.");
 		}
 	}
 	

@@ -52,6 +52,7 @@ import wrimsv2.evaluator.ValueEvaluation;
 import wrimsv2.evaluator.ValueEvaluatorLexer;
 import wrimsv2.evaluator.ValueEvaluatorParser;
 import wrimsv2.external.LoadAllDll;
+import wrimsv2.hdf5.HDF5Writer;
 import wrimsv2.ilp.ILP;
 import wrimsv2.solver.CloseCurrentSolver;
 import wrimsv2.solver.LPSolveSolver;
@@ -379,10 +380,16 @@ public class ControllerDebug extends Thread {
 		}
 		new CloseCurrentSolver(ControlData.solverName);
 		if (ControlData.writeInitToDVOutput){
-		DssOperation.writeInitDvarAliasToDSS();
+			DssOperation.writeInitDvarAliasToDSS();
 		}
 		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
+		
+		if (ControlData.outputHDF5){
+			HDF5Writer.CreateDvarAliasLookup();
+			HDF5Writer.writeTimestepData();
+			HDF5Writer.closeDataStructure();
+		}
 	}
 	
 	public void prepareInitialTimeStep(){

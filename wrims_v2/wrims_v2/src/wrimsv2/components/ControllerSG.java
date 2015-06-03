@@ -13,6 +13,7 @@ import wrimsv2.evaluator.AssignPastCycleVariable;
 import wrimsv2.evaluator.DssOperation;
 import wrimsv2.evaluator.PreEvaluator;
 import wrimsv2.evaluator.ValueEvaluatorParser;
+import wrimsv2.hdf5.HDF5Writer;
 import wrimsv2.solver.XASolver;
 import wrimsv2.solver.SetXALog;
 import wrimsv2.solver.InitialXASolver;
@@ -295,10 +296,16 @@ public class ControllerSG {
 		}
 		ControlData.xasolver.close();
 		if (ControlData.writeInitToDVOutput){
-		DssOperation.writeInitDvarAliasToDSS();
+			DssOperation.writeInitDvarAliasToDSS();
 		}
 		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
+		
+		if (ControlData.outputHDF5){
+			HDF5Writer.CreateDvarAliasLookup();
+			HDF5Writer.writeTimestepData();
+			HDF5Writer.closeDataStructure();
+		}
 	}
 	
 	public void writeOutputDssEveryTenYears(){

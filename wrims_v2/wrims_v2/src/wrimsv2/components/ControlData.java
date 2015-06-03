@@ -96,6 +96,7 @@ public class ControlData {
 	public static boolean isParseStudy=true;
 	public static boolean ignoreError=false;
 	public static boolean allowSvTsInit=false;
+	public static boolean outputHDF5=true;
 	
 	public ControlData(){
 	}

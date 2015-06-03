@@ -17,6 +17,7 @@ import wrimsv2.evaluator.AssignPastCycleVariable;
 import wrimsv2.evaluator.DssOperation;
 import wrimsv2.evaluator.PreEvaluator;
 import wrimsv2.evaluator.ValueEvaluatorParser;
+import wrimsv2.hdf5.HDF5Writer;
 import wrimsv2.ilp.ILP;
 import wrimsv2.solver.LPSolveSolver;
 import wrimsv2.solver.XASolver;
@@ -347,6 +348,12 @@ public class ControllerBatch {
 		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 		
+		if (ControlData.outputHDF5){
+			HDF5Writer.CreateDvarAliasLookup();
+			HDF5Writer.writeTimestepData();
+			HDF5Writer.closeDataStructure();
+		}
+		
 		// write complete or fail
 		if (enableProgressLog || enableConfigProgress) {
 			try {
@@ -539,10 +546,16 @@ public class ControllerBatch {
 			ControlData.xasolver.close();
 		}
 		if (ControlData.writeInitToDVOutput){
-		DssOperation.writeInitDvarAliasToDSS();
+			DssOperation.writeInitDvarAliasToDSS();
 		}
 		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
+		
+		if (ControlData.outputHDF5){
+			HDF5Writer.CreateDvarAliasLookup();
+			HDF5Writer.writeTimestepData();
+			HDF5Writer.closeDataStructure();
+		}
 	}
 
 	public void runModelGurobi(StudyDataSet sds){
@@ -666,6 +679,12 @@ public class ControllerBatch {
 		}
 		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
+		
+		if (ControlData.outputHDF5){
+			HDF5Writer.CreateDvarAliasLookup();
+			HDF5Writer.writeTimestepData();
+			HDF5Writer.closeDataStructure();
+		}
 	}
 
 	public void runModelGurobiTest(StudyDataSet sds){
@@ -856,5 +875,11 @@ public class ControllerBatch {
 		}
 		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
+		
+		if (ControlData.outputHDF5){
+			HDF5Writer.CreateDvarAliasLookup();
+			HDF5Writer.writeTimestepData();
+			HDF5Writer.closeDataStructure();
+		}
 	}
 }
