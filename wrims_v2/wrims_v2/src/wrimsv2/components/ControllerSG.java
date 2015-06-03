@@ -302,7 +302,7 @@ public class ControllerSG {
 		ControlData.writer.closeDSSFile();
 		
 		if (ControlData.outputHDF5){
-			HDF5Writer.CreateDvarAliasLookup();
+			HDF5Writer.createDvarAliasLookup();
 			HDF5Writer.writeTimestepData();
 			HDF5Writer.closeDataStructure();
 		}

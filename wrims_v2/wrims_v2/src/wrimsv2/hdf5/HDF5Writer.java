@@ -49,6 +49,7 @@ public class HDF5Writer {
 	private static int gidMonthly=-1;
 	private static String gDaily="Daily";
 	private static int gidDaily=-1;
+	private static int i_error;
 	
 	public static void createDataStructure(){
 		h5FileName=FilePaths.fullDvarDssPath;
@@ -85,7 +86,7 @@ public class HDF5Writer {
 		
 	}
 	
-	public static void CreateDvarAliasLookup(){
+	public static void createDvarAliasLookup(){
 		HashMap<String, DssDataSetFixLength> dvAliasTs = DataTimeSeries.dvAliasTS;
 		int size=dvAliasTs.size();
 		dvAsLookupNames=new String[size];
@@ -208,47 +209,70 @@ public class HDF5Writer {
 		
 		if (gidMonthly>=0){
 			try {
-				int tidCompound = H5.H5Tcreate(HDF5Constants.H5T_COMPOUND, 8*2000);
-				int offset=0;
 				String name=monthlyDvarAliasList.get(0);
 				int dim = DataTimeSeries.dvAliasTS.get(name).getData().length;
 				dims[0]=dim;
 				
-				for (int i=0; i<1000; i++){
-					name=monthlyDvarAliasList.get(i);
-					int j=monthlyDvarAliasMap.get(name);
+				int size=monthlyDvarAliasList.size();
+				int tableCount=(size-1)/1000+1;
+				int lastTableColCount=size%1000;
+				if (lastTableColCount==0) lastTableColCount=1000;
+	
+				for (int k=0; k<tableCount; k++){
+					int offset=0;
+					int endi, colCount;
 					
-					int tidValue = H5.H5Tinsert(tidCompound, String.valueOf(j), offset, HDF5Constants.H5T_NATIVE_DOUBLE);
-					offset=offset+8;
-				}
+					int kk=k+1;
+					if (kk<tableCount){
+						endi=1000*kk;
+						colCount=1000;
+					}else{
+						endi=size;
+						colCount=lastTableColCount;
+					}
+					String dName="Timestep Table "+kk;
+					
+					int tidCompound = H5.H5Tcreate(HDF5Constants.H5T_COMPOUND, 8*colCount);
+					for (int i=k*1000; i<endi; i++){
+						name=monthlyDvarAliasList.get(i);
+						int j=monthlyDvarAliasMap.get(name);
+					
+						int tidValue = H5.H5Tinsert(tidCompound, String.valueOf(j), offset, HDF5Constants.H5T_NATIVE_DOUBLE);
+						offset=offset+8;
+					}
 			
-				int sidTDA = H5.H5Screate_simple(1, dims, null);
-				if (sidTDA >= 0){
-					int didTDA = H5.H5Dcreate(gidMonthly, "Timestep", tidCompound, sidTDA, HDF5Constants.H5P_DEFAULT, HDF5Constants.H5P_DEFAULT, HDF5Constants.H5P_DEFAULT);
+					int sidTDA = H5.H5Screate_simple(1, dims, null);
+					if (sidTDA >= 0){
+						int didTDA = H5.H5Dcreate(gidMonthly, dName, tidCompound, sidTDA, HDF5Constants.H5P_DEFAULT, HDF5Constants.H5P_DEFAULT, HDF5Constants.H5P_DEFAULT);
 				
-					if (didTDA >= 0){
-						offset=0;		
-						for (int i=0; i<1000; i++){
-							name=monthlyDvarAliasList.get(i);
-							int j=monthlyDvarAliasMap.get(name);
+						if (didTDA >= 0){
+							offset=0;
+							//if (k==2) endi=0;
+							for (int i=k*1000; i<endi; i++){
+								name=monthlyDvarAliasList.get(i);
+								int j=monthlyDvarAliasMap.get(name);
 							
-							int tidCompoundTmp = H5.H5Tcreate(HDF5Constants.H5T_COMPOUND, 8);						
-							H5.H5Tinsert(tidCompoundTmp, String.valueOf(j), offset, HDF5Constants.H5T_NATIVE_DOUBLE);
+								i_error=i;
+								
+								int tidCompoundTmp = H5.H5Tcreate(HDF5Constants.H5T_COMPOUND, 8);						
+								H5.H5Tinsert(tidCompoundTmp, String.valueOf(j), offset, HDF5Constants.H5T_NATIVE_DOUBLE);
 						
-							double[] data = DataTimeSeries.dvAliasTS.get(name).getData();
-							
-							H5.H5Dwrite(didTDA, tidCompoundTmp, 
+								double[] data = DataTimeSeries.dvAliasTS.get(name).getData();
+								
+								H5.H5Dwrite(didTDA, tidCompoundTmp, 
 							        HDF5Constants.H5S_ALL, HDF5Constants.H5S_ALL, HDF5Constants.H5P_DEFAULT, data);
 							
-							H5.H5Tclose(tidCompoundTmp);
+								H5.H5Tclose(tidCompoundTmp);
+							}
 						}
-					}
-					H5.H5Dclose(didTDA);
-				}	
-				H5.H5Sclose(sidTDA);
-				H5.H5Tclose(tidCompound);
+						H5.H5Dclose(didTDA);
+					}	
+					H5.H5Sclose(sidTDA);
+					H5.H5Tclose(tidCompound);
+				}
 			}catch(Exception e){
 				e.printStackTrace();
+				System.out.println("error at "+i_error);
 			}
 		}
 	}
