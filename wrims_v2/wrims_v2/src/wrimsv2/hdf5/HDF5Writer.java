@@ -202,7 +202,7 @@ public class HDF5Writer {
 		writeDailyTimestepDvarAlias();
 	}
 	
-	public static void writeMonthlyTimestepDvarAlias(){
+	public static void writeMonthlyTimestepDvarAlias_deprecated(){
 		
 		long[] dims={0};
 		
@@ -272,8 +272,98 @@ public class HDF5Writer {
 		}
 	}
 	
+public static void writeMonthlyTimestepDvarAlias(){
+		
+		long[] dims={0,0};
+		
+		if (gidMonthly>=0 && monthlyDvarAliasList.size()>0){
+			try {		
+				String name=monthlyDvarAliasList.get(0);
+				int dim = DataTimeSeries.dvAliasTS.get(name).getData().length;
+				
+				int size=monthlyDvarAliasList.size();
+				
+				dims[0]=dim;
+				dims[1]=size;
+				double[][] write_data=new double[dim][size];
+				
+				String dName="Timestep Table";
+					
+				int sidTDA = H5.H5Screate_simple(2, dims, null);
+				if (sidTDA >= 0){
+					int didTDA = H5.H5Dcreate(gidMonthly, dName, HDF5Constants.H5T_NATIVE_DOUBLE, sidTDA, HDF5Constants.H5P_DEFAULT, HDF5Constants.H5P_DEFAULT, HDF5Constants.H5P_DEFAULT);
+				
+					if (didTDA >= 0){
+						for (int i=0; i<size; i++){
+								name=monthlyDvarAliasList.get(i);
+											
+								double[] data = DataTimeSeries.dvAliasTS.get(name).getData();
+								
+								for (int j=0; j<dim; j++){
+									write_data[j][i]=data[j];
+								}
+								
+							}
+						}
+				
+						H5.H5Dwrite(didTDA, HDF5Constants.H5T_NATIVE_DOUBLE, 
+						HDF5Constants.H5S_ALL, HDF5Constants.H5S_ALL, HDF5Constants.H5P_DEFAULT, write_data);
+					
+						H5.H5Dclose(didTDA);
+					}	
+					H5.H5Sclose(sidTDA);
+
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	public static void writeDailyTimestepDvarAlias(){
 		
+		long[] dims={0,0};
+		
+		if (gidDaily>=0 && dailyDvarAliasList.size()>0){
+			try {		
+				String name=dailyDvarAliasList.get(0);
+				int dim = DataTimeSeries.dvAliasTS.get(name).getData().length;
+				
+				int size=dailyDvarAliasList.size();
+				
+				dims[0]=dim;
+				dims[1]=size;
+				double[][] write_data=new double[dim][size];
+				
+				String dName="Timestep Table";
+					
+				int sidTDA = H5.H5Screate_simple(2, dims, null);
+				if (sidTDA >= 0){
+					int didTDA = H5.H5Dcreate(gidDaily, dName, HDF5Constants.H5T_NATIVE_DOUBLE, sidTDA, HDF5Constants.H5P_DEFAULT, HDF5Constants.H5P_DEFAULT, HDF5Constants.H5P_DEFAULT);
+				
+					if (didTDA >= 0){
+						for (int i=0; i<size; i++){
+								name=dailyDvarAliasList.get(i);
+											
+								double[] data = DataTimeSeries.dvAliasTS.get(name).getData();
+								
+								for (int j=0; j<dim; j++){
+									write_data[j][i]=data[j];
+								}
+								
+							}
+						}
+				
+						H5.H5Dwrite(didTDA, HDF5Constants.H5T_NATIVE_DOUBLE, 
+						HDF5Constants.H5S_ALL, HDF5Constants.H5S_ALL, HDF5Constants.H5P_DEFAULT, write_data);
+					
+						H5.H5Dclose(didTDA);
+					}	
+					H5.H5Sclose(sidTDA);
+
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public static void writeOneCycle(ModelDataSet mds){
