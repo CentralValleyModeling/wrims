@@ -49,7 +49,6 @@ public class HDF5Writer {
 	private static int gidMonthly=-1;
 	private static String gDaily="Daily";
 	private static int gidDaily=-1;
-	private static int i_error;
 	
 	public static void createDataStructure(){
 		h5FileName=FilePaths.fullDvarDssPath;
@@ -240,19 +239,17 @@ public class HDF5Writer {
 						int tidValue = H5.H5Tinsert(tidCompound, String.valueOf(j), offset, HDF5Constants.H5T_NATIVE_DOUBLE);
 						offset=offset+8;
 					}
-			
+					H5.H5Tclose(tidCompound);
+					
 					int sidTDA = H5.H5Screate_simple(1, dims, null);
 					if (sidTDA >= 0){
 						int didTDA = H5.H5Dcreate(gidMonthly, dName, tidCompound, sidTDA, HDF5Constants.H5P_DEFAULT, HDF5Constants.H5P_DEFAULT, HDF5Constants.H5P_DEFAULT);
 				
 						if (didTDA >= 0){
 							offset=0;
-							//if (k==2) endi=0;
 							for (int i=k*1000; i<endi; i++){
 								name=monthlyDvarAliasList.get(i);
 								int j=monthlyDvarAliasMap.get(name);
-							
-								i_error=i;
 								
 								int tidCompoundTmp = H5.H5Tcreate(HDF5Constants.H5T_COMPOUND, 8);						
 								H5.H5Tinsert(tidCompoundTmp, String.valueOf(j), offset, HDF5Constants.H5T_NATIVE_DOUBLE);
@@ -268,11 +265,9 @@ public class HDF5Writer {
 						H5.H5Dclose(didTDA);
 					}	
 					H5.H5Sclose(sidTDA);
-					H5.H5Tclose(tidCompound);
 				}
 			}catch(Exception e){
 				e.printStackTrace();
-				System.out.println("error at "+i_error);
 			}
 		}
 	}
