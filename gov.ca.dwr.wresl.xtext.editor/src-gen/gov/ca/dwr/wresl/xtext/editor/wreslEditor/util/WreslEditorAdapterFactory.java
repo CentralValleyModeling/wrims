@@ -415,9 +415,14 @@ public class WreslEditorAdapterFactory extends AdapterFactoryImpl
         return createFunctionAdapter();
       }
       @Override
-      public Adapter caseExternalFunction(ExternalFunction object)
+      public Adapter caseExternalFunction1(ExternalFunction1 object)
       {
-        return createExternalFunctionAdapter();
+        return createExternalFunction1Adapter();
+      }
+      @Override
+      public Adapter caseExternalFunction2(ExternalFunction2 object)
+      {
+        return createExternalFunction2Adapter();
       }
       @Override
       public Adapter caseTrunkTimeArray(TrunkTimeArray object)
@@ -453,6 +458,11 @@ public class WreslEditorAdapterFactory extends AdapterFactoryImpl
       public Adapter caseAbsFunction(AbsFunction object)
       {
         return createAbsFunctionAdapter();
+      }
+      @Override
+      public Adapter caseRoundFunction(RoundFunction object)
+      {
+        return createRoundFunctionAdapter();
       }
       @Override
       public Adapter casePowFunction(PowFunction object)
@@ -1537,16 +1547,31 @@ public class WreslEditorAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.ExternalFunction <em>External Function</em>}'.
+   * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.ExternalFunction1 <em>External Function1</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.ExternalFunction
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.ExternalFunction1
    * @generated
    */
-  public Adapter createExternalFunctionAdapter()
+  public Adapter createExternalFunction1Adapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.ExternalFunction2 <em>External Function2</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.ExternalFunction2
+   * @generated
+   */
+  public Adapter createExternalFunction2Adapter()
   {
     return null;
   }
@@ -1652,6 +1677,21 @@ public class WreslEditorAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createAbsFunctionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.RoundFunction <em>Round Function</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.RoundFunction
+   * @generated
+   */
+  public Adapter createRoundFunctionAdapter()
   {
     return null;
   }

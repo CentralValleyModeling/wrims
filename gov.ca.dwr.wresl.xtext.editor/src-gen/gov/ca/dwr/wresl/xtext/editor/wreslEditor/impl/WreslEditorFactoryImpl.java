@@ -132,7 +132,8 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
       case WreslEditorPackage.UNARY: return createUnary();
       case WreslEditorPackage.TERM: return createTerm();
       case WreslEditorPackage.FUNCTION: return createFunction();
-      case WreslEditorPackage.EXTERNAL_FUNCTION: return createExternalFunction();
+      case WreslEditorPackage.EXTERNAL_FUNCTION1: return createExternalFunction1();
+      case WreslEditorPackage.EXTERNAL_FUNCTION2: return createExternalFunction2();
       case WreslEditorPackage.TRUNK_TIME_ARRAY: return createTrunkTimeArray();
       case WreslEditorPackage.TRUNK_TIME_ARRAY_INDEX: return createTrunkTimeArrayIndex();
       case WreslEditorPackage.MAX_FUNCTION: return createMaxFunction();
@@ -140,6 +141,7 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
       case WreslEditorPackage.MOD_FUNCTION: return createModFunction();
       case WreslEditorPackage.INT_FUNCTION: return createIntFunction();
       case WreslEditorPackage.ABS_FUNCTION: return createAbsFunction();
+      case WreslEditorPackage.ROUND_FUNCTION: return createRoundFunction();
       case WreslEditorPackage.POW_FUNCTION: return createPowFunction();
       case WreslEditorPackage.LOG_FUNCTION: return createLogFunction();
       case WreslEditorPackage.VAR_MODEL: return createVarModel();
@@ -906,10 +908,21 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
    * <!-- end-user-doc -->
    * @generated
    */
-  public ExternalFunction createExternalFunction()
+  public ExternalFunction1 createExternalFunction1()
   {
-    ExternalFunctionImpl externalFunction = new ExternalFunctionImpl();
-    return externalFunction;
+    ExternalFunction1Impl externalFunction1 = new ExternalFunction1Impl();
+    return externalFunction1;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ExternalFunction2 createExternalFunction2()
+  {
+    ExternalFunction2Impl externalFunction2 = new ExternalFunction2Impl();
+    return externalFunction2;
   }
 
   /**
@@ -987,6 +1000,17 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
   {
     AbsFunctionImpl absFunction = new AbsFunctionImpl();
     return absFunction;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public RoundFunction createRoundFunction()
+  {
+    RoundFunctionImpl roundFunction = new RoundFunctionImpl();
+    return roundFunction;
   }
 
   /**

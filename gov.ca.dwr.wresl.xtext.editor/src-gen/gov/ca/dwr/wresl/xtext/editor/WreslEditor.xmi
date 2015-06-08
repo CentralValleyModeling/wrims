@@ -40,9 +40,9 @@
       </type>
       <alternatives xsi:type="xtext:Alternatives">
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.90"/>
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.91"/>
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.92"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.93"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.94"/>
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.44"/>
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.11"/>
       </alternatives>
@@ -55,7 +55,7 @@
         <elements xsi:type="xtext:Keyword" value="Declare"/>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Assignment" feature="name" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
@@ -107,7 +107,7 @@
         <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//IfTerm"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.109"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.111"/>
         <elements xsi:type="xtext:Assignment" feature="logical" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.59"/>
         </elements>
@@ -123,7 +123,7 @@
         <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//ElseIfTerm"/>
       </type>
       <alternatives xsi:type="xtext:Group" cardinality="+">
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.110"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.112"/>
         <elements xsi:type="xtext:Assignment" feature="logical" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.59"/>
         </elements>
@@ -139,7 +139,7 @@
         <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//ElseTerm"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.111"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.113"/>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Assignment" cardinality="+" feature="pattern" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
@@ -158,7 +158,7 @@
             <type metamodel="/0/@metamodelDeclarations.0">
               <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//Declaration"/>
             </type>
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
           </terminal>
         </elements>
         <elements xsi:type="xtext:Keyword" value=")"/>
@@ -184,7 +184,7 @@
           <elements xsi:type="xtext:Keyword" value="]"/>
         </elements>
         <elements xsi:type="xtext:Assignment" feature="name" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
         </elements>
         <elements xsi:type="xtext:Keyword" cardinality="?" value="="/>
         <elements xsi:type="xtext:Keyword" value="{"/>
@@ -205,7 +205,7 @@
             <type metamodel="/0/@metamodelDeclarations.0">
               <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//Declaration"/>
             </type>
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
           </terminal>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="ta" operator="=">
@@ -243,7 +243,7 @@
             <type metamodel="/0/@metamodelDeclarations.0">
               <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//Declaration"/>
             </type>
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
           </terminal>
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
@@ -281,7 +281,7 @@
               <type metamodel="/0/@metamodelDeclarations.0">
                 <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//Declaration"/>
               </type>
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
             </terminal>
           </elements>
           <elements xsi:type="xtext:Keyword" value="{"/>
@@ -314,7 +314,7 @@
               <type metamodel="/0/@metamodelDeclarations.0">
                 <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//Declaration"/>
               </type>
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
             </terminal>
           </elements>
           <elements xsi:type="xtext:Keyword" value="{"/>
@@ -353,7 +353,7 @@
               <type metamodel="/0/@metamodelDeclarations.0">
                 <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//Declaration"/>
               </type>
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
             </terminal>
           </elements>
           <elements xsi:type="xtext:Keyword" value="{"/>
@@ -389,7 +389,7 @@
               <type metamodel="/0/@metamodelDeclarations.0">
                 <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//Declaration"/>
               </type>
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
             </terminal>
           </elements>
           <elements xsi:type="xtext:Keyword" value="{"/>
@@ -428,12 +428,12 @@
             <type metamodel="/0/@metamodelDeclarations.0">
               <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//Declaration"/>
             </type>
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
           </terminal>
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Assignment" feature="definition" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.89"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.91"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
@@ -465,7 +465,7 @@
             <type metamodel="/0/@metamodelDeclarations.0">
               <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//Declaration"/>
             </type>
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
           </terminal>
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
@@ -482,7 +482,7 @@
             <elements xsi:type="xtext:Keyword" value="KIND"/>
           </elements>
           <elements xsi:type="xtext:Assignment" feature="kind" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.126"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.129"/>
           </elements>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
@@ -491,7 +491,7 @@
             <elements xsi:type="xtext:Keyword" value="UNITS"/>
           </elements>
           <elements xsi:type="xtext:Assignment" feature="units" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.126"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.129"/>
           </elements>
         </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
@@ -509,7 +509,7 @@
         <elements xsi:type="xtext:Alternatives">
           <elements xsi:type="xtext:Group">
             <elements xsi:type="xtext:Assignment" feature="name" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
             </elements>
             <elements xsi:type="xtext:Alternatives">
               <elements xsi:type="xtext:Keyword" value=".dll"/>
@@ -552,14 +552,14 @@
           <elements xsi:type="xtext:Keyword" value="KIND"/>
         </elements>
         <elements xsi:type="xtext:Assignment" feature="kind" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.126"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.129"/>
         </elements>
         <elements xsi:type="xtext:Alternatives">
           <elements xsi:type="xtext:Keyword" value="units"/>
           <elements xsi:type="xtext:Keyword" value="UNITS"/>
         </elements>
         <elements xsi:type="xtext:Assignment" feature="units" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.126"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.129"/>
         </elements>
       </alternatives>
     </rules>
@@ -577,14 +577,14 @@
           <elements xsi:type="xtext:Keyword" value="KIND"/>
         </elements>
         <elements xsi:type="xtext:Assignment" feature="kind" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.126"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.129"/>
         </elements>
         <elements xsi:type="xtext:Alternatives">
           <elements xsi:type="xtext:Keyword" value="units"/>
           <elements xsi:type="xtext:Keyword" value="UNITS"/>
         </elements>
         <elements xsi:type="xtext:Assignment" feature="units" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.126"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.129"/>
         </elements>
       </alternatives>
     </rules>
@@ -615,14 +615,14 @@
           <elements xsi:type="xtext:Keyword" value="KIND"/>
         </elements>
         <elements xsi:type="xtext:Assignment" feature="kind" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.126"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.129"/>
         </elements>
         <elements xsi:type="xtext:Alternatives">
           <elements xsi:type="xtext:Keyword" value="units"/>
           <elements xsi:type="xtext:Keyword" value="UNITS"/>
         </elements>
         <elements xsi:type="xtext:Assignment" feature="units" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.126"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.129"/>
         </elements>
       </alternatives>
     </rules>
@@ -641,14 +641,14 @@
           <elements xsi:type="xtext:Keyword" value="KIND"/>
         </elements>
         <elements xsi:type="xtext:Assignment" feature="kind" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.126"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.129"/>
         </elements>
         <elements xsi:type="xtext:Alternatives">
           <elements xsi:type="xtext:Keyword" value="units"/>
           <elements xsi:type="xtext:Keyword" value="UNITS"/>
         </elements>
         <elements xsi:type="xtext:Assignment" feature="units" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.126"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.129"/>
         </elements>
       </alternatives>
     </rules>
@@ -674,21 +674,21 @@
           <elements xsi:type="xtext:Keyword" value="TIMESERIES"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="bPart" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.126"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.129"/>
         </elements>
         <elements xsi:type="xtext:Alternatives">
           <elements xsi:type="xtext:Keyword" value="kind"/>
           <elements xsi:type="xtext:Keyword" value="KIND"/>
         </elements>
         <elements xsi:type="xtext:Assignment" feature="kind" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.126"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.129"/>
         </elements>
         <elements xsi:type="xtext:Alternatives">
           <elements xsi:type="xtext:Keyword" value="units"/>
           <elements xsi:type="xtext:Keyword" value="UNITS"/>
         </elements>
         <elements xsi:type="xtext:Assignment" feature="units" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.126"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.129"/>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Alternatives">
@@ -696,7 +696,7 @@
             <elements xsi:type="xtext:Keyword" value="CONVERT"/>
           </elements>
           <elements xsi:type="xtext:Assignment" feature="convert" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.126"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.129"/>
           </elements>
         </elements>
       </alternatives>
@@ -750,8 +750,8 @@
         </elements>
         <elements xsi:type="xtext:Assignment" feature="caseName" operator="=">
           <terminal xsi:type="xtext:Alternatives">
-            <elements xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
-            <elements xsi:type="xtext:RuleCall" rule="/0/@rules.93"/>
+            <elements xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
+            <elements xsi:type="xtext:RuleCall" rule="/0/@rules.95"/>
           </terminal>
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
@@ -836,8 +836,8 @@
         </elements>
         <elements xsi:type="xtext:Assignment" feature="tableName" operator="=">
           <terminal xsi:type="xtext:Alternatives">
-            <elements xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
-            <elements xsi:type="xtext:RuleCall" rule="/0/@rules.93"/>
+            <elements xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
+            <elements xsi:type="xtext:RuleCall" rule="/0/@rules.95"/>
           </terminal>
         </elements>
         <elements xsi:type="xtext:Alternatives">
@@ -846,8 +846,8 @@
         </elements>
         <elements xsi:type="xtext:Assignment" feature="from" operator="=">
           <terminal xsi:type="xtext:Alternatives">
-            <elements xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
-            <elements xsi:type="xtext:RuleCall" rule="/0/@rules.93"/>
+            <elements xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
+            <elements xsi:type="xtext:RuleCall" rule="/0/@rules.95"/>
           </terminal>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
@@ -863,7 +863,7 @@
             <elements xsi:type="xtext:Keyword" value="USE"/>
           </elements>
           <elements xsi:type="xtext:Assignment" feature="use" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
           </elements>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
@@ -912,10 +912,10 @@
         <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//TermSimple"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.89"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.91"/>
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.71"/>
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.93"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.95"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="LowerAndOrUpper">
@@ -1030,7 +1030,7 @@
           <elements xsi:type="xtext:Keyword" value="]"/>
         </elements>
         <elements xsi:type="xtext:Assignment" feature="name" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Assignment" feature="definition" operator="=">
@@ -1075,8 +1075,8 @@
         </elements>
         <elements xsi:type="xtext:Assignment" feature="caseName" operator="=">
           <terminal xsi:type="xtext:Alternatives">
-            <elements xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
-            <elements xsi:type="xtext:RuleCall" rule="/0/@rules.93"/>
+            <elements xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
+            <elements xsi:type="xtext:RuleCall" rule="/0/@rules.95"/>
           </terminal>
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
@@ -1252,7 +1252,7 @@
           <elements xsi:type="xtext:Keyword" value="GROUP"/>
         </elements>
         <elements xsi:type="xtext:Assignment" feature="name" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Alternatives" cardinality="+">
@@ -1276,7 +1276,7 @@
           <elements xsi:type="xtext:Keyword" value="MODEL"/>
         </elements>
         <elements xsi:type="xtext:Assignment" feature="name" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Alternatives" cardinality="+">
@@ -1317,7 +1317,7 @@
           <elements xsi:type="xtext:Keyword" value="SEQUENCE"/>
         </elements>
         <elements xsi:type="xtext:Assignment" feature="name" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Alternatives">
@@ -1329,21 +1329,21 @@
             <type metamodel="/0/@metamodelDeclarations.0">
               <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//Model"/>
             </type>
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
           </terminal>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="condition" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.58"/>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.125"/>
+          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
           <elements xsi:type="xtext:Assignment" feature="order" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
           </elements>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.107"/>
-          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.108"/>
+          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.109"/>
+          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.110"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
@@ -1367,7 +1367,7 @@
                 <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//Condition"/>
               </type>
             </elements>
-            <elements xsi:type="xtext:RuleCall" rule="/0/@rules.124"/>
+            <elements xsi:type="xtext:RuleCall" rule="/0/@rules.127"/>
           </elements>
         </elements>
       </alternatives>
@@ -1393,8 +1393,8 @@
         <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.122"/>
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.121"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.125"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.124"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="ConditionalUnary">
@@ -1410,7 +1410,7 @@
       <type metamodel="/1/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </type>
-      <alternatives xsi:type="xtext:RuleCall" rule="/0/@rules.123"/>
+      <alternatives xsi:type="xtext:RuleCall" rule="/0/@rules.126"/>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="ConditionalTerm">
       <type metamodel="/0/@metamodelDeclarations.0">
@@ -1426,7 +1426,7 @@
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.65"/>
           </elements>
         </elements>
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.82"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.84"/>
         <elements xsi:type="xtext:Group" predicated="true">
           <elements xsi:type="xtext:Group">
             <elements xsi:type="xtext:Keyword" value="("/>
@@ -1521,11 +1521,11 @@
             <type metamodel="/0/@metamodelDeclarations.0">
               <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//Declaration"/>
             </type>
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
           </terminal>
         </elements>
         <elements xsi:type="xtext:Assignment" feature="n" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.89"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.91"/>
         </elements>
         <elements xsi:type="xtext:Assignment" feature="f" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.71"/>
@@ -1538,9 +1538,9 @@
           <elements xsi:type="xtext:Keyword" value=")"/>
         </elements>
         <elements xsi:type="xtext:Assignment" feature="s" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.93"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.95"/>
         </elements>
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.106"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.108"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Function">
@@ -1549,27 +1549,29 @@
       </type>
       <alternatives xsi:type="xtext:Alternatives">
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.72"/>
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.75"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.73"/>
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.76"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.77"/>
         <elements xsi:type="xtext:Group">
           <elements xsi:type="xtext:Keyword" value="("/>
           <elements xsi:type="xtext:RuleCall" rule="/0/@rules.32"/>
           <elements xsi:type="xtext:Keyword" value=")"/>
         </elements>
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.77"/>
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.78"/>
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.79"/>
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.80"/>
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.81"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.82"/>
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.83"/>
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.84"/>
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.85"/>
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.86"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.87"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.88"/>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="ExternalFunction">
+    <rules xsi:type="xtext:ParserRule" name="ExternalFunction1">
       <type metamodel="/0/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//ExternalFunction"/>
+        <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//ExternalFunction1"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Alternatives">
@@ -1578,17 +1580,17 @@
               <type metamodel="/0/@metamodelDeclarations.0">
                 <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//Declaration"/>
               </type>
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
             </terminal>
           </elements>
-          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.94"/>
-          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.102"/>
+          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.96"/>
+          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.104"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="("/>
         <elements xsi:type="xtext:Assignment" feature="e1" operator="=">
           <terminal xsi:type="xtext:Alternatives">
             <elements xsi:type="xtext:RuleCall" rule="/0/@rules.65"/>
-            <elements xsi:type="xtext:RuleCall" rule="/0/@rules.73"/>
+            <elements xsi:type="xtext:RuleCall" rule="/0/@rules.74"/>
           </terminal>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="*">
@@ -1596,10 +1598,31 @@
           <elements xsi:type="xtext:Assignment" feature="e2" operator="+=">
             <terminal xsi:type="xtext:Alternatives">
               <elements xsi:type="xtext:RuleCall" rule="/0/@rules.65"/>
-              <elements xsi:type="xtext:RuleCall" rule="/0/@rules.73"/>
+              <elements xsi:type="xtext:RuleCall" rule="/0/@rules.74"/>
             </terminal>
           </elements>
         </elements>
+        <elements xsi:type="xtext:Keyword" value=")"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="ExternalFunction2">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//ExternalFunction2"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Alternatives">
+          <elements xsi:type="xtext:Assignment" feature="ref" operator="=">
+            <terminal xsi:type="xtext:CrossReference">
+              <type metamodel="/0/@metamodelDeclarations.0">
+                <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//Declaration"/>
+              </type>
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
+            </terminal>
+          </elements>
+          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.96"/>
+          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.104"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="("/>
         <elements xsi:type="xtext:Keyword" value=")"/>
       </alternatives>
     </rules>
@@ -1613,16 +1636,16 @@
             <type metamodel="/0/@metamodelDeclarations.0">
               <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//Declaration"/>
             </type>
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
           </terminal>
         </elements>
         <elements xsi:type="xtext:Keyword" value="("/>
         <elements xsi:type="xtext:Assignment" feature="t1" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.74"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.75"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value=":"/>
         <elements xsi:type="xtext:Assignment" feature="t2" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.74"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.75"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value=")"/>
       </alternatives>
@@ -1642,7 +1665,7 @@
             <type metamodel="/0/@metamodelDeclarations.0">
               <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//Declaration"/>
             </type>
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
           </terminal>
         </elements>
       </alternatives>
@@ -1652,7 +1675,7 @@
         <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//MaxFunction"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.114"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.116"/>
         <elements xsi:type="xtext:Keyword" value="("/>
         <elements xsi:type="xtext:Assignment" feature="e1" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.65"/>
@@ -1671,7 +1694,7 @@
         <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//MinFunction"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.113"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.115"/>
         <elements xsi:type="xtext:Keyword" value="("/>
         <elements xsi:type="xtext:Assignment" feature="e1" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.65"/>
@@ -1690,7 +1713,7 @@
         <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//ModFunction"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.115"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.117"/>
         <elements xsi:type="xtext:Keyword" value="("/>
         <elements xsi:type="xtext:Assignment" feature="e1" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.65"/>
@@ -1707,7 +1730,7 @@
         <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//IntFunction"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.116"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.118"/>
         <elements xsi:type="xtext:Keyword" value="("/>
         <elements xsi:type="xtext:Assignment" feature="e" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.65"/>
@@ -1720,7 +1743,20 @@
         <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//AbsFunction"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.117"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.119"/>
+        <elements xsi:type="xtext:Keyword" value="("/>
+        <elements xsi:type="xtext:Assignment" feature="e" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.65"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=")"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="RoundFunction">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//RoundFunction"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.120"/>
         <elements xsi:type="xtext:Keyword" value="("/>
         <elements xsi:type="xtext:Assignment" feature="e" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.65"/>
@@ -1733,7 +1769,7 @@
         <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//PowFunction"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.118"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.121"/>
         <elements xsi:type="xtext:Keyword" value="("/>
         <elements xsi:type="xtext:Assignment" feature="e1" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.65"/>
@@ -1750,7 +1786,7 @@
         <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//LogFunction"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.119"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.122"/>
         <elements xsi:type="xtext:Keyword" value="("/>
         <elements xsi:type="xtext:Assignment" feature="e" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.65"/>
@@ -1762,7 +1798,7 @@
       <type metamodel="/1/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </type>
-      <alternatives xsi:type="xtext:RuleCall" rule="/0/@rules.87"/>
+      <alternatives xsi:type="xtext:RuleCall" rule="/0/@rules.89"/>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="VarModel">
       <type metamodel="/0/@metamodelDeclarations.0">
@@ -1774,7 +1810,7 @@
             <type metamodel="/0/@metamodelDeclarations.0">
               <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//Declaration"/>
             </type>
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
           </terminal>
         </elements>
         <elements xsi:type="xtext:Keyword" value="["/>
@@ -1783,7 +1819,7 @@
             <type metamodel="/0/@metamodelDeclarations.0">
               <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//Model"/>
             </type>
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
           </terminal>
         </elements>
         <elements xsi:type="xtext:Keyword" value="]"/>
@@ -1799,7 +1835,7 @@
             <type metamodel="/0/@metamodelDeclarations.0">
               <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//Declaration"/>
             </type>
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
           </terminal>
         </elements>
         <elements xsi:type="xtext:Keyword" value="["/>
@@ -1808,7 +1844,7 @@
             <type metamodel="/0/@metamodelDeclarations.0">
               <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//Model"/>
             </type>
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
           </terminal>
         </elements>
         <elements xsi:type="xtext:Keyword" value="]"/>
@@ -1829,7 +1865,7 @@
             <type metamodel="/0/@metamodelDeclarations.0">
               <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//Declaration"/>
             </type>
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
           </terminal>
         </elements>
         <elements xsi:type="xtext:Keyword" value="["/>
@@ -1848,7 +1884,7 @@
             <type metamodel="/0/@metamodelDeclarations.0">
               <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//Declaration"/>
             </type>
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
           </terminal>
         </elements>
         <elements xsi:type="xtext:Keyword" value="["/>
@@ -1867,24 +1903,24 @@
         <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.112"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.114"/>
         <elements xsi:type="xtext:Keyword" value="("/>
         <elements xsi:type="xtext:Alternatives">
-          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
-          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.102"/>
-          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.101"/>
+          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
+          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.104"/>
+          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.103"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value=","/>
         <elements xsi:type="xtext:Alternatives">
-          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
-          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.104"/>
-          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.105"/>
+          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
+          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.106"/>
+          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.107"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value=","/>
         <elements xsi:type="xtext:Alternatives">
-          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
-          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.104"/>
-          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.105"/>
+          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
+          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.106"/>
+          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.107"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value=")"/>
       </alternatives>
@@ -1894,7 +1930,7 @@
         <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//Ident"/>
       </type>
       <alternatives xsi:type="xtext:Assignment" feature="name" operator="=">
-        <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
+        <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Number">
@@ -1903,7 +1939,7 @@
       </type>
       <alternatives xsi:type="xtext:Alternatives">
         <elements xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.120"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.123"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="IncludeFile">
@@ -1926,7 +1962,7 @@
           <elements xsi:type="xtext:Keyword" value="]"/>
         </elements>
         <elements xsi:type="xtext:Assignment" feature="file" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.126"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.129"/>
         </elements>
       </alternatives>
     </rules>
@@ -1943,7 +1979,7 @@
           <elements xsi:type="xtext:Keyword" value="model"/>
           <elements xsi:type="xtext:Keyword" value="MODEL"/>
         </elements>
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="IncludeGroup">
@@ -1959,7 +1995,7 @@
           <elements xsi:type="xtext:Keyword" value="group"/>
           <elements xsi:type="xtext:Keyword" value="GROUP"/>
         </elements>
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.128"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.131"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="SpecialIdent">
@@ -1967,14 +2003,14 @@
         <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.94"/>
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.100"/>
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.101"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.96"/>
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.102"/>
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.103"/>
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.104"/>
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.105"/>
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.95"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.106"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.107"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.97"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="TafCfs">
@@ -1982,10 +2018,10 @@
         <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.96"/>
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.97"/>
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.98"/>
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.99"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.100"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.101"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="I">
@@ -2191,6 +2227,15 @@
         <elements xsi:type="xtext:Keyword" value="ABS"/>
       </alternatives>
     </rules>
+    <rules xsi:type="xtext:TerminalRule" name="ROUND">
+      <type metamodel="/1/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value="round"/>
+        <elements xsi:type="xtext:Keyword" value="ROUND"/>
+      </alternatives>
+    </rules>
     <rules xsi:type="xtext:TerminalRule" name="POW">
       <type metamodel="/1/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -2333,7 +2378,7 @@
       </alternatives>
     </rules>
   </xtext:Grammar>
-  <xtext:Grammar name="org.eclipse.xtext.common.Terminals" definesHiddenTokens="true" hiddenTokens="/1/@rules.5 /1/@rules.3 /0/@rules.127">
+  <xtext:Grammar name="org.eclipse.xtext.common.Terminals" definesHiddenTokens="true" hiddenTokens="/1/@rules.5 /1/@rules.3 /0/@rules.130">
     <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="ecore">
       <ePackage href="http://www.eclipse.org/emf/2002/Ecore#/"/>
     </metamodelDeclarations>

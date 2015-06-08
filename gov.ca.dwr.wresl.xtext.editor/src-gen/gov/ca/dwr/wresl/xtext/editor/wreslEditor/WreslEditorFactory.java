@@ -635,13 +635,22 @@ public interface WreslEditorFactory extends EFactory
   Function createFunction();
 
   /**
-   * Returns a new object of class '<em>External Function</em>'.
+   * Returns a new object of class '<em>External Function1</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>External Function</em>'.
+   * @return a new object of class '<em>External Function1</em>'.
    * @generated
    */
-  ExternalFunction createExternalFunction();
+  ExternalFunction1 createExternalFunction1();
+
+  /**
+   * Returns a new object of class '<em>External Function2</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>External Function2</em>'.
+   * @generated
+   */
+  ExternalFunction2 createExternalFunction2();
 
   /**
    * Returns a new object of class '<em>Trunk Time Array</em>'.
@@ -705,6 +714,15 @@ public interface WreslEditorFactory extends EFactory
    * @generated
    */
   AbsFunction createAbsFunction();
+
+  /**
+   * Returns a new object of class '<em>Round Function</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Round Function</em>'.
+   * @generated
+   */
+  RoundFunction createRoundFunction();
 
   /**
    * Returns a new object of class '<em>Pow Function</em>'.

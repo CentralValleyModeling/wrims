@@ -220,10 +220,13 @@ Term:
 	ref=[Declaration] | n=Number | f=Function | '(' e=Expression ')'| s=SpecialIdent | MultiStep;
 
 Function:
-	ExternalFunction | MaxFunction | MinFunction | '(' SumContent ')' | ModFunction | IntFunction | AbsFunction | PowFunction | LogFunction | VarModel | VarModelStep | VarModelIndex | VarModelIndexStep;
+	ExternalFunction1 | ExternalFunction2 | MaxFunction | MinFunction | '(' SumContent ')' | ModFunction | IntFunction | AbsFunction | RoundFunction | PowFunction | LogFunction | VarModel | VarModelStep | VarModelIndex | VarModelIndexStep;
 
-ExternalFunction:
+ExternalFunction1:
 	((ref=[Declaration])|TafCfs|Month) '(' e1=(Expression|TrunkTimeArray) (',' e2+=(Expression|TrunkTimeArray))* ')';
+	
+ExternalFunction2:
+	((ref=[Declaration])|TafCfs|Month) '(' ')';
 
 TrunkTimeArray: 
 	ref=[Declaration] '(' t1=TrunkTimeArrayIndex ':' t2=TrunkTimeArrayIndex ')' 
@@ -245,6 +248,9 @@ IntFunction:
 
 AbsFunction:
 	ABS '(' e=Expression ')';
+	
+RoundFunction:
+	ROUND '(' e=Expression ')';
 
 PowFunction:
 	POW '(' e1=Expression ','  e2=Expression ')';
@@ -340,6 +346,9 @@ terminal INTFUNC:
 	
 terminal ABS:
 	'abs' | 'ABS';
+
+terminal ROUND:
+	'round'|'ROUND';
 	
 terminal POW:
 	'pow' | 'POW';

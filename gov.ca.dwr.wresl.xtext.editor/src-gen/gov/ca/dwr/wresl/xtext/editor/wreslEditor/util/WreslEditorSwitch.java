@@ -596,12 +596,21 @@ public class WreslEditorSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case WreslEditorPackage.EXTERNAL_FUNCTION:
+      case WreslEditorPackage.EXTERNAL_FUNCTION1:
       {
-        ExternalFunction externalFunction = (ExternalFunction)theEObject;
-        T result = caseExternalFunction(externalFunction);
-        if (result == null) result = caseFunction(externalFunction);
-        if (result == null) result = caseTermSimple(externalFunction);
+        ExternalFunction1 externalFunction1 = (ExternalFunction1)theEObject;
+        T result = caseExternalFunction1(externalFunction1);
+        if (result == null) result = caseFunction(externalFunction1);
+        if (result == null) result = caseTermSimple(externalFunction1);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case WreslEditorPackage.EXTERNAL_FUNCTION2:
+      {
+        ExternalFunction2 externalFunction2 = (ExternalFunction2)theEObject;
+        T result = caseExternalFunction2(externalFunction2);
+        if (result == null) result = caseFunction(externalFunction2);
+        if (result == null) result = caseTermSimple(externalFunction2);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -661,6 +670,15 @@ public class WreslEditorSwitch<T> extends Switch<T>
         T result = caseAbsFunction(absFunction);
         if (result == null) result = caseFunction(absFunction);
         if (result == null) result = caseTermSimple(absFunction);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case WreslEditorPackage.ROUND_FUNCTION:
+      {
+        RoundFunction roundFunction = (RoundFunction)theEObject;
+        T result = caseRoundFunction(roundFunction);
+        if (result == null) result = caseFunction(roundFunction);
+        if (result == null) result = caseTermSimple(roundFunction);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -1826,17 +1844,33 @@ public class WreslEditorSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>External Function</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>External Function1</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>External Function</em>'.
+   * @return the result of interpreting the object as an instance of '<em>External Function1</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseExternalFunction(ExternalFunction object)
+  public T caseExternalFunction1(ExternalFunction1 object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>External Function2</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>External Function2</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseExternalFunction2(ExternalFunction2 object)
   {
     return null;
   }
@@ -1949,6 +1983,22 @@ public class WreslEditorSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseAbsFunction(AbsFunction object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Round Function</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Round Function</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseRoundFunction(RoundFunction object)
   {
     return null;
   }

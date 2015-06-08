@@ -242,10 +242,13 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WreslEditor.ecore#//Term/s"/>
     </genClasses>
     <genClasses ecoreClass="WreslEditor.ecore#//Function"/>
-    <genClasses ecoreClass="WreslEditor.ecore#//ExternalFunction">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//ExternalFunction/ref"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//ExternalFunction/e1"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//ExternalFunction/e2"/>
+    <genClasses ecoreClass="WreslEditor.ecore#//ExternalFunction1">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//ExternalFunction1/ref"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//ExternalFunction1/e1"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//ExternalFunction1/e2"/>
+    </genClasses>
+    <genClasses ecoreClass="WreslEditor.ecore#//ExternalFunction2">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//ExternalFunction2/ref"/>
     </genClasses>
     <genClasses ecoreClass="WreslEditor.ecore#//TrunkTimeArray">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//TrunkTimeArray/ref"/>
@@ -272,6 +275,9 @@
     </genClasses>
     <genClasses ecoreClass="WreslEditor.ecore#//AbsFunction">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//AbsFunction/e"/>
+    </genClasses>
+    <genClasses ecoreClass="WreslEditor.ecore#//RoundFunction">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//RoundFunction/e"/>
     </genClasses>
     <genClasses ecoreClass="WreslEditor.ecore#//PowFunction">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//PowFunction/e1"/>

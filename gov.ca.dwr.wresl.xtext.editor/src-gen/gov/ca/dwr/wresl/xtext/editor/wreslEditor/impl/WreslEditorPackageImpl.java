@@ -26,7 +26,8 @@ import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ElseTerm;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Expression;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.External;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ExternalDef;
-import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ExternalFunction;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ExternalFunction1;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ExternalFunction2;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Function;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Goal;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalCase;
@@ -55,6 +56,7 @@ import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Objective;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Pattern;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Penalty;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.PowFunction;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.RoundFunction;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.SVar;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.SVarCase;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.SVarDSS;
@@ -585,7 +587,14 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass externalFunctionEClass = null;
+  private EClass externalFunction1EClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass externalFunction2EClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -635,6 +644,13 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * @generated
    */
   private EClass absFunctionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass roundFunctionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -2560,9 +2576,9 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getExternalFunction()
+  public EClass getExternalFunction1()
   {
-    return externalFunctionEClass;
+    return externalFunction1EClass;
   }
 
   /**
@@ -2570,9 +2586,9 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getExternalFunction_Ref()
+  public EReference getExternalFunction1_Ref()
   {
-    return (EReference)externalFunctionEClass.getEStructuralFeatures().get(0);
+    return (EReference)externalFunction1EClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -2580,9 +2596,9 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getExternalFunction_E1()
+  public EReference getExternalFunction1_E1()
   {
-    return (EReference)externalFunctionEClass.getEStructuralFeatures().get(1);
+    return (EReference)externalFunction1EClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -2590,9 +2606,29 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getExternalFunction_E2()
+  public EReference getExternalFunction1_E2()
   {
-    return (EReference)externalFunctionEClass.getEStructuralFeatures().get(2);
+    return (EReference)externalFunction1EClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getExternalFunction2()
+  {
+    return externalFunction2EClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExternalFunction2_Ref()
+  {
+    return (EReference)externalFunction2EClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -2783,6 +2819,26 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
   public EReference getAbsFunction_E()
   {
     return (EReference)absFunctionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getRoundFunction()
+  {
+    return roundFunctionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getRoundFunction_E()
+  {
+    return (EReference)roundFunctionEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -3273,10 +3329,13 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
 
     functionEClass = createEClass(FUNCTION);
 
-    externalFunctionEClass = createEClass(EXTERNAL_FUNCTION);
-    createEReference(externalFunctionEClass, EXTERNAL_FUNCTION__REF);
-    createEReference(externalFunctionEClass, EXTERNAL_FUNCTION__E1);
-    createEReference(externalFunctionEClass, EXTERNAL_FUNCTION__E2);
+    externalFunction1EClass = createEClass(EXTERNAL_FUNCTION1);
+    createEReference(externalFunction1EClass, EXTERNAL_FUNCTION1__REF);
+    createEReference(externalFunction1EClass, EXTERNAL_FUNCTION1__E1);
+    createEReference(externalFunction1EClass, EXTERNAL_FUNCTION1__E2);
+
+    externalFunction2EClass = createEClass(EXTERNAL_FUNCTION2);
+    createEReference(externalFunction2EClass, EXTERNAL_FUNCTION2__REF);
 
     trunkTimeArrayEClass = createEClass(TRUNK_TIME_ARRAY);
     createEReference(trunkTimeArrayEClass, TRUNK_TIME_ARRAY__REF);
@@ -3303,6 +3362,9 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
 
     absFunctionEClass = createEClass(ABS_FUNCTION);
     createEReference(absFunctionEClass, ABS_FUNCTION__E);
+
+    roundFunctionEClass = createEClass(ROUND_FUNCTION);
+    createEReference(roundFunctionEClass, ROUND_FUNCTION__E);
 
     powFunctionEClass = createEClass(POW_FUNCTION);
     createEReference(powFunctionEClass, POW_FUNCTION__E1);
@@ -3393,12 +3455,14 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     addEClass.getESuperTypes().add(this.getExpression());
     termEClass.getESuperTypes().add(this.getUnary());
     functionEClass.getESuperTypes().add(this.getTermSimple());
-    externalFunctionEClass.getESuperTypes().add(this.getFunction());
+    externalFunction1EClass.getESuperTypes().add(this.getFunction());
+    externalFunction2EClass.getESuperTypes().add(this.getFunction());
     maxFunctionEClass.getESuperTypes().add(this.getFunction());
     minFunctionEClass.getESuperTypes().add(this.getFunction());
     modFunctionEClass.getESuperTypes().add(this.getFunction());
     intFunctionEClass.getESuperTypes().add(this.getFunction());
     absFunctionEClass.getESuperTypes().add(this.getFunction());
+    roundFunctionEClass.getESuperTypes().add(this.getFunction());
     powFunctionEClass.getESuperTypes().add(this.getFunction());
     logFunctionEClass.getESuperTypes().add(this.getFunction());
     varModelEClass.getESuperTypes().add(this.getFunction());
@@ -3656,10 +3720,13 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
 
     initEClass(functionEClass, Function.class, "Function", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-    initEClass(externalFunctionEClass, ExternalFunction.class, "ExternalFunction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getExternalFunction_Ref(), this.getDeclaration(), null, "ref", null, 0, 1, ExternalFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getExternalFunction_E1(), ecorePackage.getEObject(), null, "e1", null, 0, 1, ExternalFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getExternalFunction_E2(), ecorePackage.getEObject(), null, "e2", null, 0, -1, ExternalFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(externalFunction1EClass, ExternalFunction1.class, "ExternalFunction1", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getExternalFunction1_Ref(), this.getDeclaration(), null, "ref", null, 0, 1, ExternalFunction1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExternalFunction1_E1(), ecorePackage.getEObject(), null, "e1", null, 0, 1, ExternalFunction1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExternalFunction1_E2(), ecorePackage.getEObject(), null, "e2", null, 0, -1, ExternalFunction1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(externalFunction2EClass, ExternalFunction2.class, "ExternalFunction2", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getExternalFunction2_Ref(), this.getDeclaration(), null, "ref", null, 0, 1, ExternalFunction2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(trunkTimeArrayEClass, TrunkTimeArray.class, "TrunkTimeArray", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getTrunkTimeArray_Ref(), this.getDeclaration(), null, "ref", null, 0, 1, TrunkTimeArray.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3686,6 +3753,9 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
 
     initEClass(absFunctionEClass, AbsFunction.class, "AbsFunction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getAbsFunction_E(), this.getExpression(), null, "e", null, 0, 1, AbsFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(roundFunctionEClass, RoundFunction.class, "RoundFunction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getRoundFunction_E(), this.getExpression(), null, "e", null, 0, 1, RoundFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(powFunctionEClass, PowFunction.class, "PowFunction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getPowFunction_E1(), this.getExpression(), null, "e1", null, 0, 1, PowFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -313,12 +313,15 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="s" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Function" eSuperTypes="#//TermSimple"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ExternalFunction" eSuperTypes="#//Function">
+  <eClassifiers xsi:type="ecore:EClass" name="ExternalFunction1" eSuperTypes="#//Function">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ref" eType="#//Declaration"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="e1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="e2" upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
         containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ExternalFunction2" eSuperTypes="#//Function">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ref" eType="#//Declaration"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TrunkTimeArray">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ref" eType="#//Declaration"/>
@@ -353,6 +356,10 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AbsFunction" eSuperTypes="#//Function">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="e" eType="#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RoundFunction" eSuperTypes="#//Function">
     <eStructuralFeatures xsi:type="ecore:EReference" name="e" eType="#//Expression"
         containment="true"/>
   </eClassifiers>

@@ -232,6 +232,8 @@ RULE_INTFUNC : ('int'|'INT');
 
 RULE_ABS : ('abs'|'ABS');
 
+RULE_ROUND : ('round'|'ROUND');
+
 RULE_POW : ('pow'|'POW');
 
 RULE_LOG : ('log'|'LOG'|'log10'|'LOG10');
