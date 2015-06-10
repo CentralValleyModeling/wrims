@@ -11,12 +11,15 @@ import java.util.Set;
 
 import ncsa.hdf.hdf5lib.H5;
 import ncsa.hdf.hdf5lib.HDF5Constants;
+import ncsa.hdf.hdf5lib.exceptions.HDF5Exception;
 import ncsa.hdf.hdf5lib.exceptions.HDF5LibraryException;
 import ncsa.hdf.object.h5.H5File;
 
 import wrimsv2.commondata.solverdata.SolverData;
+import wrimsv2.commondata.wresldata.Alias;
 import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.ModelDataSet;
+import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.FilePaths;
 import wrimsv2.evaluator.DataTimeSeries;
@@ -607,13 +610,12 @@ public static void writeMonthlyTimestepDvarAlias(){
 	
 	public static void writeMonthlyCycle(ModelDataSet mds, int index){
 		
-			//writeMonthlyCycleStaticVariables(mds, index);
-			//writeMonthlyCycleDynamicVariables(mds, index);
+		if (gidSCMonthly>=0) writeMonthlyCycleStaticVariables(mds, index);
+		if (gidDCMonthly>=0) writeMonthlyCycleDynamicVariables(mds, index);
 		
 	}
 	
 	public static void writeDailyCycle(ModelDataSet mds, int index){
-		
 		
 	}
 	
@@ -621,14 +623,209 @@ public static void writeMonthlyTimestepDvarAlias(){
 	
 	}
 	
+	public static void writeMonthlyCycleStaticVariables(ModelDataSet mds, int index){
+		
+		ArrayList<String> dvList = mds.dvList;
+		ArrayList<String> svList = mds.svList;
+		ArrayList<String> asList = mds.asList;
+		Map<String, Dvar> dvMap = mds.dvMap;
+		Map<String, Svar> svMap = mds.svMap;
+		Map<String, Alias> asMap = mds.asMap;
+		int dvSize = dvList.size();
+		int svSize = svList.size();
+		int asSize = asList.size();
+		
+		int size=dvSize+svSize+asSize;
+		
+		double[][] write_data = new double[1][size];
+		
+		for (int i=0; i<dvSize; i++){
+			String name=dvList.get(i);
+						
+			double data = dvMap.get(name).data.getData().doubleValue();
+			write_data[0][i]=data;						
+		}
+		
+		int offset=dvSize;
+		for (int i=0; i<asSize; i++){
+			String name=asList.get(i);
+						
+			double data = asMap.get(name).data.getData().doubleValue();
+			write_data[0][i+offset]=data;						
+		}
+		offset=dvSize+asSize;
+		for (int i=0; i<svSize; i++){
+			String name=svList.get(i);
+						
+			double data = svMap.get(name).getData().getData().doubleValue();
+			write_data[0][i+offset]=data;						
+		}
+		
+		String dName="Cycle "+index+" Table";
+		long[] dims = {1, size};
+		long[] dims1 = {1, size};
+		long[] maxDims={HDF5Constants.H5S_UNLIMITED, HDF5Constants.H5S_UNLIMITED};
+		long[] chunkDims={1,5};
+		
+		int sidVs;
+		try {				
+			int didVs =-1;
+			try{
+				didVs = H5.H5Dopen(gidSCMonthly, dName);
+				Integer currTimestep = ControlData.currTimeStep.get(index-1);
+				dims[0]=currTimestep+1;
+				H5.H5Dextend(didVs, dims);
+				
+				int fsidVs = H5.H5Dget_space (didVs);
+				long[] offset1={0,0};
+			    offset1[0] = currTimestep;
+			    offset1[1] = 0;
+			    H5.H5Sselect_hyperslab(fsidVs, HDF5Constants.H5S_SELECT_SET, offset1, null,
+			                                  dims1, null); 
+			    sidVs = H5.H5Screate_simple (2, dims1, null); 
+			    
+				H5.H5Dwrite(didVs, HDF5Constants.H5T_NATIVE_DOUBLE, 
+					sidVs, fsidVs, HDF5Constants.H5P_DEFAULT, write_data);
+				
+				H5.H5Sclose(fsidVs);
+				H5.H5Dclose(didVs);
+				H5.H5Sclose(sidVs);
+				
+			}catch (Exception e){			
+				sidVs = H5.H5Screate_simple(2, dims, maxDims);
+				if (sidVs >= 0){
+					int cparms = H5.H5Pcreate (HDF5Constants.H5P_DATASET_CREATE);
+					H5.H5Pset_chunk ( cparms, 2, chunkDims);
+					didVs = H5.H5Dcreate(gidSCMonthly, dName, HDF5Constants.H5T_NATIVE_DOUBLE, sidVs, cparms);
+				
+					if (didVs >= 0){		
+						H5.H5Dextend(didVs, dims);
+					
+						int fsidVs = H5.H5Dget_space (didVs);
+						long[] offset1={0,0};
+						offset1[0] = 0;
+						offset1[1] = 0;
+						H5.H5Sselect_hyperslab(fsidVs, HDF5Constants.H5S_SELECT_SET, offset1, null,
+								dims1, null); 
+				    
+						H5.H5Dwrite(didVs, HDF5Constants.H5T_NATIVE_DOUBLE, 
+								sidVs, fsidVs, HDF5Constants.H5P_DEFAULT, write_data);
+						
+						H5.H5Sclose(fsidVs);
+					}
+				}
+				H5.H5Dclose(didVs);
+				H5.H5Sclose(sidVs);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+	}
+	
+	public static void writeMonthlyCycleDynamicVariables(ModelDataSet mds, int index){
+		
+	}
+	
 	public static void skipOneCycle(ModelDataSet mds, int index){
 		if (fid>0){
 			if (ControlData.timeStep.equals("1MON")) {
-				
+				skipMonthlyCycle(mds, index);
 			}else if (ControlData.timeStep.equals("1DAY")){
-				
+				skipDailyCycle(mds, index);
 			}
 		}
+	}
+	
+	public static void skipMonthlyCycle(ModelDataSet mds, int index){
+		
+		if (gidSCMonthly>=0) skipMonthlyCycleStaticVariables(mds, index);
+		if (gidDCMonthly>=0) skipMonthlyCycleDynamicVariables(mds, index);
+		
+	}
+	
+	public static void skipDailyCycle(ModelDataSet mds, int index){
+		
+	}
+	
+	public static void skipMonthlyCycleStaticVariables(ModelDataSet mds, int index){
+		ArrayList<String> dvList = mds.dvList;
+		ArrayList<String> svList = mds.svList;
+		ArrayList<String> asList = mds.asList;
+		int dvSize = dvList.size();
+		int svSize = svList.size();
+		int asSize = asList.size();
+		
+		int size=dvSize+svSize+asSize;
+		
+		double[][] write_data = new double[1][size];
+		
+		for (int i=0; i<size; i++){
+			write_data[0][i]=0.0;						
+		}
+		
+		String dName="Cycle "+index+" Table";
+		long[] dims = {1, size};
+		long[] dims1 = {1, size};
+		long[] maxDims={HDF5Constants.H5S_UNLIMITED, HDF5Constants.H5S_UNLIMITED};
+		long[] chunkDims={1,5};
+		
+		int sidVs;
+		try {				
+			int didVs =-1;
+			try{
+				didVs = H5.H5Dopen(gidSCMonthly, dName);
+				Integer currTimestep = ControlData.currTimeStep.get(index-1);
+				dims[0]=currTimestep+1;
+				H5.H5Dextend(didVs, dims);
+				
+				int fsidVs = H5.H5Dget_space (didVs);
+				long[] offset1={0,0};
+			    offset1[0] = currTimestep;
+			    offset1[1] = 0;
+			    H5.H5Sselect_hyperslab(fsidVs, HDF5Constants.H5S_SELECT_SET, offset1, null,
+			                                  dims1, null); 
+			    sidVs = H5.H5Screate_simple (2, dims1, null); 
+			    
+				H5.H5Dwrite(didVs, HDF5Constants.H5T_NATIVE_DOUBLE, 
+					sidVs, fsidVs, HDF5Constants.H5P_DEFAULT, write_data);
+				
+				H5.H5Sclose(fsidVs);
+				H5.H5Dclose(didVs);
+				H5.H5Sclose(sidVs);
+				
+			}catch (Exception e){			
+				sidVs = H5.H5Screate_simple(2, dims, maxDims);
+				if (sidVs >= 0){
+					int cparms = H5.H5Pcreate (HDF5Constants.H5P_DATASET_CREATE);
+					H5.H5Pset_chunk ( cparms, 2, chunkDims);
+					didVs = H5.H5Dcreate(gidSCMonthly, dName, HDF5Constants.H5T_NATIVE_DOUBLE, sidVs, cparms);
+				
+					if (didVs >= 0){		
+						H5.H5Dextend(didVs, dims);
+					
+						int fsidVs = H5.H5Dget_space (didVs);
+						long[] offset1={0,0};
+						offset1[0] = 0;
+						offset1[1] = 0;
+						H5.H5Sselect_hyperslab(fsidVs, HDF5Constants.H5S_SELECT_SET, offset1, null,
+								dims1, null); 
+				    
+						H5.H5Dwrite(didVs, HDF5Constants.H5T_NATIVE_DOUBLE, 
+								sidVs, fsidVs, HDF5Constants.H5P_DEFAULT, write_data);
+						
+						H5.H5Sclose(fsidVs);
+					}
+				}
+				H5.H5Dclose(didVs);
+				H5.H5Sclose(sidVs);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+	}
+	
+	public static void skipMonthlyCycleDynamicVariables(ModelDataSet mds, int index){
+		
 	}
 	
 	public static void closeDataStructure(){

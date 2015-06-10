@@ -28,7 +28,7 @@ public class Example_CL_SharingFix_092812 {
 		String[] controlDataString = {
 
 				
-	    "-config=\"D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CL_SharingFix_092812\\Future_BO_36steps.config\"" 
+	    "-config=\"D:\\CL_Existing_BO_noCC_FullDem\\Existing.config" 
 				
 		};
 
