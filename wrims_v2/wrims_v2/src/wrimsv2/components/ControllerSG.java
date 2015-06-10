@@ -269,7 +269,9 @@ public class ControllerSG {
 							Error.writeErrorLog();
 							noError=false;
 						}
-						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
+						int cycleI=i+1;
+						if (ControlData.outputHDF5 && ControlData.outputCycle) HDF5Writer.writeOneCycle(mds, cycleI);
+						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
 						//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==2) new RCCComparison();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
@@ -279,7 +281,9 @@ public class ControllerSG {
 							VariableTimeStep.currTimeAddOneDay();
 						}
 					}else{
-						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" skipped. ("+model+")");
+						int cycleI=i+1;
+						if (ControlData.outputHDF5 && ControlData.outputCycle) HDF5Writer.skipOneCycle(mds, cycleI);
+						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" skipped. ("+model+")");
 						new AssignPastCycleVariable();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){

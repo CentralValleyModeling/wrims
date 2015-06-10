@@ -51,6 +51,18 @@ public class HDF5Writer {
 	private static int gidMonthly=-1;
 	private static String gDaily="Daily";
 	private static int gidDaily=-1;
+	private static String gSC="Static Cycle";
+	private static int gidSC=-1;
+	private static String gDC="Dynamic Cycle";
+	private static int gidDC=-1;
+	private static String gSCMonthly="Monthly";
+	private static int gidSCMonthly=-1;
+	private static String gSCDaily="Daily";
+	private static int gidSCDaily=-1;
+	private static String gDCMonthly="Monthly";
+	private static int gidDCMonthly=-1;
+	private static String gDCDaily="Daily";
+	private static int gidDCDaily=-1;
 	
 	public static void createDataStructure(){
 		h5FileName=FilePaths.fullDvarDssPath;
@@ -60,6 +72,12 @@ public class HDF5Writer {
 		}
 		fid=HDF5Util.locateFile(h5FileName);
 		
+		Date date = ControlData.monthlyStartTime;
+		String[] monthlyDateStr={TimeOperation.dssTimeEndDay(date.getYear()+1900, date.getMonth()+1, date.getDate())};	
+		
+		date = ControlData.dailyStartTime;
+		String[] dailyDateStr={TimeOperation.dssTimeEndDay(date.getYear()+1900, date.getMonth()+1, date.getDate())};										
+		
 		if (fid<0){
 			System.out.println("Failed to generate HDF5 file.");
 		}else{
@@ -68,6 +86,88 @@ public class HDF5Writer {
 				if (gidPartA>=0){
 					gidPartF = HDF5Util.locateGroup(gidPartA, gPartF);
 					if (gidPartF>=0){	
+						gidSC=HDF5Util.locateGroup(gidPartF, gSC);
+						if (gidSC>=0){	
+							int tidAttr = H5.H5Tcopy(HDF5Constants.H5T_C_S1);
+							long[] dims= {1};
+							int sidAttr = H5.H5Screate_simple(1, dims, null);
+							H5.H5Tset_size(tidAttr, 30);
+							
+							gidSCMonthly=HDF5Util.locateGroup(gidSC, gSCMonthly);
+							if (gidSCMonthly>=0 && tidAttr>=0 && sidAttr>=0){
+								int aidMonthly=-1;
+								try{
+									H5.H5Aopen(gidSCMonthly, "Starting Time", HDF5Constants.H5P_DEFAULT);
+								}catch (Exception e){
+									aidMonthly=H5.H5Acreate(gidSCMonthly, "Starting Time", tidAttr, sidAttr, HDF5Constants.H5P_DEFAULT);
+								}
+								if (aidMonthly>=0){
+																		
+									HDF5Util.writeStringAttr(aidMonthly, tidAttr, monthlyDateStr, 30);
+									H5.H5Aclose(aidMonthly);
+								}
+							}
+							
+							gidSCDaily=HDF5Util.locateGroup(gidSC, gSCDaily);
+							if (gidSCDaily>=0 && tidAttr>=0 && sidAttr>=0){
+								int aidDaily=-1;
+								try{
+									H5.H5Aopen(gidSCDaily, "Starting Time", HDF5Constants.H5P_DEFAULT);
+								}catch (Exception e){
+									aidDaily=H5.H5Acreate(gidSCDaily, "Starting Time", tidAttr, sidAttr, HDF5Constants.H5P_DEFAULT);
+								}
+								if (aidDaily>=0){
+									
+									HDF5Util.writeStringAttr(aidDaily, tidAttr, dailyDateStr, 30);
+									H5.H5Aclose(aidDaily);
+								}
+							}
+							
+							H5.H5Tclose(tidAttr);
+							H5.H5Sclose(sidAttr);
+						}
+						
+						gidDC=HDF5Util.locateGroup(gidPartF, gDC);
+						if (gidDC>=0){			
+							int tidAttr = H5.H5Tcopy(HDF5Constants.H5T_C_S1);
+							long[] dims= {1};
+							int sidAttr = H5.H5Screate_simple(1, dims, null);
+							H5.H5Tset_size(tidAttr, 30);
+							
+							gidDCMonthly=HDF5Util.locateGroup(gidDC, gDCMonthly);
+							if (gidDCMonthly>=0 && tidAttr>=0 && sidAttr>=0){
+								int aidMonthly=-1;
+								try{
+									H5.H5Aopen(gidDCMonthly, "Starting Time", HDF5Constants.H5P_DEFAULT);
+								}catch (Exception e){
+									aidMonthly=H5.H5Acreate(gidDCMonthly, "Starting Time", tidAttr, sidAttr, HDF5Constants.H5P_DEFAULT);
+								}
+								if (aidMonthly>=0){
+																		
+									HDF5Util.writeStringAttr(aidMonthly, tidAttr, monthlyDateStr, 30);
+									H5.H5Aclose(aidMonthly);
+								}
+							}
+							
+							gidDCDaily=HDF5Util.locateGroup(gidDC, gDCDaily);
+							if (gidDCDaily>=0 && tidAttr>=0 && sidAttr>=0){
+								int aidDaily=-1;
+								try{
+									H5.H5Aopen(gidDCDaily, "Starting Time", HDF5Constants.H5P_DEFAULT);
+								}catch (Exception e){
+									aidDaily=H5.H5Acreate(gidDCDaily, "Starting Time", tidAttr, sidAttr, HDF5Constants.H5P_DEFAULT);
+								}
+								if (aidDaily>=0){
+									
+									HDF5Util.writeStringAttr(aidDaily, tidAttr, dailyDateStr, 30);
+									H5.H5Aclose(aidDaily);
+								}
+							}
+							
+							H5.H5Tclose(tidAttr);
+							H5.H5Sclose(sidAttr);
+						}
+						
 						gidIOData = HDF5Util.locateGroup(gidPartF, gIOData);
 						if (gidIOData>=0){
 							gidInfo = HDF5Util.locateGroup(gidIOData, gInfo);							
@@ -87,9 +187,8 @@ public class HDF5Writer {
 										aidMonthly=H5.H5Acreate(gidMonthly, "Starting Time", tidAttr, sidAttr, HDF5Constants.H5P_DEFAULT);
 									}
 									if (aidMonthly>=0){
-										Date date = ControlData.monthlyStartTime;
-										String[] dateStr={TimeOperation.dssTimeEndDay(date.getYear()+1900, date.getMonth()+1, date.getDate())};										
-										writeStringAttr(aidMonthly, tidAttr, dateStr, 30);
+																			
+										HDF5Util.writeStringAttr(aidMonthly, tidAttr, monthlyDateStr, 30);
 										H5.H5Aclose(aidMonthly);
 									}
 								}
@@ -103,9 +202,8 @@ public class HDF5Writer {
 										aidDaily=H5.H5Acreate(gidDaily, "Starting Time", tidAttr, sidAttr, HDF5Constants.H5P_DEFAULT);
 									}
 									if (aidDaily>=0){
-										Date date = ControlData.dailyStartTime;
-										String[] dateStr={TimeOperation.dssTimeEndDay(date.getYear()+1900, date.getMonth()+1, date.getDate())};										
-										writeStringAttr(aidDaily, tidAttr, dateStr, 30);
+										
+										HDF5Util.writeStringAttr(aidDaily, tidAttr, dailyDateStr, 30);
 										H5.H5Aclose(aidDaily);
 									}
 								}
@@ -198,19 +296,19 @@ public class HDF5Writer {
 					
 					int tidCompoundTmp = H5.H5Tcreate(HDF5Constants.H5T_COMPOUND, 256);
 					H5.H5Tinsert(tidCompoundTmp, "Name", offset, tidStringName);
-					writeStringData(didLookup, tidCompoundTmp, dvAsLookupNames, 256);
+					HDF5Util.writeStringData(didLookup, tidCompoundTmp, dvAsLookupNames, 256);
 					
 					tidCompoundTmp = H5.H5Tcreate(HDF5Constants.H5T_COMPOUND, 80);
 					H5.H5Tinsert(tidCompoundTmp, "Kind", offset, tidStringKind);
-					writeStringData(didLookup, tidCompoundTmp, dvAsLookupKinds, 80);
+					HDF5Util.writeStringData(didLookup, tidCompoundTmp, dvAsLookupKinds, 80);
 					
 					tidCompoundTmp = H5.H5Tcreate(HDF5Constants.H5T_COMPOUND, 20);
 					H5.H5Tinsert(tidCompoundTmp, "Unit", offset, tidStringUnit);
-					writeStringData(didLookup, tidCompoundTmp, dvAsLookupUnits, 20);
+					HDF5Util.writeStringData(didLookup, tidCompoundTmp, dvAsLookupUnits, 20);
 					
 					tidCompoundTmp = H5.H5Tcreate(HDF5Constants.H5T_COMPOUND, 4);
 					H5.H5Tinsert(tidCompoundTmp, "Timestep", offset, tidStringTimestep);
-					writeStringData(didLookup, tidCompoundTmp, dvAsLookupTimestep, 4);
+					HDF5Util.writeStringData(didLookup, tidCompoundTmp, dvAsLookupTimestep, 4);
 					
 					tidCompoundTmp = H5.H5Tcreate(HDF5Constants.H5T_COMPOUND, 4);
 					H5.H5Tinsert(tidCompoundTmp, "Index", offset, HDF5Constants.H5T_NATIVE_INT32);
@@ -448,7 +546,7 @@ public static void writeMonthlyTimestepDvarAlias(){
 					for (int i=0; i<size; i++){
 						nameList[i]=monthlyDvarAliasMap.get(monthlyDvarAliasList.get(i));
 					}
-					writeStringData(didList, tidName, nameList, 256);
+					HDF5Util.writeStringData(didList, tidName, nameList, 256);
 				}
 				
 	            H5.H5Sclose(sidList);
@@ -484,7 +582,7 @@ public static void writeMonthlyTimestepDvarAlias(){
 					for (int i=0; i<size; i++){
 						nameList[i]=dailyDvarAliasMap.get(dailyDvarAliasList.get(i));
 					}
-					writeStringData(didList, tidName, nameList, 256);
+					HDF5Util.writeStringData(didList, tidName, nameList, 256);
 				}
 				
 	            H5.H5Sclose(sidList);
@@ -497,16 +595,58 @@ public static void writeMonthlyTimestepDvarAlias(){
 		}
 	}
 	
-	public static void writeOneCycle(ModelDataSet mds){
+	public static void writeOneCycle(ModelDataSet mds, int index){
 		if (fid>0){
-			
+			if (ControlData.timeStep.equals("1MON")) {
+				writeMonthlyCycle(mds, index);
+			}else if (ControlData.timeStep.equals("1DAY")){
+				writeDailyCycle(mds, index);
+			}
+		}
+	}
+	
+	public static void writeMonthlyCycle(ModelDataSet mds, int index){
+		
+			//writeMonthlyCycleStaticVariables(mds, index);
+			//writeMonthlyCycleDynamicVariables(mds, index);
+		
+	}
+	
+	public static void writeDailyCycle(ModelDataSet mds, int index){
+		
+		
+	}
+	
+	public static void listCycleStaticVariables(){
+	
+	}
+	
+	public static void skipOneCycle(ModelDataSet mds, int index){
+		if (fid>0){
+			if (ControlData.timeStep.equals("1MON")) {
+				
+			}else if (ControlData.timeStep.equals("1DAY")){
+				
+			}
 		}
 	}
 	
 	public static void closeDataStructure(){
-		if (gidDaily>=0)
 			try {
-				H5.H5Gclose(gidDaily);
+				if (gidSCDaily>=0)
+					H5.H5Gclose(gidSCDaily);
+				if (gidSCMonthly>=0) 
+					H5.H5Gclose(gidSCMonthly);
+				if (gidSC>=0)
+					H5.H5Gclose(gidSC);
+				if (gidDCDaily>=0)
+					H5.H5Gclose(gidDCDaily);
+				if (gidDCMonthly>=0) 
+					H5.H5Gclose(gidDCMonthly);
+				if (gidDC>=0)
+					H5.H5Gclose(gidDC);
+				if (gidDaily>=0)
+					H5.H5Gclose(gidDaily);
 				if (gidMonthly>=0) 
 					H5.H5Gclose(gidMonthly);
 				if (gidData>=0) 
@@ -525,49 +665,5 @@ public static void writeMonthlyTimestepDvarAlias(){
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	}
-	
-	public static void writeStringData(int did, int tid, String[] stringArray, int stringLength){
-		try {
-			int size =stringArray.length;
-			byte[][] write_data =  new byte[size][stringLength];
-			for (int indx = 0; indx <size ; indx++) {
-				for (int jndx = 0; jndx < stringLength; jndx++) {
-					if (jndx < stringArray[indx].length())
-						write_data[indx][jndx] = (byte) stringArray[indx].charAt(jndx);
-					else
-						write_data[indx][jndx] = 0;
-				}
-			}
-
-			if ((did >= 0) && (tid >= 0))
-				H5.H5Dwrite(did, tid, 
-				        HDF5Constants.H5S_ALL, HDF5Constants.H5S_ALL, HDF5Constants.H5P_DEFAULT, 
-				        write_data);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public static void writeStringAttr(int aid, int tid, String[] stringArray, int stringLength){
-		try {
-			int size =stringArray.length;
-			byte[][] write_data =  new byte[size][stringLength];
-			for (int indx = 0; indx <size ; indx++) {
-				for (int jndx = 0; jndx < stringLength; jndx++) {
-					if (jndx < stringArray[indx].length())
-						write_data[indx][jndx] = (byte) stringArray[indx].charAt(jndx);
-					else
-						write_data[indx][jndx] = 0;
-				}
-			}
-
-			if ((aid >= 0) && (tid >= 0))
-				H5.H5Awrite(aid, tid, write_data);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 }

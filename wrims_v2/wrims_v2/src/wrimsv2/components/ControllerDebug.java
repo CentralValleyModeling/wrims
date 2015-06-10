@@ -339,7 +339,9 @@ public class ControllerDebug extends Thread {
 							Error.writeErrorLog();
 							noError=false;
 						}
-						System.out.println("Cycle "+(modelIndex+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
+						int cycleI=modelIndex+1;
+						if (ControlData.outputHDF5 && ControlData.outputCycle) HDF5Writer.writeOneCycle(mds, cycleI);
+						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						pauseForDebug(modelIndex);
 						if (Error.error_evaluation.size()>=1) noError=false;
 						if (Error.getTotalError()==0) noError=true;
@@ -351,7 +353,9 @@ public class ControllerDebug extends Thread {
 							VariableTimeStep.currTimeAddOneDay();
 						}
 					}else{
-						System.out.println("Cycle "+(modelIndex+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" skipped. ("+model+")");
+						int cycleI=modelIndex+1;
+						if (ControlData.outputHDF5 && ControlData.outputCycle) HDF5Writer.skipOneCycle(mds, cycleI);
+						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" skipped. ("+model+")");
 						new AssignPastCycleVariable();
 						deferPause(modelIndex);
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);

@@ -97,6 +97,7 @@ public class ControlData {
 	public static boolean ignoreError=false;
 	public static boolean allowSvTsInit=false;
 	public static boolean outputHDF5=false;
+	public static boolean outputCycle=false;
 	
 	public ControlData(){
 	}
