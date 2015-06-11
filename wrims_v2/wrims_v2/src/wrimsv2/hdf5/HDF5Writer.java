@@ -19,6 +19,7 @@ import wrimsv2.commondata.solverdata.SolverData;
 import wrimsv2.commondata.wresldata.Alias;
 import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.ModelDataSet;
+import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.FilePaths;
@@ -620,8 +621,22 @@ public static void writeMonthlyTimestepDvarAlias(){
 		if (gidDCDaily>=0) writeDailyCycleDynamicVariables(mds, index);
 	}
 	
-	public static void listCycleStaticVariables(){
-	
+	public static void listCycleStaticVariables(StudyDataSet sds){
+		ArrayList<String> ml = sds.getModelList();
+		Map<String, ModelDataSet> mm = sds.getModelDataSetMap();
+		ArrayList<String> mtsl = sds.getModelTimeStepList();
+		int size=ml.size();
+		for (int i=0; i<size; i++){
+			String model=ml.get(i);
+			ModelDataSet mds = mm.get(model);
+			String timestep = mtsl.get(i);
+			
+			if (timestep.equals("1MON")){
+				if (gidSCMonthly>=0) HDF5Util.writeCycleStaticVariableNames(mds, gidSCMonthly, i);
+			}else if (timestep.equals("1DAY")){
+				if (gidSCDaily>=0) HDF5Util.writeCycleStaticVariableNames(mds, gidSCDaily, i);
+			}
+		}
 	}
 	
 	public static void writeMonthlyCycleStaticVariables(ModelDataSet mds, int index){
@@ -728,14 +743,12 @@ public static void writeMonthlyTimestepDvarAlias(){
 	public static void skipMonthlyCycle(ModelDataSet mds, int index){
 		
 		if (gidSCMonthly>=0) skipMonthlyCycleStaticVariables(mds, index);
-		if (gidDCMonthly>=0) skipMonthlyCycleDynamicVariables(mds, index);
 		
 	}
 	
 	public static void skipDailyCycle(ModelDataSet mds, int index){
 		
 		if (gidSCDaily>=0) skipDailyCycleStaticVariables(mds, index);
-		if (gidDCDaily>=0) skipDailyCycleDynamicVariables(mds, index);
 		
 	}
 	
@@ -775,14 +788,6 @@ public static void writeMonthlyTimestepDvarAlias(){
 		}
 		
 		HDF5Util.writeCycleStaticData(index, size, gidSCDaily, write_data);
-	}
-	
-	public static void skipMonthlyCycleDynamicVariables(ModelDataSet mds, int index){
-		
-	}
-	
-	public static void skipDailyCycleDynamicVariables(ModelDataSet mds, int index){
-		
 	}
 	
 	public static void closeDataStructure(){
