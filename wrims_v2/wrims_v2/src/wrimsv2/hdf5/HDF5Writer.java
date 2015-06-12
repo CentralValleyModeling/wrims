@@ -723,11 +723,13 @@ public static void writeMonthlyTimestepDvarAlias(){
 
 	
 	public static void writeMonthlyCycleDynamicVariables(ModelDataSet mds, int index){
-		
+		String dName=+ControlData.currYear+"-"+ControlData.currMonth+" Cycle "+index+" Table";
+		HDF5Util.writeCycleDynamicVariables(mds, gidDCMonthly, dName);
 	}
 	
 	public static void writeDailyCycleDynamicVariables(ModelDataSet mds, int index){
-		
+		String dName=+ControlData.currYear+"-"+ControlData.currMonth+"-"+ControlData.currDay+" Cycle "+index+" Table";
+		HDF5Util.writeCycleDynamicVariables(mds, gidDCDaily, dName);
 	}
 	
 	public static void skipOneCycle(ModelDataSet mds, int index){

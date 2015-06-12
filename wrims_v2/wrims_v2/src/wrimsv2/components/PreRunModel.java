@@ -70,7 +70,7 @@ public class PreRunModel {
 			System.out.println("Create HDF5 output data structure.");
 			HDF5Writer.createDataStructure();
 			if (ControlData.outputCycle){
-				HDF5Writer.listCycleStaticVariables();
+				HDF5Writer.listCycleStaticVariables(sds);
 			}
 			System.out.println("HDF5 output data structure is created.");
 		}

@@ -2,8 +2,11 @@ package wrimsv2.hdf5;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
+import wrimsv2.commondata.solverdata.SolverData;
 import wrimsv2.commondata.wresldata.Alias;
 import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.ModelDataSet;
@@ -237,5 +240,99 @@ public class HDF5Util {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public static void writeCycleDynamicVariables(ModelDataSet mds, int gid, String dName){
+		
+		Map<String, Dvar> solverDvMap = SolverData.getDvarMap();
+		ArrayList<String> dvTimeArrayList = mds.dvTimeArrayList;
+		Map<String, Svar> svFutMap = mds.svFutMap;
+		Map<String, Alias> asFutMap = mds.asFutMap;
+
+		int dvSize=dvTimeArrayList.size();
+		int asSize=asFutMap.size();
+		int svSize=svFutMap.size();
+		
+		int size=dvSize+svSize+asSize;
+		
+		String[] vNames = new String[size];
+		double[] vValues = new double[size];
+		
+		for (int i=0; i<dvSize; i++){
+			String name=dvTimeArrayList.get(i);
+			vNames[i]=name;
+			Dvar dvar = solverDvMap.get(name);
+			vValues[i]=dvar.getData().getData().doubleValue();
+		}
+		
+		int offset=dvSize;
+		Set<String> asKeys = asFutMap.keySet();
+		Iterator<String> asIter = asKeys.iterator();
+		while (asIter.hasNext()){
+			String name=asIter.next();
+			vNames[offset]=name;
+			Alias as = asFutMap.get(name);
+			vValues[offset]=as.getData().getData().doubleValue();
+			offset=offset+1;
+		}
+		
+		offset=dvSize+asSize;
+		Set<String> svKeys = svFutMap.keySet();
+		Iterator<String> svIter = svKeys.iterator();
+		while (svIter.hasNext()){
+			String name=svIter.next();
+			vNames[offset]=name;
+			Svar sv = svFutMap.get(name);
+			vValues[offset]=sv.getData().getData().doubleValue();
+			offset=offset+1;
+		}
+		
+		if (size>0){
+			long[] dims = {size};
+			try {
+				int tidName = H5.H5Tcopy(HDF5Constants.H5T_C_S1);
+				H5.H5Tset_size(tidName, 256);
+			
+				int tidCompound = H5.H5Tcreate(HDF5Constants.H5T_COMPOUND, 256+8);	
+				int offset1=0;
+				H5.H5Tinsert(tidCompound, "Name", offset1, tidName);
+				offset1=256;
+				H5.H5Tinsert(tidCompound, "Value", offset1, HDF5Constants.H5T_NATIVE_DOUBLE);
+				
+				int sidTable = H5.H5Screate_simple(1, dims, null);
+				if (sidTable >= 0 && size>0){
+					int didTable=-1;
+					try{
+						didTable = H5.H5Dopen(gid, dName);
+					}catch(Exception e){
+						didTable = H5.H5Dcreate(gid,
+							dName, tidCompound,
+							sidTable, HDF5Constants.H5P_DEFAULT, HDF5Constants.H5P_DEFAULT, HDF5Constants.H5P_DEFAULT);
+					}
+				
+					if (didTable >= 0){
+						offset1=0;
+						int tidCompoundTmp = H5.H5Tcreate(HDF5Constants.H5T_COMPOUND, 256);						
+						H5.H5Tinsert(tidCompoundTmp, "Name", offset1, tidName);
+						HDF5Util.writeStringData(didTable, tidCompoundTmp, vNames, 256);
+						H5.H5Tclose(tidCompoundTmp);
+					
+						tidCompoundTmp = H5.H5Tcreate(HDF5Constants.H5T_COMPOUND, 8);						
+						H5.H5Tinsert(tidCompoundTmp, "Value", offset1, HDF5Constants.H5T_NATIVE_DOUBLE);
+						H5.H5Dwrite(didTable, tidCompoundTmp, 
+					        HDF5Constants.H5S_ALL, HDF5Constants.H5S_ALL, HDF5Constants.H5P_DEFAULT, vValues);
+						H5.H5Tclose(tidCompoundTmp);
+					}
+				
+					H5.H5Sclose(sidTable);
+					H5.H5Tclose(tidName);
+					H5.H5Dclose(didTable);
+				}
+				H5.H5Tclose(tidCompound);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }
