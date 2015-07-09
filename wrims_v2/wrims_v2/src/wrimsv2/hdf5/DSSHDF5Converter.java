@@ -54,13 +54,17 @@ public class DSSHDF5Converter {
 	private static int initIndex=0;
 	
 	private static ArrayList<String> svMonthlyNames = new ArrayList<String>();
+	private static ArrayList<String> svMonthlyKinds = new ArrayList<String>();
 	private static Map<String, double[]> svMonthlyData = new HashMap<String, double[]>();
 	private static ArrayList<String> svDailyNames = new ArrayList<String>();
+	private static ArrayList<String> svDailyKinds = new ArrayList<String>();
 	private static Map<String, double[]> svDailyData = new HashMap<String, double[]>();
 	
 	private static ArrayList<String> initMonthlyNames = new ArrayList<String>();
+	private static ArrayList<String> initMonthlyKinds = new ArrayList<String>();
 	private static Map<String, double[]> initMonthlyData = new HashMap<String, double[]>();
 	private static ArrayList<String> initDailyNames = new ArrayList<String>();
+	private static ArrayList<String> initDailyKinds = new ArrayList<String>();
 	private static Map<String, double[]> initDailyData = new HashMap<String, double[]>();
 	
 	private static String svH5FileName="";
@@ -129,8 +133,17 @@ public class DSSHDF5Converter {
 		int size=svMonthlyNames.size();
 		long[] dims = {size};
 		try {
-			int tidName = H5.H5Tcopy(HDF5Constants.H5T_C_S1);
-			H5.H5Tset_size(tidName, 256);
+			int tidStringName = H5.H5Tcopy(HDF5Constants.H5T_C_S1);
+			H5.H5Tset_size(tidStringName, 256);
+			
+			int tidStringKind = H5.H5Tcopy(HDF5Constants.H5T_C_S1);
+			H5.H5Tset_size(tidStringKind, 80);
+			
+			int tidCompound = H5.H5Tcreate(HDF5Constants.H5T_COMPOUND, (256+80));
+			int offset=0;
+			int tidName = H5.H5Tinsert(tidCompound, "Name", offset, tidStringName);
+			offset=offset+256;
+			int tidKind = H5.H5Tinsert(tidCompound, "Kind", offset, tidStringKind);
 				
 			int sidList = H5.H5Screate_simple(1, dims, null);
 			if (svGidInfo >= 0 && sidList >= 0 && size>0){
@@ -139,16 +152,28 @@ public class DSSHDF5Converter {
 					didList = H5.H5Dopen(svGidMonthly, "Timestep List");
 				}catch(Exception e){
 					didList = H5.H5Dcreate(svGidMonthly,
-							"Timestep List", tidName,
+							"Timestep List", tidCompound,
 							sidList, HDF5Constants.H5P_DEFAULT, HDF5Constants.H5P_DEFAULT, HDF5Constants.H5P_DEFAULT);
 				}
 				
 				if (didList >= 0){
-					HDF5Util.writeStringData(didList, tidName, svMonthlyNames.toArray(new String[size]), 256);
+					offset=0;
+					
+					int tidCompoundTmp = H5.H5Tcreate(HDF5Constants.H5T_COMPOUND, 256);
+					H5.H5Tinsert(tidCompoundTmp, "Name", offset, tidStringName);
+					HDF5Util.writeStringData(didList, tidCompoundTmp, svMonthlyNames.toArray(new String[size]), 256);
+					
+					tidCompoundTmp = H5.H5Tcreate(HDF5Constants.H5T_COMPOUND, 80);
+					H5.H5Tinsert(tidCompoundTmp, "Kind", offset, tidStringKind);
+					HDF5Util.writeStringData(didList, tidCompoundTmp, svMonthlyKinds.toArray(new String[size]), 80);
+					
+					H5.H5Tclose(tidCompoundTmp);
 				}
 				
 	            H5.H5Sclose(sidList);
-	            H5.H5Tclose(tidName);
+	            H5.H5Tclose(tidStringName);
+	            H5.H5Tclose(tidStringKind);
+	            H5.H5Tclose(tidCompound);
 	            H5.H5Dclose(didList);
 			}
 		}
@@ -161,8 +186,17 @@ public class DSSHDF5Converter {
 		int size=svDailyNames.size();
 		long[] dims = {size};
 		try {
-			int tidName = H5.H5Tcopy(HDF5Constants.H5T_C_S1);
-			H5.H5Tset_size(tidName, 256);
+			int tidStringName = H5.H5Tcopy(HDF5Constants.H5T_C_S1);
+			H5.H5Tset_size(tidStringName, 256);
+			
+			int tidStringKind = H5.H5Tcopy(HDF5Constants.H5T_C_S1);
+			H5.H5Tset_size(tidStringKind, 80);
+			
+			int tidCompound = H5.H5Tcreate(HDF5Constants.H5T_COMPOUND, (256+80));
+			int offset=0;
+			int tidName = H5.H5Tinsert(tidCompound, "Name", offset, tidStringName);
+			offset=offset+256;
+			int tidKind = H5.H5Tinsert(tidCompound, "Kind", offset, tidStringKind);
 				
 			int sidList = H5.H5Screate_simple(1, dims, null);
 			if (svGidInfo >= 0 && sidList >= 0 && size>0){
@@ -171,16 +205,28 @@ public class DSSHDF5Converter {
 					didList = H5.H5Dopen(svGidDaily, "Timestep List");
 				}catch(Exception e){
 					didList = H5.H5Dcreate(svGidDaily,
-							"Timestep List", tidName,
+							"Timestep List", tidCompound,
 							sidList, HDF5Constants.H5P_DEFAULT, HDF5Constants.H5P_DEFAULT, HDF5Constants.H5P_DEFAULT);
 				}
 				
 				if (didList >= 0){
-					HDF5Util.writeStringData(didList, tidName, svDailyNames.toArray(new String[size]), 256);
+					offset=0;
+					
+					int tidCompoundTmp = H5.H5Tcreate(HDF5Constants.H5T_COMPOUND, 256);
+					H5.H5Tinsert(tidCompoundTmp, "Name", offset, tidStringName);
+					HDF5Util.writeStringData(didList, tidCompoundTmp, svDailyNames.toArray(new String[size]), 256);
+					
+					tidCompoundTmp = H5.H5Tcreate(HDF5Constants.H5T_COMPOUND, 80);
+					H5.H5Tinsert(tidCompoundTmp, "Kind", offset, tidStringKind);
+					HDF5Util.writeStringData(didList, tidCompoundTmp, svDailyKinds.toArray(new String[size]), 80);
+					
+					H5.H5Tclose(tidCompoundTmp);
 				}
 				
 	            H5.H5Sclose(sidList);
-	            H5.H5Tclose(tidName);
+	            H5.H5Tclose(tidStringName);
+	            H5.H5Tclose(tidStringKind);
+	            H5.H5Tclose(tidCompound);
 	            H5.H5Dclose(didList);
 			}
 		}
@@ -193,8 +239,17 @@ public class DSSHDF5Converter {
 		int size=initMonthlyNames.size();
 		long[] dims = {size};
 		try {
-			int tidName = H5.H5Tcopy(HDF5Constants.H5T_C_S1);
-			H5.H5Tset_size(tidName, 256);
+			int tidStringName = H5.H5Tcopy(HDF5Constants.H5T_C_S1);
+			H5.H5Tset_size(tidStringName, 256);
+			
+			int tidStringKind = H5.H5Tcopy(HDF5Constants.H5T_C_S1);
+			H5.H5Tset_size(tidStringKind, 80);
+			
+			int tidCompound = H5.H5Tcreate(HDF5Constants.H5T_COMPOUND, (256+80));
+			int offset=0;
+			int tidName = H5.H5Tinsert(tidCompound, "Name", offset, tidStringName);
+			offset=offset+256;
+			int tidKind = H5.H5Tinsert(tidCompound, "Kind", offset, tidStringKind);
 				
 			int sidList = H5.H5Screate_simple(1, dims, null);
 			if (initGidInfo >= 0 && sidList >= 0 && size>0){
@@ -203,16 +258,28 @@ public class DSSHDF5Converter {
 					didList = H5.H5Dopen(initGidMonthly, "Timestep List");
 				}catch(Exception e){
 					didList = H5.H5Dcreate(initGidMonthly,
-							"Timestep List", tidName,
+							"Timestep List", tidCompound,
 							sidList, HDF5Constants.H5P_DEFAULT, HDF5Constants.H5P_DEFAULT, HDF5Constants.H5P_DEFAULT);
 				}
 				
 				if (didList >= 0){
-					HDF5Util.writeStringData(didList, tidName, initMonthlyNames.toArray(new String[size]), 256);
+					offset=0;
+					
+					int tidCompoundTmp = H5.H5Tcreate(HDF5Constants.H5T_COMPOUND, 256);
+					H5.H5Tinsert(tidCompoundTmp, "Name", offset, tidStringName);
+					HDF5Util.writeStringData(didList, tidCompoundTmp, initMonthlyNames.toArray(new String[size]), 256);
+					
+					tidCompoundTmp = H5.H5Tcreate(HDF5Constants.H5T_COMPOUND, 80);
+					H5.H5Tinsert(tidCompoundTmp, "Kind", offset, tidStringKind);
+					HDF5Util.writeStringData(didList, tidCompoundTmp, initMonthlyKinds.toArray(new String[size]), 80);
+					
+					H5.H5Tclose(tidCompoundTmp);
 				}
 				
 	            H5.H5Sclose(sidList);
-	            H5.H5Tclose(tidName);
+	            H5.H5Tclose(tidStringName);
+	            H5.H5Tclose(tidStringKind);
+	            H5.H5Tclose(tidCompound);
 	            H5.H5Dclose(didList);
 			}
 		}
@@ -225,8 +292,17 @@ public class DSSHDF5Converter {
 		int size=initDailyNames.size();
 		long[] dims = {size};
 		try {
-			int tidName = H5.H5Tcopy(HDF5Constants.H5T_C_S1);
-			H5.H5Tset_size(tidName, 256);
+			int tidStringName = H5.H5Tcopy(HDF5Constants.H5T_C_S1);
+			H5.H5Tset_size(tidStringName, 256);
+			
+			int tidStringKind = H5.H5Tcopy(HDF5Constants.H5T_C_S1);
+			H5.H5Tset_size(tidStringKind, 80);
+			
+			int tidCompound = H5.H5Tcreate(HDF5Constants.H5T_COMPOUND, (256+80));
+			int offset=0;
+			int tidName = H5.H5Tinsert(tidCompound, "Name", offset, tidStringName);
+			offset=offset+256;
+			int tidKind = H5.H5Tinsert(tidCompound, "Kind", offset, tidStringKind);
 				
 			int sidList = H5.H5Screate_simple(1, dims, null);
 			if (initGidInfo >= 0 && sidList >= 0 && size>0){
@@ -235,16 +311,28 @@ public class DSSHDF5Converter {
 					didList = H5.H5Dopen(initGidDaily, "Timestep List");
 				}catch(Exception e){
 					didList = H5.H5Dcreate(initGidDaily,
-							"Timestep List", tidName,
+							"Timestep List", tidCompound,
 							sidList, HDF5Constants.H5P_DEFAULT, HDF5Constants.H5P_DEFAULT, HDF5Constants.H5P_DEFAULT);
 				}
 				
 				if (didList >= 0){
-					HDF5Util.writeStringData(didList, tidName, initDailyNames.toArray(new String[size]), 256);
+					offset=0;
+					
+					int tidCompoundTmp = H5.H5Tcreate(HDF5Constants.H5T_COMPOUND, 256);
+					H5.H5Tinsert(tidCompoundTmp, "Name", offset, tidStringName);
+					HDF5Util.writeStringData(didList, tidCompoundTmp, initDailyNames.toArray(new String[size]), 256);
+					
+					tidCompoundTmp = H5.H5Tcreate(HDF5Constants.H5T_COMPOUND, 80);
+					H5.H5Tinsert(tidCompoundTmp, "Kind", offset, tidStringKind);
+					HDF5Util.writeStringData(didList, tidCompoundTmp, initDailyKinds.toArray(new String[size]), 80);
+					
+					H5.H5Tclose(tidCompoundTmp);
 				}
 				
 	            H5.H5Sclose(sidList);
-	            H5.H5Tclose(tidName);
+	            H5.H5Tclose(tidStringName);
+	            H5.H5Tclose(tidStringKind);
+	            H5.H5Tclose(tidCompound);
 	            H5.H5Dclose(didList);
 			}
 		}
@@ -677,11 +765,13 @@ public class DSSHDF5Converter {
 					}
 				}
 				String name=rts.getAttributes().getLocationName();
+				String kind=ds.getAttributes().getTypeName();
 				svMonthlyNames.add(name);
+				svMonthlyKinds.add(kind);
 				svMonthlyData.put(name, data);
 				svLookupNames.add(name);
 				svLookupUnits.add(ds.getAttributes().getYUnits());
-				svLookupKinds.add(ds.getAttributes().getTypeName());
+				svLookupKinds.add(kind);
 		        svLookupTimestep.add("1MON");
 		        svLookupIndex.add(svIndex);
 		        svIndex++;
@@ -781,11 +871,13 @@ public class DSSHDF5Converter {
 					}
 				}
 				String name=rts.getAttributes().getLocationName();
+				String kind=ds.getAttributes().getTypeName();
 				svDailyNames.add(name);
+				svDailyKinds.add(kind);
 				svDailyData.put(name, data);
 				svLookupNames.add(name);
 				svLookupUnits.add(ds.getAttributes().getYUnits());
-				svLookupKinds.add(ds.getAttributes().getTypeName());
+				svLookupKinds.add(kind);
 		        svLookupTimestep.add("1DAY");
 		        svLookupIndex.add(svIndex);
 		        svIndex++;
@@ -941,11 +1033,13 @@ public class DSSHDF5Converter {
 						}
 					}
 					String name=rts.getAttributes().getLocationName();
+					String kind=ds.getAttributes().getTypeName();
 					initMonthlyNames.add(name);
+					initMonthlyKinds.add(kind);
 					initMonthlyData.put(name, data);
 					initLookupNames.add(name);
 					initLookupUnits.add(ds.getAttributes().getYUnits());
-					initLookupKinds.add(ds.getAttributes().getTypeName());
+					initLookupKinds.add(kind);
 					initLookupTimestep.add("1MON");
 					initLookupIndex.add(initIndex);
 					initIndex++;
@@ -1058,11 +1152,13 @@ public class DSSHDF5Converter {
 						}
 					}
 					String name=rts.getAttributes().getLocationName();
+					String kind=ds.getAttributes().getTypeName();
 					initDailyNames.add(name);
+					initDailyKinds.add(kind);
 					initDailyData.put(name, data);
 					initLookupNames.add(name);
 					initLookupUnits.add(ds.getAttributes().getYUnits());
-					initLookupKinds.add(ds.getAttributes().getTypeName());
+					initLookupKinds.add(kind);
 					initLookupTimestep.add("1DAY");
 					initLookupIndex.add(initIndex);
 					initIndex++;

@@ -39,6 +39,8 @@ public class HDF5Writer {
 	private static ArrayList<String> dailyDvarAliasList =  new ArrayList<String>();
 	private static Map<String, String> monthlyDvarAliasMap = new HashMap<String, String>();
 	private static Map<String, String> dailyDvarAliasMap =  new HashMap<String, String>();
+	private static Map<String, String> monthlyDvarAliasKindMap = new HashMap<String, String>();
+	private static Map<String, String> dailyDvarAliasKindMap =  new HashMap<String, String>();
 	private static String h5FileName="";
 	private static int fid=-1;
 	private static String gPartA=ControlData.partA;
@@ -242,7 +244,8 @@ public class HDF5Writer {
 			DssDataSetFixLength dds = dvAliasTs.get(dvAliasName);
 			String dvAliasNameMod=dvAliasName.substring(0, dvAliasName.length()-5);
 			dvAsLookupNames[i]=dvAliasNameMod;
-			dvAsLookupKinds[i]=dds.getKind();
+			String kind = dds.getKind();
+			dvAsLookupKinds[i]=kind;
 			dvAsLookupUnits[i]=dds.getUnits();
 			String timestep=dds.getTimeStep();
 			dvAsLookupTimestep[i]=timestep;
@@ -250,9 +253,11 @@ public class HDF5Writer {
 			dvAsLookupIndex[i]=j;
 			if (timestep.equals("1MON")){
 				monthlyDvarAliasMap.put(dvAliasName, dvAliasNameMod);
+				monthlyDvarAliasKindMap.put(dvAliasName, kind);
 				monthlyDvarAliasList.add(dvAliasName);
 			}else if (timestep.equals("1DAY")){
 				dailyDvarAliasMap.put(dvAliasName, dvAliasNameMod);
+				dailyDvarAliasKindMap.put(dvAliasName, kind);
 				dailyDvarAliasList.add(dvAliasName);
 			}
 			i=i+1;
@@ -531,9 +536,18 @@ public static void writeMonthlyTimestepDvarAlias(){
 		int size=monthlyDvarAliasList.size();
 		long[] dims = {size};
 		try {
-			int tidName = H5.H5Tcopy(HDF5Constants.H5T_C_S1);
-			H5.H5Tset_size(tidName, 256);
-				
+			int tidStringName = H5.H5Tcopy(HDF5Constants.H5T_C_S1);
+			H5.H5Tset_size(tidStringName, 256);
+			
+			int tidStringKind = H5.H5Tcopy(HDF5Constants.H5T_C_S1);
+			H5.H5Tset_size(tidStringKind, 80);
+			
+			int tidCompound = H5.H5Tcreate(HDF5Constants.H5T_COMPOUND, (256+80));
+			int offset=0;
+			int tidName = H5.H5Tinsert(tidCompound, "Name", offset, tidStringName);
+			offset=offset+256;
+			int tidKind = H5.H5Tinsert(tidCompound, "Kind", offset, tidStringKind);
+							
 			int sidList = H5.H5Screate_simple(1, dims, null);
 			if (gidInfo >= 0 && sidList >= 0 && size>0){
 				int didList=-1;
@@ -541,20 +555,35 @@ public static void writeMonthlyTimestepDvarAlias(){
 					didList = H5.H5Dopen(gidMonthly, "Timestep List");
 				}catch(Exception e){
 					didList = H5.H5Dcreate(gidMonthly,
-							"Timestep List", tidName,
+							"Timestep List", tidCompound,
 							sidList, HDF5Constants.H5P_DEFAULT, HDF5Constants.H5P_DEFAULT, HDF5Constants.H5P_DEFAULT);
 				}
 				
 				if (didList >= 0){
 					String[] nameList=new String[size];
+					String[] kindList=new String[size];
 					for (int i=0; i<size; i++){
 						nameList[i]=monthlyDvarAliasMap.get(monthlyDvarAliasList.get(i));
+						kindList[i]=monthlyDvarAliasKindMap.get(monthlyDvarAliasList.get(i));
 					}
-					HDF5Util.writeStringData(didList, tidName, nameList, 256);
+					
+					offset=0;
+					
+					int tidCompoundTmp = H5.H5Tcreate(HDF5Constants.H5T_COMPOUND, 256);
+					H5.H5Tinsert(tidCompoundTmp, "Name", offset, tidStringName);
+					HDF5Util.writeStringData(didList, tidCompoundTmp, nameList, 256);
+					
+					tidCompoundTmp = H5.H5Tcreate(HDF5Constants.H5T_COMPOUND, 80);
+					H5.H5Tinsert(tidCompoundTmp, "Kind", offset, tidStringKind);
+					HDF5Util.writeStringData(didList, tidCompoundTmp, kindList, 80);
+					
+					H5.H5Tclose(tidCompoundTmp);
 				}
 				
 	            H5.H5Sclose(sidList);
-	            H5.H5Tclose(tidName);
+	            H5.H5Tclose(tidStringName);
+	            H5.H5Tclose(tidStringKind);
+	            H5.H5Tclose(tidCompound);
 	            H5.H5Dclose(didList);
 			}
 		}
@@ -567,9 +596,18 @@ public static void writeMonthlyTimestepDvarAlias(){
 		int size=dailyDvarAliasList.size();
 		long[] dims = {size};
 		try {
-			int tidName = H5.H5Tcopy(HDF5Constants.H5T_C_S1);
-			H5.H5Tset_size(tidName, 256);
-				
+			int tidStringName = H5.H5Tcopy(HDF5Constants.H5T_C_S1);
+			H5.H5Tset_size(tidStringName, 256);
+			
+			int tidStringKind = H5.H5Tcopy(HDF5Constants.H5T_C_S1);
+			H5.H5Tset_size(tidStringKind, 80);
+			
+			int tidCompound = H5.H5Tcreate(HDF5Constants.H5T_COMPOUND, (256+80));
+			int offset=0;
+			int tidName = H5.H5Tinsert(tidCompound, "Name", offset, tidStringName);
+			offset=offset+256;
+			int tidKind = H5.H5Tinsert(tidCompound, "Kind", offset, tidStringKind);
+							
 			int sidList = H5.H5Screate_simple(1, dims, null);
 			if (gidInfo >= 0 && sidList >= 0 && size>0){
 				int didList=-1;
@@ -583,14 +621,27 @@ public static void writeMonthlyTimestepDvarAlias(){
 				
 				if (didList >= 0){
 					String[] nameList=new String[size];
+					String[] kindList=new String[size];
 					for (int i=0; i<size; i++){
 						nameList[i]=dailyDvarAliasMap.get(dailyDvarAliasList.get(i));
+						kindList[i]=dailyDvarAliasKindMap.get(dailyDvarAliasList.get(i));
 					}
-					HDF5Util.writeStringData(didList, tidName, nameList, 256);
+					
+					int tidCompoundTmp = H5.H5Tcreate(HDF5Constants.H5T_COMPOUND, 256);
+					H5.H5Tinsert(tidCompoundTmp, "Name", offset, tidStringName);
+					HDF5Util.writeStringData(didList, tidCompoundTmp, nameList, 256);
+					
+					tidCompoundTmp = H5.H5Tcreate(HDF5Constants.H5T_COMPOUND, 80);
+					H5.H5Tinsert(tidCompoundTmp, "Kind", offset, tidStringKind);
+					HDF5Util.writeStringData(didList, tidCompoundTmp, kindList, 80);
+					
+					H5.H5Tclose(tidCompoundTmp);
 				}
 				
 	            H5.H5Sclose(sidList);
-	            H5.H5Tclose(tidName);
+	            H5.H5Tclose(tidStringName);
+	            H5.H5Tclose(tidStringKind);
+	            H5.H5Tclose(tidCompound);
 	            H5.H5Dclose(didList);
 			}
 		}
