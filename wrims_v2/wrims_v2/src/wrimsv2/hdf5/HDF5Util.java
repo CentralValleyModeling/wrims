@@ -24,7 +24,7 @@ public class HDF5Util {
 	public static int locateFile(String fileName){
 		
 		try {
-			return H5.H5Fopen(fileName, HDF5Constants.H5F_ACC_RDWR, HDF5Constants.H5P_DEFAULT);
+			return H5.H5Fopen(fileName, HDF5Constants.H5F_ACC_TRUNC, HDF5Constants.H5P_DEFAULT);
 		} catch (Exception e) {
 		
 			try {
