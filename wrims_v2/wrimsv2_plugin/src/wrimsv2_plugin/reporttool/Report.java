@@ -228,9 +228,9 @@ public class Report {
 		generateSummaryTable(monitor);
 		int dataIndex = 0;
 		int size = pathnameMaps.size();
-		int progress=Math.round(30.0f/size);
 		for (PathnameMap pathMap : pathnameMaps) {
 			dataIndex = dataIndex + 1;
+			int progress=Math.round(dataIndex*30.0f/size)-Math.round((dataIndex-1)*30.0f/size);
 			monitor.subTask("Generating plot " + dataIndex + " of " + size + ".");
 			monitor.worked(progress);
 			
@@ -343,11 +343,11 @@ public class Report {
 				"SWPSOD", "CVPSOD");
 		boolean firstDataRow = true;
 		int size = pathnameMaps.size();
-		int progress=Math.round(30.0f/size);
 		int dataIndex = 0;
 		for (PathnameMap pathMap : pathnameMaps) {
 			dataIndex++;
 			monitor.subTask("Processing dataset " + dataIndex + " of " + size);
+			int progress=Math.round(dataIndex*30.0f/size)-Math.round((dataIndex-1)*30.0f/size);
 			monitor.worked(progress);
 			
 			if (!categoryList.contains(pathMap.var_category)) {
