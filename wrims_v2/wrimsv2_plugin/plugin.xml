@@ -588,6 +588,13 @@
           </separator>
        </menu>
        <action
+             class="wrimsv2_plugin.debugger.menuitem.ReportToolMenu"
+             id="wpp.reporttool"
+             label="Report Tool"
+             menubarPath="wpp.data/operation"
+             style="push">
+       </action>
+       <action
              class="wrimsv2_plugin.debugger.menuitem.SaveInitFileMenu"
              id="wpp.saveinitfile"
              label="Save To Initial File"

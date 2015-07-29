@@ -15,5 +15,9 @@
 	<classpathentry exported="true" kind="lib" path="lib/guava-11.0.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/help/dssvueHelp.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/sys/jh.jar"/>
+	<classpathentry kind="lib" path="lib/vista.jar"/>
+	<classpathentry kind="lib" path="lib/dsm2-input-model.jar"/>
+	<classpathentry kind="lib" path="lib/jfreechart.jar"/>
+	<classpathentry kind="lib" path="lib/iText.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -160,6 +160,11 @@ Bundle-ClassPath: lib/gridUtil.jar,
  lib/guava-11.0.2.jar,
  lib/help/dssvueHelp.jar,
  lib/sys/jh.jar,
+ lib/dsm2-input-model.jar,
+ lib/jfreechart.jar,
+ lib/iText.jar,
+ lib/vista.jar,
+ lib/jpy.jar,
  .
 Bundle-NativeCode: lib/cb.dll; osname=win32, lib/javaHeclib.dll; osname=win32, lib/rmaUtil.dll; osname=win32
 Bundle-Activator: wrimsv2_plugin.debugger.core.DebugCorePlugin
