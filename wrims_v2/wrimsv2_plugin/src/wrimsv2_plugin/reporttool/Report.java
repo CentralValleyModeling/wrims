@@ -7,10 +7,19 @@ import gov.ca.dsm2.input.parser.Tables;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.debug.core.DebugException;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.PlatformUI;
 
 import vista.report.TSMath;
 import vista.set.DataReference;
@@ -18,6 +27,11 @@ import vista.set.Group;
 import vista.set.RegularTimeSeries;
 import vista.time.TimeFactory;
 import vista.time.TimeWindow;
+import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.debugger.model.WPPValue;
+import wrimsv2_plugin.debugger.view.WPPAllGoalView;
+import wrimsv2_plugin.tools.DataProcess;
 
 /**
  * Generates a report based on the template file instructions
@@ -81,13 +95,40 @@ public class Report {
 		generateReport(inputStream, outputFileName);
 	}
 
-	void generateReport(InputStream templateContentStream, String outputFilename) throws IOException {
-		//logger.fine("Parsing input template");
-		Utils.clearMessages();
-		parseTemplateFile(templateContentStream);
-		doProcessing();
-		//logger.fine("Done generating report");
-		openOutputFile(outputFilename);
+	void generateReport(final InputStream templateContentStream, final String outputFilename) throws IOException {
+		
+		final IWorkbench workbench=PlatformUI.getWorkbench();
+		workbench.getDisplay().asyncExec(new Runnable(){
+			public void run(){
+				Shell shell=workbench.getActiveWorkbenchWindow().getShell();
+				ProgressMonitorDialog dialog = new ProgressMonitorDialog(shell);  
+				try {
+					dialog.run(true,false, new IRunnableWithProgress() {
+						@Override
+						public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+							monitor.beginTask("Generate PDF Report", 100);
+							//logger.fine("Parsing input template");
+							Utils.clearMessages();
+							try {
+								parseTemplateFile(templateContentStream, monitor);
+							} catch (IOException e) {
+								WPPException.handleException(e);
+							}
+							doProcessing(monitor);
+							//logger.fine("Done generating report");
+							openOutputFile(outputFilename);
+							monitor.done();
+						}
+					});
+				} catch (InvocationTargetException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 
 	protected void openOutputFile(String outputFilename) {
@@ -102,7 +143,10 @@ public class Report {
 
 	}
 	
-	void parseTemplateFile(InputStream templateFileStream) throws IOException {
+	void parseTemplateFile(InputStream templateFileStream, IProgressMonitor monitor) throws IOException {
+		monitor.subTask("Parsing template file.");
+		monitor.worked(0);
+		
 		Parser p = new Parser();
 		Tables tables = p.parseModel(templateFileStream);
 		// load scalars into a map
@@ -145,7 +189,11 @@ public class Report {
 		twValues = timeWindowTable.getValues();
 	}
 
-	public void doProcessing() {
+	public void doProcessing(IProgressMonitor monitor) {
+		
+		monitor.subTask("Processing template file.");
+		monitor.worked(20);
+		
 		// open files 1 and file 2 and loop over to plot
 		Group dssGroupBase = Utils.opendss(scalars.get("FILE_BASE"));
 		Group dssGroupAlt = Utils.opendss(scalars.get("FILE_ALT"));
@@ -175,10 +223,17 @@ public class Report {
 			return;
 		}
 
-		generateSummaryTable();
+		monitor.worked(20);
+		
+		generateSummaryTable(monitor);
 		int dataIndex = 0;
+		int size = pathnameMaps.size();
+		int progress=Math.round(30.0f/size);
 		for (PathnameMap pathMap : pathnameMaps) {
 			dataIndex = dataIndex + 1;
+			monitor.subTask("Generating plot " + dataIndex + " of " + size + ".");
+			monitor.worked(progress);
+			
 			//logger.fine("Working on index: " + dataIndex);
 			if (pathMap.pathAlt == null || pathMap.pathAlt == "") {
 				pathMap.pathAlt = pathMap.pathBase;
@@ -250,7 +305,7 @@ public class Report {
 		writer.endDocument();
 	}
 
-	private void generateSummaryTable() {
+	private void generateSummaryTable(IProgressMonitor monitor) {
 		
 		writer.setTableFontSize(scalars.get("TABLE_FONT_SIZE"));
 		
@@ -287,7 +342,14 @@ public class Report {
 		List<String> categoryList = Arrays.asList("RF", "DI", "DO", "DE",
 				"SWPSOD", "CVPSOD");
 		boolean firstDataRow = true;
+		int size = pathnameMaps.size();
+		int progress=Math.round(30.0f/size);
+		int dataIndex = 0;
 		for (PathnameMap pathMap : pathnameMaps) {
+			dataIndex++;
+			monitor.subTask("Processing dataset " + dataIndex + " of " + size);
+			monitor.worked(progress);
+			
 			if (!categoryList.contains(pathMap.var_category)) {
 				continue;
 			}
