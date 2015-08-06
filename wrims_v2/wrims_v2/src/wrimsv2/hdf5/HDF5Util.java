@@ -99,6 +99,32 @@ public class HDF5Util {
 		}
 	}
 	
+	public static String[] readStringData(int did, int tid, int size, int stringLength){
+		try {
+			byte[] read_data =  new byte[size*stringLength];
+			String[] stringData=new String[size];
+			
+			if ((did >= 0) && (tid >= 0))
+				H5.H5Dread(did, tid, 
+				        HDF5Constants.H5S_ALL, HDF5Constants.H5S_ALL, HDF5Constants.H5P_DEFAULT, 
+				        read_data);
+			
+			for (int indx = 0; indx <size ; indx++) {
+				byte[] buff=new byte[stringLength];
+				for (int jndx = 0; jndx < stringLength; jndx++) {
+					buff[jndx]=read_data[indx*stringLength+jndx];
+				}
+				stringData[indx]=(new String(buff)).trim().toLowerCase();
+			}
+			return stringData;
+		}
+		catch (Exception e) {
+			String[] stringData=new String[0];
+			e.printStackTrace();
+			return stringData;
+		}
+	}
+	
 	public static void writeStringAttr(int aid, int tid, String[] stringArray, int stringLength){
 		try {
 			int size =stringArray.length;
@@ -117,6 +143,20 @@ public class HDF5Util {
 		}
 		catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public static String readStringAttr(int aid, int tid, int stringLength){
+		try {
+			byte[] readData=new byte[stringLength];
+			if ((aid >= 0) && (tid >= 0))
+				H5.H5Aread(aid, tid, readData);
+			
+			String stringAttr=(new String(readData)).toLowerCase().trim();
+			return stringAttr;
+		}catch (Exception e) {
+			e.printStackTrace();
+			return "";
 		}
 	}
 	

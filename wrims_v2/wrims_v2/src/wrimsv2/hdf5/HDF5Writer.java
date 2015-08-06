@@ -103,7 +103,7 @@ public class HDF5Writer {
 							if (gidSCMonthly>=0 && tidAttr>=0 && sidAttr>=0){
 								int aidMonthly=-1;
 								try{
-									H5.H5Aopen(gidSCMonthly, "Starting Time", HDF5Constants.H5P_DEFAULT);
+									aidMonthly=H5.H5Aopen(gidSCMonthly, "Starting Time", HDF5Constants.H5P_DEFAULT);
 								}catch (Exception e){
 									aidMonthly=H5.H5Acreate(gidSCMonthly, "Starting Time", tidAttr, sidAttr, HDF5Constants.H5P_DEFAULT);
 								}
@@ -118,7 +118,7 @@ public class HDF5Writer {
 							if (gidSCDaily>=0 && tidAttr>=0 && sidAttr>=0){
 								int aidDaily=-1;
 								try{
-									H5.H5Aopen(gidSCDaily, "Starting Time", HDF5Constants.H5P_DEFAULT);
+									aidDaily=H5.H5Aopen(gidSCDaily, "Starting Time", HDF5Constants.H5P_DEFAULT);
 								}catch (Exception e){
 									aidDaily=H5.H5Acreate(gidSCDaily, "Starting Time", tidAttr, sidAttr, HDF5Constants.H5P_DEFAULT);
 								}
@@ -144,7 +144,7 @@ public class HDF5Writer {
 							if (gidDCMonthly>=0 && tidAttr>=0 && sidAttr>=0){
 								int aidMonthly=-1;
 								try{
-									H5.H5Aopen(gidDCMonthly, "Starting Time", HDF5Constants.H5P_DEFAULT);
+									aidMonthly=H5.H5Aopen(gidDCMonthly, "Starting Time", HDF5Constants.H5P_DEFAULT);
 								}catch (Exception e){
 									aidMonthly=H5.H5Acreate(gidDCMonthly, "Starting Time", tidAttr, sidAttr, HDF5Constants.H5P_DEFAULT);
 								}
@@ -159,7 +159,7 @@ public class HDF5Writer {
 							if (gidDCDaily>=0 && tidAttr>=0 && sidAttr>=0){
 								int aidDaily=-1;
 								try{
-									H5.H5Aopen(gidDCDaily, "Starting Time", HDF5Constants.H5P_DEFAULT);
+									aidDaily=H5.H5Aopen(gidDCDaily, "Starting Time", HDF5Constants.H5P_DEFAULT);
 								}catch (Exception e){
 									aidDaily=H5.H5Acreate(gidDCDaily, "Starting Time", tidAttr, sidAttr, HDF5Constants.H5P_DEFAULT);
 								}
@@ -188,7 +188,7 @@ public class HDF5Writer {
 								if (gidMonthly>=0 && tidAttr>=0 && sidAttr>=0){
 									int aidMonthly=-1;
 									try{
-										H5.H5Aopen(gidMonthly, "Starting Time", HDF5Constants.H5P_DEFAULT);
+										aidMonthly=H5.H5Aopen(gidMonthly, "Starting Time", HDF5Constants.H5P_DEFAULT);
 									}catch (Exception e){
 										aidMonthly=H5.H5Acreate(gidMonthly, "Starting Time", tidAttr, sidAttr, HDF5Constants.H5P_DEFAULT);
 									}
@@ -203,7 +203,7 @@ public class HDF5Writer {
 								if (gidDaily>=0 && tidAttr>=0 && sidAttr>=0){
 									int aidDaily=-1;
 									try{
-										H5.H5Aopen(gidDaily, "Starting Time", HDF5Constants.H5P_DEFAULT);
+										aidDaily=H5.H5Aopen(gidDaily, "Starting Time", HDF5Constants.H5P_DEFAULT);
 									}catch (Exception e){
 										aidDaily=H5.H5Acreate(gidDaily, "Starting Time", tidAttr, sidAttr, HDF5Constants.H5P_DEFAULT);
 									}

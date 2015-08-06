@@ -588,7 +588,7 @@ public class DSSHDF5Converter {
 								if (svGidMonthly>=0 && tidAttr>=0 && sidAttr>=0){
 									int aidMonthly=-1;
 									try{
-										H5.H5Aopen(svGidMonthly, "Starting Time", HDF5Constants.H5P_DEFAULT);
+										aidMonthly=H5.H5Aopen(svGidMonthly, "Starting Time", HDF5Constants.H5P_DEFAULT);
 									}catch (Exception e){
 										aidMonthly=H5.H5Acreate(svGidMonthly, "Starting Time", tidAttr, sidAttr, HDF5Constants.H5P_DEFAULT);
 									}
@@ -603,7 +603,7 @@ public class DSSHDF5Converter {
 								if (svGidDaily>=0 && tidAttr>=0 && sidAttr>=0){
 									int aidDaily=-1;
 									try{
-										H5.H5Aopen(svGidDaily, "Starting Time", HDF5Constants.H5P_DEFAULT);
+										aidDaily=H5.H5Aopen(svGidDaily, "Starting Time", HDF5Constants.H5P_DEFAULT);
 									}catch (Exception e){
 										aidDaily=H5.H5Acreate(svGidDaily, "Starting Time", tidAttr, sidAttr, HDF5Constants.H5P_DEFAULT);
 									}
@@ -679,7 +679,7 @@ public class DSSHDF5Converter {
 								if (initGidMonthly>=0 && tidAttr>=0 && sidAttr>=0){
 									int aidMonthly=-1;
 									try{
-										H5.H5Aopen(initGidMonthly, "Starting Time", HDF5Constants.H5P_DEFAULT);
+										aidMonthly=H5.H5Aopen(initGidMonthly, "Starting Time", HDF5Constants.H5P_DEFAULT);
 									}catch (Exception e){
 										aidMonthly=H5.H5Acreate(initGidMonthly, "Starting Time", tidAttr, sidAttr, HDF5Constants.H5P_DEFAULT);
 									}
@@ -694,7 +694,7 @@ public class DSSHDF5Converter {
 								if (initGidDaily>=0 && tidAttr>=0 && sidAttr>=0){
 									int aidDaily=-1;
 									try{
-										H5.H5Aopen(initGidDaily, "Starting Time", HDF5Constants.H5P_DEFAULT);
+										aidDaily=H5.H5Aopen(initGidDaily, "Starting Time", HDF5Constants.H5P_DEFAULT);
 									}catch (Exception e){
 										aidDaily=H5.H5Acreate(initGidDaily, "Starting Time", tidAttr, sidAttr, HDF5Constants.H5P_DEFAULT);
 									}
@@ -768,7 +768,7 @@ public class DSSHDF5Converter {
 				String kind=ds.getAttributes().getTypeName();
 				svMonthlyNames.add(name);
 				svMonthlyKinds.add(kind);
-				svMonthlyData.put(name, data);
+				svMonthlyData.put(name+"/"+kind, data);
 				svLookupNames.add(name);
 				svLookupUnits.add(ds.getAttributes().getYUnits());
 				svLookupKinds.add(kind);
@@ -786,7 +786,8 @@ public class DSSHDF5Converter {
 		if (svGidMonthly>=0 && size>0){
 			try {		
 				String name=svMonthlyNames.get(0);
-				int dim = svMonthlyData.get(name).length;
+				String kind=svMonthlyKinds.get(0);
+				int dim = svMonthlyData.get(name+"/"+kind).length;
 				
 				dims[0]=dim;
 				dims[1]=size;
@@ -806,8 +807,9 @@ public class DSSHDF5Converter {
 					if (didTDA >= 0){
 						for (int i=0; i<size; i++){
 								name=svMonthlyNames.get(i);
+								kind=svMonthlyKinds.get(i);
 											
-								double[] data = svMonthlyData.get(name);
+								double[] data = svMonthlyData.get(name+"/"+kind);
 								
 								for (int j=0; j<dim; j++){
 									write_data[j][i]=data[j];
@@ -874,7 +876,7 @@ public class DSSHDF5Converter {
 				String kind=ds.getAttributes().getTypeName();
 				svDailyNames.add(name);
 				svDailyKinds.add(kind);
-				svDailyData.put(name, data);
+				svDailyData.put(name+"/"+kind, data);
 				svLookupNames.add(name);
 				svLookupUnits.add(ds.getAttributes().getYUnits());
 				svLookupKinds.add(kind);
@@ -892,7 +894,8 @@ public class DSSHDF5Converter {
 		if (svGidDaily>=0 && size>0){
 			try {		
 				String name=svDailyNames.get(0);
-				int dim = svDailyData.get(name).length;
+				String kind=svDailyKinds.get(0);
+				int dim = svDailyData.get(name+"/"+kind).length;
 				
 				dims[0]=dim;
 				dims[1]=size;
@@ -912,8 +915,9 @@ public class DSSHDF5Converter {
 					if (didTDA >= 0){
 						for (int i=0; i<size; i++){
 								name=svDailyNames.get(i);
-											
-								double[] data = svDailyData.get(name);
+								kind=svDailyKinds.get(i);
+								
+								double[] data = svDailyData.get(name+"/"+kind);
 								
 								for (int j=0; j<dim; j++){
 									write_data[j][i]=data[j];
@@ -1036,7 +1040,7 @@ public class DSSHDF5Converter {
 					String kind=ds.getAttributes().getTypeName();
 					initMonthlyNames.add(name);
 					initMonthlyKinds.add(kind);
-					initMonthlyData.put(name, data);
+					initMonthlyData.put(name+"/"+kind, data);
 					initLookupNames.add(name);
 					initLookupUnits.add(ds.getAttributes().getYUnits());
 					initLookupKinds.add(kind);
@@ -1055,7 +1059,8 @@ public class DSSHDF5Converter {
 		if (initGidMonthly>=0 && size>0){
 			try {		
 				String name=initMonthlyNames.get(0);
-				int dim = initMonthlyData.get(name).length;
+				String kind=initMonthlyKinds.get(0);
+				int dim = initMonthlyData.get(name+"/"+kind).length;
 				
 				dims[0]=dim;
 				dims[1]=size;
@@ -1075,8 +1080,9 @@ public class DSSHDF5Converter {
 					if (didTDA >= 0){
 						for (int i=0; i<size; i++){
 								name=initMonthlyNames.get(i);
+								kind=initMonthlyKinds.get(i);
 											
-								double[] data = initMonthlyData.get(name);
+								double[] data = initMonthlyData.get(name+"/"+kind);
 								
 								for (int j=0; j<dim; j++){
 									write_data[j][i]=data[j];
@@ -1155,7 +1161,7 @@ public class DSSHDF5Converter {
 					String kind=ds.getAttributes().getTypeName();
 					initDailyNames.add(name);
 					initDailyKinds.add(kind);
-					initDailyData.put(name, data);
+					initDailyData.put(name+"/"+kind, data);
 					initLookupNames.add(name);
 					initLookupUnits.add(ds.getAttributes().getYUnits());
 					initLookupKinds.add(kind);
@@ -1174,7 +1180,8 @@ public class DSSHDF5Converter {
 		if (initGidDaily>=0 && size>0){
 			try {		
 				String name=initDailyNames.get(0);
-				int dim = initDailyData.get(name).length;
+				String kind=initDailyKinds.get(0);
+				int dim = initDailyData.get(name+"/"+kind).length;
 				
 				dims[0]=dim;
 				dims[1]=size;
@@ -1194,8 +1201,9 @@ public class DSSHDF5Converter {
 					if (didTDA >= 0){
 						for (int i=0; i<size; i++){
 								name=initDailyNames.get(i);
+								kind=initDailyKinds.get(i);
 											
-								double[] data = initDailyData.get(name);
+								double[] data = initDailyData.get(name+"/"+kind);
 								
 								for (int j=0; j<dim; j++){
 									write_data[j][i]=data[j];

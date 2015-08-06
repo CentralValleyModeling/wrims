@@ -19,6 +19,7 @@ import wrimsv2.evaluator.DssDataSetFixLength;
 import wrimsv2.evaluator.DssOperation;
 import wrimsv2.evaluator.TimeOperation;
 import wrimsv2.external.LoadAllDll;
+import wrimsv2.hdf5.HDF5Reader;
 import wrimsv2.hdf5.HDF5Writer;
 
 public class PreRunModel {
@@ -27,10 +28,10 @@ public class PreRunModel {
 		VariableTimeStep.procCycleTimeStep(sds);
 		ControlData.totalTimeStep=VariableTimeStep.getTotalTimeStep(sds);
 		ArrayList<String> modelList=sds.getModelList();
-		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
+		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();
 		ControlData.monthlyStartTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, TimeOperation.numberOfDays(ControlData.startMonth, ControlData.startYear));
 		ControlData.dailyStartTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
-				
+
 		ControlData.writer = new DSSDataWriter(FilePaths.fullDvarDssPath);
 		try {
 			ControlData.writer.openDSSFile();
@@ -39,25 +40,35 @@ public class PreRunModel {
 			Error.addEngineError("Could not open dv file. "+e);
 			return;
 		}
-		
-		if (!(new File(FilePaths.fullInitDssPath)).exists()){ 
+
+		if (!(new File(FilePaths.fullInitDssPath)).exists()){
 			System.out.println("Error: Initial file "+ FilePaths.fullInitDssPath+" doesn't exist.");
 			System.out.println("=======Run Complete Unsuccessfully=======");
 			System.exit(1);
 		}
-		if (!(new File(FilePaths.fullSvarDssPath)).exists()){ 
+		if (!(new File(FilePaths.fullSvarDssPath)).exists()){
 			System.out.println("Error: Svar file "+ FilePaths.fullSvarDssPath+" doesn't exist.");
 			System.out.println("=======Run Complete Unsuccessfully=======");
 			System.exit(1);
 		}
-		DSSUtil.generateCatalog(FilePaths.fullInitDssPath);
-		DSSUtil.generateCatalog(FilePaths.fullSvarDssPath);
-		ControlData.groupInit= DSSUtil.createGroup("local", FilePaths.fullInitDssPath);
-		ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarDssPath);
 		ControlData.allTsMap=sds.getTimeseriesMap();
-		
-		readTimeseries();
+
+		if (FilePaths.svarDssFile.toLowerCase().endsWith(".h5")){
+			HDF5Reader.readTimeseries();
+		}else{
+			DSSUtil.generateCatalog(FilePaths.fullSvarDssPath);
+			ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarDssPath);
+			readTimeseries();
+		}
+
+		if (FilePaths.initDssFile.toLowerCase().endsWith(".h5")){
+			HDF5Reader.initialDvarAliasTS();
+		}else{
+			DSSUtil.generateCatalog(FilePaths.fullInitDssPath);
+			ControlData.groupInit= DSSUtil.createGroup("local", FilePaths.fullInitDssPath);
+		}
 		initialDvarAliasTS();
+
 		for (int i=0; i<modelList.size(); i++){
 			String model=modelList.get(i);
 			ModelDataSet mds=modelDataSetMap.get(model);
@@ -65,7 +76,7 @@ public class PreRunModel {
 			ControlData.currCycleIndex=i;
 			processExternal();
 		}
-		
+
 		if (ControlData.outputHDF5){
 			System.out.println("Create HDF5 output data structure.");
 			HDF5Writer.createDataStructure();
@@ -75,10 +86,10 @@ public class PreRunModel {
 			System.out.println("HDF5 output data structure is created.");
 		}
 	}
-	
+
 	public void readTimeseries(){
 		Map<String, Timeseries> tsMap=ControlData.currStudyDataSet.getTimeseriesMap();
-		Map<String, ArrayList<String>> tsTimeStepMap=ControlData.currStudyDataSet.getTimeseriesTimeStepMap(); 
+		Map<String, ArrayList<String>> tsTimeStepMap=ControlData.currStudyDataSet.getTimeseriesTimeStepMap();
 		ControlData.currEvalTypeIndex=6;
 		Set tsKeySet=tsMap.keySet();
 		Iterator iterator=tsKeySet.iterator();
@@ -86,7 +97,7 @@ public class PreRunModel {
 			String tsName=(String)iterator.next();
 			//System.out.println("Reading svar timeseries "+tsName);
 			//To Do: in the svar class, add flag to see if svTS has been loaded
-			if (!DataTimeSeries.lookSvDss.contains(tsName)){ 
+			if (!DataTimeSeries.lookSvDss.contains(tsName)){
 				ArrayList<String> timeStepList=tsTimeStepMap.get(tsName);
 				for (String timeStep:timeStepList){
 					DssOperation.getSVTimeseries(tsName, FilePaths.fullSvarDssPath, timeStep);
@@ -97,11 +108,11 @@ public class PreRunModel {
 		}
 		System.out.println("Timeseries Reading Done.");
 	}
-	
+
 	public void	initialDvarAliasTS(){
 		DataTimeSeries.dvAliasTS=new HashMap<String, DssDataSetFixLength>();
 	}
-	
+
 	public void processExternal(){
 		ModelDataSet mds=ControlData.currModelDataSet;
 		ArrayList<String> exList = mds.exList;
