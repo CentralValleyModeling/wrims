@@ -62,8 +62,10 @@ public class PreRunModel {
 		}
 
 		if (FilePaths.initDssFile.toLowerCase().endsWith(".h5")){
-			HDF5Reader.initialDvarAliasTS();
+			ControlData.initHDF5=true;
+			HDF5Reader.readInitialData();
 		}else{
+			ControlData.initHDF5=false;
 			DSSUtil.generateCatalog(FilePaths.fullInitDssPath);
 			ControlData.groupInit= DSSUtil.createGroup("local", FilePaths.fullInitDssPath);
 		}

@@ -98,6 +98,7 @@ public class ControlData {
 	public static boolean allowSvTsInit=false;
 	public static boolean outputHDF5=false;
 	public static boolean outputCycle=false;
+	public static boolean initHDF5=false;
 	
 	public ControlData(){
 	}

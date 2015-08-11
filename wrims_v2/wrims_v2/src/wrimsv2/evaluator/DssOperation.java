@@ -13,6 +13,7 @@ import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.Timeseries;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
+import wrimsv2.hdf5.HDF5Reader;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -93,6 +94,11 @@ public class DssOperation {
 	}
 	
 	public static boolean getSVInitTimeseries(String name){
+		
+		if (ControlData.initHDF5){
+			return HDF5Reader.getSVInitTimeseries(name);
+		}
+		
 		Timeseries ts=ControlData.currTsMap.get(name);
 		String partC=ts.kind;
 		DataSet ds=getDataForInitial(regularExp(ControlData.partA),regularExp(ts.dssBPart),regularExp(partC),"",regularExp(ControlData.partE), regularExp(ControlData.initPartF));
@@ -162,6 +168,11 @@ public class DssOperation {
 	}
 	
 	public static boolean getDVAliasInitTimeseries(String name){
+		
+		if (ControlData.initHDF5){
+			return HDF5Reader.getDVAliasInitTimeseries(name);
+		}
+		
 		String units;
 		String partC;
 		if (ControlData.currDvMap.containsKey(name)){

@@ -12,8 +12,11 @@ import ncsa.hdf.hdf5lib.HDF5Constants;
 import ncsa.hdf.hdf5lib.exceptions.HDF5LibraryException;
 import vista.set.DataSet;
 import vista.set.RegularTimeSeries;
+import wrimsv2.commondata.wresldata.Alias;
+import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.Timeseries;
 import wrimsv2.components.ControlData;
+import wrimsv2.components.Error;
 import wrimsv2.components.FilePaths;
 import wrimsv2.evaluator.DataTimeSeries;
 import wrimsv2.evaluator.DssDataSet;
@@ -81,7 +84,7 @@ public class HDF5Reader {
 		}
 	}
 	
-	public static void initialDvarAliasTS(){
+	public static void readInitialData(){
 		if (openFileAndGroup(2)>=0){
 			readLookupTable(2);
 			readTimestepList(2);
@@ -779,4 +782,170 @@ public class HDF5Reader {
 		return true;
 	}
 	
+	public static boolean getDVAliasInitTimeseries(String name){	
+		String units;
+		String partC;
+		if (ControlData.currDvMap.containsKey(name)){
+			Dvar dvar=ControlData.currDvMap.get(name);
+			partC=dvar.kind;
+			units=dvar.units;
+		}else{
+			Alias alias=ControlData.currAliasMap.get(name);
+			partC=alias.kind;
+			units=alias.units;
+		}
+		
+		boolean found=false;
+		String timeStep=ControlData.timeStep;
+		String timeStepLow=timeStep.toLowerCase();
+		
+		int i=0;
+		while (i<initLookupName.length && !found){
+			if (initLookupName[i].equals(name) && initLookupTimestep[i].equals(timeStepLow) && initLookupKind[i].equals(partC) && initLookupUnit[i].equals(units)){
+				found=true;
+			}
+			i++;
+		}
+		
+		if (!found) return false;
+		
+		String[] listName=new String[0];
+		String[] listKind=new String[0];
+		double[][] data=new double[0][0];
+		Date startDate=new Date(21, 9, 31, 24, 0);
+		
+		if (timeStep.equals("1MON")){
+			listName = initMonthlyListName;
+			listKind = initMonthlyListKind;
+			data = initMonthlyData;
+			startDate=initMonthlyStartDate;
+		}else if (timeStep.equals("1DAY")){
+			listName = initDailyListName;
+			listKind = initDailyListKind;
+			data = initDailyData;
+			startDate= initDailyStartDate;
+		}
+		
+		i=0; 
+		int index=-1;
+		while(i<listName.length && index==-1){
+			if (listName[i].equals(name) && listKind[i].equals(partC)){
+				index=i;
+			}
+			i++;
+		}
+		
+		if (index==-1) return false;
+		
+		DssDataSet dds= new DssDataSet();
+		ArrayList<Double> dataArray= new ArrayList<Double>();
+		
+		for (int j=0; j<data.length; j++){
+			dataArray.add(data[j][index]);
+		}
+
+		dds.setUnits(units);
+		dds.setKind(partC);
+        dds.setData(dataArray);
+        dds.setTimeStep(timeStep);
+        dds.setStartTime(startDate);
+        dds.setFromDssFile(true);
+        dds.generateStudyStartIndex();
+        String entryNameTS=DssOperation.entryNameTS(name, timeStep);
+        DataTimeSeries.dvAliasInit.put(entryNameTS, dds);
+		return true;
+	}
+	
+	public static boolean getSVInitTimeseries(String name){	
+		Timeseries ts=ControlData.currTsMap.get(name);
+		String partC=ts.kind;
+		String units=ts.units;
+		
+		boolean found=false;
+		String timeStep=ControlData.timeStep;
+		String timeStepLow=timeStep.toLowerCase();
+		
+		int i=0;
+		while (i<initLookupName.length && !found){
+			if (initLookupName[i].equals(name) && initLookupTimestep[i].equals(timeStepLow) && initLookupKind[i].equals(partC) && initLookupUnit[i].equals(units)){
+				found=true;
+			}
+			i++;
+		}
+		
+		if (!found) return false;
+		
+		String[] listName=new String[0];
+		String[] listKind=new String[0];
+		double[][] data=new double[0][0];
+		Date startDate=new Date(21, 9, 31, 24, 0);
+		
+		if (timeStep.equals("1MON")){
+			listName = initMonthlyListName;
+			listKind = initMonthlyListKind;
+			data = initMonthlyData;
+			startDate=initMonthlyStartDate;
+		}else if (timeStep.equals("1DAY")){
+			listName = initDailyListName;
+			listKind = initDailyListKind;
+			data = initDailyData;
+			startDate= initDailyStartDate;
+		}
+		
+		i=0; 
+		int index=-1;
+		while(i<listName.length && index==-1){
+			if (listName[i].equals(name) && listKind[i].equals(partC)){
+				index=i;
+			}
+			i++;
+		}
+		
+		if (index==-1) return false;
+		
+		DssDataSet dds= new DssDataSet();
+		ArrayList<Double> dataArray= new ArrayList<Double>();
+		
+		if (ts.units.equals("taf") && ts.convertToUnits.equals("cfs")){
+			for (int j=0; j<data.length; j++){
+				double dataEntry = data[j][index];
+				if (dataEntry==-901.0){
+					dataArray.add(-901.0);
+				}else if (dataEntry==-902.0){
+					dataArray.add(-902.0);
+				}else{
+					TimeOperation.findTime(j, startDate.getYear()+1900, startDate.getMonth(), startDate.getDate());
+					double dataEntryValue=dataEntry*Evaluation.tafcfs("taf_cfs");
+					dataArray.add(dataEntryValue);
+				}
+			}
+		}else if (ts.units.equals("cfs") && ts.convertToUnits.equals("taf")){
+			for (int j=0; j<data.length; j++){
+				double dataEntry=data[j][index];
+				if (dataEntry==-901.0){
+					dataArray.add(-901.0);
+				}else if (dataEntry==-902.0){
+					dataArray.add(-902.0);
+				}else{
+					TimeOperation.findTime(j, startDate.getYear()+1900, startDate.getMonth(), startDate.getDate());
+					double dataEntryValue=dataEntry*Evaluation.tafcfs("cfs_taf");
+					dataArray.add(dataEntryValue);
+				}
+			}
+		}else{
+			for (int j=0; j<data.length; j++){
+				dataArray.add(data[j][index]);
+			}
+		}
+		dds.setUnits(ts.units);
+		dds.setKind(partC);
+        dds.setData(dataArray);
+        dds.setTimeStep(timeStep);
+        dds.setStartTime(startDate);
+        dds.setFromDssFile(true);
+        dds.generateStudyStartIndex();
+        String entryNameTS=DssOperation.entryNameTS(name, timeStep);
+        DataTimeSeries.svInit.put(entryNameTS, dds);
+		return true;
+	}
 }
