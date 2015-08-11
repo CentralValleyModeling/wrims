@@ -85,9 +85,9 @@ public class ControllerTree {
 	
 	public void setControlData(){
 		FilePaths.groundwaterDir="";
-		FilePaths.setSvarDssPaths("D:\\CalLite_Beta_042611\\DSS\\CL_FUTURE_WHL042611_SV.dss");
-        FilePaths.setInitDssPaths("D:\\CalLite_Beta_042611\\DSS\\CalLite2020D09EINIT.dss");
-        FilePaths.setDvarDssPaths("D:\\CalLite_Beta_042611\\DSS\\TestWRIMSV2DV.dss");
+		FilePaths.setSvarFilePaths("D:\\CalLite_Beta_042611\\DSS\\CL_FUTURE_WHL042611_SV.dss");
+        FilePaths.setInitFilePaths("D:\\CalLite_Beta_042611\\DSS\\CalLite2020D09EINIT.dss");
+        FilePaths.setDvarFilePaths("D:\\CalLite_Beta_042611\\DSS\\TestWRIMSV2DV.dss");
         FilePaths.setMainFilePaths("D:\\CalLite_Beta_042611\\Run\\main_BO.wresl");
 		ControlData cd=new ControlData();
         cd.svDvPartF="2020D09E";
@@ -112,9 +112,9 @@ public class ControllerTree {
 	public void setControlData(String[] args){
 		FilePaths.groundwaterDir=args[0];
         FilePaths.setMainFilePaths(args[1]);
-        FilePaths.setSvarDssPaths(args[2]);
-        FilePaths.setInitDssPaths(args[3]);
-        FilePaths.setDvarDssPaths(args[4]);
+        FilePaths.setSvarFilePaths(args[2]);
+        FilePaths.setInitFilePaths(args[3]);
+        FilePaths.setDvarFilePaths(args[4]);
 		ControlData cd=new ControlData();
 		cd.svDvPartF=args[5];
 		cd.initPartF=args[6];
@@ -150,9 +150,9 @@ public class ControllerTree {
 			out.write(FilePaths.groundwaterDir+"\n");
 			out.write("StudyFileFullPath\n");
 			out.write(FilePaths.fullMainPath+"\n");
-			out.write(FilePaths.fullSvarDssPath+"\n");
+			out.write(FilePaths.fullSvarFilePath+"\n");
 			out.write(FilePaths.fullDvarDssPath+"\n");
-			out.write(FilePaths.fullInitDssPath+"\n");
+			out.write(FilePaths.fullInitFilePath+"\n");
 			out.write(ControlData.defaultTimeStep+"\n");
 			out.write(VariableTimeStep.getTotalTimeStep(ControlData.defaultTimeStep)+"\n");
 			out.write(ControlData.startDay+"\n");
@@ -209,8 +209,8 @@ public class ControllerTree {
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
 		ControlData.monthlyStartTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
 				
-		ControlData.groupInit= DSSUtil.createGroup("local", FilePaths.fullInitDssPath);
-		ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarDssPath);
+		ControlData.groupInit= DSSUtil.createGroup("local", FilePaths.fullInitFilePath);
+		ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarFilePath);
 		ControlData.allTsMap=sds.getTimeseriesMap();
 		
 		Calendar cal = Calendar.getInstance();
@@ -294,8 +294,8 @@ public class ControllerTree {
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
 		ControlData.monthlyStartTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
 				
-		ControlData.groupInit= DSSUtil.createGroup("local", FilePaths.fullInitDssPath);
-		ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarDssPath);
+		ControlData.groupInit= DSSUtil.createGroup("local", FilePaths.fullInitFilePath);
+		ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarFilePath);
 		ControlData.allTsMap=sds.getTimeseriesMap();
 		
 		Calendar cal = Calendar.getInstance();
@@ -416,7 +416,7 @@ public class ControllerTree {
 			//System.out.println("Reading svar timeseries "+tsName);
 			//To Do: in the svar class, add flag to see if svTS has been loaded
 			if (!DataTimeSeries.lookSvDss.contains(tsName)){ 
-				DssOperation.getSVTimeseries(tsName, FilePaths.fullSvarDssPath, ControlData.partE);
+				DssOperation.getSVTimeseries(tsName, FilePaths.fullSvarFilePath, ControlData.partE);
 				DataTimeSeries.lookSvDss.add(tsName);
 			}
 		}

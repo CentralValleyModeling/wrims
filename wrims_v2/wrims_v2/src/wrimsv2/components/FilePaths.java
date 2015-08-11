@@ -7,15 +7,16 @@ public class FilePaths {
 	public static String fullMainPath="";
 	public static String mainFile="";
 	public static String mainDirectory="";
-	public static String fullSvarDssPath="";
-	public static String svarDssFile="";
-	public static String svarDssDirectory="";
+	public static String fullSvarFilePath="";
+	public static String svarFile="";
+	public static String svarFileDirectory="";
 	public static String fullDvarDssPath="";
 	public static String dvarDssFile="";
 	public static String dvarDssDirectory="";
-	public static String fullInitDssPath="";
-	public static String initDssFile="";
-	public static String initDssDirectory="";
+	public static String fullDvarHDF5Path="";
+	public static String fullInitFilePath="";
+	public static String initFile="";
+	public static String initFileDirectory="";
 	public static String fullIlpPath="";
 	public static String ilpFile="";
 	public static String ilpFileDirectory="";
@@ -30,25 +31,35 @@ public class FilePaths {
 		mainFile=fullPath.substring(index+1);
 	}
 	
-	public static void setSvarDssPaths(String fullPath){
-		fullSvarDssPath=fullPath;
+	public static void setSvarFilePaths(String fullPath){
+		fullSvarFilePath=fullPath;
 		int index=fullPath.lastIndexOf(File.separator);
-		svarDssDirectory=fullPath.substring(0,index+1);
-		svarDssFile=fullPath.substring(index+1);
+		svarFileDirectory=fullPath.substring(0,index+1);
+		svarFile=fullPath.substring(index+1);
 	}
 	
-	public static void setDvarDssPaths(String fullPath){
+	public static void setDvarFilePaths(String fullPath){
+		if (fullPath.toLowerCase().endsWith(".h5")){
+			ControlData.outputHDF5=true;
+			ControlData.outputCycle=true;
+			fullDvarHDF5Path=fullPath;
+			int index=fullPath.lastIndexOf(".");
+			fullPath=fullPath.substring(0, index+1)+"dss";
+		}else{
+			ControlData.outputHDF5=false;
+			ControlData.outputCycle=false;
+		}
 		fullDvarDssPath=fullPath;
 		int index=fullPath.lastIndexOf(File.separator);
 		dvarDssDirectory=fullPath.substring(0,index+1);
 		dvarDssFile=fullPath.substring(index+1);
 	}
 	
-	public static void setInitDssPaths(String fullPath){
-		fullInitDssPath=fullPath;
+	public static void setInitFilePaths(String fullPath){
+		fullInitFilePath=fullPath;
 		int index=fullPath.lastIndexOf(File.separator);
-		initDssDirectory=fullPath.substring(0,index+1);
-		initDssFile=fullPath.substring(index+1);
+		initFileDirectory=fullPath.substring(0,index+1);
+		initFile=fullPath.substring(index+1);
 	}
 	
 	public static void clear(){
@@ -57,15 +68,15 @@ public class FilePaths {
 		fullMainPath="";
 		mainFile="";
 		mainDirectory="";
-		fullSvarDssPath="";
-		svarDssFile="";
-		svarDssDirectory="";
+		fullSvarFilePath="";
+		svarFile="";
+		svarFileDirectory="";
 		fullDvarDssPath="";
 		dvarDssFile="";
 		dvarDssDirectory="";
-		fullInitDssPath="";
-		initDssFile="";
-		initDssDirectory="";
+		fullInitFilePath="";
+		initFile="";
+		initFileDirectory="";
 		fullIlpPath="";
 		ilpFile="";
 		ilpFileDirectory="";

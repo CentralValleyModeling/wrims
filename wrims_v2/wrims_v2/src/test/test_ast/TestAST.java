@@ -219,7 +219,7 @@ public class TestAST extends TestCase{
         fp.setMainFilePaths(mainFile);
 		
         new ControlData();
-        FilePaths.fullInitDssPath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\2020D09EINIT.DSS";
+        FilePaths.fullInitFilePath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\2020D09EINIT.DSS";
 		ANTLRStringStream stream = new ANTLRStringStream("v: cvp_sl(-1)"); 
 		ValueEvaluatorTreeLexer lexer = new ValueEvaluatorTreeLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
@@ -245,8 +245,8 @@ public class TestAST extends TestCase{
         fp.setMainFilePaths(mainFile);
 		
         new ControlData();
-        FilePaths.fullSvarDssPath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\2020D09ESV.dss";
-        FilePaths.fullInitDssPath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\2020D09EINIT.DSS";
+        FilePaths.fullSvarFilePath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\2020D09ESV.dss";
+        FilePaths.fullInitFilePath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\2020D09EINIT.DSS";
         ControlData.currEvalName="bf601";
 		ANTLRStringStream stream = new ANTLRStringStream("v: timeseries"); 
 		EvaluatorLexer lexer = new EvaluatorLexer(stream);
@@ -271,8 +271,8 @@ public class TestAST extends TestCase{
         Map<String, Svar> svMap =new HashMap<String, Svar>();
         svMap.put("bf601", svar);
         ControlData.currSvMap=svMap;
-        FilePaths.fullSvarDssPath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\2020D09ESV.dss";
-        FilePaths.fullInitDssPath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\2020D09EINIT.DSS";
+        FilePaths.fullSvarFilePath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\2020D09ESV.dss";
+        FilePaths.fullInitFilePath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\2020D09EINIT.DSS";
         ControlData.currEvalName="bf601";
 		ANTLRStringStream stream = new ANTLRStringStream("v: timeseries"); 
 		EvaluatorLexer lexer = new EvaluatorLexer(stream);
@@ -296,8 +296,8 @@ public class TestAST extends TestCase{
         fp.setMainFilePaths(mainFile);
 		
         new ControlData();
-        FilePaths.fullSvarDssPath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\2020D09ESV.dss";
-        FilePaths.fullInitDssPath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\2020D09EINIT.DSS";
+        FilePaths.fullSvarFilePath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\2020D09ESV.dss";
+        FilePaths.fullInitFilePath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\2020D09EINIT.DSS";
         ControlData.currEvalName="bf601";
 		ANTLRStringStream stream = new ANTLRStringStream("v: timeseries"); 
 		EvaluatorLexer lexer = new EvaluatorLexer(stream);

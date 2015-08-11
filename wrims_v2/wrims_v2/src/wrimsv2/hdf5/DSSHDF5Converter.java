@@ -100,9 +100,9 @@ public class DSSHDF5Converter {
 	}
 	
 	public void convertSVFile(){
-		if (FilePaths.svarDssFile.toLowerCase().endsWith(".dss")){
+		if (FilePaths.svarFile.toLowerCase().endsWith(".dss")){
 			convertSVFileDssToHDF5();
-		}else if (FilePaths.svarDssFile.toLowerCase().endsWith(".h5")){
+		}else if (FilePaths.svarFile.toLowerCase().endsWith(".h5")){
 			convertSVFileHDF5ToDss();
 		}
 	}
@@ -559,7 +559,7 @@ public class DSSHDF5Converter {
 		
 		String[] dailyDateStr={TimeOperation.dssTimeEndDay(ControlData.startYear, ControlData.startMonth, ControlData.startDay)};										
 		
-		svH5FileName=FilePaths.fullSvarDssPath;
+		svH5FileName=FilePaths.fullSvarFilePath;
 		int index=svH5FileName.lastIndexOf(".");
 		svH5FileName=svH5FileName.substring(0, index+1)+"h5";
 		
@@ -650,7 +650,7 @@ public class DSSHDF5Converter {
 		}
 		String[] dailyDateStr={TimeOperation.dssTimeEndDay(firstYear, firstMonth, firstDay)};										
 		
-		initH5FileName=FilePaths.fullInitDssPath;
+		initH5FileName=FilePaths.fullInitFilePath;
 		int index=initH5FileName.lastIndexOf(".");
 		initH5FileName=initH5FileName.substring(0, index+1)+"h5";
 		
@@ -726,8 +726,8 @@ public class DSSHDF5Converter {
 		
 		int dim = getTotalTimeStep("1MON");
 		
-		DSSUtil.generateCatalog(FilePaths.fullSvarDssPath);
-		ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarDssPath);
+		DSSUtil.generateCatalog(FilePaths.fullSvarFilePath);
+		ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarFilePath);
 		String[] parts=new String[6];
 		parts[0]=regularExp(ControlData.partA);
 		parts[1]="";
@@ -837,8 +837,8 @@ public class DSSHDF5Converter {
 		
 		int dim = getTotalTimeStep("1DAY");
 		
-		DSSUtil.generateCatalog(FilePaths.fullSvarDssPath);
-		ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarDssPath);
+		DSSUtil.generateCatalog(FilePaths.fullSvarFilePath);
+		ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarFilePath);
 		String[] parts=new String[6];
 		parts[0]=regularExp(ControlData.partA);
 		parts[1]="";
@@ -944,9 +944,9 @@ public class DSSHDF5Converter {
 	}
 	
 	public void convertInitFile(){
-		if (FilePaths.initDssFile.endsWith(".dss")){
+		if (FilePaths.initFile.endsWith(".dss")){
 			convertInitFileDssToHDF5();
-		}else if (FilePaths.initDssFile.endsWith(".h5")){
+		}else if (FilePaths.initFile.endsWith(".h5")){
 			convertInitFileHDF5ToDss();
 		}
 	}
@@ -976,8 +976,8 @@ public class DSSHDF5Converter {
 		initMonthlyNames = new ArrayList<String>();
 		initMonthlyData = new HashMap<String, double[]>();
 		
-		DSSUtil.generateCatalog(FilePaths.fullInitDssPath);
-		ControlData.groupInit= DSSUtil.createGroup("local", FilePaths.fullInitDssPath);
+		DSSUtil.generateCatalog(FilePaths.fullInitFilePath);
+		ControlData.groupInit= DSSUtil.createGroup("local", FilePaths.fullInitFilePath);
 		String[] parts=new String[6];
 		parts[0]=regularExp(ControlData.partA);
 		parts[1]="";
@@ -1108,8 +1108,8 @@ public class DSSHDF5Converter {
 		initDailyNames = new ArrayList<String>();
 		initDailyData = new HashMap<String, double[]>();
 		
-		DSSUtil.generateCatalog(FilePaths.fullInitDssPath);
-		ControlData.groupInit= DSSUtil.createGroup("local", FilePaths.fullInitDssPath);
+		DSSUtil.generateCatalog(FilePaths.fullInitFilePath);
+		ControlData.groupInit= DSSUtil.createGroup("local", FilePaths.fullInitFilePath);
 		String[] parts=new String[6];
 		parts[0]=regularExp(ControlData.partA);
 		parts[1]="";
@@ -1241,9 +1241,9 @@ public class DSSHDF5Converter {
 	public void setControlData(String[] args){
 		FilePaths.groundwaterDir=args[0];
         FilePaths.setMainFilePaths(args[1]);
-        FilePaths.setSvarDssPaths(args[2]);
-        FilePaths.setInitDssPaths(args[3]);
-        FilePaths.setDvarDssPaths(args[4]);
+        FilePaths.setSvarFilePaths(args[2]);
+        FilePaths.setInitFilePaths(args[3]);
+        FilePaths.setDvarFilePaths(args[4]);
 		ControlData.svDvPartF=args[5];
 		ControlData.initPartF=args[6];
 		ControlData.partA = args[7];

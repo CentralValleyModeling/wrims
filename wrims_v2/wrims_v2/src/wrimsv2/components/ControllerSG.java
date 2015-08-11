@@ -72,9 +72,9 @@ public class ControllerSG {
 	public void setControlData(){
 		FilePaths.groundwaterDir="D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\CVGroundwater\\Data\\";
 		FilePaths.setMainFilePaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\CONV\\Run\\mainCONV_30.wresl");
-		FilePaths.setSvarDssPaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\DSS\\CalSim30_06_SV.dss");
-        FilePaths.setInitDssPaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\DSS\\CalSim30_06Init.dss");   
-        FilePaths.setDvarDssPaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\CONV\\DSS\\TestWRIMSV2DV.dss");
+		FilePaths.setSvarFilePaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\DSS\\CalSim30_06_SV.dss");
+        FilePaths.setInitFilePaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\DSS\\CalSim30_06Init.dss");   
+        FilePaths.setDvarFilePaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\CONV\\DSS\\TestWRIMSV2DV.dss");
 		ControlData cd=new ControlData();
 		cd.svDvPartF="CALSIM30_06";
 		cd.initPartF="CALSIM30_06";
@@ -96,9 +96,9 @@ public class ControllerSG {
 	public void setControlData(String[] args){
 		FilePaths.groundwaterDir=args[0];
         FilePaths.setMainFilePaths(args[1]);
-        FilePaths.setSvarDssPaths(args[2]);
-        FilePaths.setInitDssPaths(args[3]);
-        FilePaths.setDvarDssPaths(args[4]);
+        FilePaths.setSvarFilePaths(args[2]);
+        FilePaths.setInitFilePaths(args[3]);
+        FilePaths.setDvarFilePaths(args[4]);
 		ControlData cd=new ControlData();
 		cd.svDvPartF=args[5];
 		cd.initPartF=args[6];
@@ -138,9 +138,9 @@ public class ControllerSG {
 			out.write(FilePaths.groundwaterDir+"\n");
 			out.write("StudyFileFullPath\n");
 			out.write(FilePaths.fullMainPath+"\n");
-			out.write(FilePaths.fullSvarDssPath+"\n");
+			out.write(FilePaths.fullSvarFilePath+"\n");
 			out.write(FilePaths.fullDvarDssPath+"\n");
-			out.write(FilePaths.fullInitDssPath+"\n");
+			out.write(FilePaths.fullInitFilePath+"\n");
 			out.write(ControlData.defaultTimeStep+"\n");
 			out.write(VariableTimeStep.getTotalTimeStep(ControlData.defaultTimeStep)+"\n");
 			out.write(ControlData.startDay+"\n");

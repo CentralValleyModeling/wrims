@@ -95,10 +95,6 @@ public class DssOperation {
 	
 	public static boolean getSVInitTimeseries(String name){
 		
-		if (ControlData.initHDF5){
-			return HDF5Reader.getSVInitTimeseries(name);
-		}
-		
 		Timeseries ts=ControlData.currTsMap.get(name);
 		String partC=ts.kind;
 		DataSet ds=getDataForInitial(regularExp(ControlData.partA),regularExp(ts.dssBPart),regularExp(partC),"",regularExp(ControlData.partE), regularExp(ControlData.initPartF));
@@ -167,12 +163,7 @@ public class DssOperation {
 		return "^"+part+"$";
 	}
 	
-	public static boolean getDVAliasInitTimeseries(String name){
-		
-		if (ControlData.initHDF5){
-			return HDF5Reader.getDVAliasInitTimeseries(name);
-		}
-		
+	public static boolean getDVAliasInitTimeseries(String name){		
 		String units;
 		String partC;
 		if (ControlData.currDvMap.containsKey(name)){

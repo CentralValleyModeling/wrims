@@ -38,9 +38,9 @@ public class testStudies {
 	
 	public void testSimpleStudy() throws RecognitionException, IOException{
         FilePaths.groundwaterDir="";
-		FilePaths.setSvarDssPaths("Z:\\CalSimOrig\\CommonData\\BigExampleSV.dss");
-        FilePaths.setInitDssPaths("Z:\\CalSimOrig\\CommonData\\BigExampleINIT.dss");
-        FilePaths.setDvarDssPaths("Z:\\CalSimOrig\\Example10\\DSS\\TestWRIMSV2DV.dss");
+		FilePaths.setSvarFilePaths("Z:\\CalSimOrig\\CommonData\\BigExampleSV.dss");
+        FilePaths.setInitFilePaths("Z:\\CalSimOrig\\CommonData\\BigExampleINIT.dss");
+        FilePaths.setDvarFilePaths("Z:\\CalSimOrig\\Example10\\DSS\\TestWRIMSV2DV.dss");
         FilePaths.setMainFilePaths("Z:\\CalSimOrig\\Example10\\run\\Example10.wresl");
 		ControlData cd=new ControlData();
 		cd.svDvPartF="EXAMPLE";
@@ -96,9 +96,9 @@ public class testStudies {
 	public void testCalsim3_BO()throws RecognitionException, IOException{
 		FilePaths.groundwaterDir="D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\CVGroundwater\\Data\\";
 		FilePaths.setMainFilePaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\CONV\\Run\\mainCONV_30.wresl");
-		FilePaths.setSvarDssPaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\DSS\\CalSim30_06_SV.dss");
-        FilePaths.setInitDssPaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\DSS\\CalSim30_06Init.dss");   
-        FilePaths.setDvarDssPaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\CONV\\DSS\\TestWRIMSV2DV.dss");
+		FilePaths.setSvarFilePaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\DSS\\CalSim30_06_SV.dss");
+        FilePaths.setInitFilePaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\DSS\\CalSim30_06Init.dss");   
+        FilePaths.setDvarFilePaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\CONV\\DSS\\TestWRIMSV2DV.dss");
 		ControlData cd=new ControlData();
 		cd.svDvPartF="CALSIM30_06";
 		cd.initPartF="CALSIM30_06";
@@ -125,9 +125,9 @@ public class testStudies {
 	public void testParsedCalsim3()throws RecognitionException, IOException{
 		FilePaths.groundwaterDir="D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\CVGroundwater\\Data\\";
 		FilePaths.setMainFilePaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\CONV\\Run\\mainCONV_30.wresl");
-		FilePaths.setSvarDssPaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\DSS\\CalSim30_06_SV.dss");
-        FilePaths.setInitDssPaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\DSS\\CalSim30_06Init.dss");   
-        FilePaths.setDvarDssPaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\CONV\\DSS\\TestWRIMSV2DV.dss");
+		FilePaths.setSvarFilePaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\DSS\\CalSim30_06_SV.dss");
+        FilePaths.setInitFilePaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\DSS\\CalSim30_06Init.dss");   
+        FilePaths.setDvarFilePaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\CONV\\DSS\\TestWRIMSV2DV.dss");
 		ControlData cd=new ControlData();
 		cd.svDvPartF="CALSIM30_06";
 		cd.initPartF="CALSIM30_06";
@@ -180,9 +180,9 @@ public class testStudies {
 
 	public void testParsedCalLite()throws RecognitionException, IOException{
 		FilePaths.groundwaterDir="";
-		FilePaths.setSvarDssPaths("D:\\CalLite_Beta_042611\\DSS\\CL_FUTURE_WHL042611_SV.dss");
-        FilePaths.setInitDssPaths("D:\\CalLite_Beta_042611\\DSS\\CalLite2020D09EINIT.dss");
-        FilePaths.setDvarDssPaths("D:\\CalLite_Beta_042611\\DSS\\TestWRIMSV2DV.dss");
+		FilePaths.setSvarFilePaths("D:\\CalLite_Beta_042611\\DSS\\CL_FUTURE_WHL042611_SV.dss");
+        FilePaths.setInitFilePaths("D:\\CalLite_Beta_042611\\DSS\\CalLite2020D09EINIT.dss");
+        FilePaths.setDvarFilePaths("D:\\CalLite_Beta_042611\\DSS\\TestWRIMSV2DV.dss");
         FilePaths.setMainFilePaths("D:\\CalLite_Beta_042611\\Run\\main_BO.wresl");
 		ControlData cd=new ControlData();
         cd.svDvPartF="2020D09E";

@@ -15,6 +15,7 @@ import wrimsv2.components.Error;
 import wrimsv2.components.FilePaths;
 import wrimsv2.components.IntDouble;
 import wrimsv2.external.*;
+import wrimsv2.hdf5.HDF5Reader;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -433,7 +434,7 @@ public class ValueEvaluation {
 			}
 		}else{
 			DataTimeSeries.lookInitDss.add(entryNameTS);
-			if (DssOperation.getSVInitTimeseries(ident)){
+			if (getSVInitTimeseries(ident)){
 				DssDataSet dds=DataTimeSeries.svInit.get(entryNameTS);
 				TimeOperation.findTime(idValue);
 				index =timeSeriesIndex(dds);
@@ -465,6 +466,14 @@ public class ValueEvaluation {
 		return 1.0;
 	}
 	
+	public static boolean getSVInitTimeseries(String ident){
+		if (ControlData.initHDF5){
+			return HDF5Reader.getSVInitTimeseries(ident);
+		}else{
+			return DssOperation.getSVInitTimeseries(ident);
+		}
+	}
+	
 	public static double dvarAliasTimeSeries(String ident){
 		String entryNameTS=DssOperation.entryNameTS(ident, ControlData.timeStep);
 		int index;
@@ -492,7 +501,7 @@ public class ValueEvaluation {
 		}
 		
 		if (!DataTimeSeries.dvAliasInit.containsKey(entryNameTS)){
-			if (!DssOperation.getDVAliasInitTimeseries(ident)){
+			if (!getDVAliasInitTimeseries(ident)){
 				Error.addEvaluationError("Initial file doesn't have data for decision vairiable/alias " +ident);
 				return 1.0;
 			}
@@ -542,7 +551,7 @@ public class ValueEvaluation {
 		}
 		
 		if (!DataTimeSeries.dvAliasInit.containsKey(entryNameTS)){
-			if (!DssOperation.getDVAliasInitTimeseries(ident)){
+			if (!getDVAliasInitTimeseries(ident)){
 				Error.addEvaluationError("Initial file doesn't have data for decision vairiable/alias " +ident);
 				return 1.0;
 			}
@@ -562,6 +571,14 @@ public class ValueEvaluation {
 		
 		Error.addEvaluationError("The data requested for timeseries "+ident+" is outside of the time frame provided in dss file.");
 		return 1.0;
+	}
+	
+	public static boolean getDVAliasInitTimeseries(String ident){	
+		if (ControlData.initHDF5){
+			return HDF5Reader.getDVAliasInitTimeseries(ident);
+		}else{
+			return DssOperation.getDVAliasInitTimeseries(ident);
+		}
 	}
 	
 	public static int timeSeriesIndex(DssDataSet dds){

@@ -71,11 +71,7 @@ public class HDF5Writer {
 	private static int gidDCDaily=-1;
 	
 	public static void createDataStructure(){
-		h5FileName=FilePaths.fullDvarDssPath;
-		if (h5FileName.toLowerCase().endsWith(".dss")){
-			int index=h5FileName.lastIndexOf(".");
-			h5FileName=h5FileName.substring(0, index+1)+"h5";
-		}
+		h5FileName=FilePaths.fullDvarHDF5Path;
 		fid=HDF5Util.locateFile(h5FileName);
 		
 		Date date = ControlData.monthlyStartTime;

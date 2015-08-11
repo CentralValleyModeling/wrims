@@ -158,23 +158,23 @@ public class ConfigUtils {
 			}
 			
 			if (configMap.get("svarfile").contains(":")){
-				FilePaths.setSvarDssPaths(new File(configMap.get("svarfile")).getCanonicalPath());
+				FilePaths.setSvarFilePaths(new File(configMap.get("svarfile")).getCanonicalPath());
 			} else {
-				FilePaths.setSvarDssPaths(new File(StudyUtils.configDir, configMap.get("svarfile")).getCanonicalPath());
+				FilePaths.setSvarFilePaths(new File(StudyUtils.configDir, configMap.get("svarfile")).getCanonicalPath());
 			}
-			System.out.println("SvarFile:       "+FilePaths.fullSvarDssPath);
+			System.out.println("SvarFile:       "+FilePaths.fullSvarFilePath);
 			
 			if (configMap.get("initfile").contains(":")){
-				FilePaths.setInitDssPaths(new File(configMap.get("initfile")).getCanonicalPath());
+				FilePaths.setInitFilePaths(new File(configMap.get("initfile")).getCanonicalPath());
 			} else {
-				FilePaths.setInitDssPaths(new File(StudyUtils.configDir, configMap.get("initfile")).getCanonicalPath());
+				FilePaths.setInitFilePaths(new File(StudyUtils.configDir, configMap.get("initfile")).getCanonicalPath());
 			}
-			System.out.println("InitFile:       "+FilePaths.fullInitDssPath);
+			System.out.println("InitFile:       "+FilePaths.fullInitFilePath);
 			
 			if (configMap.get("dvarfile").contains(":")) {
-				FilePaths.setDvarDssPaths(new File(configMap.get("dvarfile")).getCanonicalPath());
+				FilePaths.setDvarFilePaths(new File(configMap.get("dvarfile")).getCanonicalPath());
 			} else {
-				FilePaths.setDvarDssPaths(new File(StudyUtils.configDir, configMap.get("dvarfile")).getCanonicalPath());
+				FilePaths.setDvarFilePaths(new File(StudyUtils.configDir, configMap.get("dvarfile")).getCanonicalPath());
 			}
 			System.out.println("DvarFile:       "+FilePaths.fullDvarDssPath);
 		

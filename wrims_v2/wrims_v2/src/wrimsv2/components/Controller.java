@@ -71,9 +71,9 @@ public class Controller {
 	public void setControlData(){
 		FilePaths.groundwaterDir="";
 		FilePaths.setMainFilePaths("d:\\2L_MW_7_O_120512\\run\\main.wresl");
-		FilePaths.setSvarDssPaths("d:\\2L_MW_7_O_120512\\dss\\DailyPA_SV.dss");
-	    FilePaths.setInitDssPaths("d:\\2L_MW_7_O_120512\\dss\\DailyPA_init.dss");
-	    FilePaths.setDvarDssPaths("d:\\2L_MW_7_O_120512\\dss\\testDV.DSS");		
+		FilePaths.setSvarFilePaths("d:\\2L_MW_7_O_120512\\dss\\DailyPA_SV.dss");
+	    FilePaths.setInitFilePaths("d:\\2L_MW_7_O_120512\\dss\\DailyPA_init.dss");
+	    FilePaths.setDvarFilePaths("d:\\2L_MW_7_O_120512\\dss\\testDV.DSS");		
 	    ControlData cd=new ControlData();
 		cd.svDvPartF="KBPM";
 		cd.initPartF="KBPM";
@@ -95,9 +95,9 @@ public class Controller {
 	public void setControlData(String[] args){
 		FilePaths.groundwaterDir=args[0];
         FilePaths.setMainFilePaths(args[1]);
-        FilePaths.setSvarDssPaths(args[2]);
-        FilePaths.setInitDssPaths(args[3]);
-        FilePaths.setDvarDssPaths(args[4]);
+        FilePaths.setSvarFilePaths(args[2]);
+        FilePaths.setInitFilePaths(args[3]);
+        FilePaths.setDvarFilePaths(args[4]);
 		ControlData cd=new ControlData();
 		cd.svDvPartF=args[5];
 		cd.initPartF=args[6];
@@ -131,9 +131,9 @@ public class Controller {
 			out.write(FilePaths.groundwaterDir+"\n");
 			out.write("StudyFileFullPath\n");
 			out.write(FilePaths.fullMainPath+"\n");
-			out.write(FilePaths.fullSvarDssPath+"\n");
+			out.write(FilePaths.fullSvarFilePath+"\n");
 			out.write(FilePaths.fullDvarDssPath+"\n");
-			out.write(FilePaths.fullInitDssPath+"\n");
+			out.write(FilePaths.fullInitFilePath+"\n");
 			out.write(ControlData.defaultTimeStep+"\n");
 			out.write(VariableTimeStep.getTotalTimeStep(ControlData.defaultTimeStep)+"\n");
 			out.write(ControlData.startDay+"\n");

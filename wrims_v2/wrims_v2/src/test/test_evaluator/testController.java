@@ -26,8 +26,8 @@ import wrimsv2.wreslparser.elements.WriteCSV;
 public class testController {
 
 	public void testSvControl() throws RecognitionException, IOException{
-        FilePaths.fullSvarDssPath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\2020D09ESV.dss";
-        FilePaths.fullInitDssPath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\2020D09EINIT.DSS";
+        FilePaths.fullSvarFilePath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\2020D09ESV.dss";
+        FilePaths.fullInitFilePath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\2020D09EINIT.DSS";
         FilePaths.setMainFilePaths("D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\main.wresl");
 		ControlData cd=new ControlData();
 		cd.endYear=1921;
@@ -133,8 +133,8 @@ public class testController {
 	}
 	
 	public void testParsedCalsim3()throws RecognitionException, IOException{
-        FilePaths.fullSvarDssPath="D:\\CALSIM30_041311_BO\\common\\DSS\\CalSim30_06_SV.dss";
-        FilePaths.fullInitDssPath="D:\\CALSIM30_041311_BO\\common\\DSS\\CalSim30_06Init.dss";
+        FilePaths.fullSvarFilePath="D:\\CALSIM30_041311_BO\\common\\DSS\\CalSim30_06_SV.dss";
+        FilePaths.fullInitFilePath="D:\\CALSIM30_041311_BO\\common\\DSS\\CalSim30_06Init.dss";
         FilePaths.setMainFilePaths("D:\\CALSIM30_041311_BO\\CONV\\Run\\mainCONV_30.wresl");
 		ControlData cd=new ControlData();
 		cd.startYear=1921;
@@ -184,8 +184,8 @@ public class testController {
 	
 	@Test
 	public void testParsedCalLite()throws RecognitionException, IOException{
-        FilePaths.fullSvarDssPath="D:\\CalLite_Beta_042611\\DSS\\CL_FUTURE_WHL042611_SV.dss";
-        FilePaths.fullInitDssPath="D:\\CalLite_Beta_042611\\DSS\\CalLite2020D09EINIT.dss";
+        FilePaths.fullSvarFilePath="D:\\CalLite_Beta_042611\\DSS\\CL_FUTURE_WHL042611_SV.dss";
+        FilePaths.fullInitFilePath="D:\\CalLite_Beta_042611\\DSS\\CalLite2020D09EINIT.dss";
         FilePaths.setMainFilePaths("D:\\CalLite_Beta_042611\\Run\\main_BO.wresl");
 		ControlData cd=new ControlData();
 		cd.startYear=1921;

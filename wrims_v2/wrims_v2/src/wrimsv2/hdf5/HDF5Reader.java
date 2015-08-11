@@ -107,10 +107,10 @@ public class HDF5Reader {
 		int gidDaily=-1;
 		
 		if (flag==1){
-			h5FileName=FilePaths.fullSvarDssPath;
+			h5FileName=FilePaths.fullSvarFilePath;
 			gPartF=ControlData.svDvPartF;
 		}else{
-			h5FileName=FilePaths.fullInitDssPath;
+			h5FileName=FilePaths.fullInitFilePath;
 			gPartF=ControlData.initPartF;
 		}
 		

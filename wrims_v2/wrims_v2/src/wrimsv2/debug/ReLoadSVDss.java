@@ -25,12 +25,12 @@ public class ReLoadSVDss {
 	public ReLoadSVDss(StudyDataSet sds){
 		ControlData.currStudyDataSet=sds;
 				
-		if (!(new File(FilePaths.fullSvarDssPath)).exists()){ 
-			System.out.println("Error: Svar file "+ FilePaths.fullSvarDssPath+" doesn't exist.");
+		if (!(new File(FilePaths.fullSvarFilePath)).exists()){ 
+			System.out.println("Error: Svar file "+ FilePaths.fullSvarFilePath+" doesn't exist.");
 			System.out.println("=======Run Complete Unsuccessfully=======");
 			System.exit(0);
 		}
-		ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarDssPath);
+		ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarFilePath);
 		ControlData.allTsMap=sds.getTimeseriesMap();
 		
 		readTimeseries();
@@ -49,7 +49,7 @@ public class ReLoadSVDss {
 			if (!DataTimeSeries.lookSvDss.contains(tsName)){ 
 				ArrayList<String> timeStepList=tsTimeStepMap.get(tsName);
 				for (String timeStep:timeStepList){
-					DssOperation.getSVTimeseries(tsName, FilePaths.fullSvarDssPath, timeStep);
+					DssOperation.getSVTimeseries(tsName, FilePaths.fullSvarFilePath, timeStep);
 					String entryNameTS=DssOperation.entryNameTS(tsName, timeStep);
 					DataTimeSeries.lookSvDss.add(entryNameTS);
 				}
