@@ -26,7 +26,7 @@ public class WreslCheckGUI {
 	
 	public static void main(String[] args) {
 				
-		JFrame frame = new JFrame(Param.wreslChekerName + new BuildProps().getSVN());
+		JFrame frame = new JFrame(Param.wreslChekerName + new BuildProps().getVN());
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		JPanel wreslCheckPanel = new JPanel();
 		wreslCheckPanel.setLayout(new BoxLayout(wreslCheckPanel, BoxLayout.Y_AXIS));

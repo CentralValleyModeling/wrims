@@ -10,9 +10,9 @@ public class TestDistribute {
 	
 	
 	@Test(groups = { "distribute" })
-	public void version_svn() {
+	public void version_vn() {
 		
-		new BuildProps().getSVN();
+		new BuildProps().getVN();
 		
 
 	

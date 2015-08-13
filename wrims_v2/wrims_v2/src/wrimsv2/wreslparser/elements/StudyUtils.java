@@ -99,7 +99,7 @@ public class StudyUtils {
 
 		LogUtils.setLogFile(mainWreslFile.getParentFile().getCanonicalPath(), logFileName);
 
-		LogUtils.titleMsg(Param.wreslChekerName + new BuildProps().getSVN());
+		LogUtils.titleMsg(Param.wreslChekerName + new BuildProps().getVN());
 
 			
 		try {

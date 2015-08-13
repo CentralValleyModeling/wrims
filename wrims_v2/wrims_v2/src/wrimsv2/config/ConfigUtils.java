@@ -38,7 +38,7 @@ public class ConfigUtils {
 		// print version number then exit
 		if (args.length==1 && args[0].equalsIgnoreCase("-version") ) {
 		
-			System.out.println("WRIMS "+new BuildProps().getSVN());
+			System.out.println("WRIMS "+new BuildProps().getVN());
 			System.exit(0);
 		}
 		

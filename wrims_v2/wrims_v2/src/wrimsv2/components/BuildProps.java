@@ -16,7 +16,7 @@ public class BuildProps {
 			buildProps.load(getClass().getResourceAsStream(
 					"/wrimsv2/version.props"));
 		} catch (Exception e) {
-			buildProps.put("svn", "NOT BUILT EVER - DEV Env");
+			buildProps.put("vn", "NOT BUILT EVER - DEV Env");
 			buildProps.put("buildtime", "" + new Date());
 			//buildProps.put("system", "OS: " + System.getProperty("os.name"));
 			// e.printStackTrace();
@@ -24,9 +24,9 @@ public class BuildProps {
 		
 	}
 	
-	public String getSVN() {
+	public String getVN() {
 		
-		return buildProps.getProperty("svn");
+		return buildProps.getProperty("vn");
 		
 	}	
 
