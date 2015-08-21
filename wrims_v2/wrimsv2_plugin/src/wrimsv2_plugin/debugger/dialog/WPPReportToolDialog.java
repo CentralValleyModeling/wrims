@@ -2,6 +2,7 @@ package wrimsv2_plugin.debugger.dialog;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -371,6 +372,18 @@ public class WPPReportToolDialog extends Dialog {
 		if (templateFileStr.equals("") || baseFileStr.equals("") || altFileStr.equals("") || reportFileStr.equals("")){
 			MessageDialog.openInformation(shell,
 					"Error", "You must specify the template file, the source DSS files, and the output PDF file");
+		}else if(!new File(templateFileStr).exists()){
+			MessageDialog.openInformation(shell,
+					"Error", "The template files doesn't exist");
+		}else if (!new File(baseFileStr).exists() && !new File(altFileStr).exists()){
+			MessageDialog.openInformation(shell,
+					"Error", "The source DSS files for the base and alternative studies don't exist");
+		}else if(!new File(baseFileStr).exists()){
+				MessageDialog.openInformation(shell,
+						"Error", "The source DSS file for the base study doesn't exist");
+		}else if(!new File(altFileStr).exists()){
+			MessageDialog.openInformation(shell,
+					"Error", "The source DSS file for the alternative study doesn't exist");
 		}else{
 			try {
 				// Create an inputstream from template file;

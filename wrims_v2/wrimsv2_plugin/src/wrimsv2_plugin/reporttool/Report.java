@@ -211,7 +211,7 @@ public class Report {
 		writer.startDocument(output_file);
 		String author = scalars.get("MODELER").replace("\"", "");
 		writer.addTitlePage(
-		        String.format("System Water Balance Report: %s vs %s", scalars.get("NAME_ALT"), scalars.get("NAME_BASE")), author,
+		        String.format("System Report: %s vs %s", scalars.get("NAME_ALT"), scalars.get("NAME_BASE")), author,
 		        scalars.get("FILE_BASE"), scalars.get("FILE_ALT"));
 		writer.setAuthor(author);
 		if (dssGroupBase == null || dssGroupAlt == null) {
