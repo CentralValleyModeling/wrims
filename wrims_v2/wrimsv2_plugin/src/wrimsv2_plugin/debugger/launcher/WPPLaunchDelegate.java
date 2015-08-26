@@ -39,6 +39,7 @@ import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
 import wrimsv2_plugin.debugger.msr.MSRDataTransfer;
 import wrimsv2_plugin.debugger.msr.MSRProcRun;
+import wrimsv2_plugin.debugger.msr.MSRUtil;
 import wrimsv2_plugin.debugger.pa.PAProcDV;
 import wrimsv2_plugin.debugger.pa.PAProcInit;
 import wrimsv2_plugin.debugger.pa.PAProcRun;
@@ -203,8 +204,15 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 		
 		int terminateCode=0;
 		
-		DebugCorePlugin.msDuration=Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_MSDURATION, "12"));
-		
+		String isFixDuration=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ISFIXDURATION, "yes");
+		if (isFixDuration.equals("yes")){
+			DebugCorePlugin.msDuration=new int[1];
+			DebugCorePlugin.msDuration[0]=Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_FIXEDDURATION, "12"));
+		}else{
+			String variableDuration=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_VARIABLEDURATION, "");
+			DebugCorePlugin.msDuration=MSRUtil.loadMSDuration(variableDuration, configuration);
+		}
+			
 		MSRDataTransfer dataTxfr=new MSRDataTransfer();
 		dataTxfr.procDataTxfrFile(configuration, ms);
 		

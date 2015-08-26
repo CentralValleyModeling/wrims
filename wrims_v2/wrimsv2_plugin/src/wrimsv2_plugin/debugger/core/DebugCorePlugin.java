@@ -209,7 +209,9 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static final String ATTR_WPP_ALLOWSVTSINIT=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_ALLOWSVTSINIT";
 	public static final String ATTR_WPP_LAUNCHTYPE=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_LAUNCHTYPE";
 	public static final String ATTR_WPP_MULTISTUDY=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_MULTISTUDY";
-	public static final String ATTR_WPP_MSDURATION=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_MSDURATION";
+	public static final String ATTR_WPP_ISFIXDURATION=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_ISFIXDURATION";
+	public static final String ATTR_WPP_FIXEDDURATION=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_MSDURATION";
+	public static final String ATTR_WPP_VARIABLEDURATION=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_VARIABLEDURATION";
 	public static final String ATTR_WPP_DATATRANSFER=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_DATATRANSFER";
 	public static final String ATTR_WPP_PASTARTINTERVAL=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_PASTARTINTERVAL";
 	public static final String ATTR_WPP_PADURATION=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_PADURATION";
@@ -252,7 +254,8 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static int msEndYear=2009;
 	public static int msEndMonth=9;
 	public static int msEndDay=30;
-	public static int msDuration=12;
+	public static int[] msDuration={12};
+	public static int msDurationIndex=0;
 	
 	public static boolean isDssInOp=false;
 	

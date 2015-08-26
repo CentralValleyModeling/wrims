@@ -26,6 +26,7 @@ import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
 import wrimsv2_plugin.debugger.msr.MSRDataTransferBR;
 import wrimsv2_plugin.debugger.msr.MSRProcRunBR;
+import wrimsv2_plugin.debugger.msr.MSRUtil;
 import wrimsv2_plugin.debugger.pa.PAProcDVBR;
 import wrimsv2_plugin.debugger.pa.PAProcInitBR;
 import wrimsv2_plugin.debugger.pa.PAProcRunBR;
@@ -180,7 +181,14 @@ public class BatchRunProcess {
 	
 	public void multiStudyRun(LaunchConfigInfo configuration, String launchFilePath) throws CoreException{
 		
-		msDuration=Integer.parseInt(configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_MSDURATION, "12"));
+		String isFixDuration=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_ISFIXDURATION, "yes");
+		if (isFixDuration.equals("yes")){
+			DebugCorePlugin.msDuration=new int[1];
+			DebugCorePlugin.msDuration[0]=Integer.parseInt(configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_FIXEDDURATION, "12"));
+		}else{
+			String variableDuration=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_VARIABLEDURATION, "");
+			DebugCorePlugin.msDuration=MSRUtil.loadMSDuration(variableDuration, launchFilePath);
+		}
 		
 		MSRDataTransferBR dataTxfr=new MSRDataTransferBR();
 		dataTxfr.procDataTxfrFile(configuration, launchFilePath, ms);

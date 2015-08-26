@@ -23,6 +23,7 @@ public class MSRProcRun {
 	}
 	
 	public void initialMSTime(){	
+		DebugCorePlugin.msDurationIndex=0;
 		DebugCorePlugin.msStartYear=DebugCorePlugin.startYear;
 		DebugCorePlugin.msStartMonth=DebugCorePlugin.startMonth;
 		DebugCorePlugin.msStartDay=DebugCorePlugin.startDay;
@@ -35,11 +36,14 @@ public class MSRProcRun {
 	
 	public void updateMSTime(){
 		getMSStartTime();
+		if (DebugCorePlugin.msDurationIndex<DebugCorePlugin.msDuration.length-1){
+			DebugCorePlugin.msDurationIndex++;
+		}
 		getMSEndTime();
 	}
 	
 	public void getMSEndTime(){
-		int month=DebugCorePlugin.msStartMonth+DebugCorePlugin.msDuration;
+		int month=DebugCorePlugin.msStartMonth+DebugCorePlugin.msDuration[DebugCorePlugin.msDurationIndex];
 		int year=(month-1)/12;
 		DebugCorePlugin.msEndYear=DebugCorePlugin.msStartYear+year;
 		DebugCorePlugin.msEndMonth=month-year*12;
@@ -70,7 +74,7 @@ public class MSRProcRun {
 		preMSStartMonth=DebugCorePlugin.msStartMonth;
 		preMSStartDay=DebugCorePlugin.msStartDay;
 		
-		int month=DebugCorePlugin.msStartMonth+DebugCorePlugin.msDuration;
+		int month=DebugCorePlugin.msStartMonth+DebugCorePlugin.msDuration[DebugCorePlugin.msDurationIndex];;
 		int year=(month-1)/12;
 		DebugCorePlugin.msStartYear=DebugCorePlugin.msStartYear+year;
 		DebugCorePlugin.msStartMonth=month-year*12;

@@ -15,6 +15,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -30,7 +31,9 @@ import wrimsv2_plugin.tools.TimeOperation;
 
 public class WPPMSTab extends AbstractLaunchConfigurationTab {
 	
-	private Text msDurationText;
+	private Text fixedDurationText;
+	private Text variableDurationText;
+	private Button variableDurationButton;
 	private Combo studies;
 	private Text fMainFileText;
 	private Button fMainFileButton;
@@ -63,6 +66,8 @@ public class WPPMSTab extends AbstractLaunchConfigurationTab {
 	private ModifyListener svFPartML;
 	private ModifyListener initFPartML;
 	private ModifyListener timeStepML;
+	private Button fixOptionButton;
+	private Button variableOptionButton;
 	
 	@Override
 	public void createControl(Composite parent) {
@@ -77,24 +82,89 @@ public class WPPMSTab extends AbstractLaunchConfigurationTab {
 		
 		createVerticalSpacer(comp, 3);
 		
+		// Create the first Group
+	    Group group1 = new Group(comp, SWT.SHADOW_IN);
+	    group1.setText("Multi Study Duration:");
+	    group1.setLayout(new RowLayout(SWT.HORIZONTAL));
+	    GridData gd = new GridData(GridData.BEGINNING);
+		gd.horizontalSpan = 7;
+		group1.setLayoutData(gd);
+	    fixOptionButton=new Button(group1, SWT.RADIO);
+	    fixOptionButton.setText("Fixed Duration");
+	    fixOptionButton.addSelectionListener(new SelectionListener(){
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				updateLaunchConfigurationDialog();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}	
+		});
+	    
+	    variableOptionButton=new Button(group1, SWT.RADIO);
+	    variableOptionButton.setText("Variable Duration");
+	    variableOptionButton.addSelectionListener(new SelectionListener(){
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				updateLaunchConfigurationDialog();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}	
+		});
+		
 		Label label1=new Label(comp, SWT.NONE);
-		label1.setText("Multi Study Duration (months):");
-		GridData gd = new GridData(GridData.BEGINNING);
+		label1.setText("&Fixed Duration (months):");
+		gd = new GridData(GridData.BEGINNING);
 		gd.horizontalSpan = 4;
 		label1.setLayoutData(gd);
 		
-		msDurationText=new Text(comp, SWT.RIGHT);
+		fixedDurationText=new Text(comp, SWT.RIGHT);
 		gd = new GridData(GridData.BEGINNING);
 		gd.horizontalSpan = 3;
 		gd.widthHint=50;
-		msDurationText.setLayoutData(gd);
-		msDurationText.addModifyListener(new ModifyListener(){
+		fixedDurationText.setLayoutData(gd);
+		fixedDurationText.addModifyListener(new ModifyListener(){
 
 			@Override
 			public void modifyText(ModifyEvent e) {
 				updateLaunchConfigurationDialog();
 			}
 			
+		});
+		
+		Label variableDurationLabel = new Label(comp, SWT.NONE);
+		variableDurationLabel.setText("&Variable Duration:");
+		gd = new GridData(GridData.BEGINNING);
+		variableDurationLabel.setLayoutData(gd);
+		variableDurationLabel.setFont(font);
+		
+		variableDurationText = new Text(comp, SWT.SINGLE | SWT.BORDER);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 5;
+		variableDurationText.setLayoutData(gd);
+		variableDurationText.setFont(font);
+		variableDurationText.addModifyListener(new ModifyListener(){
+
+			@Override
+			public void modifyText(ModifyEvent e) {
+				updateLaunchConfigurationDialog();
+			}
+			
+		});
+				
+		variableDurationButton = createPushButton(comp, "&Browse", null); //$NON-NLS-1$
+		variableDurationButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				browseFiles(variableDurationText);
+			}
 		});
 		
 		Label label2=new Label(comp, SWT.NONE);
@@ -372,8 +442,19 @@ public class WPPMSTab extends AbstractLaunchConfigurationTab {
 	public void initializeFrom(ILaunchConfiguration configuration) {
 		currConfiguration=configuration;
 		try {
-			String msDuration = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_MSDURATION, "12");
-			msDurationText.setText(msDuration);
+			String isFixDuration = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ISFIXDURATION, "yes");
+			if (isFixDuration.equals("yes")){
+				fixOptionButton.setSelection(true);
+			}else{
+				variableOptionButton.setSelection(true);
+			}
+			
+			String fixDuration = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_FIXEDDURATION, "12");
+			fixedDurationText.setText(fixDuration);
+			
+			String variableDuration = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_VARIABLEDURATION, "");
+			variableDurationText.setText(variableDuration);
+			
 			setupForm(configuration);
 		} catch (CoreException e) {
 			setErrorMessage(e.getMessage());
@@ -481,6 +562,11 @@ public class WPPMSTab extends AbstractLaunchConfigurationTab {
 	
 	@Override
 	public void performApply(ILaunchConfigurationWorkingCopy configuration) {
+		String variableDurationFile = variableDurationText.getText().trim();
+		if (variableDurationFile.length() == 0) {
+			variableDurationFile = "";
+		}
+		
 		String dataTransferFile = dataTransferText.getText().trim();
 		if (dataTransferFile.length() == 0) {
 			dataTransferFile = "";
@@ -522,7 +608,13 @@ public class WPPMSTab extends AbstractLaunchConfigurationTab {
 			timeStep = "";
 		}
 		
-		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_MSDURATION, msDurationText.getText());
+		if (fixOptionButton.getSelection()){
+			configuration.setAttribute(DebugCorePlugin.ATTR_WPP_ISFIXDURATION, "yes");
+		}else{
+			configuration.setAttribute(DebugCorePlugin.ATTR_WPP_ISFIXDURATION, "no");
+		}
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_FIXEDDURATION, fixedDurationText.getText());
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_VARIABLEDURATION, variableDurationFile);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_DATATRANSFER+"_MS"+sid, dataTransferFile);		
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_PROGRAM+"_MS"+sid, mainFile);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_DVARFILE+"_MS"+sid, dvarFile);
