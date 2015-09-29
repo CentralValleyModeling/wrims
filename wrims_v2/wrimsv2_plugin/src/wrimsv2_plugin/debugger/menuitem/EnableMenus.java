@@ -38,10 +38,8 @@ public class EnableMenus {
 			
 			public void procRunMenu(MenuItem item){
 				if (item.getText().equals("&Run")){
-					SubContributionItem subContribution = (SubContributionItem)item.getData();
-					IContributionItem subItems = subContribution.getInnerItem();
-					ActionSetMenuManager aSubItems = (ActionSetMenuManager)subItems;
-					for (IContributionItem subItem:aSubItems.getItems()){
+					MenuManager subContribution = (MenuManager)item.getData();
+					for (IContributionItem subItem:subContribution.getItems()){
 						if (enableMenuMap.containsKey(subItem.getId())){
 							ActionSetContributionItem aSubItem = (ActionSetContributionItem)subItem;
 							IContributionItem inSubItem = aSubItem.getInnerItem();	
