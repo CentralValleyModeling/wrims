@@ -13,6 +13,7 @@ import gov.ca.dwr.jdiagram.panel.MagnifierPanel;
 import gov.ca.dwr.jdiagram.toolbars.DateCombo;
 import gov.ca.dwr.jdiagram.toolbars.SearchText;
 import hec.heclib.dss.CondensedReference;
+import hec.heclib.dss.DSSPathname;
 import hec.heclib.dss.HecDss;
 import hec.heclib.util.HecTime;
 import hec.hecmath.DSSFile;
@@ -1435,32 +1436,83 @@ public abstract class SchematicBase extends ViewPart {
 			}
 		
 			int size = PluginCore.allSchematicVariableNames.size();
-			for (int j=0; j<size; j++) {
-				String name = PluginCore.allSchematicVariableNames.get(j);
-				if (PluginCore.allPathName.containsKey(name)){
-					String pathName = PluginCore.allPathName.get(name);
-					for (int i=0; i<4; i++){
-						if (DebugCorePlugin.selectedStudies[i]){
-							HecMath dataSet=null;
-							HecDss dvFile = DebugCorePlugin.dvDss[i];
-							HecDss svFile = DebugCorePlugin.svDss[i];
-							if (dvFile != null){
-								try {
-									dataSet = dvFile.read(pathName);
-									if (dataSet ==null){
+			
+			if (size>0){
+				HashMap<String, String>[] dvPathnameMap=new HashMap[4];
+				HashMap<String, String>[] svPathnameMap=new HashMap[4];
+				for (int i=0; i<4; i++){
+					if (DebugCorePlugin.selectedStudies[i]){
+						HecDss dvFile = DebugCorePlugin.dvDss[i];
+						HecDss svFile = DebugCorePlugin.svDss[i];
+						if (dvFile !=null){
+							dvPathnameMap[i] = generatePathnameMap(dvFile);
+						}else{
+							dvPathnameMap[i] = null;
+						}
+						if (svFile !=null){
+							svPathnameMap[i] = generatePathnameMap(svFile);
+						}else{
+							svPathnameMap[i] = null;
+						}
+					}
+				}
+			
+				for (int j=0; j<size; j++) {
+					String name = PluginCore.allSchematicVariableNames.get(j);
+					if (PluginCore.allPathName.containsKey(name)){
+						String pathName = PluginCore.allPathName.get(name);
+						for (int i=0; i<4; i++){
+							if (DebugCorePlugin.selectedStudies[i]){
+								HecMath dataSet=null;
+								HecDss dvFile = DebugCorePlugin.dvDss[i];
+								HecDss svFile = DebugCorePlugin.svDss[i];
+								if (dvFile != null){
+									try {
+										dataSet = dvFile.read(pathName);
+										if (dataSet ==null){
+											readFromSV(svFile, pathName, name, i);
+											continue;
+										}else{
+											PluginCore.allSchematicVariableData[i].put(name, dataSet);
+											PluginCore.allSchematicVariableUnitsCFS[i].put(name, dataSet.getUnits());
+											PluginCore.allSchematicVariableUnitsTAF[i].put(name, dataSet.getUnits());
+											continue;
+										}
+									} catch (Exception e) {
 										readFromSV(svFile, pathName, name, i);
-										continue;
-									}else{
+									}
+								}else{
+									readFromSV(svFile, pathName, name, i);
+								}
+							}
+						}
+					}else{
+						for (int i=0; i<4; i++){
+							if (DebugCorePlugin.selectedStudies[i]){
+								HecMath dataSet=null;
+								HecDss dvFile = DebugCorePlugin.dvDss[i];
+								HecDss svFile = DebugCorePlugin.svDss[i];
+							
+								String pathName=dvPathnameMap[i].get(name);
+								if (pathName !=null){
+									try {
+										dataSet= dvFile.read(pathName);
 										PluginCore.allSchematicVariableData[i].put(name, dataSet);
 										PluginCore.allSchematicVariableUnitsCFS[i].put(name, dataSet.getUnits());
 										PluginCore.allSchematicVariableUnitsTAF[i].put(name, dataSet.getUnits());
-										continue;
+									}catch (Exception e) {
 									}
-								} catch (Exception e) {
-									readFromSV(svFile, pathName, name, i);
 								}
-							}else{
-								readFromSV(svFile, pathName, name, i);
+								pathName=svPathnameMap[i].get(name);
+								if (pathName !=null){
+									try {
+										dataSet= svFile.read(pathName);
+										PluginCore.allSchematicVariableData[i].put(name, dataSet);
+										PluginCore.allSchematicVariableUnitsCFS[i].put(name, dataSet.getUnits());
+										PluginCore.allSchematicVariableUnitsTAF[i].put(name, dataSet.getUnits());
+									}catch (Exception e) {
+									}
+								}
 							}
 						}
 					}
@@ -1479,6 +1531,19 @@ public abstract class SchematicBase extends ViewPart {
 			}
 		} catch (Exception e) {
 		}
+	}
+	
+	public static HashMap<String, String> generatePathnameMap(HecDss file){
+		HashMap<String, String> pathnameMap=new HashMap<String, String> ();
+		Vector<CondensedReference> v=file.getCondensedCatalog();
+		for (int i=0; i<v.size(); i++){
+			CondensedReference cr = v.get(i);
+			String pathname=cr.getNominalPathname();
+			DSSPathname dssPathname = new DSSPathname(pathname);
+			String partB=dssPathname.bPart();
+			pathnameMap.put(partB, pathname);
+		}
+		return pathnameMap;
 	}
 	
 	public boolean findInView(String text) {
