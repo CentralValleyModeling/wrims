@@ -17,6 +17,8 @@ public class SchematicPluginCore {
 	
 	public static boolean showMagnifier=false;
 	
+	public static boolean zoomToRect=false;
+	
 	public static PageSizesEnum pageSize;
 	
 	public static ArrayList<DiagramItem> copiedItems = new ArrayList<DiagramItem>();

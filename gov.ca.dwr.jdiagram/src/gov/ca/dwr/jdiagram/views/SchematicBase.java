@@ -7,6 +7,7 @@ import gov.ca.dwr.hecdssvue.views.DSSPlotView;
 import gov.ca.dwr.hecdssvue.views.DSSTableView;
 import gov.ca.dwr.jdiagram.Activator;
 import gov.ca.dwr.jdiagram.FontUtil;
+import gov.ca.dwr.jdiagram.RectangleZoomBehavior;
 import gov.ca.dwr.jdiagram.SchematicPluginCore;
 import gov.ca.dwr.jdiagram.dialog.PDFOptionDialog;
 import gov.ca.dwr.jdiagram.panel.MagnifierPanel;
@@ -134,6 +135,8 @@ public abstract class SchematicBase extends ViewPart {
 	private Action zoomInAction;
 
 	private Action zoomOutAction;
+	
+	private Action zoomRectAction;
 	
 	private Action zoomMagnifier;
 
@@ -355,6 +358,7 @@ public abstract class SchematicBase extends ViewPart {
 		manager.add(zoomInAction);
 		manager.add(zoomOutAction);
 		manager.add(zoomNormalAction);
+		manager.add(zoomRectAction);
 		manager.add(zoomMagnifier);
 		manager.add(fontAction);
 		dateCombo=new DateCombo(this);
@@ -453,6 +457,23 @@ public abstract class SchematicBase extends ViewPart {
 				rect.setRect(rect.x-rect.width/2, rect.y-rect.height/2, rect.width*2, rect.height*2);
 				diagramView.zoomToFit(rect);
 			};
+		};
+		
+		zoomRectAction = new Action("Zoom to Rectangular", Activator.getImageDescriptor("zoom_region.png")) {
+
+			private int behavior = 0;
+			
+			public void run() {
+				SchematicPluginCore.zoomToRect=!SchematicPluginCore.zoomToRect;
+				if (SchematicPluginCore.zoomToRect) {
+					behavior = diagramView.getBehavior();
+					diagramView.setCustomBehavior(new RectangleZoomBehavior(
+							diagramView));
+				} else {
+					diagramView.setBehavior(0);
+					diagramView.setBehavior(behavior);
+				}
+			}
 		};
 		
 		zoomMagnifier = new Action("Magnifier", Activator.getImageDescriptor("zoom_magnifier.png")) {
