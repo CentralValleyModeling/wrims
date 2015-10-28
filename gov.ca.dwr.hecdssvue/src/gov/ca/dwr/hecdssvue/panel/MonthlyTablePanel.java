@@ -1,6 +1,7 @@
 package gov.ca.dwr.hecdssvue.panel;
 
 import gov.ca.dwr.hecdssvue.PluginCore;
+import gov.ca.dwr.hecdssvue.monthly.MonthlyTable;
 import gov.ca.dwr.hecdssvue.views.DSSMonthlyView;
 import hec.gfx2d.G2dMarkerProperties;
 import hec.io.DataContainer;
