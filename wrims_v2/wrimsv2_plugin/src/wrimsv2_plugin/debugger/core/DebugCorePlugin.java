@@ -34,7 +34,6 @@ import wrimsv2_plugin.debugger.model.WPPValue;
 import wrimsv2_plugin.debugger.toolbaritem.DebugSet;
 import wrimsv2_plugin.debugger.view.WPPVariableView;
 import wrimsv2_plugin.tools.VariableProperty;
-
 import hec.heclib.dss.HecDss;
 
 import java.io.File;
@@ -258,6 +257,17 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static int msDurationIndex=0;
 	
 	public static boolean isDssInOp=false;
+	
+	public static String repTemplateFile="";
+	public static String repBaseFile="";
+	public static String repBaseAlias="Base";
+	public static String repAltFile="";
+	public static String repAltAlias="Alt";
+	public static String repNote="";
+	public static String repAssumption="";
+	public static String repModeler="";
+	public static String repFontSize="9";
+	public static String reportFileName="";
 	
 	/**
 	 * The constructor.
