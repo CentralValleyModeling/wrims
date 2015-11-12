@@ -131,6 +131,13 @@
              style="push">
        </action>
        <action
+             class="gov.ca.dwr.hecdssvue.menus.CopyTo"
+             id="gov.ca.dwr.hecdssvue.copyto"
+             label="Copy To"
+             menubarPath="gov.ca.dwr.hecdssvue.dss/operation"
+             style="push">
+       </action>
+       <action
              class="gov.ca.dwr.hecdssvue.menus.MathFunction"
              id="gov.ca.dwr.hecdssvue.mathfunction"
              label="Math Function"

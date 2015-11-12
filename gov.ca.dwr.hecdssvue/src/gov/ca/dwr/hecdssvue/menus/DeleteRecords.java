@@ -3,6 +3,7 @@ package gov.ca.dwr.hecdssvue.menus;
 import java.util.Vector;
 
 import gov.ca.dwr.hecdssvue.PluginCore;
+import gov.ca.dwr.hecdssvue.components.DataOps;
 import gov.ca.dwr.hecdssvue.views.DSSCatalogView;
 import gov.ca.dwr.hecdssvue.views.DSSTableView;
 import hec.dataTable.HecDataTable;
@@ -76,7 +77,7 @@ public class DeleteRecords implements IWorkbenchWindowActionDelegate{
 							String[] parts=selectedParts.get(j);
 							for (int k=0; k<dvPathNameList.size(); k++){
 								String pathname=(String)dvPathNameList.get(k);
-								if (containParts(pathname, parts)){
+								if (DataOps.containParts(pathname, parts)){
 									selectedPathname.add(pathname);
 									foundInDv[i]=true;
 								}
@@ -92,7 +93,7 @@ public class DeleteRecords implements IWorkbenchWindowActionDelegate{
 							String[] parts=selectedParts.get(j);
 							for (int k=0; k<svPathNameList.size(); k++){
 								String pathname=(String)svPathNameList.get(k);
-								if (containParts(pathname, parts)){
+								if (DataOps.containParts(pathname, parts)){
 									selectedPathname.add(pathname);
 								}
 							}
@@ -104,21 +105,5 @@ public class DeleteRecords implements IWorkbenchWindowActionDelegate{
 		}
 		TableViewer viewer = dssCatalogView.getViewer();
 		viewer.setInput(viewer.getInput());
-	}
-	
-	public boolean containParts(String pathName, String[] parts){
-		String start="/";
-		String end="/";
-		for (int i=1; i<4; i++){
-			start=start+parts[i]+"/";
-		}
-		for (int i=5; i<7; i++){
-			end=end+parts[i]+"/";
-		}
-		if (pathName.startsWith(start) && pathName.endsWith(end)){
-			return true;
-		}else{
-			return false;
-		}
 	}
 }

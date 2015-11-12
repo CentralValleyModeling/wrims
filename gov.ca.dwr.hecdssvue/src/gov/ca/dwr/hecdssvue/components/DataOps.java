@@ -326,4 +326,22 @@ public class DataOps {
 		}
 		return pathnameMap;
 	}
+	
+	public static boolean containParts(String pathName, String[] parts){
+		String start="/";
+		String end="/";
+		for (int i=1; i<4; i++){
+			start=start+parts[i]+"/";
+		}
+		for (int i=5; i<7; i++){
+			end=end+parts[i]+"/";
+		}
+		if (pathName.startsWith(start) && pathName.endsWith(end)){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	
 }

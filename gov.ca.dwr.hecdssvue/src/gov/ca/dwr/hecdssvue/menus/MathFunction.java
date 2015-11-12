@@ -33,9 +33,6 @@ import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.view.WPPVarMonitorView;
 
 public class MathFunction implements IWorkbenchWindowActionDelegate{
-
-	private Vector<String> oldPathnameVector=new Vector<String>();
-	private Vector<String> newPathnameVector=new Vector<String>();		
 	
 	@Override
 	public void run(IAction action) {
