@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="DWR"
+            id="gov.ca.dwr.calsimhydro">
+      </category>
+      <view
+            name="CalSim Hydro"
+            category="gov.ca.dwr.calsimhydro"
+            class="gov.ca.dwr.calsimhydro.views.CalSimHydroView"
+            id="gov.ca.dwr.calsimhydro.views.CalSimHydroView">
+      </view>
+  </extension>
+  <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.jdt.ui.JavaPerspective">
+         <view
+               id="gov.ca.dwr.calsimhydro.views.CalSimHydroView"
+               ratio="1.0"
+               relationship="right"
+               relative="org.eclipse.ui.views.TaskList">
+         </view>
+      </perspectiveExtension>
+  </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="gov.ca.dwr.calsimhydro.PerspectiveFactory"
+            fixed="true"
+            id="gov.ca.dwr.calsimhydro.perspective"
+            icon="icons/resource_persp.gif"
+            name="CalSim Hydro">
+      </perspective>
+  </extension>
+</plugin>
