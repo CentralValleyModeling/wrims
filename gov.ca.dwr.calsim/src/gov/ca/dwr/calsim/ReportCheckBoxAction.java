@@ -68,9 +68,9 @@ public class ReportCheckBoxAction implements ActionListener {
 						if (DebugCorePlugin.studyTypes[j]==0){
 							lookups=CalSimPluginCore.CalLiteLookups;
 						}else if (DebugCorePlugin.studyTypes[j]==1){
-							lookups=CalSimPluginCore.CalSim2Lookups;
-						}else if (DebugCorePlugin.studyTypes[j]==2){
 							lookups=CalSimPluginCore.CalSim3Lookups;
+						}else if (DebugCorePlugin.studyTypes[j]==2){
+							lookups=CalSimPluginCore.CalSim2Lookups;
 						}
 						for (int k=0; k<lookups.length; k++){
 							if (lookups[k][0].equals(id)){								
