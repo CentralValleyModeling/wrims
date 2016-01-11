@@ -15,6 +15,7 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-NativeCode: cb.dll; osname=win32, javaHeclib.dll; osname=win32, rmaUtil.dll; osname=win32
 Bundle-ActivationPolicy: lazy
 Export-Package: gov.ca.dwr.hecdssvue;uses:="org.eclipse.jface.resource,org.eclipse.ui.plugin,org.osgi.framework",
+ gov.ca.dwr.hecdssvue.components,
  gov.ca.dwr.hecdssvue.views;
   uses:="org.eclipse.core.runtime.jobs,
    javax.swing,
