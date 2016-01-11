@@ -9,6 +9,7 @@ import hec.io.DataContainer;
 
 import java.util.ArrayList;
 import java.util.Vector;
+
 import javax.swing.JScrollPane;
 
 import java.io.File;
@@ -29,6 +30,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DirectoryDialog;
@@ -67,6 +69,7 @@ public class DSSFileView extends ViewPart {
 	private String unavailableFiles="";
 	private String unavailableFolders="";
 	private String errorFiles="";
+	private Combo[] studyType= new Combo[4];
 
 	
 	/**
@@ -85,7 +88,7 @@ public class DSSFileView extends ViewPart {
 		fl.marginHeight=15;
 		
 		Composite title = new Composite(dialogArea, SWT.NONE);
-		title.setLayout(new GridLayout(37, true));
+		title.setLayout(new GridLayout(39, true));
 		Label labelTitle = new Label(title, SWT.NONE);
 		labelTitle.setText("Please select DV and SV files for alternatives");
 		okButton = new Button(title, SWT.PUSH);
@@ -153,14 +156,14 @@ public class DSSFileView extends ViewPart {
 		for (int i=0; i<4; i++){
 			final int j=i;
 			fileSelection[i] = new Composite(dialogArea, SWT.NONE);
-			GridLayout layout = new GridLayout(37, true);
+			GridLayout layout = new GridLayout(39, true);
 			fileSelection[i].setLayout(layout);
 			
 			checkBox[i]=new Button(fileSelection[i], SWT.CHECK);
 			checkBox[i].setText("Alt "+(i+1));
 			checkBox[i].setSelection(DebugCorePlugin.selectedStudies[i]);
 			GridData gd0 = new GridData(GridData.FILL_HORIZONTAL);
-			gd0.horizontalSpan = 9;//TODO
+			gd0.horizontalSpan = 3;//TODO
 			checkBox[i].setLayoutData(gd0);
 //			/*
 //			checkBox[i].addSelectionListener(new SelectionAdapter() {
@@ -177,14 +180,14 @@ public class DSSFileView extends ViewPart {
 			
 			dvFileText[i] = new Text(fileSelection[i], SWT.SINGLE | SWT.BORDER);
 			GridData gd1 = new GridData(GridData.FILL_HORIZONTAL);
-			gd1.horizontalSpan = 8;
+			gd1.horizontalSpan = 14;
 			dvFileText[i].setLayoutData(gd1);
 			dvFileText[i].setText(DebugCorePlugin.studyDvFileNames[i]);
 		
 			dvBrowserButton[i] = new Button(fileSelection[i], SWT.PUSH);
 			dvBrowserButton[i].setText("DV");
 			GridData gd2 = new GridData(GridData.FILL_HORIZONTAL);
-			gd2.horizontalSpan = 5;
+			gd2.horizontalSpan = 2;
 			dvBrowserButton[i].setLayoutData(gd2);
 			dvBrowserButton[i].addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -208,14 +211,14 @@ public class DSSFileView extends ViewPart {
 			
 			svFileText[i] = new Text(fileSelection[i], SWT.SINGLE | SWT.BORDER);
 			gd1 = new GridData(GridData.FILL_HORIZONTAL);
-			gd1.horizontalSpan = 8;
+			gd1.horizontalSpan = 14;
 			svFileText[i].setLayoutData(gd1);
 			svFileText[i].setText(DebugCorePlugin.studySvFileNames[i]);
 		
 			svBrowserButton[i] = new Button(fileSelection[i], SWT.PUSH);
 			svBrowserButton[i].setText("SV");
 			gd2 = new GridData(GridData.FILL_HORIZONTAL);
-			gd2.horizontalSpan = 5;
+			gd2.horizontalSpan = 2;
 			svBrowserButton[i].setLayoutData(gd2);
 			svBrowserButton[i].addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -235,6 +238,29 @@ public class DSSFileView extends ViewPart {
 						}
 					});
 				}
+			});
+			
+			studyType[i] = new Combo(fileSelection[i], SWT.SINGLE | SWT.BORDER);
+			GridData gd3 = new GridData(GridData.FILL_HORIZONTAL);
+			gd3.horizontalSpan = 2;
+			studyType[i].setLayoutData(gd3);
+			studyType[i].add("CL");
+			studyType[i].add("CS3");
+			studyType[i].add("CS2");
+			studyType[i].select(0);
+			DebugCorePlugin.studyTypes[i]=0;
+			studyType[i].addSelectionListener(new SelectionListener(){
+
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					DebugCorePlugin.studyTypes[j]=((Combo)e.getSource()).getSelectionIndex();
+				}
+
+				@Override
+				public void widgetDefaultSelected(SelectionEvent e) {
+					
+				}
+				
 			});
 		}
 		
