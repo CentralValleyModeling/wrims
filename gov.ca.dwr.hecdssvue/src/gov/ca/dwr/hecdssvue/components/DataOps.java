@@ -219,87 +219,87 @@ public class DataOps {
 		
 		int size = PluginCore.allSchematicVariableNames.size();
 		
-		if (size>0){
-			HashMap<String, String>[] dvPathnameMap=new HashMap[4];
-			HashMap<String, String>[] svPathnameMap=new HashMap[4];
-			for (int i=0; i<4; i++){
-				if (DebugCorePlugin.selectedStudies[i]){
-					HecDss dvFile = DebugCorePlugin.dvDss[i];
-					HecDss svFile = DebugCorePlugin.svDss[i];
-					if (dvFile !=null){
-						dvPathnameMap[i] = generatePathnameMap(dvFile);
-					}else{
-						dvPathnameMap[i] = null;
-					}
-					if (svFile !=null){
-						svPathnameMap[i] = generatePathnameMap(svFile);
-					}else{
-						svPathnameMap[i] = null;
-					}
+		HashMap<String, String>[] dvPathnameMap=new HashMap[4];
+		HashMap<String, String>[] svPathnameMap=new HashMap[4];
+		for (int i=0; i<4; i++){
+			if (DebugCorePlugin.selectedStudies[i]){
+				PluginCore.pathnameLists[i]=new ArrayList<String>();
+				HecDss dvFile = DebugCorePlugin.dvDss[i];
+				HecDss svFile = DebugCorePlugin.svDss[i];
+				if (dvFile !=null){
+					dvPathnameMap[i] = generatePathnameMap(dvFile, i);
+				}else{
+					dvPathnameMap[i] = null;
+				}
+				if (svFile !=null){
+					svPathnameMap[i] = generatePathnameMap(svFile, i);
+				}else{
+					svPathnameMap[i] = null;
 				}
 			}
+		}
 		
-			for (int j=0; j<size; j++) {
-				String name = PluginCore.allSchematicVariableNames.get(j);
-				if (PluginCore.allPathName.containsKey(name)){
-					String pathName = PluginCore.allPathName.get(name);
-					for (int i=0; i<4; i++){
-						if (DebugCorePlugin.selectedStudies[i]){
-							HecMath dataSet=null;
-							HecDss dvFile = DebugCorePlugin.dvDss[i];
-							HecDss svFile = DebugCorePlugin.svDss[i];
-							if (dvFile != null){
-								try {
-									dataSet= dvFile.read(pathName);
-									if (dataSet ==null){
-										readFromSV(svFile, pathName, name, i);
-										continue;
-									}else{
-										PluginCore.allSchematicVariableData[i].put(name, dataSet);
-										PluginCore.allSchematicVariableUnitsCFS[i].put(name, dataSet.getUnits());
-										PluginCore.allSchematicVariableUnitsTAF[i].put(name, dataSet.getUnits());
-										continue;
-									}
-								} catch (Exception e) {
+		for (int j=0; j<size; j++) {
+			String name = PluginCore.allSchematicVariableNames.get(j);
+			if (PluginCore.allPathName.containsKey(name)){
+				String pathName = PluginCore.allPathName.get(name);
+				for (int i=0; i<4; i++){
+					if (DebugCorePlugin.selectedStudies[i]){
+						HecMath dataSet=null;
+						HecDss dvFile = DebugCorePlugin.dvDss[i];
+						HecDss svFile = DebugCorePlugin.svDss[i];
+						if (dvFile != null){
+							try {
+								dataSet= dvFile.read(pathName);
+								if (dataSet ==null){
 									readFromSV(svFile, pathName, name, i);
+									continue;
+								}else{
+									PluginCore.allSchematicVariableData[i].put(name, dataSet);
+									PluginCore.allSchematicVariableUnitsCFS[i].put(name, dataSet.getUnits());
+									PluginCore.allSchematicVariableUnitsTAF[i].put(name, dataSet.getUnits());
+									continue;
 								}
-							}else{
+							} catch (Exception e) {
 								readFromSV(svFile, pathName, name, i);
 							}
+						}else{
+							readFromSV(svFile, pathName, name, i);
 						}
 					}
-				}else{
-					for (int i=0; i<4; i++){
-						if (DebugCorePlugin.selectedStudies[i]){
-							HecMath dataSet=null;
-							HecDss dvFile = DebugCorePlugin.dvDss[i];
-							HecDss svFile = DebugCorePlugin.svDss[i];
-						
-							String pathName=dvPathnameMap[i].get(name);
-							if (pathName !=null){
-								try {
-									dataSet= dvFile.read(pathName);
-									PluginCore.allSchematicVariableData[i].put(name, dataSet);
-									PluginCore.allSchematicVariableUnitsCFS[i].put(name, dataSet.getUnits());
-									PluginCore.allSchematicVariableUnitsTAF[i].put(name, dataSet.getUnits());
-								}catch (Exception e) {
-								}
+				}
+			}else{
+				for (int i=0; i<4; i++){
+					if (DebugCorePlugin.selectedStudies[i]){
+						HecMath dataSet=null;
+						HecDss dvFile = DebugCorePlugin.dvDss[i];
+						HecDss svFile = DebugCorePlugin.svDss[i];
+					
+						String pathName=dvPathnameMap[i].get(name);
+						if (pathName !=null){
+							try {
+								dataSet= dvFile.read(pathName);
+								PluginCore.allSchematicVariableData[i].put(name, dataSet);
+								PluginCore.allSchematicVariableUnitsCFS[i].put(name, dataSet.getUnits());
+								PluginCore.allSchematicVariableUnitsTAF[i].put(name, dataSet.getUnits());
+							}catch (Exception e) {
 							}
-							pathName=svPathnameMap[i].get(name);
-							if (pathName !=null){
-								try {
-									dataSet= svFile.read(pathName);
-									PluginCore.allSchematicVariableData[i].put(name, dataSet);
-									PluginCore.allSchematicVariableUnitsCFS[i].put(name, dataSet.getUnits());
-									PluginCore.allSchematicVariableUnitsTAF[i].put(name, dataSet.getUnits());
-								}catch (Exception e) {
-								}
+						}
+						pathName=svPathnameMap[i].get(name);
+						if (pathName !=null){
+							try {
+								dataSet= svFile.read(pathName);
+								PluginCore.allSchematicVariableData[i].put(name, dataSet);
+								PluginCore.allSchematicVariableUnitsCFS[i].put(name, dataSet.getUnits());
+								PluginCore.allSchematicVariableUnitsTAF[i].put(name, dataSet.getUnits());
+							}catch (Exception e) {
 							}
 						}
 					}
 				}
 			}
 		}
+		
 	}
 	
 	public static void readFromSV(HecDss svFile, String pathName, String name, int i){
@@ -314,7 +314,7 @@ public class DataOps {
 		}
 	}
 	
-	public static HashMap<String, String> generatePathnameMap(HecDss file){
+	public static HashMap<String, String> generatePathnameMap(HecDss file, int j){
 		HashMap<String, String> pathnameMap=new HashMap<String, String> ();
 		Vector<CondensedReference> v=file.getCondensedCatalog();
 		for (int i=0; i<v.size(); i++){
@@ -323,6 +323,7 @@ public class DataOps {
 			DSSPathname dssPathname = new DSSPathname(pathname);
 			String partB=dssPathname.bPart();
 			pathnameMap.put(partB, pathname);
+			PluginCore.pathnameLists[j].add(pathname);
 		}
 		return pathnameMap;
 	}
