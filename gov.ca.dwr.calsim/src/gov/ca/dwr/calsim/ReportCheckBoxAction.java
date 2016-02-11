@@ -79,19 +79,18 @@ public class ReportCheckBoxAction implements ActionListener {
 								String[] partBCs=lookups[k][1].toUpperCase().split("\\+");
 								int size=partBCs.length;
 								if (size==1){
-									int step=0;
+									String stepStr="0";
 									if (partBCs[0].endsWith(")") && partBCs[0].contains("(")){
 										int bi=partBCs[0].indexOf("(");
 										int ei=partBCs[0].length()-1;
-										String stepStr=partBCs[0].substring(bi+1, ei);
-										step=Integer.parseInt(stepStr);
+										stepStr=partBCs[0].substring(bi+1, ei);
 										partBCs[0]=partBCs[0].substring(0, bi);
 									}
 									String[] parts=partBCs[0].split("/");
 									String partB=parts[0];
 									String partC=parts[1];
 								
-									TimeSeriesContainer dataVector_file = retrieveTsDataByPathName(partB, partC, j, isBase, step);
+									TimeSeriesContainer dataVector_file = retrieveTsDataByPathName(partB, partC, j, isBase, stepStr);
 									if (dataVector_file !=null) {
 										if (PluginCore.mode.equals(PluginCore.diff) &&  !isBase){
 											dataVector_file=DataOps.diff(dataVector_file, (TimeSeriesContainer)dataVector_path1.get(0));
@@ -102,19 +101,18 @@ public class ReportCheckBoxAction implements ActionListener {
 								}else if (size>1){
 									TimeSeriesContainer combined_dataVector_file=null;
 									for (int n=0; n<size; n++){
-										int step=0;
+										String stepStr="0";
 										if (partBCs[n].endsWith(")") && partBCs[n].contains("(")){
 											int bi=partBCs[n].indexOf("(");
 											int ei=partBCs[n].length()-1;
-											String stepStr=partBCs[n].substring(bi+1, ei);
-											step=Integer.parseInt(stepStr);
+											stepStr=partBCs[n].substring(bi+1, ei);
 											partBCs[n]=partBCs[n].substring(0, bi);
 										}
 										String[] parts=partBCs[n].split("/");
 										String partB=parts[0];
 										String partC=parts[1];
 									
-										TimeSeriesContainer dataVector_file = retrieveTsDataByPathName(partB, partC, j, isBase, step);
+										TimeSeriesContainer dataVector_file = retrieveTsDataByPathName(partB, partC, j, isBase, stepStr);
 										combined_dataVector_file=combineData(dataVector_file, combined_dataVector_file);
 										if (n==0) {
 											location=partB;
@@ -137,19 +135,18 @@ public class ReportCheckBoxAction implements ActionListener {
 									partBCs=secondaryName.split("\\+");
 									size=partBCs.length;
 									if (size==1){
-										int step=0;
+										String stepStr="0";
 										if (partBCs[0].endsWith(")") && partBCs[0].contains("(")){
 											int bi=partBCs[0].indexOf("(");
 											int ei=partBCs[0].length()-1;
-											String stepStr=partBCs[0].substring(bi+1, ei);
-											step=Integer.parseInt(stepStr);
+											stepStr=partBCs[0].substring(bi+1, ei);
 											partBCs[0]=partBCs[0].substring(0, bi);
 										}
 										String[] parts=partBCs[0].split("/");
 										String partB=parts[0];
 										String partC=parts[1];
 								
-										TimeSeriesContainer dataVector_file = retrieveTsDataByPathName(partB, partC, j, isBase, step);
+										TimeSeriesContainer dataVector_file = retrieveTsDataByPathName(partB, partC, j, isBase, stepStr);
 										if (dataVector_file !=null) {
 											if (PluginCore.mode.equals(PluginCore.diff) &&  !isBase){
 												dataVector_file=DataOps.diff(dataVector_file, (TimeSeriesContainer)dataVector_path1.get(0));
@@ -160,19 +157,18 @@ public class ReportCheckBoxAction implements ActionListener {
 									}else if (size>1){
 										TimeSeriesContainer combined_dataVector_file=null;
 										for (int n=0; n<size; n++){
-											int step=0;
+											String stepStr="0";
 											if (partBCs[n].endsWith(")") && partBCs[n].contains("(")){
 												int bi=partBCs[n].indexOf("(");
 												int ei=partBCs[n].length()-1;
-												String stepStr=partBCs[n].substring(bi+1, ei);
-												step=Integer.parseInt(stepStr);
+												stepStr=partBCs[n].substring(bi+1, ei);
 												partBCs[n]=partBCs[n].substring(0, bi);
 											}
 											String[] parts=partBCs[n].split("/");
 											String partB=parts[0];
 											String partC=parts[1];
 									
-											TimeSeriesContainer dataVector_file = retrieveTsDataByPathName(partB, partC, j, isBase, step);
+											TimeSeriesContainer dataVector_file = retrieveTsDataByPathName(partB, partC, j, isBase, stepStr);
 											combined_dataVector_file=combineData(dataVector_file, combined_dataVector_file);
 											if (n==0) {
 												location=partB;
@@ -246,29 +242,25 @@ public class ReportCheckBoxAction implements ActionListener {
 		}
 	}
 	
-	private TimeSeriesContainer retrieveTsDataByPathName(String partB, String partC, int j, boolean isBase, int step){
-		
+	private TimeSeriesContainer retrieveTsDataByPathName(String partB, String partC, int j, boolean isBase, String stepStr){
 		boolean found=false;
-		Iterator<CondensedReference> it = PluginCore.condensedCatalog.iterator();
-		while (it.hasNext() && !found) {
-			CondensedReference next = it.next();
-			String pathName = next.getNominalPathname();
+		int k=0;
+		while (k<PluginCore.pathnameLists[j].size() && !found) {
+			String pathName = PluginCore.pathnameLists[j].get(k);
 			String[] parts = pathName.split("/");
 			if (parts[2].equals(partB) && parts[3].equals(partC)){
 				found = true;
 				String pathname=getPathname(parts);
 				TimeSeriesContainer dataVector_file = getData(pathname, j, isBase);
-				if (step != 0){
-					TimeSeriesMath tm;
+				if (!stepStr.equals("0")){
+					try {				
+						int step = Integer.parseInt(stepStr);
+						stepStr=stepStr+"MON";
+					}catch (Exception e){	
+					}
 					try {
-						tm = new TimeSeriesMath(dataVector_file);
-						int interval=dataVector_file.interval;
-						HecMath newTm;
-						if (interval==1440){
-							newTm = tm.shiftInTime(step+"DAY");
-						}else{
-							newTm = tm.shiftInTime(step+"MON");
-						}
+						TimeSeriesMath tm = new TimeSeriesMath(dataVector_file);
+						HecMath newTm = tm.shiftInTime(stepStr);
 						dataVector_file=(TimeSeriesContainer) newTm.getData();
 					} catch (HecMathException e) {
 						WPPException.handleException(e);
@@ -276,6 +268,7 @@ public class ReportCheckBoxAction implements ActionListener {
 				}
 				return dataVector_file;
 			}
+			k++;
 		}
 		
 		return null;
