@@ -1459,25 +1459,7 @@ public abstract class SchematicBase extends ViewPart {
 			int size = PluginCore.allSchematicVariableNames.size();
 			
 			if (size>0){
-				HashMap<String, String>[] dvPathnameMap=new HashMap[4];
-				HashMap<String, String>[] svPathnameMap=new HashMap[4];
-				for (int i=0; i<4; i++){
-					if (DebugCorePlugin.selectedStudies[i]){
-						HecDss dvFile = DebugCorePlugin.dvDss[i];
-						HecDss svFile = DebugCorePlugin.svDss[i];
-						if (dvFile !=null){
-							dvPathnameMap[i] = generatePathnameMap(dvFile);
-						}else{
-							dvPathnameMap[i] = null;
-						}
-						if (svFile !=null){
-							svPathnameMap[i] = generatePathnameMap(svFile);
-						}else{
-							svPathnameMap[i] = null;
-						}
-					}
-				}
-			
+							
 				for (int j=0; j<size; j++) {
 					String name = PluginCore.allSchematicVariableNames.get(j);
 					if (PluginCore.allPathName.containsKey(name)){
@@ -1514,7 +1496,7 @@ public abstract class SchematicBase extends ViewPart {
 								HecDss dvFile = DebugCorePlugin.dvDss[i];
 								HecDss svFile = DebugCorePlugin.svDss[i];
 							
-								String pathName=dvPathnameMap[i].get(name);
+								String pathName=PluginCore.dvPathnameMap[i].get(name);
 								if (pathName !=null){
 									try {
 										dataSet= dvFile.read(pathName);
@@ -1524,7 +1506,7 @@ public abstract class SchematicBase extends ViewPart {
 									}catch (Exception e) {
 									}
 								}
-								pathName=svPathnameMap[i].get(name);
+								pathName=PluginCore.svPathnameMap[i].get(name);
 								if (pathName !=null){
 									try {
 										dataSet= svFile.read(pathName);
