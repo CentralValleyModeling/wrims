@@ -59,6 +59,8 @@ public class PluginCore {
 	public static ArrayList<HecDss> dssArray = new ArrayList<HecDss> ();// for multiple dss readin
 	public static Vector<CondensedReference> condensedCatalog;
 	public static ArrayList<String>[] pathnameLists=new ArrayList[4];
+	public static HashMap<String, String>[] dvPathnameMap=new HashMap[4];
+	public static HashMap<String, String>[] svPathnameMap=new HashMap[4];
 		
 	public static ArrayList<String> allStorageNames = new ArrayList<String>();
 	public static HashMap<String, String> allPathName=new HashMap<String, String>();

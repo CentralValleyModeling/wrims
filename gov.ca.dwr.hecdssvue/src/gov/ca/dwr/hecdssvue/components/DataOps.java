@@ -219,22 +219,20 @@ public class DataOps {
 		
 		int size = PluginCore.allSchematicVariableNames.size();
 		
-		HashMap<String, String>[] dvPathnameMap=new HashMap[4];
-		HashMap<String, String>[] svPathnameMap=new HashMap[4];
 		for (int i=0; i<4; i++){
 			if (DebugCorePlugin.selectedStudies[i]){
 				PluginCore.pathnameLists[i]=new ArrayList<String>();
 				HecDss dvFile = DebugCorePlugin.dvDss[i];
 				HecDss svFile = DebugCorePlugin.svDss[i];
 				if (dvFile !=null){
-					dvPathnameMap[i] = generatePathnameMap(dvFile, i);
+					PluginCore.dvPathnameMap[i] = generatePathnameMap(dvFile, i);
 				}else{
-					dvPathnameMap[i] = null;
+					PluginCore.dvPathnameMap[i] = null;
 				}
 				if (svFile !=null){
-					svPathnameMap[i] = generatePathnameMap(svFile, i);
+					PluginCore.svPathnameMap[i] = generatePathnameMap(svFile, i);
 				}else{
-					svPathnameMap[i] = null;
+					PluginCore.svPathnameMap[i] = null;
 				}
 			}
 		}
@@ -275,7 +273,7 @@ public class DataOps {
 						HecDss dvFile = DebugCorePlugin.dvDss[i];
 						HecDss svFile = DebugCorePlugin.svDss[i];
 					
-						String pathName=dvPathnameMap[i].get(name);
+						String pathName=PluginCore.dvPathnameMap[i].get(name);
 						if (pathName !=null){
 							try {
 								dataSet= dvFile.read(pathName);
@@ -285,7 +283,7 @@ public class DataOps {
 							}catch (Exception e) {
 							}
 						}
-						pathName=svPathnameMap[i].get(name);
+						pathName=PluginCore.svPathnameMap[i].get(name);
 						if (pathName !=null){
 							try {
 								dataSet= svFile.read(pathName);
