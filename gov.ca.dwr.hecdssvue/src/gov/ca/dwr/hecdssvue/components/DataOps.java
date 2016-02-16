@@ -88,10 +88,24 @@ public class DataOps {
 				// WRONG MONTH FIX: subtract 1 min
 				ht.add(-1);
 
-				if (months.contains(ht.month())) {
-					ltimes.add(times[i]);
-					lvalues.add(values[i]);
-					// values[i] = Constants.UNDEFINED;
+				if (PluginCore.isAllWaterYear){
+					if (months.contains(ht.month())) {
+						ltimes.add(times[i]);
+						lvalues.add(values[i]);
+						// values[i] = Constants.UNDEFINED;
+					}
+				}else{
+					if (months.contains(ht.month())) {
+						if (ht.month()>0 && ht.month()<10 && PluginCore.filterWaterYear.contains(ht.year())){
+							ltimes.add(times[i]);
+							lvalues.add(values[i]);
+							// values[i] = Constants.UNDEFINED;
+						}else if (ht.month()>=10 && ht.month()<=12 && PluginCore.filterWaterYear.contains(ht.year()+1)){
+							ltimes.add(times[i]);
+							lvalues.add(values[i]);
+							// values[i] = Constants.UNDEFINED;
+						}
+					}
 				}
 			}
 

@@ -7,7 +7,9 @@ import hec.hecmath.HecMath;
 import hec.io.DataContainer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Vector;
 
 import org.eclipse.jface.viewers.TableViewer;
@@ -53,6 +55,9 @@ public class PluginCore {
 	    add(8);
 	    add(9);
 	}};
+	
+	public static boolean isAllWaterYear=true;
+	public static HashSet<Integer> filterWaterYear=new HashSet<Integer>();
 	
 	public static String filter="/*/*/*/*/*/*/";
 	

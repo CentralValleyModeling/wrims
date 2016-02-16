@@ -1138,16 +1138,18 @@ public final class MonthlyTableModel extends AbstractTableModel { // extends
 				// be displayed
 				Hashtable<Integer, Object> displayMonths = new Hashtable<Integer, Object>();
 				for (int j = 0; j < 12; ++j) {
-					int time = _tsc.times[j];
-					HecTime hecTime = new HecTime();
-					hecTime.set(time);
-					int dataMonth = hecTime.month() - 10;
-					if (dataMonth < 0)
-						dataMonth += 12;
-					// System.out.println("dataMonth = " + dataMonth);
-					displayMonths.put(dataMonth, new Object()); // dummy value -
+					if (j<_tsc.times.length){
+						int time = _tsc.times[j];
+						HecTime hecTime = new HecTime();
+						hecTime.set(time);
+						int dataMonth = hecTime.month() - 10;
+						if (dataMonth < 0)
+							dataMonth += 12;
+						// System.out.println("dataMonth = " + dataMonth);
+						displayMonths.put(dataMonth, new Object()); // dummy value -
 																// will only
 																// check if null
+					}
 				}
 
 				_numberHeaderRows = 4; // CB to do: eliminate hard-coding
