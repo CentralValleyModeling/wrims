@@ -50,6 +50,12 @@
             id="gov.ca.dwr.hecdssvue.views.DSSOpsView"
             name="DSS Options">
       </view>
+      <view
+            category="gov.ca.dwr.hecdssvue"
+            class="gov.ca.dwr.hecdssvue.views.WaterYearView"
+            id="gov.ca.dwr.hecdssvue.views.WaterYearView"
+            name="Water Year">
+      </view>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
