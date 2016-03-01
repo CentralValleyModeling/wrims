@@ -790,15 +790,23 @@ public abstract class SchematicBase extends ViewPart {
 		for (int i=0; i<tws.length; i++){
 			if (date.equals(tws[i])){
 				if (PluginCore.units.equals(PluginCore.cfs)){
-					if (PluginCore.longTermAverageDataCFS[i]==null) {
-						calculateLongTermAverage(i, date, tws, true);
+					if (PluginCore.months.size()<12){
+						return retrieveLongTermAverageSelectedMonths(date, names, true);
+					}else{
+						if (PluginCore.longTermAverageDataCFS[i]==null) {
+							calculateLongTermAverage(i, date, tws, true);
+						}
+						return retrieveLongTermAverage(i, names, true);
 					}
-					return retrieveLongTermAverage(i, names, true);
 				}else{
-					if (PluginCore.longTermAverageDataTAF[i]==null) {
-						calculateLongTermAverage(i, date, tws, false);
+					if (PluginCore.months.size()<12){
+						return retrieveLongTermAverageSelectedMonths(date, names, false);
+					}else{
+						if (PluginCore.longTermAverageDataTAF[i]==null) {
+							calculateLongTermAverage(i, date, tws, false);
+						}
+						return retrieveLongTermAverage(i, names, false);
 					}
-					return retrieveLongTermAverage(i, names, false);
 				}
 			}
 		}
@@ -891,8 +899,6 @@ public abstract class SchematicBase extends ViewPart {
 	}
 	
 	public void calculateLongTermAverage(int pi, String date, String[] tws, boolean isCFS){
-
-		int size = tws.length;
 		
 		Hashtable<String, Double> _longTermTafToCfsConversionFactors = new Hashtable<String, Double>();
 
@@ -963,29 +969,15 @@ public abstract class SchematicBase extends ViewPart {
 							count++;
 							inRange=true;
 						}
-						month = -1;
-						if (ht.day() > 1) {
-							month = ht.month() + 2;
-							if (month >= 13) {
-								year = ht.year() + 1;
-							} else {
-								year = ht.year();
-							}
-							ht.setDate(TimeOperation.getMonthText(month)+
-									+ year);
+						month = ht.month() + 1;
+						if (month == 13) {
+							month = 1;
+							year = ht.year() + 1;
 						} else {
-							month = ht.month() + 1;
-							if (month == 13) {
-								year = ht.year() + 1;
-							} else {
-								year = ht.year();
-							}
-							ht.setDate(TimeOperation.getMonthText(month)+
-									+ year);
+							year = ht.year();
 						}
-						ht.add(-1440); // 86400 advanced ht from October 31,
-						// 1921 at 2400 to December 30, 1921
-						// at 2400.
+						ht.setDate(TimeOperation.getMonthText(month)+
+								+ year);
 					}
 					if (inRange) {
 						altAverage.put(name, sum/count);
@@ -995,6 +987,96 @@ public abstract class SchematicBase extends ViewPart {
 				}
 			}
 		}
+	}	
+	
+	public ArrayList<HashMap<String, Double>> calculateLongTermAverageSelectedMonths(String date, Hashtable<String, Object> names, boolean isCFS){
+		
+		Hashtable<String, Double> _longTermTafToCfsConversionFactors = new Hashtable<String, Double>();
+
+		ArrayList<HashMap<String, Double>> termAverage= new ArrayList<HashMap<String, Double>>();
+				
+		int index = 0;
+		int month = -1;
+		int year = -1;
+
+		HecTime startDate = new HecTime();
+		HecTime endDate = new HecTime();
+		
+		String[] split = date.split(" - ");
+		startDate.setDate(split[0]); 
+		startDate.setTime("0100");
+
+		endDate.setDate(split[1]); 
+		endDate.setTime("2400");
+		month = endDate.month() + 1;
+		year = endDate.year();
+		if (month == 13) {
+			year = startDate.year() + 1;
+		}
+		String monthName = TimeOperation.getMonthText(month);
+		endDate.setDate(monthName + year);
+		endDate.add(-1440);
+		
+		HecTime ht = new HecTime();
+		HecTime hecStartTime = new HecTime();
+		HecTime hecEndTime = new HecTime();
+
+		for (int i=0; i<4; i++){
+			HashMap<String, Double> altAverage = new HashMap<String, Double>();
+			termAverage.add(altAverage);
+			
+			HashMap<String, HecMath> altSchematicVariableData = PluginCore.allSchematicVariableData[i];
+			Set<String> keys=names.keySet();
+			Iterator<String> it = keys.iterator();
+			while (it.hasNext()){
+				String name=it.next();
+				if (altSchematicVariableData.containsKey(name)){
+					HecMath dataSet=altSchematicVariableData.get(name);
+					boolean isStorage=false;
+					try {
+						TimeSeriesContainer tsc = (TimeSeriesContainer)dataSet.getData();
+						if (PluginCore.allStorageNames.contains(name)) isStorage=true;
+						boolean isTAFSelected = (PluginCore.units.equalsIgnoreCase("taf") ? true
+								: false);
+						tsc=unitsConversion(isStorage, tsc, isTAFSelected, i, name);
+						ht.set(startDate);
+						hecStartTime.set(tsc.startTime);
+						hecEndTime.set(tsc.endTime);
+						int count=0;
+						double sum=0.0;
+						boolean inRange=false;
+						while (ht.compareTimes(hecEndTime)<=0 && ht.compareTimes(endDate)<=0){
+							if (ht.compareTimes(hecStartTime) >= 0 && PluginCore.months.contains(ht.month())){
+								int valueIndex = (ht.year() - hecStartTime
+										.year())
+										* 12
+										+ (ht.month() - hecStartTime
+												.month());
+								sum += tsc.values[valueIndex];
+								count++;
+								inRange=true;
+							}
+							month = ht.month() + 1;
+							if (month == 13) {
+								month = 1;
+								year = ht.year() + 1;
+							} else {
+								year = ht.year();
+							}
+							ht.setDate(TimeOperation.getMonthText(month)+
+									+ year);
+						}
+						if (inRange) {
+							altAverage.put(name, sum/count);
+						}
+					} catch (HecMathException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+		
+		return termAverage;
 	}	
 	
 	public Hashtable<String, String>[] retrieveLongTermAverage(int index, Hashtable<String, Object> names, boolean isCFS){
@@ -1030,6 +1112,81 @@ public abstract class SchematicBase extends ViewPart {
 					if (PluginCore.allStorageNames.contains(name)) isStorage=true;
 					String value = "";			
 					HashMap<String, Double> altAverage = termAverage.get(k);
+					if (altAverage.containsKey(name)){
+						double data = altAverage.get(name);
+						boolean isTAFSelected = (PluginCore.units.equalsIgnoreCase("taf") ? true
+								: false);
+						String units;
+						if (isCFS){
+							units=PluginCore.allSchematicVariableUnitsCFS[k].get(name);
+						}else{
+							units=PluginCore.allSchematicVariableUnitsTAF[k].get(name);
+						}
+						if (data>100000000) {
+							value="N/A";
+						} else {
+							value = data + " " + units;
+						}
+						if (PluginCore.mode.equals(PluginCore.diff)) {
+							if (j > baseIndex) {
+								if (results[baseIndex] == null || results[baseIndex].get(name) == null){
+									results[j].put(name,"N/A");
+									continue;
+								}
+								String[] baseFields = results[baseIndex].get(name)
+										.split("\\s");
+								String[] altFields = value.split("\\s");
+								try {
+									double baseVal = Double.parseDouble(baseFields[0]);
+									double altVal = Double.parseDouble(altFields[0]);
+									results[j].put(name, (altVal - baseVal) + " " + baseFields[1]);
+								} catch (NumberFormatException nfe) {
+									results[j].put(name,"N/A");
+								}
+							}else {
+								results[j].put(name, value);
+							}
+						}else {
+							results[j].put(name, value);
+						}
+					}else{
+						value="";
+						results[j].put(name, value);
+					}	
+				}	
+			}
+		}
+		return results;
+	}
+	
+	public Hashtable<String, String>[] retrieveLongTermAverageSelectedMonths(String date, Hashtable<String, Object> names, boolean isCFS){
+		
+		int size=names.size();
+		Hashtable<String, String>[] results = new Hashtable[4];
+
+		for (int i = 0; i < 4; ++i) {
+			results[i] = new Hashtable<String, String>();
+		}
+
+		int baseIndex=5;
+		
+		ArrayList<HashMap<String, Double>> termAverage = calculateLongTermAverageSelectedMonths(date, names, isCFS);
+		
+		for (int j = 1; j < 4; j++) {
+			int k=j-1;
+			if (DebugCorePlugin.selectedStudies[k]){
+				if (baseIndex>j){
+					baseIndex=j;
+				}
+				HashMap<String, Double> altAverage = termAverage.get(k);
+				Enumeration<String> variableEnum = names.keys();
+				while (variableEnum.hasMoreElements()) {
+					String name = variableEnum.nextElement();
+					ArrayList<String[]> pathParts = new ArrayList<String[]>();
+					CondensedReference found = null;
+					boolean isStorage=false;
+					if (PluginCore.allStorageNames.contains(name)) isStorage=true;
+					String value = "";			
 					if (altAverage.containsKey(name)){
 						double data = altAverage.get(name);
 						boolean isTAFSelected = (PluginCore.units.equalsIgnoreCase("taf") ? true
