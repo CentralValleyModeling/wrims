@@ -17,16 +17,12 @@ define COSMAOct { !from Oct to Sep
           value COSMA_Octdv(-1) }
      }
 	goal set_COSMA_Octdv { COSMA_Octdv = COSMAOct }
-!define COSMA_MIper_Oct { value COSMA_MIdmd / COSMAOct } !monthly demand distribution
-define COSMA_MIper_Oct { case posdenominator  {condition COSMAOct > 0.0 value COSMA_MIdmd / COSMAOct }
-                         case negdenominator  {condition COSMAOct < 0.0 value COSMA_MIdmd / COSMAOct }
-                         case zerodenominator {condition always value 0.0 }
-                       } !monthly demand distribution
-                         
+define COSMA_MIper_Oct { value COSMA_MIdmd / COSMAOct } !monthly demand distribution
+
 define COSMA_Aprdv { std kind 'COSMA-demand' units 'taf' }
 define COSMAApr { !from Apr to Mar
      case FirstYr {
-          condition month == Oct .and. wateryear == beginWaterYear
+          condition month == Oct .and. wateryear == 1922
           sum(i=0,5,1) COSMA_MIDmd(i) }
      case LastYr {
           condition month == Apr .and. wateryear == 2003
@@ -38,11 +34,7 @@ define COSMAApr { !from Apr to Mar
           condition always
           value COSMA_Aprdv(-1) }
      }
-!define COSMA_MIper_Apr { value COSMA_MIdmd / COSMAApr } !monthly demand distribution
-define COSMA_MIper_Apr { case posdenominator  {condition COSMAApr > 0.0 value COSMA_MIdmd / COSMAApr  }
-                         case negdenominator  {condition COSMAApr < 0.0 value COSMA_MIdmd / COSMAApr  }
-                         case zerodenominator {condition always value 0.0 }
-                       } !monthly demand distribution
+define COSMA_MIper_Apr { value COSMA_MIdmd / COSMAApr } !monthly demand distribution
 	goal set_COSMA_Aprdv { COSMA_Aprdv = COSMAApr }
 
 !COSMA Ag monthly demand

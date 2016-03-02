@@ -12,7 +12,7 @@ define CHReqSac {
     value 0.}
   case control{
     condition month >= Oct .and. month <= May
-    value max(0., (EstTotExpTD-CH_b_sv)/CH_m_sv)}
+    value max(0., (EstTotExp-CH_b_sv)/CH_m_sv)}
   case other {
     condition  always
     value 0.}

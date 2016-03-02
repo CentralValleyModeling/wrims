@@ -38,40 +38,9 @@ define ave_last_15days {value 8}
 
 !define daysindv {alias daysin kind 'DAYS' units 'DAYS'}
 
-! Delta uplands accretion/depletion at OMR027, OMR039 and SJR056
-define DD_50_PA1	{timeseries kind 'DELTA-DEPLETION' units 'TAF' convert 'CFS'}
-define DD_50_PA2	{timeseries kind 'DELTA-DEPLETION' units 'TAF' convert 'CFS'}
-define DD_50_PU		{timeseries kind 'DELTA-DEPLETION' units 'TAF' convert 'CFS'}
-
-define DA_50_PA1	{timeseries kind 'DELTA-ACCRETION' units 'TAF' convert 'CFS'}
-define DA_50_PA2	{timeseries kind 'DELTA-ACCRETION' units 'TAF' convert 'CFS'}
-define DA_50_PU		{timeseries kind 'DELTA-ACCRETION' units 'TAF' convert 'CFS'}
-
-define DD_OMR039_OMR_adjdv{lower -99999 upper 99999 kind 'DELTA-NET-DEPLETION' units 'CFS'}
-define DD_OMR039_OMR_adj{
-	case octBgnWY {  ! special case for first wateryear
-       	  condition month == OCT .and. wateryear == bgnWY
-	  value (20/60.6)*(1-Rfactor_644b)*dem_D700_pag*taf_cfs} !The diversion less the return flow assuming 100% allocation, i.e. the depletion
-	case other { 
-       	  condition always
-       	  value perdv_cvpag_s(-1)*(20/60.6)*(1-Rfactor_644b)*dem_D700_pag*taf_cfs}} !The diversion less the return flow using actual allocation, i.e. the depletion
-       	  
-goal setDD_OMR039_OMR_adjdv {DD_OMR039_OMR_adjdv = DD_OMR039_OMR_adj}
-
-define DD_SJR056_OMR_adjdv{lower -99999 upper 99999 kind 'DELTA-NET-DEPLETION' units 'CFS'}
-define DD_SJR056_OMR_adj{
-	case octBgnWY {  ! special case for first wateryear
-       	  condition month == OCT .and. wateryear == bgnWY
-	  value (20/60.6)*(1-Rfactor_644c-Rfactor_644d)*dem_D700_pag*taf_cfs} !The diversion less the return flow assuming 100% allocation, i.e. the depletion
-	case other { 
-       	  condition always
-       	  value perdv_cvpag_s(-1)*(20/60.6)*(1-Rfactor_644c-Rfactor_644d)*dem_D700_pag*taf_cfs}} !The diversion less the return flow using actual allocation, i.e. the depletion
-       	  
-goal setDD_SJR056_OMR_adjdv {DD_SJR056_OMR_adjdv = DD_SJR056_OMR_adj}
-
 !*************************************************************************************************************
 ! define the other flows that go into making the export component
-!define net_delta_cu { value DND_OMR + DD_OMR027_OMR_adj + DND_MOK + DND_SJR_East + DND_SJR_West + DND_SAC_South}   ! Net Delta Consumptive Use
+!define net_delta_cu { value DND_OMR + DND_MOK + DND_SJR_East + DND_SJR_West + DND_SAC_South}   ! Net Delta Consumptive Use
 define net_delta_cu { value                       ! Net Delta Consumptive Use
 !        DND_SAC_North +    ! Don't include this because it occurs upstream of C_SAC041
         DND_SAC_South +
@@ -79,8 +48,7 @@ define net_delta_cu { value                       ! Net Delta Consumptive Use
         DND_MOK +
         DND_SJR_East +
         DND_SJR_West +
-        DND_OMR +
-        DD_50_PU - DD_OMR039_OMR_adj - DA_50_PU + DD_50_PA1 - DD_SJR056_OMR_adj - DA_50_PA1 + DD_50_PA2 - DA_50_PA2
+        DND_OMR
 }
 
 define net_DICU{ lower unbounded kind 'DICU_FLOW' units 'CFS' }!shengjun add 2/24/2005
@@ -91,8 +59,7 @@ goal def_net_DICU{ net_DICU=
         DND_MOK +
         DND_SJR_East +
         DND_SJR_West +
-        DND_OMR +
-        DD_50_PU - DD_OMR039_OMR_adj - DA_50_PU + DD_50_PA1 - DD_SJR056_OMR_adj - DA_50_PA1 + DD_50_PA2 - DA_50_PA2
+        DND_OMR
 }
 
 ! Net Delta Consumptive Use decision variable for calculating ANN MRDO

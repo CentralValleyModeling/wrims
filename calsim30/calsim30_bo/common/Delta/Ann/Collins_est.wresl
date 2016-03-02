@@ -15,7 +15,7 @@ define COReqSac {
     value 0.}
   case control{
     condition month >=OCT .and. month <=MAY
-    value max(0., (EstTotExpTD-CO_b_sv)/CO_m_sv)}
+    value max(0., (EstTotExp-CO_b_sv)/CO_m_sv)}
   case other {
     condition  always
     value 0.}

@@ -53,11 +53,8 @@ goal Wheeling2 {
              }
 
 ! See wheelcontinuity for Surplus side and total Release side
-goal CVCReleaseCont {C_WKYTN_whlcv + C_KSWCK_whlcv + C_NTOMA_whlcv + C32_whlcv = C_SAC000_ADD_whlcv + D419_cvcrels}
-
-!Only allow wheeling carriage during wheeling release operation.
-goal lim_CVC_carriage {C_SAC000_ADD_whlcv < D419_cvcrels}
-
+goal CVCReleaseCont {C_WKYTN_whlcv + C_KSWCK_whlcv + C_NTOMA_whlcv + C32_whlcv = C_NDO_whlcv + D419_cvcrels}
+/*
 !---------------------- JPOD ----------------------
 ! Determine JPOD Wheeling
 define wheelCap {select cap from WheelCap where year=wateryear }
@@ -93,14 +90,11 @@ goal wheelingCVP1 {D419_cvpwhl < remWheelCap*taf_cfs }
 define EWA_CVPWHLcap {value max(BanksMaxAllow - D419_Base,0.)}
 
 ! Allow JPOD half of the cap - the other half is reserved for EWA
-goal maxJPOD_CVP {D419_cvpwhl < EWA_CVPWHLcap*tracy_int}
+goal maxJPOD_CVP {D419_cvpwhl < 0.5*EWA_CVPWHLcap*tracy_int}
 
 ! See wheelcontinuity for Surplus side and total Release side
-goal JPODReleaseCont {C_wkytn_whljp + C_kswck_whljp + C_ntoma_whljp = C_SAC000_ADD_whljp + D419_whlrels}
+goal JPODReleaseCont {C3_whljp + C5_whljp + C9_whljp + C32_whljp = C407_whljp + D419_whlrels + c177C_EXOP}
 
-goal lim_JPOD_carriage {C_SAC000_ADD_whljp < D419_whlrels}
-
-/*
 !---------------------- EWA -----------------------
 ! Determine available wheeling capacity for EWA.
 ! Note:  The available capacity is computed after Cross Valley Canal wheeling is done.

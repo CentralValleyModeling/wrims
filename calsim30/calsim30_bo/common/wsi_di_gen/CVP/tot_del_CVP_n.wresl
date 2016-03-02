@@ -26,7 +26,7 @@ define cvpdel_PU {
 
        case      MAR  {
        condition month == MAR .and. wateryear > bgnWY
-       sum(i=-1,-12,-1) (D_WTPBUK_03_PU3(i) + D_WTPCSD_02_PU(i) + D_WKYTN_02_PU(i) + D_WTPJMS_03_PU1(i) + D_WTPBLV_03_PU2(i) + CL2_FOLSMdv(i) + CL2_SJWD_Sdv(i) + CL2_ELDORdv(i) + CL2_ROSEVdv(i)/*+ CL2_CARECdv(i)*/ + CL2_SMUDdv(i) /*+ CL2_PCWA_Sdv(i)*/ + CL2_SCWAdv(i) + CL2_PCWA_Adv(i))* cfs_taf(i) }
+       sum(i=-1,-12,-1) (D_WTPBUK_03_PU3(i) + D_WTPCSD_02_PU(i) + D_WKYTN_02_PU(i) + D_WTPJMS_03_PU1(i) + D_SAC294_03_PU2(i) + CL2_FOLSMdv(i) + CL2_SJWD_Sdv(i) + CL2_ELDORdv(i) + CL2_ROSEVdv(i) + CL2_CARECdv(i) + CL2_SMUDdv(i) /*+ CL2_PCWA_Sdv(i)*/ + CL2_SCWAdv(i) + CL2_PCWA_Adv(i))* cfs_taf(i) }
 
        case      otherwise {
        condition always

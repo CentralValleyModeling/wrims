@@ -92,7 +92,6 @@ goal set1C520cycle6 { C520_mif = Stan_C520FW  }
 goal set1C528cycle6 { C528_mif = Stan_C528FW }
 
 goal setC10instream { C10INSTREAM = C10INSTREAM[sjrbase]}
-goal setC520instream {C520INSTREAM = C520INSTREAM[sjrbase]}
 
 ! Excess flow on reach C520 for cycle6  (why set 1 & set 2 ?)
 goal set1C520_exc_acycle6 {

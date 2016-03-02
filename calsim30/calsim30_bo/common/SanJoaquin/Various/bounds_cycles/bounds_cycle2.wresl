@@ -49,31 +49,22 @@ goal boundC540cycle2 { C540_mif < C540_mif[SJRBASE] }
 Stanislaus River F & W minimum flows and excess arcs
 */
 ! Stanislaus River F & W minimum flows
-/*
 goal boundC520cycle2 {
      lhs C520_mif
      rhs C520_mif[SJRBASE]
      lhs<rhs penalty 0 }
-goal boundC520instreamcycle2 {
-     lhs C520instream
-     rhs C520instream[SJRBASE]
-     lhs<rhs penalty 0 }
-*/
 ! Stanislaus River excess flows for cycle 2 ( Why bound1C520_exc_acycle2 & bound2C520_exc_acycle2 ?)
 goal bound1C520_exc_acycle2 {
      lhs       C520_exc_a
-     rhs       C520_exc[SJRBASE]
+     rhs       C520_exc_a[SJRBASE]
      lhs<rhs   penalty 0 }
 ! Stanislaus River excess flows for cycle 2
 goal bound2C520_exc_acycle2 {
      lhs       C520_exc_a
-     rhs       C520_exc[SJRBASE]
+     rhs       C520_exc_a[SJRBASE]
      lhs>rhs   penalty 0 }
-
 ! Stanislaus River minimum flow for cycle 2
 goal boundC528cycle2 { C528_mif < C528_mif[SJRBASE] }
-goal boundC520acycle2 { C520_mif < C520_mif[SJRBASE] }
-goal boundC520bcycle2 { C520instream = C520instream[SJRBASE] }
 
 /*
 VAMP book-keeping

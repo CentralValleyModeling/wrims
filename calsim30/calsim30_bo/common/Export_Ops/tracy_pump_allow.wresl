@@ -50,20 +50,17 @@ define tracyminpump {
         condition always
         value 800. }
 }
-
-define tracyminpumpdv {alias tracyminpump kind 'health-safety' units 'cfs'}
-
 goal settracyminpump {
     lhs D418_cvp
     case tracylowshasta {
         condition S_SHSTA(-1) /*+ S44(-1)*/ + S_SHSTAmod < 1500.
 	rhs tracyminpump
-        lhs>rhs penalty 0 !65*taf_cfs + 1
+        lhs>rhs penalty 65*taf_cfs + 1
         lhs<rhs penalty 2700 }
     case tracylowshastafolsom {
         condition S_FOLSM(-1) + S_FOLSMmod < 400. .and. S_SHSTA(-1) /*+ S44(-1)*/ + S_SHSTAmod < 2000. !Better reflection of actual operations by trying to keep
         rhs tracyminpump                                                       !water from being released for SL storage during low storage
-        lhs>rhs penalty 0 !65*taf_cfs + 1                                         !conditions in the NOD.
+        lhs>rhs penalty 65*taf_cfs + 1                                         !conditions in the NOD.
         lhs<rhs penalty 2700 }
     case tracyhighshasta   {
         condition always

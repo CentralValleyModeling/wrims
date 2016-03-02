@@ -14,10 +14,9 @@ goal setI852_WTS {I852_WTS = 0.}
 !goal zeroD7b_WTS  {D7b_WTS = 0.}
 !goal zeroD168A_WTS {D168A_WTS = 0.}
 
-goal zeroC_SAC000_ADD_WTS {C_SAC000_ADD_WTS  = 0.}
+goal zeroC_NDO_WTS {C_NDO_WTS  = 0.}
 goal zeroD418_WTS {D418_WTS  = 0.}
 goal zeroD419_WTS {D419_WTS  = 0.}
-goal noWTS_Yuba_Stg1 {WTS_Yuba_Stg1 = 0.}
 
 goal setS_SHSTA_WTS {S_SHSTA_WTS = 0.}!S_SHSTA_WTS(-1)}
 goal setS_OROVL_WTS {S_OROVL_WTS = 0.}!S_OROVL_WTS(-1)}
@@ -51,8 +50,6 @@ define SacOthCI_Max1 {value 0.}
 
 goal zeroC_FTR059_WTS {C_FTR059_WTS  = 0.}
 goal zeroC_KSWCK_WTS {C_KSWCK_WTS  = 0.}
-!goal zeroC_OROVL_WTS {C_OROVL_WTS  = 0.}
+goal zeroC_OROVL_WTS {C_OROVL_WTS  = 0.}
 goal zeroC_SAC041_WTS {C_SAC041_WTS  = 0.}
 goal zeroD400_WTS {D400_WTS  = 0.}
-goal zeroI_OROVL_WTS {I_OROVL_WTS = 0.}
-goal zeroI_SHSTA_WTS {I_SHSTA_WTS = 0.}

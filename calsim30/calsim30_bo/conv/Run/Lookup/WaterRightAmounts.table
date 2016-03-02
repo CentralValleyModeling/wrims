@@ -18,7 +18,7 @@ diversion  right
 14          2.65    ! D_JBC004_11_SA3 Biggs West Gridley Water District and Butte Water District
 15          1.00    ! C_JBC008       Sutter Extension Water District
 16          5.48    ! D_FTR003_17S_SA Miscellaneous Feather River diverters
-17          3.15    ! D_FTR008_16_SA  Miscellaneous Feather River diverters
+17         17.58    ! D_FTR008_16_SA  Miscellaneous Feather River diverters
 18          7.20    ! D_FTR003_22_SA2 Miscellaneous Feather River diverters
 19          1.15    ! D_FTR028_15S_SA Miscellaneous Feather River diverters
 20          4.13    ! D_FTR045_15N_SA Miscellaneous Feather River diverters
@@ -32,4 +32,3 @@ diversion  right
 28         20.00    ! D_SAC109_19_SA  Tisdale Weir to Feather R.(Represents diversion to 19_NA)
 29         13.00    ! D_SAC081_21_NA  Colusa Basin Drain to Sacramento Bypass
 30          1.00    ! D_SAC075_22_NA  Feather River to American River
-31          0.15    ! D_FTR021_16_SA  Oswald WD

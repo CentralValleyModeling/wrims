@@ -92,7 +92,7 @@ define Vern_Freq_Resdv {alias Vern_Freq_Res kind 'FREQUENCY' units 'NONE'}
 define Suspen_triglfdv {std kind 'TRIGGER' units 'NONE'}
 define Suspen_triglf {
 	case initialize {
-                condition month==OCT .and. wateryear==beginWaterYear
+                condition month==OCT .and. wateryear==1922
 		value 0.}
 	case suspension1 {
                 condition RV_Freq_Susp>=0.5

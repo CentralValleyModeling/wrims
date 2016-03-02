@@ -76,13 +76,6 @@ define qsacFth31dv {alias qsacFth31 kind 'flow-channel' units 'cfs'}
 !Estimation of additional Freemont weir monthly average spill based on daily spill estimations for flows over 23,100 cfs according to BDCP proposed notch.
 !Daily operation time frame defined in FRENothc_OnOff.table
 
-define gate11flow {      !Flow for the gate at 11.5 ft elevation
-	case Sep_Jun {condition month <=JUN .or. month==SEP
-!		value 100.}
-		value 0.}
-	case other { condition always
-		value 0. }  }
-
 !Daily operation of notch. Modify lookup table FRENotch_OnOff to indicate the days the notch will be operating. BDCP Proposed Operation: DEC 1st through APR 30th
 define Notch_OnOff1 {select switch from FRENotch_OnOff where Day=1, month=month}
 define Notch_OnOff2 {select switch from FRENotch_OnOff where Day=2, month=month}
@@ -185,37 +178,37 @@ define frespill_w30 {select Spill from FRE_No_Notch given Sac_Flow=qsacFth30 use
 define frespill_w31 {select Spill from FRE_No_Notch given Sac_Flow=qsacFth31 use linear}
 
 !Estimation of Fremont daily spill based on notch operation
-define frespill_1 {value max(frespill_wn1*Notch_OnOff1 + frespill_w1*(1-Notch_OnOff1),gate11flow)}
-define frespill_2 {value max(frespill_wn2*Notch_OnOff2 + frespill_w2*(1-Notch_OnOff2), gate11flow)}
-define frespill_3 {value max(frespill_wn3*Notch_OnOff3 + frespill_w3*(1-Notch_OnOff3), gate11flow)}
-define frespill_4 {value max(frespill_wn4*Notch_OnOff4 + frespill_w4*(1-Notch_OnOff4), gate11flow)}
-define frespill_5 {value max(frespill_wn5*Notch_OnOff5 + frespill_w5*(1-Notch_OnOff5), gate11flow)}
-define frespill_6 {value max(frespill_wn6*Notch_OnOff6 + frespill_w6*(1-Notch_OnOff6), gate11flow)}
-define frespill_7 {value max(frespill_wn7*Notch_OnOff7 + frespill_w7*(1-Notch_OnOff7), gate11flow)}
-define frespill_8 {value max(frespill_wn8*Notch_OnOff8 + frespill_w8*(1-Notch_OnOff8), gate11flow)}
-define frespill_9 {value max(frespill_wn9*Notch_OnOff9 + frespill_w9*(1-Notch_OnOff9), gate11flow)}
-define frespill_10 {value max(frespill_wn10*Notch_OnOff10 + frespill_w10*(1-Notch_OnOff10), gate11flow)}
-define frespill_11 {value max(frespill_wn11*Notch_OnOff11 + frespill_w11*(1-Notch_OnOff11), gate11flow)}
-define frespill_12 {value max(frespill_wn12*Notch_OnOff12 + frespill_w12*(1-Notch_OnOff12), gate11flow)}
-define frespill_13 {value max(frespill_wn13*Notch_OnOff13 + frespill_w13*(1-Notch_OnOff13), gate11flow)}
-define frespill_14 {value max(frespill_wn14*Notch_OnOff14 + frespill_w14*(1-Notch_OnOff14), gate11flow)}
-define frespill_15 {value max(frespill_wn15*Notch_OnOff15 + frespill_w15*(1-Notch_OnOff15), gate11flow)}
-define frespill_16 {value max(frespill_wn16*Notch_OnOff16 + frespill_w16*(1-Notch_OnOff16), gate11flow)}
-define frespill_17 {value max(frespill_wn17*Notch_OnOff17 + frespill_w17*(1-Notch_OnOff17), gate11flow)}
-define frespill_18 {value max(frespill_wn18*Notch_OnOff18 + frespill_w18*(1-Notch_OnOff18), gate11flow)}
-define frespill_19 {value max(frespill_wn19*Notch_OnOff19 + frespill_w19*(1-Notch_OnOff19), gate11flow)}
-define frespill_20 {value max(frespill_wn20*Notch_OnOff20 + frespill_w20*(1-Notch_OnOff20), gate11flow)}
-define frespill_21 {value max(frespill_wn21*Notch_OnOff21 + frespill_w21*(1-Notch_OnOff21), gate11flow)}
-define frespill_22 {value max(frespill_wn22*Notch_OnOff22 + frespill_w22*(1-Notch_OnOff22), gate11flow)}
-define frespill_23 {value max(frespill_wn23*Notch_OnOff23 + frespill_w23*(1-Notch_OnOff23), gate11flow)}
-define frespill_24 {value max(frespill_wn24*Notch_OnOff24 + frespill_w24*(1-Notch_OnOff24), gate11flow)}
-define frespill_25 {value max(frespill_wn25*Notch_OnOff25 + frespill_w25*(1-Notch_OnOff25), gate11flow)}
-define frespill_26 {value max(frespill_wn26*Notch_OnOff26 + frespill_w26*(1-Notch_OnOff26), gate11flow)}
-define frespill_27 {value max(frespill_wn27*Notch_OnOff27 + frespill_w27*(1-Notch_OnOff27), gate11flow)}
-define frespill_28 {value max(frespill_wn28*Notch_OnOff28 + frespill_w28*(1-Notch_OnOff28), gate11flow)}
-define frespill_29 {value max(frespill_wn29*Notch_OnOff29 + frespill_w29*(1-Notch_OnOff29), gate11flow*max(0.,min(daysin+1-29.,1.)))}
-define frespill_30 {value max(frespill_wn30*Notch_OnOff30 + frespill_w30*(1-Notch_OnOff30), gate11flow*max(0.,min(daysin+1-30.,1.)))}
-define frespill_31 {value max(frespill_wn31*Notch_OnOff31 + frespill_w31*(1-Notch_OnOff31), gate11flow*max(0.,min(daysin+1-31.,1.)))}
+define frespill_1 {value frespill_wn1*Notch_OnOff1 + frespill_w1*(1-Notch_OnOff1)}
+define frespill_2 {value frespill_wn2*Notch_OnOff2 + frespill_w2*(1-Notch_OnOff2)}
+define frespill_3 {value frespill_wn3*Notch_OnOff3 + frespill_w3*(1-Notch_OnOff3)}
+define frespill_4 {value frespill_wn4*Notch_OnOff4 + frespill_w4*(1-Notch_OnOff4)}
+define frespill_5 {value frespill_wn5*Notch_OnOff5 + frespill_w5*(1-Notch_OnOff5)}
+define frespill_6 {value frespill_wn6*Notch_OnOff6 + frespill_w6*(1-Notch_OnOff6)}
+define frespill_7 {value frespill_wn7*Notch_OnOff7 + frespill_w7*(1-Notch_OnOff7)}
+define frespill_8 {value frespill_wn8*Notch_OnOff8 + frespill_w8*(1-Notch_OnOff8)}
+define frespill_9 {value frespill_wn9*Notch_OnOff9 + frespill_w9*(1-Notch_OnOff9)}
+define frespill_10 {value frespill_wn10*Notch_OnOff10 + frespill_w10*(1-Notch_OnOff10)}
+define frespill_11 {value frespill_wn11*Notch_OnOff11 + frespill_w11*(1-Notch_OnOff11)}
+define frespill_12 {value frespill_wn12*Notch_OnOff12 + frespill_w12*(1-Notch_OnOff12)}
+define frespill_13 {value frespill_wn13*Notch_OnOff13 + frespill_w13*(1-Notch_OnOff13)}
+define frespill_14 {value frespill_wn14*Notch_OnOff14 + frespill_w14*(1-Notch_OnOff14)}
+define frespill_15 {value frespill_wn15*Notch_OnOff15 + frespill_w15*(1-Notch_OnOff15)}
+define frespill_16 {value frespill_wn16*Notch_OnOff16 + frespill_w16*(1-Notch_OnOff16)}
+define frespill_17 {value frespill_wn17*Notch_OnOff17 + frespill_w17*(1-Notch_OnOff17)}
+define frespill_18 {value frespill_wn18*Notch_OnOff18 + frespill_w18*(1-Notch_OnOff18)}
+define frespill_19 {value frespill_wn19*Notch_OnOff19 + frespill_w19*(1-Notch_OnOff19)}
+define frespill_20 {value frespill_wn20*Notch_OnOff20 + frespill_w20*(1-Notch_OnOff20)}
+define frespill_21 {value frespill_wn21*Notch_OnOff21 + frespill_w21*(1-Notch_OnOff21)}
+define frespill_22 {value frespill_wn22*Notch_OnOff22 + frespill_w22*(1-Notch_OnOff22)}
+define frespill_23 {value frespill_wn23*Notch_OnOff23 + frespill_w23*(1-Notch_OnOff23)}
+define frespill_24 {value frespill_wn24*Notch_OnOff24 + frespill_w24*(1-Notch_OnOff24)}
+define frespill_25 {value frespill_wn25*Notch_OnOff25 + frespill_w25*(1-Notch_OnOff25)}
+define frespill_26 {value frespill_wn26*Notch_OnOff26 + frespill_w26*(1-Notch_OnOff26)}
+define frespill_27 {value frespill_wn27*Notch_OnOff27 + frespill_w27*(1-Notch_OnOff27)}
+define frespill_28 {value frespill_wn28*Notch_OnOff28 + frespill_w28*(1-Notch_OnOff28)}
+define frespill_29 {value frespill_wn29*Notch_OnOff29 + frespill_w29*(1-Notch_OnOff29)}
+define frespill_30 {value frespill_wn30*Notch_OnOff30 + frespill_w30*(1-Notch_OnOff30)}
+define frespill_31 {value frespill_wn31*Notch_OnOff31 + frespill_w31*(1-Notch_OnOff31)}
 
 !Fremont spill daily outputs
 define frespill_1dv {alias frespill_1 kind 'FLOW-DELIVERY' units 'CFS'}
@@ -256,7 +249,7 @@ define frespill { value (frespill_1 + frespill_2 + frespill_3 + frespill_4 + fre
 
 define frespilldv {alias frespill kind 'FLOW-DELIVERY' units 'cfs'}
 
-goal actwflow2 { SP_SAC083_YBP037 = frespill}
+goal actwflow2 { SP_SAC083_YBP034 = frespill}
 
 !define QsacFth {alias C_SAC085 + C_FTR003  kind 'flow-channel' units 'cfs'}
 

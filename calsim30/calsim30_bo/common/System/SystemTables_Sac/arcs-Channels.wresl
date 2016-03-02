@@ -22,8 +22,7 @@ define C_AMR020	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_AMR017	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}	
 define C_AMR015	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}	
 define C_AMR009	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}		
-define C_AMR007	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_AMR006	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
+define C_AMR007	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}	
 define C_AMR004	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}		
 define C_ABT002	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_SFA030	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
@@ -33,7 +32,6 @@ define C_NNA013	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_NFA054	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_NFA048	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_NFA022	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_NFA019	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_NFA016	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_NFA011	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_EMD001	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
@@ -56,9 +54,7 @@ define C_ANT010	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_ABN027	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_ABN026	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_ABN024	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_ABN014 {lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_ABN010	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_ABN006	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_ABN000	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_CCK007	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_CCK022	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
@@ -70,9 +66,8 @@ define C_CRC002	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! Barker and Cache Sloughs	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-define C_CSL005		{lower 0 upper 999999 kind 'CHANNEL' units 'CFS'}
-define C_CSL004B	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_CSL004A	{lower -99999 upper 999999 kind 'CHANNEL' units 'CFS'}
+define C_CSL005B	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
+define C_CSL005A	{lower -99999 upper 999999 kind 'CHANNEL' units 'CFS'}
 
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -128,14 +123,11 @@ define C_BRR049 	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_CMBIE 	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_BRR031 	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_BRR028 	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_BRR023 	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
+define C_BRR025 	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_CMPFW 	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_BRR017	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_BRR011	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}	
 define C_BRR004	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-
-!define C_SYC000	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-!define C_SYC002	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 
 define C_DRM000 	{lower 0 upper 840 kind 'CHANNEL' units 'CFS'}! Capacity from PG&E PAD for Drum Spaulding project, 2008.
 define C_DRM001 	{lower 0 upper 840 kind 'CHANNEL' units 'CFS'}
@@ -180,11 +172,10 @@ define C_BTC024	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_BTC018	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_BTC017	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_BTC016	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_BTC015	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_BTC012	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}	
 define C_BTC007	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}	
 define C_BTC003	{lower 0 upper 150000 kind 'CHANNEL' units 'CFS'}
-define C_BSL001a	{lower 0 upper 250 kind 'CHANNEL' units 'CFS'} !Reduced from 99999 to 1500 cfs on 4-26-11 and from 1500 to 250 cfs on 2-21-12
+define C_BSL001a	{lower 0 upper 1500 kind 'CHANNEL' units 'CFS'} !Reduced from 99999 to 1500 on 4-26-11
 define C_BSL001b	{lower 0 upper 150000 kind 'CHANNEL' units 'CFS'}
 define C_BSL004	{lower 0 upper 150000 kind 'CHANNEL' units 'CFS'}
 define C_RFS17		{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}		
@@ -232,8 +223,6 @@ define C_CLV004		{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 !!! California Aqueduct	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 define C_CAA000	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_CAA002	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_CAA003	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 
   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! Clear Creek		!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -264,8 +253,7 @@ define C_CBD000	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 !!! Contra Costa Canal	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 define C_CCC004	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}	
-define C_CCC007	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_ORP000	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
+
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! Cottonwood Creek	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -290,7 +278,7 @@ define C_COW003	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 define C_DRC012	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_DRC010	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}	
-define C_DRC005	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
+define C_DRC006	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -374,15 +362,14 @@ define  C_WEC000  	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define  C_RVC000  	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 
 define C_RVPHB	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_WBF039	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_WBF030	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_WBF015	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_WBF006	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_LGRSV	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_SFF039	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_SFF029	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
+define C_SFF040	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_SFF028	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_SFF020	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
+define C_SFF027	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
+define C_SFF019	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_SFF018	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_SFF011	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_SFF008	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
@@ -440,12 +427,6 @@ define C_HON021	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!! Isolated Facility	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-define C_ISF001_OMR027	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! Jack Slough	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 define C_JCK002	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}	
@@ -455,7 +436,6 @@ define C_JCK002	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 !!! Knights Landing Ridgecut	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 define C_KLR005	{lower 0 upper 999999 kind 'CHANNEL' units 'CFS'}
-define C_KLR006	{lower 0 upper 999999 kind 'CHANNEL' units 'CFS'}
 
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -483,14 +463,6 @@ define C_LCC016	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!! Los Vaquerous		!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-define C_LOSVQ	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_LVP007	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_TRNSF	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! Marsh Creek		!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 define C_MSH015	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
@@ -512,7 +484,7 @@ define C_MNS000	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! Mokelumne River 	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-define C_MOK019 	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
+!define C_MOK018 	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_MOK014 	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_MOK004 	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 
@@ -533,7 +505,6 @@ define C_NBA021 	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! Old and Middle River Combined  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-define C_OMR039	{lower 0      upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_OMR028	{lower -99999 upper 99999 kind 'CHANNEL' units 'CFS'}!Negative lower bounds allows for "backwards" flow from Delta!
 define C_OMR027	{lower -99999 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_OMR024b	{lower 0      upper 99999 kind 'CHANNEL' units 'CFS'}
@@ -569,8 +540,7 @@ define C_PTH007	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 !!! Putah South Canal	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 define C_PSC003	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_PSC006	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_PSC013	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
+define C_PSC006	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}	
 define C_PSC015	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}	
 define C_PSC017	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_PSC020	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
@@ -663,7 +633,6 @@ define C_SAC065	{lower 0 upper 110000 kind 'CHANNEL' units 'CFS'}
 define C_SAC064	{lower 0 upper 110000 kind 'CHANNEL' units 'CFS'}
 define C_SAC063	{lower 0 upper 110000 kind 'CHANNEL' units 'CFS'}	
 define C_SAC062	{lower 0 upper 110000 kind 'CHANNEL' units 'CFS'}
-define C_SAC061	{lower 0 upper 110000 kind 'CHANNEL' units 'CFS'}
 define C_SAC057	{lower 0 upper 110000 kind 'CHANNEL' units 'CFS'}
 define C_SAC053	{lower 0 upper 110000 kind 'CHANNEL' units 'CFS'}	
 define C_SAC050	{lower 0 upper 110000 kind 'CHANNEL' units 'CFS'}	
@@ -679,6 +648,7 @@ define C_SAC017	{lower 0 upper 999999 kind 'CHANNEL' units 'CFS'}
 define C_SAC011	{lower 0 upper 999999 kind 'CHANNEL' units 'CFS'}
 define C_SAC007	{lower 0 upper 999999 kind 'CHANNEL' units 'CFS'}
 define C_SAC003	{lower 0 upper 999999 kind 'CHANNEL' units 'CFS'}
+define C_SAC000	{lower 0 upper 999999 kind 'CHANNEL' units 'CFS'}
 
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -708,10 +678,7 @@ define C_FCS006 	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! Delta	        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-define C_SAC000_ADD	{lower 0 upper 999999 kind 'CHANNEL' units 'CFS'}
-define C_SAC000_MIN	{lower 0 upper 999999 kind 'CHANNEL' units 'CFS'}
-define C_CHIPPS		{lower 0 upper 999999 kind 'CHANNEL' units 'CFS'}
-define C_CHCGO		{lower 0 upper 999999 kind 'CHANNEL' units 'CFS'}
+define C_NDO		{lower 0 upper 99999*taf_cfs kind 'CHANNEL' units 'CFS'}
 !define C_407		{lower 0 upper 99999*taf_cfs kind 'CHANNEL' units 'CFS'}
 !define C_408		{lower -999999 upper 999999 kind 'CHANNEL' units 'CFS'}
 !define C_409		{lower -999999 upper 999999 kind 'CHANNEL' units 'CFS'}
@@ -781,8 +748,7 @@ define C_THM005	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 !!! Hendricks and Toadtown Canal	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 define C_HKC002		{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_TTC002		{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_TTC000		{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
+define C_TTC011		{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -803,12 +769,10 @@ define C_WWC006	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 !!! Willow Slough Bypass	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 define C_WSB000		{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_WSB005		{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! Yolo Bypass		!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-define C_YBP037	{lower 0 upper 999999 kind 'CHANNEL' units 'CFS'}
 define C_YBP034	{lower 0 upper 999999 kind 'CHANNEL' units 'CFS'}
 define C_YBP032	{lower 0 upper 999999 kind 'CHANNEL' units 'CFS'}	
 define C_YBP026	{lower 0 upper 999999 kind 'CHANNEL' units 'CFS'}	
@@ -824,28 +788,22 @@ define C_YBP002	{lower 0 upper 999999 kind 'CHANNEL' units 'CFS'}
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! Yuba River		!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-define C_SCT000	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_SLT009	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_SLT008	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_CMT000	{lower 0 upper 1100  kind 'CHANNEL' units 'CFS'}
-define C_NFY002	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_NFY017	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_NFY029	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_MFY013	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_MFY012	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_MFY005 {lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_LRT000	{lower 0 upper 860   kind 'CHANNEL' units 'CFS'}
-define C_OGN005	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_OGN004	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_SFY007	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_NBLDB	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_YUB039	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_CGT005	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_CGT006	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_YUB034	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_YUB030	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
+define  C_SCT000 	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
+define  C_SLT009 	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
+define  C_SLT008 	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
+define  C_CMT000 	{lower 0 upper 1100  kind 'CHANNEL' units 'CFS'}
+define  C_NFY017 	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
+define  C_NFY029 	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
+define  C_MFY013 	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
+define  C_MFY012 	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
+define  C_LRT000 	{lower 0 upper 860   kind 'CHANNEL' units 'CFS'}
+define  C_OGN005 	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
+define  C_OGN004 	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
+define  C_SFY007 	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
+define  C_NBLDB	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'} 
+define  C_YUB039 	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
+define  C_YUB030 	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_ENGLB	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
-define C_YUB024	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_YUB023	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_YUB022	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}
 define C_YUB014	{lower 0 upper 99999 kind 'CHANNEL' units 'CFS'}

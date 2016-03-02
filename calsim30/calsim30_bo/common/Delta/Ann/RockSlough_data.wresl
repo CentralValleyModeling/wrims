@@ -89,7 +89,7 @@ goal setRS_EC_DSM2 {RS_EC_MonthDSM2 = RS_EC_Month_smooth_sv}
 !   Cl = 0.15*EC - 12      (this is the 'ag. drainage' line)
 ! These two equations intercept at Cl=30.222... and EC=281.481481481...
 define RS_CL_Month_sv {value max(0.285*RS_EC_Month_sv - 50.,
-                                 0.150*RS_EC_Month_sv - 12.,0.0)}
+                                 0.150*RS_EC_Month_sv - 12.)}
 
 define RS_EC_Month {std kind 'SALINITY' units 'UMHOS/CM'}
 define RS_CL_Month {std kind 'SALINITY' units 'MG/L'}
@@ -133,7 +133,7 @@ define RS_EC_Max14Day_sv {
 !   Cl = 0.15*EC - 12      (this is the 'ag. drainage' line)
 ! These two equations intercept at Cl=30.222... and EC=281.481481481...
 define RS_CL_Max14Day_sv {value max(0.285*RS_EC_Max14Day_sv - 50.,
-                                    0.150*RS_EC_Max14Day_sv - 12.,0.0)}
+                                    0.150*RS_EC_Max14Day_sv - 12.)}
 
 define RS_EC_Max14Day {std kind 'SALINITY' units 'UMHOS/CM'}
 define RS_CL_Max14Day {std kind 'SALINITY' units 'MG/L'}
@@ -439,15 +439,18 @@ define RS_Sac_ZeroExp_sv1 {
   case LowCL {
     condition C_SAC041_ANN(-1) >= 40000.
     value  0.}
+  case CritRelax {
+    condition wyt_SAC==Critical .and. RS_m_1_sv >= 1.0
+    value 0.}
   case NoSalinityControlPossible{
     condition abs(RS_m_1_sv) <= 0.001 .and. int(RS_b_1_sv) == 0
     value 0.}
   case NegSlope{
     condition RS_m_1_sv <= 0.0
     value 0.}
-  case LargeNegInt{
-    condition RS_b_1_sv < -10000.0
-    value 0.}  
+  case NegCarriage{
+    condition RS_m_1_sv >= 1.0
+    value 0.}
   case control{
     condition always
     value -RS_b_1_sv/RS_m_1_sv}

@@ -80,8 +80,12 @@ define  indxE321     {value  67}
 !***  Initialize the groundwater system at the first simulation month
 !*********************************************************************
 !*********************************************************************
-define rInitGWSystem  {value InitGWSystem(0) }
-
+define rInitGWSystem {case first{
+                       condition wateryear == bgnWY .and. month == Oct
+                              value InitGWSystem(wateryear,month,1) }     !Returns value of 0 if successfully executed
+                      case other{
+                       condition always
+                              value  0.0 }}
 
 
 !*********************************************************************

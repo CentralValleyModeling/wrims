@@ -12,7 +12,7 @@ define CLann_WTPBUK_03_PU3	{select contract from Contracts_CVPService where dive
 
 define CLann_SHSTA_03_PU1	{select contract from Contracts_CVPService where diversion=14}
 
-define CLann_WTPBLV_03_PU2	{select contract from Contracts_CVPService where diversion=15}
+define CLann_SAC294_03_PU2	{select contract from Contracts_CVPService where diversion=15}
 
 define CLann_SAC294_03_PA	{select contract from Contracts_CVPService where diversion=2}
 
@@ -99,10 +99,9 @@ define CLWF_ANN_SJWD_S   {timeseries kind 'CVPWF-CONTRACT-LIMIT'  units 'TAF'}  
 define CLWF_ANN_ELDOR_ID     {timeseries kind 'CVPWF-CONTRACT-LIMIT'  units 'TAF'}  !
 define CLWF_ANN_ELDOR_CO     {timeseries kind 'CVPWF-CONTRACT-LIMIT'  units 'TAF'}  !
 define CLWF_ANN_SMUD       {timeseries kind 'CVPWF-CONTRACT-LIMIT'  units 'TAF'}  !
-define CLWF_ANN_GSWC       {timeseries kind 'CVPWF-CONTRACT-LIMIT'  units 'TAF'}  !
 define CLWF_ANN_SCWA       {timeseries kind 'CVPWF-CONTRACT-LIMIT'  units 'TAF'}  !
 define CLWF_ANN_ROSEV     {timeseries kind 'CVPWF-CONTRACT-LIMIT'  units 'TAF'}  !
-!define CLWF_ANN_CAREC     {timeseries kind 'CVPWF-CONTRACT-LIMIT'  units 'TAF'}  !
+define CLWF_ANN_CAREC     {timeseries kind 'CVPWF-CONTRACT-LIMIT'  units 'TAF'}  !
 define CLann_ANN_SCWA_FRPT    		{VALUE 0.0}  !
 define CLann_ANN_EBMD_FRPT    		{VALUE 0.0}  !
 
@@ -136,16 +135,16 @@ define anncvpCL_pmi_n { value
       +CLann_WTPBUK_03_PU3
       +CLann_WKYTN_02_PU
       +CLann_SHSTA_03_PU1
-      +CLann_WTPBLV_03_PU2
+      +CLann_SAC294_03_PU2
       +CLWF_ANN_PCWA_A
       +CLWF_ANN_FOLSM
       +CLWF_ANN_SJWD_S
       +CLWF_ANN_ELDOR_ID
       +CLWF_ANN_ELDOR_CO
       +CLWF_ANN_SMUD
-      +CLWF_ANN_GSWC
       +CLWF_ANN_SCWA
       +CLWF_ANN_ROSEV
+      +CLWF_ANN_CAREC
       +CLann_ANN_SCWA_FRPT
       +CLann_ANN_EBMD_FRPT}
 

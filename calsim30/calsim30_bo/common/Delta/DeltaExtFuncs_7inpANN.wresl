@@ -16,12 +16,12 @@ define getFinalMrdo {EXTERNAL f90}
 
 !*************************************************************************************************************
 ! Define External ANN Code AND DLLS
-define AnnLineGen {EXTERNAL interann7inp_roa0slr0.dll}
+define AnnLineGen {EXTERNAL Ann7inp_BST_noSLR_111010.dll}
 
-define AnnEC {EXTERNAL interann7inp_roa0slr0.dll}
+define AnnEC {EXTERNAL Ann7inp_BST_noSLR_111010.dll}
 
-define AnnEC_matchDSM2 {EXTERNAL interann7inp_roa0slr0.dll}
+define AnnEC_matchDSM2 {EXTERNAL Ann7inp_BST_noSLR_111010.dll}
 
-define Ann_X2 {EXTERNAL interann7inp_roa0slr0.dll}
-define getNDO_X2 {EXTERNAL interann7inp_roa0slr0.dll}
-define getNDO_x2_curMonNDOSplit {EXTERNAL interann7inp_roa0slr0.dll}
+define Ann_X2 {EXTERNAL Ann7inp_BST_noSLR_111010.dll}
+define getNDO_X2 {EXTERNAL Ann7inp_BST_noSLR_111010.dll}
+define getNDO_x2_curMonNDOSplit {EXTERNAL Ann7inp_BST_noSLR_111010.dll}

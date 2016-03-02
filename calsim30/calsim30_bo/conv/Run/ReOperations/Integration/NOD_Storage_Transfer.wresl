@@ -18,8 +18,8 @@ define S4_SWPdv {lower unbounded kind 'STORAGE' units 'TAF' }
 
 !Use the May allocation and start using it in June.
 define S4_SWP {
-  case OctbeginWaterYear {
-    condition month==OCT .and. wateryear==beginWaterYear
+  case Oct1922 {
+    condition month==OCT .and. wateryear==1922
     value     0. }
   case Aug {
     condition month==AUG

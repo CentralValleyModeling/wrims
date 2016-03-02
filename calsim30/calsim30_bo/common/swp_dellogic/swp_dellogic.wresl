@@ -30,5 +30,5 @@ INCLUDE 'deliveries\swp_bound_del.wresl'
 goal PerrisSeismic {S27 < 74.}
   !Pumping capacity is not 100% reliable; must take unit outages into account:
 INCLUDE 'conveyance_limits.wresl'
-!INCLUDE 'constraints-GPmin.wresl'
+INCLUDE 'constraints-GPmin.wresl'
 

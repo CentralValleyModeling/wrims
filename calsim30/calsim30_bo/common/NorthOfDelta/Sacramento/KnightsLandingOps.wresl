@@ -2,21 +2,15 @@
 !
 ! ==========================================================================
 !
-define C_SAC093_1         {std kind 'FLOW' units 'CFS'}  ! segment above 15000
-define C_SAC093_0         {std kind 'FLOW' units 'CFS'}  ! segment from 0 to 15000
-define C_SAC093IntFlow    {INTEGER std kind 'INTEGER' units 'NONE'}
+define C_SAC097_1         {std kind 'FLOW' units 'CFS'}  ! segment above 15000
+define C_SAC097_0         {std kind 'FLOW' units 'CFS'}  ! segment from 0 to 15000
+define C_SAC097IntFlow    {INTEGER std kind 'INTEGER' units 'CFS'}
 
-goal C_SAC093SurplusFlow  {C_SAC093 - 15000.0 = C_SAC093_1 - C_SAC093_0}
-goal C_SAC093FlowAbove	  {C_SAC093_1         < 99999.0 - C_SAC093IntFlow*99999.0} ! If C_SAC093 > 15000. then C_SAC093IntFlow = 0
-goal C_SAC093FlowBelow    {C_SAC093_0         < C_SAC093IntFlow*99999.0}           ! If C_SAC093 < 15000. then C_SAC093IntFlow = 1
+goal C_SAC097SurplusFlow  {C_SAC097 - 15000.0 = C_SAC097_1 - C_SAC097_0}
+goal C_SAC097FlowAbove	  {C_SAC097_1         < 99999.0 - C_SAC097IntFlow*99999.0} ! If C_SAC097 > 15000. then C_SAC097IntFlow = 0
+goal C_SAC097FlowBelow    {C_SAC097_0         < C_SAC097IntFlow*99999.0}           ! If C_SAC097 < 15000. then C_SAC097IntFlow = 1
 
-!goal LimitC_CBD000        {C_CBD000 < C_SAC093IntFlow*99999.0}
+goal LimitC_CBD005        {C_CBD005 < C_SAC097IntFlow*99999.0}
 
-define maxCBD001_KLR005   {timeseries kind 'FLOW_MAX' units 'TAF'}
-goal LimitD_CBD001_KLR005 {D_CBD001_KLR005 < maxCBD001_KLR005*taf_cfs + 99999.0 - C_SAC093IntFlow*99999.0}
-
-define C_CBD000_LP {std kind 'flow-channel' units 'cfs'}
-define C_CBD000_HP {std kind 'flow-channel' units 'cfs'}
-goal split_C_CBD000 {C_CBD000 = C_CBD000_LP + C_CBD000_HP}
-
-goal lim_C_CBD000_HP {C_CBD000_HP < C_SAC093IntFlow*99999} 
+define maxCBD005_KLR005   {timeseries kind 'FLOW_MAX' units 'TAF'}
+goal LimitD_CBD005_KLR005 {D_CBD005_KLR005 < maxCBD005_KLR005*taf_cfs + 99999.0 - C_SAC097IntFlow*99999.0}

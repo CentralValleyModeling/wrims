@@ -271,7 +271,7 @@ goal MaxWTS_CAShort {WTS_CAShort < WTS_CA_Stg1 + WTS_CA_Stg2}
 define WTS_SACAcq_Stg1 {std kind 'WTS-Acquisition-Met' units 'taf'}
 define SACAcq_Stg1_Met {
     case first_yr {
-        condition month<APR .and. wateryear==beginWaterYear
+        condition month<APR .and. wateryear==1922
         value 0. }
     case April {
         condition month==APR
@@ -290,7 +290,7 @@ goal set_WTS_SACAcq_Stg1 {WTS_SACAcq_Stg1 = SACAcq_Stg1_Met}
 define WTS_SJRAcq_Stg1 {std kind 'WTS-Acquisition-Met' units 'taf'}
 define SJRAcq_Stg1_Met {
     case first_yr {
-        condition month<APR .and. wateryear==beginWaterYear
+        condition month<APR .and. wateryear==1922
         value 0. }
     case April {
         condition month==APR
@@ -307,7 +307,7 @@ define SACAcq_Stg2_Met {value 0.}
 define WTS_SACAcq_Stg2 {std kind 'WTS-Acquisition-Met' units 'taf'}
 define SACAcq_Stg2_Met {
     case first_yr {
-        condition month<APR .and. wateryear==beginWaterYear
+        condition month<APR .and. wateryear==1922
         value 0. }
     case April {
         condition month==APR
@@ -329,7 +329,7 @@ define SJRAcq_Stg2_Met {value 0.}
 define WTS_SJRAcq_Stg2 {std kind 'WTS-Acquisition-Met' units 'taf'}
 define SJRAcq_Stg2_Met {
     case first_yr {
-        condition month<APR .and. wateryear==beginWaterYear
+        condition month<APR .and. wateryear==1922
         value 0. }
     case April {
         condition month==APR
@@ -346,7 +346,7 @@ goal set_WTS_SJRAcq_Stg2 {WTS_SJRAcq_Stg2 = SJRAcq_Stg2_Met}
 define WTS_CVP_Stg1 {std kind 'WTS-Transfer-Met' units 'taf'}
 define CVP_Stg1_Met {
     case first_yr {
-        condition month<APR .and. wateryear==beginWaterYear
+        condition month<APR .and. wateryear==1922
         value 0. }
     case April {
         condition month==APR
@@ -360,7 +360,7 @@ goal set_WTS_CVP_Stg1 {WTS_CVP_Stg1 = CVP_Stg1_Met}
 define WTS_SWP_Stg1 {std kind 'WTS-Transfer-Met' units 'taf'}
 define SWP_Stg1_Met {
     case first_yr {
-        condition month<APR .and. wateryear==beginWaterYear
+        condition month<APR .and. wateryear==1922
         value 0. }
     case April {
         condition month==APR
@@ -378,7 +378,7 @@ define D815_Stg2_Met {value 0.}
 define WTS_D815_Stg2 {std kind 'WTS-Transfer-Met' units 'taf'}
 define D815_Stg2_Met {
     case first_yr {
-        condition month<APR .and. wateryear==beginWaterYear
+        condition month<APR .and. wateryear==1922
         value 0. }
     case April {
         condition month==APR
@@ -395,7 +395,7 @@ define D885_Stg2_Met {value 0.}
 define WTS_D885_Stg2 {std kind 'WTS-Transfer-Met' units 'taf'}
 define D885_Stg2_Met {
     case first_yr {
-        condition month<APR .and. wateryear==beginWaterYear
+        condition month<APR .and. wateryear==1922
         value 0. }
     case April {
         condition month==APR
@@ -412,7 +412,7 @@ define D895_Stg2_Met {value 0.}
 define WTS_D895_Stg2 {std kind 'WTS-Transfer-Met' units 'taf'}
 define D895_Stg2_Met {
     case first_yr {
-        condition month<APR .and. wateryear==beginWaterYear
+        condition month<APR .and. wateryear==1922
         value 0. }
     case April {
         condition month==APR
@@ -429,7 +429,7 @@ define SPILLED_Stg2 {value 0.}
 define WTS_SPILLED_Stg2 {std kind 'WTS-Spilled' units 'taf'}
 define SPILLED_Stg2 {
     case first_yr {
-        condition month<APR .and. wateryear==beginWaterYear
+        condition month<APR .and. wateryear==1922
         value 0. }
     case April {
         condition month==APR

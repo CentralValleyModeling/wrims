@@ -4,7 +4,7 @@
 
 goal lim_DeltaSurplus {D408_DS < Delta_Surplus}
 */
-goal surplus_to_storage {D408_DS < C422_FILL_CC}
+goal surplus_to_storage {D408_DS < C422_FILL}
 
 
 !*************************
@@ -145,7 +145,7 @@ goal ECC_to_delivery {D408_OR_ECC < C423_DEL}
 define lim_min_div {
 	case LimDiv {
 		condition	MinDiv_switch == 1
-		value		max(0., demand_D420 - S422_CC_maxWQrel)
+		value		max(0., demand_D420 - S422_maxWQrel)
 	}
 	case otherwise {
 		condition	always
@@ -184,12 +184,11 @@ define dem_TX_fcst {
 	}
 	case otherwise {
 		condition	always
-		value		max(0., CCWD_rem_demand - max(0., ann_CVP_alloc - ann_CVP_div) /*- max(0., S422(-1) - S422_CC_level1)*/)
+		value		max(0., CCWD_rem_demand - max(0., ann_CVP_alloc - ann_CVP_div) - max(0., S422(-1) - S422level1))
 	}
 }
 
 define dem_TX_fcst_ {alias dem_TX_fcst kind 'demand-forecast' units 'taf'}
 
 !Limit priority third party transfers
-goal lim_D408_TX_H {D408_TX_H < dem_TX_fcst*taf_cfs}
-
+goal lim_D408_TX_P {D408_TX_P < dem_TX_fcst*taf_cfs}

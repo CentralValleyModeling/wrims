@@ -30,7 +30,7 @@ define D_WTPEDH_ELDID 	{std kind 'DIVERSION' units 'CFS'}
 define D_NTOMA_FSC003 	{std kind 'DIVERSION' units 'CFS'}
 define D_AMR017_WTPBJM 	{std kind 'DIVERSION' units 'CFS'}
 define D_AMR007_WTPFBN 	{std kind 'DIVERSION' units 'CFS'}
-define D_FSC003_FSCLOS 	{std kind 'DIVERSION' units 'CFS'}
+
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! Antelope Creek !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -64,13 +64,13 @@ define D_BCN005_03_NA 	{std kind 'DIVERSION' units 'CFS'}
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! Bear River !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-define D_WLF013_NIDTD 	{std kind 'DIVERSION' units 'CFS'}
+define D_WLF013_TARRD 	{std kind 'DIVERSION' units 'CFS'}
 define D_SPLDG_DRM000 	{std kind 'DIVERSION' units 'CFS'}
 define D_DRM001_BRR074 	{std kind 'DIVERSION' units 'CFS'}
 define D_DRM001_SYC002 	{std kind 'DIVERSION' units 'CFS'}
 define D_SYC002_BRR074 	{std kind 'DIVERSION' units 'CFS'}
 define D_DRM009_CYN010 	{lower 0 upper 42 kind 'DIVERSION' units 'CFS'}
-define D_BRR072_CYN009 	{lower 0 upper 0 kind 'DIVERSION' units 'CFS'}
+define D_BRR072_CYN010 	{lower 0 upper 0 kind 'DIVERSION' units 'CFS'}
 define D_CYN009_TWL005 	{std kind 'DIVERSION' units 'CFS'}
 define D_LBR002_LBC001 	{std kind 'DIVERSION' units 'CFS'}
 define D_BRR050_BEC000 	{std kind 'DIVERSION' units 'CFS'}
@@ -80,9 +80,9 @@ define D_WSE004_24_NA1 	{std kind 'DIVERSION' units 'CFS'}
 define D_WSE004_24_NU3 	{std kind 'DIVERSION' units 'CFS'}
 define D_CBC001_24_NA1 	{std kind 'DIVERSION' units 'CFS'}
 define D_CBC001_CCK036 	{std kind 'DIVERSION' units 'CFS'}
-define D_CBC000_NIDTD 	{std kind 'DIVERSION' units 'CFS'}
+define D_CBC000_NIDDC 	{std kind 'DIVERSION' units 'CFS'}
 define D_BRR017_23_NA 	{std kind 'DIVERSION' units 'CFS'}
-define D_ABN006_23_NA 	{std kind 'DIVERSION' units 'CFS'}
+define D_ABN024_23_NA 	{std kind 'DIVERSION' units 'CFS'}
 define D_BEC021_LBC032 	{std kind 'DIVERSION' units 'CFS'}
 define D_BEC022_WTPBWM 	{std kind 'DIVERSION' units 'CFS'}
 define D_WTPBWM_24_NU1 	{std kind 'DIVERSION' units 'CFS'}
@@ -131,12 +131,7 @@ define D_BSL000_SAC141 	{std kind 'DIVERSION' units 'CFS'}
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 define D_CCH052_20_NA1 	{std kind 'DIVERSION' units 'CFS'}
 define D_CCH030_20_NA1 	{std kind 'DIVERSION' units 'CFS'}
-define D_CLRLK_CLLPT 	{std kind 'DIVERSION' units 'CFS'}
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!! California Aqueduct  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-define D_CAA002_50_PA2 	{std kind 'DIVERSION' units 'CFS'}
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! Clear Creek !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -160,16 +155,17 @@ define D_CBD041_08S_SA1	{std kind 'DIVERSION' units 'CFS'}
 define D_CBD041_08S_SA2	{std kind 'DIVERSION' units 'CFS'}
 define D_CBD037_08S_PR	{std kind 'DIVERSION' units 'CFS'}
 define D_CBD028_08S_PA 	{std kind 'DIVERSION' units 'CFS'}
-define D_CBD028_08S_SA3 	{std kind 'DIVERSION' units 'CFS'}
+define D_CBD023_08S_SA3 	{std kind 'DIVERSION' units 'CFS'}
 define D_CBD001_KLR005 	{std kind 'DIVERSION' units 'CFS'}
+define D_KLR005_21_PA 	{std kind 'DIVERSION' units 'CFS'}
 
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! Contra Costa Water District Sub-Model !!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-define D_CHIPPS_CCC019 	{std kind 'DIVERSION' units 'cfs'} 
-define D_CCC019_CCWD 	{std kind 'DIVERSION' units 'cfs'}
-define D_CCC007_ANTOC 	{std kind 'DIVERSION' units 'cfs'}
+!define D_CCC007_CCWD 	{std kind 'DIVERSION' units 'cfs'} ! TOTAL CCWD DIVERSION
+define D_CCWD 			{std kind 'DIVERSION' units 'cfs'} ! TOTAL CCWD DIVERSION
+!define D_TRNSFR_LOSVQ 	{std kind 'DIVERSION' units 'cfs'}
 
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -194,12 +190,13 @@ define D_COW014_03_NA 	{std kind 'DIVERSION' units 'CFS'}
 !!! Deer Creek !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 define D_DRC010_05_NA		{lower 0. upper 45 kind 'DIVERSION' units 'CFS'} !Deer Creek ID
-define D_DRC005_05_NA		{lower 0. upper 83 kind 'DIVERSION' units 'CFS'} !Stanford Vina Ranch ID
+define D_DRC006_05_NA		{lower 0. upper 83 kind 'DIVERSION' units 'CFS'} !Stanford Vina Ranch ID
 
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! Delta !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+define D_NDO 				{std kind 'DIVERSION' units 'CFS'}
 
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -224,10 +221,9 @@ define D_ELD012_04_NA 	{std kind 'DIVERSION' units 'CFS'}
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! Feather River !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-define D_OROVL_13_NU1 	{lower 0 upper 25 kind 'DIVERSION' units 'CFS'} !Estimate of current canal capacity from SFWPA.
+define D_OROVL_13_NU1 	{std kind 'DIVERSION' units 'CFS'}
 define D_FTR068_THRMF 	{std kind 'DIVERSION' units 'CFS'}
 define D_THRMF_11_NU1 	{std kind 'DIVERSION' units 'CFS'}
-define D_THRMF_12_NU1 	{std kind 'DIVERSION' units 'CFS'}
 define D_THRMA_WEC000 	{std kind 'DIVERSION' units 'CFS'}
 define D_THRMA_JBC000 	{std kind 'DIVERSION' units 'CFS'}
 define D_THRMA_RVC000 	{std kind 'DIVERSION' units 'CFS'}
@@ -257,12 +253,13 @@ define D_FTR008_16_SA 	{std kind 'DIVERSION' units 'CFS'}
 define D_FTR003_17S_SA 	{std kind 'DIVERSION' units 'CFS'}
 
 define D_MNRRH_13_NA 	{std kind 'DIVERSION' units 'CFS'}
-define D_SFF029_SFT000 	{std kind 'DIVERSION' units 'CFS'}
+define D_SFF028_SFT000 	{std kind 'DIVERSION' units 'CFS'}
 define D_SFF011_MNRRH 	{std kind 'DIVERSION' units 'CFS'}
 define D_MNRRH_WTPMNR	{std kind 'DIVERSION' units 'CFS'}
 define D_WTPMNR_13_NU1	{std kind 'DIVERSION' units 'CFS'}
 define D_MNRRH_13_NU2	{std kind 'DIVERSION' units 'CFS'}
 define D_OWC000_13_NA	{std kind 'DIVERSION' units 'CFS'}
+define D_OWC000_RFS13	{std kind 'DIVERSION' units 'CFS'}
 define D_LST004_OWC000	{std kind 'DIVERSION' units 'CFS'}
 define D_WBF030_HKC002	{lower 0.0 upper 125.0 kind 'DIVERSION' units 'CFS'}
 define D_WBF015_MIO023	{lower 0.0 upper 65.0 kind 'DIVERSION' units 'CFS'}
@@ -278,7 +275,7 @@ define D_LDC007_11_SA2	{std kind 'DIVERSION' units 'CFS'}
 define D_FSC003_WTPCOL 	{std kind 'DIVERSION' units 'CFS'}!Coloma WTP
 define D_FSC015_60N_NA2 	{std kind 'DIVERSION' units 'CFS'}
 define D_FSC025_60N_PU 	{std kind 'DIVERSION' units 'CFS'}
-define D_FSC027_MAQ012 	{std kind 'DIVERSION' units 'CFS'}
+define D_FSC027_EBMUD 	{std kind 'DIVERSION' units 'CFS'}
 
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -308,29 +305,17 @@ define D_GCC056_08S_PR 	{std kind 'DIVERSION' units 'CFS'}
 define D_GCC065_08S_PA	{std kind 'DIVERSION' units 'CFS'}
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!! Isolated Facility !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-define D_ISF001_OMR024 	{std kind 'DIVERSION' units 'CFS'}
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! Knights Landing Ridgecut !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-define D_KLR005_21_PA 	{std kind 'DIVERSION' units 'CFS'}
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! Lost Creek !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!! Los Vaquerous !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-define D_MAQ057_LVP007 	{std kind 'DIVERSION' units 'cfs'}
-define D_LOSVQ_TRNSF	{lower -99999 upper 400 kind 'DIVERSION' units 'CFS'}
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! Mokelumne River !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-define DD_MOK004_MOK 	{std kind 'DIVERSION' units 'CFS'}
+define D_MOK004_DD_MOK 	{lower -99999 upper 99999 kind 'DIVERSION' units 'CFS'}
 
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -347,17 +332,16 @@ define D_NBA009_WTPTAB 	{std kind 'DIVERSION' units 'CFS'}
 define D_NBA011_WTPNBR 	{std kind 'DIVERSION' units 'CFS'}
 define D_NBA021_VJB000 	{std kind 'DIVERSION' units 'CFS'}
 define D_VJB000_WTPBNC 	{std kind 'DIVERSION' units 'CFS'}
-define D_VJB000_WTPFMH 	{std kind 'DIVERSION' units 'CFS'}
+define D_VJB000_WTPGVFH 	{std kind 'DIVERSION' units 'CFS'}
 define D_NBA027_WTPAMC 	{std kind 'DIVERSION' units 'CFS'}
 define D_NBA027_WTPJAC 	{std kind 'DIVERSION' units 'CFS'}
 define D_NBA027_NBALOS 	{std kind 'DIVERSION' units 'CFS'}
 
-define D_WTPTAB_TVAFB 	{std kind 'DIVERSION' units 'CFS'}
+define D_WTPTAB_TAFB 	{std kind 'DIVERSION' units 'CFS'}
 define D_WTPBNC_BNCIA 	{std kind 'DIVERSION' units 'CFS'}
-define D_WTPFMH_VLLJO 	{std kind 'DIVERSION' units 'CFS'}
+define D_WTPGVFH_VLLJO 	{std kind 'DIVERSION' units 'CFS'}
 define D_WTPAMC_AMCYN 	{std kind 'DIVERSION' units 'CFS'}
 define D_WTPJAC_NAPA 	{std kind 'DIVERSION' units 'CFS'}
-define D_WTPJAC_AMCYN 	{std kind 'DIVERSION' units 'CFS'}
 
 !Need to define sub-arcs here
 define D_BKR004_NBA009_PRJ 		{std kind 'DIVERSION' units 'CFS'}
@@ -377,16 +361,10 @@ define D_BKR004_NBA009_SCWA_PCO 	{std kind 'DIVERSION' units 'CFS'}
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! Old Middle River (Delta) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-define D_OMR027_CAA000	 	{std kind 'DIVERSION' units 'cfs'}!Banks Pumping Plant to California Aqueduct
-define D_OMR027_CAA000_TD 	{std kind 'DIVERSION' units 'cfs'}!Banks Pumping Plant through Delta to California Aqueduct
-define D_OMR027_CAA000_IF 	{std kind 'DIVERSION' units 'cfs'}!Banks Pumping Plant from Isolated Facility to California Aqueduct 
-
-define D_OMR028_DMC003	 	{std kind 'DIVERSION' units 'cfs'}!Tracy Pumping Plant to Delta-Mendota Canal
-define D_OMR028_DMC003_TD 	{std kind 'DIVERSION' units 'cfs'}!Tracy Pumping Plant through Delta to Delta-Mendota Canal
-define D_OMR028_DMC003_IF 	{std kind 'DIVERSION' units 'cfs'}!Tracy Pumping Plant from Isolated Facility to Delta-Mendota Canal
-
-define D_OMR021_ORP000 	{std kind 'DIVERSION' units 'cfs'}
-define DD_OMR027_OMR 	{std kind 'DIVERSION' units 'CFS'}
+define D_OMR027_CAA000 	{std kind 'DIVERSION' units 'cfs'}!Banks Pumping Plant to California 
+define D_OMR028_DMC003 	{std kind 'DIVERSION' units 'cfs'}!Tracy Pumping Plant to Delta-Men
+define D_OMR021_ORP000 	{std kind 'DIVERSION' units 'cfs'}!
+define D_OMR027_DD_OMR 	{lower -99999 upper 99999 kind 'DIVERSION' units 'CFS'}!Delta Net
 
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -401,10 +379,9 @@ define D_PTH024_PSC003 	{std kind 'DIVERSION' units 'CFS'}
 define D_PSC003_20_PA 	{std kind 'DIVERSION' units 'CFS'}
 define D_PSC003_25_PA1 	{std kind 'DIVERSION' units 'CFS'}
 define D_PSC006_25_PA2 	{std kind 'DIVERSION' units 'CFS'}
-define D_PSC013_WTPDEF 	{std kind 'DIVERSION' units 'CFS'}
 define D_PSC015_CSPSO 	{std kind 'DIVERSION' units 'CFS'}
-define D_PSC017_WTPNBR 	{std kind 'DIVERSION' units 'CFS'}
 define D_PSC020_WTPCMT 	{std kind 'DIVERSION' units 'CFS'}
+define D_PSC017_WTPDEF 	{std kind 'DIVERSION' units 'CFS'}
 define D_PSC024_WTPWMN 	{std kind 'DIVERSION' units 'CFS'}
 define D_PSC024_SIDSH 	{std kind 'DIVERSION' units 'CFS'}
 define D_PSC033_VJB000 	{std kind 'DIVERSION' units 'CFS'}
@@ -438,13 +415,13 @@ define D_SAC281_02_NA	 	{std kind 'DIVERSION' units 'CFS'}
 define D_SAC296_02_SA 	{std kind 'DIVERSION' units 'CFS'}
 define D_SAC273_03_NA 	{std kind 'DIVERSION' units 'CFS'}
 define D_SAC294_03_PA 	{std kind 'DIVERSION' units 'CFS'}
-define D_SAC294_WTPBLV 	{std kind 'DIVERSION' units 'CFS'}
-define D_WTPBLV_03_PU2 	{std kind 'DIVERSION' units 'CFS'}
+define D_SAC294_03_PU2 	{std kind 'DIVERSION' units 'CFS'}
 define D_SAC296_WTPFTH 	{std kind 'DIVERSION' units 'CFS'}
 define D_WTPFTH_03_SU 	{std kind 'DIVERSION' units 'CFS'}
 define D_WTPFTH_02_SU 	{std kind 'DIVERSION' units 'CFS'}
 define D_SAC289_03_SA 	{std kind 'DIVERSION' units 'CFS'}
 define D_SAC240_TCC001 	{std kind 'DIVERSION' units 'CFS'}
+define D_SAC240_CCL005 	{std kind 'DIVERSION' units 'CFS'}
 define D_SAC224_04_NA 	{std kind 'DIVERSION' units 'CFS'}
 define D_SAC240_05_NA 	{std kind 'DIVERSION' units 'CFS'}
 define D_SAC207_GCC007 	{std kind 'DIVERSION' units 'CFS'}
@@ -455,6 +432,7 @@ define D_MTC000_09_NA 	{std kind 'DIVERSION' units 'CFS'}
 define D_SAC185_09_NA 	{std kind 'DIVERSION' units 'CFS'}
 define D_MTC000_09_PR 	{std kind 'DIVERSION' units 'CFS'}
 
+define D_SAC193_BTC032 	{std kind 'DIVERSION' units 'CFS'}
 define D_SAC185_08N_NA 	{std kind 'DIVERSION' units 'CFS'}
 define D_SAC178_08N_SA1 	{std kind 'DIVERSION' units 'CFS'}
 define D_SAC162_09_SA2 	{std kind 'DIVERSION' units 'CFS'}
@@ -479,17 +457,15 @@ define D_SAC077_WTPSRW 	{std kind 'DIVERSION' units 'CFS'}
 define D_WTPSRW_24_NU2 	{std kind 'DIVERSION' units 'CFS'}
 define D_SAC075_22_NA 	{std kind 'DIVERSION' units 'CFS'}
 define D_SAC074_21_SA 	{std kind 'DIVERSION' units 'CFS'}
-define D_SAC074_WTPDWP 	{std kind 'DIVERSION' units 'CFS'}
-define D_WTPDWP_20_NU1 	{std kind 'DIVERSION' units 'CFS'}
 define D_SAC065_WTPBTB 	{std kind 'DIVERSION' units 'CFS'}
 define D_WTPBTB_21_PU 	{std kind 'DIVERSION' units 'CFS'}
 define D_SAC062_WTPSAC 	{std kind 'DIVERSION' units 'CFS'}
 define D_SAC050_FPT013 	{std kind 'DIVERSION' units 'CFS'}
-define D_SAC041_ISF001 	{std kind 'DIVERSION' units 'CFS'}
 define D_SAC030_MOK014 	{std kind 'DIVERSION' units 'CFS'} 
-define DD_SAC017_SACS 	{std kind 'DIVERSION' units 'CFS'}
-define DD_SAC041_SACN 	{std kind 'DIVERSION' units 'CFS'}
-define DD_SAC000_SACW 	{std kind 'DIVERSION' units 'CFS'}
+define D_SAC017_DD_SACS 	{lower -99999 upper 99999 kind 'DIVERSION' units 'CFS'}
+define D_SAC041_DD_SACN 	{lower -99999 upper 99999 kind 'DIVERSION' units 'CFS'}
+define D_SAC000_DD_SACW 	{lower -99999 upper 99999 kind 'DIVERSION' units 'CFS'}
+define D_SAC000_ANTWR 	{std kind 'DIVERSION' units 'CFS'}
 
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -506,26 +482,24 @@ define D_WTPSJP_26N_PU2 	{std kind 'DIVERSION' units 'CFS'}
 define D_WTPSJP_26N_PU3 	{std kind 'DIVERSION' units 'CFS'}
 define D_WTPSJP_26N_NU1 	{std kind 'DIVERSION' units 'CFS'}
 define D_WTPFOL_26S_PU1 	{std kind 'DIVERSION' units 'CFS'}
-define D_WTPVNY_26S_PU1 	{std kind 'DIVERSION' units 'CFS'}
-define D_FOLSM_26S_NU4 		{std kind 'DIVERSION' units 'CFS'}
+define D_WTPFOL_26S_NU4 	{std kind 'DIVERSION' units 'CFS'}
 define D_WTPCOL_26S_PU2 	{std kind 'DIVERSION' units 'CFS'}
 define D_WTPFBN_26N_NU1 	{std kind 'DIVERSION' units 'CFS'}
 define D_WTPFBN_26N_NU3 	{std kind 'DIVERSION' units 'CFS'}
 define D_WTPFBN_26N_NU4 	{std kind 'DIVERSION' units 'CFS'}
 define D_WTPFBN_26S_NU1 	{std kind 'DIVERSION' units 'CFS'}
 define D_WTPFBN_26S_NU2 	{std kind 'DIVERSION' units 'CFS'}
-define D_FOLSM_26S_PU3 		{std kind 'DIVERSION' units 'CFS'}
+define D_FSC003_26S_PU3 	{std kind 'DIVERSION' units 'CFS'}
 define D_WTPBJM_26N_NU2 	{std kind 'DIVERSION' units 'CFS'}
 
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! San Joaquin River !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-define DD_SJR026_SJRE 	{std kind 'DIVERSION' units 'CFS'} 
-define DD_SJR013_SJRW 	{std kind 'DIVERSION' units 'CFS'}
-define D_SJR062_50_PA1	{std kind 'DIVERSION' units 'CFS'}
+define D_SJR026_DD_SJRE 	{lower -99999 upper 99999 kind 'DIVERSION' units 'CFS'}!Delta Net 
+define D_SJR013_DD_SJRW 	{lower -99999 upper 99999 kind 'DIVERSION' units 'CFS'}!Delta Net
+define D_SJR062_50_PA 		{std kind 'DIVERSION' units 'CFS'}
 define D_SJR028_WTPDWS 	{std kind 'DIVERSION' units 'CFS'}
-define D_SJR006_ANTOC 	{std kind 'DIVERSION' units 'CFS'}
 
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -536,6 +510,7 @@ define D_SBP028_17S_PR 	{std kind 'DIVERSION' units 'CFS'}
 define D_SBP014_17S_NA 	{std kind 'DIVERSION' units 'CFS'}
 define D_DWRPS1_16_NA2 	{std kind 'DIVERSION' units 'CFS'}
 define D_DWRPS2_11_NA 	{std kind 'DIVERSION' units 'CFS'}
+define D_DWRPS2_16_SA 	{std kind 'DIVERSION' units 'CFS'}
 define D_SBP012_DWRPS1 	{std kind 'DIVERSION' units 'CFS'}
 define D_SBP021_DWRPS2 	{std kind 'DIVERSION' units 'CFS'}
 
@@ -591,8 +566,6 @@ define D_YBP023_21_SA 	{std kind 'DIVERSION' units 'CFS'}
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 define D_SLT009_SCT000 	{std kind 'DIVERSION' units 'CFS'}
 define D_OGN005_CMT000 	{std kind 'DIVERSION' units 'CFS'}
-define D_NBLDB_CGT005 	{std kind 'DIVERSION' units 'CFS'}
-define D_CGT005_14_NA 	{std kind 'DIVERSION' units 'CFS'}
 define D_MFY013_LRT000 	{std kind 'DIVERSION' units 'CFS'}
 define D_YUB013_14_NA 	{std kind 'DIVERSION' units 'CFS'}
 define D_YUB011_15N_NA2	{std kind 'DIVERSION' units 'CFS'}

@@ -1,7 +1,7 @@
 C*******************************************************************************
 C
 C                  INTEGRATED WATER FLOW MODEL (IWFM)
-C                         *** Version 3.02 ***
+C                         *** Version 3.0 ***
 C
 C*******************************************************************************
 C
@@ -10,8 +10,8 @@ C                         for IWFM Pre-Processing
 C                                (Unit 7)
 C
 C
-C             Project:  C2VSim: California Central Valley Groundwater-Surface Water Simulation Model
-C             Filename: CVelement.dat
+C             Project:  C2VSIM: California Central Valley Groundwater-Surface Water Simulation Model
+C             Filename:  CVelement.dat
 C
 C*******************************************************************************
 C                            File Description

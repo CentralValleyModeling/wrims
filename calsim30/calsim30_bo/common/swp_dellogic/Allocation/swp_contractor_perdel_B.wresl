@@ -115,8 +115,8 @@ define var_deltar_13 {value perdel_ag *tableA_13} !KERN COUNTY WA
 define var_deltar_14 {value perdel_oth*tableA_14} !LITTLEROCK CREEK ID
 define var_deltar_15 {value perdel_mwd*tableA_15} !METROPOLITAN WDSC
 define var_deltar_16 {value perdel_oth*tableA_16} !MOJAVE WA
-define var_deltar_17 {value perdel_oth*tableA_17} !NAPA COUNTY FC&WCD
-define var_deltar_18 {value perdel_ag *tableA_18} !OAK FLAT WD
+define var_deltar_17 {value perdel_ag *tableA_17} !NAPA COUNTY FC&WCD
+define var_deltar_18 {value perdel_oth*tableA_18} !OAK FLAT WD
 define var_deltar_19 {value perdel_oth*tableA_19} !PALMDALE WD
 define var_deltar_20 {value perdel_oth*tableA_20} !SAN BERNARDINO VALLEY MWD
 define var_deltar_21 {value perdel_oth*tableA_21} !SAN GABRIEL VALLEY MWD

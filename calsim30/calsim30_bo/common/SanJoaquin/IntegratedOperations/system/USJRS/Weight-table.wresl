@@ -1,4 +1,4 @@
-Objective obj_SJ_IO_SYS_USJRS = {[F17,-50000000],
+Objective obj = {[F17,-50000000],
 [FIO,-50000000],
 [IIO,-50000000],
 [S17_1,2000000*taf_cfs],

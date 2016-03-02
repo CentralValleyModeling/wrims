@@ -11,8 +11,8 @@ goal switch_swp_integration {CV_IO_F_SWP + CV_IO_R_SWP < switch_SWP*10000.}
 
 
 !For now, no transfer back from SWP or CVP to FWUA in USJRS.
-!goal no_swp_DFS {DIO_S_F < 0}
-!goal no_cvp_DFS {DIO_C_F < 0}
+goal no_swp_DFS {DIO_S_F < 0}
+goal no_cvp_DFS {DIO_C_F < 0}
 
 
 !Use this statement to turn off direct circulation.

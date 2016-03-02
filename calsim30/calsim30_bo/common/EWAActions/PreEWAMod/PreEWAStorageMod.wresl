@@ -170,10 +170,10 @@ goal setS8ewa_pre {S8ewa_preStepsdv = S8ewa_preSteps}
 !introduced the S*ewa_preSteps variable.
 define S1CoDebt {
     case FirstOctober {
-        condition month==oct .and. Wateryear==beginWaterYear
+        condition month==oct .and. Wateryear==1922
         value 0. }
     case OtherOctobers {
-        condition month==oct .and. Wateryear>beginWaterYear
+        condition month==oct .and. Wateryear>1922
         value max(0., S1__z5(-1) - S1(-1)) }
     case ResFill {
         condition always
@@ -181,10 +181,10 @@ define S1CoDebt {
 }
 define S4CoDebt {
     case FirstOctober {
-        condition month==oct .and. Wateryear==beginWaterYear
+        condition month==oct .and. Wateryear==1922
         value 0. }
     case October {
-        condition month==oct .and. Wateryear>beginWaterYear
+        condition month==oct .and. Wateryear>1922
         value max(0., S4CoDebtdv(-1)+(S4__z5(-1)-S4ewa_preStepsDv(-1)) - (S4(-1)-S4_EWA(-1)))}
     case ResFill {
         condition always
@@ -192,10 +192,10 @@ define S4CoDebt {
 }
 define S6CoDebt {
     case FirstOctober {
-        condition month==oct .and. Wateryear==beginWaterYear
+        condition month==oct .and. Wateryear==1922
         value 0. }
     case October {
-        condition month==oct .and. Wateryear>beginWaterYear
+        condition month==oct .and. Wateryear>1922
         value max(0., S6CoDebtdv(-1)+(S6__z5(-1)-S6ewa_preStepsDv(-1)) - (S6(-1)-S6_EWA(-1)))}
     case ResFill {
         condition always
@@ -203,10 +203,10 @@ define S6CoDebt {
 }
 define S8CoDebt {
     case FirstOctober {
-        condition month==oct .and. Wateryear==beginWaterYear
+        condition month==oct .and. Wateryear==1922
         value 0. }
     case October {
-        condition month==oct .and. Wateryear>beginWaterYear
+        condition month==oct .and. Wateryear>1922
         value max(0., S8CoDebtdv(-1)+(S8__z5(-1)-S8ewa_preStepsDv(-1)) - (S8(-1)-S8_EWA(-1)))}
     case ResFill {
         condition always

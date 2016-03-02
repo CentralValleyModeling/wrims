@@ -12,33 +12,31 @@ define S_FOLSMlevel3 {
 define FolInf {value(I_FOLSM + SR_26N*Area_26N_NTOMA + SR_26S*Area_26S_NTOMA + I_NFA022 + I_NFA054 + I_LKVLY + I_MFA001 + I_MFA023 + I_SFA030)*cfs_taf}
 define FolInfEst {sum(i=0,SEP-month,1) (I_FOLSM(i)+SR_26N(i)*Area_26N_NTOMA+SR_26S(i)*Area_26S_NTOMA+I_NFA022(i)+I_NFA054(i)+I_LKVLY(i)+I_MFA001(i)+I_MFA023(i)+I_SFA030(i))*cfs_taf(i) }
 
-define FolDiv {value (WRWF_ANN_PCWA_A + CLWF_ANN_PCWA_A) * perdem_PCWA_AMR +
+define FolDiv {value (WRWF_ANN_PCWA_A + CLWF_ANN_PCWA_A) * perdem_PCWA +
                       WRWF_ANN_NRWD_A                   * perdem_NRWD +
                      (WRWF_ANN_FOLSM  + CLWF_ANN_FOLSM ) * perdem_FOLSM +
                       WRWF_ANN_FOLPR                    * perdem_FOLPR +
-                      WRWF_ANN_SJWD_P                   * perdem_SJWD +
-                     (WRWF_ANN_SJWD_S + CLWF_ANN_SJWD_S) * perdem_SJWD +
+                      WRWF_ANN_SJWD_P                   * perdem_SJWD_P +
+                     (WRWF_ANN_SJWD_S + CLWF_ANN_SJWD_S) * perdem_SJWD_S +
                      (WRWF_ANN_ELDOR + CLWF_ANN_ELDOR_ID + CLWF_ANN_ELDOR_CO) * perdem_ELDOR  +
                      (WRWF_ANN_ROSEV  + CLWF_ANN_ROSEV ) * perdem_ROSEV +
-                      WRWF_ANN_GSWC                     * perdem_GSWC +
-                      WRWF_ANN_CAREC                   * perdem_CAREC +
+                      WRWF_ANN_SCWC                     * perdem_SCWC +
+                      CLWF_ANN_CAREC                   * perdem_CAREC +
                       CLWF_ANN_SMUD                    * perdem_SMUD +
-                      CLWF_ANN_GSWC                    * perdem_GSWC +
                       FSC_Losses * cfs_taf}
 
 define FolDivEst {sum(i=0,SEP-month,1)
-            	    ((WRWF_ANN_PCWA_A(i) + CLWF_ANN_PCWA_A(i)) * perdem_PCWA_AMR(i) +
+            	    ((WRWF_ANN_PCWA_A(i) + CLWF_ANN_PCWA_A(i)) * perdem_PCWA(i) +
                       WRWF_ANN_NRWD_A(i)                      * perdem_NRWD(i) +
                      (WRWF_ANN_FOLSM(i)  + CLWF_ANN_FOLSM(i) ) * perdem_FOLSM(i) +
                       WRWF_ANN_FOLPR(i)                       * perdem_FOLPR(i) +
-                      WRWF_ANN_SJWD_P(i)                      * perdem_SJWD(i) +
-                     (WRWF_ANN_SJWD_S(i) + CLWF_ANN_SJWD_S(i)) * perdem_SJWD(i) +
+                      WRWF_ANN_SJWD_P(i)                      * perdem_SJWD_P(i) +
+                     (WRWF_ANN_SJWD_S(i) + CLWF_ANN_SJWD_S(i)) * perdem_SJWD_S(i) +
                      (WRWF_ANN_ELDOR(i) + CLWF_ANN_ELDOR_ID(i) + CLWF_ANN_ELDOR_CO(i)) * perdem_ELDOR(i)  +
                      (WRWF_ANN_ROSEV(i)  + CLWF_ANN_ROSEV(i) ) * perdem_ROSEV(i) +
-                      WRWF_ANN_GSWC(i)                        * perdem_GSWC(i) +
-                      WRWF_ANN_CAREC(i)                      * perdem_CAREC(i) +
+                      WRWF_ANN_SCWC(i)                        * perdem_SCWC(i) +
+                      CLWF_ANN_CAREC(i)                      * perdem_CAREC(i) +
                       CLWF_ANN_SMUD(i)                       * perdem_SMUD(i) +
-                      CLWF_ANN_GSWC(i)                       * perdem_GSWC(i) +
                       FSC_Losses(i) * cfs_taf(i))}
 
 

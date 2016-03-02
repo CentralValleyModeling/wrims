@@ -1,7 +1,7 @@
 ! R.Wilbur & S. Wu 5/10/05
 
 goal meetJP {
-  lhs D409 + D408_P
+  lhs D409
   case NoSalinityControlPossible{
     condition abs(JP_m_sv) <= 0.001 .and. int(JP_b_sv) == 0
     rhs ExportCap
@@ -20,7 +20,7 @@ goal meetJP {
     lhs<rhs penalty 0}
   case Normal {
     condition always
-    rhs JP_m_sv*C_SACtot_ANN + JP_b_sv
+    rhs JP_m_sv*C_SAC041_ANN + JP_m_sv*C_YBP002 + JP_b_sv
     lhs<rhs penalty 0}
 }
 

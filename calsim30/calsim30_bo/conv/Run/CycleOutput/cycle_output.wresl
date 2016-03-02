@@ -28,9 +28,6 @@ goal setstanpulseC_WKYTN {
 define Stan_C520FW_dv {alias Stan_C520FW kind 'output-cfs' units 'cfs'}
 define Stan_C528FW_dv {alias Stan_C528FW kind 'output-cfs' units 'cfs'}
 define C10InstreamTgtdv {alias C10InstrmTgt1dv[sjrbase] kind 'output-cfs' units 'cfs'}
-define C520InstreamC1 {alias C520INSTREAM[sjrbase] kind 'output-cfs' units 'cfs'}
-define C520INSTGTDV2 {std kind 'output-cfs' units 'cfs'}
-goal setC520INSTGTDV2 {C520INSTGTDV2 = C520INSTGTDV[SJRBASE]}
 
 ! SJR_WQ1
 define[local] C605a_SJRWQ1 {alias C605a[SJR_WQ1]     kind 'FLOW-CHANNEL'  units 'CFS'}
@@ -69,7 +66,7 @@ define[local] C_WKYTN_BASE {alias C_WKYTN[MONTHLYWEIGHTED] kind 'FLOW-CHANNEL' u
 define[local] C_KSWCK_BASE {alias C_KSWCK[MONTHLYWEIGHTED] kind 'FLOW-CHANNEL' units 'CFS'}
 define[local] C_FTR059_BASE {alias C_FTR059[MONTHLYWEIGHTED] kind 'FLOW-CHANNEL' units 'CFS'}
 define[local] C_NTOMA_BASE {alias C_NTOMA[MONTHLYWEIGHTED] kind 'FLOW-CHANNEL' units 'CFS'}
-define[local] C_SAC000_BASE {alias C_SAC000_ADD[MONTHLYWEIGHTED] + C_SAC000_MIN[MONTHLYWEIGHTED] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] C_SAC000_BASE {alias C_SAC000[MONTHLYWEIGHTED] kind 'FLOW-CHANNEL' units 'CFS'}
 define[local] D409_BASE {alias D409[MONTHLYWEIGHTED] kind 'FLOW-DELIVERY' units 'CFS'}
 !
 define[local] S_TRNTY_UPSTREAM {alias S_TRNTY[UPSTREAM] kind 'STORAGE' units 'TAF'}
@@ -82,7 +79,7 @@ define[local] C_WKYTN_UPSTREAM {alias C_WKYTN[UPSTREAM] kind 'FLOW-CHANNEL' unit
 define[local] C_KSWCK_UPSTREAM {alias C_KSWCK[UPSTREAM] kind 'FLOW-CHANNEL' units 'CFS'}
 define[local] C_FTR059_UPSTREAM {alias C_FTR059[UPSTREAM] kind 'FLOW-CHANNEL' units 'CFS'}
 define[local] C_NTOMA_UPSTREAM {alias C_NTOMA[UPSTREAM] kind 'FLOW-CHANNEL' units 'CFS'}
-define[local] C_SAC000_UPSTREAM {alias C_SAC000_ADD[UPSTREAM] + C_SAC000_MIN[UPSTREAM] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] C_SAC000_UPSTREAM {alias C_SAC000[UPSTREAM] kind 'FLOW-CHANNEL' units 'CFS'}
 define[local] D409_UPSTREAM {alias D409[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
 !
 define[local] S_TRNTY_DELTA {alias S_TRNTY[DELTA] kind 'STORAGE' units 'TAF'}
@@ -95,8 +92,21 @@ define[local] C_WKYTN_DELTA {alias C_WKYTN[DELTA] kind 'FLOW-CHANNEL' units 'CFS
 define[local] C_KSWCK_DELTA {alias C_KSWCK[DELTA] kind 'FLOW-CHANNEL' units 'CFS'}
 define[local] C_FTR059_DELTA {alias C_FTR059[DELTA] kind 'FLOW-CHANNEL' units 'CFS'}
 define[local] C_NTOMA_DELTA {alias C_NTOMA[DELTA] kind 'FLOW-CHANNEL' units 'CFS'}
-define[local] C_SAC000_DELTA {alias C_SAC000_ADD[DELTA] + C_SAC000_MIN[DELTA] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] C_SAC000_DELTA {alias C_SAC000[DELTA] kind 'FLOW-CHANNEL' units 'CFS'}
 define[local] D409_DELTA {alias D409[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+
+define[local] S_TRNTY_DELTA2 {alias S_TRNTY[DELTA2] kind 'STORAGE' units 'TAF'}
+define[local] S_SHSTA_DELTA2 {alias S_SHSTA[DELTA2] kind 'STORAGE' units 'TAF'}
+define[local] S_OROVL_DELTA2 {alias S_OROVL[DELTA2] kind 'STORAGE' units 'TAF'}
+define[local] S_FOLSM_DELTA2 {alias S_FOLSM[DELTA2] kind 'STORAGE' units 'TAF'}
+define[local] S11_DELTA2 {alias S11[DELTA2] kind 'STORAGE' units 'TAF'}
+define[local] S12_DELTA2 {alias S12[DELTA2] kind 'STORAGE' units 'TAF'}
+define[local] C_WKYTN_DELTA2 {alias C_WKYTN[DELTA2] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] C_KSWCK_DELTA2 {alias C_KSWCK[DELTA2] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] C_FTR059_DELTA2 {alias C_FTR059[DELTA2] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] C_NTOMA_DELTA2 {alias C_NTOMA[DELTA2] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] C_SAC000_DELTA2 {alias C_SAC000[DELTA2] kind 'FLOW-CHANNEL' units 'CFS'}
+define[local] D409_DELTA2 {alias D409[DELTA2] kind 'FLOW-DELIVERY' units 'CFS'}
 
 !Save cycle results for LV
 define D408_c6 {alias D408[monthlyweighted] kind 'flow-delivery' units 'cfs'}
@@ -126,9 +136,6 @@ define I424_c8 {alias I424[delta] kind 'flow-inflow' units 'cfs'}
 define S422_c8 {alias S422[delta] kind 'storage' units 'taf'}
 define D420_c8 {alias D420[delta] kind 'flow-delivery' units 'cfs'}
 
-define NMFSdaysopen_c8  {alias NMFSdaysopendv[DELTA] kind 'DCC-DAYS-OPEN' UNITS 'NONE'}
-define NMFSMaxExpDCC_c8 {alias NMFS_MaxExpDCCdv[DELTA] kind 'Export-Limit' units 'cfs'}
-
 ! Outputs for US FWS RPA Verification
 define NDO_cyc_MW {alias NDO[monthlyweighted] kind 'flow-ndo' units 'cfs'}
 define D418_cyc_MW {alias D418[monthlyweighted] kind 'flow-delivery' units 'cfs'}
@@ -143,7 +150,7 @@ define[local] C_SAC066_Cycle6 {alias C_SAC066[MONTHLYWEIGHTED] kind 'FLOW-CHANNE
 !define[local] C_SAC048IF400_Cycle6 {alias C_SAC048_IF400[MONTHLYWEIGHTED] kind 'FLOW-CHANNEL' units 'CFS'}
 define[local] C_SAC048_Cycle6 {alias C_SAC048[MONTHLYWEIGHTED] kind 'FLOW-CHANNEL' units 'CFS'}
 
-define[local] SP_SAC083_YBP037_Cycle6 {alias SP_SAC083_YBP037[MONTHLYWEIGHTED] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] SP_SAC083_YBP034_Cycle6 {alias SP_SAC083_YBP034[MONTHLYWEIGHTED] kind 'FLOW-DELIVERY' units 'CFS'}
 define[local] SP_SAC066_YBP020_Cycle6 {alias SP_SAC066_YBP020[MONTHLYWEIGHTED] kind 'FLOW-DELIVERY' units 'CFS'}
 !define[local] D400_Cycle6 {alias D400[MONTHLYWEIGHTED] kind 'FLOW-DELIVERY' units 'CFS'}
 
@@ -159,7 +166,7 @@ define[local] C_SAC048IF400_Cycle7 {alias C_SAC048_IF400[UPSTREAM] kind 'FLOW-CH
 define[local] QsaC_SAC048ns_c7 {alias QsaC_SAC048nospilldv[UPSTREAM] kind 'DEBUG' units 'CFS'}
 define[local] QsaC_SAC048corr_c7 {alias QsaC_SAC048corrdv[UPSTREAM] kind 'DEBUG' units 'CFS'}
 
-define[local] SP_SAC083_YBP037_Cycle7 {alias SP_SAC083_YBP037[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] SP_SAC083_YBP034_Cycle7 {alias SP_SAC083_YBP034[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
 define[local] SP_SAC066_YBP020_Cycle7 {alias SP_SAC066_YBP020[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
 define[local] D400_Cycle7 {alias D400[UPSTREAM] kind 'FLOW-DELIVERY' units 'CFS'}
 !!!!needs to be corrected to 'FLOW-CHANNEL'
@@ -395,7 +402,7 @@ define[local] C_SAC048IF400_Cycle8 {alias C_SAC048_IF400[DELTA] kind 'FLOW-CHANN
 define[local] QsaC_SAC048ns_c8 {alias QsaC_SAC048nospilldv[DELTA] kind 'DEBUG' units 'CFS'}
 define[local] QsaC_SAC048corr_c8 {alias QsaC_SAC048corrdv[DELTA] kind 'DEBUG' units 'CFS'}
 
-define[local] SP_SAC083_YBP037_Cycle8 {alias SP_SAC083_YBP037[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] SP_SAC083_YBP034_Cycle8 {alias SP_SAC083_YBP034[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
 define[local] SP_SAC066_YBP020_Cycle8 {alias SP_SAC066_YBP020[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
 define[local] D400_Cycle8 {alias D400[DELTA] kind 'FLOW-DELIVERY' units 'CFS'}
 

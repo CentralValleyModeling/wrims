@@ -15,7 +15,7 @@ define Antioch_demand {        ! TAF/mon
         condition always
         value 0. }
 }
-goal set_D_SJR006_ANTOC { D_SJR006_ANTOC < Antioch_demand * taf_cfs}
+goal set_D_SAC000_ANTWR { D_SAC000_ANTWR < Antioch_demand * taf_cfs}
 
 !******************************************************************************
 ! Fairfield, Vacaville and Benecia Agreement for Settlement Water

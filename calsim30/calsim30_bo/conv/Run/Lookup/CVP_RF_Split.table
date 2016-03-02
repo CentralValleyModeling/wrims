@@ -1,5 +1,5 @@
 CVP_RF_Split                
-NodeID    Contr   Month   RF1_Pct RF2_Pct
+Node    Contr   Month   RF1_Pct RF2_Pct
 700 1   1   1.00    0.00
 700 1   2   1.00    0.00
 700 1   3   1.00    0.00

@@ -24,15 +24,15 @@ goal calc_WQ421 {WQ421 = WQ408_OR*D408_OR[UPSTREAM]*scale_421 + WQ408_VC*D408_VC
 !Transfer Facility
 define scale_423 {
 	case no_water {
-                condition       C421_TFR[UPSTREAM] + C423_FILL[UPSTREAM] + C422_REL_CC[UPSTREAM] < 0.01
+                condition       C421[UPSTREAM] + C423_FILL[UPSTREAM] + C422_REL[UPSTREAM] < 0.01
 		value		0.
 	}
 	case otherwise {
 		condition	always
-                value           1./(C421_TFR[UPSTREAM] + C423_FILL[UPSTREAM] + C422_REL_CC[UPSTREAM])
+                value           1./(C421[UPSTREAM] + C423_FILL[UPSTREAM] + C422_REL[UPSTREAM])
 	}
 }
-goal calc_WQ423 {WQ423 = WQ421*C421_TFR[UPSTREAM]*scale_423 + WQ424_MOK*C423_FILL[UPSTREAM]*scale_423 + WQ422(-1)*C422_REL_CC[UPSTREAM]*scale_423}
+goal calc_WQ423 {WQ423 = WQ421*C421[UPSTREAM]*scale_423 + WQ424_MOK*C423_FILL[UPSTREAM]*scale_423 + WQ422(-1)*C422_REL[UPSTREAM]*scale_423}
 
 !Los Vaqueros
 

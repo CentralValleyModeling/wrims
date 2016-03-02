@@ -7,5 +7,5 @@ INCLUDE 'banks_pump_allow.wresl'
 INCLUDE '..\..\..\common\export_ops\tracysplit.wresl'
 INCLUDE '..\..\..\common\export_ops\tracy_limits.wresl'
 
-!INCLUDE '..\..\..\common\export_ops\exportratio.wresl'
-!INCLUDE '..\..\..\common\export_ops\april_may_maxexport.wresl'
+INCLUDE '..\..\..\common\export_ops\exportratio.wresl'
+INCLUDE '..\..\..\common\export_ops\april_may_maxexport.wresl'

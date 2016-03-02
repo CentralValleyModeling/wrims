@@ -9,7 +9,7 @@ define wqrelobjdv {std kind 'FLOW-DESIRED' units 'CFS'}
 !
 define wq_releaseobj {
     case first_year {
-	 condition month <= DEC .and. wateryear == beginWaterYear
+	 condition month <= DEC .and. wateryear == 1922
 	 value 0.}
     case notarg0 {
 	 condition DeltaWQReleaseSwitch <= 0
@@ -55,7 +55,7 @@ goal save_relobj {wqrelobjdv = wq_releaseobj}
 ! Further constrain WQ release from NODOS if storage is below 150/300 TAF.
 define release_limit {
     case first_year {
-	 condition month <= DEC .and. wateryear == beginWaterYear
+	 condition month <= DEC .and. wateryear == 1922
 	 value 0.}
     case above200 {
          condition month <= Dec .or. month >=Jul .and. s34(-1) >= 150.*DeltaWQReleaseSwitch

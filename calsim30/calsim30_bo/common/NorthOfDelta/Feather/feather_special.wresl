@@ -52,7 +52,7 @@ define nov_trigger_cfs {
         from      featherfish_058
         where   month = NOV}
 
-define MF_FTR059 {
+define MF_C_FTR059 {
   case October {
     condition month == OCT
     value   0
@@ -68,31 +68,27 @@ define MF_FTR059 {
     value   0
   }
   case November3 {
-    condition month == NOV .and. D419_exp1(prevOCT) <= 300.1
-    value  0
-  }
-  case November4 {
     condition month == NOV
     value   C_FTR059(prevOCT) - 500
   }
   case DecemberToMarch1 {
     condition month >= DEC .AND. month <= MAR .AND.
         int(C_FTR059(prevOCT)) > oct_trigger_cfs .AND. 
-        S_OROVL(prevOCT)+S_OROVL_mod_dv(prevOCT) < S_OROVLlevel5(prevOCT) - .001 .AND. D419_exp1(prevOct) > 300.1 .and.
-        int(C_FTR059(prevNOV)) > nov_trigger_cfs .AND. D419_exp1(prevNov) > 300.1 .and.
-        S_OROVL(prevNOV)+S_OROVL_mod_dv(prevNOV) < S_OROVLlevel5(prevNOV) - .001
+        S_OROVL(prevOCT)+S_OROVL_mod_dv(prevOCT) < S_OROVLlevel5(prevOCT) .AND.
+        int(C_FTR059(prevNOV)) > nov_trigger_cfs .AND.
+        S_OROVL(prevNOV)+S_OROVL_mod_dv(prevNOV) < S_OROVLlevel5(prevNOV)
     value   max(C_FTR059(prevOCT) - 500, C_FTR059(prevNOV) - 500)
   }
   case DecemberToMarch2 {
     condition month >= DEC .AND. month <= MAR .AND.
-    int(C_FTR059(prevOCT)) > oct_trigger_cfs .AND. D419_exp1(prevOct) > 300.1 .and.
-    S_OROVL(prevOCT)+S_OROVL_mod_dv(prevOCT) < S_OROVLlevel5(prevOCT) - .001
+    int(C_FTR059(prevOCT)) > oct_trigger_cfs .AND.
+    S_OROVL(prevOCT)+S_OROVL_mod_dv(prevOCT) < S_OROVLlevel5(prevOCT)
     value   C_FTR059(prevOCT) - 500
   }
   case DecemberToMarch3 {
     condition month >= DEC .AND. month <= MAR .AND.
-    int(C_FTR059(prevNOV)) > nov_trigger_cfs .AND. D419_exp1(prevNov) > 300.1 .and.
-    S_OROVL(prevNOV)+S_OROVL_mod_dv(prevNOV) < S_OROVLlevel5(prevNOV) - .001
+    int(C_FTR059(prevNOV)) > nov_trigger_cfs .AND.
+    S_OROVL(prevNOV)+S_OROVL_mod_dv(prevNOV) < S_OROVLlevel5(prevNOV)
     value   C_FTR059(prevNOV) - 500
   }
   case otherwise {
@@ -101,27 +97,17 @@ define MF_FTR059 {
   }
 }
 
-!Ensure that the state can release sufficient water to meet it's IBU obligations and H&S
-
-define D419_0 {upper 300 kind 'flow-delivery' units 'cfs'}
-define D419_1 {std kind 'flow-delivery' units 'cfs'}
-goal split_D419_EXP1 {D419_Exp1 = D419_0 + D419_1}
-
-define int_HandS {integer std kind 'INTEGER' units 'none'}
-goal boundN_D419_0 {D419_0 > int_HandS * 300}
-goal boundN_D419_1 {D419_1 < int_HandS * 99999}
-
 goal avoidTrigger {
   lhs C_FTR059
   case October {
     condition month == OCT
-    rhs   oct_trigger_cfs + 99999 - 99999*int_HandS
+    rhs   oct_trigger_cfs
     lhs>rhs   penalty 4600
     lhs<rhs   penalty 0
   }
   case November {
     condition month == NOV
-    rhs   max(nov_trigger_cfs, MF_FTR059 + 500) + 99999 - 99999*int_HandS
+    rhs   max(nov_trigger_cfs, MF_C_FTR059 + 500)
     lhs>rhs   penalty 4600
     lhs<rhs   penalty 0
   }
@@ -178,61 +164,29 @@ define minflowFeather {timeseries kind 'FLOW-MIN-REQUIRED' units 'CFS'}
 
 define minflow_C_FTR068 {select minflow from minflow where C_arc=200,month=month}
 goal mnflw_C_FTR068 {C_FTR068_MIF < minflow_C_FTR068}
-goal minflow_C_FTR059 {C_FTR059_MIF < max(MF_FTR059,minflowFeather)} ! below Thermalito return
+goal minflow_C_FTR059 {C_FTR059_MIF < max(MF_C_FTR059,minflowFeather)} ! below Thermalito return
 goal minflow_C_FTR039 {C_FTR039_MIF < minflowFeather} ! below Sunset Pumps
 goal minflow_C_FTR003 {C_FTR003_MIF < minflowFeather} ! at the mouth
 
 
 ! Oroville would be operated only to satify minimum instream and delta conditions if less than 1.0 MAF - Aaron Miller 5/21/08
-define C_OROVL_IBU {std kind 'flow-channel' units 'cfs'}  !Weight with -3000 to replace commented out constraint oro_releases.
-define C_OROVL_EXP {std kind 'flow-channel' units 'cfs'}
-goal split_C_OROVL {C_OROVL = C_OROVL_IBU + C_OROVL_EXP}
-
-define C_OROVL_EXP_max_ {value max(0., I_OROVL + CT_OROVILLE + I_RVPHB + I_WBF030 + I_WBF015 + I_WBF006 + I_NFF027 + I_MFF019 + I_SFF008 + I_SFF011 + I_LGRSV + I_LST007 + D_SLT009_SCT000_SV - D_WBF030_HKC002_SV - D_WBF015_MIO023_SV - D_SFF011_MNRRH_SV - D_LST004_OWC000_SV + (S_OROVL(-1) - 1000. - DrainTar_buffer)*taf_cfs)}
-
-goal lim_C_OROVL_EXP {C_OROVL_EXP < C_OROVL_EXP_max_}
-
-define C_OROVL_EXP_max {alias C_OROVL_EXP_max_ kind 'upper-bound' units 'cfs'}
-
-/*
 goal oro_releases {
     lhs C_OROVL
     case low_storage {
         condition S_OROVL(-1) < 1000. + DrainTar_buffer
-            rhs MF_FTR059
+            rhs MF_C_FTR059
             lhs>rhs penalty 3000.
             lhs<rhs penalty 0 }
     case norm_storage {
         condition always
-            rhs MF_FTR059
+            rhs MF_C_FTR059
             lhs>rhs penalty 0
             lhs<rhs penalty 0 }
 }
-*/
 
 ! Oroville would have physical contraints when reaching lower elevations - Aaron Miller 5/21/08
 ! oro<1250 TAF units 2,4,6 are lost
 ! oro<850 TAF units 1,3,5 are lost
-define C_OROVL_valve {upper 1500 kind 'flow-channel' units 'cfs'}
-define C_OROVL_PP135 {upper 7200 kind 'flow-channel' units 'cfs'}
-define C_OROVL_Rem {std kind 'flow-channel' units 'cfs'}
-goal split_C_OROVL2 {C_OROVL = C_OROVL_valve + C_OROVL_PP135 + C_OROVL_Rem}
-
-define C_OROVL_Rem_max_ {value max(0., I_OROVL + CT_OROVILLE + I_RVPHB + I_WBF030 + I_WBF015 + I_WBF006 + I_NFF027 + I_MFF019 + I_SFF008 + I_SFF011 + I_LGRSV + I_LST007 + D_SLT009_SCT000_SV - D_WBF030_HKC002_SV - D_WBF015_MIO023_SV - D_SFF011_MNRRH_SV - D_LST004_OWC000_SV + (S_OROVL(-1) - 1250.)*taf_cfs)}
-define C_OROVL_PP135_max_ {value max(0., I_OROVL + CT_OROVILLE + I_RVPHB + I_WBF030 + I_WBF015 + I_WBF006 + I_NFF027 + I_MFF019 + I_SFF008 + I_SFF011 + I_LGRSV + I_LST007 + D_SLT009_SCT000_SV - D_WBF030_HKC002_SV - D_WBF015_MIO023_SV - D_SFF011_MNRRH_SV - D_LST004_OWC000_SV + (S_OROVL(-1) - 850.)*taf_cfs)}
-
-goal lim_C_OROVL_Rem {C_OROVL_Rem < C_OROVL_Rem_max_}
-!goal lim_C_OROVL_PP135 {C_OROVL_PP135 < C_OROVL_PP135_max_}
-goal lim_C_OROVL_PP135 {
-    lhs C_OROVL_PP135
-    rhs C_OROVL_PP135_max_
-    lhs<rhs penalty 0
-    lhs>rhs penalty 99999}
-
-define C_OROVL_Rem_max {alias C_OROVL_Rem_max_ kind 'upper-bound' units 'cfs'}
-define C_OROVL_PP135_max {alias C_OROVL_PP135_max_ kind 'upper-bound' units 'cfs'}
-
-/*
 goal river_valve_flow {
     lhs C_OROVL
     case river_valve_only {
@@ -250,4 +204,4 @@ goal river_valve_flow {
         rhs 17000.
         lhs>rhs penalty 0
         lhs<rhs penalty 0 }
-}*/
+}

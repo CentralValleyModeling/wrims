@@ -1,6 +1,6 @@
 ! NegCarriageOpsLimit.wresl
 
-define est_exp_2 {value max(ExportCap,EstTotExpTD)}
+define est_exp_2 {value max(ExportCap,EstTotExp)}
 define exp_est_total_2 {alias est_exp_2 kind 'ESTIMATE' units 'CFS'}
 
 !Emmaton

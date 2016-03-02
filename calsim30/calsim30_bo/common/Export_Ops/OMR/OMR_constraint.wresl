@@ -19,7 +19,6 @@ define Qexp_Max {value min(MAXEXP_RPA,Qexp_pulseperiod) }
 
 ! How much of CCWD estimated demand will impact OMR flows?
 define CCWDFraction {value (D408_OR_max + D408_VC_max)/(D408_RS_max + D408_OR_max + D408_VC_max)}
-define Qsod_noExp { value 0. + D408D416_est*CCWDFraction + netDICU_SOD}
 !
 define Qsod_VAMPperiod { value Qexp_Max + D408D416_est*CCWDFraction + netDICU_SOD}
 define Qomr_VAMPperiod { value coefA*C639[VAMP_AND_DO]+coefb*Qsod_VAMPperiod+coefc}
@@ -53,10 +52,7 @@ define C_OMR014_limit_init {
 define Qsod_HandS { value max(tracyminpump + banksminpump,HandS_minpump) + D408D416_est*CCWDFraction + netDICU_SOD}
 define Qomr_HandS { value coefA*C639[VAMP_AND_DO]+coefb*Qsod_HandS+coefc}
 define Qomr_HandSdv {alias Qomr_HandS kind 'FLOW-CHANNEL' units 'CFS'}
-define Qomr_noExp { value coefA*C639[VAMP_AND_DO]+coefb*Qsod_noExp+coefc}
-define Qomr_noExpdv {alias Qomr_noExp kind 'FLOW-CHANNEL' units 'CFS'}
-!define C_OMR014_limit {value min(C_OMR014_limit_init,Qomr_HandS)}
-define C_OMR014_limit {value min(C_OMR014_limit_init,Qomr_noExp)}
+define C_OMR014_limit {value min(C_OMR014_limit_init,Qomr_HandS)}
 define C_OMR014_LBound  {alias C_OMR014_limit kind 'FLOW-LBOUND' units 'CFS'}
 !
 goal bound_Qomr { C_OMR014 > C_OMR014_limit }
@@ -65,73 +61,23 @@ goal bound_Qomr { C_OMR014 > C_OMR014_limit }
 !*********************************************************************************************
 ! C_OMR014_Base represents the OMR flow not including COA related pumping at Banks or Tracy
 define C_OMR014_NoEXP1  {lower -99999*taf_cfs upper 99999*taf_cfs kind 'FLOW-CHANNEL' units 'CFS'}
-goal set_C_OMR014NoEXP1 {C_OMR014_NoEXP1 - C_OMR014 = D419_EXP1_TD + D418_EXP1_TD + D419_CVPDEDEX1TD + D408_P_WHL_SB_E1 + D408_P_WHL_SF_E1}
-
-!Calculate how much OMR flow needs to be increased from
-!the UPSTREAM cycle in order to meet the OMR flow criteria.
-define OMR_increase {value max(0., C_OMR014_limit - C_OMR014[UPSTREAM])}
-
-!Calculate the amount exports must be decreased from 
-!the UPSTREAM cycle in order to achieve the OMR flow increase calculated above.
-define Export_dec {value max(0.,-OMR_increase/coefB)}
-
-!If SWP exports in the UPSTREAM cycle were greater than CVP exports, 
-!the first decrease will be applied to SWP exports until OMR is met
-!or SWP exports equal CVP exports.
-define SWP_exp_dec {value max(0.,min(Export_dec, D419_swp_TD[UPSTREAM] - D418_TD[UPSTREAM]
-                          - D419_CVPDEDEX1TD[UPSTREAM] /*- D408_P_WHL_SB_E1[UPSTREAM] - D408_P_WHL_SF_E1[UPSTREAM]*/))}
-
-!If CVP exports in the UPSTREAM cycle were greater than SWP exports, 
-!the first decrease will be applied to CVP exports until OMR is met
-!or CVP exports equal SWP exports.
-define CVP_exp_dec {value max(0.,min(Export_dec, D418_TD[UPSTREAM] + D419_CVPDEDEX1TD[UPSTREAM] 
-                              /*+ D408_P_WHL_SB_E1[UPSTREAM] + D408_P_WHL_SF_E1[UPSTREAM] */- D419_swp_TD[UPSTREAM]))}
-
-!Once exports are equal and if further cuts to exports must be made, 
-!cuts will be made equally by this combined amount.
-define Comb_exp_dec {value max(0., Export_dec - SWP_exp_dec - CVP_exp_dec)}
-
-define OMR_increase_ {alias OMR_increase kind 'temp' units 'cfs'}
-define Export_dec_   {alias Export_dec kind 'temp' units 'cfs'}
-define SWP_exp_dec_  {alias SWP_exp_dec kind 'temp' units 'cfs'}
-define CVP_exp_dec_  {alias CVP_exp_dec kind 'temp' units 'cfs'}
-define Comb_exp_dec_ {alias Comb_exp_dec kind 'temp' units 'cfs'}
-
-/*
+goal set_C_OMR014NoEXP1 {C_OMR014_NoEXP1 - C_OMR014 = D419_EXP1_TD + D418_EXP1_TD + D419_CVPDEDEX1TD}
+!
 goal bound_D419 {
-  lhs     D419_EXP1_TD + D408_P_WHL_SB_E1
+  lhs     D419_EXP1_TD
   case FWSBOActions{
-  condition month>=dec .and. month<=jun
+  condition month>=dec .or. month<=jun
     rhs     0.5*C_OMR014_NoEXP1 - 0.5*C_OMR014_limit
     lhs>rhs    penalty 1285
     lhs<rhs penalty    0}
 }
 !
 goal bound_D418 {
-  lhs     D418_EXP1_TD + D419_CVPDEDEX1TD + D408_P_WHL_SF_E1
+  lhs     D418_EXP1_TD + D419_CVPDEDEX1TD
   case FWSBOActions{
-    condition month>=dec .and. month<=jun
+    condition month>=dec .or. month<=jun
     rhs     0.5*C_OMR014_NoEXP1 - 0.5*C_OMR014_limit
     lhs>rhs    penalty 1285
     lhs<rhs penalty    0}
-}*/
-
-!Implement shared export capacity under the OMR constraint for SWP exports.
-goal bound_D419 {
-  lhs     D419_swp_TD
-  case FWSBOActions {
-  condition   month>=dec .and.  month<=jun 
-    rhs     D419_swp_TD[UPSTREAM] - swp_exp_dec - 0.5*comb_exp_dec
-    lhs>rhs    penalty 1285
-    lhs<rhs penalty    0}
 }
 
-!Implement shared export capacity under the OMR constraint for CVP exports.
-goal bound_D418 {
-  lhs     D418_TD + D419_CVPDEDEX1TD /*+ D408_P_WHL_SF_E1*/
-  case FWSBOActions {
-    condition   month>=dec .and.  month<=jun    
-    rhs     D418_TD[UPSTREAM] - cvp_exp_dec - 0.5*comb_exp_dec
-    lhs>rhs    penalty 1285
-    lhs<rhs penalty    0}
-}

@@ -1,6 +1,6 @@
 
 goal meetAN {
-  lhs D409 + D408_P
+  lhs D409
   case NoSalinityControlPossible{
     condition abs(AN_m_sv) <= 0.001 .and. int(AN_b_sv) == 0
     rhs ExportCap
@@ -19,6 +19,6 @@ goal meetAN {
     lhs<rhs penalty 0}*/
   case Normal {
     condition always
-    rhs AN_m_sv*C_SACtot_ANN + AN_b_sv
+    rhs AN_m_sv*C_SAC041_ANN + AN_m_sv*C_YBP002 + AN_b_sv
     lhs<rhs penalty 0}
 }

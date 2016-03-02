@@ -9,4 +9,4 @@
 define CL_FPT013_EBMUD    {timeseries kind 'ALLOC-CVP-MI' units 'TAF' convert 'CFS'} !Allocation amount for EBMUD Freeport
 
 goal setD_FPT013_FSC013   {D_FPT013_FSC013 < CL_FPT013_EBMUD} ! Contract limit
-goal setD_FSC027_MAQ012   {D_FSC027_MAQ012 = D_FPT013_FSC013} ! Water diverted at Freeport for EBMUD is delivered at end of Folsom South Canal
+goal setD_FSC027_EBMUD   {D_FSC027_EBMUD = D_FPT013_FSC013} ! Water diverted at Freeport for EBMUD is delivered at end of Folsom South Canal

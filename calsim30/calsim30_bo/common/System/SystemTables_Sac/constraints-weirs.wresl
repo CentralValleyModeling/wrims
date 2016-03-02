@@ -258,7 +258,7 @@ define fwslope1 {value 0.645}
 define fwslope2 {value 0.8566}
 
 ! weir flow will be a sum of all the segment's linearized functions
-goal actfwflow {SP_SAC083_YBP037 = fwslope0*SAC083in_0 + fwslope1*SAC083in_2 - fwslope1*SAC083in_0 + fwslope2*SAC083in_3 }
+goal actfwflow {SP_SAC083_YBP034 = fwslope0*SAC083in_0 + fwslope1*SAC083in_2 - fwslope1*SAC083in_0 + fwslope2*SAC083in_3 }
 
 ! integer variable to bound segments for proper filling step by step
 define int_fweir1 {INTEGER STD KIND 'INTEGER' UNITS 'NONE'}

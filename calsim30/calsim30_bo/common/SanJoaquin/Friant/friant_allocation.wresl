@@ -72,8 +72,8 @@ define Class1_delivered {
         case march {
             condition month == mar
             value 0.0 }
-        case initialCase {
-            condition month < mar .and. wateryear == beginWaterYear
+        case initial {
+            condition month < mar .and. wateryear == 1922
             value 0.0 }
         case otherwise {
             condition always
@@ -98,7 +98,7 @@ define class1_alloc {
            condition   month >= mar .and. month <= jun
             value max(0.0, min(Fr_WS_for_cor, Class1_max - Class1_delivered)) }
         case firstmonth {
-            condition wateryear == beginWaterYear .and. month == oct
+            condition wateryear == 1922 .and. month == oct
             value 0.0 }
         case otherwise {
             condition   always
@@ -261,8 +261,8 @@ define Class2_delivered {
         case march {
             condition month == mar
             value 0.0 }
-        case initialCase {
-            condition month < mar .and. wateryear == beginWaterYear
+        case initial {
+            condition month < mar .and. wateryear == 1922
             value 0.0 }
         case otherwise {
             condition always
@@ -273,7 +273,7 @@ define Class2_alloc {
             condition month == mar
             value min(Class2_max, Fr_WS_for - Class1_alloc - Fr_for_spill) }
         case initial {
-            condition month <= feb .and. wateryear == beginWaterYear
+            condition month <= feb .and. wateryear == 1922
             value 0.0 }
         case aprthrumay {
             condition month >= apr .and. month <= may
@@ -294,7 +294,7 @@ define class2_alloc {
            condition   month >= mar .and. month <= jun
             value max(0.0, min(Fr_WS_for_cor - Class1_alloc - Fr_for_spill_cor, Class2_max - Class2_delivered)) }
         case firstmonth {
-            condition wateryear == beginWaterYear .and. month == oct
+            condition wateryear == 1922 .and. month == oct
             value 0.0 }
         case otherwise {
             condition   always

@@ -15,7 +15,7 @@ define JPReqSac {
     value 0.}
   case control{
     condition month >= Apr .and. month <= Aug
-    value max(0., (EstTotExpTD-JP_b_sv)/JP_m_sv)}
+    value max(0., (EstTotExp-JP_b_sv)/JP_m_sv)}
   case other {
     condition  always
     value 0.}

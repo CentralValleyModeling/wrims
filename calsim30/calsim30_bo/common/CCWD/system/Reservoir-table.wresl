@@ -1,6 +1,7 @@
 define S422_1 {std kind 'STORAGE-ZONE' units 'TAF'}
+define S422_2 {std kind 'STORAGE-ZONE' units 'TAF'}
 define S422 {std kind 'STORAGE' units 'TAF'} !Los Vaqueros
-goal storage422 {S422=S422_1}
+goal storage422 {S422=S422_1+S422_2}
 define F422 {std kind 'FLOW-SPILL-NON-RECOV' units 'CFS'}
 define E422 {lower unbounded kind 'EVAPORATION' units 'CFS'}
 define A422 {std kind 'SURFACE-AREA' units 'ACRES'}

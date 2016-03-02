@@ -140,8 +140,5 @@ goal bound_D418qwest {
   lhs<rhs penalty    0}
 
 !
-define VernQdv    {alias VernQ  kind 'FLOW-CHANNEL' units 'CFS'} ! for QAQC
-define casedefdv  {alias casedef  kind 'SELECTOR' units 'NONE'} ! for QAQC
-
 define OMFlow    {alias C_OMR014  kind 'FLOW-CHANNEL' units 'CFS'} ! for output
 define QWestFlow {alias C_SJR013 kind 'FLOW-CHANNEL' units 'CFS'} ! for output

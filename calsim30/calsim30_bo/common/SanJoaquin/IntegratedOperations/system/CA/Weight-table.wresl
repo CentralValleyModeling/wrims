@@ -1,4 +1,4 @@
-Objective obj_SJ_IO_SYS_CA = {[CV_IO_F_SWP,396250],
+Objective obj = {[CV_IO_F_SWP,396250],
 [CV_IO_R_SWP_SLR,3810],
 [CV_IO_R_SWP_SH,3750],
 [CV_IO_R_SWP_SLS,4974],

@@ -38,8 +38,8 @@ define S_TRNTYFillAmt {
         condition month==OCT
         value 0. }
     case ResFill {
-        condition S_TRNTY(-1) > S1level4_prev-.5
-        value max(S_TRNTY(-1)-S_TRNTY(-2),0.) }
+        condition S1(-1) > S1level4_prev-.5
+        value max(S1(-1)-S1(-2),0.) }
     case otherwise {
         condition always 
         value 0. }

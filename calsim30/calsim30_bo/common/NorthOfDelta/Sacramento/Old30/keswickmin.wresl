@@ -1,4 +1,4 @@
-define MF_KSWCK {timeseries kind 'flow-min-required' units 'CFS'}
+define MF_C_KSWCK {timeseries kind 'flow-min-required' units 'CFS'}
 
 define keswick_min {lower -999999.0 upper 999999.0 kind 'alias' units 'CFS'}
 
@@ -9,7 +9,7 @@ define tempcntrl_surrogate {
                 use    linear
                 where  month=month}
 
-define effective_c_KSWCKmin { value max(MF_KSWCK,tempcntrl_surrogate) }
+define effective_c_KSWCKmin { value max(MF_C_KSWCK,tempcntrl_surrogate) }
 
 Goal  setkeswick_min { keswick_min =effective_c_KSWCKmin}
 

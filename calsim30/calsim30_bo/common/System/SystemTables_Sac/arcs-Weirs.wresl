@@ -24,7 +24,7 @@ define	SP_SAC148_BTC003	{std kind 'RIVER-SPILLS' units 'CFS'}
 ! Tisdale Weir
 define	SP_SAC122_SBP021	{std kind 'RIVER-SPILLS' units 'CFS'}
 ! Fremont Weir
-define	SP_SAC083_YBP037	{std kind 'RIVER-SPILLS' units 'CFS'}
+define	SP_SAC083_YBP034	{std kind 'RIVER-SPILLS' units 'CFS'}
 ! Sacramento Weir
 define	SP_SAC066_YBP020	{std kind 'RIVER-SPILLS' units 'CFS'}
 

@@ -120,12 +120,12 @@ define DL_60N_PU     {std kind 'DELIVERY-LOSS' units 'CFS'}
 !==============================
 ! EBMUD
 !==============================
-define EF_FSC027_MAQ012  {value 0.05001}
-define SF_FSC027_MAQ012  {value 0.04999}
+define EF_FSC027_EBMUD  {value 0.05001}
+define SF_FSC027_EBMUD  {value 0.04999}
 
-define DL_FSC027_MAQ012  {std kind 'DELIVERY-LOSS'    units 'CFS'}
-define EL_FSC027_MAQ012  {std kind 'EVAPORATIVE-LOSS' units 'CFS'}
-define SL_FSC027_MAQ012  {std kind 'SEEPAGE-LOSS'     units 'CFS'}
+define DL_FSC027_EBMUD  {std kind 'DELIVERY-LOSS'    units 'CFS'}
+define EL_FSC027_EBMUD  {std kind 'EVAPORATIVE-LOSS' units 'CFS'}
+define SL_FSC027_EBMUD  {std kind 'SEEPAGE-LOSS'     units 'CFS'}
 
 define DL_EBMUD     {std kind 'DELIVERY-LOSS' units 'CFS'}
 */

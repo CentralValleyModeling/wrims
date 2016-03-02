@@ -425,8 +425,8 @@ define carryover_final {value
  carryover_final_29  +
  carryover_final_30  }
  
- !define co_final_dv {alias carryover_final kind 'carryover' units 'taf'}
- goal set_co_final {co_final_dv = carryover_final} 
+ define co_final_dv {alias carryover_final kind 'carryover' units 'taf'}
+ 
 
 define antco_dv_1  {alias carryover_final_1  kind 'swp-output' units 'taf'} !ALAMEDA COUNTY FC&WCD-ZONE 7
 define antco_dv_2  {alias carryover_final_2  kind 'swp-output' units 'taf'} !ALAMEDA COUNTY WD

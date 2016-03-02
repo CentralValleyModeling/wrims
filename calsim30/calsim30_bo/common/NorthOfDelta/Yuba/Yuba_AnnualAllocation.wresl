@@ -268,17 +268,17 @@ goal minpowerrelease_SEP 	{lhs COLGATE_SEP
 	case other 		{condition always rhs 0.0 lhs>rhs constrain lhs<rhs constrain}}	
 
 !minimum instream flow d/s of New Bullards Bar
-define MF_NBB {value 5.}
+define MF_C_NBB {value 5.}
 
-goal minflowNBB_APR {C_NBB_MIF_APR<MF_NBB}
-goal minflowNBB_MAY {C_NBB_MIF_MAY<MF_NBB}
-goal minflowNBB_JUN {C_NBB_MIF_JUN<MF_NBB}
-goal minflowNBB_JUL {C_NBB_MIF_JUL<MF_NBB}
-goal minflowNBB_AUG {C_NBB_MIF_AUG<MF_NBB}
-goal minflowNBB_SEP {C_NBB_MIF_SEP<MF_NBB}
+goal minflowNBB_APR {C_NBB_MIF_APR<MF_C_NBB}
+goal minflowNBB_MAY {C_NBB_MIF_MAY<MF_C_NBB}
+goal minflowNBB_JUN {C_NBB_MIF_JUN<MF_C_NBB}
+goal minflowNBB_JUL {C_NBB_MIF_JUL<MF_C_NBB}
+goal minflowNBB_AUG {C_NBB_MIF_AUG<MF_C_NBB}
+goal minflowNBB_SEP {C_NBB_MIF_SEP<MF_C_NBB}
 
 !minimum instream flow at Smartsville
-define MIF_YUB024_APR {
+define MIF_YUB023_APR {
 	case Wet {
         	condition wytype_YUBA == 1
         	select Wet   from Yuba_LowerYubaMinflow where C_arc=237,standard = MinFlowCrit,month=7}
@@ -299,7 +299,7 @@ define MIF_YUB024_APR {
         	select Ecrit from Yuba_LowerYubaMinflow where C_arc=237,standard = MinFlowCrit,month=7}
         }
        	
-define MIF_YUB024_MAY {
+define MIF_YUB023_MAY {
 	case Wet {
 	        condition wytype_YUBA == 1
 	        select Wet   from Yuba_LowerYubaMinflow where C_arc=237,standard = MinFlowCrit,month=8}
@@ -320,7 +320,7 @@ define MIF_YUB024_MAY {
 	        select Ecrit from Yuba_LowerYubaMinflow where C_arc=237,standard = MinFlowCrit,month=8}
         }
 
-define MIF_YUB024_JUN {
+define MIF_YUB023_JUN {
 	case Wet {
 	        condition wytype_YUBA == 1
 	        select Wet   from Yuba_LowerYubaMinflow where C_arc=237,standard = MinFlowCrit,month=9}
@@ -341,7 +341,7 @@ define MIF_YUB024_JUN {
 	        select Ecrit from Yuba_LowerYubaMinflow where C_arc=237,standard = MinFlowCrit,month=9}
         }
 
-define MIF_YUB024_JUL {        
+define MIF_YUB023_JUL {        
 	case Wet {
         	condition wytype_YUBA == 1
         	select Wet   from Yuba_LowerYubaMinflow where C_arc=237,standard = MinFlowCrit,month=10}
@@ -362,7 +362,7 @@ define MIF_YUB024_JUL {
         	select Ecrit from Yuba_LowerYubaMinflow where C_arc=237,standard = MinFlowCrit,month=10}
         }
        	
-define MIF_YUB024_AUG {      	
+define MIF_YUB023_AUG {      	
 	case Wet {
         	condition wytype_YUBA == 1
         	select Wet   from Yuba_LowerYubaMinflow where C_arc=237,standard = MinFlowCrit,month=11}
@@ -383,7 +383,7 @@ define MIF_YUB024_AUG {
         	select Ecrit from Yuba_LowerYubaMinflow where C_arc=237,standard = MinFlowCrit,month=11}
         }
 
-define MIF_YUB024_SEP {
+define MIF_YUB023_SEP {
 	case Wet {
 	        condition wytype_YUBA == 1
 	        select Wet   from Yuba_LowerYubaMinflow where C_arc=237,standard = MinFlowCrit,month=12}
@@ -405,12 +405,12 @@ define MIF_YUB024_SEP {
         }
 
 
-goal minflowEB_APR {C_EB_MIF_APR<MIF_YUB024_APR}
-goal minflowEB_MAY {C_EB_MIF_MAY<MIF_YUB024_MAY}
-goal minflowEB_JUN {C_EB_MIF_JUN<MIF_YUB024_JUN}
-goal minflowEB_JUL {C_EB_MIF_JUL<MIF_YUB024_JUL}
-goal minflowEB_AUG {C_EB_MIF_AUG<MIF_YUB024_AUG}
-goal minflowEB_SEP {C_EB_MIF_SEP<MIF_YUB024_SEP}
+goal minflowEB_APR {C_EB_MIF_APR<MIF_YUB023_APR}
+goal minflowEB_MAY {C_EB_MIF_MAY<MIF_YUB023_MAY}
+goal minflowEB_JUN {C_EB_MIF_JUN<MIF_YUB023_JUN}
+goal minflowEB_JUL {C_EB_MIF_JUL<MIF_YUB023_JUL}
+goal minflowEB_AUG {C_EB_MIF_AUG<MIF_YUB023_AUG}
+goal minflowEB_SEP {C_EB_MIF_SEP<MIF_YUB023_SEP}
 
 !minimum instream flow d/s of Daguerre Point
 define MIF_YUB006_APR {

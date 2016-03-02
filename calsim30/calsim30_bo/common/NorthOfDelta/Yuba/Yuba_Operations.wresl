@@ -28,7 +28,7 @@ goal C_NBLDB_Total    {C_NBLDB = C_NBLDB_MIF + C_NBLDB_POW + C_NBLDB_ADD}
 
 
 !Minimum flow requirements u/s of Narrows penstock st to zero
-define MF_ENGLB {
+define MF_C_ENGLB {
 	case Wet {
         	condition wytype_Yuba == 1
         	select Wet   from Yuba_LowerYubaMinflow where C_arc=37,standard = 0,month=month}
@@ -50,7 +50,7 @@ define MF_ENGLB {
         }
 
 
-goal C_ENGLBminflow {C_ENGLB_MIF < MF_ENGLB} 
+goal C_ENGLBminflow {C_ENGLB_MIF < MF_C_ENGLB} 
 goal C_ENGLBpower   {C_ENGLB_POW < NarrowsMax} !capacity of Narrows
 goal C_ENGLBtotal   {C_ENGLB = C_ENGLB_MIF + C_ENGLB_POW + C_ENGLB_ADD}
 
@@ -59,7 +59,7 @@ goal C_ENGLBtotal   {C_ENGLB = C_ENGLB_MIF + C_ENGLB_POW + C_ENGLB_ADD}
 !The purpose of the first case statement is to avoid specifying an
 !initial value for C_NBLDB_ADD
 goal MaintainWinterFlows {
-	lhs  C_YUB024
+	lhs  C_YUB023
 	case firstmonth {
 	        condition month==OCT .and. wateryear == bgnWY
         	rhs 0.
@@ -68,17 +68,17 @@ goal MaintainWinterFlows {
         	}
 	case Nov  {
 		condition month==NOV .and. C_ENGLB_ADD(-1) < 0.01 
-		rhs C_YUB024(-1)
+		rhs C_YUB023(-1)
 		lhs<rhs penalty 20000
 		lhs>rhs penalty 0} 
 	case Dec  {
 		condition month==DEC .and. C_ENGLB_ADD(-1) < 0.01  
-		rhs C_YUB024(-1)
+		rhs C_YUB023(-1)
 		lhs<rhs penalty 20000
 		lhs>rhs penalty 0}  
 	case Jan  {
 		condition month==JAN .and. C_ENGLB_ADD(-1) < 0.01  
-		rhs C_YUB024(-1)
+		rhs C_YUB023(-1)
 		lhs<rhs penalty 20000
 		lhs>rhs penalty 0} 
 }
@@ -184,7 +184,7 @@ define RelEGBMinFlow {
 	        
 	case	  Otherwise {
 	condition always
-	value     MIF_YUB024dv(-1) - S_ENGLB(-2)*taf_cfs(-1) + S_ENGLB(-1)*taf_cfs(-1) - I_ENGLB(-1) -  I_ENGLB(-1)+ E_ENGLB(-1) - C_NBLDB_MIF(-1)}
+	value     MIF_YUB023dv(-1) - S_ENGLB(-2)*taf_cfs(-1) + S_ENGLB(-1)*taf_cfs(-1) - I_ENGLB(-1) -  I_ENGLB(-1)+ E_ENGLB(-1) - C_NBLDB_MIF(-1)}
 	}
 	
 define RelDGPDemand {

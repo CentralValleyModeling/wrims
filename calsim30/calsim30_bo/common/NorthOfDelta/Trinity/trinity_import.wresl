@@ -18,7 +18,7 @@ define trin_import1 {select    flow
                     from      trinity_import
                     where     month=month, clair_lev=clair_level, shasta_lev=shasta_level}
 
-define trin_import2 { value min(trin_import1,max(3900.-MF_LWSTN,0.)) }
+define trin_import2 { value min(trin_import1,max(3900.-MF_C_LWSTN,0.)) }
 
 define trin_impdv {alias trin_import2 units 'cfs'}
 

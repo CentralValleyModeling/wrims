@@ -2,7 +2,7 @@
 
 goal zero_D855   {D855 = 0.}
 goal D419CVCZero {D419_cvc = 0.0}
-goal setC_SAC000_ADD_whlcv {C_SAC000_ADD_whlcv = 0.0}
+goal setC_NDO_whlcv {C_NDO_whlcv = 0.0}
 goal whlcv_zero1 {C_WKYTN_whlcv = 0.0}
 goal whlcv_zero2 {D_WKYTN_whlcv = 0.0}
 goal whlcv_zero3 {C_KSWCK_whlcv = 0.0}

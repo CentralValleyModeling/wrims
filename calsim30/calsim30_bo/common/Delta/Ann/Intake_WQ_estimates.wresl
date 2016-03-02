@@ -25,8 +25,8 @@ define RS_estEC {
 !   Cl = 0.285*EC - 50    (this is the 'seawater' line)
 !   Cl = 0.15*EC - 12      (this is the 'ag. drainage' line)
 ! These two equations intercept at Cl=30.222... and EC=281.481481481...
-define RS_estCL {value max(0.285*RS_estEC - 50.,0.150*RS_estEC - 12.,0.0)}
-define RS_estCLdv {alias RS_estCL kind 'SALINITY' units 'MG/L'} !debug purposes
+define RS_estCL {value max(0.285*RS_estEC - 50.,0.150*RS_estEC - 12.)}
+!define RS_estCLdv {alias RS_estCL kind 'SALINITY' units 'MG/L'} !debug purposes
 
 !*******************************************************
 ! estimate Old River salinity conditions based on previous cycle flow results
@@ -47,8 +47,8 @@ define LV_estEC {
 !   Cl = 0.285*EC - 50    (this is the 'seawater' line)
 !   Cl = 0.15*EC - 12      (this is the 'ag. drainage' line)
 ! These two equations intercept at Cl=30.222... and EC=281.481481481...
-define LV_estCL {value max(0.285*LV_estEC - 50.,0.150*LV_estEC - 12.,0.0)}
-define LV_estCLdv {alias LV_estCL kind 'SALINITY' units 'MG/L'} !debug purposes
+define LV_estCL {value max(0.285*LV_estEC - 50.,0.150*LV_estEC - 12.)}
+!define LV_estCLdv {alias LV_estCL kind 'SALINITY' units 'MG/L'} !debug purposes
 
 !*******************************************************
 ! estimate Victoria Canal salinity conditions based on previous cycle flow results
@@ -69,7 +69,7 @@ define VI_estEC {
 !   Cl = 0.285*EC - 50    (this is the 'seawater' line)
 !   Cl = 0.15*EC - 12      (this is the 'ag. drainage' line)
 ! These two equations intercept at Cl=30.222... and EC=281.481481481...
-define VI_estCL {value max(0.285*VI_estEC - 50.,0.150*VI_estEC - 12.,0.0)}
-define VI_estCLdv {alias VI_estCL kind 'SALINITY' units 'MG/L'} !debug purposes
+define VI_estCL {value max(0.285*VI_estEC - 50.,0.150*VI_estEC - 12.)}
+!define VI_estCLdv {alias VI_estCL kind 'SALINITY' units 'MG/L'} !debug purposes
 
 !*******************************************************

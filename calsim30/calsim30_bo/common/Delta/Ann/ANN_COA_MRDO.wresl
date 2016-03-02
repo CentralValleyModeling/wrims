@@ -54,9 +54,9 @@ goal cJPZ  {JP_Q   = JP_Z   + JP_X  }
 goal cCOZ  {CO_Q   = CO_Z   + CO_X  }
 
 !link ann outflow to coa outflow:
-goal coa_RS1 {C_SAC000_ADD_ANN > RS_Q_1}
-goal coa_RS2 {C_SAC000_ADD_ANN > RS_Q_2}
-goal coa_RS3 {C_SAC000_ADD_ANN > RS_Q_3}
-goal coa_EM  {C_SAC000_ADD_ANN > EM_Q  }
-goal coa_JP  {C_SAC000_ADD_ANN > JP_Q  }
-goal coa_CO  {C_SAC000_ADD_ANN > CO_Q  }
+goal coa_RS1 {C_NDO_ANN > RS_Q_1}
+goal coa_RS2 {C_NDO_ANN > RS_Q_2}
+goal coa_RS3 {C_NDO_ANN > RS_Q_3}
+goal coa_EM  {C_NDO_ANN > EM_Q  }
+goal coa_JP  {C_NDO_ANN > JP_Q  }
+goal coa_CO  {C_NDO_ANN > CO_Q  }
