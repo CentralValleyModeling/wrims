@@ -56,6 +56,30 @@
             id="gov.ca.dwr.hecdssvue.views.WaterYearView"
             name="Water Year">
       </view>
+            <view
+            name="Storage Flows"
+            category="gov.ca.dwr.hecdssvue"
+            class="gov.ca.dwr.hecdssvue.views.StorageFlowsView"
+            id="gov.ca.dwr.hecdssvue.views.StorageFlowsView">
+      </view>
+      <view
+            name="San Joaquin River"
+            category="gov.ca.dwr.hecdssvue"
+            class="gov.ca.dwr.hecdssvue.views.SanJoaquinRiverView"
+            id="gov.ca.dwr.hecdssvue.views.SanJoaquinRiverView">
+      </view>
+      <view
+            name="Water Management Actions"
+            category="gov.ca.dwr.hecdssvue"
+            class="gov.ca.dwr.hecdssvue.views.WaterManagementActionsView"
+            id="gov.ca.dwr.hecdssvue.views.WaterManagementActionsView">
+      </view>
+      <view
+            name="Delivery Shorages"
+            category="gov.ca.dwr.hecdssvue"
+            class="gov.ca.dwr.hecdssvue.views.DeliveryShortagesView"
+            id="gov.ca.dwr.hecdssvue.views.DeliveryShortagesView">
+      </view>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">

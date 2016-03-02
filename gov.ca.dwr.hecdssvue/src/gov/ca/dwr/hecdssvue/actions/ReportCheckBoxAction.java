@@ -1,4 +1,4 @@
-package gov.ca.dwr.calsim;
+package gov.ca.dwr.hecdssvue.actions;
 
 import gov.ca.dwr.hecdssvue.PluginCore;
 import gov.ca.dwr.hecdssvue.components.DataOps;
@@ -40,12 +40,12 @@ public class ReportCheckBoxAction implements ActionListener {
 		String cn=c.getName();
 		
 		if (c.isSelected()){
-			if (!CalSimPluginCore.selectedCheckBox.contains(cn)){
-				CalSimPluginCore.selectedCheckBox.add(cn);
+			if (!PluginCore.selectedCheckBox.contains(cn)){
+				PluginCore.selectedCheckBox.add(cn);
 			}
 		}else{
-			if (CalSimPluginCore.selectedCheckBox.contains(cn)){
-				CalSimPluginCore.selectedCheckBox.remove(cn);
+			if (PluginCore.selectedCheckBox.contains(cn)){
+				PluginCore.selectedCheckBox.remove(cn);
 			}
 		}
 		
@@ -54,8 +54,8 @@ public class ReportCheckBoxAction implements ActionListener {
 
 	private void retrieveTsData() {
 		Vector<DataContainer> dataVector_paths=new Vector<DataContainer>();
-		for (int i=0; i<CalSimPluginCore.selectedCheckBox.size(); i++){
-			String cn=CalSimPluginCore.selectedCheckBox.get(i);
+		for (int i=0; i<PluginCore.selectedCheckBox.size(); i++){
+			String cn=PluginCore.selectedCheckBox.get(i);
 			if (cn.startsWith("ckbp")){
 				String id=cn.replaceFirst("ckbp", "");
 				boolean isBase=true;
@@ -67,11 +67,11 @@ public class ReportCheckBoxAction implements ActionListener {
 						//Vector<CondensedReference> ccSv = DebugCorePlugin.svDss[j].getCondensedCatalog();
 						String[][] lookups=new String[0][0];
 						if (DebugCorePlugin.studyTypes[j]==0){
-							lookups=CalSimPluginCore.CalLiteLookups;
+							lookups=PluginCore.CalLiteLookups;
 						}else if (DebugCorePlugin.studyTypes[j]==1){
-							lookups=CalSimPluginCore.CalSim3Lookups;
+							lookups=PluginCore.CalSim3Lookups;
 						}else if (DebugCorePlugin.studyTypes[j]==2){
-							lookups=CalSimPluginCore.CalSim2Lookups;
+							lookups=PluginCore.CalSim2Lookups;
 						}
 						for (int k=0; k<lookups.length; k++){
 							if (lookups[k][0].equals(id)){								

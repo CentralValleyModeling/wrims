@@ -1,12 +1,13 @@
-package gov.ca.dwr.calsim;
+package gov.ca.dwr.hecdssvue.actions;
 
-import gov.ca.dwr.calsim.views.DeliveryShortagesView;
-import gov.ca.dwr.calsim.views.SanJoaquinRiverView;
-import gov.ca.dwr.calsim.views.StorageFlowsView;
-import gov.ca.dwr.calsim.views.WaterManagementActionsView;
+import gov.ca.dwr.hecdssvue.PluginCore;
 import gov.ca.dwr.hecdssvue.views.DSSMonthlyView;
 import gov.ca.dwr.hecdssvue.views.DSSPlotView;
 import gov.ca.dwr.hecdssvue.views.DSSTableView;
+import gov.ca.dwr.hecdssvue.views.DeliveryShortagesView;
+import gov.ca.dwr.hecdssvue.views.SanJoaquinRiverView;
+import gov.ca.dwr.hecdssvue.views.StorageFlowsView;
+import gov.ca.dwr.hecdssvue.views.WaterManagementActionsView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,7 +32,7 @@ public class ReportButtonAction implements ActionListener {
 		String bn=b.getName();
 		
 		if (bn.equalsIgnoreCase("btnpClear") || bn.equalsIgnoreCase("btnpClear_SJR") || bn.equalsIgnoreCase("btnpClear_shortage")){
-			CalSimPluginCore.selectedCheckBox=new ArrayList<String>();
+			PluginCore.selectedCheckBox=new ArrayList<String>();
 			clearAllCheckBox();
 		}
 	}

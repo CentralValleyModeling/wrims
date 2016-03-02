@@ -198,6 +198,8 @@ Bundle-ClassPath: gridUtil.jar,
  heclib.jar,
  images.jar,
  rma.jar,
+ swixml.jar,
+ jdom.jar,
  jar/help/dssvueHelp.jar,
  jar/sys/jh.jar,
  .

@@ -1,8 +1,8 @@
-package gov.ca.dwr.calsim.views;
+package gov.ca.dwr.hecdssvue.views;
 
-import gov.ca.dwr.calsim.CalSimPluginCore;
-import gov.ca.dwr.calsim.ReportButtonAction;
-import gov.ca.dwr.calsim.ReportCheckBoxAction;
+import gov.ca.dwr.hecdssvue.PluginCore;
+import gov.ca.dwr.hecdssvue.actions.ReportButtonAction;
+import gov.ca.dwr.hecdssvue.actions.ReportCheckBoxAction;
 import hec.io.DataContainer;
 
 import java.awt.Component;
@@ -17,7 +17,7 @@ import org.eclipse.swt.widgets.Composite;
 
 public class StorageFlowsView extends AbstractCalSimView{
 
-	public static String ID="gov.ca.dwr.calsim.views.StorageFlowsView";
+	public static String ID="gov.ca.dwr.hecdssvue.views.StorageFlowsView";
 	private Component[] components=new Component[0];
 	
 	public StorageFlowsView(){
@@ -27,7 +27,7 @@ public class StorageFlowsView extends AbstractCalSimView{
 	
 	public void createPartControl(Composite parent){
 		super.createPartControl(parent);
-		JPanel panel = (JPanel)CalSimPluginCore.swix.find("presets");
+		JPanel panel = (JPanel)PluginCore.swix.find("presets");
 		contentPane.add(new JScrollPane(panel));
 		components = panel.getComponents();
 		for (int i = 0; i < components.length; i++) {

@@ -15,6 +15,7 @@ import java.util.Vector;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
+import org.swixml.SwingEngine;
 
 public class PluginCore {
 	public static String ID_DSSVue_DSSTableView="gov.ca.dwr.hecdssvue.views.DSSTableView";
@@ -76,4 +77,10 @@ public class PluginCore {
 	public static HashMap<String, String>[] allSchematicVariableUnitsCFS=new HashMap[4];
 	public static HashMap<String, String>[] allSchematicVariableUnitsTAF=new HashMap[4];
 	public static String dssPerspectiveID="DSS";
+	
+	public static SwingEngine swix;
+	public static String[][] CalLiteLookups=new String[0][0];
+	public static String[][] CalSim2Lookups=new String[0][0];
+	public static String[][] CalSim3Lookups=new String[0][0];
+	public static ArrayList<String> selectedCheckBox=new ArrayList<String>();
 }
