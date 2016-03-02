@@ -83,29 +83,32 @@ public final class MonthlyTableModel extends AbstractTableModel { // extends
 		for (int i = 0; i < dataSets.size(); i++) {
 			TimeSeriesContainer timeSeriesContainer = (TimeSeriesContainer) dataSets
 					.get(i);
-			// CB added hasTotalColumn code (must consider each data set
-			// separately)
-			boolean hasTotalColumn;
-			if ((showTotalColumn && timeSeriesContainer.units.trim()
-					.equalsIgnoreCase("CFS"))
-					|| timeSeriesContainer.units.trim().equalsIgnoreCase("TAF"))
-				hasTotalColumn = true;
-			else
-				hasTotalColumn = false;
-			_dataSets.add(new SingleMonthlyTable(timeSeriesContainer,
-					firstMonth, hasTotalColumn, precision));
-			if (i == 0) {
-				if (timeSeriesContainer.numberValues > 0) // CB check this
+			
+			if (timeSeriesContainer !=null){
+				// CB added hasTotalColumn code (must consider each data set
+				// separately)
+				boolean hasTotalColumn;
+				if ((showTotalColumn && timeSeriesContainer.units.trim()
+						.equalsIgnoreCase("CFS"))
+						|| timeSeriesContainer.units.trim().equalsIgnoreCase("TAF"))
+					hasTotalColumn = true;
+				else
+					hasTotalColumn = false;
+				_dataSets.add(new SingleMonthlyTable(timeSeriesContainer,
+						firstMonth, hasTotalColumn, precision));
+				if (i == 0) {
+					if (timeSeriesContainer.numberValues > 0) // CB check this
 															// !!!!!!!!!!!!!!!!!!!
-					haveData = true;
-				timeZoneID = timeSeriesContainer.timeZoneID;
-				timeZoneRawOffset = timeSeriesContainer.timeZoneRawOffset;
-			} else if (timeZoneID != null
-					&& timeSeriesContainer.timeZoneID != null) {
-				if (!timeZoneID.equals(timeSeriesContainer.timeZoneID))
+						haveData = true;
+					timeZoneID = timeSeriesContainer.timeZoneID;
+					timeZoneRawOffset = timeSeriesContainer.timeZoneRawOffset;
+				} else if (timeZoneID != null
+						&& timeSeriesContainer.timeZoneID != null) {
+					if (!timeZoneID.equals(timeSeriesContainer.timeZoneID))
+						timeZoneID = null;
+				} else
 					timeZoneID = null;
-			} else
-				timeZoneID = null;
+			}
 		}
 		if (timeZoneID != null) {
 			TimeZone timeZone = TimeZone.getTimeZone(timeZoneID);

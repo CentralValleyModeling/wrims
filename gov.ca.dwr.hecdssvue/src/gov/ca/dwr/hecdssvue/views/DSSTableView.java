@@ -47,6 +47,11 @@ public class DSSTableView extends AbstractDSSView {
 		if (table !=null) DataOps.saveData(table);
 		
 		if (dataVector != null && dataVector.size() > 0) {
+			for (int i=dataVector.size()-1; i>=0; i--){
+				if (dataVector.get(i)==null){
+					dataVector.remove(i);
+				}
+			}
 			contentPane.removeAll();
 			table = new HecDataTable(contentPane);
 			table.setDateTimeAsTwoColumns(false);
