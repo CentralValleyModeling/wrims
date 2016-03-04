@@ -820,11 +820,10 @@ public abstract class SchematicBase extends ViewPart {
 
 		baseIndex=5;
 		
-		for (int j = 1; j < 5; j++) {
-			int k=j-1;
+		for (int k = 0; k < 4; k++) {
 			if (DebugCorePlugin.selectedStudies[k]){
-				if (baseIndex>j){
-					baseIndex=j;
+				if (baseIndex>k){
+					baseIndex=k;
 				}
 
 				Enumeration<String> variableEnum = names.keys();
@@ -863,9 +862,9 @@ public abstract class SchematicBase extends ViewPart {
 								}
 															
 								if (PluginCore.mode.equals(PluginCore.diff)) {
-									if (j > baseIndex) {
+									if (k > baseIndex) {
 										if (results[baseIndex] == null || results[baseIndex].get(name) == null){
-											results[j].put(name,"N/A");
+											results[k].put(name,"N/A");
 											continue;
 										}
 										String[] baseFields = results[baseIndex].get(name)
@@ -874,22 +873,22 @@ public abstract class SchematicBase extends ViewPart {
 										try {
 											double baseVal = Double.parseDouble(baseFields[0]);
 											double altVal = Double.parseDouble(altFields[0]);
-											results[j].put(name, (altVal - baseVal) + " " + baseFields[1]);
+											results[k].put(name, (altVal - baseVal) + " " + baseFields[1]);
 										} catch (NumberFormatException nfe) {
-											results[j].put(name,"N/A");
+											results[k].put(name,"N/A");
 										}
 									}else {
-										results[j].put(name, value);
+										results[k].put(name, value);
 									}
 								} else {
-									results[j].put(name, value);
+									results[k].put(name, value);
 								}
 							}else{
-								results[j].put(name, value);
+								results[k].put(name, value);
 							}
 						} catch (Exception e) {
 							//WPPException.handleException(e);
-							results[j].put(name, value);
+							results[k].put(name, value);
 						}
 					}
 				}
@@ -1097,11 +1096,10 @@ public abstract class SchematicBase extends ViewPart {
 			termAverage=PluginCore.longTermAverageDataTAF[index];
 		}
 		
-		for (int j = 1; j < 4; j++) {
-			int k=j-1;
+		for (int k = 0; k < 4; k++) {
 			if (DebugCorePlugin.selectedStudies[k]){
-				if (baseIndex>j){
-					baseIndex=j;
+				if (baseIndex>k){
+					baseIndex=k;
 				}
 				Enumeration<String> variableEnum = names.keys();
 				while (variableEnum.hasMoreElements()) {
@@ -1128,9 +1126,9 @@ public abstract class SchematicBase extends ViewPart {
 							value = data + " " + units;
 						}
 						if (PluginCore.mode.equals(PluginCore.diff)) {
-							if (j > baseIndex) {
+							if (k > baseIndex) {
 								if (results[baseIndex] == null || results[baseIndex].get(name) == null){
-									results[j].put(name,"N/A");
+									results[k].put(name,"N/A");
 									continue;
 								}
 								String[] baseFields = results[baseIndex].get(name)
@@ -1139,19 +1137,19 @@ public abstract class SchematicBase extends ViewPart {
 								try {
 									double baseVal = Double.parseDouble(baseFields[0]);
 									double altVal = Double.parseDouble(altFields[0]);
-									results[j].put(name, (altVal - baseVal) + " " + baseFields[1]);
+									results[k].put(name, (altVal - baseVal) + " " + baseFields[1]);
 								} catch (NumberFormatException nfe) {
-									results[j].put(name,"N/A");
+									results[k].put(name,"N/A");
 								}
 							}else {
-								results[j].put(name, value);
+								results[k].put(name, value);
 							}
 						}else {
-							results[j].put(name, value);
+							results[k].put(name, value);
 						}
 					}else{
 						value="";
-						results[j].put(name, value);
+						results[k].put(name, value);
 					}	
 				}	
 			}
@@ -1172,11 +1170,10 @@ public abstract class SchematicBase extends ViewPart {
 		
 		ArrayList<HashMap<String, Double>> termAverage = calculateLongTermAverageSelectedMonths(date, names, isCFS);
 		
-		for (int j = 1; j < 4; j++) {
-			int k=j-1;
+		for (int k = 0; k < 4; k++) {
 			if (DebugCorePlugin.selectedStudies[k]){
-				if (baseIndex>j){
-					baseIndex=j;
+				if (baseIndex>k){
+					baseIndex=k;
 				}
 				HashMap<String, Double> altAverage = termAverage.get(k);
 				Enumeration<String> variableEnum = names.keys();
@@ -1203,9 +1200,9 @@ public abstract class SchematicBase extends ViewPart {
 							value = data + " " + units;
 						}
 						if (PluginCore.mode.equals(PluginCore.diff)) {
-							if (j > baseIndex) {
+							if (k > baseIndex) {
 								if (results[baseIndex] == null || results[baseIndex].get(name) == null){
-									results[j].put(name,"N/A");
+									results[k].put(name,"N/A");
 									continue;
 								}
 								String[] baseFields = results[baseIndex].get(name)
@@ -1214,19 +1211,19 @@ public abstract class SchematicBase extends ViewPart {
 								try {
 									double baseVal = Double.parseDouble(baseFields[0]);
 									double altVal = Double.parseDouble(altFields[0]);
-									results[j].put(name, (altVal - baseVal) + " " + baseFields[1]);
+									results[k].put(name, (altVal - baseVal) + " " + baseFields[1]);
 								} catch (NumberFormatException nfe) {
-									results[j].put(name,"N/A");
+									results[k].put(name,"N/A");
 								}
 							}else {
-								results[j].put(name, value);
+								results[k].put(name, value);
 							}
 						}else {
-							results[j].put(name, value);
+							results[k].put(name, value);
 						}
 					}else{
 						value="";
-						results[j].put(name, value);
+						results[k].put(name, value);
 					}	
 				}	
 			}
@@ -1245,8 +1242,7 @@ public abstract class SchematicBase extends ViewPart {
 		baseIndex=0;
 		
 		Enumeration<String> variableEnum = names.keys();
-		for (int j = 1; j < 5; ++j) {
-			int k=j-1;
+		for (int k = 0; k < 4; k++) {
 			if (DebugCorePlugin.selectedStudies[k]){
 				
 				while (variableEnum.hasMoreElements()) {
@@ -1283,9 +1279,9 @@ public abstract class SchematicBase extends ViewPart {
 								}
 															
 								if (PluginCore.mode.equals(PluginCore.diff)) {
-									if (j > baseIndex) {
+									if (k > baseIndex) {
 										if (results[baseIndex] == null || results[baseIndex].get(name) == null){
-											results[j].put(name,"N/A");
+											results[k].put(name,"N/A");
 											continue;
 										}
 										String[] baseFields = results[baseIndex].get(name)
@@ -1294,18 +1290,18 @@ public abstract class SchematicBase extends ViewPart {
 										try {
 											double baseVal = Double.parseDouble(baseFields[0]);
 											double altVal = Double.parseDouble(altFields[0]);
-											results[j].put(name, (altVal - baseVal) + " " + baseFields[1]);
+											results[k].put(name, (altVal - baseVal) + " " + baseFields[1]);
 										} catch (NumberFormatException nfe) {
-											results[j].put(name,"N/A");
+											results[k].put(name,"N/A");
 										}
 									}else {
-										results[j].put(name, value);
+										results[k].put(name, value);
 									}
 								} else {
-									results[j].put(name, value);
+									results[k].put(name, value);
 								}
 							}else{
-								results[j].put(name, value);
+								results[k].put(name, value);
 							}
 						} catch (Exception e) {
 							WPPException.handleException(e);
@@ -1422,24 +1418,24 @@ public abstract class SchematicBase extends ViewPart {
 		TextFormat tf = null;
 		int attachPos = AttachToNode.BottomLeft;
 		switch (studyId) {
-		case 1:
+		case 0:
 			attachPos = AttachToNode.BottomLeft;
 			r2 = new Rectangle2D.Float(r.x, r.y + r.height / 2, r.width / 2,
 					r.height / 2);
 			tf = new TextFormat(Align.Near, Align.Far);
 			break;
-		case 2:
+		case 1:
 			attachPos = AttachToNode.BottomRight;
 			r2 = new Rectangle2D.Float(r.x + r.width / 2, r.y + r.height / 2,
 					r.width / 2, r.height / 2);
 			tf = new TextFormat(Align.Far, Align.Far);
 			break;
-		case 3:
+		case 2:
 			attachPos = AttachToNode.TopLeft;
 			r2 = new Rectangle2D.Float(r.x, r.y, r.width / 2, r.height / 2);
 			tf = new TextFormat(Align.Near, Align.Near);
 			break;
-		case 4:
+		case 3:
 			attachPos = AttachToNode.TopRight;
 			r2 = new Rectangle2D.Float(r.x + r.width / 2, r.y, r.width / 2,
 					r.height / 2);
