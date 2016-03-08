@@ -115,7 +115,7 @@ define SHRTG_17S_SA	{std kind 'SHORTAGE' units 'CFS'}
 define SHRTG_18_NA	{std kind 'SHORTAGE' units 'CFS'}
 define SHRTG_18_NU	{std kind 'SHORTAGE' units 'CFS'}
 define SHRTG_18_SA	{std kind 'SHORTAGE' units 'CFS'}
-!define SHRTG_19_NA	{std kind 'SHORTAGE' units 'CFS'}
+define SHRTG_19_NA	{std kind 'SHORTAGE' units 'CFS'}
 define SHRTG_19_NU	{std kind 'SHORTAGE' units 'CFS'}
 define SHRTG_19_SA	{std kind 'SHORTAGE' units 'CFS'}
 define SHRTG_20_NA1	{std kind 'SHORTAGE' units 'CFS'}
@@ -915,6 +915,9 @@ define    UD_19_NU  {timeseries kind 'URBAN-DEMAND' units 'TAF' convert 'CFS'}
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! WBA 20          !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! no surface deliveries to 20_NU1
+define    UD_20_NU1  {timeseries kind 'URBAN-DEMAND' units 'TAF' convert 'CFS'} 
+
 ! no surface deliveries to 20_NU2
 define    UD_20_NU2  {timeseries kind 'URBAN-DEMAND' units 'TAF' convert 'CFS'}  
 
@@ -941,9 +944,6 @@ define    AW_20_PA  {std kind 'APPLIED-WATER' units 'CFS'} ! Total Applied Water
 define    AWR_20_PA {timeseries kind 'APPLIED-WATER' units 'TAF' convert 'CFS'}! Applied Water for rice
 define    AWO_20_PA {timeseries kind 'APPLIED-WATER' units 'TAF' convert 'CFS'}! Applied Water for all other crops
 
-define    DN_20_NU1  {std kind 'SW-DELIVERY-NET' units 'CFS'}               
-define    DG_20_NU1  {std kind 'SW-DELIVERY-GROSS' units 'CFS'}
-define    UD_20_NU1  {timeseries kind 'URBAN-DEMAND' units 'TAF' convert 'CFS'}
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! WBA 21          !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -1106,13 +1106,13 @@ define    DN_25_PU  {std kind 'SW-DELIVERY-NET' units 'CFS'}
 define    DG_25_PU  {std kind 'SW-DELIVERY-GROSS' units 'CFS'}
 define    UD_25_PU  {timeseries kind 'URBAN-DEMAND' units 'TAF' convert 'CFS'}
 
-!define AWO_SIDSH    {timeseries kind 'APPLIED-WATER' units 'TAF' convert 'CFS'} !23% of total of AWo_25_PA1 and SIDSH
+define AWO_SIDSH    {timeseries kind 'APPLIED-WATER' units 'TAF' convert 'CFS'} !21% of AWo_25_PA1
 define    UD_CSPSO  {timeseries kind 'URBAN-DEMAND' units 'TAF' convert 'CFS'}
 define    UD_SUISN  {timeseries kind 'URBAN-DEMAND' units 'TAF' convert 'CFS'}
 define    UD_FRFLD  {timeseries kind 'URBAN-DEMAND' units 'TAF' convert 'CFS'}
 define    UD_VLLJO  {timeseries kind 'URBAN-DEMAND' units 'TAF' convert 'CFS'}
 define    UD_BNCIA  {timeseries kind 'URBAN-DEMAND' units 'TAF' convert 'CFS'}
-define    UD_TVAFB        {timeseries kind 'URBAN-DEMAND' units 'TAF' convert 'CFS'}
+define    UD_TAFB        {timeseries kind 'URBAN-DEMAND' units 'TAF' convert 'CFS'}
 
 !Demand are currently not defined for Napa and Anerican Canyon.
 !Table A water and Arcticle 21 water is delivered from the NBA and split 21% to American Canyon and 79% to Napa
@@ -1238,6 +1238,6 @@ define    DG_60N_PU {std kind 'SW-DELIVERY-GROSS' units 'CFS'}
 define    UD_60N_PU {timeseries kind 'URBAN-DEMAND' units 'TAF' convert 'CFS'}
 
 !Bear River Model demand
-!define DMD_BRR050_BEC000 {timeseries kind 'DEMAND' units 'TAF' convert 'CFS'}
-!define DMD_CMBIE_CBC000       {timeseries kind 'DEMAND' units 'TAF' convert 'CFS'}
+define DMD_BRR050_BEC000 {timeseries kind 'DEMAND' units 'TAF' convert 'CFS'}
+define DMD_CMBIE_CBC000       {timeseries kind 'DEMAND' units 'TAF' convert 'CFS'}
 

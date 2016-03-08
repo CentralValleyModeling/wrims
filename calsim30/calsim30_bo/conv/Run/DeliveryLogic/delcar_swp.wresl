@@ -55,11 +55,8 @@ define nds_swpdel_adj {value nds_perdel_adj*SWP_TableA}
 define nds_swpdel_adjdv {alias nds_swpdel_adj kind 'swp-delivery' units 'TAF'}
 
 ! Stage 1 Transfers adjustment
-define SWP_TargP1 {select SWP_LYRA from WTS_Stage1_Targets_C3 where year=transfersyear}
-define SWP_TargP2 {select SWP_Phase8 from WTS_Stage1_Targets_C3 where year=transfersyear}
-define SWP_Targ {value SWP_TargP1 + SWP_TargP2 }
-define swp_allocation_0 {value wsidi_swpdel + SWP_Targ*(1.-SaltCostFact_stg1)}     ! Added 100% of Stage1 Transfers target
-define swp_alloc_0_io {value max(wsidi_swpdel + min(SIO_SWP(-1),max_return_swp2), wsidi_swpdel_io) + SWP_Targ*(1.-SaltCostFact_stg1)}     ! Added 100% of Stage1 Transfers target
+define swp_allocation_0 {value wsidi_swpdel /*+ SWP_Targ*(1.-SaltCostFact_stg1)*/}     ! Added 100% of Stage1 Transfers target
+define swp_alloc_0_io {value max(wsidi_swpdel + min(SIO_SWP(-1),max_return_swp2), wsidi_swpdel_io) /*+ SWP_Targ*(1.-SaltCostFact_stg1)*/}     ! Added 100% of Stage1 Transfers target
 
 !need to adjust deltar to include implicit storage in san luis for article 56 carryover
 !define deltar_adjust {select carryover from wsi_deltar_adjust given deltar=del_swp_trial1 use linear}
@@ -106,21 +103,15 @@ define buffSWP_MayAug {select buffer from ExportEstimate_SWP where month = May}
         condition always
         value 0.}
 } */
-
 ! SJR in flood - if C639 over 16,000 cfs
-define floodSJRdv {std kind 'trigger' UNITS 'NONE'}
 define floodSJR {
     case Wet {
-        condition month>=MAR .and. month <= MAY .and. C639[VAMP_AND_DO] > 16000.
+        condition C639[VAMP_AND_DO] > 16000.
         value 1.}
-    case MarthruMay {
-        condition month>=APR .and. month <= MAY
-        value floodSJRdv(-1)}
     case other {
         condition always
         value 0.}
 }
-goal savefloodSJR {floodSJRdv=floodSJR}
 
 ! Estimate Export Capability for use in determining delivery target limitations
 define SWPDelCapEst {
@@ -242,10 +233,7 @@ define deltar_drymin {
 
 ! This implements the two SL adjustments defined in the previous lines
 define swp_allocation_1 {value max(min(swp_allocation_0+nds_swpdel_adj,deltar_expmax),deltar_drymin) }
-!define swp_allocation_1 {value max(swp_allocation_0+nds_swpdel_adj,deltar_drymin) }
-
 define swp_alloc_1_io   {value max(min(swp_alloc_0_io,deltar_expmax_io),deltar_drymin) }
-!define swp_alloc_1_io   {value max(swp_alloc_0_io,deltar_drymin) }
 
 ! This implements the export capacity constraint previously determined
 define swp_allocation_2 {
@@ -279,7 +267,7 @@ define swp_alloc_3_io {value min(max_tableA,swp_alloc_2_io)}
 ! This implements the no reduction rule for april to december
 define swp_alloc {
     case start {
-        condition  wateryear==beginWaterYear .and. month==oct
+        condition  wateryear==1922 .and. month==oct
         value      max_tableA*0.5}
     case JanToApr {                                         ! reductions allowed
         condition  month >= JAN .and. month <= APR
@@ -291,7 +279,7 @@ define swp_alloc {
 
 define swp_alloc_io {
     case start {
-        condition  wateryear==beginWaterYear .and. month==oct
+        condition  wateryear==1922 .and. month==oct
         value      max_tableA*0.5}
     case JanToApr {                                         ! reductions allowed
         condition  month >= JAN .and. month <= APR

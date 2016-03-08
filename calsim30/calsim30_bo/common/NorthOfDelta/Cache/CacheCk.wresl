@@ -23,7 +23,7 @@ goal AdjStorage2_CLRLK  {S_adjCLRLK + 842.0 = S_CLRLK}
 ! Code to distinguish between flood releases and releases for water supply
 define C_CLRLK_Flood 	{std kind 'FLOW' units 'CFS'}
 define C_CLRLK_WS 	{std kind 'FLOW' units 'CFS'}
-goal setC_CLRLK_Total	{C_CLRLK < C_CLRLK_Flood + C_CLRLK_WS}
+goal setC_CLRLK_Total	{C_CLRLK = C_CLRLK_Flood + C_CLRLK_WS}
 
 !Code to simulate seepage through Clear Lake Dam - assumed to be 5 cfs
 define CLDamLeak 		{value 5.0}
@@ -97,7 +97,7 @@ case FirstMonth {
     	value 313.0 }
 case May {
     	condition   month == May
-    	value S_adjCLRLK(-1) + C_CLRLK(-1)*cfs_taf(-1) - max(0.0, S_CLRLK(-2) + I_CLRLK(-1)*cfs_taf(-1) - D_CLRLK_CLLPT(-1) - E_CLRLK(-1)*cfs_taf(-1) - S_CLRLKLevel4(-1)) }
+    	value S_adjCLRLK(-1) + C_CLRLK(-1)*cfs_taf(-1) - max(0.0, S_CLRLK(-2) + I_CLRLK(-1)*cfs_taf(-1) -E_CLRLK(-1)*cfs_taf(-1)-S_CLRLKLevel4(-1)) }
 case other  {
     	condition always
     	value adjCLRLK_May1_dv(-1) }
@@ -122,7 +122,7 @@ goal setalloc_YCFCWCD_dv {alloc_YCFCWCD_dv = alloc_YCFCWCD}
 goal set_C_CLRLK_WS {
      lhs C_CLRLK_WS
      case Low {
-          condition adjCLRLK_May1 <= 130.00 .and. month >= MAY .and. month <= SEP .or. adjCLRLK_May1 <= 130.00 .and. month == OCT
+          condition adjCLRLK_May1 <= 130.00 .and. month >= MAY .and. month <= OCT
           rhs CLDamLeak
 	  lhs>rhs     constrain
     	  lhs<rhs     penalty 0
@@ -203,7 +203,7 @@ case April  {
     	lhs>rhs     constrain
     	lhs<rhs     penalty 0 }
 case MayOct {
-    	condition   month >= MAY .and. month <= SEP .or. month == OCT
+    	condition   month >= MAY .and. month <= OCT
     	rhs max(C_CLRLK_WSMax,CLDamLeak) ! Assume no flood release during irrigation season
     	lhs>rhs     constrain
     	lhs<rhs     penalty 0 }

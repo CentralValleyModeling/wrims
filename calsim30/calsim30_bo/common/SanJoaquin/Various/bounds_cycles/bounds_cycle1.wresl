@@ -34,7 +34,6 @@ goal setC10RPAcycle1 { C10RPA = 0. }
 !goal setC10INSTREAMcycle1 { C10INSTREAM = 0. }    
 ! Debt is incurred in cycle 5 but payment is not made until cycle 6 
 goal setD530_VAMP {D530_VAMP = 0.}          
-goal totC520C1 {C520 = C520_MIF + C520INSTREAM + C520F}
 
 /*
 VAMP book-keeping

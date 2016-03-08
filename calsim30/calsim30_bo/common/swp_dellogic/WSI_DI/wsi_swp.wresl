@@ -55,23 +55,10 @@ SOD carried-over debt that should be assumed as supply in the present
 year, and therefore the delivery target should be based on this
 additional supply regardless of SWP San Luis storage state.
 */
-define co_final_dv {std kind 'carryover' units 'taf'}
-define co_available_dv {std kind 'carryover' units 'taf'}
-
-define S12effective {case Jan {
-                       condition month == JAN
-                       value max(S12(-1) - co_final_dv(-1), 0.0)}
-                     case FebtoMar {
-                       condition month >= FEB .and. month <= MAR
-                       value max(S12(-1) - co_available_dv(-1), 0.0)}
-                     case Rest {
-                       condition always
-                       value S12(-1)}}
-
 define WSI_SWP {
     case JantoApr {
         condition  month >= JAN .and. month <= APR
-        value      S_OROVL(-1) + S_OROVLmod + S12effective +
+        value      S_OROVL(-1) + S_OROVLmod + S12(-1) +
                    EwaDebtSwp2dv(prevSep) /*- swp_co_1*/ +
                    frcst_fea  }     ! Previous month storage plus forecast inflow
     case May {
@@ -90,7 +77,7 @@ define WSI_SWP_dv {alias WSI_SWP kind 'water-supply-index' units 'taf'}
 define WSI_SWP_io {
     case JantoApr {
         condition  month >= JAN .and. month <= APR
-        value      S_OROVL(-1) + S_OROVLmod + S12effective +
+        value      S_OROVL(-1) + S_OROVLmod + S12(-1) +
                    EwaDebtSwp2dv(prevSep) /*- swp_co_1*/ +
                    frcst_fea + min(SIO_SWP(-1),max_return_swp2)  }     ! Previous month storage plus forecast inflow
     case May {

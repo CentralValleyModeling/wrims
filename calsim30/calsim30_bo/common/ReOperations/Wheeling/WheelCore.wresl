@@ -9,5 +9,5 @@ define maxTracycalcDV {alias maxTracycalc Units 'cfs'}  ! For Output Only
 
 ! SOD Flow Directions
 goal Wheeling3 {D855 = D419_cvc}
-goal wheel_old {D804 = D419_CVPDED + D419_cvpwhl - D859_GWRECH_CVPB + C423B_DEL_SF + C423B_DEL_DMC + C423B_WHL_SF}
+goal wheel_old {D804 = D419_CVPDED + D419_cvpwhl - D859_GWRECH_CVPB}
 goal wheel_gw {D859_GWRECH_CVPB < D419_cvpwhl}

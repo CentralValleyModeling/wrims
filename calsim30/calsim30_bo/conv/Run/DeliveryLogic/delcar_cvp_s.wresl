@@ -40,7 +40,7 @@ define estCVPExp_May {
     case May_B2Action4Off {
         condition month == MAY .and. int(B2Action4On) == 0
         value PulseExpRes1*0.5*15./31. + 3000.*16./31. }
-    case otherwise {
+    case otherwise
         condition always
         value 1125. }
 }
@@ -88,9 +88,6 @@ define CVPDelCapEst {
             + max(estCVPExp_Apr, wetSJR*estCVPExp_WetApr)*cfs_taf(1)
             + max(estCVPExp_May, wetSJR*estCVPExp_WetMay)*cfs_taf(2)
             + max(estCVPExp_Jun, wetSJR*estCVPExp_WetJun)*cfs_taf(3)
-!            + estCVPExp_Apr*cfs_taf(1)
-!            + estCVPExp_May*cfs_taf(2)
-!            + estCVPExp_Jun*cfs_taf(3)
             + estCVPExp_JulAug*cfs_taf(4)
             + estCVPExp_JulAug*cfs_taf(5)
             + S11(-1) - buffCVP_MarAug + jbypass_del + AnnualBanksCVP }
@@ -99,9 +96,6 @@ define CVPDelCapEst {
         value max(estCVPExp_Apr, wetSJR*estCVPExp_WetApr)*cfs_taf
             + max(estCVPExp_May, wetSJR*estCVPExp_WetMay)*cfs_taf(1)
             + max(estCVPExp_Jun, wetSJR*estCVPExp_WetJun)*cfs_taf(2)
-!        value estCVPExp_Apr*cfs_taf
-!            + estCVPExp_May*cfs_taf(1)
-!            + estCVPExp_Jun*cfs_taf(2)
             + estCVPExp_JulAug*cfs_taf(3)
             + estCVPExp_JulAug*cfs_taf(4)
             + S11(-1) - buffCVP_AprAug + jbypass_del + AnnualBanksCVP }
@@ -109,8 +103,6 @@ define CVPDelCapEst {
         condition month == MAY
         value max(estCVPExp_May, wetSJR*estCVPExp_WetMay)*cfs_taf
             + max(estCVPExp_Jun, wetSJR*estCVPExp_WetJun)*cfs_taf(1)
-!        value estCVPExp_May*cfs_taf
-!            + estCVPExp_Jun*cfs_taf(1)
             + estCVPExp_JulAug*cfs_taf(2)
             + estCVPExp_JulAug*cfs_taf(3)
             + S11(-1) - buffCVP_MayAug + jbypass_del + AnnualBanksCVP }
@@ -200,7 +192,7 @@ define deltar_cvp_sdv {std kind 'DEL-TARGET' units 'taf'}
 
 define del_third_cvp_s {
   case initialdel {
-    condition month <= FEB .and. wateryear == beginWaterYear
+    condition month <= FEB .and. wateryear == 1922
     value anncvpCL_tot_s}
   case march_april {
     condition month >= MAR .and. month <=MAY

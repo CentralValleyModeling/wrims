@@ -1,6 +1,7 @@
 package gov.ca.dwr.hecdssvue.panel;
 
 import gov.ca.dwr.hecdssvue.PluginCore;
+import gov.ca.dwr.hecdssvue.components.ShowSelected;
 import gov.ca.dwr.hecdssvue.views.DSSCatalogView;
 import gov.ca.dwr.hecdssvue.views.DSSMonthlyView;
 import gov.ca.dwr.hecdssvue.views.DSSPlotView;
@@ -83,7 +84,8 @@ public class OpsPanel extends JPanel {
 
 	public static String[] _twSelections = { "All", "OCT1921 - SEP2009","OCT1921 - SEP2003",
 			"OCT1928 - SEP1934","OCT1986 - SEP1992","OCT1975 - SEP1977",
-			"OCT1976 - SEP1977","OCT1994 - SEP2003","OCT2000 - SEP2009"};
+			"OCT1976 - SEP1977","OCT1994 - SEP2003","OCT2000 - SEP2009",
+			"OCT1997 - SEP2007"};
 
 	private Vector<String> _twitems = new Vector<String>(1, 1);
 	
@@ -267,7 +269,7 @@ public class OpsPanel extends JPanel {
 		            		break;
 					}
 				}
-				showSelected();
+				ShowSelected.showSelected();
 			}
 			
 		});
@@ -362,13 +364,13 @@ public class OpsPanel extends JPanel {
 		taf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PluginCore.units=PluginCore.taf;
-				showSelected();
+				ShowSelected.showSelected();
 			}
 		});
 		cfs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PluginCore.units=PluginCore.cfs;
-				showSelected();
+				ShowSelected.showSelected();
 			}
 		});
 		taf.setFont(new Font(f.getName(), f.getStyle(), 12));
@@ -413,7 +415,7 @@ public class OpsPanel extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				PluginCore.mode=comp.getText();
-				showSelected();
+				ShowSelected.showSelected();
 			}
 
 			@Override
@@ -446,7 +448,7 @@ public class OpsPanel extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				PluginCore.mode=diff.getText();
-				showSelected();
+				ShowSelected.showSelected();
 			}
 
 			@Override
@@ -498,7 +500,7 @@ public class OpsPanel extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				setAnnualType(PluginCore.WATERYEAR);
-				showSelected();
+				ShowSelected.showSelected();
 			}
 
 			@Override
@@ -531,7 +533,7 @@ public class OpsPanel extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				setAnnualType(PluginCore.CALENDAR_YEAR);
-				showSelected();
+				ShowSelected.showSelected();
 			}
 
 			@Override
@@ -564,7 +566,7 @@ public class OpsPanel extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				setAnnualType(PluginCore.FEDERAL_CONTRACT_YEAR);
-				showSelected();
+				ShowSelected.showSelected();
 			}
 
 			@Override
@@ -605,7 +607,7 @@ public class OpsPanel extends JPanel {
 				JComboBox tb = (JComboBox) e.getSource();
 				String twSel = (String) tb.getSelectedItem();
 				setTimeWindow(twSel);
-				showSelected();
+				ShowSelected.showSelected();
 			}
 		});
 		Dimension d = new Dimension(350, 17);
@@ -762,7 +764,7 @@ public class OpsPanel extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				PluginCore.chartType=0;
-				showSelected();
+				ShowSelected.showSelected();
 			}
 
 			@Override
@@ -796,7 +798,7 @@ public class OpsPanel extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				PluginCore.chartType=1;
-				showSelected();
+				ShowSelected.showSelected();
 			}
 
 			@Override
@@ -831,7 +833,7 @@ public class OpsPanel extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				PluginCore.chartType=2;
-				showSelected();
+				ShowSelected.showSelected();
 			}
 
 			@Override
@@ -866,7 +868,7 @@ public class OpsPanel extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				PluginCore.chartType=3;
-				showSelected();
+				ShowSelected.showSelected();
 			}
 
 			@Override
@@ -901,7 +903,7 @@ public class OpsPanel extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				PluginCore.chartType=4;
-				showSelected();
+				ShowSelected.showSelected();
 			}
 
 			@Override
@@ -974,56 +976,5 @@ public class OpsPanel extends JPanel {
 		lowerPanel.setLayout(new BorderLayout());
 		lowerPanel.add(box1, BorderLayout.CENTER);
 		return lowerPanel;
-	}
-	
-	public void showSelected(){
-		
-		try {
-			final IWorkbench workbench=PlatformUI.getWorkbench();
-			workbench.getDisplay().asyncExec(new Runnable(){
-			public void run(){
-				try {
-					DSSCatalogView catalogView = (DSSCatalogView) workbench.getActiveWorkbenchWindow()
-                            .getActivePage().findView(DSSCatalogView.ID);
-					Iterator iterator = ((IStructuredSelection) catalogView.getViewer().getSelection())
-							.iterator();
-					Vector<DataContainer> dataVector = new Vector();
-					Vector<DataContainer> dataVector_path = new Vector();
-					while(iterator.hasNext()){
-						String[] parts = (String[]) iterator.next();
-						// read 1 file
-//						DataContainer data = catalogView.getData(catalogView.getPathname(parts));
-//						if (data == null) {
-//							continue;
-//						}
-//						dataVector.add(data);
-			            // read multiple files
-						dataVector_path = catalogView.getData(catalogView.getPathname(parts));
-						if (dataVector_path == null) {
-							continue;
-						}
-						dataVector.addAll(dataVector_path);
-					}
-					
-					
-					DSSPlotView dpv = (DSSPlotView) workbench.getActiveWorkbenchWindow()
-                            .getActivePage().findView(DSSPlotView.ID);
-					dpv.showSelected(dataVector);
-					
-					DSSTableView dtv = (DSSTableView) workbench.getActiveWorkbenchWindow()
-                            .getActivePage().findView(DSSTableView.ID);
-					dtv.showSelected(dataVector);
-			
-					DSSMonthlyView mv = (DSSMonthlyView) workbench.getActiveWorkbenchWindow()
-							.getActivePage().findView(DSSMonthlyView.ID);
-					mv.showSelected(dataVector);
-				} catch (Exception e) {
-					WPPException.handleException(e);
-				}
-			}
-			});
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 }

@@ -16,37 +16,7 @@ The flow through the Delta cross channel and Georgianna Slough are given by:
   DXC Flow                              = 0.160*Qsac + 1261 ==> OPEN GATE POSITION
   DXC Flow                              = 0.0               ==> CLOSED GATE POSITION
 */
-/*
-06/23/2011
-The above documented equations are modified based on the flow results from 2009 DSM2 recalibration model
-for estimating the DXC & Georg. Sl flow. The equations are modified as follows:
 
-    DXC & Georg. Sl. Flow = (a * Sac Flow) + b
-        where a = 0.3217 , b = 1051 cfs ==> OPEN GATE POSITION
-        where a = 0.1321 , b = 1087 cfs  ==> CLOSED GATE POSITION
-
- We can break the equation into individual components that will give the same result:
-
-  Georgianna Sl. Flow           = 0.1321*Qsac + 1087  ==> OPEN OR CLOSED GATE POSITION
-  DXC Flow                              = 0.1896*Qsac - 36 ==> OPEN GATE POSITION
-  DXC Flow                              = 0.0               ==> CLOSED GATE POSITION
-
-*/
-/*
-06/23/2011
-Modify the regression equations used to compute flow through the Delta cross channel and Georgiana Sl for the
-BDCP PP (25000ac Restoration was included) scenario derived based on DSM2 outputs
-
-DXC & Georg. Sl. Flow = (a * Sac Flow) + b
-	 where a = 0.2842, b = 453 cfs ==> OPEN GATE POSITION
-         where a = 0.1339, b = 745 cfs ==> CLOSED GATE POSITION
-
-We can break the equation into individual component that will give the same result:
-
-  Georgianna Sl. Flow           = 0.1339*Qsac + 745  ==> OPEN OR CLOSED GATE POSITION
-  DXC Flow                              = 0.1503*Qsac - 292 ==> OPEN GATE POSITION
-  DXC Flow                              = 0.0               ==> CLOSED GATE POSITION
-*/
 ! Split arc C401B into Georgianna Sl. and DXC components
 define DXC_max {value 99999.*taf_cfs} ! over 1,600,000 cfs (plenty big)
 /*define C401B_GEO {std kind 'FLOW-GEORGIANA' units 'CFS'}
@@ -54,8 +24,7 @@ define C401B_DXC {std kind 'FLOW-DXC' units 'CFS'}
 goal splitC401B {C401B = C401B_GEO + C401B_DXC}*/
 
 ! Georgiana Sl. component is always this equation
-goal GeorgSlough {C_SAC029B = 0.1321*C_SAC041 + 1087.0}
-!goal GeorgSlough {C_SAC029B = 0.1339*C_SAC041 + 745.0}
+goal GeorgSlough {C_SAC029B = 0.133*C_SAC041 + 829.0}
 
 ! Number of days in each month that the DXC gate is open
 define WQCP_days_open   {select days_open from xchanneldays where month=month}
@@ -99,10 +68,29 @@ goal openGateUboundSac {lhs   C401B_DXC
                         }
 */
 ! Gate open and closure equations with the automatic Sac closure
-goal open_cond_flow { D_SAC030_MOK014 = 0.1896*SAC_threshold*int_SAC_below*fract_open - 0.1896*SAC_below*fract_open + int_SAC_below*(-36.)*fract_open }
-!goal open_cond_flow { D_SAC030_MOK014 = 0.1503*SAC_threshold*int_SAC_below*fract_open - 0.1503*SAC_below*fract_open + int_SAC_below*(-292.)*fract_open }
+goal open_cond_flow { D_SAC030_MOK014 = 0.160*SAC_threshold*int_SAC_below*fract_open - 0.160*SAC_below*fract_open + int_SAC_below*1261.0*fract_open }
 
 GOAL HELP_INTEGER {LHS C_SAC029A RHS 0.0 LHS>RHS PENALTY 0.000001}
 
+
+!Sutter and Steamboat for Output only **************************************
+define STT_STB1_O  {std kind 'FLOW-CHANNEL' units 'CFS'}  !X channel open
+define STT_STB2_X  {std kind 'FLOW-CHANNEL' units 'CFS'}  !X channel closed
+
+goal Sutter_stmbtQ1 {  !cross channel gates opened
+	lhs STT_STB1_O
+	case other {
+	condition always
+	rhs 0.4941*C_SAC041 - 1434. }
+	}
+
+goal Sutter_stmbtQ2 { !cross channel gates closed
+	lhs STT_STB2_X
+	case other {
+	condition always
+	rhs 0.4593*C_SAC041 - 1807. }
+	}
+
+define STT_STMBT {alias STT_STB1_O * fract_open + STT_STB2_X - STT_STB2_X* fract_open kind 'FLOW-CHANNEL' units 'CFS' }
 
 !******************************************************************************

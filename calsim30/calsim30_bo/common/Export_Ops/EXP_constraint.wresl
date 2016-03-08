@@ -17,29 +17,17 @@ define HandS_minpump {
 }
 ! Take the most restrictive of the NMFS export restrictions but consider the Health
 !   and safety level export that must be allowed
-!define MAXEXP_RPA {value max( min(NMFS_MaxExp, NMFS_MaxExp_DCC, FWS_MaxExp_X2), HandS_minpump)}
-define MAXEXP_RPA {value min(NMFS_MaxExp, NMFS_MaxExp_DCC, FWS_MaxExp_X2)}
+define MAXEXP_RPA {value max( min(NMFS_MaxExp, NMFS_MaxExp_DCC, FWS_MaxExp_X2), HandS_minpump)}
 !
 ! **********************************************************************************************
 !
-define Export_dec_RPA {value max(0.,D409[UPSTREAM] - MAXEXP_RPA)}
-define SWP_exp_dec_RPA {value max(0.,min(Export_dec_RPA,D419_swp_TD[UPSTREAM] - D418_TD[UPSTREAM]))}
-define CVP_exp_dec_RPA {value max(0.,min(Export_dec_RPA,D418_TD[UPSTREAM] - D419_swp_TD[UPSTREAM]))}
-define Comb_exp_dec_RPA {value max(0., Export_dec_RPA - SWP_exp_dec_RPA - CVP_exp_dec_RPA)}
 
-define Export_dec_RPA_ {alias Export_dec_RPA kind 'temp' units 'cfs'}
-define SWP_exp_dec_RPA_ {alias SWP_exp_dec_RPA kind 'temp' units 'cfs'}
-define CVP_exp_dec_RPA_ {alias CVP_exp_dec_RPA kind 'temp' units 'cfs'}
-define Comb_exp_dec_RPA_ {alias Comb_exp_dec_RPA kind 'temp' units 'cfs'}
-
-define MAXEXP_RPA_CVP {value max(tracyminpump,D418_TD[UPSTREAM] - CVP_exp_dec_RPA - 0.5*Comb_exp_dec_RPA)}
-define MAXEXP_RPA_SWP {value max(banksminpump,D419_swp_TD[UPSTREAM] - SWP_exp_dec_RPA - 0.5*Comb_exp_dec_RPA)}
-!define MAXEXP_RPA_CVP {value max(tracyminpump,min(0.5*MAXEXP_RPA,maxTracycalc)) }
-!define MAXEXP_RPA_SWP {value max(banksminpump,MAXEXP_RPA - MAXEXP_RPA_CVP) }
+define MAXEXP_RPA_CVP {value max(tracyminpump,min(0.5*MAXEXP_RPA,maxTracycalc)) }
+define MAXEXP_RPA_SWP {value max(banksminpump,MAXEXP_RPA - MAXEXP_RPA_CVP) }
 
 
 goal set_MAXEXP_RPA_SWP {
-    lhs     D419_swp_TD
+    lhs     D419_TD
     rhs     MAXEXP_RPA_SWP
     lhs<rhs penalty    0}
 define MAXEXP_RPA_SWPdv {alias MAXEXP_RPA_SWP kind 'EXPORT-LIMIT' units 'CFS'}
@@ -49,12 +37,3 @@ goal set_MAXEXP_RPA_CVP {
     rhs     MAXEXP_RPA_CVP
     lhs<rhs penalty    0}
 define MAXEXP_RPA_CVPdv {alias MAXEXP_RPA_CVP kind 'EXPORT-LIMIT' units 'CFS'}
-
-/*goal set_HandSminpump {
-    lhs     D418_TD + D419_TD + D418_IF + D419_IF
-    rhs     HandS_minpump
-    lhs>rhs penalty 0
-    lhs<rhs penalty 90000}
-*/
-!Limit Partner use of LV by export constraints.
-goal constrain_D408_P {D418_TD + D419_TD + D408_P < maxexp_rpa}

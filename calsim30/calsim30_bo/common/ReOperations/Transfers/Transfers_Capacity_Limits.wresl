@@ -63,7 +63,7 @@ goal setConvLimitDelta9 {                                            !OMR flow c
     lhs  DELTA_ConvLtd
     case DEC_JUN {
         condition     month >= DEC .and. month <= JUN
-        rhs           C_OMR014 - C_OMR014_limit + D419_WTS_TD2 + D419_EWA_TD       !adjusted for added WTS and EWA operations
+        rhs           C408 - C408_limit + D419_WTS_TD2 + D419_EWA_TD       !adjusted for added WTS and EWA operations
         lhs<rhs       penalty 0 }
 }
 !goal setConvLimitDelta10 {DELTA_ConvLtd + D418_TD + D419_TD < MAXEXP_RPA }  !NMFS BO

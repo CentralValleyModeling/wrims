@@ -128,7 +128,8 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static HecDss[] dvDss=new HecDss[4];
 	public static HecDss[] svDss=new HecDss[4];
 	public static Vector[] dvVector=new Vector[4]; 
-	public static Vector[] svVector=new Vector[4]; 
+	public static Vector[] svVector=new Vector[4];
+	public static int[] studyTypes={0,0,0,0};
 	@SuppressWarnings("unchecked")
 	public static Map<String, String>[] studiesData=new HashMap[4];
 	public static String timeWindow="31Oct1921 2400 30Sep2009 2400";

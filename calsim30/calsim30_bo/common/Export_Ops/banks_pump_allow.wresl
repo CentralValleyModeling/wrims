@@ -47,7 +47,6 @@ define BanksAllowOut {alias BanksMaxAllow kind 'FLOW-ALLOW-BANKS' UNITS 'CFS' }
 
 ! Banks PP Minimum Cap
 define banksminpump {value 300.}
-define banksminpumpdv {alias banksminpump kind 'health-safety' units 'cfs'}
 
 goal setbanksminpump {
     lhs D419_SWP

@@ -29,7 +29,7 @@ define VAMP_debt {std kind 'FLOW-RELEASE' units 'TAF'}
 goal setVAMP_debt {
     lhs VAMP_debt
     case firstyear {
-        condition month <= mar .and. wateryear == beginWaterYear
+        condition month <= mar .and. wateryear == 1922
         rhs VAMP_DEBT(-1) }
     case April {
         condition   month == apr

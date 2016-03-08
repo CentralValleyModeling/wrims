@@ -33,7 +33,7 @@ goal setDN_60N_NA2  {DN_60N_NA2 = DG_60N_NA2 - DL_60N_NA2}
 ! meet minimum groundwater pumping
 goal meetGPmin_60N_NA2  {GP_60N_NA2 > GPmin_60N_NA2}
 ! Total Applied Water = net surface delivery + groundwater pumping
-goal setAW_60N_NA2  {AW_60N_NA2 = DN_60N_NA2 + GP_60N_NA2 + RsdPos_60N_NA2 - RsdNeg_60N_NA2}
+goal setAW_60N_NA2  {AW_60N_NA2 = DN_60N_NA2 + GP_60N_NA2 + ErrPos_60N_NA2 - ErrNeg_60N_NA2}
 */
 
 !==============================
@@ -102,7 +102,7 @@ goal setDN_60N_PU   {DN_60N_PU = DG_60N_PU - DL_60N_PU}
 ! meet minimum groundwater pumping
 goal meetGPmin_60N_PU   {GP_60N_PU > GPmin_60N_PU}
 ! Total Applied Water = net surface delivery + groundwater pumping
-goal setUD_60N_PU   {UD_60N_PU = DN_60N_PU + GP_60N_PU + RsdPos_60N_PU - RsdNeg_60N_PU}
+goal setUD_60N_PU   {UD_60N_PU = DN_60N_PU + GP_60N_PU + ErrPos_60N_PU - ErrNeg_60N_PU}
 */
 
 !======================================================================
@@ -115,7 +115,7 @@ goal setDN_EBMUD    {DN_EBMUD = DG_EBMUD - DL_EBMUD}
 ! meet minimum groundwater pumping
 goal setGP_EBMUD    {GP_EBMUD > GPmin_EBMUD}
 ! Total Applied Water = net surface delivery + groundwater pumping
-goal setUD_EBMUD    {UD_EBMUD = DN_EBMUD + GP_EBMUD + RsdPos_EBMUD - RsdNeg_EBMUD}
+goal setUD_EBMUD    {UD_EBMUD = DN_EBMUD + GP_EBMUD + ErrPos_EBMUD - ErrNeg_EBMUD}
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! WBA 60S     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

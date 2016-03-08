@@ -4,12 +4,12 @@ urbanminmaxgw
 ID	MinFraction	MaxFraction
 1	1.00	1.00	!02_NU		Anderson, Cottonwood WD, small communities
 2	0.00	1.00	!02_PU		Centerville CSD, Clear Creek CSD, Keswick CSA, Shasta CSD
-3	0.30	1.00	!02_SU		Redding (Foothill WTP)
+3	0.00	1.00	!02_SU		Redding (Foothill WTP)
 4	1.00	1.00	!03_NU		Small communities
 5	0.00	1.00	!03_PU1		Jones Valley CSA, City of Shasta Lake, Mountain Gate CSD
 6	0.00	1.00	!03_PU2		Bella Vista WD
 7	0.00	1.00	!03_PU3		Redding (Buckeye WTP)
-8	0.30	1.00	!03_SU		Redding (Foothill WTP)
+8	0.00	1.00	!03_SU		Redding (Foothill WTP)
 9	1.00	1.00	!04_NU1		Red Bluff
 10	1.00	1.00	!04_NU2		Corning, Gerber-Las Flores CSD, small communities
 11	1.00	1.00	!05_NU		Red Bluff, Los Molinos CSD, small communities
@@ -61,7 +61,7 @@ ID	MinFraction	MaxFraction
 57	0.00	1.00	!26S_NU3	Florin RCD, Elk Grove WSC
 58	0.00	1.00	!26S_NU4	Aerojet
 59	0.00	1.00	!26S_PU1	Folsom, Folsom Prison
-60	0.50	1.00	!26S_PU2	Golden State WC
+60	0.00	1.00	!26S_PU2	Golden State WC
 61	0.00	1.00	!26S_PU3	Cal Parks & Rec
 62	0.00	1.00	!26S_PU4	SCWA Zone 41
 63	0.00	1.00	!26S_PU5	Elk Grove WSC

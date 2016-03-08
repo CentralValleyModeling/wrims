@@ -180,7 +180,7 @@ satisfy Merced ID & Stevinson demands first.
 */
 define ElNidoAlloc{
     case firstyear {
-        condition wateryear == beginWaterYear .and. month<=mar
+        condition wateryear == 1922 .and. month<=mar
         value 40. }
     case April_cut {
         condition month == apr .and. Merced_surface_demand - 40. - 26.4 >= S20Avail
@@ -205,7 +205,7 @@ define MercedDem2dv {std kind 'demand' units 'taf' }
 ! Subtract out El Nido Allocations from Merced Surface Demands
 define MercedDem2 {
     case firstyear {
-        condition wateryear == beginWaterYear .and. month <= mar
+        condition wateryear == 1922 .and. month <= mar
         value Merced_surface_demand }
     case April {
         condition month == apr
@@ -224,7 +224,7 @@ define perdv_MercedID {std kind 'percent-delivery' units 'none'}
 ! Calculate the Merced ID & Stevinson percent of demand that is actually delivered
 define perdel_MercedID {
     case firstyear {
-        condition wateryear == beginWaterYear .and. month <= Mar
+        condition wateryear == 1922 .and. month <= Mar
         value 1. }
     case April {
         condition month == apr
@@ -248,7 +248,7 @@ define ann_571_pagdv {std kind 'annual-demand' units 'taf'}
 ! Determine annual CUAW at node 571 by summing Apr thru Sept monthly CUAW
 define ann_cuaw_571_pag {
     case firstyear {
-        condition wateryear == beginWaterYear .and. month<=mar
+        condition wateryear == 1922 .and. month<=mar
         value 256. }
     case april  {
         condition month==apr

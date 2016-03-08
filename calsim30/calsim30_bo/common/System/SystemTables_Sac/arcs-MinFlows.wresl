@@ -26,10 +26,10 @@ define C_SAC201_MIF_DAILY {std kind 'FLOW-MIN-INSTREAM' units 'CFS'} ! Hamilton 
 define C_SAC201_ADD 	{std kind 'FLOW-ADDITIONAL-INSTREAM' units 'CFS'}
 
 define C_SAC120_MIF 	{std kind 'FLOW-MIN-INSTREAM' units 'CFS'} ! Wilkins Slough
+define C_SAC120_MIF_DAILY {std kind 'FLOW-MIN-INSTREAM' units 'CFS'} ! Wilkins Slough Daily
 define C_SAC120_ADD 	{std kind 'FLOW-ADDITIONAL-INSTREAM' units 'CFS'}
 
 define C_SAC097_MIF 	{std kind 'FLOW-MIN-INSTREAM' units 'CFS'} ! Navigation Control Point
-define C_SAC097_MIF_DAILY {std kind 'FLOW-MIN-INSTREAM' units 'CFS'} ! Wilkins Slough Daily (applied at NCP)
 define C_SAC097_ADD 	{std kind 'FLOW-ADDITIONAL-INSTREAM' units 'CFS'}
 
 !define C_SAC041_MIF 	{std kind 'FLOW-MIN-INSTREAM' units 'CFS'} ! Hood
@@ -109,8 +109,8 @@ define MF_MFY013 {
 }
 
 ! Yuba River's Smartsville gage flow requirement
-define C_YUB024_MIF 	{std kind 'FLOW-MIN-INSTREAM' units 'CFS'} 
-define C_YUB024_ADD 	{std kind 'FLOW-ADDITIONAL-INSTREAM' units 'CFS'}
+define C_YUB023_MIF 	{std kind 'FLOW-MIN-INSTREAM' units 'CFS'} 
+define C_YUB023_ADD 	{std kind 'FLOW-ADDITIONAL-INSTREAM' units 'CFS'}
 
 ! Yuba River's Marysville gage flow requirement
 define C_YUB006_MIF 	{std kind 'FLOW-MIN-INSTREAM' units 'CFS'} 
@@ -139,7 +139,7 @@ define wyt_YB {
 define MF_BRR050 	{
  case novaprdry 	{condition month >= NOV .and. month <= APR .and. wyt_YB >= 3. value 15. }
  case novaprwet 	{condition month >= NOV .and. month <= APR .and. wyt_YB <= 2. value 20. }
- case mayoctdry 	{condition month >= MAY .and. month <= SEP .and. wyt_YB >= 3. .or. month == OCT .and. wyt_YB >= 3. value 40. } 
+ case mayoctdry 	{condition month >= MAY .and. month <= OCT .and. wyt_YB >= 3. value 40. } 
  case other 		{condition always value 70. } 
 }
 
@@ -147,11 +147,11 @@ define C_BRR050_MIF 	{std kind 'FLOW-MIN-INSTREAM' units 'CFS'}
 define C_BRR050_ADD 	{std kind 'FLOW-ADDITIONAL-INSTREAM' units 'CFS'}
 
 ! Combie Lake Release
-define MF_CMBIE 		{value 5. } !cfs
+define MF_CMBIE 		{value 5. }
 define C_CMBIE_MIF 	{std kind 'FLOW-MIN-INSTREAM' units 'CFS'}
 define C_CMBIE_ADD 	{std kind 'FLOW-ADDITIONAL-INSTREAM' units 'CFS'}
 
-! Bear River below diversion dam min flow in cfs
+! Bear River below diversion dam
 define MF_BRR017 {
  case aprjun 	{condition month >= APR .and. month <= JUN value 25. }
  case other 	{condition always value 10. }

@@ -25,7 +25,7 @@ define WQ422_target1_ {alias WQ422_target1 kind 'fill-target' units 'mg/L'}
 !*****************************
 
 !Maximum quantity of water for wq control.  Deduct estimated MS diversion from service area demand.
-define max_total_wqc {value min(demand_D420 - D406A_MS_est, min(D408_OR_max + D408_VC_max, C421_max) + D408_RS_max + S422_CC_maxWQrel)}
+define max_total_wqc {value min(demand_D420 - D406A_MS_est, min(D408_OR_max + D408_VC_max, C421_max) + D408_RS_max + S422_maxWQrel)}
 
 !*****************************
 !Calculate the best water quality that can be delivered.  Do not include Mokelumne Intake.  Assume Mallard Slough
@@ -116,7 +116,7 @@ define WQ_OVL_max {
 define D_OVL_minmax {
 	case LVmin {
 		condition	WQ422(-1) < WQ408_ORVC_min
-		value		S422_CC_maxWQrel
+		value		S422_maxWQrel
 	}
 	case ORVC_minmin {
 		condition	always
@@ -130,7 +130,7 @@ define D_OVL_midmax {
 	}
 	case LVmid {
 		condition	WQ422(-1) >= WQ408_ORVC_min
-		value		S422_CC_maxWQrel
+		value		S422_maxWQrel
 	}
 	case ORVC_minmid {
 		condition	always
@@ -140,7 +140,7 @@ define D_OVL_midmax {
 define D_OVL_maxmax {
 	case LVmax {
 		condition 	WQ422(-1) >= WQ408_ORVC_max
-		value		S422_CC_maxWQrel
+		value		S422_maxWQrel
 	}
 	case ORVC_maxmax {
 		condition	always
@@ -223,7 +223,7 @@ define WQ_RVL_mid {
 define D_RVL_minmax {
 	case LVmin {
 		condition	WQ422(-1) < min(WQ408_RS,WQ408_VC)
-		value		S422_CC_maxWQrel
+		value		S422_maxWQrel
 	}
 	case VCmin {
 		condition	WQ408_VC < WQ408_RS
@@ -237,7 +237,7 @@ define D_RVL_minmax {
 define D_RVL_maxmax {
 	case LVmax {
 		condition	WQ422(-1) >= max(WQ408_RS,WQ408_VC)
-		value		S422_CC_maxWQrel
+		value		S422_maxWQrel
 	}
 	case VCmax {
 		condition	WQ408_VC >= WQ408_RS
@@ -251,7 +251,7 @@ define D_RVL_maxmax {
 define D_RVL_midmax {
 	case LVmid {
 		condition	WQ422(-1) < max(WQ408_RS,WQ408_VC) .and. WQ422(-1) >= min(WQ408_RS,WQ408_VC)
-		value		S422_CC_maxWQrel
+		value		S422_maxWQrel
 	}
 	case VCmid {
 		condition	WQ408_VC <= WQ422(-1) .and. WQ408_VC >= WQ408_RS .or. WQ408_VC < WQ408_RS .and. WQ408_VC > WQ422(-1)
@@ -336,7 +336,7 @@ define WQ_ROL_mid {
 define D_ROL_minmax {
 	case LVmin {
 		condition	WQ422(-1) < min(WQ408_RS,WQ408_OR)
-		value		S422_CC_maxWQrel
+		value		S422_maxWQrel
 	}
 	case VCmin {
 		condition	WQ408_OR < WQ408_RS
@@ -350,7 +350,7 @@ define D_ROL_minmax {
 define D_ROL_maxmax {
 	case LVmax {
 		condition	WQ422(-1) >= max(WQ408_RS,WQ408_OR)
-		value		S422_CC_maxWQrel
+		value		S422_maxWQrel
 	}
 	case VCmax {
 		condition	WQ408_OR >= WQ408_RS
@@ -364,7 +364,7 @@ define D_ROL_maxmax {
 define D_ROL_midmax {
 	case LVmid {
 		condition	WQ422(-1) < max(WQ408_RS,WQ408_OR) .and. WQ422(-1) >= min(WQ408_RS,WQ408_OR)
-		value		S422_CC_maxWQrel
+		value		S422_maxWQrel
 	}
 	case VCmid {
 		condition	WQ408_OR <= WQ422(-1) .and. WQ408_OR >= WQ408_RS .or. WQ408_OR < WQ408_RS .and. WQ408_OR > WQ422(-1)
@@ -483,22 +483,22 @@ define WQ420_pLV {
 		value		WQ422(-1)
 	}
 	case MeetsDemand {
-		condition	S422_CC_maxWQrel >= max_total_wqc
+		condition	S422_maxWQrel >= max_total_wqc
                 value           (max_total_wqc*WQ422(-1) + D406A_MS_est*WQ406A_MS)/(max_total_wqc + D406A_MS_est)
 	}
 	case TwoSource {
-		condition	S422_CC_maxWQrel + D_OVR_minmax >= max_total_wqc
-                value           (S422_CC_maxWQrel*WQ422(-1) + (max_total_wqc - S422_CC_maxWQrel)*WQ_OVR_min + D406A_MS_est*WQ406A_MS)/(max_total_wqc + D406A_MS_est)
+		condition	S422_maxWQrel + D_OVR_minmax >= max_total_wqc
+                value           (S422_maxWQrel*WQ422(-1) + (max_total_wqc - S422_maxWQrel)*WQ_OVR_min + D406A_MS_est*WQ406A_MS)/(max_total_wqc + D406A_MS_est)
 	}
 	case ThreeSource {
-		condition	S422_CC_maxWQrel + D_OVR_minmax + D_OVR_midmax >= max_total_wqc
-		value		(S422_CC_maxWQrel*WQ422(-1) + D_OVR_minmax*WQ_OVR_min + (max_total_wqc - S422_CC_maxWQrel - D_OVR_minmax)*WQ_OVR_mid
+		condition	S422_maxWQrel + D_OVR_minmax + D_OVR_midmax >= max_total_wqc
+		value		(S422_maxWQrel*WQ422(-1) + D_OVR_minmax*WQ_OVR_min + (max_total_wqc - S422_maxWQrel - D_OVR_minmax)*WQ_OVR_mid
                                 + D406A_MS_est*WQ406A_MS)/(max_total_wqc + D406A_MS_est)
 	}
 	case FourSource {
 		condition	always
-		value		(S422_CC_maxWQrel*WQ422(-1) + D_OVR_minmax*WQ_OVR_min + D_OVR_midmax*WQ_OVR_mid
-                                + (max_total_wqc - S422_CC_maxWQrel - D_OVR_minmax - D_OVR_midmax)*WQ_OVR_max + D406A_MS_est*WQ406A_MS)/(max_total_wqc + D406A_MS_est)
+		value		(S422_maxWQrel*WQ422(-1) + D_OVR_minmax*WQ_OVR_min + D_OVR_midmax*WQ_OVR_mid
+                                + (max_total_wqc - S422_maxWQrel - D_OVR_minmax - D_OVR_midmax)*WQ_OVR_max + D406A_MS_est*WQ406A_MS)/(max_total_wqc + D406A_MS_est)
 	}
 }
 
@@ -624,19 +624,16 @@ define WQ421_est_1_ {alias WQ421_est_1 kind 'salinity-estimate' units 'cfs'}
 !****************************
 !Determine potential Los Vaqueros WQ operations
 !****************************
-!Define Los Vaqueros fill demand.  Depends on available storage capacity, expected inflows, evaporation, conveyance capacity, and fill regulations.
-define S422_CC_demand {value max(0.,min((S422_CC_level2 - S422_CC(-1))*taf_cfs - max(0.,I422 - 5.) - I422_ppt_cfs + E422_CC_est, lim_NoFill, lim_FebNoFill, lim_fill_X2, C422_FILL_max))}
-define S422_demand {value max(0.,min((S422_CC_level2+S422_P_level2 - S422(-1))*taf_cfs - max(0.,I422 - 5.) - I422_ppt_cfs + E422_est, lim_NoFill, lim_FebNoFill, lim_fill_X2, C422_FILL_max))}
 
 !If WQ421_est_1 > WQ422_target1 or WQ420_est_1 > WQ420_target or LV is full then no filling opportunity exists and releases from LV may be necessary.
 define fill_switch {
 	case MokFilling {
-                condition       WQ420_RSMS <= WQ420_target .and. D408_RS_max >= demand_D420 - D406A_MS_est .and. S422_CC_demand > 1
+                condition       WQ420_RSMS <= WQ420_target .and. D408_RS_max >= demand_D420 - D406A_MS_est .and. S422_demand > 1
 				.and. lim_MOK_ann > 1 .and. WQ424_MOK < WQ408_ORVC_min
 		value		1.
 	}
 	case NoFilling {
-                condition       WQ421_est_1 > WQ422_target1 .or. WQ420_est_1 > WQ420_target + 0.1 .or. S422_demand < 0.1 .or. max_intake_wqc + 0.01 < demand_D420 - D406A_MS_est .or. lim_Fill_OMR < 0.1
+                condition       WQ421_est_1 > WQ422_target1 .or. WQ420_est_1 > WQ420_target + 0.1 .or. S422_demand < 0.1 .or. max_intake_wqc + 0.01 < demand_D420 - D406A_MS_est
 		value		0.
 	}
 	case Filling {
@@ -647,7 +644,7 @@ define fill_switch {
 
 define fill_switch_MOK {
 	case MokFilling {
-                condition       WQ420_RSMS <= WQ420_target .and. D408_RS_max >= demand_D420 - D406A_MS_est .and. S422_CC_demand > 1
+                condition       WQ420_RSMS <= WQ420_target .and. D408_RS_max >= demand_D420 - D406A_MS_est .and. S422_demand > 1
 				.and. lim_MOK_ann > 1 .and. WQ424_MOK < WQ408_ORVC_min
 		value		1.
 	}
@@ -668,7 +665,7 @@ define fill_switch_MOK_ {alias fill_switch_MOK kind 'allow-LV-filling' units 'no
 define WQ420_MOK {value (max(0.,demand_D420 - min(lim_min_div,lim_MOK_ann,lim_CVP_ann))*WQ420_best + min(lim_min_div,lim_MOK_ANN,lim_CVP_ann)*WQ424_MOK)/demand_D420}
 
 goal no_fill_salinity_const {
-        lhs C422_REL_CC*WQ422(-1)+D408_OR_CC*WQ408_OR+D408_VC_CC*WQ408_VC+D408_RS*WQ408_RS+D406A_MS*WQ406A_MS+I424*WQ424_MOK
+        lhs C422_REL*WQ422(-1)+D408_OR*WQ408_OR+D408_VC*WQ408_VC+D408_RS*WQ408_RS+D406A_MS*WQ406A_MS+I424*WQ424_MOK
   	/*case NoFillMeetStandard {
     		condition	fill_switch < 0.5 .and. WQ420_MOK <= WQ420_target
                 rhs             (max_total_wqc + D406A_MS_est)*WQ420_target
@@ -748,7 +745,7 @@ define C422_F_422_targ {value max(0., D_ORVC_422_targ - C423_D_422_targ)}
 define C422_F_422_targ_ {alias C422_F_422_targ kind 'flow-split-target' units 'cfs'}
 
 goal lim_LVfill_byWQ {C422_FILL < C422_F_422_targ + C423_FILL}
-goal lim_D_ORVC_forFill {C421_TFR < D_ORVC_422_targ}
+goal lim_D_ORVC_forFill {C421 < D_ORVC_422_targ}
 
 !Mokelumne Intake operations logic.  First priority is to use water to increase LV storage and improve LV water quality.  This
 !is why C423_FILL is weighted highly.  LV storage can be maintained by using MOK water to maintain the CCWD delivery target instead of water in LV storage.
@@ -784,3 +781,110 @@ goal route_MOK_div {
 		lhs<rhs		penalty 0
 	}
 }
+
+!*****************************************************************************************************************************
+
+!Favor OR or VC, or RS intake by water quality from August to December.
+!From January to July, diversions from OR or VC take priority over RS because of
+!fish screens as long as water quality goals met and storage not sacrificed.
+!If it is determined there is a fill opportunity, and RS has the middle water quality,
+!favor the lower ORVC water quality to ensure maximum filling while meeting Service Area demands
+!and water quality targets.
+
+define switch_RS_HCL {
+	case FillOpp {
+		condition	fill_switch > 0.5 .and. WQ408_RS >= WQ408_ORVC_min .and. WQ408_RS > WQ420_target
+		value		1.
+	}
+	case JantoJul {		!Fish protection supercedes best available water quality as long as delivery standard met.
+		condition	range(month,jan,jul)
+		value		1.
+	}
+	case HighCL {
+		condition	WQ408_RS >= WQ408_OR .and. WQ408_RS >= WQ408_VC
+		value		1.
+	}
+	case otherwise {
+		condition	always
+		value		0.
+	}
+}
+
+define switch_OR_HCL {
+	case HighCL {
+		condition	WQ408_OR > WQ408_VC
+		value		1.*max(0., 1. - switch_RS_HCL)
+	}
+	case otherwise {
+		condition	always
+		value		0.
+	}
+}
+
+define switch_VC_HCL {value 1.*max(0., 1. - switch_RS_HCL)*max(0., 1. - switch_OR_HCL)}
+
+define switch_RS_MCL {
+	case MidCL {
+		condition	WQ408_RS >= WQ408_OR .or. WQ408_RS >= WQ408_VC
+		value		1.*max(0., 1. - switch_RS_HCL)
+	}
+	case otherwise {
+		condition	always
+		value		0.
+	}
+}
+
+define switch_OR_MCL {
+	case MidCL {
+		condition	WQ408_OR > WQ408_VC .and. switch_RS_HCL > 0.5
+		value		1.
+	}
+	case MidCL2 {
+		condition	WQ408_OR > WQ408_RS .and. switch_VC_HCL > 0.5
+		value		1.
+	}
+	case otherwise {
+		condition	always
+		value		0.
+	}
+}
+
+define switch_VC_MCL {value 1.*max(0., 1. - switch_RS_MCL)*max(0., 1. - switch_OR_MCL)}
+
+define switch_RS_LCL {value 1.*max(0., 1. - switch_RS_HCL)*max(0., 1. - switch_RS_MCL)}
+define switch_OR_LCL {value 1.*max(0., 1. - switch_OR_HCL)*max(0., 1. - switch_OR_MCL)}
+define switch_VC_LCL {value 1.*max(0., 1. - switch_RS_LCL)*max(0., 1. - switch_OR_LCL)}
+
+!Cap intake wq subarcs to operate to wq and fish screen criteria.
+goal cap_D408_RS_HCL {D408_RS_HCL < switch_RS_HCL * 9999.}
+goal cap_D408_OR_HCL {D408_OR_HCL < switch_OR_HCL * 9999.}
+goal cap_D408_VC_HCL {D408_VC_HCL < switch_VC_HCL * 9999.}
+
+goal cap_D408_RS_MCL {D408_RS_MCL < switch_RS_MCL * 9999.}
+goal cap_D408_OR_MCL {D408_OR_MCL < switch_OR_MCL * 9999.}
+goal cap_D408_VC_MCL {D408_VC_MCL < switch_VC_MCL * 9999.}
+
+goal cap_D408_RS_LCL {D408_RS_LCL < switch_RS_LCL * 9999.}
+goal cap_D408_OR_LCL {D408_OR_LCL < switch_OR_LCL * 9999.}
+goal cap_D408_VC_LCL {D408_VC_LCL < switch_VC_LCL * 9999.}
+
+!Save subarc switch parameters.
+define switch_RS_HCL_ {alias switch_RS_HCL kind 'wq-trigger' units 'none'}
+define switch_OR_HCL_ {alias switch_OR_HCL kind 'wq-trigger' units 'none'}
+define switch_VC_HCL_ {alias switch_VC_HCL kind 'wq-trigger' units 'none'}
+
+define switch_RS_MCL_ {alias switch_RS_MCL kind 'wq-trigger' units 'none'}
+define switch_OR_MCL_ {alias switch_OR_MCL kind 'wq-trigger' units 'none'}
+define switch_VC_MCL_ {alias switch_VC_MCL kind 'wq-trigger' units 'none'}
+
+define switch_RS_LCL_ {alias switch_RS_LCL kind 'wq-trigger' units 'none'}
+define switch_OR_LCL_ {alias switch_OR_LCL kind 'wq-trigger' units 'none'}
+define switch_VC_LCL_ {alias switch_VC_LCL kind 'wq-trigger' units 'none'}
+
+
+
+
+
+
+
+

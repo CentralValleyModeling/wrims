@@ -32,15 +32,14 @@ define CL1ann_WTPCYC_16_PU    	{select contract from Contracts_FRSA where contra
 define CLann_JBC008_11_SA4    	{select contract from Contracts_FRSA where contractor=10} !Sutter Extension WD
 
 !Water right agreements with DWR
-define WRann_FTR014_16_SA    	{select right from WaterRightAmounts where diversion=3}  !Garden Highway MWC
-define WRann_FTR018_15S_SA    	{select right from WaterRightAmounts where diversion=4}  !Plumas MWC
-define WRann_FTR018_16_SA     	{select right from WaterRightAmounts where diversion=5}  !Tudor MWC
+define WRann_FTR014_16_SA    	{select right from WaterRightAmounts where diversion=3}   !Garden Highway MWC
+define WRann_FTR018_15S_SA    	{select right from WaterRightAmounts where diversion=4}   !Plumas MWC
+define WRann_FTR018_16_SA     	{select right from WaterRightAmounts where diversion=5}   !Tudor MWC
 define WRann_WEC005  		{select right from WaterRightAmounts where diversion=10} !Western Canal WD
 define WRann_LDC007_11_SA2    	{select right from WaterRightAmounts where diversion=11} !Richvale ID
 define WRann_RVC005_11_SA2PR2	{select right from WaterRightAmounts where diversion=13} !Richvale ID
 define WRann_JBC004_11_SA3    	{select right from WaterRightAmounts where diversion=14} !Butte WD and Biggs-West Gridley WD
 define WRann_JBC008_11_SA4    	{select right from WaterRightAmounts where diversion=15} !Sutter Extension WD
-define WRann_FTR021_16_SA     	{select right from WaterRightAmounts where diversion=31} !Oswald WD
 
 !Constrain deliveries to miscellaneous FRSA diverters to 1976 surveyed diversions
 !Diversions to 11_SA are small and are ignored
@@ -490,9 +489,6 @@ define WR_FTR018_16_SA        	{alias WRmon_FTR018_16_SA kind 'WATER-RIGHT' unit
 
 define WRmon_FTR008_16_SA     	{value max (0.0,WRann_FTR008_16_SA * (AWR_16_SA*cfs_taf*(1+ RPF_16_SA - RUFr5_TS) + AWO_16_SA*cfs_taf*(1+ RPF_16_SA - RUFo_16_SA)) / SumAW_16_SA_sv)} !Miscellaneous Diverters
 define WR_FTR008_16_SA        	{alias WRmon_FTR008_16_SA kind 'CONTRACT-LIMIT' units 'TAF'}
-
-define WRmon_FTR021_16_SA     	{value max(0.0,WRann_FTR021_16_SA * (AWR_16_SA*cfs_taf*(1+ RPF_16_SA - RUFr5_TS) + AWO_16_SA*cfs_taf*(1+ RPF_16_SA - RUFo_16_SA)) / SumAW_16_SA_sv)} !Oswald WD
-define WR_FTR021_16_SA        	{alias WRmon_FTR021_16_SA kind 'WATER-RIGHT' units 'TAF'}
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!! City of Yuba City!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

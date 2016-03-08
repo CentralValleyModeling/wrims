@@ -285,35 +285,35 @@ goal setAWOyear_16_PAdv {AWOyear_16_PAdv = AWOyear_16_PA}
 
 
 !define CLann_WTPCSD_02_PA    {select contract from Contracts_CVPService where diversion=1}
-define CLmon_WTPCSD_02_PA     {value max(0.0, CLann_WTPCSD_02_PA * (AWR_02_PA*(1+ RPF_02_PA - RUFr5_TS) + AWO_02_PA*(1+ RPF_02_PA - RUFo_02_PA))*cfs_taf / (AWRyear_02_PA + AWOyear_02_PA))} ! Monthly contract amount (TAF) patterned on demand
+define CLmon_WTPCSD_02_PA     {value max(0.0, CLann_WTPCSD_02_PA * (AWR_02_PA*(1+ RPF_02_PA - RUFr5_TS) + AWO_02_PA)*cfs_taf*(1+ RPF_02_PA - RUFo_02_PA) / (AWRyear_02_PA + AWOyear_02_PA))} ! Monthly contract amount (TAF) patterned on demand
 define CL_WTPCSD_02_PA        {alias CLmon_WTPCSD_02_PA kind 'CONTRACT-LIMIT' units 'TAF'}
 
 !define CLann_SAC294_03_PA    {select contract from Contracts_CVPService where diversion=2}
-define CLmon_SAC294_03_PA     {value max(0.0, CLann_SAC294_03_PA * (AWR_03_PA*(1+ RPF_03_PA - RUFr5_TS) + AWO_03_PA*(1+ RPF_03_PA - RUFo_03_PA))*cfs_taf / (AWRyear_03_PA + AWOyear_03_PA))}  ! Monthly contract amount (TAF) patterned on demand
+define CLmon_SAC294_03_PA     {value max(0.0, CLann_SAC294_03_PA * (AWR_03_PA*(1+ RPF_03_PA - RUFr5_TS) + AWO_03_PA)*cfs_taf*(1+ RPF_03_PA - RUFo_03_PA) / (AWRyear_03_PA + AWOyear_03_PA))}  ! Monthly contract amount (TAF) patterned on demand
 define CL_SAC294_03_PA        {alias CLmon_SAC294_03_PA kind 'CONTRACT-LIMIT' units 'TAF'}
 
 !define CLann_CCL005_04_PA1   {select contract from Contracts_CVPService where diversion=3}
-define CLmon_CCL005_04_PA1    {value max(0.0, CLann_CCL005_04_PA1 * (AWR_04_PA1*(1+ RPF_04_PA1 - RUFr5_TS) + AWO_04_PA1*(1+ RPF_04_PA1 - RUFo_04_PA1))*cfs_taf / (AWRyear_04_PA1 + AWOyear_04_PA1))}  ! Monthly contract amount (TAF) patterned on demand
+define CLmon_CCL005_04_PA1    {value max(0.0, CLann_CCL005_04_PA1 * (AWR_04_PA1*(1+ RPF_04_PA1 - RUFr5_TS) + AWO_04_PA1)*cfs_taf*(1+ RPF_04_PA1 - RUFo_04_PA1) / (AWRyear_04_PA1 + AWOyear_04_PA1))}  ! Monthly contract amount (TAF) patterned on demand
 !define CL_CCL005_04_PA1       {alias CLmon_CCL005_04_PA1 kind 'CONTRACT-LIMIT' units 'TAF'}
 
 !define CLann_TCC022_04_PA2   {select contract from Contracts_CVPService where diversion=4}
-define CLmon_TCC022_04_PA2    {value max(0.0, CLann_TCC022_04_PA2 * (AWR_04_PA2*(1+ RPF_04_PA2 - RUFr5_TS) + AWO_04_PA2*(1+ RPF_04_PA2 - RUFo_04_PA2))*cfs_taf / (AWRyear_04_PA2 + AWOyear_04_PA2))}  ! Monthly contract amount (TAF) patterned on demand
+define CLmon_TCC022_04_PA2    {value max(0.0, CLann_TCC022_04_PA2 * (AWR_04_PA2*(1+ RPF_04_PA2 - RUFr5_TS) + AWO_04_PA2)*cfs_taf*(1+ RPF_04_PA2 - RUFo_04_PA2) / (AWRyear_04_PA2 + AWOyear_04_PA2))}  ! Monthly contract amount (TAF) patterned on demand
 !define CL_TCC022_04_PA2       {alias CLmon_TCC022_04_PA2 kind 'CONTRACT-LIMIT' units 'TAF'}
 
 !define CLann_TCC036_07N_PA   {select contract from Contracts_CVPService where diversion=7}
-define CLmon_TCC036_07N_PA    {value max(0.0, CLann_TCC036_07N_PA * (AWR_07N_PA*(1+ RPF_07N_PA - RUFr5_TS) + AWO_07N_PA*(1+ RPF_07N_PA - RUFo_07N_PA))*cfs_taf / (AWRyear_07N_PA + AWOyear_07N_PA))}  ! Monthly contract amount (TAF) patterned on demand
+define CLmon_TCC036_07N_PA    {value max(0.0, CLann_TCC036_07N_PA * (AWR_07N_PA*(1+ RPF_07N_PA - RUFr5_TS) + AWO_07N_PA)*cfs_taf*(1+ RPF_07N_PA - RUFo_07N_PA) / (AWRyear_07N_PA + AWOyear_07N_PA))}  ! Monthly contract amount (TAF) patterned on demand
 !define CL_TCC036_07N_PA       {alias CLmon_TCC036_07N_PA kind 'CONTRACT-LIMIT' units 'TAF'}
 
 !define CLann_TCC081_07S_PA   {select contract from Contracts_CVPService where diversion=8}
-define CLmon_TCC081_07S_PA    {value max(0.0, CLann_TCC081_07S_PA * (AWR_07S_PA*(1+ RPF_07S_PA - RUFr5_TS) + AWO_07S_PA*(1+ RPF_07S_PA - RUFo_07S_PA))*cfs_taf / (AWRyear_07S_PA + AWOyear_07S_PA))}  ! Monthly contract amount (TAF) patterned on demand
+define CLmon_TCC081_07S_PA    {value max(0.0, CLann_TCC081_07S_PA * (AWR_07S_PA*(1+ RPF_07S_PA - RUFr5_TS) + AWO_07S_PA)*cfs_taf*(1+ RPF_07S_PA - RUFo_07S_PA) / (AWRyear_07S_PA + AWOyear_07S_PA))}  ! Monthly contract amount (TAF) patterned on demand
 !define CL_TCC081_07S_PA       {alias CLmon_TCC081_07S_PA kind 'CONTRACT-LIMIT' units 'TAF'}
 
 !define CLann_TCC111_07S_PA   {select contract from Contracts_CVPService where diversion=23}
-define CLmon_TCC111_07S_PA    {value max(0.0, CLann_TCC111_07S_PA * (AWR_07S_PA*(1+ RPF_07S_PA - RUFr5_TS) + AWO_07S_PA*(1+ RPF_07S_PA - RUFo_07S_PA))*cfs_taf / (AWRyear_07S_PA + AWOyear_07S_PA))}  ! Monthly contract amount (TAF) patterned on demand
+define CLmon_TCC111_07S_PA    {value max(0.0, CLann_TCC111_07S_PA * (AWR_07S_PA*(1+ RPF_07S_PA - RUFr5_TS) + AWO_07S_PA)*cfs_taf*(1+ RPF_07S_PA - RUFo_07S_PA) / (AWRyear_07S_PA + AWOyear_07S_PA))}  ! Monthly contract amount (TAF) patterned on demand
 !define CL_TCC111_07S_PA       {alias CLmon_TCC111_07S_PA kind 'CONTRACT-LIMIT' units 'TAF'}
 
 !define CLann_FTR021_16_PA    {select contract from Contracts_CVPService where diversion=9}
-define CLmon_FTR021_16_PA     {value max(0.0, CLann_FTR021_16_PA * (AWR_16_PA*(1+ RPF_16_PA - RUFr5_TS) + AWO_16_PA*(1+ RPF_16_PA - RUFo_16_PA))*cfs_taf / (AWRyear_16_PA + AWOyear_16_PA))}  ! Monthly contract amount (TAF) patterned on demand
+define CLmon_FTR021_16_PA     {value max(0.0, CLann_FTR021_16_PA * (AWR_16_PA*(1+ RPF_16_PA - RUFr5_TS) + AWO_16_PA)*cfs_taf*(1+ RPF_16_PA - RUFo_16_PA) / (AWRyear_16_PA + AWOyear_16_PA))}  ! Monthly contract amount (TAF) patterned on demand
 define CL_FTR021_16_PA        {alias CLmon_FTR021_16_PA kind 'CONTRACT-LIMIT' units 'TAF'}
 
 
@@ -849,9 +849,9 @@ define CL_WKYTN_02_PU         {alias CLmon_WKYTN_02_PU kind 'CONTRACT-LIMIT' uni
 define CLmon_SHSTA_03_PU1     {value max(0.0, CLann_SHSTA_03_PU1 * UD_03_PU1*cfs_taf / UDann_03_PU1)} ! Monthly contract amount (TAF) patterned on demand
 define CL_SHSTA_03_PU1        {alias CLmon_SHSTA_03_PU1 kind 'CONTRACT-LIMIT' units 'TAF'}
 
-!define CLann_WTPBLV_03_PU2   {select contract from Contracts_CVPService where diversion=15}
-define CLmon_WTPBLV_03_PU2    {value max(0.0, CLann_WTPBLV_03_PU2 * UD_03_PU2*cfs_taf / UDann_03_PU2)} ! Monthly contract amount (TAF) patterned on demand
-define CL_WTPBLV_03_PU2       {alias CLmon_WTPBLV_03_PU2 kind 'CONTRACT-LIMIT' units 'TAF'}
+!define CLann_SAC294_03_PU2   {select contract from Contracts_CVPService where diversion=15}
+define CLmon_SAC294_03_PU2    {value max(0.0, CLann_SAC294_03_PU2 * UD_03_PU2*cfs_taf / UDann_03_PU2)} ! Monthly contract amount (TAF) patterned on demand
+define CL_SAC294_03_PU2       {alias CLmon_SAC294_03_PU2 kind 'CONTRACT-LIMIT' units 'TAF'}
 
 !define CLann_WTPBUK_03_PU3   {select contract from Contracts_CVPService where diversion=11}
 define CLmon_WTPBUK_03_PU3    {value max(0.0, CLann_WTPBUK_03_PU3 * UD_03_PU3*cfs_taf / UDann_03_PU3)} ! Monthly contract amount (TAF) patterned on demand
@@ -1988,7 +1988,6 @@ define WR_YUB003_15N_NU       {alias WRmon_YUB003_15N_NU kind 'NP-CONTRACT-LIMIT
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 define    CLmon_MIO023_10_NA       {value 99999.} !PG&E contract amount
 define    CLmon_MIO023_12_NU1      {value 3.0} !PG&E contract amount
-define    CLmon_THRMF_12_NU1       {value 0.0}
 
 
 !American River
@@ -2035,7 +2034,7 @@ define WRmon_CBD041_08S_SA2   {
 ! RD108, River Garden Farms Company
 ! RD108 75 cfs, Apr - Sep (A011899)
 ! RGFC 19 cfs, Apr - Sep 15 (A011910) from Knights Landing Ridge Cut but included here
-define WRmon_CBD028_08S_SA3   {
+define WRmon_CBD023_08S_SA3   {
 	case AprAug{
 		condition month >= APR .and. month <= AUG
           	value (75. + 19.) * cfs_taf}
@@ -2505,9 +2504,10 @@ define WRmon_CRC002_22_SA1    {value 99999. }
 define WRmon_CSL005_25_NA     {value 99999. }
 define WRmon_CWD009_02_NA     {value 99999. }
 define WRmon_DRC010_05_NA     {value 99999. }
-define WRmon_DRC005_05_NA     {value 99999. }
+define WRmon_DRC006_05_NA     {value 99999. }
 define WRmon_DWRPS1_16_NA2    {value 99999. }
 define WRmon_DWRPS2_11_NA     {value 99999. }
+define WRmon_DWRPS2_16_SA     {value 99999. }
 define WRmon_ELD012_04_NA     {value 99999. }
 define WRmon_ESL008_09_SA1    {value 99999. }
 define WRmon_FDC006_14_NA     {value 99999. }

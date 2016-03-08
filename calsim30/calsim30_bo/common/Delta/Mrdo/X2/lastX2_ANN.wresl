@@ -79,7 +79,7 @@ define X2_prv_KM {std kind 'X2-POSITION-PREV' units 'KM'}
 ! do KM equation continuously from initial condition
 define X2_last_KM {
     case firstmonth {
-	condition month == OCT .and. wateryear == beginWaterYear
+	condition month == OCT .and. wateryear == 1922
         value a_x2_coef + b_x2_coef*X2_prv(-1) - c_x2_coef*LOG10(NDO(-1))
         }
     case otherwise {

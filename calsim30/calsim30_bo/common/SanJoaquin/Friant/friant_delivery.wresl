@@ -73,8 +73,8 @@ goal set_ann_C1_alloc { ann_C1_alloc = Class1_delivered + Class1_alloc}
 
 ! Annual Friant-Kern Canal Class 1 delivery computation - updated monthly through June
 define Ann_FK_C1 {
-    case initialCase {
-        condition month == oct .and. wateryear == beginWaterYear
+    case initial {
+        condition month == oct .and. wateryear == 1922
         value 0 }
     case MarthruJun {
          condition   month >= mar .and. month <= jun
@@ -85,8 +85,8 @@ define Ann_FK_C1 {
 
 ! Annual Madera Canal Class 1 delivery computation - updated monthly
 define Ann_Madera_C1 {
-    case initialCase {
-        condition month == oct .and. wateryear == beginWaterYear
+    case initial {
+        condition month == oct .and. wateryear == 1922
         value 0 }
     case MarthruJun {
          condition   month >= mar .and. month <= jun
@@ -97,8 +97,8 @@ define Ann_Madera_C1 {
 
 ! Annual Friant-Kern Canal Class 2 delivery computation - updated monthly
 define Ann_FK_C2 {
-    case initialCase {
-        condition month == oct .and. wateryear == beginWaterYear
+    case initial {
+        condition month == oct .and. wateryear == 1922
         value 0.0 }
     case otherwise {
         condition always
@@ -106,8 +106,8 @@ define Ann_FK_C2 {
 
 ! Annual Madera Canal Class 2 delivery computation - updated monthly
 define Ann_Madera_C2 {
-    case initialCase {
-        condition month == oct .and. wateryear == beginWaterYear
+    case initial {
+        condition month == oct .and. wateryear == 1922
         value 0.0 }
     case otherwise {
         condition always
@@ -288,8 +288,8 @@ goal set_temp007 { temp007 = tot_C2_del }
 
 ! Temporary variable to compute total delivery through previous month
 define temp008 {
-    case initialCase {
-        condition month <= mar .and. wateryear == beginWaterYear
+    case initial {
+        condition month <= mar .and. wateryear == 1922
         value 0. }
     case otherwise {
         condition always
@@ -297,8 +297,8 @@ define temp008 {
 
 ! Temporary variable to compute Class 1 delivery through previous month
 define temp009 {
-    case initialCase {
-        condition month <= mar .and. wateryear == beginWaterYear
+    case initial {
+        condition month <= mar .and. wateryear == 1922
         value 0. }
     case otherwise {
         condition always
@@ -306,8 +306,8 @@ define temp009 {
 
 ! Temporary variable to compute Class 2 delivery through previous month
 define temp010 {
-    case initialCase {
-        condition month <= mar .and. wateryear == beginWaterYear
+    case initial {
+        condition month <= mar .and. wateryear == 1922
         value 0. }
     case otherwise {
         condition always

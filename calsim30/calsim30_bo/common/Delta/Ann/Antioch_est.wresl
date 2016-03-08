@@ -12,7 +12,7 @@ define ANReqSac {
     value 0.}
   case control{
     condition month == Apr
-    value max(0., (EstTotExpTD-AN_b_sv)/AN_m_sv)}
+    value max(0., (EstTotExp-AN_b_sv)/AN_m_sv)}
   case other {
     condition  always
     value 0.}

@@ -60,7 +60,7 @@ public class PAProcDVBR {
 			DebugCorePlugin.isDssInOp=false;
 			return;
 		}
-		String shiftInDay=TimeOperation.diffInDay(brp.paStartYear, brp.paStartMonth, brp.paStartDay, brp.paDVStartYear, brp.paDVStartMonth, brp.paDVStartDay)+"DAY";
+		String shiftInDay=TimeOperation.diffInDay(brp.paStartYear, brp.paStartMonth, brp.paStartDay, brp.paDVStartYear, brp.paDVStartMonth, brp.paDVStartDay)+"DAYS";
 		String startTime=TimeOperation.createStartTime(brp.paStartYear, brp.paStartMonth, brp.paStartDay, "1DAY");
 		String endTime=TimeOperation.createEndTime(brp.paEndYear, brp.paEndMonth, brp.paEndDay, "1DAY");
 		dvDss.setTimeWindow(startTime, endTime);

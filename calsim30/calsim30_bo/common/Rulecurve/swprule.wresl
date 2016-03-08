@@ -22,9 +22,8 @@ define OroDrainAmt4SL {value min(max(S_OROVL(-1) + S_OROVLmod - OroSepTarg, 0.),
                                  max(S12level4 - S12(-1) - S12mod,0.) )}
 define OroDrainAmtMon {value OroNextMonTarg}
 define ExpPmpAmtMon {value 60.} ! roughly 1000 cfs for the month
-!define ExpPmpAmtMon {value 180.} ! roughly 3000 cfs for the month    !Changes for the IF operations
 
-!calculate the actual rule curve.	!Changes in values for the IF operations
+!calculate the actual rule curve.
 define SWPRULEcalc {
      case OctToDec {
           condition month >= oct .and. month <= dec
@@ -32,45 +31,34 @@ define SWPRULEcalc {
      case JanToFeb {
           condition month == jan .or. month == feb
           value     month/6. * SWP_Rule_DelTar}
-!value     S12(-1) + S12mod}
      case MarthruApr {
           condition month == mar .or. month == apr
           value     SWP_Rule_DelTar}
-!value     S12(-1) + S12mod}
      case May {
           condition month == may
           value max(min(S12(-1) + S12mod - (swpdemfinal_may - ExpPmpAmtMon) + OroDrainAmtMon,
                 SWPRuleDrainTar + (swpdemfinal_jun + swpdemfinal_jul + swpdemfinal_aug + swpdemfinal_sep - 4. * ExpPmpAmtMon)),
                     init_SWPRuleDrainTar + OroDrainAmt4SL)}
-!          value max(SWPRuleDrainTar,
-!                    SWPRuleDrainTar + (swpdemfinal_jun + swpdemfinal_jul + swpdemfinal_aug + swpdemfinal_sep - 4. * ExpPmpAmtMon))}
      case June {
           condition month == jun
           value max(min(S12(-1) + S12mod - (swpdemfinal_jun - ExpPmpAmtMon) + OroDrainAmtMon,
                 SWPRuleDrainTar + (swpdemfinal_jul + swpdemfinal_aug + swpdemfinal_sep - 3. * ExpPmpAmtMon)),
                     init_SWPRuleDrainTar + OroDrainAmt4SL)}
-!           value max(SWPRuleDrainTar,
-!                    SWPRuleDrainTar + (swpdemfinal_jul + swpdemfinal_aug + swpdemfinal_sep - 3. * ExpPmpAmtMon))}
      case July {
           condition month == jul
           value max(min(S12(-1) + S12mod - (swpdemfinal_jul - ExpPmpAmtMon) + OroDrainAmtMon,
                 SWPRuleDrainTar + (swpdemfinal_aug + swpdemfinal_sep - 2. * ExpPmpAmtMon)),
                     init_SWPRuleDrainTar + OroDrainAmt4SL)}
-!          value max(SWPRuleDrainTar,
-!                    SWPRuleDrainTar + (swpdemfinal_aug + swpdemfinal_sep - 2. * ExpPmpAmtMon))}
      case August {
           condition month == aug
           value max(min(S12(-1) + S12mod - (swpdemfinal_aug - ExpPmpAmtMon) + OroDrainAmtMon,
                 SWPRuleDrainTar + (swpdemfinal_sep - ExpPmpAmtMon)),
                     init_SWPRuleDrainTar + OroDrainAmt4SL)}
-!           value max(SWPRuleDrainTar,
-!                    SWPRuleDrainTar + (swpdemfinal_sep - ExpPmpAmtMon))}
      case Sep {
           condition always
           value max(min(S12(-1) + S12mod - (swpdemfinal_sep - ExpPmpAmtMon) + OroDrainAmtMon,
                 SWPRuleDrainTar),
                     init_SWPRuleDrainTar + OroDrainAmt4SL)}
-!           value SWPRuleDrainTar}
 }
 !
 define SWPRuleCalc1 {

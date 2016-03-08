@@ -5,7 +5,6 @@ Estimates are based on current month delivery and San Luis rule-curve.
 
 !*********************************************************************************************
 ! SWP exports:
-! This calculation is considering both potential ND intake as well as SD intake - see ExportEstimate2.wresl
 
 ! export for south-of-delta SWP: demand
 define EstSWPSodDem {value swp_total_demand - I860 } !Ryan 8/9/2005
@@ -16,25 +15,11 @@ define EstSWPSodRC {value SWPRULEcalc1*taf_cfs - (S12(-1)+S12mod)*taf_cfs}
 define exp_est_SWPRC {alias EstSWPSodRC kind 'EXPORT-ESTIMATE' units 'CFS'}
 
 ! export for south-of-delta SWP: demand + rulecurve
-define est_oro_release{
-	case verylow {condition S_OROVL[GW_INITIAL] <= 1250.0 
-	value 300.0}
-	case low {condition S_OROVL[GW_INITIAL]>1250.0 .and. S_OROVL[GW_INITIAL] <= 1800.0 
-	value  0.25*(S_OROVL(-1) - 1000. - DrainTar_buffer)*taf_cfs}
-	case high {condition S_OROVL[GW_INITIAL]>1800.0 .and. S_OROVL[GW_INITIAL] <= 2200.0 
-	value 0.50*(S_OROVL(-1) - 1000. - DrainTar_buffer)*taf_cfs}
-	case veryhigh { condition always 
-	value 0.75*(S_OROVL(-1) - 1000. - DrainTar_buffer)*taf_cfs}
-}
-
-define EstSWPSodExp {value min(BanksMaxAllow, max(300.0, EstSWPSodDem + EstSWPSodRC), max(300., est_oro_release))}
+define EstSWPSodExp {value min(BanksMaxAllow, max(300.0, EstSWPSodDem + EstSWPSodRC))}
 define exp_est_SWP {alias EstSWPSodExp kind 'EXPORT-ESTIMATE' units 'CFS'}
-define exp_estSWPlim3  {alias max(300.,est_oro_release) kind 'debug' units 'cfs'}
-
 
 !*********************************************************************************************
 ! CVP exports:
-! This calculation is considering both potential ND intake as well as SD intake - see ExportEstimate2.wresl
 
 ! export for south-of-delta CVP: demand
 define EstCVPSodDem {value
@@ -52,19 +37,21 @@ define exp_est_CVPDem {alias EstCVPSodDem kind 'EXPORT-ESTIMATE' units 'CFS'}
 define EstCVPSodRC {value CvpRuleCalc1*taf_cfs - (S11(-1)+S11mod)*taf_cfs}
 define exp_est_CVPRC {alias EstCVPSodRC kind 'EXPORT-ESTIMATE' units 'CFS'}
 
-! minimum Tracy pumping (for potential ND intake as well as SD intake)
+! minimum Tracy pumping
 define TracyMinPumpLevel {
         case TracyShastaLow {
                 condition S_SHSTA(-1) /*+ S44(-1)*/ + S_SHSTAmod < 1500.0
                 value 600.0 }
         case tracylowshastafolsom {
                 condition S_FOLSM(-1) + S_FOLSMmod < 400. .and. S_SHSTA(-1) /*+ S44(-1)*/ + S_SHSTAmod < 2000. !Better reflection of actual operations by trying to keep
-                value 800. }                                                            !water from being released for SL storage during low storage
+                value 800.  }                                                           !water from being released for SL storage during low storage
         case TracyShastaHigh {
                 condition always
                 value 800.0 }
 }
 ! export for south-of-delta CVP: demand + rulecurve
 define CVPexportcap {value maxTracycalc+ CVPDedBanksSwitch*BanksMaxAllowCVP}
+
 define EstCVPSodExp {value min(CVPexportcap, max(TracyMinPumpLevel, EstCVPSodDem + EstCVPSodRC))}
+
 define exp_est_CVP {alias EstCVPSodExp kind 'EXPORT-ESTIMATE' units 'CFS'}

@@ -103,7 +103,7 @@ define ANNcap_out {alias ANNcap kind 'FLOW' units 'CFS'}
 !define sac_oth { std kind 'FLOW-INFLOW' units 'CFS' } ! Known inflows (previous month): Mokelumne R. with Yolo Bypass
 !goal def_sac_oth { sac_oth = C157 + C504  + C508} shengjun comment 2/20/2005
 !goal def_sac_oth { sac_oth = C157 + C504  + C508 - D403A - D403B - D403C - D403D } !shengjun add 2/20/2005
-goal def_sac_oth { sac_oth = C_CSL005 + C_MOK019  + C_CLV004 }
+goal def_sac_oth { sac_oth = SG_SAC017_492 + C_CSL005A + I_MOK014  + C_CLV004 }
 
 !*************************************************************************************************************
 ! Currently known inflows: Mokelumne R., Consumnes R. and Calaveras R. | Yolo Bypass not known.
@@ -111,7 +111,7 @@ define D_BKR004_NBA009_VPW_est { value demand_VLLJO_VPW*taf_cfs } ! Vallejo
 
 !define sac_oth_est { value C501[VAMP_AND_DO] + I504 + C508[VAMP_AND_DO]                !replaced C503 with I504
 !        -D403A_est - dem_D403B_PMI*taf_cfs*perdel_27 - dem_D403C_PMI*taf_cfs*perdel_36}
-define sac_oth_est { value CT_Woodland + I_MOK019A + I_MOK019B + C508[VAMP_AND_DO] - D_BKR004_NBA009_VPW_est - dem_D_BKR004_NBA009_NAPA*taf_cfs*perdel_27 - dem_D_BKR004_NBA009_SCWA*taf_cfs*perdel_36 } !
+define sac_oth_est { value CT_Woodland + I_MOK014 + C508[VAMP_AND_DO] - D_BKR004_NBA009_VPW_est - dem_D_BKR004_NBA009_NAPA*taf_cfs*perdel_27 - dem_D_BKR004_NBA009_SCWA*taf_cfs*perdel_36 } !
 define sac_oth_est_ { alias sac_oth_est kind 'FLOW-INFLOW' units 'CFS'}
 
 !*************************************************************************************************************

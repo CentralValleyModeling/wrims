@@ -13,11 +13,9 @@ define SJRatio_MaxExp{
                 condition Vernalis >= 6000.
                 value Vernalis / 4.
                 }
-!		value 999999.
         case Interim{
                 condition always
                 value 1500.
-!		value 999999.
                 }
        }
 */
@@ -38,27 +36,22 @@ define SJRatio_MaxExp{
     case mult_drought{
         condition (SJR_indicator + SJR_indicator1 + SJR_indicator2) <= 6.  .AND. NMforecast1 <= 1000
         value Vernalis
-!	value 999999.
         }
     case critical{
         condition wyt_SJR == 5
         value Vernalis
-!	value 999999.
         }
         case dry{
         condition wyt_SJR == 4
         value Vernalis / 2.
-!	value 999999.
         }
     case BelowN{
         condition wyt_SJR == 3
         value Vernalis / 3.
-!	value 999999.
             }
     case AN_Wet{
         condition always !wyt_SJR 2 and 1
         value Vernalis / 4.
-!	value 999999.
         }
        }
 

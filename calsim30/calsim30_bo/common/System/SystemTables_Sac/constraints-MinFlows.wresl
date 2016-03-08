@@ -16,9 +16,9 @@ goal   C_SAC240total {C_SAC240 = C_SAC240_MIF + C_SAC240_MIF_DAILY + C_SAC240_AD
 
 goal   C_SAC201total {C_SAC201 = C_SAC201_MIF + C_SAC201_MIF_DAILY + C_SAC201_ADD}  ! Hamilton City
 
-goal   C_SAC120total {C_SAC120 = C_SAC120_MIF + C_SAC120_ADD}  ! Wilkins Slough
+goal   C_SAC120total {C_SAC120 = C_SAC120_MIF + C_SAC120_MIF_DAILY + C_SAC120_ADD}  ! Wilkins Slough
 
-goal   C_SAC097total {C_SAC097 = C_SAC097_MIF + C_SAC097_MIF_DAILY + C_SAC097_ADD}  ! Navigation Control Point
+goal   C_SAC097total {C_SAC097 = C_SAC097_MIF + C_SAC097_ADD}  ! Navigation Control Point
 
 !goal   C_SAC041total {C_SAC041 = C_SAC041_MIF + C_SAC041_ADD}  ! Hood
 
@@ -73,8 +73,8 @@ goal C_FDC006total         {C_FDC006=C_FDC006_MIF+C_FDC006_ADD}
 goal C_FDC006inflow      {C_FDC006_MIF < MF_FDC006}
 
 ! Yuba River's Smartsville gage flow requirement
-goal C_YUB024total	{C_YUB024 = C_YUB024_MIF + C_YUB024_ADD}
-!goal meetYUB024min	{C_YUB024_MIF < MIF_YUB024} !constraint set in YubaMinFlows.wresl
+goal C_YUB023total	{C_YUB023 = C_YUB023_MIF + C_YUB023_ADD}
+!goal meetYUB023min	{C_YUB023_MIF < MIF_YUB023} !constraint set in YubaMinFlows.wresl
 
 ! Yuba River's Marysville gage flow requirement
 goal C_YUB006total	{C_YUB006 = C_YUB006_MIF + C_YUB006_ADD}
@@ -94,15 +94,15 @@ goal C_BRR050minflow {C_BRR050_MIF < MF_BRR050}
 
 ! Combie Reservoir release
 goal C_CMBIEtotal {C_CMBIE=C_CMBIE_MIF+C_CMBIE_ADD}
-goal C_CMBIEminflow {C_CMBIE_MIF < MF_CMBIE}
+goal C_CMBIEminflow {C_CMBIE_MIF < MF_CMBIE*taf_cfs}
 /*
 ! Camp Far West Reservoir release
 goal C_CMPFWtotal {C_CMPFW=C_CMPFW_MIF+C_CMPFW_ADD}
-goal C_CMPFWminflow {C_CMPFW_MIF < MF_CMPFW}
+goal C_CMPFWminflow {C_CMPFW_MIF < MF_CMPFW*taf_cfs}
 */
 ! Bear River below Camp Far West near Wheatland	gage
 goal C_BRR017total {C_BRR017=C_BRR017_MIF+C_BRR017_ADD}
-goal C_BRR017minflow {C_BRR017_MIF < MF_BRR017}
+goal C_BRR017minflow {C_BRR017_MIF < MF_BRR017*taf_cfs}
 
 ! North Fork Cache Creek below Indian Valley Reservoir
 goal C_INDVLtotal {C_INDVL=C_INDVL_MIF+C_INDVL_ADD}

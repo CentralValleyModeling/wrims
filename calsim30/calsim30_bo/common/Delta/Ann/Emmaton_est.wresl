@@ -12,7 +12,7 @@ define EMReqSac {
     value 0.}
   case control{
     condition month >= Apr .and. month <= Aug
-    value max(0., (EstTotExpTD-EM_b_sv)/EM_m_sv)}
+    value max(0., (EstTotExp-EM_b_sv)/EM_m_sv)}
   case other {
     condition  always
     value 0.}

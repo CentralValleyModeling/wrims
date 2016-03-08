@@ -6,7 +6,7 @@ INCLUDE 'systemtables_all\channel-table.wresl'
 INCLUDE 'systemtables_all\delivery-table.wresl'
 !INCLUDE 'systemtables_all\return-table.wresl'
 INCLUDE 'systemtables_all\reservoir-table.wresl'
-!INCLUDE 'systemtables_all\connectivity-table.wresl'
+INCLUDE 'systemtables_all\connectivity-table.wresl'
 
 !define C_SAC041_ANN {std kind 'FLOW-ANN' units 'CFS'}
 !define C_SAC041_WQ {std kind 'FLOW-WQ' units 'CFS'}

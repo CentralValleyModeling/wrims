@@ -10,6 +10,7 @@ I_{DESTINATION NODE} 	- boundary inflow from rim watershed
 SR_{WBA} 			- aggregated precipitation runoff from specific WBA 
 
 */
+
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ! SURFACE RUNOFF FROM WBAs !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -43,7 +44,6 @@ define SR_24 	{timeseries kind 'SURFACE-RUNOFF' units 'TAF' convert 'CFS'}
 define SR_25 	{timeseries kind 'SURFACE-RUNOFF' units 'TAF' convert 'CFS'}
 define SR_26N {timeseries kind 'SURFACE-RUNOFF' units 'TAF' convert 'CFS'}
 define SR_26S {timeseries kind 'SURFACE-RUNOFF' units 'TAF' convert 'CFS'}
-define SR_71  {timeseries kind 'SURFACE-RUNOFF' units 'TAF' convert 'CFS'}
 
 define SR_02_CWD003 	{std kind 'SURFACE-RUNOFF' units 'CFS'}
 define SR_02_KSWCK 	{std kind 'SURFACE-RUNOFF' units 'CFS'}
@@ -92,7 +92,6 @@ define SR_15N_FTR029 	{std kind 'SURFACE-RUNOFF' units 'CFS'}
 define SR_15N_JCK002 	{std kind 'SURFACE-RUNOFF' units 'CFS'}
 define SR_15N_HON004 	{std kind 'SURFACE-RUNOFF' units 'CFS'}
 define SR_15S_FTR012 	{std kind 'SURFACE-RUNOFF' units 'CFS'}
-define SR_15S_BRR004 	{std kind 'SURFACE-RUNOFF' units 'CFS'}
 define SR_16_DWRPS1 	{std kind 'SURFACE-RUNOFF' units 'CFS'}
 define SR_17N_BSL001 	{std kind 'SURFACE-RUNOFF' units 'CFS'}
 define SR_17S_SSL001 	{std kind 'SURFACE-RUNOFF' units 'CFS'}
@@ -140,7 +139,6 @@ define SR_60N_SJR028 	{std kind 'SURFACE-RUNOFF' units 'CFS'}
 define SR_60S_SJR028 	{std kind 'SURFACE-RUNOFF' units 'CFS'}
 define SR_60N_SJR022 	{std kind 'SURFACE-RUNOFF' units 'CFS'}
 
-define SR_71_OMR039 	{std kind 'SURFACE-RUNOFF' units 'CFS'}
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ! BOUNDARY INFLOWS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -165,12 +163,11 @@ define I_BTL006 	{timeseries kind 'INFLOW' units 'TAF' convert 'CFS'}
 define I_BCN010 	{timeseries kind 'INFLOW' units 'TAF' convert 'CFS'} 
 
 !!! Bear River !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-define I_WLF013 	{timeseries kind 'INFLOW' units 'TAF' convert 'CFS'} 
+define I_WLF021 	{timeseries kind 'INFLOW' units 'TAF' convert 'CFS'} 
 define I_RLLNS 	{timeseries kind 'INFLOW' units 'TAF' convert 'CFS'}
 define I_CMBIE 	{timeseries kind 'INFLOW' units 'TAF' convert 'CFS'}
 define I_CMPFW 	{timeseries kind 'INFLOW' units 'TAF' convert 'CFS'}
 define I_DHC001 	{timeseries kind 'INFLOW' units 'TAF' convert 'CFS'}
-define I_BRR023 	{timeseries kind 'INFLOW' units 'TAF' convert 'CFS'}
 
 !!! Big Chico Creek !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 define I_BCC014 	{timeseries kind 'INFLOW' units 'TAF' convert 'CFS'}
@@ -226,10 +223,6 @@ define I_LCC038 	{timeseries kind 'INFLOW' units 'TAF' convert 'CFS'}
 !!! Little Dry Creek !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 define I_LDC029 	{timeseries kind 'INFLOW' units 'TAF' convert 'CFS'}
 
-!!! Los Vaqueros Reservoir !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-define I_LOSVQ	 	{std kind 'INFLOW' units 'CFS'} !defined by CalSim-II: I422 + I422_ppt_cfs
-!define I_LOSVQ	 	{timeseries kind 'INFLOW' units 'TAF' convert 'CFS'}
-
 !!! Marsh Creek !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 define I_MSH015 	{timeseries kind 'INFLOW' units 'TAF' convert 'CFS'} ! Inflow to Delta
 
@@ -237,8 +230,7 @@ define I_MSH015 	{timeseries kind 'INFLOW' units 'TAF' convert 'CFS'} ! Inflow t
 define I_MLC006 	{timeseries kind 'INFLOW' units 'TAF' convert 'CFS'}
 
 !!! Mokelumne River !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-define I_MOK019A 	{timeseries kind 'INFLOW' units 'TAF' convert 'CFS'}
-define I_MOK019B 	{timeseries kind 'INFLOW' units 'TAF' convert 'CFS'}
+define I_MOK014 	{timeseries kind 'INFLOW' units 'TAF' convert 'CFS'}
 
 !!! Paynes Creek !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 define I_PYN001 	{timeseries kind 'INFLOW' units 'TAF' convert 'CFS'}
@@ -295,13 +287,12 @@ define CT_Oroville 	{timeseries kind 'CLOSURE-TERM' units 'TAF' convert 'CFS'} !
 
 
 !!! Delta !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-define DA_OMR_OMR027	{timeseries kind 'DELTA-ACCRETION' units 'TAF' convert 'CFS'}
-define DA_MOK_MOK004	{timeseries kind 'DELTA-ACCRETION' units 'TAF' convert 'CFS'}
-define DA_SJRE_SJR026 	{timeseries kind 'DELTA-ACCRETION' units 'TAF' convert 'CFS'}
-define DA_SJRW_SJR013 	{timeseries kind 'DELTA-ACCRETION' units 'TAF' convert 'CFS'}
-define DA_SACS_SAC017 	{timeseries kind 'DELTA-ACCRETION' units 'TAF' convert 'CFS'}
-define DA_SACN_SAC041 	{timeseries kind 'DELTA-ACCRETION' units 'TAF' convert 'CFS'}
-define DA_SACW_SAC000 	{timeseries kind 'DELTA-ACCRETION' units 'TAF' convert 'CFS'}
+define DA_OMR 		{timeseries kind 'DELTA-ACCRETION' units 'TAF' convert 'CFS'}
+define DA_MOK 		{timeseries kind 'DELTA-ACCRETION' units 'TAF' convert 'CFS'}
+define DA_SJR_East 	{timeseries kind 'DELTA-ACCRETION' units 'TAF' convert 'CFS'}
+define DA_SJR_West 	{timeseries kind 'DELTA-ACCRETION' units 'TAF' convert 'CFS'}
+define DA_SAC_South 	{timeseries kind 'DELTA-ACCRETION' units 'TAF' convert 'CFS'}
+define DA_SAC_North 	{timeseries kind 'DELTA-ACCRETION' units 'TAF' convert 'CFS'}
+define DA_SAC_West 	{timeseries kind 'DELTA-ACCRETION' units 'TAF' convert 'CFS'}
 
-
-
+define BC_Verona 	{timeseries kind 'BIAS-CORRECTION' units 'TAF' convert 'CFS'} ! 3.2 inches evap. in last 2 weeks of Sept. x 510,000 acres of rice

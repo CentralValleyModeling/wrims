@@ -9,7 +9,7 @@
 !!!    Export is the smaller of the pump capacity and the Export Allowed by thr E/I ratio for that period.
 
 ! Delta inflow using the previous cycle SJR flow
-define Dinflow {alias C_SACtot_ANN+C_MOK019+C508+C639[VAMP_AND_DO] kind 'INFLOW-PULSE' units 'CFS'}
+define Dinflow {alias C_SAC041_ANN+I_MOK014+C_YBP002+C508+C639[VAMP_AND_DO] kind 'INFLOW-PULSE' units 'CFS'}
 
 !############ PULSE PERIOD #############################
 ! Allowable export is set to certain limits based upon the flow of the
@@ -108,10 +108,6 @@ goal Export_limit_during_pulse_mon {
             condition     month == MAY
             rhs           NonPulseExpCtrl*16.0/daysin + PulseExpCtrl*15.0/daysin
             lhs<rhs       penalty 0 }
-        case otherwise {
-        	condition	always
-        	rhs		99999.
-        	lhs<rhs		penalty 0}
 }
 
 ! Limit the actual export to the day weighted average allowable export for each month.
@@ -139,10 +135,6 @@ goal Export_limit_Tracy_pulse_mon {
             condition     month == MAY
             rhs           TracyCapPermit*16.0/daysin + PulseExpCtrl*0.5*15.0/daysin
             lhs<rhs       penalty 0 }
-        case otherwise {
-        	condition	always
-        	rhs		99999.
-        	lhs<rhs		penalty 0}
 }
 
 define AprMayBanksCtrl {std kind 'EXPORT-CTRL-APRMAY' units 'CFS'}
@@ -157,10 +149,6 @@ goal Export_limit_Banks_pulse_mon {
             condition     month == MAY
             rhs           BanksMaxAllow*16.0/daysin + PulseExpCtrl*0.5*15.0/daysin
             lhs<rhs       penalty 0 }
-        case otherwise {
-        	condition	always
-        	rhs		99999.
-        	lhs<rhs		penalty 0}
 }
 
 goal Export_limit_D418 {  ! Prevents Non-Pulse portion of month from being greater than Physical Capacity

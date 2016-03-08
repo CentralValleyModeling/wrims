@@ -9,7 +9,7 @@
 !
 ! The units for this table are TAF.
 American_PRJ_WR
-index       Folsom      SJWD        ElDorID     Roseville   PCWA_AMR    CalPrkRc    SMUD        SCWA   	    PCWA_NFA	GSWC
-1           27.00       33.00       0.00        5.00        0.00        0.00        15.00       0.00        35.50	5.00
-2           0.00        24.20       7.55        32.00       0.00        0.00        30.00       15.00       0.00	6.00
-3           7.00        0.00        0.00        0.00        0.00        0.00        0.00        0.00        0.00	0.00
+index       Folsom      SJWD        ElDorID     Roseville   PCWA_AMR    CalPrkRc    SMUD        SCWA   	    PCWA_NFA
+1           27.00       33.00       0.00        5.00        0.00        0.00        15.00       0.00        35.50
+2           0.00        24.20       7.55        32.00       0.00        5.00        30.00       15.00       0.00
+3           7.00        0.00        15.00       0.00        0.00        0.00        0.00        0.00        0.00

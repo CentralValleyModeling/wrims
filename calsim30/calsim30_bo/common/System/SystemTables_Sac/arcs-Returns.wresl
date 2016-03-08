@@ -24,7 +24,7 @@ define R_PGWWTP_CRC002	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_DCWWTP_DCK012	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_26N_NA_EMD007	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_ELDID_EDWWTP	{std kind 'RETURN-FLOW' units 'CFS'}
-define R_EDWWTP_DEE020	{std kind 'RETURN-FLOW' units 'CFS'}
+define R_EDWWTP			{std kind 'RETURN-FLOW' units 'CFS'}
 define R_RFS26S_AMR020	{std kind 'RETURN-FLOW' units 'CFS'}
 
 
@@ -38,18 +38,17 @@ define R_RFS26S_AMR020	{std kind 'RETURN-FLOW' units 'CFS'}
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 define R_24_NA1_CCK022 	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_24_NA2_ABN000	{std kind 'RETURN-FLOW' units 'CFS'}
-define R_24_NU1_ABN027 	{std kind 'RETURN-FLOW' units 'CFS'}
+define R_24_NU1_ABWWTP 	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_24_NU3_CCK038 	{std kind 'RETURN-FLOW' units 'CFS'}
+define R_ABWWTP_ABN027 	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_RFS23_CCK007	 	{std kind 'RETURN-FLOW' units 'CFS'}
 
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! Bear River		!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-define R_NIDDC_WLF021	{std kind 'RETURN-FLOW' units 'CFS'}
-define R_NIDDC_RLLNS	{std kind 'RETURN-FLOW' units 'CFS'}
-!define R_NIDDC_DER002	{std kind 'RETURN-FLOW' units 'CFS'}
-define R_RFS23_BRR004	{std kind 'RETURN-FLOW' units 'CFS'}
+define R_DSCNL_WLF021	{std kind 'RETURN-FLOW' units 'CFS'}
+define R_RFS23_BRR004		{std kind 'RETURN-FLOW' units 'CFS'}
 
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -83,7 +82,6 @@ define R_08N_SA2_CBD049	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_08N_PR1_CBD049	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_08N_SA1_CBD044	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_08N_PA_CBD044	{std kind 'RETURN-FLOW' units 'CFS'}
-define  R_06_NA_CBD044	{std kind 'RETURN-FLOW' units 'CFS'} !Richard 5/22/2013
 define R_07N_NA_CBD044	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_07N_PA_CBD044	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_07S_NA_CBD044	{std kind 'RETURN-FLOW' units 'CFS'}
@@ -106,8 +104,7 @@ define R_08S_PA_CBD012	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_25_PA2_CSL005	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_25_NA_CSL005		{std kind 'RETURN-FLOW' units 'CFS'}
 define R_RFS25_CSL005		{std kind 'RETURN-FLOW' units 'CFS'}
-define R_25_PU_EAWWTP		{std kind 'RETURN-FLOW' units 'CFS'}
-define R_EAWWTP_CSL005		{std kind 'RETURN-FLOW' units 'CFS'}
+
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! Clear Creek		!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -152,14 +149,11 @@ define R_RFS14_JCK002		{std kind 'RETURN-FLOW' units 'CFS'}
 define R_15N_NA1_FTR031	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_15N_NA2_JCK002	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_15N_SA_FTR031	{std kind 'RETURN-FLOW' units 'CFS'}
-define R_15N_NU_LCWWTP	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_16_PU_YCWWTP	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_15S_SA_FTR014	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_15S_NA1_DHC001	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_15S_NA2_DHC001	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_15S_NU_DHC001	{std kind 'RETURN-FLOW' units 'CFS'}
-define R_15S_NU_LCWWTP	{std kind 'RETURN-FLOW' units 'CFS'}
-define R_LCWWTP_FTR025	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_MNRRH_FTR072	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_ORWWTP_FTR063 	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_YCWWTP_FTR028 	{std kind 'RETURN-FLOW' units 'CFS'}
@@ -191,14 +185,7 @@ define R_24_NA3_SCR002	{std kind 'RETURN-FLOW' units 'CFS'}
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! Mokelumne River	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-define R_26S_NA_MOK019	{std kind 'RETURN-FLOW' units 'CFS'}  !Richard 5/22/2013
 
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!! Old and Middle River	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-define R_RFS71A_OMR039	{std kind 'RETURN-FLOW' units 'CFS'}
-define R_TCWWTP_OMR039	{std kind 'RETURN-FLOW' units 'CFS'}
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! Putah Creek		!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -231,7 +218,6 @@ define R_03_SU_SWWWTP	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_02_SU_CCWWTP	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_03_PU2_SWWWTP	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_SWWWTP_SAC281	{std kind 'RETURN-FLOW' units 'CFS'}
-define R_02_NU_SAC281	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_02_PU_CCWWTP	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_03_PU3_SWWWTP	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_CCWWTP_SAC287	{std kind 'RETURN-FLOW' units 'CFS'}
@@ -283,11 +269,10 @@ define R_RFS26S_SRWWTP	{std kind 'RETURN-FLOW' units 'CFS'}
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! San Joaquin River	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-define R_50_PA1_SJR056	{std kind 'RETURN-FLOW' units 'CFS'}
+define R_50_PA_SJR056		{std kind 'RETURN-FLOW' units 'CFS'}
 define R_RFS61C_SJR056	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_MAWWTP_SJR056	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_STWWTP_SJR042	{std kind 'RETURN-FLOW' units 'CFS'}
-define R_60N_NU1_WSWWTP	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_WSWWTP_SJR028	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_60N_NA3_SJR028	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_60N_NA4_SJR022	{std kind 'RETURN-FLOW' units 'CFS'}
@@ -312,7 +297,7 @@ define R_DWRPS1_SBP012	{std kind 'RETURN-FLOW' units 'CFS'}
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! Stony Creek		!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-define R_06_PA_STN009   {std kind 'RETURN-FLOW' units 'CFS'} !Richard 5/22/2013
+
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! Tehama-Colusa Canal	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -336,18 +321,16 @@ define R_RFS11_WWC006	{std kind 'RETURN-FLOW' units 'CFS'}
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 define R_20_NA1_WSB000	{std kind 'RETURN-FLOW' units 'CFS'}
 define R_20_NA2_WSB000	{std kind 'RETURN-FLOW' units 'CFS'}
-define R_20_NU1_DVWWTP	{std kind 'RETURN-FLOW' units 'CFS'}
-define R_DVWWTP_WSB005	{std kind 'RETURN-FLOW' units 'CFS'}
+define R_20_NU1_WSB000	{std kind 'RETURN-FLOW' units 'CFS'}
 
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! Yolo Bypass		!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-define R_21_PA_YBP032	{std kind 'RETURN-FLOW' units 'CFS'}
-define R_20_NU1_WLWWTP	{std kind 'RETURN-FLOW' units 'CFS'}
-define R_WLWWTP_YBP032	{std kind 'RETURN-FLOW' units 'CFS'}
-define R_21_SA_YBP020	{std kind 'RETURN-FLOW' units 'CFS'}
-define R_21_NA_YBP032	{std kind 'RETURN-FLOW' units 'CFS'}
+define R_21_PA_YBP032		{std kind 'RETURN-FLOW' units 'CFS'}
+define R_20_NU1_YBP032	{std kind 'RETURN-FLOW' units 'CFS'}
+define R_21_SA_YBP020		{std kind 'RETURN-FLOW' units 'CFS'}
+define R_21_NA_YBP032		{std kind 'RETURN-FLOW' units 'CFS'}
 
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

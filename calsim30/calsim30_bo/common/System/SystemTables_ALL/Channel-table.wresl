@@ -22,7 +22,7 @@ define C407 {lower 0. upper 99999*taf_cfs kind 'FLOW-CHANNEL' units 'CFS'} !Requ
 !define C416 {lower 0. upper 99999*taf_cfs kind 'FLOW-CHANNEL' units 'CFS'} !Node Between 409 and 417
 !define C417 {lower 0. upper 99999*taf_cfs kind 'FLOW-CHANNEL' units 'CFS'} !CP upstream of Tracy
 !define C418 {lower 0. upper 25000*taf_cfs kind 'FLOW-CHANNEL' units 'CFS'} !CVP Tracy Pumping Plant
-!define C504 {lower 0. upper 9999*taf_cfs kind 'FLOW-CHANNEL' units 'CFS'} !
+define C504 {lower 0. upper 9999*taf_cfs kind 'FLOW-CHANNEL' units 'CFS'} !
 !define C644 {lower 0. upper 9999*taf_cfs kind 'FLOW-CHANNEL' units 'CFS'} !San Joaquin Inflow to Delta
 define C700 {lower 0. upper 4400 kind 'FLOW-CHANNEL' units 'CFS'} !CVP Upper DMC Project AG Div
 define C700A {lower 0. upper 10000 kind 'FLOW-CHANNEL' units 'CFS'} !Intertie

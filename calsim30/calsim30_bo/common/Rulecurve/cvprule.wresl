@@ -50,56 +50,46 @@ define CVP_rule_2 {alias CVP_Rule_Sha_Cut units 'NONE'}
 
 define CVPRuleDrainTar {value init_CVPRuleDrainTar
                             + max(acvpdel_tot_s - 2000.,0.)*0.1}  !10% buffer for delivery in excess of 2 MAF
-!define CVPRuleDrainTar {value init_CVPRuleDrainTar}  !Change for the IF operations
 
 define ExpAmtMon {value 60.} ! roughly 1000 cfs for the month
-!define ExpAmtMon {value 180.} ! roughly 3000 cfs for the month    Change for the IF operations
 
-!calculate the actual rule curve.	!Changes in values for the IF operations
+!calculate the actual rule curve.
 define CVPRULEcalc {
      case Oct {
           condition month == oct
           value     max(CVPRuleDrainTar, CVP_Rule_Max * CVP_Rule_Sha_Cut * month/6.)}
-!	   value     CVPRuleDrainTar}
      case NovToDec {
           condition month >= nov .and. month <= dec
           value     max(CVPRuleDrainTar, CVP_Rule_Max * CVP_Rule_Sha_Cut * month/6., CVPRULECV(-1))}
-!	   value     CVPRuleDrainTar}
      case JanToFeb {
           condition month >= jan .and. month <= feb
           value     max(CVPRuleDrainTar, CVP_Rule_Max * CVP_Rule_Sha_Cut * month/6., CVPRULECV(-1))}
-!	  value     S11(-1) + S11mod}
      case MarthruApr {
           condition month >= mar .and. month <= apr
           value     max(CVPRuleDrainTar, CVP_Rule_DelTar)}
-!	  value     S11(-1) + S11mod}
      case May {
           condition month == may
           value max(CVPRuleDrainTar,
                     min(max(S11(-1) + S11mod - (cvpdemfinal_may - ExpAmtMon),
                             CVPRULECV(-1)    - (cvpdemfinal_may - ExpAmtMon)),
                         CVPRuleDrainTar + (cvpdemfinal_jun + cvpdemfinal_jul + cvpdemfinal_aug + cvpdemfinal_sep - 4. * ExpAmtMon)))}
-!                        CVPRuleDrainTar + (cvpdemfinal_jun + cvpdemfinal_jul + cvpdemfinal_aug + cvpdemfinal_sep - 4. * ExpAmtMon))}
      case June {
           condition month == jun
           value max(CVPRuleDrainTar,
                     min(max(S11(-1) + S11mod - (cvpdemfinal_jun - ExpAmtMon)*(1-0.5),  ! push harder in June by 50% of demand if possible
                             CVPRULECV(-1)    - (cvpdemfinal_jun - ExpAmtMon)*(1-0.5)), ! to avoid shortages due to salinity costs
                         CVPRuleDrainTar + (cvpdemfinal_jul + cvpdemfinal_aug + cvpdemfinal_sep - 3. * ExpAmtMon)))}
-!                        CVPRuleDrainTar + (cvpdemfinal_jul + cvpdemfinal_aug + cvpdemfinal_sep - 3. * ExpAmtMon))}
      case July {
           condition month == jul
           value max(CVPRuleDrainTar,
                     min(max(S11(-1) + S11mod - (cvpdemfinal_jul - ExpAmtMon)*(1-0.75),  ! push harder in July by 75% of demand if possible
                             CVPRULECV(-1)    - (cvpdemfinal_jul - ExpAmtMon)*(1-0.75)), ! to avoid shortages due to salinity costs
                         CVPRuleDrainTar + (cvpdemfinal_aug + cvpdemfinal_sep - 2. * ExpAmtMon)))}
-!                        CVPRuleDrainTar + (cvpdemfinal_aug + cvpdemfinal_sep - 2. * ExpAmtMon))}
      case August {
           condition month == aug
           value max(CVPRuleDrainTar,
                     min(max(S11(-1) + S11mod - (cvpdemfinal_aug - ExpAmtMon),
                             CVPRULECV(-1)    - (cvpdemfinal_aug - ExpAmtMon)),
-!                        CVPRuleDrainTar + (cvpdemfinal_sep - ExpAmtMon))}
                         CVPRuleDrainTar + (cvpdemfinal_sep - ExpAmtMon)))}
      case Sep {
           condition always
@@ -107,7 +97,6 @@ define CVPRULEcalc {
                     min(max(S11(-1) + S11mod - (cvpdemfinal_sep - ExpAmtMon),
                             CVPRULECV(-1)    - (cvpdemfinal_sep - ExpAmtMon)),
                         CVPRuleDrainTar))}
-!                        CVPRuleDrainTar)}
 }
 
 ! Cvp Rule Curve set to Drain Target if CVP SOD delivery target was increased
@@ -121,22 +110,5 @@ define CVPRULEcalc {
 !       value       CvpRuleCalc }
 !}
 
-!define CvpRuleCalc1 {value max(S11level2,min(CvpRuleCalc,CVP_Rule_Cap_Shasta,S11level4))}
-
-! goal revised to be conditional on Shasta and Folsom storage.  This affects balancing 
-! decisions between nod and sod storage, and the calculation of estimated cvp export 
-! which is used to set the upper bound on C400_MIF.  This edit allows the removal of the 
-! penalty for pumping above H&S when shasta and folsom are low.  
-define CvpRuleCalc1 {
-    case RClowshasta {
-        condition 	S_SHSTA(-1) < 1500.
-        value		S11Level2}
-    case RClowShastaFolsom {
-        condition 	S_FOLSM(-1) < 400. .and. S_SHSTA(-1) < 2000.
-        value		S11Level2}
-    case otherwise {
-    	condition	always 
-    	value		max(S11Level2,min(CvpRuleCalc,CVP_Rule_Cap_Shasta,S11Level4))}
-}
-
+define CvpRuleCalc1 {value max(S11level2,min(CvpRuleCalc,CVP_Rule_Cap_Shasta,S11level4))}
 goal setCVPRULECV { CVPRULECV = CVPRulecalc1 }

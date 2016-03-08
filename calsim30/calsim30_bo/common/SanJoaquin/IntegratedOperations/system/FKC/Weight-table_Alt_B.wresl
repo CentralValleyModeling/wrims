@@ -1,4 +1,4 @@
-Objective obj_SJ_IO_FKC = {[D910_16B_PC,1.1],
+Objective obj = {[D910_16B_PC,1.1],
 [D920_16B_PC,1.2],
 [D932_16B_PC,1.3],
 [D933_16B_PC,1.35],

@@ -348,10 +348,8 @@ define Relcap_BRYSA  	{select discharge from res_info given storage=1000*S_BRYSA
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! Englebright Dam, Yuba River		!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-define S_ENGLB		{std kind 'STORAGE' units 'TAF'} !
-define E_ENGLB         {lower unbounded kind 'EVAPORATION' units 'CFS'}
-define A_ENGLB   {value 786.0} ! Reservoir Surface Area at storage 65 TAF. 
-define ER_ENGLB  {timeseries kind 'EVAPORATION-RATE' units 'IN'}
+define	S_ENGLB		{std kind 'STORAGE' units 'TAF'} !
+define  E_ENGLB         {lower unbounded kind 'EVAPORATION' units 'CFS'}
 
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -433,7 +431,7 @@ define relcap_CMBIE {select discharge from res_info given storage=1000*S_CMBIE(-
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!Camp Far West Reservoir !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-define S_CMPFWlevel1 {value 2.9}
+define S_CMPFWlevel1 {value 1}
 define S_CMPFW_1 {std kind 'STORAGE-ZONE' units 'TAF'}
 define S_CMPFWlevel2 {select target from res_level where res_num=286,level=2,month=month}
 define S_CMPFW_2 {std kind 'STORAGE-ZONE' units 'TAF'}
@@ -525,9 +523,3 @@ define coefev_SLYCK {value (A_SLYCKforward - A_SLYCKback)/(100*max(0.01,S_SLYCK(
 
 ! This storage is pre-operated
 define S_RVPHB      	{std kind 'STORAGE' units 'TAF'}
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!! Los Vaqueros Reservoir !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-define S_LOSVQ      	{std kind 'STORAGE' units 'TAF'}
-define E_LOSVQ      	{std kind 'EVAPORATION' units 'CFS'}

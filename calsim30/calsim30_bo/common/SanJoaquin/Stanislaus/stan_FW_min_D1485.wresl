@@ -22,7 +22,7 @@ Fish & Wildlife flows
 
 define OIDSSJIDdem{
          case firstyear {
-           condition month >= oct .and. month <=feb .and. wateryear > beginWaterYear
+           condition month >= oct .and. month <=feb .and. wateryear > 1922
            value OSSJIDDV(prevMAR)*.959}
          case others {
            condition always

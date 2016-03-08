@@ -132,8 +132,8 @@ define co_lost_dv {alias co_lost kind 'carryover' units 'taf'}
 
 !Determine carryover available after losses subtracted.
 define co_available {value max(0., co_req_tot - co_lost)}
-!define co_available_dv {alias co_available kind 'carryover' units 'taf'}
-goal set_co_available {co_available_dv = co_available}
+define co_available_dv {alias co_available kind 'carryover' units 'taf'}
+
 
 !Determine carryover and spill allocations.
 define alloc_co_1 {value A56_Allocation(1,1,co_lost,

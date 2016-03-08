@@ -16,7 +16,7 @@ INCLUDE 'Sacramento\HamiltonCity_bypassflow.wresl'
 INCLUDE 'Sacramento\NCP_relax.wresl'
 INCLUDE 'Sacramento\ShaRuleCurv.wresl'
 INCLUDE 'Sacramento\KeswickPower.wresl'
-INCLUDE 'Sacramento\KnightsLandingOps.wresl'
+!INCLUDE 'Sacramento\KnightsLandingOps.wresl'
 INCLUDE 'Sacramento\setdailyadjmif.wresl'
 
 INCLUDE 'Trinity\Trinitymin.wresl'

@@ -1,4 +1,4 @@
-Objective obj_SYS_LVR = {
+Objective obj = {
 [S422_1,19000*taf_cfs],
 [S422_2,18002*taf_cfs],
 [S422_3,18001*taf_cfs],

@@ -1,7 +1,7 @@
 ! R.Wilbur & S. Wu 5/10/05
 
 goal meetCO {
-  lhs D409 + D408_P
+  lhs D409
   case NoSalinityControlPossible{
     condition abs(CO_m_sv) <= 0.001 .and. int(CO_b_sv) == 0
     rhs ExportCap
@@ -20,7 +20,7 @@ goal meetCO {
     lhs<rhs penalty 0}
   case Normal {
     condition always
-    rhs CO_m_sv*C_SACtot_ANN + CO_b_sv
+    rhs CO_m_sv*C_SAC041_ANN + CO_m_sv*C_YBP002 + CO_b_sv
     lhs<rhs penalty 0}
 }
 

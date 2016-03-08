@@ -3,11 +3,11 @@
 ! A. Munevar 11/15/99
 
 ! Delta Export defined as in DWRSIM Algorithm Description for Export Ratio
-define ExportActualTD {alias D418_TD+D419_TD+D408_P KIND 'EXPORT-PRJ' units 'CFS'  }
+define ExportActualTD {alias D418_TD+D419_TD KIND 'EXPORT-PRJ' units 'CFS'  }
 define ExportActualIF {alias D418_IF+D419_IF KIND 'EXPORT-PRJ' units 'CFS'  }
 
 ! Delta Inflow defined as in DWRSIM Algorithm Description for Export Ratio
-define Inflow {alias C_SACtot_ANN+DD_SAC041_SACN-DA_SACN_SAC041+CT_Woodland+C_MOK019+C_SJR056+ C_CLV004+I_MSH015 kind 'INFLOW-DELTA' UNITS 'CFS'   }
+define Inflow {alias C_SAC041_ANN+C_YBP002+CT_Woodland+I_MOK014+C_SJR056+ C_CLV004+I_MSH015 kind 'INFLOW-DELTA' UNITS 'CFS'   }
 
 
 ! EI allowable export variable - MAXIMUM ALLOWABLE EXPORT due to EXPORT RATIO

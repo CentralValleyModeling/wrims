@@ -57,7 +57,7 @@ define  H_COW017_dv   {upper unbounded lower unbounded kind 'STREAM-STAGE' units
 define  H_COW007_dv   {upper unbounded lower unbounded kind 'STREAM-STAGE' units 'FEET'}
 define  H_COW003_dv   {upper unbounded lower unbounded kind 'STREAM-STAGE' units 'FEET'}
 define  H_DRC010_dv   {upper unbounded lower unbounded kind 'STREAM-STAGE' units 'FEET'}
-define  H_DRC005_dv   {upper unbounded lower unbounded kind 'STREAM-STAGE' units 'FEET'}
+define  H_DRC006_dv   {upper unbounded lower unbounded kind 'STREAM-STAGE' units 'FEET'}
 define  H_ELD027_dv   {upper unbounded lower unbounded kind 'STREAM-STAGE' units 'FEET'}
 define  H_ELD022_dv   {upper unbounded lower unbounded kind 'STREAM-STAGE' units 'FEET'}
 define  H_ELD017_dv   {upper unbounded lower unbounded kind 'STREAM-STAGE' units 'FEET'}  
@@ -232,7 +232,7 @@ goal setH_COW017_dv   {H_COW017_dv = GetStrm_H(211)}
 goal setH_COW007_dv   {H_COW007_dv = GetStrm_H(212)}
 goal setH_COW003_dv   {H_COW003_dv = GetStrm_H(213)}
 goal setH_DRC010_dv   {H_DRC010_dv = GetStrm_H(256)}
-goal setH_DRC005_dv   {H_DRC005_dv = GetStrm_H(257)}
+goal setH_DRC006_dv   {H_DRC006_dv = GetStrm_H(257)}
 goal setH_ELD027_dv   {H_ELD027_dv = GetStrm_H(237)}
 goal setH_ELD022_dv   {H_ELD022_dv = GetStrm_H(238)}
 goal setH_ELD017_dv   {H_ELD017_dv = GetStrm_H(239)}
@@ -408,7 +408,7 @@ define  H_GW_COW017_dv   {upper unbounded lower unbounded kind 'GW-ELEV' units '
 define  H_GW_COW007_dv   {upper unbounded lower unbounded kind 'GW-ELEV' units 'FEET'}
 define  H_GW_COW003_dv   {upper unbounded lower unbounded kind 'GW-ELEV' units 'FEET'}
 define  H_GW_DRC010_dv   {upper unbounded lower unbounded kind 'GW-ELEV' units 'FEET'}
-define  H_GW_DRC005_dv   {upper unbounded lower unbounded kind 'GW-ELEV' units 'FEET'}
+define  H_GW_DRC006_dv   {upper unbounded lower unbounded kind 'GW-ELEV' units 'FEET'}
 define  H_GW_ELD027_dv   {upper unbounded lower unbounded kind 'GW-ELEV' units 'FEET'}
 define  H_GW_ELD022_dv   {upper unbounded lower unbounded kind 'GW-ELEV' units 'FEET'}
 define  H_GW_ELD017_dv   {upper unbounded lower unbounded kind 'GW-ELEV' units 'FEET'}  
@@ -584,7 +584,7 @@ goal setH_GW_COW017_dv   {H_GW_COW017_dv = GetGW_H(012,1)}
 goal setH_GW_COW007_dv   {H_GW_COW007_dv = GetGW_H(011,1)}      
 goal setH_GW_COW003_dv   {H_GW_COW003_dv = GetGW_H(017,1)}      
 goal setH_GW_DRC010_dv   {H_GW_DRC010_dv = GetGW_H(096,1)}      
-goal setH_GW_DRC005_dv   {H_GW_DRC005_dv = GetGW_H(100,1)}      
+goal setH_GW_DRC006_dv   {H_GW_DRC006_dv = GetGW_H(100,1)}      
 goal setH_GW_ELD027_dv   {H_GW_ELD027_dv = GetGW_H(081,1)}      
 goal setH_GW_ELD022_dv   {H_GW_ELD022_dv = GetGW_H(082,1)}      
 goal setH_GW_ELD017_dv   {H_GW_ELD017_dv = GetGW_H(083,1)}      

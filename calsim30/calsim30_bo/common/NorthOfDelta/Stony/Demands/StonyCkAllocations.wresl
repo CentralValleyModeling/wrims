@@ -139,7 +139,7 @@ define AnnCL_06_PA {value CLann_STN026_06_PA + CLann_STN021_06_PA }
 
 goal set_AnnCL_06_PA {AnnCL_06_PAdv = AnnCL_06_PA}
 
-define OUWUA_maxdr   {value min((AWRann_06_PA*(1.- RUFR_06_PA) + AWOann_06_PA*(1.- RUFO_06_PA) - AnnGPmin_06_PA) * (1 + RPF_06_PA) / (1 - EVF_STN_06_PA  - DPF_STN_06_PA - LFF_STN_06_PA - OSF_STN_06_PA),AnnCL_06_PA)}
+define OUWUA_maxdr   {value max(0.0,min(((AWRann_06_PA*(1.- RUFR_06_PA) + AWOann_06_PA*(1.- RUFO_06_PA)) - AnnGPmin_06_PA) * (1 + RPF_06_PA) * (1 + EVF_STN_06_PA  + DPF_STN_06_PA + LFF_STN_06_PA + OSF_STN_06_PA),AnnCL_06_PA))}
 define OUWUA_maxdrdv {alias OUWUA_maxdr kind 'demand' units 'taf'}
 
 define TCCA_dem {value 38.3}
@@ -178,18 +178,16 @@ goal setTCCA_allocdv {TCCA_allocdv = alloc_TCCA}
 
 
 ! define the monthly allocation for OUWUA South Canal (units = cfs)
-define alloc_OUWUA_s     {VALUE (max(0.0,min(1.0,(alloc_OUWUA/OUWUA_maxdr))*0.65*(AWR_06_PA*(1.- RUFR_06_PA) + AWO_06_PA*(1.- RUFO_06_PA)) * (1.- GPmin_06_PA) * (1 + RPF_06_PA)))/(1 - EVF_STN026_06_PA - DPF_STN026_06_PA - LFF_STN026_06_PA - OSF_STN026_06_PA) }
+define alloc_OUWUA_s     {VALUE max(0.0,min(1.0,(alloc_OUWUA/OUWUA_maxdr))*0.68*(AWR_06_PA*(1.- RUFR_06_PA) + AWO_06_PA*(1.- RUFO_06_PA)) * (1.- GPmin_06_PA) * (1 + RPF_06_PA) * (1 + EVF_STN_06_PA + DPF_STN_06_PA + LFF_STN_06_PA + OSF_STN_06_PA)) }
 goal set_D_STN026_06_PA   { D_STN026_06_PA  < alloc_OUWUA_s}
 
 ! define the monthly allocation for OUWUA North Canal (units = cfs)
-define alloc_OUWUA_n     {VALUE (max(0.0,min(1.0,(alloc_OUWUA/OUWUA_maxdr))*0.35*(AWR_06_PA*(1.- RUFR_06_PA) + AWO_06_PA*(1.- RUFO_06_PA)) * (1.- GPmin_06_PA) * (1 + RPF_06_PA)))/(1 - EVF_STN021_06_PA - DPF_STN021_06_PA - LFF_STN021_06_PA - OSF_STN021_06_PA) }
+define alloc_OUWUA_n     {VALUE max(0.0,min(1.0,(alloc_OUWUA/OUWUA_maxdr))*0.32*(AWR_06_PA*(1.- RUFR_06_PA) + AWO_06_PA*(1.- RUFO_06_PA)) * (1.- GPmin_06_PA) * (1 + RPF_06_PA) * (1 + EVF_STN_06_PA + DPF_STN_06_PA + LFF_STN_06_PA + OSF_STN_06_PA)) }
 goal set_D_STN021_06_PA   { D_STN021_06_PA  < alloc_OUWUA_n}
 
 ! define monthly distribution percent for TCCA
 define per_TCCA_tot      {SELECT per_TCCA FROM TCCA_per where month=month }
 goal set_D_STN014_TCC031 { D_STN014_TCC031 < alloc_TCCA*per_TCCA_tot*taf_cfs}
 
-define alloc_ouwua_ndv   {std kind 'allocation' units 'cfs'}
-define alloc_ouwua_sdv   {std kind 'allocation' units 'cfs'}
 goal setalloc_ouwua_sdv		{alloc_ouwua_sdv = alloc_OUWUA_s}
 goal setalloc_ouwua_ndv		{alloc_ouwua_ndv = alloc_OUWUA_n}

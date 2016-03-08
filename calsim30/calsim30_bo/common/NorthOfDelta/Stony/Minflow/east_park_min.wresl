@@ -5,6 +5,6 @@ define east_park_min {select flow
                   where  month=month}
 
 
-define MF_EPARK {alias east_park_min kind 'flow-min-required' units 'cfs'}
+define MF_C_EPARK {alias east_park_min kind 'flow-min-required' units 'cfs'}
 
-goal meet_eastpkmin {C_EPARK_mif < MF_EPARK}
+goal meet_eastpkmin {C_EPARK_mif < MF_C_EPARK}

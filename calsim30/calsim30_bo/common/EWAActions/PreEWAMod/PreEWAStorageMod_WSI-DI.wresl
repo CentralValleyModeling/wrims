@@ -119,7 +119,7 @@ define S_SHSTAdebt {
 define S_OROVLdebt {
     case October {
         condition month==oct
-        value 0.0}!max(0., S_OROVL_mod_dv(prevSep)+S_OROVL_EWAdv(prevSep)) }
+        value 0.0}!max(0., S_SHSTA_mod_dv(prevSep)+S_OROVL_EWAdv(prevSep)) }
     case ResFill {
         condition always
         value max(0., S_OROVLDebtdv(-1)-S_OROVLFillAmt) }

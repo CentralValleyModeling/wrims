@@ -5,10 +5,10 @@
 define FWS_MaxExp_X2 {
      case Sep_FWS_W {
           condition      month == SEP .and. wyt_SAC <= 2  ! FWS BO (Dec 08) Action 4 - Fall X2
-          value          max(D418[UPSTREAM] + D419[UPSTREAM] + C_SAC000_ADD[UPSTREAM] + C_SAC000_MIN[UPSTREAM] - MRDO_X2nocapdv[UPSTREAM],0.) }
+          value          max(D418[UPSTREAM] + D419[UPSTREAM] + C_SAC000[UPSTREAM] - MRDO_X2nocapdv[UPSTREAM],0.) }
      case Oct_FWS_W {
           condition      month <= OCT .and. wyt_SAC <= 2  ! FWS BO (Dec 08) Action 4 - Fall X2
-          value          max(D418[UPSTREAM] + D419[UPSTREAM] + C_SAC000_ADD[UPSTREAM] + C_SAC000_MIN[UPSTREAM] - MRDO_X2nocapdv[UPSTREAM],0.) }
+          value          max(D418[UPSTREAM] + D419[UPSTREAM] + C_SAC000[UPSTREAM] - MRDO_X2nocapdv[UPSTREAM],0.) }
      case NoExpCut {
           condition      always
           value          99999.    }

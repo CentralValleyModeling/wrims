@@ -227,7 +227,7 @@ define EC_I637    {    !RM601
     case nearzero {
               condition I637 < 0.0001
         value 0.0 }
-    case elseCase {
+    case else {
         condition always
         value ( CI601 * EC_CI601 + I_gw601 * EC_Igw601 ) / I637 } }
 
@@ -235,7 +235,7 @@ define EC_I636    {    !RM604
     case nearzero {
         condition I636 < 0.0001
         value 0.0 }
-    case elseCase {
+    case else {
         condition always
         value ( CI604 * EC_CI604 + CI617 * EC_CI617    !Integration 03/31/04
         + CI631 * EC_CI631 + I_gw604 * EC_Igw604) / I636 } }    !Integration 03/31/04
@@ -243,7 +243,7 @@ define EC_I614A    {    !RM121
     case nearzero {
         condition I614a < 0.0001
         value 0.0 }
-    case elseCase {
+    case else {
         condition always
         value ( CI642 * EC_CI642 + I_gw642 * EC_Igw642 ) / I614a } }
 

@@ -2,8 +2,8 @@
 ! Code and tables by A. Munevar 7/8/98
 ! American River D893 added by Dustin Jones 12/27/99
 
-define bgnWY {value beginWaterYear}
-define EndWY {value 2009}
+define bgnWY {value 1922} !changing beginning year requires modification of groundwater data file CVprecip(20100923).dat (same initial year of data)
+define EndWY {value 2003}
 
 ! ================ INDICES AS DEFINED BY DWR (CHANGE IN FEB) =====================
 ! the 40-30-30 index for Sacramento Basin

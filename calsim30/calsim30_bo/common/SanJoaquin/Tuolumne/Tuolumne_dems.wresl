@@ -86,7 +86,7 @@ is less than 900, allocation is 55% of demand.
 */
 define NDP_WS {
     case firstyear {
-        condition wateryear == beginWaterYear .and. month<=mar
+        condition wateryear == 1922 .and. month<=mar
         value 1. }
     case Normal {
 !        condition month==apr .and. S81(-1)>950.

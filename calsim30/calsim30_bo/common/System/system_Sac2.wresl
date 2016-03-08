@@ -20,7 +20,7 @@ INCLUDE 'systemtables_Sac\arcs-Returns.wresl'
 INCLUDE 'systemtables_Sac\arcs-Contracts.wresl'
 INCLUDE 'systemtables_Sac\arcs-Contracts-FRSA.wresl'
 INCLUDE 'systemtables_Sac\arcs-Contracts-Refuges.wresl'
-INCLUDE 'systemtables_Sac\arcs-Residuals.wresl'
+INCLUDE 'systemtables_Sac\arcs-Errors.wresl'
 INCLUDE 'systemtables_Sac\arcs-Preoperations.wresl'
 !INCLUDE 'systemtables_Sac\arcs-WUFactors.wresl' !see cycle 1
 INCLUDE 'systemtables_Sac\arcs-Reservoirs.wresl'
@@ -43,16 +43,11 @@ INCLUDE 'systemtables_Sac\constraints-DeepPercolation.wresl'
 
 define C_SAC041_ANN {std kind 'FLOW-ANN' units 'CFS'}
 define C_SAC041_WQ {std kind 'FLOW-WQ' units 'CFS'}
-goal C_SAC041tot {C_SAC041 = C_SAC041_ANN + C_SAC041_WQ}
+goal C400total_ann {C_SAC041=C_SAC041_ANN + C_SAC041_WQ}
 
-define C_CSL005_ANN {std kind 'FLOW-ANN' units 'CFS'}
-goal C_CSL005tot {C_CSL005 = C_CSL005_ANN}
+define C_YBP002_ANN {std kind 'FLOW-ANN' units 'CFS'}
 
-define C_SACtot_ANN {std kind 'FLOW-ANN' units 'CFS'}
-goal setC_SACtot_ANN {C_SACtot_ANN = C_SAC041_ANN + C_CSL005_ANN}
-
-goal setC_SAC041_WQ {C_SAC041_WQ = 0.0} ! Remove this goal if NODOS activated
-
+goal setC_SAC041_WQ {C_SAC041_WQ=0.0} ! Remove this goal if NODOS activated
 
 
 

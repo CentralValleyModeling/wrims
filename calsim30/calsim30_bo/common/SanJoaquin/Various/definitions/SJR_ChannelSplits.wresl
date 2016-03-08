@@ -185,7 +185,7 @@ define C520RPA {std kind 'FLOW-RELEASE' units 'cfs'}
 ! Define instream flow release from Tulloch, units = CFS
 define C520INSTREAM {std kind 'FLOW-RELEASE' units 'cfs'}
 ! Sum all the components for the flow release of Tulloch
-goal aggegC520_exc { C520_exc = C520_exc_a + C520WQ + C520VAMP + C520DO /*+ C520F*/ + C520MIN + C520RPA /*+ C520INSTREAM*/ }
+goal aggegC520_exc { C520_exc = C520_exc_a + C520WQ + C520VAMP + C520DO + C520F + C520MIN + C520RPA /*+ C520INSTREAM*/ }
 
 
 
