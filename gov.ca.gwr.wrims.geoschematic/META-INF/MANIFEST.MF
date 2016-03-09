@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Geoschematic
+Bundle-SymbolicName: gov.ca.gwr.wrims.geoschematic;singleton:=true
+Bundle-Version: 1.0.0.0
+Bundle-Activator: gov.ca.gwr.wrims.geoschematic.Activator
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.locationtech.udig.catalog,
+ org.locationtech.udig.project,
+ org.locationtech.udig.project.ui,
+ org.locationtech.udig.catalog.ui,
+ org.locationtech.udig.tool.default,
+ org.locationtech.udig.catalog.wms,
+ org.locationtech.udig.info
+Bundle-ActivationPolicy: lazy

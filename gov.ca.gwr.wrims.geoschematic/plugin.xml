@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+        <category id="wpp.category.wrims2" name="WRIMS2">
+        </category>
+      <view name="Map View"
+            icon="images/icons/eview16/map.png"
+            category="wpp.category.wrims2"
+            class="gov.ca.gwr.wrims.geoschematic.MapView"
+            id="gov.ca.gwr.wrims.geoschematic.MapView">
+      </view>
+   </extension>
+   <extension point="org.eclipse.ui.perspectives">
+      <perspective
+            class="gov.ca.gwr.wrims.geoschematic.GeoschematicPerspective"
+            fixed="false"
+            id="gov.ca.gwr.wrims.geoschematic.GeoschematicPerspective"
+            name="GeoSchematic">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="gov.ca.gwr.wrims.geoschematic.GeoschematicPerspective">
+          <actionSet id="org.locationtech.udig.project.ui.LayerActions">
+         </actionSet>
+		 <actionSet id="org.locationtech.udig.project.ui.layer.menu">
+         </actionSet>
+     </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension targetID="*">
+            <perspectiveShortcut id="gov.ca.gwr.wrims.geoschematic.GeoschematicPerspective"/> 
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:gov.ca.gwr.wrims.geoschematic.MapView">
+         <command
+               commandId="org.locationtech.udig.project.ui.addLayerCommand"
+               icon="images/icons/elcl16/layer_add.png"
+               label="Add Layer"
+               style="push"
+               tooltip="Add Layer">
+         </command>
+         <command
+               commandId="gov.ca.gwr.wrims.geoschematic.maptool.activate"
+               icon="images/icons/elcl16/info_mode.png"
+               label="Info"
+               style="radio"
+               tooltip="Feature Info">
+            <parameter
+                  name="gov.ca.gwr.wrims.geoschematic.maptool.activate.toolid"
+                  value="org.locationtech.udig.tool.info.infoMode">
+            </parameter>
+         </command>
+         <command
+               commandId="gov.ca.gwr.wrims.geoschematic.maptool.activate"
+               icon="images/icons/elcl16/pan_tool.png"
+               label="Pan"
+               style="radio"
+               tooltip="Pan">
+            <parameter
+                  name="gov.ca.gwr.wrims.geoschematic.maptool.activate.toolid"
+                  value="org.locationtech.udig.tools.Pan">
+            </parameter>
+         </command>
+         <command
+               commandId="gov.ca.gwr.wrims.geoschematic.maptool.activate"
+               icon="images/icons/elcl16/zoom_tool.png"
+               label="Zoom"
+               style="radio"
+               tooltip="Zoom">
+            <parameter
+                  name="gov.ca.gwr.wrims.geoschematic.maptool.activate.toolid"
+                  value="org.locationtech.udig.tools.Zoom">
+            </parameter>
+         </command>
+         <command
+               commandId="gov.ca.gwr.wrims.geoschematic.maptool.activate"
+               icon="images/icons/elcl16/zoom_layers.png"
+               label="Zoom Extent"
+               style="push"
+               tooltip="Zoom Extent">
+            <parameter
+                  name="gov.ca.gwr.wrims.geoschematic.maptool.activate.toolid"
+                  value="org.locationtech.udig.tools.ZoomExtent">
+            </parameter>
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="gov.ca.gwr.wrims.geoschematic.ActivateMapToolHandler"
+            commandId="gov.ca.gwr.wrims.geoschematic.maptool.activate">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="gov.ca.gwr.wrims.geoschematic.maptool.activate"
+            name="Activate Map Tool">
+         <commandParameter
+               id="gov.ca.gwr.wrims.geoschematic.maptool.activate.toolid"
+               name="ToolId"
+               optional="false">
+         </commandParameter>
+      </command>
+   </extension>
+</plugin>
