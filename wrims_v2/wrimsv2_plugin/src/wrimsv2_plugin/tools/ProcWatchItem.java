@@ -11,17 +11,19 @@ import java.io.LineNumberReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+
 public class ProcWatchItem {
 	private final static String watchFile = "watch.prf"; 
 	
 	public static ArrayList<String> getLastWatchItems(){
 		ArrayList<String> watchItems=new ArrayList<String> ();
 		try {
-			File file = new File(watchFile);
+			File file = new File(DebugCorePlugin.dataDir, watchFile);
 			if (!file.exists()){
 				file.createNewFile();
 			}
-			FileInputStream fs = new FileInputStream(watchFile);
+			FileInputStream fs = new FileInputStream(file.getAbsolutePath());
 			BufferedReader br = new BufferedReader(new InputStreamReader(fs));
 		    LineNumberReader reader = new LineNumberReader(br);
 		    String line;
@@ -36,7 +38,11 @@ public class ProcWatchItem {
 	
 	public static void saveWatchItems(ArrayList<String> watchItems){
 		try {
-			FileWriter watchFW = new FileWriter(watchFile);
+			File file = new File(DebugCorePlugin.dataDir, watchFile);
+			if (!file.exists()){
+				file.createNewFile();
+			}
+			FileWriter watchFW = new FileWriter(file.getAbsolutePath());
 			PrintWriter out = new PrintWriter(watchFW);
 			int size = watchItems.size();
 			for (int i=0; i<size; i++){
