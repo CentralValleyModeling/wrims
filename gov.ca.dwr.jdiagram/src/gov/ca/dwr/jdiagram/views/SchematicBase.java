@@ -939,50 +939,52 @@ public abstract class SchematicBase extends ViewPart {
 			termAverage.add(altAverage);
 			
 			HashMap<String, HecMath> altSchematicVariableData = PluginCore.allSchematicVariableData[i];
-			Set<String> keys=altSchematicVariableData.keySet();
-			Iterator<String> it = keys.iterator();
-			while (it.hasNext()){
-				String name=it.next();
-				HecMath dataSet=altSchematicVariableData.get(name);
-				boolean isStorage=false;
-				try {
-					TimeSeriesContainer tsc = (TimeSeriesContainer)dataSet.getData();
-					if (PluginCore.allStorageNames.contains(name)) isStorage=true;
-					boolean isTAFSelected = (PluginCore.units.equalsIgnoreCase("taf") ? true
+			if (altSchematicVariableData !=null){
+				Set<String> keys=altSchematicVariableData.keySet();
+				Iterator<String> it = keys.iterator();
+				while (it.hasNext()){
+					String name=it.next();
+					HecMath dataSet=altSchematicVariableData.get(name);
+					boolean isStorage=false;
+					try {
+						TimeSeriesContainer tsc = (TimeSeriesContainer)dataSet.getData();
+						if (PluginCore.allStorageNames.contains(name)) isStorage=true;
+						boolean isTAFSelected = (PluginCore.units.equalsIgnoreCase("taf") ? true
 							: false);
-					tsc=unitsConversion(isStorage, tsc, isTAFSelected, i, name);
-					ht.set(startDate);
-					hecStartTime.set(tsc.startTime);
-					hecEndTime.set(tsc.endTime);
-					int count=0;
-					double sum=0.0;
-					boolean inRange=false;
-					while (ht.compareTimes(hecEndTime)<=0 && ht.compareTimes(endDate)<=0){
-						if (ht.compareTimes(hecStartTime) >= 0){
-							int valueIndex = (ht.year() - hecStartTime
-								.year())
-								* 12
-								+ (ht.month() - hecStartTime
-										.month());
-							sum += tsc.values[valueIndex];
-							count++;
-							inRange=true;
-						}
-						month = ht.month() + 1;
-						if (month == 13) {
-							month = 1;
-							year = ht.year() + 1;
-						} else {
-							year = ht.year();
-						}
-						ht.setDate(TimeOperation.getMonthText(month)+
+						tsc=unitsConversion(isStorage, tsc, isTAFSelected, i, name);
+						ht.set(startDate);
+						hecStartTime.set(tsc.startTime);
+						hecEndTime.set(tsc.endTime);
+						int count=0;
+						double sum=0.0;
+						boolean inRange=false;
+						while (ht.compareTimes(hecEndTime)<=0 && ht.compareTimes(endDate)<=0){
+							if (ht.compareTimes(hecStartTime) >= 0){
+								int valueIndex = (ht.year() - hecStartTime
+										.year())
+										* 12
+										+ (ht.month() - hecStartTime
+												.month());
+								sum += tsc.values[valueIndex];
+								count++;
+								inRange=true;
+							}
+							month = ht.month() + 1;
+							if (month == 13) {
+								month = 1;
+								year = ht.year() + 1;
+							} else {
+								year = ht.year();
+							}
+							ht.setDate(TimeOperation.getMonthText(month)+
 								+ year);
+						}
+						if (inRange) {
+							altAverage.put(name, sum/count);
+						}
+					} catch (HecMathException e) {
+						e.printStackTrace();
 					}
-					if (inRange) {
-						altAverage.put(name, sum/count);
-					}
-				} catch (HecMathException e) {
-					e.printStackTrace();
 				}
 			}
 		}

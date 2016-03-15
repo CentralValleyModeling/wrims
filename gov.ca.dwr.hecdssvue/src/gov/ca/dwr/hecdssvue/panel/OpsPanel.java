@@ -2,6 +2,7 @@ package gov.ca.dwr.hecdssvue.panel;
 
 import gov.ca.dwr.hecdssvue.PluginCore;
 import gov.ca.dwr.hecdssvue.components.ShowSelected;
+import gov.ca.dwr.hecdssvue.dialog.InsertTimeWindowDialog;
 import gov.ca.dwr.hecdssvue.views.DSSCatalogView;
 import gov.ca.dwr.hecdssvue.views.DSSMonthlyView;
 import gov.ca.dwr.hecdssvue.views.DSSPlotView;
@@ -70,6 +71,8 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
@@ -85,7 +88,7 @@ public class OpsPanel extends JPanel {
 	public static String[] _twSelections = { "All", "OCT1921 - SEP2009","OCT1921 - SEP2003",
 			"OCT1928 - SEP1934","OCT1986 - SEP1992","OCT1975 - SEP1977",
 			"OCT1976 - SEP1977","OCT1994 - SEP2003","OCT2000 - SEP2009",
-			"OCT1997 - SEP2007"};
+			"OCT1997 - SEP2007", "Add..."};
 
 	private Vector<String> _twitems = new Vector<String>(1, 1);
 	
@@ -606,8 +609,19 @@ public class OpsPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				JComboBox tb = (JComboBox) e.getSource();
 				String twSel = (String) tb.getSelectedItem();
-				setTimeWindow(twSel);
-				ShowSelected.showSelected();
+				if (twSel.equals("Add...")){
+					final IWorkbench workbench=PlatformUI.getWorkbench();
+					workbench.getDisplay().asyncExec(new Runnable(){
+						public void run(){
+							Shell shell=workbench.getActiveWorkbenchWindow().getShell();
+							InsertTimeWindowDialog dialog= new InsertTimeWindowDialog(shell, SWT.BORDER|SWT.APPLICATION_MODAL, true, false, false, false, false, "Add Time Window", "Add Time Window");
+							dialog.open(twbox);
+						}
+					});
+				}else{
+					setTimeWindow(twSel);
+					ShowSelected.showSelected();
+				}
 			}
 		});
 		Dimension d = new Dimension(350, 17);

@@ -1,10 +1,8 @@
 package gov.ca.dwr.jdiagram.toolbars;
 
 import gov.ca.dwr.jdiagram.SchematicPluginCore;
+import gov.ca.dwr.jdiagram.dialog.AddTimeWindowDialog;
 import gov.ca.dwr.jdiagram.views.SchematicBase;
-import gov.ca.dwr.jdiagram.views.SchematicView;
-
-import java.awt.geom.Rectangle2D;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -14,9 +12,10 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.menus.WorkbenchWindowControlContribution;
-
-import com.mindfusion.diagramming.DiagramView;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.tools.TimeOperation;
@@ -52,13 +51,24 @@ public class DateCombo extends
 			@Override
 			public void modifyText(ModifyEvent e) {
 				SchematicPluginCore.selIndex=dateList.getSelectionIndex();
-				SchematicPluginCore.selDate=dateList.getText();
-				if (!DebugCorePlugin.isDebugging){
-					schematicView.refreshValues(0, true);					
-				}else{
-					if (DebugCorePlugin.target !=null){
-						schematicView.refreshValues(1, true);
+				if (SchematicPluginCore.selIndex>0){
+					SchematicPluginCore.selDate=dateList.getText();
+					if (!DebugCorePlugin.isDebugging){
+						schematicView.refreshValues(0, true);					
+					}else{
+						if (DebugCorePlugin.target !=null){
+							schematicView.refreshValues(1, true);
+						}
 					}
+				}else if (SchematicPluginCore.selIndex==0){
+					final IWorkbench workbench=PlatformUI.getWorkbench();
+					workbench.getDisplay().asyncExec(new Runnable(){
+						public void run(){
+							Shell shell=workbench.getActiveWorkbenchWindow().getShell();
+							AddTimeWindowDialog dialog= new AddTimeWindowDialog(shell, SWT.BORDER|SWT.APPLICATION_MODAL, true, false, false, false, false, "Add Time Window", "Add Time Window");
+							dialog.open(getDateList());
+						}
+					});
 				}
 			}
 			
