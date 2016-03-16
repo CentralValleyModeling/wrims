@@ -78,8 +78,8 @@ public class DateCombo extends
 	
 	public void setDateCombo(int startMonth, int startYear, int endMonth, int endYear){
 		dateList.removeAll();
-		for (int i=0; i<SchematicPluginCore._twSelections.length; i++){
-			dateList.add(SchematicPluginCore._twSelections[i]);
+		for (int i=0; i<SchematicPluginCore._twSelections.size(); i++){
+			dateList.add(SchematicPluginCore._twSelections.get(i));
 		}
 		int j=startMonth;
 		for (int i=startYear; i<=endYear; i++){

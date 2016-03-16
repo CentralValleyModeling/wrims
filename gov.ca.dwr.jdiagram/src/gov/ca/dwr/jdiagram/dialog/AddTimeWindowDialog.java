@@ -1,17 +1,12 @@
 package gov.ca.dwr.jdiagram.dialog;
 
 import gov.ca.dwr.jdiagram.SchematicPluginCore;
-import gov.ca.dwr.jdiagram.toolbars.DateCombo;
-
-import javax.swing.JComboBox;
-
 import org.eclipse.jface.dialogs.PopupDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -96,9 +91,10 @@ public class AddTimeWindowDialog extends PopupDialog {
 		ok.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent event){
 				int index=validateTW();
-				if (index==SchematicPluginCore._twSelections.length){
+				if (index==SchematicPluginCore._twSelections.size()){
 					dateList.add(newTW, index);
 					dateList.select(index);
+					SchematicPluginCore._twSelections.add(index, newTW);
 					close();
 				}else if (index>=0){
 					dateList.select(index);
@@ -131,7 +127,7 @@ public class AddTimeWindowDialog extends PopupDialog {
 	        return -1;
 		}else{
 			newTW=month1.getText()+startyear+" - "+month2.getText()+endyear;
-			int size=SchematicPluginCore._twSelections.length;
+			int size=SchematicPluginCore._twSelections.size();
 			int index=size;
 			for (int i=0; i<index; i++){
 				if (dateList.getItem(i).equals(newTW)){

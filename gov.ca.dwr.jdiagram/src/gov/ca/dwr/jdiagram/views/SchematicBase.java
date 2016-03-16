@@ -17,7 +17,6 @@ import hec.heclib.dss.CondensedReference;
 import hec.heclib.dss.DSSPathname;
 import hec.heclib.dss.HecDss;
 import hec.heclib.util.HecTime;
-import hec.hecmath.DSSFile;
 import hec.hecmath.HecMath;
 import hec.hecmath.HecMathException;
 import hec.io.DataContainer;
@@ -44,25 +43,18 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
 
-import javax.swing.JLayeredPane;
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.resource.DeviceResourceManager;
-import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
-import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.FontData;
-import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -71,10 +63,8 @@ import org.eclipse.swt.widgets.FontDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
-import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -82,7 +72,6 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.WorkbenchException;
 import org.eclipse.ui.part.ViewPart;
-import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
@@ -111,7 +100,6 @@ import com.mindfusion.diagramming.TextFormat;
 import com.mindfusion.diagramming.export.PdfExporter;
 import com.mindfusion.diagramming.export.SvgExporter;
 import com.mindfusion.pdf.AutoScale;
-import com.mindfusion.pdf.PageSizesEnum;
 
 /**
  * This view represents the schematic drawing
@@ -523,7 +511,7 @@ public abstract class SchematicBase extends ViewPart {
 		forwardAction = new Action("Forward", Activator.getImageDescriptor("forward.png")){
 			
 			public void run(){
-				int twSize=SchematicPluginCore._twSelections.length;
+				int twSize=SchematicPluginCore._twSelections.size();
 				Combo dateList = dateCombo.getDateList();
 				int size=dateList.getItemCount();
 				if (SchematicPluginCore.selIndex<twSize){
@@ -544,7 +532,7 @@ public abstract class SchematicBase extends ViewPart {
 		backwardAction = new Action("Backward", Activator.getImageDescriptor("backward.png")){
 			
 			public void run(){
-				int twSize=SchematicPluginCore._twSelections.length;
+				int twSize=SchematicPluginCore._twSelections.size();
 				Combo dateList = dateCombo.getDateList();
 				int size=dateList.getItemCount();
 				if (SchematicPluginCore.selIndex<=twSize){
@@ -786,9 +774,9 @@ public abstract class SchematicBase extends ViewPart {
 	}
 	
 	public Hashtable<String, String>[] retrieveUndebug(String date, Hashtable<String, Object> names){
-		String[] tws = SchematicPluginCore._twSelections;
-		for (int i=0; i<tws.length; i++){
-			if (date.equals(tws[i])){
+		ArrayList<String> tws = SchematicPluginCore._twSelections;
+		for (int i=0; i<tws.size(); i++){
+			if (date.equals(tws.get(i))){
 				if (PluginCore.units.equals(PluginCore.cfs)){
 					if (PluginCore.months.size()<12){
 						return retrieveLongTermAverageSelectedMonths(date, names, true);
@@ -897,7 +885,7 @@ public abstract class SchematicBase extends ViewPart {
 		return results;
 	}
 	
-	public void calculateLongTermAverage(int pi, String date, String[] tws, boolean isCFS){
+	public void calculateLongTermAverage(int pi, String date, ArrayList<String> tws, boolean isCFS){
 		
 		Hashtable<String, Double> _longTermTafToCfsConversionFactors = new Hashtable<String, Double>();
 

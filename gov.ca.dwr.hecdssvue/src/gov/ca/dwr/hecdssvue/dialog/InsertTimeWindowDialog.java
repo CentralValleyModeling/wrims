@@ -1,5 +1,7 @@
 package gov.ca.dwr.hecdssvue.dialog;
 
+import gov.ca.dwr.hecdssvue.PluginCore;
+
 import javax.swing.JComboBox;
 
 import org.eclipse.jface.dialogs.PopupDialog;
@@ -95,6 +97,7 @@ public class InsertTimeWindowDialog extends PopupDialog {
 				if (index==twbox.getItemCount()-1){
 					twbox.insertItemAt(newTW, index);
 					twbox.setSelectedIndex(index);
+					PluginCore._twSelections.add(index, newTW);
 					close();
 				}else if (index>=0){
 					twbox.setSelectedIndex(index);
