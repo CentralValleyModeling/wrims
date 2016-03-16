@@ -1,6 +1,12 @@
 package gov.ca.dwr.jdiagram.dialog;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import gov.ca.dwr.jdiagram.SchematicPluginCore;
+
 import org.eclipse.jface.dialogs.PopupDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -17,6 +23,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
+
+import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 
 public class AddTimeWindowDialog extends PopupDialog {
 	//private DateCombo dateCombo;
@@ -95,6 +103,7 @@ public class AddTimeWindowDialog extends PopupDialog {
 					dateList.add(newTW, index);
 					dateList.select(index);
 					SchematicPluginCore._twSelections.add(index, newTW);
+					saveTWFile();
 					close();
 				}else if (index>=0){
 					dateList.select(index);
@@ -150,5 +159,25 @@ public class AddTimeWindowDialog extends PopupDialog {
 				messageBox.open();
 			}
 		});
+	}
+	
+	public void saveTWFile(){
+		try {
+			File file = new File(DebugCorePlugin.dataDir, SchematicPluginCore.twFile);
+			if (!file.exists()){
+				file.createNewFile();
+			}
+			FileWriter fw = new FileWriter(file.getAbsolutePath());
+			PrintWriter out = new PrintWriter(fw);
+			int size = SchematicPluginCore._twSelections.size();
+			if (size>1){
+				for (int i=1; i<size; i++){
+					out.println(SchematicPluginCore._twSelections.get(i));
+				}
+			}
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

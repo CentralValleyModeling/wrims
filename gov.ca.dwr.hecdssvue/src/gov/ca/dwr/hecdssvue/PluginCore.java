@@ -1,10 +1,8 @@
 package gov.ca.dwr.hecdssvue;
 
-import gov.ca.dwr.hecdssvue.views.DSSCatalogView;
 import hec.heclib.dss.CondensedReference;
 import hec.heclib.dss.HecDss;
 import hec.hecmath.HecMath;
-import hec.io.DataContainer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,9 +10,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Vector;
 
-import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.PlatformUI;
 import org.swixml.SwingEngine;
 
 public class PluginCore {
@@ -63,6 +58,7 @@ public class PluginCore {
 		"OCT1976 - SEP1977","OCT1994 - SEP2003","OCT2000 - SEP2009",
 		"OCT1997 - SEP2007", "Add..."));
 	
+	public static String twFile="twDSS.prf";
 	public static boolean isAllWaterYear=true;
 	public static HashSet<Integer> filterWaterYear=new HashSet<Integer>();
 	

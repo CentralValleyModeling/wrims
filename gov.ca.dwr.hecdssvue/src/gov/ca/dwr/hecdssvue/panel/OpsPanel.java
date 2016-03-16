@@ -4,17 +4,9 @@ import gov.ca.dwr.hecdssvue.PluginCore;
 import gov.ca.dwr.hecdssvue.components.ShowSelected;
 import gov.ca.dwr.hecdssvue.dialog.InsertTimeWindowDialog;
 import gov.ca.dwr.hecdssvue.views.DSSCatalogView;
-import gov.ca.dwr.hecdssvue.views.DSSMonthlyView;
-import gov.ca.dwr.hecdssvue.views.DSSPlotView;
-import gov.ca.dwr.hecdssvue.views.DSSTableView;
-import hec.dssgui.Group;
-import hec.hecmath.DSS;
-import hec.hecmath.DSSFile;
-import hec.io.DataContainer;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -22,20 +14,16 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Vector;
-import java.util.prefs.BackingStoreException;
-import java.util.prefs.Preferences;
 
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
@@ -49,38 +37,23 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
-import javax.swing.ProgressMonitor;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.DefaultTableModel;
 
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
-import wrimsv2_plugin.debugger.exception.WPPException;
-import wrimsv2_plugin.debugger.view.WPPWatchView;
 import wrimsv2_plugin.tools.TimeOperation;
 
 public class OpsPanel extends JPanel {
@@ -596,6 +569,7 @@ public class OpsPanel extends JPanel {
 	}
 
 	public JComboBox createTWBox() {
+		procTWFile();
 		for (int i = 0; i < PluginCore._twSelections.size(); i++){
 			_twitems.addElement(PluginCore._twSelections.get(i));
 		}
@@ -626,6 +600,28 @@ public class OpsPanel extends JPanel {
 		twbox.setSelectedIndex(0);
 		PluginCore.tw="All";
 		return twbox;
+	}
+	
+	public void procTWFile(){
+		try {
+			File file = new File(DebugCorePlugin.dataDir, PluginCore.twFile);
+			if (!file.exists()){
+				file.createNewFile();
+			}else{
+				PluginCore._twSelections=new ArrayList<String>();
+				PluginCore._twSelections.add("All");
+				FileInputStream fs = new FileInputStream(file.getAbsolutePath());
+				BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+				LineNumberReader reader = new LineNumberReader(br);
+				String line;
+				while((line = br.readLine())!=null){
+					PluginCore._twSelections.add(line);
+				}
+				PluginCore._twSelections.add("Add...");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void setTimeWindow(String twSel) {

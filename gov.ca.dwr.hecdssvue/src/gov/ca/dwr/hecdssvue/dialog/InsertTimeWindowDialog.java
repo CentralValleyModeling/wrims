@@ -1,5 +1,10 @@
 package gov.ca.dwr.hecdssvue.dialog;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import gov.ca.dwr.hecdssvue.PluginCore;
 
 import javax.swing.JComboBox;
@@ -10,7 +15,6 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -21,6 +25,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
+
+import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 
 public class InsertTimeWindowDialog extends PopupDialog {
 	private JComboBox twbox;
@@ -98,6 +104,7 @@ public class InsertTimeWindowDialog extends PopupDialog {
 					twbox.insertItemAt(newTW, index);
 					twbox.setSelectedIndex(index);
 					PluginCore._twSelections.add(index, newTW);
+					saveTWFile();
 					close();
 				}else if (index>=0){
 					twbox.setSelectedIndex(index);
@@ -153,5 +160,25 @@ public class InsertTimeWindowDialog extends PopupDialog {
 				messageBox.open();
 			}
 		});
+	}
+	
+	public void saveTWFile(){
+		try {
+			File file = new File(DebugCorePlugin.dataDir, PluginCore.twFile);
+			if (!file.exists()){
+				file.createNewFile();
+			}
+			FileWriter fw = new FileWriter(file.getAbsolutePath());
+			PrintWriter out = new PrintWriter(fw);
+			int size = PluginCore._twSelections.size();
+			if (size>2){
+				for (int i=1; i<size-1; i++){
+					out.println(PluginCore._twSelections.get(i));
+				}
+			}
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

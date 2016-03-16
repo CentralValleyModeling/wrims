@@ -1,5 +1,13 @@
 package gov.ca.dwr.jdiagram.toolbars;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
+import java.util.ArrayList;
+
+import gov.ca.dwr.hecdssvue.PluginCore;
 import gov.ca.dwr.jdiagram.SchematicPluginCore;
 import gov.ca.dwr.jdiagram.dialog.AddTimeWindowDialog;
 import gov.ca.dwr.jdiagram.views.SchematicBase;
@@ -78,6 +86,7 @@ public class DateCombo extends
 	
 	public void setDateCombo(int startMonth, int startYear, int endMonth, int endYear){
 		dateList.removeAll();
+		procTWFile();
 		for (int i=0; i<SchematicPluginCore._twSelections.size(); i++){
 			dateList.add(SchematicPluginCore._twSelections.get(i));
 		}
@@ -97,5 +106,26 @@ public class DateCombo extends
 	
 	public Combo getDateList(){
 		return dateList;
+	}
+	
+	public void procTWFile(){
+		try {
+			File file = new File(DebugCorePlugin.dataDir, SchematicPluginCore.twFile);
+			if (!file.exists()){
+				file.createNewFile();
+			}else{
+				SchematicPluginCore._twSelections=new ArrayList<String>();
+				SchematicPluginCore._twSelections.add("Add...");
+				FileInputStream fs = new FileInputStream(file.getAbsolutePath());
+				BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+				LineNumberReader reader = new LineNumberReader(br);
+				String line;
+				while((line = br.readLine())!=null){
+					SchematicPluginCore._twSelections.add(line);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
