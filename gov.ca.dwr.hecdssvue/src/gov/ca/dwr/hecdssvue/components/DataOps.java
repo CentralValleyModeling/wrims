@@ -210,8 +210,8 @@ public class DataOps {
 	public static void loadAllSchematicVariableData(){
 		PluginCore.allSchematicVariableUnitsCFS=new HashMap[4];
 		PluginCore.allSchematicVariableUnitsTAF=new HashMap[4];
-		PluginCore.longTermAverageDataCFS=new ArrayList[8];
-		PluginCore.longTermAverageDataTAF=new ArrayList[8];
+		PluginCore.longTermAverageDataCFS=new HashMap();
+		PluginCore.longTermAverageDataTAF=new HashMap();
 		PluginCore.allSchematicVariableData = new HashMap[4];
 		for (int kk=0; kk<4; kk++){
 			HashMap<String, HecMath> data= new HashMap<String, HecMath>();

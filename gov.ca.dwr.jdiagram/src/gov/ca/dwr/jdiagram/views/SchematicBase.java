@@ -775,14 +775,14 @@ public abstract class SchematicBase extends ViewPart {
 	
 	public Hashtable<String, String>[] retrieveUndebug(String date, Hashtable<String, Object> names){
 		ArrayList<String> tws = SchematicPluginCore._twSelections;
-		for (int i=0; i<tws.size(); i++){
-			if (date.equals(tws.get(i))){
+		for (int i=0; i<tws.size()-1; i++){
+			if (date.equals(tws.get(i+1))){
 				if (PluginCore.units.equals(PluginCore.cfs)){
 					if (PluginCore.months.size()<12){
 						return retrieveLongTermAverageSelectedMonths(date, names, true);
 					}else{
-						if (PluginCore.longTermAverageDataCFS[i]==null) {
-							calculateLongTermAverage(i, date, tws, true);
+						if (!PluginCore.longTermAverageDataCFS.containsKey(i)) {
+							calculateLongTermAverage(i, date, true);
 						}
 						return retrieveLongTermAverage(i, names, true);
 					}
@@ -790,8 +790,8 @@ public abstract class SchematicBase extends ViewPart {
 					if (PluginCore.months.size()<12){
 						return retrieveLongTermAverageSelectedMonths(date, names, false);
 					}else{
-						if (PluginCore.longTermAverageDataTAF[i]==null) {
-							calculateLongTermAverage(i, date, tws, false);
+						if (!PluginCore.longTermAverageDataTAF.containsKey(i)) {
+							calculateLongTermAverage(i, date, false);
 						}
 						return retrieveLongTermAverage(i, names, false);
 					}
@@ -885,15 +885,15 @@ public abstract class SchematicBase extends ViewPart {
 		return results;
 	}
 	
-	public void calculateLongTermAverage(int pi, String date, ArrayList<String> tws, boolean isCFS){
+	public void calculateLongTermAverage(int pi, String date, boolean isCFS){
 		
 		Hashtable<String, Double> _longTermTafToCfsConversionFactors = new Hashtable<String, Double>();
 
 		ArrayList<HashMap<String, Double>> termAverage= new ArrayList<HashMap<String, Double>>();
 		if (isCFS){
-			PluginCore.longTermAverageDataCFS[pi]=termAverage;
+			PluginCore.longTermAverageDataCFS.put(pi, termAverage);
 		}else{
-			PluginCore.longTermAverageDataTAF[pi]=termAverage;
+			PluginCore.longTermAverageDataTAF.put(pi, termAverage);
 		}
 		
 		int index = 0;
@@ -1081,9 +1081,9 @@ public abstract class SchematicBase extends ViewPart {
 		
 		ArrayList<HashMap<String, Double>> termAverage;
 		if (isCFS){
-			termAverage=PluginCore.longTermAverageDataCFS[index];
+			termAverage=PluginCore.longTermAverageDataCFS.get(index);
 		}else{
-			termAverage=PluginCore.longTermAverageDataTAF[index];
+			termAverage=PluginCore.longTermAverageDataTAF.get(index);
 		}
 		
 		for (int k = 0; k < 4; k++) {
@@ -1578,8 +1578,8 @@ public abstract class SchematicBase extends ViewPart {
 		if (this instanceof SchematicView){
 			PluginCore.allSchematicVariableUnitsCFS=new HashMap[4];
 			PluginCore.allSchematicVariableUnitsTAF=new HashMap[4];
-			PluginCore.longTermAverageDataCFS=new ArrayList[8];
-			PluginCore.longTermAverageDataTAF=new ArrayList[8];
+			PluginCore.longTermAverageDataCFS=new HashMap();
+			PluginCore.longTermAverageDataTAF=new HashMap();
 			PluginCore.allSchematicVariableData = new HashMap[4];
 			for (int kk=0; kk<4; kk++){
 				HashMap<String, HecMath> data= new HashMap<String, HecMath>();
