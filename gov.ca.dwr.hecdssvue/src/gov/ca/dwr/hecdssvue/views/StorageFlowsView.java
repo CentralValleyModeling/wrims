@@ -1,6 +1,6 @@
 package gov.ca.dwr.hecdssvue.views;
 
-import gov.ca.dwr.hecdssvue.PluginCore;
+import gov.ca.dwr.hecdssvue.DssPluginCore;
 import gov.ca.dwr.hecdssvue.actions.ReportButtonAction;
 import gov.ca.dwr.hecdssvue.actions.ReportCheckBoxAction;
 import hec.io.DataContainer;
@@ -27,7 +27,7 @@ public class StorageFlowsView extends AbstractCalSimView{
 	
 	public void createPartControl(Composite parent){
 		super.createPartControl(parent);
-		JPanel panel = (JPanel)PluginCore.swix.find("presets");
+		JPanel panel = (JPanel)DssPluginCore.swix.find("presets");
 		contentPane.add(new JScrollPane(panel));
 		components = panel.getComponents();
 		for (int i = 0; i < components.length; i++) {

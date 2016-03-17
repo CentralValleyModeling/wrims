@@ -1,7 +1,7 @@
 package gov.ca.dwr.hecdssvue.views;
 
 import gov.ca.dwr.hecdssvue.Activator;
-import gov.ca.dwr.hecdssvue.PluginCore;
+import gov.ca.dwr.hecdssvue.DssPluginCore;
 import gov.ca.dwr.hecdssvue.components.DataOps;
 import hec.dataTable.HecDataTable;
 import hec.heclib.dss.HecDss;
@@ -106,7 +106,7 @@ public class DSSFileView extends ViewPart {
 						}else{
 							showDssFileErrorDialog(1);
 						}
-						PluginCore.dssArray = new ArrayList<HecDss> ();
+						DssPluginCore.dssArray = new ArrayList<HecDss> ();
 //						dssArray.add(DebugCorePlugin.dvDss[0]);
 //						dssArray.add(DebugCorePlugin.svDss[0]);
 //						for (int i = 0; i <DebugCorePlugin.dvDss.length; i++){
@@ -115,15 +115,15 @@ public class DSSFileView extends ViewPart {
 //						}
 						for (int i = 0; i <DebugCorePlugin.selectedStudies.length/2;i++){
 							if (DebugCorePlugin.selectedStudies[i]==true){
-								PluginCore.dssArray.add(DebugCorePlugin.dvDss[i]);
-								PluginCore.dssArray.add(DebugCorePlugin.svDss[i]);
+								DssPluginCore.dssArray.add(DebugCorePlugin.dvDss[i]);
+								DssPluginCore.dssArray.add(DebugCorePlugin.svDss[i]);
 							}
 						}
 						try {
 							DSSCatalogView dcv = (DSSCatalogView) getSite().getWorkbenchWindow()
                                                 .getActivePage().showView(DSSCatalogView.ID);
 							try {
-								dcv.getViewer().setInput(PluginCore.dssArray);
+								dcv.getViewer().setInput(DssPluginCore.dssArray);
 								DataOps.loadAllSchematicVariableData();
 //								dcv.setInput(dssArray);
 //								dcv.updateData();

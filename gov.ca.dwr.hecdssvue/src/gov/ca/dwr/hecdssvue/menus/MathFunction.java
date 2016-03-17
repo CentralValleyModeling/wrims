@@ -5,7 +5,7 @@ import java.util.Vector;
 
 import javax.swing.SwingUtilities;
 
-import gov.ca.dwr.hecdssvue.PluginCore;
+import gov.ca.dwr.hecdssvue.DssPluginCore;
 import gov.ca.dwr.hecdssvue.components.CatalogListSelection;
 import gov.ca.dwr.hecdssvue.components.DssMathFrame;
 import gov.ca.dwr.hecdssvue.views.DSSCatalogView;
@@ -38,7 +38,7 @@ public class MathFunction implements IWorkbenchWindowActionDelegate{
 	public void run(IAction action) {
 		IWorkbench workbench=PlatformUI.getWorkbench();
 		IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
-		final DSSCatalogView dssCatalogView=(DSSCatalogView) workBenchPage.findView(PluginCore.ID_DSSVue_DSSCatalogView);
+		final DSSCatalogView dssCatalogView=(DSSCatalogView) workBenchPage.findView(DssPluginCore.ID_DSSVue_DSSCatalogView);
 
 		if (dssCatalogView !=null){
 			final Vector<String[]> selectedParts=dssCatalogView.getSelectedParts();			

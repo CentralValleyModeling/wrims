@@ -1,6 +1,6 @@
 package gov.ca.dwr.hecdssvue.views;
 
-import gov.ca.dwr.hecdssvue.PluginCore;
+import gov.ca.dwr.hecdssvue.DssPluginCore;
 import gov.ca.dwr.hecdssvue.panel.MonthlyTablePanel;
 import gov.ca.dwr.hecdssvue.panel.OpsPanel;
 import hec.gfx2d.G2dMouseAdapter;
@@ -50,7 +50,7 @@ public class DSSMonthlyView extends AbstractDSSView {
 	public void showSelected(final Vector<DataContainer> dataVector) {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				loadMonthlyTable(PluginCore.annualType, dataVector);
+				loadMonthlyTable(DssPluginCore.annualType, dataVector);
 				monthly.getTable().setupModel();
 				monthly.showTable();
 			}});
@@ -66,11 +66,11 @@ public class DSSMonthlyView extends AbstractDSSView {
 
 		int firstPossibleMonth;
 		
-		if (annualType == PluginCore.WATERYEAR) {
+		if (annualType == DssPluginCore.WATERYEAR) {
 			firstPossibleMonth = 0;
-		} else if (annualType == PluginCore.CALENDAR_YEAR) {
+		} else if (annualType == DssPluginCore.CALENDAR_YEAR) {
 			firstPossibleMonth = 3;
-		} else if (annualType == PluginCore.FEDERAL_CONTRACT_YEAR) {
+		} else if (annualType == DssPluginCore.FEDERAL_CONTRACT_YEAR) {
 			firstPossibleMonth = 5;
 		} else {
 			return;

@@ -1,6 +1,6 @@
 package gov.ca.dwr.hecdssvue.components;
 
-import gov.ca.dwr.hecdssvue.PluginCore;
+import gov.ca.dwr.hecdssvue.DssPluginCore;
 import gov.ca.dwr.hecdssvue.views.DSSCatalogView;
 import hec.dataTable.HecDataTable;
 import hec.heclib.dss.CondensedReference;
@@ -88,7 +88,7 @@ public class DataOps {
 				// WRONG MONTH FIX: subtract 1 min
 				ht.add(-1);
 
-				if (PluginCore.isAllWaterYear){
+				if (DssPluginCore.isAllWaterYear){
 					if (months.contains(ht.month())) {
 						ltimes.add(times[i]);
 						lvalues.add(values[i]);
@@ -96,11 +96,11 @@ public class DataOps {
 					}
 				}else{
 					if (months.contains(ht.month())) {
-						if (ht.month()>0 && ht.month()<10 && PluginCore.filterWaterYear.contains(ht.year())){
+						if (ht.month()>0 && ht.month()<10 && DssPluginCore.filterWaterYear.contains(ht.year())){
 							ltimes.add(times[i]);
 							lvalues.add(values[i]);
 							// values[i] = Constants.UNDEFINED;
-						}else if (ht.month()>=10 && ht.month()<=12 && PluginCore.filterWaterYear.contains(ht.year()+1)){
+						}else if (ht.month()>=10 && ht.month()<=12 && DssPluginCore.filterWaterYear.contains(ht.year()+1)){
 							ltimes.add(times[i]);
 							lvalues.add(values[i]);
 							// values[i] = Constants.UNDEFINED;
@@ -142,13 +142,13 @@ public class DataOps {
 		String[] parts = fullName.split("/");
 		boolean isStorage = parts[3].trim().toLowerCase().startsWith("storage");
 		
-		if (!PluginCore.units.equals(units)) {
-			if (PluginCore.units.equals(PluginCore.taf) && units.equals(PluginCore.cfs)){
+		if (!DssPluginCore.units.equals(units)) {
+			if (DssPluginCore.units.equals(DssPluginCore.taf) && units.equals(DssPluginCore.cfs)){
 				tsc = adjustMonthlyData(tsc, true); 
-				tsc.units=PluginCore.taf;
-			} else if (PluginCore.units.equals(PluginCore.cfs) && units.equals(PluginCore.taf) && !isStorage){
+				tsc.units=DssPluginCore.taf;
+			} else if (DssPluginCore.units.equals(DssPluginCore.cfs) && units.equals(DssPluginCore.taf) && !isStorage){
 				tsc = adjustMonthlyData(tsc, false); 
-				tsc.units=PluginCore.cfs;
+				tsc.units=DssPluginCore.cfs;
 			}
 		}
 		return tsc;
@@ -208,18 +208,18 @@ public class DataOps {
 	}
 	
 	public static void loadAllSchematicVariableData(){
-		PluginCore.allSchematicVariableUnitsCFS=new HashMap[4];
-		PluginCore.allSchematicVariableUnitsTAF=new HashMap[4];
-		PluginCore.longTermAverageDataCFS=new HashMap();
-		PluginCore.longTermAverageDataTAF=new HashMap();
-		PluginCore.allSchematicVariableData = new HashMap[4];
+		DssPluginCore.allSchematicVariableUnitsCFS=new HashMap[4];
+		DssPluginCore.allSchematicVariableUnitsTAF=new HashMap[4];
+		DssPluginCore.longTermAverageDataCFS=new HashMap();
+		DssPluginCore.longTermAverageDataTAF=new HashMap();
+		DssPluginCore.allSchematicVariableData = new HashMap[4];
 		for (int kk=0; kk<4; kk++){
 			HashMap<String, HecMath> data= new HashMap<String, HecMath>();
-			PluginCore.allSchematicVariableData[kk]=data;
+			DssPluginCore.allSchematicVariableData[kk]=data;
 			HashMap<String, String> cfsUnitsMap = new HashMap<String, String>();
-			PluginCore.allSchematicVariableUnitsCFS[kk]=cfsUnitsMap;
+			DssPluginCore.allSchematicVariableUnitsCFS[kk]=cfsUnitsMap;
 			HashMap<String, String> tafUnitsMap = new HashMap<String, String>();
-			PluginCore.allSchematicVariableUnitsTAF[kk]=tafUnitsMap;
+			DssPluginCore.allSchematicVariableUnitsTAF[kk]=tafUnitsMap;
 			
 			if (DebugCorePlugin.selectedStudies[kk]){
 				if (DebugCorePlugin.dvDss[kk] !=null){
@@ -231,30 +231,30 @@ public class DataOps {
 			}	
 		}
 		
-		int size = PluginCore.allSchematicVariableNames.size();
+		int size = DssPluginCore.allSchematicVariableNames.size();
 		
 		for (int i=0; i<4; i++){
 			if (DebugCorePlugin.selectedStudies[i]){
-				PluginCore.pathnameLists[i]=new ArrayList<String>();
+				DssPluginCore.pathnameLists[i]=new ArrayList<String>();
 				HecDss dvFile = DebugCorePlugin.dvDss[i];
 				HecDss svFile = DebugCorePlugin.svDss[i];
 				if (dvFile !=null){
-					PluginCore.dvPathnameMap[i] = generatePathnameMap(dvFile, i);
+					DssPluginCore.dvPathnameMap[i] = generatePathnameMap(dvFile, i);
 				}else{
-					PluginCore.dvPathnameMap[i] = null;
+					DssPluginCore.dvPathnameMap[i] = null;
 				}
 				if (svFile !=null){
-					PluginCore.svPathnameMap[i] = generatePathnameMap(svFile, i);
+					DssPluginCore.svPathnameMap[i] = generatePathnameMap(svFile, i);
 				}else{
-					PluginCore.svPathnameMap[i] = null;
+					DssPluginCore.svPathnameMap[i] = null;
 				}
 			}
 		}
 		
 		for (int j=0; j<size; j++) {
-			String name = PluginCore.allSchematicVariableNames.get(j);
-			if (PluginCore.allPathName.containsKey(name)){
-				String pathName = PluginCore.allPathName.get(name);
+			String name = DssPluginCore.allSchematicVariableNames.get(j);
+			if (DssPluginCore.allPathName.containsKey(name)){
+				String pathName = DssPluginCore.allPathName.get(name);
 				for (int i=0; i<4; i++){
 					if (DebugCorePlugin.selectedStudies[i]){
 						HecMath dataSet=null;
@@ -267,9 +267,9 @@ public class DataOps {
 									readFromSV(svFile, pathName, name, i);
 									continue;
 								}else{
-									PluginCore.allSchematicVariableData[i].put(name, dataSet);
-									PluginCore.allSchematicVariableUnitsCFS[i].put(name, dataSet.getUnits());
-									PluginCore.allSchematicVariableUnitsTAF[i].put(name, dataSet.getUnits());
+									DssPluginCore.allSchematicVariableData[i].put(name, dataSet);
+									DssPluginCore.allSchematicVariableUnitsCFS[i].put(name, dataSet.getUnits());
+									DssPluginCore.allSchematicVariableUnitsTAF[i].put(name, dataSet.getUnits());
 									continue;
 								}
 							} catch (Exception e) {
@@ -287,23 +287,23 @@ public class DataOps {
 						HecDss dvFile = DebugCorePlugin.dvDss[i];
 						HecDss svFile = DebugCorePlugin.svDss[i];
 					
-						String pathName=PluginCore.dvPathnameMap[i].get(name);
+						String pathName=DssPluginCore.dvPathnameMap[i].get(name);
 						if (pathName !=null){
 							try {
 								dataSet= dvFile.read(pathName);
-								PluginCore.allSchematicVariableData[i].put(name, dataSet);
-								PluginCore.allSchematicVariableUnitsCFS[i].put(name, dataSet.getUnits());
-								PluginCore.allSchematicVariableUnitsTAF[i].put(name, dataSet.getUnits());
+								DssPluginCore.allSchematicVariableData[i].put(name, dataSet);
+								DssPluginCore.allSchematicVariableUnitsCFS[i].put(name, dataSet.getUnits());
+								DssPluginCore.allSchematicVariableUnitsTAF[i].put(name, dataSet.getUnits());
 							}catch (Exception e) {
 							}
 						}
-						pathName=PluginCore.svPathnameMap[i].get(name);
+						pathName=DssPluginCore.svPathnameMap[i].get(name);
 						if (pathName !=null){
 							try {
 								dataSet= svFile.read(pathName);
-								PluginCore.allSchematicVariableData[i].put(name, dataSet);
-								PluginCore.allSchematicVariableUnitsCFS[i].put(name, dataSet.getUnits());
-								PluginCore.allSchematicVariableUnitsTAF[i].put(name, dataSet.getUnits());
+								DssPluginCore.allSchematicVariableData[i].put(name, dataSet);
+								DssPluginCore.allSchematicVariableUnitsCFS[i].put(name, dataSet.getUnits());
+								DssPluginCore.allSchematicVariableUnitsTAF[i].put(name, dataSet.getUnits());
 							}catch (Exception e) {
 							}
 						}
@@ -318,9 +318,9 @@ public class DataOps {
 		try {
 			HecMath dataSet = svFile.read(pathName);
 			if (dataSet !=null){
-				PluginCore.allSchematicVariableData[i].put(name, dataSet);
-				PluginCore.allSchematicVariableUnitsCFS[i].put(name, dataSet.getUnits());
-				PluginCore.allSchematicVariableUnitsTAF[i].put(name, dataSet.getUnits());
+				DssPluginCore.allSchematicVariableData[i].put(name, dataSet);
+				DssPluginCore.allSchematicVariableUnitsCFS[i].put(name, dataSet.getUnits());
+				DssPluginCore.allSchematicVariableUnitsTAF[i].put(name, dataSet.getUnits());
 			}
 		} catch (Exception e) {
 		}
@@ -335,7 +335,7 @@ public class DataOps {
 			DSSPathname dssPathname = new DSSPathname(pathname);
 			String partB=dssPathname.bPart();
 			pathnameMap.put(partB, pathname);
-			PluginCore.pathnameLists[j].add(pathname);
+			DssPluginCore.pathnameLists[j].add(pathname);
 		}
 		return pathnameMap;
 	}

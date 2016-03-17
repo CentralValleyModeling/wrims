@@ -1,6 +1,6 @@
 package gov.ca.dwr.hecdssvue.panel;
 
-import gov.ca.dwr.hecdssvue.PluginCore;
+import gov.ca.dwr.hecdssvue.DssPluginCore;
 import gov.ca.dwr.hecdssvue.components.ShowSelected;
 import gov.ca.dwr.hecdssvue.dialog.InsertTimeWindowDialog;
 import gov.ca.dwr.hecdssvue.views.DSSCatalogView;
@@ -76,8 +76,8 @@ public class OpsPanel extends JPanel {
 	private JRadioButton taf = new JRadioButton("TAF");
 	private JRadioButton cfs = new JRadioButton("CFS");
 
-	private JRadioButton comp = new JRadioButton(PluginCore.comp);
-	private JRadioButton diff = new JRadioButton(PluginCore.diff);
+	private JRadioButton comp = new JRadioButton(DssPluginCore.comp);
+	private JRadioButton diff = new JRadioButton(DssPluginCore.diff);
 
 	private JRadioButton wateryear = new JRadioButton("oct - sep"); 
 	private JRadioButton calendar = new JRadioButton("jan - dec"); ; 
@@ -196,45 +196,45 @@ public class OpsPanel extends JPanel {
 
 			@Override
 			public void valueChanged(ListSelectionEvent arg0) {
-				PluginCore.months=new ArrayList<Integer>();
+				DssPluginCore.months=new ArrayList<Integer>();
 				int[] sels=list.getSelectedIndices();
 				for (int i=0; i<sels.length; i++){
 					switch (sels[i]) {
 		            	case 0:  
-		            		PluginCore.months.add(10);
+		            		DssPluginCore.months.add(10);
 		            		break;
 		            	case 1:  
-		            		PluginCore.months.add(11);
+		            		DssPluginCore.months.add(11);
 		            		break;
 		            	case 2:  
-		            		PluginCore.months.add(12);
+		            		DssPluginCore.months.add(12);
 		            		break;
 		            	case 3:  
-		            		PluginCore.months.add(1);
+		            		DssPluginCore.months.add(1);
 		            		break;
 		            	case 4:  
-		            		PluginCore.months.add(2);
+		            		DssPluginCore.months.add(2);
 		            		break;
 		            	case 5:  
-		            		PluginCore.months.add(3);
+		            		DssPluginCore.months.add(3);
 		            		break;
 		            	case 6:  
-		            		PluginCore.months.add(4);
+		            		DssPluginCore.months.add(4);
 		            		break;
 		            	case 7:  
-		            		PluginCore.months.add(5);
+		            		DssPluginCore.months.add(5);
 		            		break;
 		            	case 8:  
-		            		PluginCore.months.add(6);
+		            		DssPluginCore.months.add(6);
 		            		break;
 		            	case 9:  
-		            		PluginCore.months.add(7);
+		            		DssPluginCore.months.add(7);
 		            		break;
 		            	case 10:  
-		            		PluginCore.months.add(8);
+		            		DssPluginCore.months.add(8);
 		            		break;
 		            	case 11:  
-		            		PluginCore.months.add(9);
+		            		DssPluginCore.months.add(9);
 		            		break;
 		            	default:
 		            		break;
@@ -267,8 +267,8 @@ public class OpsPanel extends JPanel {
 				workbench.getDisplay().asyncExec(new Runnable(){
 					public void run(){
 						IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
-						DSSCatalogView dssCatalogView=(DSSCatalogView) workBenchPage.findView(PluginCore.ID_DSSVue_DSSCatalogView);
-						dssCatalogView.getViewer().setInput(PluginCore.dssArray);
+						DSSCatalogView dssCatalogView=(DSSCatalogView) workBenchPage.findView(DssPluginCore.ID_DSSVue_DSSCatalogView);
+						dssCatalogView.getViewer().setInput(DssPluginCore.dssArray);
 					}
 				});
 			}
@@ -326,7 +326,7 @@ public class OpsPanel extends JPanel {
 		JPanel panel = new JPanel();
 		ButtonGroup g = new ButtonGroup();
 
-		if (PluginCore.units == PluginCore.cfs)
+		if (DssPluginCore.units == DssPluginCore.cfs)
 			cfs.setSelected(true);
 		else 
 			taf.setSelected(true);
@@ -334,13 +334,13 @@ public class OpsPanel extends JPanel {
 		g.add(taf);
 		taf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PluginCore.units=PluginCore.taf;
+				DssPluginCore.units=DssPluginCore.taf;
 				ShowSelected.showSelected();
 			}
 		});
 		cfs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PluginCore.units=PluginCore.cfs;
+				DssPluginCore.units=DssPluginCore.cfs;
 				ShowSelected.showSelected();
 			}
 		});
@@ -380,12 +380,12 @@ public class OpsPanel extends JPanel {
 		panel.add(comp);
 		panel.add(diff);
 		comp.setSelected(true);
-		PluginCore.mode=comp.getText();
+		DssPluginCore.mode=comp.getText();
 		comp.addMouseListener(new MouseListener(){
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				PluginCore.mode=comp.getText();
+				DssPluginCore.mode=comp.getText();
 				ShowSelected.showSelected();
 			}
 
@@ -418,7 +418,7 @@ public class OpsPanel extends JPanel {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				PluginCore.mode=diff.getText();
+				DssPluginCore.mode=diff.getText();
 				ShowSelected.showSelected();
 			}
 
@@ -456,7 +456,7 @@ public class OpsPanel extends JPanel {
 		g.add(wateryear);
 		g.add(calendar);
 		g.add(fedContract);
-		setAnnualType(PluginCore.WATERYEAR);
+		setAnnualType(DssPluginCore.WATERYEAR);
 		g.setSelected(wateryear.getModel(), true);
 		wateryear.setFont(new Font(f.getName(), f.getStyle(), 12));
 		calendar.setFont(new Font(f.getName(), f.getStyle(), 12));
@@ -470,7 +470,7 @@ public class OpsPanel extends JPanel {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				setAnnualType(PluginCore.WATERYEAR);
+				setAnnualType(DssPluginCore.WATERYEAR);
 				ShowSelected.showSelected();
 			}
 
@@ -503,7 +503,7 @@ public class OpsPanel extends JPanel {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				setAnnualType(PluginCore.CALENDAR_YEAR);
+				setAnnualType(DssPluginCore.CALENDAR_YEAR);
 				ShowSelected.showSelected();
 			}
 
@@ -536,7 +536,7 @@ public class OpsPanel extends JPanel {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				setAnnualType(PluginCore.FEDERAL_CONTRACT_YEAR);
+				setAnnualType(DssPluginCore.FEDERAL_CONTRACT_YEAR);
 				ShowSelected.showSelected();
 			}
 
@@ -570,8 +570,8 @@ public class OpsPanel extends JPanel {
 
 	public JComboBox createTWBox() {
 		procTWFile();
-		for (int i = 0; i < PluginCore._twSelections.size(); i++){
-			_twitems.addElement(PluginCore._twSelections.get(i));
+		for (int i = 0; i < DssPluginCore._twSelections.size(); i++){
+			_twitems.addElement(DssPluginCore._twSelections.get(i));
 		}
 		final JComboBox twbox = new JComboBox(_twitems);
 		twbox.setEditable(true);
@@ -598,26 +598,26 @@ public class OpsPanel extends JPanel {
 		twbox.setMinimumSize(d);
 		twbox.setFont(new Font(f.getName(), f.getStyle(), 12));
 		twbox.setSelectedIndex(0);
-		PluginCore.tw="All";
+		DssPluginCore.tw="All";
 		return twbox;
 	}
 	
 	public void procTWFile(){
 		try {
-			File file = new File(DebugCorePlugin.dataDir, PluginCore.twFile);
+			File file = new File(DebugCorePlugin.dataDir, DssPluginCore.twFile);
 			if (!file.exists()){
 				file.createNewFile();
 			}else{
-				PluginCore._twSelections=new ArrayList<String>();
-				PluginCore._twSelections.add("All");
+				DssPluginCore._twSelections=new ArrayList<String>();
+				DssPluginCore._twSelections.add("All");
 				FileInputStream fs = new FileInputStream(file.getAbsolutePath());
 				BufferedReader br = new BufferedReader(new InputStreamReader(fs));
 				LineNumberReader reader = new LineNumberReader(br);
 				String line;
 				while((line = br.readLine())!=null){
-					PluginCore._twSelections.add(line);
+					DssPluginCore._twSelections.add(line);
 				}
-				PluginCore._twSelections.add("Add...");
+				DssPluginCore._twSelections.add("Add...");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -626,7 +626,7 @@ public class OpsPanel extends JPanel {
 	
 	public void setTimeWindow(String twSel) {
 		if (twSel.equals("All")){
-			PluginCore.tw="All";
+			DssPluginCore.tw="All";
 		}else{
 			String[] split = twSel.split(" +");
 			String startMonth = split[0].substring(0, 3);
@@ -642,17 +642,17 @@ public class OpsPanel extends JPanel {
 					sYear);
 				int daysInEndMonth = TimeOperation.numberOfDays(eMonth,
 					eYear);
-				PluginCore.tw = daysInStartMonth + startMonth
+				DssPluginCore.tw = daysInStartMonth + startMonth
 					+ startYear + " 2400 " + daysInEndMonth
 					+ endMonth + endYear + " 2400";
 			} catch (NumberFormatException nfe) {
-				PluginCore.tw = "31Oct1921 2400 30Sep2009 2400"; 
+				DssPluginCore.tw = "31Oct1921 2400 30Sep2009 2400"; 
 			}
 		}
 	}
 	
 	public void setAnnualType(int annType) {
-		PluginCore.annualType = annType;
+		DssPluginCore.annualType = annType;
 	}
 	
 	public JPanel createLowerPanel() {
@@ -702,7 +702,7 @@ public class OpsPanel extends JPanel {
 					  }
 					  
 					  public void setFilter(){
-							PluginCore.filter=getPathSpec(false);
+							DssPluginCore.filter=getPathSpec(false);
 					  }
 					  
 					  public String getPathSpec(boolean useRegex) {
@@ -736,8 +736,8 @@ public class OpsPanel extends JPanel {
 				workbench.getDisplay().asyncExec(new Runnable(){
 					public void run(){
 						IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
-						DSSCatalogView dssCatalogView=(DSSCatalogView) workBenchPage.findView(PluginCore.ID_DSSVue_DSSCatalogView);
-						dssCatalogView.getViewer().setInput(PluginCore.dssArray);
+						DSSCatalogView dssCatalogView=(DSSCatalogView) workBenchPage.findView(DssPluginCore.ID_DSSVue_DSSCatalogView);
+						dssCatalogView.getViewer().setInput(DssPluginCore.dssArray);
 					}
 				});
 			}
@@ -769,7 +769,7 @@ public class OpsPanel extends JPanel {
 
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				PluginCore.chartType=0;
+				DssPluginCore.chartType=0;
 				ShowSelected.showSelected();
 			}
 
@@ -803,7 +803,7 @@ public class OpsPanel extends JPanel {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				PluginCore.chartType=1;
+				DssPluginCore.chartType=1;
 				ShowSelected.showSelected();
 			}
 
@@ -838,7 +838,7 @@ public class OpsPanel extends JPanel {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				PluginCore.chartType=2;
+				DssPluginCore.chartType=2;
 				ShowSelected.showSelected();
 			}
 
@@ -873,7 +873,7 @@ public class OpsPanel extends JPanel {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				PluginCore.chartType=3;
+				DssPluginCore.chartType=3;
 				ShowSelected.showSelected();
 			}
 
@@ -908,7 +908,7 @@ public class OpsPanel extends JPanel {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				PluginCore.chartType=4;
+				DssPluginCore.chartType=4;
 				ShowSelected.showSelected();
 			}
 
@@ -945,7 +945,7 @@ public class OpsPanel extends JPanel {
 	    group.add(_annualTotExceedBtn);
 	    group.add(_monthlyAvgBtn);
 		_plotBtn.setSelected(true);
-		PluginCore.chartType=0;
+		DssPluginCore.chartType=0;
 
 		// List of Months for plots/table
 		_monthlist = createMonthList();

@@ -8,7 +8,7 @@ import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import gov.ca.dwr.hecdssvue.PluginCore;
+import gov.ca.dwr.hecdssvue.DssPluginCore;
 import gov.ca.dwr.hecdssvue.components.CatalogListSelection;
 import gov.ca.dwr.hecdssvue.components.DssMathFrame;
 import gov.ca.dwr.hecdssvue.views.DSSCatalogView;
@@ -89,7 +89,7 @@ public class ManualTimeseries implements IWorkbenchWindowActionDelegate{
 					    		workbench.getDisplay().asyncExec(new Runnable(){
 					    			public void run(){
 					    				IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
-										DSSCatalogView dssCatalogView=(DSSCatalogView) workBenchPage.findView(PluginCore.ID_DSSVue_DSSCatalogView);
+										DSSCatalogView dssCatalogView=(DSSCatalogView) workBenchPage.findView(DssPluginCore.ID_DSSVue_DSSCatalogView);
 										TableViewer viewer = dssCatalogView.getViewer();
 										viewer.setInput(viewer.getInput()); 
 					    			}

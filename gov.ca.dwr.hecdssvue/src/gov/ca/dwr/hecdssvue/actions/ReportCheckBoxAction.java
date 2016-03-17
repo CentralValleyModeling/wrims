@@ -1,6 +1,6 @@
 package gov.ca.dwr.hecdssvue.actions;
 
-import gov.ca.dwr.hecdssvue.PluginCore;
+import gov.ca.dwr.hecdssvue.DssPluginCore;
 import gov.ca.dwr.hecdssvue.components.DataOps;
 import gov.ca.dwr.hecdssvue.components.RetrieveCheckBoxTsData;
 import gov.ca.dwr.hecdssvue.views.DSSMonthlyView;
@@ -41,12 +41,12 @@ public class ReportCheckBoxAction implements ActionListener {
 		String cn=c.getName();
 		
 		if (c.isSelected()){
-			if (!PluginCore.selectedCheckBox.contains(cn)){
-				PluginCore.selectedCheckBox.add(cn);
+			if (!DssPluginCore.selectedCheckBox.contains(cn)){
+				DssPluginCore.selectedCheckBox.add(cn);
 			}
 		}else{
-			if (PluginCore.selectedCheckBox.contains(cn)){
-				PluginCore.selectedCheckBox.remove(cn);
+			if (DssPluginCore.selectedCheckBox.contains(cn)){
+				DssPluginCore.selectedCheckBox.remove(cn);
 			}
 		}
 		

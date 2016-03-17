@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import gov.ca.dwr.hecdssvue.PluginCore;
+import gov.ca.dwr.hecdssvue.DssPluginCore;
 
 import javax.swing.JComboBox;
 
@@ -103,7 +103,7 @@ public class InsertTimeWindowDialog extends PopupDialog {
 				if (index==twbox.getItemCount()-1){
 					twbox.insertItemAt(newTW, index);
 					twbox.setSelectedIndex(index);
-					PluginCore._twSelections.add(index, newTW);
+					DssPluginCore._twSelections.add(index, newTW);
 					saveTWFile();
 					close();
 				}else if (index>=0){
@@ -164,16 +164,16 @@ public class InsertTimeWindowDialog extends PopupDialog {
 	
 	public void saveTWFile(){
 		try {
-			File file = new File(DebugCorePlugin.dataDir, PluginCore.twFile);
+			File file = new File(DebugCorePlugin.dataDir, DssPluginCore.twFile);
 			if (!file.exists()){
 				file.createNewFile();
 			}
 			FileWriter fw = new FileWriter(file.getAbsolutePath());
 			PrintWriter out = new PrintWriter(fw);
-			int size = PluginCore._twSelections.size();
+			int size = DssPluginCore._twSelections.size();
 			if (size>2){
 				for (int i=1; i<size-1; i++){
-					out.println(PluginCore._twSelections.get(i));
+					out.println(DssPluginCore._twSelections.get(i));
 				}
 			}
 			out.close();

@@ -1,6 +1,6 @@
 package gov.ca.dwr.hecdssvue.components;
 
-import gov.ca.dwr.hecdssvue.PluginCore;
+import gov.ca.dwr.hecdssvue.DssPluginCore;
 import gov.ca.dwr.hecdssvue.views.DSSMonthlyView;
 import gov.ca.dwr.hecdssvue.views.DSSPlotView;
 import gov.ca.dwr.hecdssvue.views.DSSTableView;
@@ -22,8 +22,8 @@ import wrimsv2_plugin.debugger.exception.WPPException;
 public class RetrieveCheckBoxTsData {
 	public RetrieveCheckBoxTsData() {
 		Vector<DataContainer> dataVector_paths=new Vector<DataContainer>();
-		for (int i=0; i<PluginCore.selectedCheckBox.size(); i++){
-			String cn=PluginCore.selectedCheckBox.get(i);
+		for (int i=0; i<DssPluginCore.selectedCheckBox.size(); i++){
+			String cn=DssPluginCore.selectedCheckBox.get(i);
 			if (cn.startsWith("ckbp")){
 				String id=cn.replaceFirst("ckbp", "");
 				boolean isBase=true;
@@ -35,11 +35,11 @@ public class RetrieveCheckBoxTsData {
 						//Vector<CondensedReference> ccSv = DebugCorePlugin.svDss[j].getCondensedCatalog();
 						String[][] lookups=new String[0][0];
 						if (DebugCorePlugin.studyTypes[j]==0){
-							lookups=PluginCore.CalLiteLookups;
+							lookups=DssPluginCore.CalLiteLookups;
 						}else if (DebugCorePlugin.studyTypes[j]==1){
-							lookups=PluginCore.CalSim3Lookups;
+							lookups=DssPluginCore.CalSim3Lookups;
 						}else if (DebugCorePlugin.studyTypes[j]==2){
-							lookups=PluginCore.CalSim2Lookups;
+							lookups=DssPluginCore.CalSim2Lookups;
 						}
 						for (int k=0; k<lookups.length; k++){
 							if (lookups[k][0].equals(id)){								
@@ -60,7 +60,7 @@ public class RetrieveCheckBoxTsData {
 								
 									TimeSeriesContainer dataVector_file = retrieveTsDataByPathName(partB, partC, j, isBase, stepStr);
 									if (dataVector_file !=null) {
-										if (PluginCore.mode.equals(PluginCore.diff) &&  !isBase){
+										if (DssPluginCore.mode.equals(DssPluginCore.diff) &&  !isBase){
 											dataVector_file=DataOps.diff(dataVector_file, (TimeSeriesContainer)dataVector_path1.get(0));
 										}
 										dataVector_file.location=partB;
@@ -89,7 +89,7 @@ public class RetrieveCheckBoxTsData {
 										}
 									}
 									if (combined_dataVector_file !=null) {
-										if (PluginCore.mode.equals(PluginCore.diff) &&  !isBase){
+										if (DssPluginCore.mode.equals(DssPluginCore.diff) &&  !isBase){
 											combined_dataVector_file=DataOps.diff(combined_dataVector_file, (TimeSeriesContainer)dataVector_path1.get(0));
 										}
 										combined_dataVector_file.location=location;
@@ -116,7 +116,7 @@ public class RetrieveCheckBoxTsData {
 								
 										TimeSeriesContainer dataVector_file = retrieveTsDataByPathName(partB, partC, j, isBase, stepStr);
 										if (dataVector_file !=null) {
-											if (PluginCore.mode.equals(PluginCore.diff) &&  !isBase){
+											if (DssPluginCore.mode.equals(DssPluginCore.diff) &&  !isBase){
 												dataVector_file=DataOps.diff(dataVector_file, (TimeSeriesContainer)dataVector_path1.get(0));
 											}
 											dataVector_file.location=partB;
@@ -145,7 +145,7 @@ public class RetrieveCheckBoxTsData {
 											}
 										}
 										if (combined_dataVector_file !=null) {
-											if (PluginCore.mode.equals(PluginCore.diff) &&  !isBase){
+											if (DssPluginCore.mode.equals(DssPluginCore.diff) &&  !isBase){
 												combined_dataVector_file=DataOps.diff(combined_dataVector_file, (TimeSeriesContainer)dataVector_path1.get(0));
 											}
 											combined_dataVector_file.location=location;
@@ -158,7 +158,7 @@ public class RetrieveCheckBoxTsData {
 						isBase=false;
 					}	
 				}
-				if (PluginCore.mode.equals(PluginCore.diff)){
+				if (DssPluginCore.mode.equals(DssPluginCore.diff)){
 					if	(dataVector_path1.size()>0) dataVector_path1.remove(0);
 					if	(dataVector_path2.size()>0) dataVector_path2.remove(0);
 				}
@@ -213,8 +213,8 @@ public class RetrieveCheckBoxTsData {
 	private TimeSeriesContainer retrieveTsDataByPathName(String partB, String partC, int j, boolean isBase, String stepStr){
 		boolean found=false;
 		int k=0;
-		while (k<PluginCore.pathnameLists[j].size() && !found) {
-			String pathName = PluginCore.pathnameLists[j].get(k);
+		while (k<DssPluginCore.pathnameLists[j].size() && !found) {
+			String pathName = DssPluginCore.pathnameLists[j].get(k);
 			String[] parts = pathName.split("/");
 			if (parts[2].equals(partB) && parts[3].equals(partC)){
 				found = true;
@@ -268,12 +268,12 @@ public class RetrieveCheckBoxTsData {
 				case 0:
 					try{
 						//dataVector_file = dssArray.get(i).get(pathname, true);
-						if (PluginCore.tw.equals("All")){	
-							dataVector_file = DataOps.getMonthlyData((TimeSeriesContainer)DebugCorePlugin.dvDss[j].get(pathname, true), PluginCore.months);
+						if (DssPluginCore.tw.equals("All")){	
+							dataVector_file = DataOps.getMonthlyData((TimeSeriesContainer)DebugCorePlugin.dvDss[j].get(pathname, true), DssPluginCore.months);
 						}else{
-							String startTime=PluginCore.tw.substring(0, 13);
-							String endTime=PluginCore.tw.substring(15, 28);
-							dataVector_file = DataOps.getMonthlyData((TimeSeriesContainer)DebugCorePlugin.dvDss[j].get(pathname, startTime, endTime), PluginCore.months);
+							String startTime=DssPluginCore.tw.substring(0, 13);
+							String endTime=DssPluginCore.tw.substring(15, 28);
+							dataVector_file = DataOps.getMonthlyData((TimeSeriesContainer)DebugCorePlugin.dvDss[j].get(pathname, startTime, endTime), DssPluginCore.months);
 						}
 					} catch (Exception ex) {
 						dataVector_file = null;
@@ -292,12 +292,12 @@ public class RetrieveCheckBoxTsData {
 //					if (dataVector_path.get((i-1)/2).equals(null)){
 						try{
 //							dataVector_file = dssArray.get(i).get(pathname, true);
-							if (PluginCore.tw.equals("All")){  
-								dataVector_file = DataOps.getMonthlyData((TimeSeriesContainer)DebugCorePlugin.svDss[j].get(pathname, true), PluginCore.months);
+							if (DssPluginCore.tw.equals("All")){  
+								dataVector_file = DataOps.getMonthlyData((TimeSeriesContainer)DebugCorePlugin.svDss[j].get(pathname, true), DssPluginCore.months);
 							}else{ 
-								String startTime=PluginCore.tw.substring(0, 13);
-								String endTime=PluginCore.tw.substring(15, 28);
-								dataVector_file = DataOps.getMonthlyData((TimeSeriesContainer)DebugCorePlugin.svDss[j].get(pathname, startTime, endTime), PluginCore.months);
+								String startTime=DssPluginCore.tw.substring(0, 13);
+								String endTime=DssPluginCore.tw.substring(15, 28);
+								dataVector_file = DataOps.getMonthlyData((TimeSeriesContainer)DebugCorePlugin.svDss[j].get(pathname, startTime, endTime), DssPluginCore.months);
 							}
 						} catch (Exception ex) {
 							dataVector_file = null;

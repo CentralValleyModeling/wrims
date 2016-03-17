@@ -15,7 +15,7 @@ import org.eclipse.ui.PlatformUI;
 import rma.util.PlugInLoader;
 import rma.util.RMAIO;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
-import gov.ca.dwr.hecdssvue.PluginCore;
+import gov.ca.dwr.hecdssvue.DssPluginCore;
 import gov.ca.dwr.hecdssvue.views.DSSCatalogView;
 import hec.dssgui.CombinedDataManager;
 import hec.dssgui.DataReference;
@@ -106,7 +106,7 @@ public class CatalogListSelection extends ListSelection {
 		
 		IWorkbench workbench=PlatformUI.getWorkbench();
 		IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
-		final DSSCatalogView dssCatalogView=(DSSCatalogView) workBenchPage.findView(PluginCore.ID_DSSVue_DSSCatalogView);
+		final DSSCatalogView dssCatalogView=(DSSCatalogView) workBenchPage.findView(DssPluginCore.ID_DSSVue_DSSCatalogView);
 
 		if (dssCatalogView !=null){
 			final Vector<String[]> selectedParts=dssCatalogView.getSelectedParts();			
