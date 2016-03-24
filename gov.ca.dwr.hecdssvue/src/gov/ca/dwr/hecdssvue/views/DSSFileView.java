@@ -20,6 +20,12 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DropTarget;
+import org.eclipse.swt.dnd.DropTargetAdapter;
+import org.eclipse.swt.dnd.DropTargetEvent;
+import org.eclipse.swt.dnd.FileTransfer;
+import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -46,6 +52,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.PluginTransfer;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.statushandlers.StatusManager;
 
@@ -65,6 +72,8 @@ public class DSSFileView extends ViewPart {
 	private Button[] dvBrowserButton=new Button[4];
 	private Text[] svFileText=new Text[4];
 	private Button[] svBrowserButton=new Button[4];
+	private DropTarget[] dvDt=new DropTarget[4];
+	private DropTarget[] svDt=new DropTarget[4];
 	private Button okButton;
 	private String unavailableFiles="";
 	private String unavailableFolders="";
@@ -183,6 +192,19 @@ public class DSSFileView extends ViewPart {
 			gd1.horizontalSpan = 14;
 			dvFileText[i].setLayoutData(gd1);
 			dvFileText[i].setText(DebugCorePlugin.studyDvFileNames[i]);
+			
+			dvDt[i] = new DropTarget(dvFileText[i], DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK);
+	        dvDt[i].setTransfer(new Transfer[] { FileTransfer.getInstance(), PluginTransfer.getInstance() });
+	        dvDt[i].addDropListener(new DropTargetAdapter() {
+	            public void drop(DropTargetEvent event) {
+	                String fileList[] = null;
+	                FileTransfer ft = FileTransfer.getInstance();
+	                if (ft.isSupportedType(event.currentDataType)) {
+	                    fileList = (String[]) event.data;
+	                    dvFileText[j].setText(fileList[0]);
+	                }
+	            }
+	        });
 		
 			dvBrowserButton[i] = new Button(fileSelection[i], SWT.PUSH);
 			dvBrowserButton[i].setText("DV");
@@ -214,7 +236,20 @@ public class DSSFileView extends ViewPart {
 			gd1.horizontalSpan = 14;
 			svFileText[i].setLayoutData(gd1);
 			svFileText[i].setText(DebugCorePlugin.studySvFileNames[i]);
-		
+
+			svDt[i] = new DropTarget(svFileText[i], DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK);
+	        svDt[i].setTransfer(new Transfer[] { FileTransfer.getInstance(), PluginTransfer.getInstance() });
+	        svDt[i].addDropListener(new DropTargetAdapter() {
+	            public void drop(DropTargetEvent event) {
+	                String fileList[] = null;
+	                FileTransfer ft = FileTransfer.getInstance();
+	                if (ft.isSupportedType(event.currentDataType)) {
+	                    fileList = (String[]) event.data;
+	                    svFileText[j].setText(fileList[0]);
+	                }
+	            }
+	        });
+			
 			svBrowserButton[i] = new Button(fileSelection[i], SWT.PUSH);
 			svBrowserButton[i].setText("SV");
 			gd2 = new GridData(GridData.FILL_HORIZONTAL);

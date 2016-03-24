@@ -37,6 +37,12 @@ import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DropTarget;
+import org.eclipse.swt.dnd.DropTargetAdapter;
+import org.eclipse.swt.dnd.DropTargetEvent;
+import org.eclipse.swt.dnd.FileTransfer;
+import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -55,6 +61,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ResourceListSelectionDialog;
+import org.eclipse.ui.part.PluginTransfer;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.dialog.WPPLoadStudyDssDialog;
@@ -103,7 +110,12 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	private MYItemListener sml=new MYItemListener(1);
 	private MYItemListener eml=new MYItemListener(2);
 	private MYItemListener syl=new MYItemListener(1);
-	private MYItemListener eyl=new MYItemListener(2);	
+	private MYItemListener eyl=new MYItemListener(2);
+	private DropTarget mainFileDt;
+	private DropTarget dvarFileDt;
+	private DropTarget svarFileDt;
+	private DropTarget initFileDt;
+	private DropTarget groundWaterFolderDt;	
 	
 	public static String[] months = { "oct", "nov", "dec", "jan", "feb", "mar",
 		"apr", "may", "jun", "jul", "aug", "sep" };
@@ -214,6 +226,19 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 			}
 		});
 		
+		mainFileDt = new DropTarget(fMainFileText, DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK);
+		mainFileDt.setTransfer(new Transfer[] { FileTransfer.getInstance(), PluginTransfer.getInstance() });
+		mainFileDt.addDropListener(new DropTargetAdapter() {
+            public void drop(DropTargetEvent event) {
+                String fileList[] = null;
+                FileTransfer ft = FileTransfer.getInstance();
+                if (ft.isSupportedType(event.currentDataType)) {
+                    fileList = (String[]) event.data;
+                    fMainFileText.setText(fileList[0]);
+                }
+            }
+        });
+		
 		fMainFileButton = createPushButton(comp, "&Browse", null); //$NON-NLS-1$
 		fMainFileButton.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -239,6 +264,19 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 				updateLaunchConfigurationDialog();
 			}
 		});
+		
+		dvarFileDt = new DropTarget(fDvarFileText, DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK);
+		dvarFileDt.setTransfer(new Transfer[] { FileTransfer.getInstance(), PluginTransfer.getInstance() });
+		dvarFileDt.addDropListener(new DropTargetAdapter() {
+            public void drop(DropTargetEvent event) {
+                String fileList[] = null;
+                FileTransfer ft = FileTransfer.getInstance();
+                if (ft.isSupportedType(event.currentDataType)) {
+                    fileList = (String[]) event.data;
+                    fDvarFileText.setText(fileList[0]);
+                }
+            }
+        });
 		
 		fDvarFileButton = createPushButton(comp, "&Browse", null); //$NON-NLS-1$
 		fDvarFileButton.addSelectionListener(new SelectionAdapter() {
@@ -266,6 +304,19 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 			}
 		});
 		
+		svarFileDt = new DropTarget(fSvarFileText, DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK);
+		svarFileDt.setTransfer(new Transfer[] { FileTransfer.getInstance(), PluginTransfer.getInstance() });
+		svarFileDt.addDropListener(new DropTargetAdapter() {
+            public void drop(DropTargetEvent event) {
+                String fileList[] = null;
+                FileTransfer ft = FileTransfer.getInstance();
+                if (ft.isSupportedType(event.currentDataType)) {
+                    fileList = (String[]) event.data;
+                    fSvarFileText.setText(fileList[0]);
+                }
+            }
+        });
+		
 		fSvarFileButton = createPushButton(comp, "&Browse", null); //$NON-NLS-1$
 		fSvarFileButton.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -292,6 +343,19 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 			}
 		});
 		
+		initFileDt = new DropTarget(fInitFileText, DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK);
+		initFileDt.setTransfer(new Transfer[] { FileTransfer.getInstance(), PluginTransfer.getInstance() });
+		initFileDt.addDropListener(new DropTargetAdapter() {
+            public void drop(DropTargetEvent event) {
+                String fileList[] = null;
+                FileTransfer ft = FileTransfer.getInstance();
+                if (ft.isSupportedType(event.currentDataType)) {
+                    fileList = (String[]) event.data;
+                    fInitFileText.setText(fileList[0]);
+                }
+            }
+        });
+		
 		fInitFileButton = createPushButton(comp, "&Browse", null); //$NON-NLS-1$
 		fInitFileButton.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -317,6 +381,19 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 				updateLaunchConfigurationDialog();
 			}
 		});
+		
+		groundWaterFolderDt = new DropTarget(groundWaterFolderText, DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK);
+		groundWaterFolderDt.setTransfer(new Transfer[] { FileTransfer.getInstance(), PluginTransfer.getInstance() });
+		groundWaterFolderDt.addDropListener(new DropTargetAdapter() {
+            public void drop(DropTargetEvent event) {
+                String fileList[] = null;
+                FileTransfer ft = FileTransfer.getInstance();
+                if (ft.isSupportedType(event.currentDataType)) {
+                    fileList = (String[]) event.data;
+                    groundWaterFolderText.setText(fileList[0]);
+                }
+            }
+        });
 		
 		groundWaterFolderButton = createPushButton(comp, "&Browse", null); //$NON-NLS-1$
 		groundWaterFolderButton.addSelectionListener(new SelectionAdapter() {
