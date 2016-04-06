@@ -1,4 +1,4 @@
-package gov.ca.gwr.wrims.geoschematic;
+package gov.ca.dwr.wrims.geoschematic;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;

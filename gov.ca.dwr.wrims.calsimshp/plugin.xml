@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+           id="gov.ca.dwr.wrims.catalog.calsimshp.service"
+           point="org.locationtech.udig.catalog.ServiceExtension">
+      <service
+            class="gov.ca.dwr.wrims.calsimshp.CalSimShpServiceExtension"
+            id="gov.ca.dwr.wrims.calsimshp.service"
+            name="CalSim Shapefile Service Extension"/>
+   	</extension>
+   <extension
+         point="org.locationtech.udig.catalog.ui.connectionFactory">
+      <factory
+            class="gov.ca.dwr.wrims.calsimshp.CalSimShpConnectionFactory"
+            id="gov.ca.dwr.wrims.calsimshp">
+      </factory>
+      <wizardPage
+            class="gov.ca.dwr.wrims.calsimshp.CalSimShpWizardPage"
+            description="CalSim Shapefiles for Arcs and Nodes"
+            name="CalSim Shapefiles">
+      </wizardPage>
+   </extension>
+</plugin>

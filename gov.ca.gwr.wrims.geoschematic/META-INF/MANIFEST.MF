@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Geoschematic
-Bundle-SymbolicName: gov.ca.gwr.wrims.geoschematic;singleton:=true
+Bundle-SymbolicName: gov.ca.dwr.wrims.geoschematic;singleton:=true
 Bundle-Version: 1.0.0.0
-Bundle-Activator: gov.ca.gwr.wrims.geoschematic.Activator
+Bundle-Activator: gov.ca.dwr.wrims.geoschematic.Activator
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,

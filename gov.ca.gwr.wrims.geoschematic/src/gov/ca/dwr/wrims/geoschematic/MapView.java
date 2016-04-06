@@ -1,4 +1,4 @@
-package gov.ca.gwr.wrims.geoschematic;
+package gov.ca.dwr.wrims.geoschematic;
 
 
 import org.eclipse.core.runtime.IAdaptable;
@@ -31,7 +31,7 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
  */
 public class MapView extends ViewPart implements MapPart, IAdaptable {
 
-    public static final String ID = "gov.ca.gwr.wrims.geoschematic.MapView"; //$NON-NLS-1$
+    public static final String ID = "gov.ca.dwr.wrims.geoschematic.MapView"; //$NON-NLS-1$
     private static final String MAP_NAME = "geoschematic_map";
 
 	public static CoordinateReferenceSystem DEFAULT_CRS;

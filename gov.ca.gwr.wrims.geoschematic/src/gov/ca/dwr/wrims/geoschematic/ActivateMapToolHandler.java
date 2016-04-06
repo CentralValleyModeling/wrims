@@ -1,4 +1,4 @@
-package gov.ca.gwr.wrims.geoschematic;
+package gov.ca.dwr.wrims.geoschematic;
 
 import java.util.Map;
 
@@ -17,7 +17,7 @@ public class ActivateMapToolHandler extends AbstractHandler {
 			throws ExecutionException {
 			// Get the view identifier, if any.
 		final Map parameters = event.getParameters();
-		String toolid = (String) parameters.get("gov.ca.gwr.wrims.geoschematic.maptool.activate.toolid"); //$NON-NLS-1$
+		String toolid = (String) parameters.get("gov.ca.dwr.wrims.geoschematic.maptool.activate.toolid"); //$NON-NLS-1$
 		((ToolManager) ApplicationGIS.getToolManager()).findToolProxy((String)toolid).run();
 		return null;
 	}

@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Calsimshp
+Bundle-SymbolicName: gov.ca.dwr.wrims.calsimshp;singleton:=true
+Bundle-Version: 1.0.0.0
+Bundle-Activator: gov.ca.dwr.wrims.calsimshp.CalSimShpPlugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.locationtech.udig.catalog,
+ org.locationtech.udig.ui,
+ org.locationtech.udig.catalog.ui
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
