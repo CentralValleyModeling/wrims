@@ -1,6 +1,6 @@
 package gov.ca.dwr.hecdssvue.panel;
 
-import gov.ca.dwr.hecdssvue.PluginCore;
+import gov.ca.dwr.hecdssvue.DssPluginCore;
 import gov.ca.dwr.hecdssvue.monthly.MonthlyTable;
 import gov.ca.dwr.hecdssvue.views.DSSMonthlyView;
 import hec.gfx2d.G2dMarkerProperties;
@@ -208,7 +208,7 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 		});
 		_viewMenu.add(_viewCommas);
 
-		if (PluginCore.units.equals(PluginCore.taf)) { // No average or
+		if (DssPluginCore.units.equals(DssPluginCore.taf)) { // No average or
 															// total column when
 															// selected units
 															// are CFS
@@ -373,7 +373,7 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 		// CB - No total column when selected units are CFS
 		// CB - cannot use units here due to more than one data set. It is
 		// handled later
-		if (PluginCore.units.equals(PluginCore.taf))
+		if (DssPluginCore.units.equals(DssPluginCore.taf))
 			showTotalColumn = false;
 		int status = _table.setData(dataSets, firstMonth, _showCommas,
 				showTotalColumn, _decimalPlaces);
@@ -386,7 +386,7 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 	public int setData(TimeSeriesContainer timeSeriesContainer, int firstMonth) {
 		boolean showTotalColumn = true;
 		// CB added - No total column when selected units are CFS
-		if ((!PluginCore.units.equals(PluginCore.taf) || !(timeSeriesContainer.units
+		if ((!DssPluginCore.units.equals(DssPluginCore.taf) || !(timeSeriesContainer.units
 						.trim().equalsIgnoreCase("TAF"))))
 			showTotalColumn = false;
 		int status = _table.setData(timeSeriesContainer, firstMonth,
@@ -403,7 +403,7 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 			TimeSeriesContainer tsc = (TimeSeriesContainer) dc;
 			boolean showTotalColumn = true;
 			// CB added - No total column when selected units are CFS
-			if (!PluginCore.units.equals(PluginCore.taf) || !((TimeSeriesContainer) dc).units
+			if (!DssPluginCore.units.equals(DssPluginCore.taf) || !((TimeSeriesContainer) dc).units
 							.trim().equalsIgnoreCase("TAF"))
 				showTotalColumn = false;
 			status = _table.addData(tsc, firstMonth, _showCommas,
@@ -440,7 +440,7 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 	 */
 	void setShowTotalColumn(boolean showTotalColumn) {
 		// No average or total column when selected units are CFS (overriding)
-		if (PluginCore.units.equals(PluginCore.taf))
+		if (DssPluginCore.units.equals(DssPluginCore.taf))
 			if (showTotalColumn != _showTotalColumn) {
 				_showTotalColumn = showTotalColumn;
 				if (_viewTotalColumn != null) {

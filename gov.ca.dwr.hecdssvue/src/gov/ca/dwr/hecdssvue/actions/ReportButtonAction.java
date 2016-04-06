@@ -1,6 +1,6 @@
 package gov.ca.dwr.hecdssvue.actions;
 
-import gov.ca.dwr.hecdssvue.PluginCore;
+import gov.ca.dwr.hecdssvue.DssPluginCore;
 import gov.ca.dwr.hecdssvue.components.ClearAllCheckBox;
 import gov.ca.dwr.hecdssvue.views.DSSMonthlyView;
 import gov.ca.dwr.hecdssvue.views.DSSPlotView;
@@ -33,7 +33,7 @@ public class ReportButtonAction implements ActionListener {
 		String bn=b.getName();
 		
 		if (bn.equalsIgnoreCase("btnpClear") || bn.equalsIgnoreCase("btnpClear_SJR") || bn.equalsIgnoreCase("btnpClear_shortage")){
-			PluginCore.selectedCheckBox=new ArrayList<String>();
+			DssPluginCore.selectedCheckBox=new ArrayList<String>();
 			new ClearAllCheckBox();
 		}
 	}

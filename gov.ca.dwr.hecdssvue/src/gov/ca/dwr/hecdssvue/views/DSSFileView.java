@@ -1,57 +1,52 @@
 package gov.ca.dwr.hecdssvue.views;
 
 import gov.ca.dwr.hecdssvue.Activator;
-import gov.ca.dwr.hecdssvue.PluginCore;
+import gov.ca.dwr.hecdssvue.DssPluginCore;
 import gov.ca.dwr.hecdssvue.components.DataOps;
-import hec.dataTable.HecDataTable;
 import hec.heclib.dss.HecDss;
-import hec.io.DataContainer;
 
 import java.util.ArrayList;
-import java.util.Vector;
-
-import javax.swing.JScrollPane;
-
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
+import java.io.PrintWriter;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.resource.JFaceResources;
-import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DropTarget;
+import org.eclipse.swt.dnd.DropTargetAdapter;
+import org.eclipse.swt.dnd.DropTargetEvent;
+import org.eclipse.swt.dnd.FileTransfer;
+import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontMetrics;
-import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.DirectoryDialog;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.Link;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.PluginTransfer;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.statushandlers.StatusManager;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
-import wrimsv2_plugin.tools.DataProcess;
 
 public class DSSFileView extends ViewPart {
 
@@ -65,11 +60,26 @@ public class DSSFileView extends ViewPart {
 	private Button[] dvBrowserButton=new Button[4];
 	private Text[] svFileText=new Text[4];
 	private Button[] svBrowserButton=new Button[4];
+	private DropTarget[] dvDt=new DropTarget[4];
+	private DropTarget[] svDt=new DropTarget[4];
 	private Button okButton;
+	private Button openButton;
+	private Button saveButton;
 	private String unavailableFiles="";
 	private String unavailableFolders="";
 	private String errorFiles="";
 	private Combo[] studyType= new Combo[4];
+	
+	String lines[] = { "# comment",
+			"# variable and value are separated by whitespace",
+			"# value obviously cannot contain whitespace", 
+			"",
+			"# Specify dss files to operate on",
+			"# DV Variables: AltDV1, AltDV2, AltDV3, AltDV4",
+			"# SV Variables: AltSV1, AltSV2, AltSV3, AltSV4",
+			"" };
+
+	private Label fileLabel;
 
 	
 	/**
@@ -91,66 +101,72 @@ public class DSSFileView extends ViewPart {
 		title.setLayout(new GridLayout(39, true));
 		Label labelTitle = new Label(title, SWT.NONE);
 		labelTitle.setText("Please select DV and SV files for alternatives");
+		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 9;
+		labelTitle.setLayoutData(gd);
+		
 		okButton = new Button(title, SWT.PUSH);
 		okButton.setText("OK");
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 4;
+		okButton.setLayoutData(gd);
 		okButton.addSelectionListener(new SelectionAdapter() {
 		    @Override
 		    public void widgetSelected(SelectionEvent e) {
-				selectFiles();
-				if (DebugCorePlugin.selectedStudies[0] || DebugCorePlugin.selectedStudies[1] || DebugCorePlugin.selectedStudies[2] || DebugCorePlugin.selectedStudies[3]){
-					if (checkFilesExist()){
-						boolean success=openDssFiles();
-						if (success){
-////							close();
-////							processViews();
-						}else{
-							showDssFileErrorDialog(1);
-						}
-						PluginCore.dssArray = new ArrayList<HecDss> ();
-//						dssArray.add(DebugCorePlugin.dvDss[0]);
-//						dssArray.add(DebugCorePlugin.svDss[0]);
-//						for (int i = 0; i <DebugCorePlugin.dvDss.length; i++){
-//							dssArray.add(DebugCorePlugin.dvDss[i]);
-//							dssArray.add(DebugCorePlugin.svDss[i]);
-//						}
-						for (int i = 0; i <DebugCorePlugin.selectedStudies.length/2;i++){
-							if (DebugCorePlugin.selectedStudies[i]==true){
-								PluginCore.dssArray.add(DebugCorePlugin.dvDss[i]);
-								PluginCore.dssArray.add(DebugCorePlugin.svDss[i]);
-							}
-						}
-						try {
-							DSSCatalogView dcv = (DSSCatalogView) getSite().getWorkbenchWindow()
-                                                .getActivePage().showView(DSSCatalogView.ID);
-							try {
-								dcv.getViewer().setInput(PluginCore.dssArray);
-								DataOps.loadAllSchematicVariableData();
-//								dcv.setInput(dssArray);
-//								dcv.updateData();
-							} catch (Exception ex) {
-								Status status = new Status(IStatus.ERROR,
-								                Activator.PLUGIN_ID,
-								                "Error opening dss file: ", ex);
-								StatusManager.getManager().handle(status,
-										StatusManager.LOG);
-							}
-						} catch (PartInitException e1) {
-							e1.printStackTrace();
-						}
-						// put in Catalog View
-					}else{
-						showDssFileErrorDialog(0);
-					}
-				}else{
-//					if (checkFoldersExist()){
-////						close();
-//						processViews();
-//					}else{
-//						showDssFileErrorDialog(2);
-//					}
-				}
+		    	selectFiles();
 		    }
 		});
+		
+		openButton = new Button(title, SWT.PUSH);
+		openButton.setText("Open Project");
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 4;
+		openButton.setLayoutData(gd);
+		openButton.addSelectionListener(new SelectionAdapter() {
+		    @Override
+		    public void widgetSelected(SelectionEvent e) {
+		    	final IWorkbench workbench=PlatformUI.getWorkbench();
+				workbench.getDisplay().asyncExec(new Runnable(){
+					public void run(){
+						Shell shell=workbench.getActiveWorkbenchWindow().getShell();
+						FileDialog dlg=new FileDialog(shell, SWT.OPEN);
+						dlg.setFilterNames(new String[]{"DSS Project (*.dsv)", "All Files (*.*)"});
+						dlg.setFilterExtensions(new String[]{"*.dsv", "*.*"});
+						String file=dlg.open();
+						fileLabel.setText(file);
+						openProject(file);
+					}
+				});
+		    }
+		});
+		
+		saveButton = new Button(title, SWT.PUSH);
+		saveButton.setText("Save Project");
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 4;
+		saveButton.setLayoutData(gd);
+		saveButton.addSelectionListener(new SelectionAdapter() {
+		    @Override
+		    public void widgetSelected(SelectionEvent e) {
+		    	final IWorkbench workbench=PlatformUI.getWorkbench();
+				workbench.getDisplay().asyncExec(new Runnable(){
+					public void run(){
+						Shell shell=workbench.getActiveWorkbenchWindow().getShell();
+						FileDialog dlg=new FileDialog(shell, SWT.SAVE);
+						dlg.setFilterNames(new String[]{"DSS Project (*.dsv)", "All Files (*.*)"});
+						dlg.setFilterExtensions(new String[]{"*.dsv", "*.*"});
+						String file=dlg.open();
+						saveProject(file);
+					}
+				});
+		    }
+		});
+		
+		fileLabel = new Label(title, SWT.NONE);
+		fileLabel.setText("");
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 12;
+		fileLabel.setLayoutData(gd);
 		
 		Composite[] fileSelection = new Composite[4];
 		for (int i=0; i<4; i++){
@@ -183,6 +199,19 @@ public class DSSFileView extends ViewPart {
 			gd1.horizontalSpan = 14;
 			dvFileText[i].setLayoutData(gd1);
 			dvFileText[i].setText(DebugCorePlugin.studyDvFileNames[i]);
+			
+			dvDt[i] = new DropTarget(dvFileText[i], DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK);
+	        dvDt[i].setTransfer(new Transfer[] { FileTransfer.getInstance(), PluginTransfer.getInstance() });
+	        dvDt[i].addDropListener(new DropTargetAdapter() {
+	            public void drop(DropTargetEvent event) {
+	                String fileList[] = null;
+	                FileTransfer ft = FileTransfer.getInstance();
+	                if (ft.isSupportedType(event.currentDataType)) {
+	                    fileList = (String[]) event.data;
+	                    dvFileText[j].setText(fileList[0]);
+	                }
+	            }
+	        });
 		
 			dvBrowserButton[i] = new Button(fileSelection[i], SWT.PUSH);
 			dvBrowserButton[i].setText("DV");
@@ -214,7 +243,20 @@ public class DSSFileView extends ViewPart {
 			gd1.horizontalSpan = 14;
 			svFileText[i].setLayoutData(gd1);
 			svFileText[i].setText(DebugCorePlugin.studySvFileNames[i]);
-		
+
+			svDt[i] = new DropTarget(svFileText[i], DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK);
+	        svDt[i].setTransfer(new Transfer[] { FileTransfer.getInstance(), PluginTransfer.getInstance() });
+	        svDt[i].addDropListener(new DropTargetAdapter() {
+	            public void drop(DropTargetEvent event) {
+	                String fileList[] = null;
+	                FileTransfer ft = FileTransfer.getInstance();
+	                if (ft.isSupportedType(event.currentDataType)) {
+	                    fileList = (String[]) event.data;
+	                    svFileText[j].setText(fileList[0]);
+	                }
+	            }
+	        });
+			
 			svBrowserButton[i] = new Button(fileSelection[i], SWT.PUSH);
 			svBrowserButton[i].setText("SV");
 			gd2 = new GridData(GridData.FILL_HORIZONTAL);
@@ -270,7 +312,7 @@ public class DSSFileView extends ViewPart {
 	}
 	
 	
-	public void selectFiles(){
+	public void selectFileNames(){
 		for (int i=0; i<4; i++){
 			if (checkBox[i].getSelection()){
 				DebugCorePlugin.selectedStudies[i]=true;
@@ -387,5 +429,144 @@ public class DSSFileView extends ViewPart {
 	 */
 	public void setFocus() {
 //		contentPane.requestFocus();
+	}
+	
+	public void openProject(String fn){
+		
+		for (int i=0; i<checkBox.length; i++){
+			checkBox[i].setSelection(false);
+			dvFileText[i].setText("");
+			svFileText[i].setText("");
+			studyType[i].select(0);
+		}
+		
+		try {
+			File file = new File(fn);
+			if (!file.exists()){
+				file.createNewFile();
+			}
+			FileInputStream fs = new FileInputStream(file.getAbsolutePath());
+			BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+		    LineNumberReader reader = new LineNumberReader(br);
+		    String line;
+		    while((line = br.readLine())!=null){
+		    	if (line.startsWith("#"))
+					continue;
+
+				String[] temp = line.toLowerCase().split("\t+");
+
+				if (temp.length != 2)
+					continue;
+				
+				int index;
+				if (temp[0].length()==6){
+					if (temp[0].startsWith("altdv")){
+						index=Integer.parseInt(temp[0].substring(5))-1;
+						dvFileText[index].setText(temp[1]);
+						checkBox[index].setSelection(true);
+					}else if (temp[0].startsWith("altsv")){
+						index=Integer.parseInt(temp[0].substring(5))-1;
+						svFileText[index].setText(temp[1]);
+						checkBox[index].setSelection(true);
+					}else if (temp[0].startsWith("stdtp")){
+						index=Integer.parseInt(temp[0].substring(5))-1;
+						int type=Integer.parseInt(temp[1]);
+						studyType[index].select(type);
+					}else{
+						continue;
+					}
+				}else{
+					continue;
+				}
+		    }
+		    
+		    selectFiles();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void saveProject(String fn){
+		try {
+			File file = new File(fn);
+			if (!file.exists()){
+				file.createNewFile();
+			}
+			FileWriter fw = new FileWriter(file.getAbsolutePath());
+			PrintWriter out = new PrintWriter(fw);
+			for (int i = 0; i < lines.length; i++)
+				out.write(lines[i] + "\n");
+			for (int i=0; i<dvFileText.length; i++){
+				int j=i+1;
+				out.println("AltDv" + j + "\t" + dvFileText[i].getText());
+			}
+			for (int i=0; i<svFileText.length; i++){
+				int j=i+1;
+				out.println("AltSv" + j + "\t" + svFileText[i].getText());
+			}
+			for (int i=0; i<studyType.length; i++){
+				int j=i+1;
+				out.println("StdTp" + j +"\t"+studyType[i].getSelectionIndex());
+			}
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void selectFiles(){
+		selectFileNames();
+		if (DebugCorePlugin.selectedStudies[0] || DebugCorePlugin.selectedStudies[1] || DebugCorePlugin.selectedStudies[2] || DebugCorePlugin.selectedStudies[3]){
+			if (checkFilesExist()){
+				boolean success=openDssFiles();
+				if (success){
+////					close();
+////					processViews();
+				}else{
+					showDssFileErrorDialog(1);
+				}
+				DssPluginCore.dssArray = new ArrayList<HecDss> ();
+//				dssArray.add(DebugCorePlugin.dvDss[0]);
+//				dssArray.add(DebugCorePlugin.svDss[0]);
+//				for (int i = 0; i <DebugCorePlugin.dvDss.length; i++){
+//					dssArray.add(DebugCorePlugin.dvDss[i]);
+//					dssArray.add(DebugCorePlugin.svDss[i]);
+//				}
+				for (int i = 0; i <DebugCorePlugin.selectedStudies.length/2;i++){
+					if (DebugCorePlugin.selectedStudies[i]==true){
+						DssPluginCore.dssArray.add(DebugCorePlugin.dvDss[i]);
+						DssPluginCore.dssArray.add(DebugCorePlugin.svDss[i]);
+					}
+				}
+				try {
+					DSSCatalogView dcv = (DSSCatalogView) getSite().getWorkbenchWindow()
+                                        .getActivePage().showView(DSSCatalogView.ID);
+					try {
+						dcv.getViewer().setInput(DssPluginCore.dssArray);
+						DataOps.loadAllSchematicVariableData();
+//						dcv.setInput(dssArray);
+//						dcv.updateData();
+					} catch (Exception ex) {
+						Status status = new Status(IStatus.ERROR,
+						                Activator.PLUGIN_ID,
+						                "Error opening dss file: ", ex);
+						StatusManager.getManager().handle(status,
+								StatusManager.LOG);
+					}
+				} catch (PartInitException e1) {
+					e1.printStackTrace();
+				}
+				// put in Catalog View
+			}else{
+				showDssFileErrorDialog(0);
+			}
+		}else{
+//			if (checkFoldersExist()){
+////				close();
+//				processViews();
+//			}else{
+//				showDssFileErrorDialog(2);
+//			}
+		}
 	}
 }

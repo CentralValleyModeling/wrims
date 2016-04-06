@@ -389,11 +389,12 @@ public class Procedures {
 				ModelTemp m = st.fileModelDataTable.get(f,st.fileModelNameMap.get(f).get(0));
 				ArrayList<String> list_post1 = m.incFileAbsPathList_post;
 				ArrayList<String> list_post2 = m.incFileRelativePathList_post;
+				final ArrayList<String> checkList = new ArrayList<String>(m.incFileRelativePathList_post);
 				
 				
 				for( String includedFile: st.allOffspringMap.get(f)){
-					int index =list_post2.indexOf(includedFile);
-
+					int index =checkList.indexOf(includedFile);
+					
 
 					//Pair<String,String> p2 = new Pair<String, String>(includedFile, st.fileModelNameMap.get(includedFile).get(0));
 					

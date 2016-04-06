@@ -1,6 +1,6 @@
 package gov.ca.dwr.hecdssvue.views;
 
-import gov.ca.dwr.hecdssvue.PluginCore;
+import gov.ca.dwr.hecdssvue.DssPluginCore;
 import gov.ca.dwr.hecdssvue.components.DataOps;
 import hec.gfx2d.G2dMouseAdapter;
 import hec.gfx2d.G2dObject;
@@ -63,8 +63,8 @@ public class DSSPlotView extends AbstractDSSView {
 		for (Iterator iterator = dataVector.iterator(); iterator.hasNext();) {
 			DataContainer data = (DataContainer) iterator.next();
 			if (data instanceof TimeSeriesContainer) {
-				if (PluginCore.chartType==0){
-					TimeSeriesContainer ntsc = DataOps.getMonthlyData((TimeSeriesContainer)data, PluginCore.months);
+				if (DssPluginCore.chartType==0){
+					TimeSeriesContainer ntsc = DataOps.getMonthlyData((TimeSeriesContainer)data, DssPluginCore.months);
 					TimeSeriesDataSet ts = new TimeSeriesDataSet(
 						(TimeSeriesContainer) ntsc);
 					if (((TimeSeriesContainer) ntsc).timeZoneID != null) {
@@ -72,13 +72,13 @@ public class DSSPlotView extends AbstractDSSView {
 							/ (1000 * 60 * 60));
 					}
 					g2dObj = ts;
-				}else if (PluginCore.chartType==1){
-					PairedDataContainer ntsc = getExceedence(DataOps.getMonthlyData((TimeSeriesContainer)data, PluginCore.months));
+				}else if (DssPluginCore.chartType==1){
+					PairedDataContainer ntsc = getExceedence(DataOps.getMonthlyData((TimeSeriesContainer)data, DssPluginCore.months));
 					PairedDataSet ts = new PairedDataSet(
 						(PairedDataContainer) ntsc);
 					g2dObj = ts;
-				}else if (PluginCore.chartType==2){
-					TimeSeriesContainer ntsc = getAnnualTotals(DataOps.getMonthlyData((TimeSeriesContainer)data, PluginCore.months));
+				}else if (DssPluginCore.chartType==2){
+					TimeSeriesContainer ntsc = getAnnualTotals(DataOps.getMonthlyData((TimeSeriesContainer)data, DssPluginCore.months));
 					TimeSeriesDataSet ts = new TimeSeriesDataSet(
 						(TimeSeriesContainer) ntsc);
 					if (((TimeSeriesContainer) ntsc).timeZoneID != null) {
@@ -86,13 +86,13 @@ public class DSSPlotView extends AbstractDSSView {
 							/ (1000 * 60 * 60));
 					}
 					g2dObj = ts;
-				}else if (PluginCore.chartType==3){
-					PairedDataContainer ntsc = getExceedence(getAnnualTotals(DataOps.getMonthlyData((TimeSeriesContainer)data, PluginCore.months)));
+				}else if (DssPluginCore.chartType==3){
+					PairedDataContainer ntsc = getExceedence(getAnnualTotals(DataOps.getMonthlyData((TimeSeriesContainer)data, DssPluginCore.months)));
 					PairedDataSet ts = new PairedDataSet(
 						(PairedDataContainer) ntsc);
 					g2dObj = ts;
-				}else if (PluginCore.chartType==4){
-					TimeSeriesContainer ntsc = getMonthlyAverages(DataOps.getMonthlyData((TimeSeriesContainer)data, PluginCore.months));
+				}else if (DssPluginCore.chartType==4){
+					TimeSeriesContainer ntsc = getMonthlyAverages(DataOps.getMonthlyData((TimeSeriesContainer)data, DssPluginCore.months));
 					TimeSeriesDataSet ts = new TimeSeriesDataSet(
 						(TimeSeriesContainer) ntsc);
 					if (((TimeSeriesContainer) ntsc).timeZoneID != null) {
@@ -188,11 +188,11 @@ public class DSSPlotView extends AbstractDSSView {
 			// fix if daily or other is added
 			int firstMonth = 24;
 			int firstPossibleMonth;
-			if (PluginCore.annualType == PluginCore.WATERYEAR) {
+			if (DssPluginCore.annualType == DssPluginCore.WATERYEAR) {
 				firstPossibleMonth = 10;
-			} else if (PluginCore.annualType == PluginCore.CALENDAR_YEAR) {
+			} else if (DssPluginCore.annualType == DssPluginCore.CALENDAR_YEAR) {
 				firstPossibleMonth = 1;
-			} else if (PluginCore.annualType == PluginCore.FEDERAL_CONTRACT_YEAR) {
+			} else if (DssPluginCore.annualType == DssPluginCore.FEDERAL_CONTRACT_YEAR) {
 				firstPossibleMonth = 3;
 			} else {
 				return null;
@@ -223,7 +223,7 @@ public class DSSPlotView extends AbstractDSSView {
 
 				// WRONG MONTH FIX: subtract 1 min
 				ht.add(-1);
-				if (PluginCore.annualType == PluginCore.WATERYEAR) { // CB added
+				if (DssPluginCore.annualType == DssPluginCore.WATERYEAR) { // CB added
 					// annual
 					// types
 					if ((year_prev == 0) && (ht.month() != firstMonth)) {
@@ -245,7 +245,7 @@ public class DSSPlotView extends AbstractDSSView {
 					}
 					total += values[i];
 					year_prev = year;
-				} else if (PluginCore.annualType == PluginCore.CALENDAR_YEAR) { // CB
+				} else if (DssPluginCore.annualType == DssPluginCore.CALENDAR_YEAR) { // CB
 					// added
 					// this
 					// section
@@ -264,7 +264,7 @@ public class DSSPlotView extends AbstractDSSView {
 					}
 					total += values[i];
 					year_prev = year;
-				} else if (PluginCore.annualType == PluginCore.FEDERAL_CONTRACT_YEAR) { // CB
+				} else if (DssPluginCore.annualType == DssPluginCore.FEDERAL_CONTRACT_YEAR) { // CB
 					// added
 					// this
 					// section

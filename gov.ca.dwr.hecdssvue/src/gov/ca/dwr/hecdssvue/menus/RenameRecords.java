@@ -2,7 +2,7 @@ package gov.ca.dwr.hecdssvue.menus;
 
 import java.util.Vector;
 
-import gov.ca.dwr.hecdssvue.PluginCore;
+import gov.ca.dwr.hecdssvue.DssPluginCore;
 import gov.ca.dwr.hecdssvue.views.DSSCatalogView;
 import gov.ca.dwr.hecdssvue.views.DSSTableView;
 import hec.dataTable.HecDataTable;
@@ -30,7 +30,7 @@ public class RenameRecords implements IWorkbenchWindowActionDelegate{
 	public void run(IAction action) {
 		IWorkbench workbench=PlatformUI.getWorkbench();
 		IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
-		final DSSCatalogView dssCatalogView=(DSSCatalogView) workBenchPage.findView(PluginCore.ID_DSSVue_DSSCatalogView);
+		final DSSCatalogView dssCatalogView=(DSSCatalogView) workBenchPage.findView(DssPluginCore.ID_DSSVue_DSSCatalogView);
 
 		if (dssCatalogView !=null){
 			final Vector<String[]> selectedParts=dssCatalogView.getSelectedParts();

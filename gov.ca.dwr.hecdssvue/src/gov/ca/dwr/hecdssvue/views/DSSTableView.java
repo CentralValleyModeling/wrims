@@ -1,6 +1,6 @@
 package gov.ca.dwr.hecdssvue.views;
 
-import gov.ca.dwr.hecdssvue.PluginCore;
+import gov.ca.dwr.hecdssvue.DssPluginCore;
 import gov.ca.dwr.hecdssvue.components.DataOps;
 import hec.dataTable.HecDataTable;
 import hec.dataTable.TimeSeriesDataModel;
@@ -57,7 +57,7 @@ public class DSSTableView extends AbstractDSSView {
 			table = new HecDataTable(contentPane);
 			table.setDateTimeAsTwoColumns(false);
 			table.setData(dataVector, true, 0);//TODO
-			table.setEditable(PluginCore.dssEditable);
+			table.setEditable(DssPluginCore.dssEditable);
 			table.setDragEnabled(true);
 			contentPane.add(new JScrollPane(table));
 			contentPane.invalidate();

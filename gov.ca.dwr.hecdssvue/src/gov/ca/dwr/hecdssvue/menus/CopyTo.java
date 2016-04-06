@@ -5,7 +5,7 @@ import java.util.Vector;
 
 import javax.swing.SwingUtilities;
 
-import gov.ca.dwr.hecdssvue.PluginCore;
+import gov.ca.dwr.hecdssvue.DssPluginCore;
 import gov.ca.dwr.hecdssvue.components.CatalogListSelection;
 import gov.ca.dwr.hecdssvue.components.DssMathFrame;
 import gov.ca.dwr.hecdssvue.views.DSSCatalogView;

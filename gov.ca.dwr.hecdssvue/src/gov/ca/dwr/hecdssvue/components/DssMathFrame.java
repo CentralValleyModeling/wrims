@@ -16,7 +16,7 @@ import org.eclipse.ui.PlatformUI;
 import rma.awt.RmaImage;
 import wrimsv2_plugin.debugger.exception.WPPException;
 
-import gov.ca.dwr.hecdssvue.PluginCore;
+import gov.ca.dwr.hecdssvue.DssPluginCore;
 import gov.ca.dwr.hecdssvue.views.DSSCatalogView;
 import hec.dssgui.ListSelection;
 import hec.dssgui.MathFrame2;
@@ -181,7 +181,7 @@ public class DssMathFrame extends MathFrame2 {
 		final IWorkbench workbench=PlatformUI.getWorkbench();
 		workbench.getDisplay().asyncExec(new Runnable(){
 			public void run(){
-				DSSCatalogView dssCatalogView = (DSSCatalogView)workbench.getActiveWorkbenchWindow().getActivePage().findView(PluginCore.ID_DSSVue_DSSCatalogView);
+				DSSCatalogView dssCatalogView = (DSSCatalogView)workbench.getActiveWorkbenchWindow().getActivePage().findView(DssPluginCore.ID_DSSVue_DSSCatalogView);
 				TableViewer viewer = dssCatalogView.getViewer();
 				viewer.setInput(viewer.getInput());
 			}

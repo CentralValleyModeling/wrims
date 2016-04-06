@@ -1,10 +1,16 @@
 package gov.ca.dwr.jdiagram.toolbars;
 
-import gov.ca.dwr.jdiagram.SchematicPluginCore;
-import gov.ca.dwr.jdiagram.views.SchematicBase;
-import gov.ca.dwr.jdiagram.views.SchematicView;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
+import java.util.ArrayList;
 
-import java.awt.geom.Rectangle2D;
+import gov.ca.dwr.hecdssvue.DssPluginCore;
+import gov.ca.dwr.jdiagram.SchematicPluginCore;
+import gov.ca.dwr.jdiagram.dialog.AddTimeWindowDialog;
+import gov.ca.dwr.jdiagram.views.SchematicBase;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -14,9 +20,10 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.menus.WorkbenchWindowControlContribution;
-
-import com.mindfusion.diagramming.DiagramView;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.tools.TimeOperation;
@@ -52,13 +59,24 @@ public class DateCombo extends
 			@Override
 			public void modifyText(ModifyEvent e) {
 				SchematicPluginCore.selIndex=dateList.getSelectionIndex();
-				SchematicPluginCore.selDate=dateList.getText();
-				if (!DebugCorePlugin.isDebugging){
-					schematicView.refreshValues(0, true);					
-				}else{
-					if (DebugCorePlugin.target !=null){
-						schematicView.refreshValues(1, true);
+				if (SchematicPluginCore.selIndex>0){
+					SchematicPluginCore.selDate=dateList.getText();
+					if (!DebugCorePlugin.isDebugging){
+						schematicView.refreshValues(0, true);					
+					}else{
+						if (DebugCorePlugin.target !=null){
+							schematicView.refreshValues(1, true);
+						}
 					}
+				}else if (SchematicPluginCore.selIndex==0){
+					final IWorkbench workbench=PlatformUI.getWorkbench();
+					workbench.getDisplay().asyncExec(new Runnable(){
+						public void run(){
+							Shell shell=workbench.getActiveWorkbenchWindow().getShell();
+							AddTimeWindowDialog dialog= new AddTimeWindowDialog(shell, SWT.BORDER|SWT.APPLICATION_MODAL, true, false, false, false, false, "Add Time Window", "Add Time Window");
+							dialog.open(getDateList());
+						}
+					});
 				}
 			}
 			
@@ -68,8 +86,9 @@ public class DateCombo extends
 	
 	public void setDateCombo(int startMonth, int startYear, int endMonth, int endYear){
 		dateList.removeAll();
-		for (int i=0; i<SchematicPluginCore._twSelections.length; i++){
-			dateList.add(SchematicPluginCore._twSelections[i]);
+		procTWFile();
+		for (int i=0; i<SchematicPluginCore._twSelections.size(); i++){
+			dateList.add(SchematicPluginCore._twSelections.get(i));
 		}
 		int j=startMonth;
 		for (int i=startYear; i<=endYear; i++){
@@ -87,5 +106,26 @@ public class DateCombo extends
 	
 	public Combo getDateList(){
 		return dateList;
+	}
+	
+	public void procTWFile(){
+		try {
+			File file = new File(DebugCorePlugin.dataDir, SchematicPluginCore.twFile);
+			if (!file.exists()){
+				file.createNewFile();
+			}else{
+				SchematicPluginCore._twSelections=new ArrayList<String>();
+				SchematicPluginCore._twSelections.add("Add...");
+				FileInputStream fs = new FileInputStream(file.getAbsolutePath());
+				BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+				LineNumberReader reader = new LineNumberReader(br);
+				String line;
+				while((line = br.readLine())!=null){
+					SchematicPluginCore._twSelections.add(line);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

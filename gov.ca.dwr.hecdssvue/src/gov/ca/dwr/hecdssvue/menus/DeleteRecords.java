@@ -2,7 +2,7 @@ package gov.ca.dwr.hecdssvue.menus;
 
 import java.util.Vector;
 
-import gov.ca.dwr.hecdssvue.PluginCore;
+import gov.ca.dwr.hecdssvue.DssPluginCore;
 import gov.ca.dwr.hecdssvue.components.DataOps;
 import gov.ca.dwr.hecdssvue.views.DSSCatalogView;
 import gov.ca.dwr.hecdssvue.views.DSSTableView;
@@ -62,7 +62,7 @@ public class DeleteRecords implements IWorkbenchWindowActionDelegate{
 	public void deleteSelected(){
 		IWorkbench workbench=PlatformUI.getWorkbench();
 		IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
-		DSSCatalogView dssCatalogView=(DSSCatalogView) workBenchPage.findView(PluginCore.ID_DSSVue_DSSCatalogView);
+		DSSCatalogView dssCatalogView=(DSSCatalogView) workBenchPage.findView(DssPluginCore.ID_DSSVue_DSSCatalogView);
 		boolean[] foundInDv={false, false, false, false};
 		
 		if (dssCatalogView !=null){

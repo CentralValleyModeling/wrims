@@ -1,6 +1,6 @@
 package gov.ca.dwr.hecdssvue.views;
 
-import gov.ca.dwr.hecdssvue.PluginCore;
+import gov.ca.dwr.hecdssvue.DssPluginCore;
 import gov.ca.dwr.hecdssvue.components.ShowSelected;
 
 import java.io.FileNotFoundException;
@@ -155,7 +155,7 @@ public class WaterYearView extends ViewPart {
 				for (int i=0; i<2; i++){
 					index[3][i].setSelection(false);
 				}
-				PluginCore.isAllWaterYear=true;
+				DssPluginCore.isAllWaterYear=true;
 			}
 		});
 		
@@ -201,34 +201,34 @@ public class WaterYearView extends ViewPart {
 	}
 	
 	public void wateryearFilter(){
-		PluginCore.isAllWaterYear=true;
+		DssPluginCore.isAllWaterYear=true;
 		ArrayList<Integer> selectedWaterYear=new ArrayList<Integer>();
 		for (int i=0; i<5; i++){
 			if (index[0][i].getSelection()){
-				PluginCore.isAllWaterYear=false;
+				DssPluginCore.isAllWaterYear=false;
 				selectedWaterYear.addAll(sacIndex.get(i+1));
 			}
 		}
 		for (int i=0; i<5; i++){
 			if (index[1][i].getSelection()){
-				PluginCore.isAllWaterYear=false;
+				DssPluginCore.isAllWaterYear=false;
 				selectedWaterYear.addAll(sjrIndex.get(i+1));
 			}
 		}
 		for (int i=0; i<4; i++){
 			if (index[2][i].getSelection()){
-				PluginCore.isAllWaterYear=false;
+				DssPluginCore.isAllWaterYear=false;
 				selectedWaterYear.addAll(shastaIndex.get(i+1));
 			}
 		}
 		for (int i=0; i<2; i++){
 			if (index[3][i].getSelection()){
-				PluginCore.isAllWaterYear=false;
+				DssPluginCore.isAllWaterYear=false;
 				selectedWaterYear.addAll(featherIndex.get(i));
 			}
 		}
 		
-		PluginCore.filterWaterYear=new HashSet<Integer>(selectedWaterYear);
+		DssPluginCore.filterWaterYear=new HashSet<Integer>(selectedWaterYear);
 		
 		ShowSelected.showSelected();
 	}

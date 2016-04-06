@@ -41,12 +41,12 @@ public class Activator extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		HecDSSFileAccess.setMessageLevel(0);
-		PluginCore.swix = new SwingEngine(this);
-		PluginCore.swix.getTaglib().registerTag("numtextfield", NumericTextField.class);
-		PluginCore.swix.render(new File(DebugCorePlugin.dataDir, "GUI.xml"));
-		PluginCore.CalLiteLookups=readInLookups("GUI_Links3_CalLite.table");
-		PluginCore.CalSim2Lookups=readInLookups("GUI_Links3_CalSim2.table");
-		PluginCore.CalSim3Lookups=readInLookups("GUI_Links3_CalSim3.table");
+		DssPluginCore.swix = new SwingEngine(this);
+		DssPluginCore.swix.getTaglib().registerTag("numtextfield", NumericTextField.class);
+		DssPluginCore.swix.render(new File(DebugCorePlugin.dataDir, "GUI.xml"));
+		DssPluginCore.CalLiteLookups=readInLookups("GUI_Links3_CalLite.table");
+		DssPluginCore.CalSim2Lookups=readInLookups("GUI_Links3_CalSim2.table");
+		DssPluginCore.CalSim3Lookups=readInLookups("GUI_Links3_CalSim3.table");
 		plugin = this;
 	}
 

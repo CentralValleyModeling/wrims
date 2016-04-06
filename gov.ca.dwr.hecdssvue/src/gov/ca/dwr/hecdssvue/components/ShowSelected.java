@@ -1,6 +1,6 @@
 package gov.ca.dwr.hecdssvue.components;
 
-import gov.ca.dwr.hecdssvue.PluginCore;
+import gov.ca.dwr.hecdssvue.DssPluginCore;
 import gov.ca.dwr.hecdssvue.views.DSSCatalogView;
 import gov.ca.dwr.hecdssvue.views.DSSMonthlyView;
 import gov.ca.dwr.hecdssvue.views.DSSPlotView;
@@ -20,7 +20,7 @@ public class ShowSelected {
 
 	public static void showSelected(){
 	
-		if (PluginCore.selectedCheckBox.size()==0){
+		if (DssPluginCore.selectedCheckBox.size()==0){
 			try {
 				final IWorkbench workbench=PlatformUI.getWorkbench();
 				workbench.getDisplay().asyncExec(new Runnable(){

@@ -1,6 +1,6 @@
 package gov.ca.dwr.hecdssvue.menus;
 
-import gov.ca.dwr.hecdssvue.PluginCore;
+import gov.ca.dwr.hecdssvue.DssPluginCore;
 import gov.ca.dwr.hecdssvue.views.DSSTableView;
 import hec.dataTable.HecDataTable;
 
@@ -19,14 +19,14 @@ public class AllowEdit implements IWorkbenchWindowActionDelegate{
 
 	@Override
 	public void run(IAction action) {
-		PluginCore.dssEditable=!PluginCore.dssEditable;
+		DssPluginCore.dssEditable=!DssPluginCore.dssEditable;
 		IWorkbench workbench=PlatformUI.getWorkbench();
 		IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
-		DSSTableView dssTableView=(DSSTableView) workBenchPage.findView(PluginCore.ID_DSSVue_DSSTableView);
+		DSSTableView dssTableView=(DSSTableView) workBenchPage.findView(DssPluginCore.ID_DSSVue_DSSTableView);
 		
 		if (dssTableView !=null){
 			HecDataTable table = dssTableView.getTable();
-			if (PluginCore.dssEditable){
+			if (DssPluginCore.dssEditable){
 				if (table != null) table.setEditable(true);
 				action.setText("Disallow Editing");
 			}else{
