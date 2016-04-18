@@ -31,11 +31,13 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.geotools.data.shapefile.ShapefileDataStore;
 import org.locationtech.udig.catalog.IService;
 import org.locationtech.udig.catalog.ui.AbstractUDIGImportPage;
 import org.locationtech.udig.catalog.ui.UDIGConnectionPage;
 import org.locationtech.udig.catalog.ui.workflow.EndConnectionState;
 import org.locationtech.udig.core.RecentHistory;
+import org.opengis.feature.simple.SimpleFeatureType;
 
 /**
  * Based on the WMSWizardPage this WizardPage provides an interface 
@@ -56,6 +58,8 @@ public class CalSimShpWizardPage extends AbstractUDIGImportPage implements Modif
     private Text txtFile;
     private Button btnOpenFileDialog;
     private Combo typeCombo;
+    private Combo idFieldCombo;
+    private Combo typeFieldCombo;
     
     private String url = ""; //$NON-NLS-1$    
 
@@ -134,7 +138,20 @@ public class CalSimShpWizardPage extends AbstractUDIGImportPage implements Modif
         fileTypeLabel.setText("File Type");
 
         typeCombo = new Combo(grid, SWT.NONE);
-        typeCombo.setItems(new String[] {"Arcs", "Nodes"});
+        typeCombo.setItems(new String[] {"Arc", "Node"});
+        new Label(grid, SWT.NONE).setText("");
+        
+        Label idFieldLabel = new Label(grid, SWT.NONE);
+        idFieldLabel.setText("Id Field");
+
+        idFieldCombo = new Combo(grid, SWT.NONE);
+        new Label(grid, SWT.NONE).setText("");
+        
+        Label typeFieldLabel = new Label(grid, SWT.NONE);
+        typeFieldLabel.setText("Type Field");
+
+        typeFieldCombo = new Combo(grid, SWT.NONE);
+        new Label(grid, SWT.NONE).setText("");
 
         setControl(grid);
         getWizard().getContainer().updateButtons();
@@ -277,8 +294,18 @@ public class CalSimShpWizardPage extends AbstractUDIGImportPage implements Modif
             if(!file.isFile() || !filePath.toLowerCase().endsWith(".shp")) {
             	errorMsg += "You must select a valid shapefile.";
             }
-            file.toURI().toURL();
-
+            URL url = file.toURI().toURL();
+            
+            // open the file to get the list of field names
+            ShapefileDataStore shpds = new ShapefileDataStore(url);
+	    	SimpleFeatureType shpType = shpds.getSchema();
+	    	String[] fieldNames = new String[shpType.getAttributeCount()];
+	    	for(int index = 0; index < fieldNames.length; index++) {
+	    		fieldNames[index] = shpType.getDescriptor(index).getLocalName();
+	    	}
+	    	idFieldCombo.setItems(fieldNames);
+	    	typeFieldCombo.setItems(fieldNames);
+	    	
             if(errorMsg.equals("")) {
             	setErrorMessage(null);
             	setPageComplete(true);
@@ -286,8 +313,8 @@ public class CalSimShpWizardPage extends AbstractUDIGImportPage implements Modif
             	setErrorMessage(errorMsg);
             	setPageComplete(false);
             }
-        } catch (MalformedURLException exception) {
-            setErrorMessage("You must select two valid shapefiles."); 
+        } catch (IOException exception) {
+            setErrorMessage("You must select a valid shapefile."); 
             setPageComplete(false);
         }
         
@@ -310,6 +337,9 @@ public class CalSimShpWizardPage extends AbstractUDIGImportPage implements Modif
     	try {
 	    	Map<String,Serializable> params = new HashMap<String,Serializable>();
 	    	params.put(CalSimShpServiceExtension.FILE_KEY, new File(txtFile.getText()).toURI().toURL());
+	    	params.put(CalSimShpServiceExtension.ID_FIELD_NAME_KEY, idFieldCombo.getText());
+	    	params.put(CalSimShpServiceExtension.TYPE_FIELD_NAME_KEY, typeFieldCombo.getText());
+	    	params.put(CalSimShpServiceExtension.TYPE_KEY, typeCombo.getText());
 	    	return params;
     	} catch(MalformedURLException mue) {
     		mue.printStackTrace();

@@ -11,6 +11,8 @@
  */
 package gov.ca.dwr.wrims.calsimshp;
 
+import gov.ca.dwr.wrims.calsimshp.CalSimShpDataStore.CalSimType;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
@@ -21,11 +23,7 @@ import java.util.concurrent.locks.Lock;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.geotools.data.FeatureReader;
 import org.geotools.data.memory.MemoryDataStore;
-import org.geotools.data.shapefile.ShapefileDataStore;
-import org.geotools.feature.simple.SimpleFeatureBuilder;
-import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
 import org.locationtech.udig.catalog.ICatalog;
 import org.locationtech.udig.catalog.ID;
 import org.locationtech.udig.catalog.IResolveChangeEvent;
@@ -36,9 +34,6 @@ import org.locationtech.udig.catalog.internal.CatalogImpl;
 import org.locationtech.udig.catalog.internal.ResolveChangeEvent;
 import org.locationtech.udig.catalog.internal.ResolveDelta;
 import org.locationtech.udig.ui.UDIGDisplaySafeLock;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.AttributeDescriptor;
 
 /**
  * Connect to a shapefile, load it into a MemoryDatastore, add some columns for DSS data.
@@ -55,7 +50,7 @@ public class CalSimShpServiceImpl extends IService {
     /**
      * Volatile cache of dataStore if created.
      */
-    volatile MemoryDataStore ds = null;
+    volatile CalSimShpDataStore ds = null;
     protected final Lock rLock = new UDIGDisplaySafeLock();
     private final static Lock dsInstantiationLock = new UDIGDisplaySafeLock();
 
@@ -103,7 +98,7 @@ public class CalSimShpServiceImpl extends IService {
     public <T> boolean canResolve( Class<T> adaptee ) {
         if (adaptee == null)
             return false;
-        return adaptee.isAssignableFrom(MemoryDataStore.class) 
+        return adaptee.isAssignableFrom(CalSimShpDataStore.class) 
         		|| super.canResolve(adaptee);
     }
 
@@ -154,7 +149,7 @@ public class CalSimShpServiceImpl extends IService {
      * @see org.locationtech.udig.catalog.IService#getInfo(org.eclipse.core.runtime.IProgressMonitor)
      */
     protected IServiceInfo createInfo( IProgressMonitor monitor ) throws IOException {
-        MemoryDataStore dataStore = getDS(monitor); // load ds
+       CalSimShpDataStore dataStore = getDS(monitor); // load ds
         if (dataStore == null) {
             return null; // could not connect
         }
@@ -173,43 +168,15 @@ public class CalSimShpServiceImpl extends IService {
         return params;
     }
 
-    MemoryDataStore getDS( IProgressMonitor monitor ) throws IOException {
+    CalSimShpDataStore getDS( IProgressMonitor monitor ) throws IOException {
         if (ds == null) {
             dsInstantiationLock.lock();
             try {
                 if (ds == null) {
                     try {
-                    	ShapefileDataStore shpds = new ShapefileDataStore((URL)params.get(CalSimShpServiceExtension.FILE_KEY));
-                    	FeatureReader<SimpleFeatureType, SimpleFeature> reader = shpds.getFeatureReader();
-                    	
-                    	SimpleFeatureType shpType = shpds.getSchema();
-                    	SimpleFeatureTypeBuilder typeBuilder = new SimpleFeatureTypeBuilder();
-                    	
-                    	typeBuilder.setName(shpType.getTypeName() + "_dss");
-                    	typeBuilder.setCRS(shpType.getGeometryDescriptor().getCoordinateReferenceSystem());
-                    	for(AttributeDescriptor attribute : shpType.getAttributeDescriptors()) {
-                    		typeBuilder.add(attribute);
-                    	}
-                    	typeBuilder.nillable(true).add("dss1", Double.class);
-                    	typeBuilder.nillable(true).add("dss2", Double.class);
-                    	typeBuilder.nillable(true).add("dss3", Double.class);
-                    	typeBuilder.nillable(true).add("dss4", Double.class);
-                    	SimpleFeatureType type = typeBuilder.buildFeatureType();
-                    	
-                    	// Configure memory datastore
-                        ds = new MemoryDataStore();
-                        ds.createSchema(type);
-                        
-                    	while(reader.hasNext()) {
-                    		SimpleFeature f = reader.next();
-                    		SimpleFeatureBuilder builder = new SimpleFeatureBuilder(type);
-                    		for(Object attr : f.getAttributes()) {
-                    			builder.add(attr);
-                    		}
-                    		ds.addFeature(builder.buildFeature(f.getID()));
-                    	}
-                    	reader.close();
-                    	shpds.dispose();
+                    	ds = new CalSimShpDataStore((URL)params.get(CalSimShpServiceExtension.FILE_KEY),
+                    			CalSimType.fromString((String)params.get(CalSimShpServiceExtension.TYPE_KEY)),
+                    			(String)params.get(CalSimShpServiceExtension.ID_FIELD_NAME_KEY));
                     } catch (IOException e) {
                     	e.printStackTrace();
                         throw new IOException(e);
