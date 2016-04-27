@@ -46,29 +46,15 @@ public class CalSimShpServiceExtension implements ServiceExtension {
     }
     
     private boolean validateParams(Map<String,Serializable> params) {
-        URL fileUrl = urlifyParam(params, FILE_KEY);
-        
+        URL fileUrl = (URL)params.get(FILE_KEY);
         if(fileUrl == null || !fileUrl.toString().toLowerCase().endsWith(".shp")) {
            	return false;
         }
-    	return true;
-    }
-    
-    private URL urlifyParam(Map<String,Serializable> params, String paramName) {
-        if(params.get(paramName) == null) {
-            return null;
-        } else if (params.get(paramName) instanceof URL){
-        	return (URL)params.get(paramName);
-        } 
-        try {
-        	URL url = (URL)new URL(params.get(paramName).toString());
-            params.put(paramName, url);
-            return url;
-        } catch (MalformedURLException mue) {
-            // log this?
-            mue.printStackTrace();
-            return null;
+        String type = (String)params.get(TYPE_KEY);
+        if(type == null || type.isEmpty()) {
+        	return false;
         }
+    	return true;
     }
     
     /**
