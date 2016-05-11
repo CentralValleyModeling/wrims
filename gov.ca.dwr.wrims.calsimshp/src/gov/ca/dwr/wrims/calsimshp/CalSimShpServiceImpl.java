@@ -176,7 +176,9 @@ public class CalSimShpServiceImpl extends IService {
                     try {
                     	ds = new CalSimShpDataStore((URL)params.get(CalSimShpServiceExtension.FILE_KEY),
                     			CalSimType.fromString((String)params.get(CalSimShpServiceExtension.TYPE_KEY)),
-                    			(String)params.get(CalSimShpServiceExtension.ID_FIELD_NAME_KEY));
+                    			(String)params.get(CalSimShpServiceExtension.ID_FIELD_NAME_KEY),
+                    			(String)params.get(CalSimShpServiceExtension.TYPE_FIELD_NAME_KEY),
+                    			(String)params.get(CalSimShpServiceExtension.SUB_TYPE_FIELD_NAME_KEY));
                     } catch (IOException e) {
                     	e.printStackTrace();
                         throw new IOException(e);

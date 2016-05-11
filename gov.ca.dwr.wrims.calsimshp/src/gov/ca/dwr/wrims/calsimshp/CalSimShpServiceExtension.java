@@ -31,6 +31,7 @@ public class CalSimShpServiceExtension implements ServiceExtension {
     public static final String FILE_KEY = "gov.ca.dwr.wrims.calsimshp.file_key";
     public static final String ID_FIELD_NAME_KEY = "gov.ca.dwr.wrims.calsimshp.id_field_name_key";
     public static final String TYPE_FIELD_NAME_KEY = "gov.ca.dwr.wrims.calsimshp.type_field_name_key";
+    public static final String SUB_TYPE_FIELD_NAME_KEY = "gov.ca.dwr.wrims.calsimshp.sub_type_field_name_key";
     public static final String TYPE_KEY = "gov.ca.dwr.wrims.calsimshp.type_key";
 
     public IService createService(URL id, Map<String,Serializable> params) {

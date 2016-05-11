@@ -2,44 +2,29 @@ package gov.ca.dwr.wrims.geoschematic;
 
 
 import gov.ca.dwr.jdiagram.Activator;
-import gov.ca.dwr.jdiagram.FontUtil;
-import gov.ca.dwr.jdiagram.RectangleZoomBehavior;
 import gov.ca.dwr.jdiagram.SchematicPluginCore;
 
-import java.awt.Font;
-import java.awt.geom.Rectangle2D;
 import java.util.Collections;
-
-import javax.swing.SwingUtilities;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.FontDialog;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IPartListener2;
-import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPartReference;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.geotools.referencing.CRS;
 import org.locationtech.udig.project.internal.Map;
 import org.locationtech.udig.project.internal.Project;
 import org.locationtech.udig.project.internal.ProjectFactory;
 import org.locationtech.udig.project.internal.ProjectPlugin;
-import org.locationtech.udig.project.internal.ProjectRegistry;
 import org.locationtech.udig.project.internal.render.ViewportModel;
 import org.locationtech.udig.project.ui.ApplicationGIS;
 import org.locationtech.udig.project.ui.internal.MapPart;
@@ -50,8 +35,6 @@ import org.locationtech.udig.project.ui.tool.IToolManager;
 import org.locationtech.udig.project.ui.viewers.MapViewer;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import wrimsv2_plugin.debugger.exception.WPPException;
-
 /**
  * A map view.
  *
@@ -60,7 +43,7 @@ import wrimsv2_plugin.debugger.exception.WPPException;
 public class MapView extends ViewPart implements MapPart, IAdaptable {
 
     public static final String ID = "gov.ca.dwr.wrims.geoschematic.MapView"; //$NON-NLS-1$
-    private static final String MAP_NAME = "geoschematic_map";
+    private static final String MAP_NAME = "Map Viewer";
 
 	public static CoordinateReferenceSystem DEFAULT_CRS;
 	static{

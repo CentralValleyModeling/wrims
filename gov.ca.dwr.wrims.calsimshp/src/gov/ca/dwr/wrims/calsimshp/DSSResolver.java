@@ -12,7 +12,6 @@ public class DSSResolver {
 	public static final int NUM_DSS = 4;
 	
 	private final int firstDssIndex;
-	private final int idIndex;
 
 	// TODO Hao 
 	// please add any additional members and/or constructor parameters required by the DSSResolver
@@ -24,9 +23,8 @@ public class DSSResolver {
 	 * 						the NUM_DSS DSS attributes are contiguous from this index
 	 * @param idIndex the index of the attribute which contains the identifier of the feature
 	 */
-	public DSSResolver(int firstDssIndex, int idIndex) {
+	public DSSResolver(int firstDssIndex) {
 		this.firstDssIndex = firstDssIndex;
-		this.idIndex = idIndex;
 	}
 
 	/**
@@ -44,7 +42,7 @@ public class DSSResolver {
 			// TODO Hao
 			// determine the DSS value for the currently selected date, for this feature
 			// values[idIndex] is the value of the ID column for this feature
-			//values[index] = <value>; 
+			values[index] = Math.round(Math.random()*10000); 
 		}
 	}
 
