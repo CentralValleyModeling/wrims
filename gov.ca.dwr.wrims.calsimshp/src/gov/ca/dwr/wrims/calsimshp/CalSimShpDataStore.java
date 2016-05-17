@@ -39,7 +39,7 @@ public class CalSimShpDataStore extends ContentDataStore {
 
 	private URL url;
 
-	public CalSimShpDataStore(URL url, CalSimType type, String idFieldName) throws IOException {
+	public CalSimShpDataStore(URL url, CalSimType type, String idFieldName, String typeFieldName, String subTypeFieldName) throws IOException {
 		super();
 		this.url = url;
 		this.type = type;
@@ -64,8 +64,7 @@ public class CalSimShpDataStore extends ContentDataStore {
 	    	typeBuilder.nillable(true).add("dss4", Double.class);
 	    	schema = typeBuilder.buildFeatureType();
 	    	
-	    	int idIndex = schema.indexOf(idFieldName);
-	    	DSSResolver dssResolver = new DSSResolver(shpType.getAttributeCount(), idIndex);
+	    	DSSResolver dssResolver = new DSSResolver(shpType.getAttributeCount());
 	    	
 	    	memory = new HashMap<String,CalSimShpFeature>();
 	    	while(reader.hasNext()) {

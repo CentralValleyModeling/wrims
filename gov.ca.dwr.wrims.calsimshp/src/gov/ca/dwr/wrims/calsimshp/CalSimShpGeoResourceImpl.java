@@ -1,63 +1,45 @@
 
 package gov.ca.dwr.wrims.calsimshp;
 
-import java.io.File;
+import gov.ca.dwr.wrims.tokenreplacer.MapTokenResolver;
+import gov.ca.dwr.wrims.tokenreplacer.TokenReplacingReader;
+
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.data.simple.SimpleFeatureStore;
-import org.geotools.styling.AnchorPoint;
-import org.geotools.styling.ChannelSelection;
-import org.geotools.styling.ColorMap;
-import org.geotools.styling.ColorMapEntry;
-import org.geotools.styling.ContrastEnhancement;
-import org.geotools.styling.Displacement;
-import org.geotools.styling.ExternalGraphic;
-import org.geotools.styling.FeatureTypeConstraint;
-import org.geotools.styling.FeatureTypeStyle;
-import org.geotools.styling.Fill;
-import org.geotools.styling.Graphic;
-import org.geotools.styling.Halo;
-import org.geotools.styling.ImageOutline;
-import org.geotools.styling.LinePlacement;
-import org.geotools.styling.LineSymbolizer;
-import org.geotools.styling.Mark;
-import org.geotools.styling.NamedLayer;
-import org.geotools.styling.OverlapBehavior;
-import org.geotools.styling.PointPlacement;
-import org.geotools.styling.PointSymbolizer;
-import org.geotools.styling.PolygonSymbolizer;
-import org.geotools.styling.RasterSymbolizer;
-import org.geotools.styling.Rule;
-import org.geotools.styling.SelectedChannelType;
-import org.geotools.styling.ShadedRelief;
-import org.geotools.styling.Stroke;
+import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.sld.v1_1.SLDConfiguration;
+import org.geotools.styling.NamedStyle;
+import org.geotools.styling.SLDParser;
 import org.geotools.styling.Style;
-import org.geotools.styling.StyleVisitor;
+import org.geotools.styling.StyleFactory;
 import org.geotools.styling.StyledLayerDescriptor;
-import org.geotools.styling.Symbolizer;
-import org.geotools.styling.TextSymbolizer;
-import org.geotools.styling.UserLayer;
+import org.geotools.xml.Parser;
 import org.locationtech.udig.catalog.ID;
 import org.locationtech.udig.catalog.IGeoResource;
 import org.locationtech.udig.catalog.IGeoResourceInfo;
 import org.locationtech.udig.catalog.IService;
-import org.locationtech.udig.catalog.URLUtils;
+import org.locationtech.udig.internal.ui.UiPlugin;
 import org.locationtech.udig.ui.graphics.SLDs;
 import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.style.GraphicalSymbol;
 
 /**
  * Connect to a shapefile.
  * 
  * @author Chris Hodgson, Refractions Research
  */
-@SuppressWarnings("deprecation")
 public class CalSimShpGeoResourceImpl extends IGeoResource {
     CalSimShpServiceImpl parent;
     String typename = null;
@@ -159,25 +141,15 @@ public class CalSimShpGeoResourceImpl extends IGeoResource {
         SimpleFeatureSource source  = featureSource(null);
 
         SimpleFeatureType featureType = source.getSchema();
-        
-        ID fileID = parent.getID();
-        if( !fileID.isFile() ){
-            return null; // we are only checking for sidecar files 
-        }
-        File file = fileID.toFile("sld");
-        if( !file.exists()){
-            file = fileID.toFile("SLD");
-            if( !file.exists()){
-                return null; // sidecar file not avaialble
-            }
-        }
-        StyledLayerDescriptor sld = SLDs.parseSLD( file );
+        Map<String, Serializable> params = parent.getConnectionParams();
+        String type = (String)params.get(CalSimShpServiceExtension.TYPE_KEY);
+        URL url = new URL("platform:/plugin/" + CalSimShpPlugin.ID + "/resources/calsim_" + type.toLowerCase() + ".sld");
+        StyledLayerDescriptor sld = parseSLD(url);
         if( sld == null ){
             return null; // well that is unexpected since f.exists()
         }
         
         Style[] styles = SLDs.styles( sld );
-        // Style[] styles = parser.readXML();
         
         // put the first one on
         if (styles != null && styles.length > 0) {
@@ -185,185 +157,66 @@ public class CalSimShpGeoResourceImpl extends IGeoResource {
             if (style == null) {
                 style = styles[0];
             }
-            makeGraphicsAbsolute(file, style);
             return style;
         }
         return null; // well nothing worked out; make your own style
     }
+
+    public StyledLayerDescriptor parseSLD(URL url) throws IOException {
+        StyleFactory styleFactory = CommonFactoryFinder.getStyleFactory();
+     // try SLD 1.1 first
+        SLDConfiguration config = new SLDConfiguration();
+        Reader reader = null;
+        try {
+            Parser parser = new Parser( config );
+            reader = SldUrlToInputStream(url);
+            Object object = parser.parse( reader );
+            if( object instanceof StyledLayerDescriptor){
+                StyledLayerDescriptor sld = (StyledLayerDescriptor) object;
+                return sld;
+            }
+            else if ( object instanceof NamedStyle ){
+                NamedStyle style = (NamedStyle) object;
+                StyledLayerDescriptor sld = SLDs.createDefaultSLD( style );
+                return sld;
+            }
+        }
+        catch(Exception ignore){
+            // we are ignoring this error and will try the more forgiving option below
+            UiPlugin.trace(SLDs.class,"SLD 1.1 configuration failed to parse "+url, ignore);
+        }
+        finally {
+            if( reader != null){
+                reader.close();
+            }
+        }
+        // parse it up
+        SLDParser parser = new SLDParser(styleFactory);
+        try {
+            reader = SldUrlToInputStream(url);
+            parser.setInput(reader);
+            StyledLayerDescriptor sld = parser.parseSLD();
+            return sld;
+        } catch (FileNotFoundException e) {
+            return null; // well that is unexpected since f.exists()
+        }
+    }
     
-    /**
-     * This transforms all external graphics references that are relative to absolute.
-     * This is a workaround to be able to visualize png and svg in relative mode, which 
-     * doesn't work right now in geotools. See: http://jira.codehaus.org/browse/GEOT-3235
-     * 
-     * This will not be necessary any more as soon as the geotools bug is fixed.
-     * 
-     * @param relatedFile the related shapefile.
-     * @param style the style to check.
-     */
-    private void makeGraphicsAbsolute( File relatedFile, Style style ) {
-        File parentFolder = relatedFile.getParentFile();
+
+    private Reader SldUrlToInputStream(URL url) throws IOException {
+    	InputStream inputStream = url.openConnection().getInputStream();
+        InputStreamReader isr = new InputStreamReader(inputStream);
         
-        ExternalGraphicsAbsolutePathMaker visitor = new ExternalGraphicsAbsolutePathMaker(parentFolder);
-        visitor.visit(style);
+        Map<String, Serializable> params = parent.getConnectionParams();
+		Map<String,String> tokenMap = new HashMap<String,String>();
+		tokenMap.put("idField", (String)params.get(CalSimShpServiceExtension.ID_FIELD_NAME_KEY));
+		tokenMap.put("typeField", (String)params.get(CalSimShpServiceExtension.TYPE_FIELD_NAME_KEY));
+		tokenMap.put("subTypeField", (String)params.get(CalSimShpServiceExtension.SUB_TYPE_FIELD_NAME_KEY));
+		MapTokenResolver tokenResolver = new MapTokenResolver(tokenMap);
+		TokenReplacingReader trr = new TokenReplacingReader(isr, tokenResolver);
+		return trr;
     }
-
-    private class ExternalGraphicsAbsolutePathMaker implements StyleVisitor {
-
-        private final File parentFolder;
-
-        public ExternalGraphicsAbsolutePathMaker( File parentFolder ) {
-            this.parentFolder = parentFolder;
-        }
-
-        public void visit( StyledLayerDescriptor sld ) {
-        }
-
-        public void visit( NamedLayer layer ) {
-        }
-
-        public void visit( UserLayer layer ) {
-        }
-
-        public void visit( Style style ) {
-            List<FeatureTypeStyle> fts = style.featureTypeStyles();
-            for( FeatureTypeStyle featureTypeStyle : fts ) {
-                featureTypeStyle.accept(this);
-            }
-        }
-
-        public void visit( Rule rule ) {
-            List<Symbolizer> syms = rule.symbolizers();
-            for( Symbolizer symbolizer : syms ) {
-                symbolizer.accept(this);
-            }
-        }
-
-        public void visit( FeatureTypeStyle fts ) {
-            List<Rule> rules = fts.rules();
-            for( Rule rule : rules ) {
-                rule.accept(this);
-            }
-        }
-
-        public void visit( Fill fill ) {
-            Graphic graphicFill = fill.getGraphicFill();
-            if (graphicFill != null) {
-                graphicFill.accept(this);
-            }
-        }
-
-        public void visit( Stroke stroke ) {
-            Graphic graphicFill = stroke.getGraphicFill();
-            if (graphicFill != null) {
-                graphicFill.accept(this);
-            }
-            Graphic graphicStroke = stroke.getGraphicStroke();
-            if (graphicStroke != null) {
-                graphicStroke.accept(this);
-            }
-        }
-
-        public void visit( Symbolizer sym ) {
-            if (sym instanceof RasterSymbolizer) {
-                visit((RasterSymbolizer) sym);
-            } else if (sym instanceof LineSymbolizer) {
-                visit((LineSymbolizer) sym);
-            } else if (sym instanceof PolygonSymbolizer) {
-                visit((PolygonSymbolizer) sym);
-            } else if (sym instanceof PointSymbolizer) {
-                visit((PointSymbolizer) sym);
-            } else if (sym instanceof TextSymbolizer) {
-                visit((TextSymbolizer) sym);
-            } else
-                throw new RuntimeException("visit(Symbolizer) unsupported");
-        }
-
-        public void visit( PointSymbolizer ps ) {
-            Graphic graphic = ps.getGraphic();
-            if (graphic != null) {
-                graphic.accept(this);
-            }
-        }
-
-        public void visit( LineSymbolizer line ) {
-            Stroke stroke = line.getStroke();
-            if (stroke != null) {
-                stroke.accept(this);
-            }
-        }
-
-        public void visit( PolygonSymbolizer poly ) {
-            Stroke stroke = poly.getStroke();
-            if (stroke != null) {
-                stroke.accept(this);
-            }
-            Fill fill = poly.getFill();
-            if (fill != null) {
-                fill.accept(this);
-            }
-        }
-
-        public void visit( TextSymbolizer text ) {}
-
-        public void visit( RasterSymbolizer raster ) {}
-
-        public void visit( Graphic gr ) {
-            List<GraphicalSymbol> graphicalSymbols = gr.graphicalSymbols();
-            for( GraphicalSymbol graphicalSymbol : graphicalSymbols ) {
-                if (graphicalSymbol instanceof ExternalGraphic) {
-                    ExternalGraphic ext = (ExternalGraphic) graphicalSymbol;
-                    ext.accept(this);
-                }
-            }
-        }
-
-        public void visit( Mark mark ) {}
-
-        public void visit( ExternalGraphic exgr ) {
-            try {
-                URL location = exgr.getLocation();
-                File urlToFile = URLUtils.urlToFile(location);
-                if (urlToFile != null && !urlToFile.exists()) {
-                    File newFile = new File(parentFolder, urlToFile.getPath());
-                    if (newFile.exists()) {
-                        exgr.setLocation(newFile.toURI().toURL());
-                    }
-                }
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        public void visit( PointPlacement pp ) {}
-
-        public void visit( AnchorPoint ap ) {}
-
-        public void visit( Displacement dis ) {}
-
-        public void visit( LinePlacement lp ) {}
-
-        public void visit( Halo halo ) {}
-
-        public void visit( FeatureTypeConstraint ftc ) {}
-
-        public void visit( ColorMap colorMap ) {}
-
-        public void visit( ColorMapEntry colorMapEntry ) {}
-
-        public void visit( ContrastEnhancement contrastEnhancement ) {}
-
-        public void visit( ImageOutline outline ) {}
-
-        public void visit( ChannelSelection cs ) {}
-
-        public void visit( OverlapBehavior ob ) {}
-
-        public void visit( SelectedChannelType sct ) {}
-
-        public void visit( ShadedRelief sr ) {}
-    }
-
+    
     /**
      * Helper method performing the same function as service( monitor ) without the
      * monitor or chance of IOException. 

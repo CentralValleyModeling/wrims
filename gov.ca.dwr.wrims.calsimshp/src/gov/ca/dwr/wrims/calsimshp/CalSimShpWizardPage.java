@@ -60,6 +60,7 @@ public class CalSimShpWizardPage extends AbstractUDIGImportPage implements Modif
     private Combo typeCombo;
     private Combo idFieldCombo;
     private Combo typeFieldCombo;
+    private Combo subTypeFieldCombo;
     
     private String url = ""; //$NON-NLS-1$    
 
@@ -151,6 +152,12 @@ public class CalSimShpWizardPage extends AbstractUDIGImportPage implements Modif
         typeFieldLabel.setText("Type Field");
 
         typeFieldCombo = new Combo(grid, SWT.NONE);
+        new Label(grid, SWT.NONE).setText("");
+
+        Label subTypeFieldLabel = new Label(grid, SWT.NONE);
+        subTypeFieldLabel.setText("Sub-Type Field");
+
+        subTypeFieldCombo = new Combo(grid, SWT.NONE);
         new Label(grid, SWT.NONE).setText("");
 
         setControl(grid);
@@ -305,6 +312,26 @@ public class CalSimShpWizardPage extends AbstractUDIGImportPage implements Modif
 	    	}
 	    	idFieldCombo.setItems(fieldNames);
 	    	typeFieldCombo.setItems(fieldNames);
+	    	subTypeFieldCombo.setItems(fieldNames);
+	    	
+	    	for(String fieldName : fieldNames) {
+	    		if(fieldName.equals("CalSim_ID")) {
+	    			idFieldCombo.setText(fieldName);
+	    		}
+	    		if(fieldName.equals("Type")) {
+	    			typeFieldCombo.setText(fieldName);
+	    		}
+	    		if(fieldName.equals("Sub_Type")) {
+	    			subTypeFieldCombo.setText(fieldName);
+	    		}	    				
+	    	}
+	    	
+	    	if(filePath.toLowerCase().contains("arc")) {
+	    		typeCombo.setText("Arc");
+	    	}
+	    	if(filePath.toLowerCase().contains("node")) {
+	    		typeCombo.setText("Node");
+	    	}
 	    	
             if(errorMsg.equals("")) {
             	setErrorMessage(null);
@@ -337,9 +364,10 @@ public class CalSimShpWizardPage extends AbstractUDIGImportPage implements Modif
     	try {
 	    	Map<String,Serializable> params = new HashMap<String,Serializable>();
 	    	params.put(CalSimShpServiceExtension.FILE_KEY, new File(txtFile.getText()).toURI().toURL());
+	    	params.put(CalSimShpServiceExtension.TYPE_KEY, typeCombo.getText());
 	    	params.put(CalSimShpServiceExtension.ID_FIELD_NAME_KEY, idFieldCombo.getText());
 	    	params.put(CalSimShpServiceExtension.TYPE_FIELD_NAME_KEY, typeFieldCombo.getText());
-	    	params.put(CalSimShpServiceExtension.TYPE_KEY, typeCombo.getText());
+	    	params.put(CalSimShpServiceExtension.SUB_TYPE_FIELD_NAME_KEY, subTypeFieldCombo.getText());
 	    	return params;
     	} catch(MalformedURLException mue) {
     		mue.printStackTrace();
