@@ -12,7 +12,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.navigator.resources,
  wrimsv2_plugin;bundle-version="1.0.0";visibility:=reexport
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-NativeCode: cb.dll; osname=win32, javaHeclib.dll; osname=win32, rmaUtil.dll; osname=win32
+Bundle-NativeCode: cb.dll; javaHeclib.dll; rmaUtil.dll; processor=x86, lib_x64/cb.dll; lib_x64/javaHeclib.dll; lib_x64/rmaUtil.dll; processor=x86_64
 Bundle-ActivationPolicy: lazy
 Export-Package: gov.ca.dwr.hecdssvue;uses:="org.eclipse.jface.resource,org.eclipse.ui.plugin,org.osgi.framework",
  gov.ca.dwr.hecdssvue.components,
@@ -176,7 +176,6 @@ Import-Package: hec.admin,
  hec.webedit.model,
  hec.webedit.util,
  org.apache.commons.logging;version="1.1.1",
- org.apache.log4j;version="1.2.15",
  org.eclipse.debug.core,
  org.eclipse.jdt.core,
  wrimsv2_plugin.debugger,
