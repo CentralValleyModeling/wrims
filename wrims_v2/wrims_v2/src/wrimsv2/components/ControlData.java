@@ -19,6 +19,7 @@ import wrimsv2.solver.ortools.OrToolsSolver;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Stack;
 
@@ -84,6 +85,9 @@ public class ControlData {
 	public static String solverName;
 	public static Optimizer xasolver;
 	public static OrToolsSolver otsolver;
+	//public static int cbcSolverOptions = 2;
+	public static Double clp_cbc_objective;
+	public static String clp_cbc_note="";
 	public static double lpsolve_objective;
 	public static double gurobi_objective;
 	public static boolean isPostProcessing=false;
@@ -99,6 +103,31 @@ public class ControlData {
 	public static boolean outputHDF5=false;
 	public static boolean outputCycle=false;
 	public static boolean initHDF5=false;
+	public static double solverTime_xa=0;
+	public static double solverTime_xa_this=0;
+	public static double solverTime_cbc=0;
+	public static double solverTime_cbc_this=0;
+	public static double solverCreationTime_cbc=0;
+	public static double solverCreationTime_xa=0;
+	public static double lpFileWritingTime=0;
+	public static double cdTime=0;	
+	public static double adTime=0;	
+	public static boolean useCplexLpString=false;
+	public static boolean saveCplexLpStringToFile=false;
+	public static boolean useCbcWarmStart=true;
+	public static boolean writeCbcSolvingTime=false;
+	public static Map<Integer,LinkedHashSet<String>> cycIntDvMap;
+	public static LinkedHashSet<String> allIntDv;
+	public static ArrayList<Integer> cycWarmStart;
+	public static ArrayList<Integer> cycWarmStop;
+	public static ArrayList<Integer> cycWarmUse;
+	public static boolean cbc_debug_routeXA=false; //use xa solution	
+	public static boolean cbc_debug_routeCbc=false;	// use cbc solution
+	public static String[] watchList;
+	public static double watchList_tolerance = 1e99;
+	public static double zeroTolerance =  1e-11;
+	public static Double xaIntegerT =  null;
+	public static String xaSort = null;
 	
 	public ControlData(){
 	}

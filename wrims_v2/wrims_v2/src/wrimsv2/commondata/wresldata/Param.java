@@ -10,9 +10,16 @@ public class Param {
 	// solver selection
 	  public static final Integer SOLVER_XA = 10;
 	  public static final Integer SOLVER_LPSOLVE = 20;
-	  public static final Integer SOLVER_CBC = 30;
+	  //public static final Integer SOLVER_CBC = 30;
 	  public static final Integer SOLVER_GUROBI = 40;
-	
+	  public static final Integer SOLVER_CLP0 = 50;
+	  public static final Integer SOLVER_CLP1 = 60;
+	  public static final Integer SOLVER_CLP = 70;
+	  public static final Integer SOLVER_CBC0 = 80;  // exe by file 
+	  public static final Integer SOLVER_CBC1 = 90;  // jni by file
+	  public static final Integer SOLVER_CBC = 100;  // jni
+	  public static final Integer cbcMinIntNumber = 2;  // minimum integer number for warm start	  
+	  
 	  public static boolean debug= false; 
 	  public static final String dv_std_lowerBound= "0"; 
 	  public static final String zero= "0"; 

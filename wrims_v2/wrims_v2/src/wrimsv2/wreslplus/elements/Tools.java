@@ -24,7 +24,9 @@ import java.util.StringTokenizer;
 import com.google.common.collect.HashBasedTable;
 
 import wrimsv2.commondata.wresldata.Param;
+import wrimsv2.components.FilePaths;
 import wrimsv2.wreslparser.elements.LogUtils;
+import wrimsv2.wreslparser.elements.StudyUtils;
 
 
 public class Tools {
@@ -547,6 +549,20 @@ public class Tools {
 
 	    return out;
 	  }
+		public static void quickLog(String fn, String x) {
+
+		    File ilpRootDir = new File(FilePaths.mainDirectory, "=ILP=");  
+		    File ilpDir = new File(ilpRootDir, StudyUtils.configFileName); 
+
+			try {
+				PrintWriter quickLogFile = Tools.openFile(ilpDir.getAbsolutePath(), fn);
+				quickLogFile.println(x);
+				quickLogFile.close();
+			} catch (IOException e) {
+				System.err.println("Error: " + e.getMessage());
+			}
+
+		}
 
 
 }

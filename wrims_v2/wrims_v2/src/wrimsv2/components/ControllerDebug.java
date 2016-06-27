@@ -54,6 +54,7 @@ import wrimsv2.evaluator.ValueEvaluatorParser;
 import wrimsv2.external.LoadAllDll;
 import wrimsv2.hdf5.HDF5Writer;
 import wrimsv2.ilp.ILP;
+import wrimsv2.solver.CbcSolver;
 import wrimsv2.solver.CloseCurrentSolver;
 import wrimsv2.solver.LPSolveSolver;
 import wrimsv2.solver.XASolver;
@@ -204,7 +205,7 @@ public class ControllerDebug extends Thread {
 		System.out.println("=============Prepare Run Study===========");
 		new PreRunModel(sds);
 		System.out.println("==============Run Study Start============");
-		if (ControlData.solverName.equalsIgnoreCase("XA") || ControlData.solverName.equalsIgnoreCase("XALOG") || ControlData.solverName.equalsIgnoreCase("LpSolve") || ControlData.solverName.equalsIgnoreCase("Gurobi")){
+		if (ControlData.solverName.equalsIgnoreCase("XA") || ControlData.solverName.equalsIgnoreCase("XALOG") || ControlData.solverName.equalsIgnoreCase("CBC") || ControlData.solverName.equalsIgnoreCase("Gurobi")){
 			runModelSolvers(sds);
 		}else{
 			Error.addConfigError("Solver name not recognized: "+ControlData.solverName);
@@ -228,6 +229,8 @@ public class ControllerDebug extends Thread {
 				System.out.println("Model run suspends due to error.");
 				di.handleRequest("suspend");
 			}
+		}else if (ControlData.solverName.equalsIgnoreCase("CBC")){
+			CbcSolver.init(false);
 		}else if (ControlData.solverName.equalsIgnoreCase("Gurobi")){
 			GurobiSolver.initialize();
 		}
@@ -295,7 +298,15 @@ public class ControllerDebug extends Thread {
 							new XASolver(); 
 							ILP.writeObjValue_XA();
 							ILP.writeDvarValue_XA();
-						}else if (ControlData.solverName.equalsIgnoreCase("LPSolve")) {
+				        }else if (ControlData.solverName.equalsIgnoreCase("CBC")){
+				        	ILP.setIlpFile();
+							ILP.writeIlp();
+							ILP.setVarFile();
+							ILP.writeSvarValue();
+							CbcSolver.newProblem(); 
+							ILP.writeObjValue_Clp0_Cbc0();
+							ILP.writeDvarValue_Clp0_Cbc0(CbcSolver.varDoubleMap);
+				        }else if (ControlData.solverName.equalsIgnoreCase("LPSolve")) {
 							ILP.setIlpFile();
 							ILP.writeIlp();
 							if (ILP.loggingVariableValue) {
@@ -346,6 +357,7 @@ public class ControllerDebug extends Thread {
 						if (Error.error_evaluation.size()>=1) noError=false;
 						if (Error.getTotalError()==0) noError=true;
 						//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==2) new RCCComparison();
+						if (ControlData.solverName.equalsIgnoreCase("CBC")){CbcSolver.resetModel();}
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){
 							VariableTimeStep.currTimeAddOneMonth();

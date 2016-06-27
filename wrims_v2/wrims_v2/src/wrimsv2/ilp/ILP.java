@@ -1,26 +1,34 @@
 package wrimsv2.ilp;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
 import wrimsv2.commondata.solverdata.SolverData;
 import wrimsv2.commondata.wresldata.Dvar;
+import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.WeightElement;
+import wrimsv2.components.BuildProps;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
 import wrimsv2.components.FilePaths;
 import wrimsv2.evaluator.EvalConstraint;
+import wrimsv2.solver.CbcSolver;
+import wrimsv2.solver.Clp0Solver;
 import wrimsv2.solver.LPSolveSolver;
 import wrimsv2.solver.Gurobi.GurobiSolver;
 import wrimsv2.solver.mpmodel.MPModel;
@@ -42,10 +50,20 @@ public class ILP {
 	private static ObjectOutputStream  _mpModelFile;
 	private static PrintWriter _lpSolveFile;
 	private static PrintWriter _cplexLpFile;
+	private static StringWriter _cplexLpString;
+	private static String cplexLpFileName;
 	private static PrintWriter _amplFile;
 	private static PrintWriter _svarFile;
 	private static PrintWriter _dvarFile;
 	private static PrintWriter _objValueFile;
+	public static PrintWriter _noteFile;
+	public static PrintWriter _noteFile_xa_obj;
+	public static PrintWriter _noteFile_xa_int;
+	public static PrintWriter _noteFile_cbc_obj;
+	public static PrintWriter _noteFile_cbc_int;
+	public static PrintWriter _noteFile_cbc_int_log;
+	public static PrintWriter _watchFile_xa;
+	public static PrintWriter _watchFile_cbc;
 	private static Set<String> dvar_effective;
 	private static final String lpSolve_comment_Symbol = "//";
 	private static final String ampl_comment_Symbol = "#";
@@ -53,6 +71,8 @@ public class ILP {
 	private static DecimalFormat df;
 	public static int maximumFractionDigits = 8;
 	public static boolean loggingVariableValue = false;
+	public static boolean loggingVariableValueRound = false;
+	public static boolean loggingVariableValueRound10 = false;
 	public static boolean loggingAllCycles = false;
 	public static boolean logging = false;
 	public static boolean loggingAmpl = false;
@@ -65,10 +85,73 @@ public class ILP {
 	private static File _svarDir;
 	private static File _dvarDir;
 	
+	public static ArrayList<String> intList = null;
+	
 	private ILP() {
 		
 	}
 
+	public static File getIlpDir() {
+		_ilpRootDir = new File(FilePaths.mainDirectory, "=ILP=");  
+	    _ilpDir = new File(_ilpRootDir.getAbsolutePath(), StudyUtils.configFileName); 
+		return _ilpDir;
+	}
+	
+	public static void createNoteFile() {
+		try {
+			_noteFile = Tools.openFile(_ilpDir.getAbsolutePath(), "Note.log");
+			writeNoteLn("wrims2 revision:", new BuildProps().getVN());
+			if (ControlData.cbc_debug_routeXA || ControlData.cbc_debug_routeCbc) {
+				_noteFile_xa_obj = Tools.openFile(_ilpDir.getAbsolutePath(), "Note_xa_obj.log");
+				_noteFile_cbc_obj = Tools.openFile(_ilpDir.getAbsolutePath(), "Note_cbc_obj.log");
+				_noteFile_xa_int = Tools.openFile(_ilpDir.getAbsolutePath(), "Note_xa_int.log");
+				_noteFile_cbc_int = Tools.openFile(_ilpDir.getAbsolutePath(), "Note_cbc_int.log");
+				
+				if (ControlData.cycIntDvMap!=null) {
+					ILP.writeNote("cyc ", _noteFile_cbc_int);
+					ILP.writeNote("cyc ", _noteFile_xa_int);
+					for (String s:ControlData.allIntDv ){
+						ILP.writeNote( s+" ", _noteFile_cbc_int);
+						ILP.writeNote( s+" ", _noteFile_xa_int);
+					}
+					ILP.writeNote("\r\n", _noteFile_cbc_int);
+					ILP.writeNote("\r\n", _noteFile_xa_int);
+				}
+				
+				if (ControlData.watchList!=null) {
+					_watchFile_xa = Tools.openFile(_ilpDir.getAbsolutePath(), "Watch_XA.log");
+					_watchFile_cbc = Tools.openFile(_ilpDir.getAbsolutePath(), "Watch_CBC.log");
+					ILP.writeNote( "time  ", _watchFile_xa);
+					ILP.writeNote( "time  ", _watchFile_cbc);
+					for (String s:ControlData.watchList) {
+						ILP.writeNote( s+"  ", _watchFile_xa);
+						ILP.writeNote( s+"  ", _watchFile_cbc);
+					}
+					ILP.writeNote("\r\n", _watchFile_xa);
+					ILP.writeNote("\r\n", _watchFile_cbc);
+				}
+				
+			} else if (CbcSolver.logObj && ControlData.solverName.equalsIgnoreCase("Cbc")){
+				_noteFile_cbc_obj = Tools.openFile(_ilpDir.getAbsolutePath(), "Note_cbc_obj.log");
+			} else if (CbcSolver.intLog && ControlData.solverName.equalsIgnoreCase("Cbc")){
+				_noteFile_cbc_int_log = Tools.openFile(_ilpDir.getAbsolutePath(), "Note_cbc_int_check.log");
+				if (ControlData.cycIntDvMap!=null) {
+					ILP.writeNote("cyc ", _noteFile_cbc_int_log);
+					//ILP.writeNote("cyc ", _noteFile_xa_int);
+					for (String s:ControlData.allIntDv ){
+						ILP.writeNote( s+" ", _noteFile_cbc_int_log);
+						//ILP.writeNote( s+" ", _noteFile_xa_int);
+					}
+					ILP.writeNote("\r\n", _noteFile_cbc_int_log);
+					//ILP.writeNote("\r\n", _noteFile_xa_int);
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public static void initializeIlp() {
 		
 		_ilpRootDir = new File(FilePaths.mainDirectory, "=ILP=");  
@@ -82,7 +165,7 @@ public class ILP {
 
 		if (ILP.loggingVariableValue) setVarDir();
 		setMaximumFractionDigits();
-		
+		createNoteFile();
 	    try {
 			_objValueFile = Tools.openFile(_ilpDir.getAbsolutePath(), "ObjValues.log");
 		}
@@ -103,7 +186,14 @@ public class ILP {
 
 		if (ILP.loggingMPModel) setMPModelFile();
 		if (ILP.loggingLpSolve) setLpSolveFile();
-		if (ILP.loggingCplexLp) setCplexLpFile();		
+		if (ILP.loggingCplexLp) {
+			if (ControlData.useCplexLpString && ControlData.solverType != Param.SOLVER_CBC0.intValue()
+					&& ControlData.solverType != Param.SOLVER_CBC1.intValue()){
+				setCplexLpString();
+			} else {
+				setCplexLpFile();
+			}
+		}
 		if (ILP.loggingAmpl)    setAmplFile();		
 	}
 
@@ -150,6 +240,20 @@ public class ILP {
 
 	}
 
+	public static void writeObjValue_Clp0_Cbc0() {
+
+		double objValue = ControlData.clp_cbc_objective;
+		String objValueStr = Double.toString(objValue);
+
+		writeObjValue(objValueStr, _cplexLpFile, cplexLp_comment_Symbol);
+		//if (ILP.loggingCplexLp) writeObjValue(objValueStr, _cplexLpFile, cplexLp_comment_Symbol);
+		//if (ILP.loggingAmpl) writeObjValue(objValueStr, _amplFile, ampl_comment_Symbol);
+		
+		writeObjValueLog(getYearMonthCycle(), objValueStr, _objValueFile);
+		if (!ControlData.clp_cbc_note.isEmpty()) writeNoteLn(getYearMonthCycle(), ControlData.clp_cbc_note, _noteFile);
+
+	}
+	
 	public static void writeObjValue_Gurobi() {
 
 		double objValue = ControlData.gurobi_objective;
@@ -258,6 +362,12 @@ public class ILP {
 	public static void writeDvarValue_LPSOLVE() {
 		
 		writeDvarValue_LPSOLVE(_dvarFile, dvar_effective);
+		_dvarFile.flush();
+		
+	}
+	public static void writeDvarValue_Clp0_Cbc0(Map <String, Double> varDoubleMap) {
+		
+		writeDvarValue_Clp0_Cbc0(_dvarFile, dvar_effective, varDoubleMap);
 		_dvarFile.flush();
 		
 	}
@@ -388,10 +498,9 @@ public class ILP {
 	
 	private static void setCplexLpFile() {
 		
-		String cplexLpFileName = getYearMonthCycle()+".lp";		
+		cplexLpFileName = getYearMonthCycle()+".lp";		
 
 		try {
-
 			
 			_cplexLpFile = Tools.openFile(_cplexLpDir, cplexLpFileName);
 			cplexLpFilePath = new File(_cplexLpDir, cplexLpFileName).getAbsolutePath(); // for public access
@@ -403,6 +512,66 @@ public class ILP {
 		}
 	
 	}
+	
+	private static void setCplexLpString() {
+		
+	
+			
+		//_cplexLpFile = Tools.openFile(_cplexLpDir, cplexLpFileName);
+		_cplexLpString = new StringWriter();
+		_cplexLpFile = new PrintWriter(new BufferedWriter(_cplexLpString));
+		//cplexLpFilePath = new File(_cplexLpDir, cplexLpFileName).getAbsolutePath(); // for public access
+	
+	}
+
+	public static void saveCplexLpStringToFile() {
+		
+		
+		cplexLpFileName = getYearMonthCycle()+".lp";		
+
+		try {
+			
+			_cplexLpFile = Tools.openFile(_cplexLpDir, cplexLpFileName);
+			_cplexLpFile.print(_cplexLpString);
+			_cplexLpFile.close();
+			cplexLpFilePath = new File(_cplexLpDir, cplexLpFileName).getAbsolutePath(); // for public access
+
+		}
+		catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	
+	}
+	
+	public static void closeCplexLpFile() {
+		
+		try {
+			
+			_cplexLpFile.close();
+
+		}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			//ignore
+		}
+	
+	}
+	
+	public static void reOpenCplexLpFile(boolean isAppend) {
+		
+		try {
+			
+			_cplexLpFile = Tools.openFile(_cplexLpDir, cplexLpFileName, isAppend);
+
+		}
+		catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	
+	}
+	
 	private static void setAmplFile() {
 		
 		String amplFileName = getYearMonthCycle()+ ".mod";				
@@ -531,6 +700,27 @@ public class ILP {
 		}
 		outFile.flush();
 	}
+
+	public static void writeNoteLn(String msg, String noteStr) {		
+		
+		writeNoteLn(msg, noteStr, _noteFile);
+	}
+	
+	public static void writeNoteLn(String msg, String noteStr, PrintWriter outFile) {		
+		
+//		if (Error.getTotalError()==0) {
+			outFile.println(msg+": "+noteStr);
+//		} else {
+//			outFile.println(msg+": "+"Error! ");	
+//		}
+		outFile.flush();
+	}
+
+	public static void writeNote(String msg, PrintWriter outFile) {		
+		
+		outFile.print(msg);
+		outFile.flush();
+	}
 	
 	private static void writeObjValue(String objValueStr, PrintWriter outFile, String commentSym) {		
 
@@ -584,20 +774,38 @@ public class ILP {
 		dvarFile.println("/* Weighted Dvar    */");
 		for (String s : dvar_weighted){
 			String dvName = String.format("%-35s", s);
+			double v = ControlData.xasolver.getColumnActivity(s);
+			if (loggingVariableValueRound) v = Math.round(v);
+			if (loggingVariableValueRound10 && !intList.contains(s)) {
+				v = Math.round(v/10)*10;
+			}
 			try{
-				dvarFile.print(dvName + ":  " + df.format(ControlData.xasolver.getColumnActivity(s)) +"\n"  );
+				if (v!=0){
+					dvarFile.print(dvName + ":  " + String.format("%15s", df.format(v)) +"\n"  );
+				} else {
+					dvarFile.print(dvName + ":  " + String.format("%15s", "0") +"\n"  );
+				}
 			} catch (Exception e) {
-				dvarFile.print(dvName + ":  " + ControlData.xasolver.getColumnActivity(s) +"\n"  );
+				dvarFile.print(dvName + ":  " + String.format("%15s", v) +"\n"  );
 			}
 		}
 		dvarFile.println();
 		dvarFile.println("/* Unweighted Dvar    */");	
 		for (String s : dvar_unweighted){
 			String dvName = String.format("%-35s", s);
+			double v = ControlData.xasolver.getColumnActivity(s);
+			if (loggingVariableValueRound) v = Math.round(v);
+			if (loggingVariableValueRound10 && !intList.contains(s)) {
+				v = Math.round(v/10)*10;
+			}
 			try{
-				dvarFile.print(dvName + ":  " + df.format(ControlData.xasolver.getColumnActivity(s)) +"\n"  );
+				if (v!=0){
+					dvarFile.print(dvName + ":  " + String.format("%15s", df.format(v)) +"\n"  );
+				} else {
+					dvarFile.print(dvName + ":  " + String.format("%15s", "0") +"\n"  );
+				}
 			} catch (Exception e) {
-				dvarFile.print(dvName + ":  " + ControlData.xasolver.getColumnActivity(s) +"\n"  );
+				dvarFile.print(dvName + ":  " + String.format("%15s", v) +"\n"  );
 			}
 		}
 	}
@@ -643,7 +851,57 @@ public class ILP {
 			}
 		}
 	}
+	
+	private static void writeDvarValue_Clp0_Cbc0(PrintWriter dvarFile, Set<String> dvar_effective, Map <String, Double> varDoubleMap) {		
+		
+		ArrayList<ArrayList<String>> sortedDvar = prepareDvarToWrite(dvar_effective);	
+		ArrayList<String> dvar_weighted = sortedDvar.get(0);
+		ArrayList<String> dvar_unweighted = sortedDvar.get(1);
+		
+		dvarFile.println("/* Weighted Dvar    */");
+		for (String s : dvar_weighted){
+			String dvName = String.format("%-35s", s);
+			//dvarFile.print(dvName + ":  " + ControlData.xasolver.getColumnActivity(s) +"\n"  );
+			try{
+				double v = varDoubleMap.get(s);
+				if (loggingVariableValueRound) v = Math.round(v);
+				if (loggingVariableValueRound10 && !intList.contains(s)) {
+					v = Math.round(v/10)*10;
+				}
+				// TODO: improve speed
+				if (v!=0) {
+					dvarFile.print(dvName + ":  " + String.format("%15s", df.format(v)) +"\n"  );		
+				} else {
+					dvarFile.print(dvName + ":  " + String.format("%15s", "0") +"\n"  );				
+				}
 
+			} catch (Exception e) {
+				dvarFile.print(dvName + ":  " + varDoubleMap.get(s) +"\n"  );
+			}
+		}
+		dvarFile.println();
+		dvarFile.println("/* Unweighted Dvar    */");	
+		for (String s : dvar_unweighted){
+			String dvName = String.format("%-35s", s);
+			try{
+				double v = varDoubleMap.get(s);
+				if (loggingVariableValueRound) v = Math.round(v);
+				if (loggingVariableValueRound10 && !intList.contains(s)) {
+					v = Math.round(v/10)*10;
+				}
+				// TODO: improve speed
+				if (v!=0) {
+					dvarFile.print(dvName + ":  " + String.format("%15s", df.format(v)) +"\n"  );				
+				} else {
+					dvarFile.print(dvName + ":  " + String.format("%15s", "0") +"\n"  );				
+				}
+				
+			} catch (Exception e) {
+				dvarFile.print(dvName + ":  " + varDoubleMap.get(s) +"\n"  );
+			}
+		}
+	}
+	
 	private static void writeDvarValue_Gurobi(PrintWriter dvarFile, Set<String> dvar_effective) {
 
 		
@@ -742,11 +1000,14 @@ public class ILP {
 		
 		for (String s : sortedTerm){
 			String svName = String.format("%-35s", s);
+			double v =svMap.get(s).getData().getData().doubleValue();
+			if (loggingVariableValueRound) v = Math.round(v);
+			if (loggingVariableValueRound10) {v = Math.round(v/10)*10;}
 			// TODO: improve speed
-			if (!df.format(svMap.get(s).getData().getData()).equals("-0")) {
-				svarFile.print(svName + ":  " + df.format(svMap.get(s).getData().getData()) +"\n"  );
+			if (v!=0) {
+				svarFile.print(svName + ":  " + String.format("%15s", df.format(v)) +"\n"  );
 			} else {
-				svarFile.print(svName + ":   0" +"\n"  );
+				svarFile.print(svName + ":  " + String.format("%15s", "0"));
 			}
 			
 			

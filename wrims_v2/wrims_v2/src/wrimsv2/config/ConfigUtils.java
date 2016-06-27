@@ -18,6 +18,7 @@ import wrimsv2.components.FilePaths;
 import wrimsv2.components.Error;
 import wrimsv2.evaluator.TimeOperation;
 import wrimsv2.ilp.ILP;
+import wrimsv2.solver.CbcSolver;
 import wrimsv2.solver.LPSolveSolver;
 import wrimsv2.wreslparser.elements.StudyUtils;
 import wrimsv2.wreslplus.elements.ParamTemp;
@@ -104,6 +105,7 @@ public class ConfigUtils {
 	private static void loadConfig(String configFile) {
 
 		//StudyUtils.config_errors = 0; // reset
+		String k=null;
 
 		Map<String, String> configMap = new HashMap<String, String>();
 
@@ -230,7 +232,7 @@ public class ConfigUtils {
 		System.out.println("StopDay:        "+ControlData.endDay);
 		System.out.println("Solver:         "+ControlData.solverName);
 		
-		final String[] solvers = {"xa","xalog","lpsolve","gurobi","cbc"};
+		final String[] solvers = {"xa","xalog","clp0","clp1","clp","lpsolve","gurobi","cbc0","cbc1","cbc"};
 
 		if (!Arrays.asList(solvers).contains(ControlData.solverName.toLowerCase())){
 			Error.addConfigError("Solver name not recognized: "+ControlData.solverName);
@@ -271,6 +273,239 @@ public class ConfigUtils {
 		}
 		System.out.println("PrefixInitToDvarFile: "+ControlData.writeInitToDVOutput);
 
+		// CbcDebug
+		if (configMap.keySet().contains("cbcdebug")){
+			
+			String s = configMap.get("cbcdebug");
+			
+			if (s.equalsIgnoreCase("cbc")){
+				ControlData.cbc_debug_routeXA = false;	
+				ControlData.cbc_debug_routeCbc = true;	
+			} else if (s.equalsIgnoreCase("xa")) {
+				ControlData.cbc_debug_routeXA = true;
+				ControlData.cbc_debug_routeCbc = false;	
+			} else {
+				ControlData.cbc_debug_routeXA = false;
+				ControlData.cbc_debug_routeCbc = false;	
+			}
+		}else{
+			ControlData.cbc_debug_routeXA = false;
+			ControlData.cbc_debug_routeCbc = false;	
+		}
+		System.out.println("CbcDebug (use XA solution): "+ControlData.cbc_debug_routeXA);
+		System.out.println("CbcDebug (use Cbc solution): "+ControlData.cbc_debug_routeCbc);
+
+		// watch variable
+		if (configMap.keySet().contains("watch")){
+			
+			String s = configMap.get("watch").toLowerCase();
+			ControlData.watchList = s.split(",");
+			
+			System.out.println("Watch: "+Arrays.toString(ControlData.watchList));
+
+		}
+		
+		// watch variable tolerance
+		k = "watcht";
+		if (configMap.keySet().contains(k)){
+			
+			String s = configMap.get(k);			
+			
+			try {
+				ControlData.watchList_tolerance = Double.parseDouble(s);
+			} catch (NumberFormatException e) {
+				System.out.println("watchT: Error reading config value");
+			}
+			
+		}
+		System.out.println("watchT: "+ControlData.watchList_tolerance);
+		
+		// CbcWarmStart // default is true
+		k = "cbcwarmstart";
+		if (configMap.keySet().contains(k)){
+			
+			String s = configMap.get(k);
+			
+			if (s.equalsIgnoreCase("yes") || s.equalsIgnoreCase("true")){
+				ControlData.useCbcWarmStart = true;	
+			} else if (s.equalsIgnoreCase("no") || s.equalsIgnoreCase("false")){
+				ControlData.useCbcWarmStart = false;	
+			} else {
+				ControlData.useCbcWarmStart = true;	
+			}
+		}else{
+			ControlData.useCbcWarmStart = true;
+		}
+		System.out.println("CbcWarmStart: "+ControlData.useCbcWarmStart);
+		
+		// CbcSolveFunction // default is SolveFull
+		k = "cbcsolvefunction";
+		if (configMap.keySet().contains(k)){
+			
+			String s = configMap.get(k);
+
+			if (s.equalsIgnoreCase("solveu")){
+				CbcSolver.solvFunc=CbcSolver.solvU;	
+			} else if (s.equalsIgnoreCase("solve2")){
+				CbcSolver.solvFunc=CbcSolver.solv2;	
+			} else if (s.equalsIgnoreCase("solve3")){
+				CbcSolver.solvFunc=CbcSolver.solv3;	
+			} else if (s.equalsIgnoreCase("callCbc")){
+				CbcSolver.solvFunc=CbcSolver.solvCallCbc;	
+			} else {
+				CbcSolver.solvFunc=CbcSolver.solvFull;	
+			}
+		}else{
+			CbcSolver.solvFunc=CbcSolver.solvFull;	
+		}
+		System.out.println("CbcSolveFunction: "+CbcSolver.solvFunc);
+		
+		// CbcLibName // default is ?
+		k = "cbclibname";
+		if (configMap.keySet().contains(k)){
+			
+			CbcSolver.cbcLibName = configMap.get(k);
+		}
+		System.out.println("CbcLibName: "+CbcSolver.cbcLibName);
+		
+		// zeroT // default is ? check  ControlData.zeroTolerance
+		k = "zerot";
+		if (configMap.keySet().contains(k)){
+			
+			String s = configMap.get(k);			
+			
+			try {
+				ControlData.zeroTolerance = Double.parseDouble(s);
+			} catch (NumberFormatException e) {
+				System.out.println("zeroT: Error reading config value");
+			}
+			
+		}
+		System.out.println("ZeroT: "+ControlData.zeroTolerance);
+		
+		
+		// CbcIntegerT
+		k = "cbcintegert";
+		if (configMap.keySet().contains(k)){
+			
+			String s = configMap.get(k);			
+			
+			try {
+				CbcSolver.integerT = Double.parseDouble(s);
+			} catch (NumberFormatException e) {
+				System.out.println("CbcIntegerT: Error reading config value");
+			}
+			
+		}
+		System.out.println("CbcIntegerT: "+CbcSolver.integerT);
+		
+		// XAIntegerT
+		k = "xaintegert";
+		if (configMap.keySet().contains(k)){
+			
+			String s = configMap.get(k);			
+			
+			try {
+				ControlData.xaIntegerT = Double.parseDouble(s);
+			} catch (NumberFormatException e) {
+				System.out.println("XAIntegerT: Error reading config value");
+			}
+			
+		}
+		System.out.println("XAIntegerT: "+ControlData.xaIntegerT);
+		
+		
+		// xasort // default is unknown
+		k = "xasort";
+		if (configMap.keySet().contains(k)){
+			
+			String s = configMap.get(k).toLowerCase();
+			
+			if (s.equals("yes")||s.equals("no")||s.equals("col")||s.equals("row")){
+				ControlData.xaSort=s;	
+			} else {
+				System.out.println("XASort: No | Yes | Row | Col");;
+			}
+		}
+		System.out.println("XASort: "+ControlData.xaSort);
+		
+		
+		// CbcSolve2PrimalT // default is ?
+		k = "cbcsolve2primalt";
+		if (configMap.keySet().contains(k)){
+			
+			String s = configMap.get(k);			
+			
+			try {
+				CbcSolver.solve_2_primalT = Double.parseDouble(s);
+			} catch (NumberFormatException e) {
+				System.out.println("CbcSolve2PrimalT: Error reading config value");
+			}
+			
+		}
+		System.out.println("CbcSolve2PrimalT: "+CbcSolver.solve_2_primalT);
+		
+		// CbcSolveWhsPrimalT 
+		k = "cbcsolvewhsprimalt";
+		if (configMap.keySet().contains(k)){
+			
+			String s = configMap.get(k);			
+			
+			try {
+				CbcSolver.solve_whs_primalT = Double.parseDouble(s);
+			} catch (NumberFormatException e) {
+				System.out.println("CbcSolveWhsPrimalT: Error reading config value");
+			}
+			
+		}
+		System.out.println("CbcSolveWhsPrimalT: "+CbcSolver.solve_whs_primalT);
+		
+		// LogIfObjDiff
+		k = "logifobjdiff";
+		if (configMap.keySet().contains(k)){
+			
+			String s = configMap.get(k);			
+			
+			try {
+				CbcSolver.log_if_obj_diff = Double.parseDouble(s);
+			} catch (NumberFormatException e) {
+				System.out.println("LogIfObjDiff: Error reading config value");
+			}
+			
+		}
+		System.out.println("LogIfObjDiff: "+CbcSolver.log_if_obj_diff);
+		
+		// RecordIfObjDiff
+		k = "recordifobjdiff";
+		if (configMap.keySet().contains(k)){
+			
+			String s = configMap.get(k);			
+			
+			try {
+				CbcSolver.record_if_obj_diff = Double.parseDouble(s);
+			} catch (NumberFormatException e) {
+				System.out.println("RecordIfObjDiff: Error reading config value");
+			}
+			
+		}
+		System.out.println("RecordIfObjDiff: "+CbcSolver.record_if_obj_diff);
+		
+		
+		// Warm2ndSolveFunction // default is Solve2
+		k = "warm2ndsolvefunction";
+		if (configMap.keySet().contains(k)){
+			
+			String s = configMap.get(k);
+			
+			if (s.equalsIgnoreCase("solve3")){
+				CbcSolver.warm_2nd_solvFunc=CbcSolver.solv3;		
+			} else {
+				CbcSolver.warm_2nd_solvFunc=CbcSolver.solv2;	
+			}
+		}else{
+			CbcSolver.warm_2nd_solvFunc=CbcSolver.solv2;		
+		}
+		System.out.println("Warm2ndSolveFunction: "+CbcSolver.warm_2nd_solvFunc);
 
 		// ParserCheckVarUndefined
 		if (configMap.keySet().contains("parsercheckvarundefined")){
@@ -349,6 +584,14 @@ public class ConfigUtils {
 		if(ControlData.solverName.equalsIgnoreCase("XALOG")){
 			configMap.put("ilplog","yes");
 			ILP.loggingCplexLp = true;
+		}else if (ControlData.solverName.equalsIgnoreCase("cbc0")||ControlData.solverName.equalsIgnoreCase("cbc1")) {
+			configMap.put("ilplog","yes");
+			configMap.put("ilplogallcycles","yes");
+			ILP.loggingCplexLp = true;
+		}else if (ControlData.solverName.equalsIgnoreCase("clp0")||ControlData.solverName.equalsIgnoreCase("clp1")) {
+			configMap.put("ilplog","yes");
+			configMap.put("ilplogallcycles","yes");
+			ILP.loggingCplexLp = true;
 		}else if (ControlData.solverName.equalsIgnoreCase("lpsolve")) {
 			configMap.put("ilplog","yes");
 			ILP.loggingLpSolve = true;
@@ -394,6 +637,32 @@ public class ConfigUtils {
 				}
 			}
 
+			// ilplogvarvalueround
+			// default is false
+			if (configMap.keySet().contains("ilplogvarvalueround")) {
+
+				String s = configMap.get("ilplogvarvalueround");
+
+				if (s.equalsIgnoreCase("yes") || s.equalsIgnoreCase("true")) {
+					ILP.loggingVariableValueRound = true;
+				} else {
+					ILP.loggingVariableValueRound = false;
+				}
+			}
+			
+			// ilplogvarvalueround10
+			// default is false
+			if (configMap.keySet().contains("ilplogvarvalueround10")) {
+
+				String s = configMap.get("ilplogvarvalueround10");
+
+				if (s.equalsIgnoreCase("yes") || s.equalsIgnoreCase("true")) {
+					ILP.loggingVariableValueRound10 = true;
+				} else {
+					ILP.loggingVariableValueRound10 = false;
+				}
+			}
+			
 			// IlpLogMaximumFractionDigits
 			// default is 8
 			if (configMap.keySet().contains("ilplogmaximumfractiondigits")) {

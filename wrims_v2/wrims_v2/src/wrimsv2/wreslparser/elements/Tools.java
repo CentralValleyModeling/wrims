@@ -159,6 +159,16 @@ public class Tools {
 		return new PrintWriter(new BufferedWriter(new FileWriter(f)));
 	}
 	
+	public static PrintWriter openFile(String dirPath, String fileName, boolean isAppend) throws IOException {
+
+		File f = new File(dirPath, fileName);
+		File dir = new File(f.getParent());
+		dir.mkdirs();
+		f.createNewFile();
+
+		return new PrintWriter(new BufferedWriter(new FileWriter(f,isAppend)));
+	}
+
 	public static PrintWriter openFile(String dirPath, String fileName) throws IOException {
 
 		File f = new File(dirPath, fileName);
@@ -169,8 +179,16 @@ public class Tools {
 		return new PrintWriter(new BufferedWriter(new FileWriter(f)));
 	}
 
+	public static PrintWriter setOutputString(String dirPath, String fileName) throws IOException {
 
+		File f = new File(dirPath, fileName);
+		File dir = new File(f.getParent());
+		dir.mkdirs();
+		f.createNewFile();
 
+		return new PrintWriter(new BufferedWriter(new FileWriter(f)));
+	}
+	
 	public static boolean deleteDir(String dirString) {
 		File dir = new File(dirString);
 		if (dir.isDirectory()) {

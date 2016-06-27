@@ -112,8 +112,9 @@ public class CplexLpWriter {
 
 			}
 			else {
-
-				lhs = "0";
+				
+				continue; // skip trivial constraint
+				//lhs = "0";
 			}
 
 			String sign = constraintMap.get(constraintName).getSign();
@@ -146,7 +147,7 @@ public class CplexLpWriter {
 		
 	
 		// TODO: separate integer list in the parsing stage for efficiency
-		ArrayList<String> intList = new ArrayList<String>();
+		ILP.intList = new ArrayList<String>();
 		ArrayList<String> freeList = new ArrayList<String>();
 	
 		outFile.println("");		
@@ -159,7 +160,7 @@ public class CplexLpWriter {
 			String lowerStr = dvarMap.get(key).lowerBound;
 			String upperStr = dvarMap.get(key).upperBound;
 	
-			if (dvarMap.get(key).integer.equalsIgnoreCase(Param.yes)) intList.add(key);
+			if (dvarMap.get(key).integer.equalsIgnoreCase(Param.yes)) ILP.intList.add(key);
 			
 			if (lowerStr.equalsIgnoreCase(Param.lower_unbounded) && upperStr.equalsIgnoreCase(Param.upper_unbounded)) {
 				freeList.add(key);  //TODO: test what happen if it's a free integer ???
@@ -197,13 +198,13 @@ public class CplexLpWriter {
 	
 		}
 		
-		if (intList.size() > 0) {
+		if (ILP.intList.size() > 0) {
 			outFile.println("");
 			outFile.println("\\ Integer");
 			outFile.println("Generals");
 	
-			for (int i = 0; i < intList.size(); i++) {
-				String term = intList.get(i);
+			for (int i = 0; i < ILP.intList.size(); i++) {
+				String term = ILP.intList.get(i);
 	
 				//if (i == 0) {
 					outFile.println(term);

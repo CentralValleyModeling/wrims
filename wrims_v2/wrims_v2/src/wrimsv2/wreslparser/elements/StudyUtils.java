@@ -23,6 +23,7 @@ import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.components.BuildProps;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.FilePaths;
+import wrimsv2.tools.Warmstart;
 import wrimsv2.wreslplus.elements.StudyTemp;
 import wrimsv2.wreslplus.elements.VarCycleIndex;
 import wrimsv2.wreslplus.elements.Workflow;
@@ -136,6 +137,15 @@ public class StudyUtils {
 		
 		LogUtils.closeLogFile();
 
+		if (total_errors==0){
+		if (ControlData.useCbcWarmStart || ControlData.cbc_debug_routeCbc || ControlData.cbc_debug_routeXA){
+			if (ControlData.solverName.equalsIgnoreCase("Cbc")  || ControlData.solverName.equalsIgnoreCase("Cbc1")){
+				
+				Warmstart.collectIntegerDV_2(sds);			
+			
+			}
+		}
+		}
 		return sds;
 
 	}

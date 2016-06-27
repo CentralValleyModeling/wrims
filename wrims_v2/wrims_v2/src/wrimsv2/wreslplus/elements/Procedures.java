@@ -872,6 +872,23 @@ public class Procedures {
 
 	}
 
-
+	public static int findWarmStart(int preStop, int nCyc) {
+		
+		for (int i=preStop+1; i<nCyc; i++){
+			if (ControlData.cycIntDvMap.get(i).size()>Param.cbcMinIntNumber){
+				return i; 
+			}
+		}
+		return nCyc+1;
+	}
+	
+	public static int findWarmStop(int start, int nCyc) {
+		for (int i=start; i<nCyc-1; i++){
+			if (!ControlData.cycIntDvMap.get(i).equals(ControlData.cycIntDvMap.get(i+1))){
+				return i; 
+			}
+		}
+		return nCyc-1;
+	}
 	
 }

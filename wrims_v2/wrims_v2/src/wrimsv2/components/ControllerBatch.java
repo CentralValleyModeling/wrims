@@ -5,10 +5,15 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import org.antlr.runtime.RecognitionException;
+
+import wrimsv2.commondata.solverdata.SolverData;
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.commondata.wresldata.StudyDataSet;
@@ -19,6 +24,11 @@ import wrimsv2.evaluator.PreEvaluator;
 import wrimsv2.evaluator.ValueEvaluatorParser;
 import wrimsv2.hdf5.HDF5Writer;
 import wrimsv2.ilp.ILP;
+import wrimsv2.solver.Cbc0Solver;
+import wrimsv2.solver.CbcSolver;
+import wrimsv2.solver.Clp0Solver;
+import wrimsv2.solver.ClpSolver;
+import wrimsv2.solver.InitialClpSolver;
 import wrimsv2.solver.LPSolveSolver;
 import wrimsv2.solver.XASolver;
 import wrimsv2.solver.SetXALog;
@@ -63,11 +73,17 @@ public class ControllerBatch {
 				new PreEvaluator(sds);
 				new PreRunModel(sds);
 				//generateStudyFile();
+				long check = Calendar.getInstance().getTimeInMillis();
+				
+				ILP.getIlpDir();
+				ILP.createNoteFile();
+				
 				runModel(sds);
 				long endTimeInMillis = Calendar.getInstance().getTimeInMillis();
 				int runPeriod=(int) (endTimeInMillis-startTimeInMillis);
 				System.out.println("=================Run Time is "+runPeriod/60000+"min"+Math.round((runPeriod/60000.0-runPeriod/60000)*60)+"sec====");
-
+				ILP.writeNoteLn("Total time", "(sec): "+                        Math.round(runPeriod/1000.0));
+				
 			} else {
 				System.out.println("=================Run ends with errors=================");
 				System.exit(1);
@@ -204,10 +220,12 @@ public class ControllerBatch {
 			runModelGurobi(sds);
 		} else if (ControlData.solverName.equalsIgnoreCase("Glpk")){
 			runModelOrTools(sds, "GLPK_MIXED_INTEGER_PROGRAMMING");	
-		} else if (ControlData.solverName.equalsIgnoreCase("Cbc")){
-			runModelOrTools(sds, "CBC_MIXED_INTEGER_PROGRAMMING");		
+		} else if (ControlData.solverName.equalsIgnoreCase("Clp")){
+			runModelClp(sds);	
 		} else if (ILP.logging){
 			runModelILP(sds);
+		} else if (ControlData.solverName.equalsIgnoreCase("Cbc")){
+			runModelCbc(sds);
 	    } else if (ControlData.solverName.equalsIgnoreCase("XA") || ControlData.solverName.equalsIgnoreCase("XALOG") ){
 			runModelXA(sds);
 		} else {
@@ -401,7 +419,31 @@ public class ControllerBatch {
 		ArrayList<String> modelList=sds.getModelList();
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
 		
-		if (ControlData.solverName.equalsIgnoreCase("lpsolve")) {
+		if (ControlData.solverName.equalsIgnoreCase("clp0")) {
+			ControlData.solverType = Param.SOLVER_CLP0;
+			// initiate clp0
+			Clp0Solver.init();
+		} else if (ControlData.solverName.equalsIgnoreCase("clp1")) {
+			ControlData.solverType = Param.SOLVER_CLP1;
+			// initiate clp
+			ClpSolver.init(true);
+		} else if (ControlData.solverName.equalsIgnoreCase("clp")) {
+			ControlData.solverType = Param.SOLVER_CLP;
+			// initiate clp
+			ClpSolver.init(false);
+		} else if (ControlData.solverName.equalsIgnoreCase("cbc0")) {
+			ControlData.solverType = Param.SOLVER_CBC0;
+			// initiate cbc0
+			Cbc0Solver.init();
+		} else if (ControlData.solverName.equalsIgnoreCase("cbc1")) {
+			ControlData.solverType = Param.SOLVER_CBC1;
+			// initiate cbc file passing jni
+			CbcSolver.init(true);
+		} else if (ControlData.solverName.equalsIgnoreCase("cbc")) {
+			ControlData.solverType = Param.SOLVER_CBC;
+			// initiate cbc file passing jni
+			CbcSolver.init(false);
+		} else if (ControlData.solverName.equalsIgnoreCase("lpsolve")) {
 			ControlData.solverType = Param.SOLVER_LPSOLVE;
 			// initiate lpsolve
 		} else if (ControlData.solverName.toLowerCase().contains("xa")) {
@@ -461,8 +503,14 @@ public class ControllerBatch {
 						
 						if (ILP.logging && (ILP.loggingAllCycles || isLastCycle ) ) {
 
+							long beginT = System.currentTimeMillis();
 							ILP.setIlpFile();
 							ILP.writeIlp();
+							long endT = System.currentTimeMillis();	
+							double time_second = (endT-beginT)/1000.;
+							ControlData.lpFileWritingTime += time_second; 
+							
+							
 							if (ILP.loggingVariableValue) {
 								ILP.setVarFile();
 								ILP.writeSvarValue();
@@ -485,13 +533,104 @@ public class ControllerBatch {
 				            		if (ILP.loggingVariableValue) ILP.writeDvarValue_LPSOLVE();
 				            	}
 				            }
+					    // for cbc0    
+					    } else if (ControlData.solverType == Param.SOLVER_CBC0.intValue()){
+					        	
+					        	ILP.closeCplexLpFile(); // prevent double-locked by both wrims and ilp
+					        	
+					        	// send lp file path to cbc 
+					        	Cbc0Solver.setLP(ILP.cplexLpFilePath);
+					        	
+					        	// call cbc solve
+					        	Cbc0Solver.solve();
+					        	
+					        	
+					        	
+					        	// check solving errors and put them in Error.error_solving
+					            if (Error.error_solving.size()<1) {
+					            	if (ILP.logging && (ILP.loggingAllCycles || isLastCycle ) )  { 
+					            		
+					            		ILP.reOpenCplexLpFile(true);
+					            		// write objValue in lp file
+					            		ILP.writeObjValue_Clp0_Cbc0();
+					            		if (ILP.loggingVariableValue) { 
+					            			// TODO: write solution
+					            			ILP.writeDvarValue_Clp0_Cbc0(Cbc0Solver.varDoubleMap);
+					            		}
+					            	}
+					            }					            
+				        // for clp    
+				        } else if (ControlData.solverType == Param.SOLVER_CLP0.intValue()){
+				        	
+				        	ILP.closeCplexLpFile(); // prevent double-locked by both wrims and ilp
+				        	
+				        	// send lp file path to clp 
+				        	Clp0Solver.setLP(ILP.cplexLpFilePath);
+				        	
+				        	// call clp solve
+				        	Clp0Solver.solve();
+				        	
+				        	
+				        	
+				        	// check solving errors and put them in Error.error_solving
+				            if (Error.error_solving.size()<1) {
+				            	if (ILP.logging && (ILP.loggingAllCycles || isLastCycle ) )  { 
+				            		
+				            		ILP.reOpenCplexLpFile(true);
+				            		// write objValue in lp file
+				            		ILP.writeObjValue_Clp0_Cbc0();
+				            		if (ILP.loggingVariableValue) { 
+				            			// TODO: write solution
+				            			ILP.writeDvarValue_Clp0_Cbc0(Clp0Solver.varDoubleMap);
+				            		}
+				            	}
+				            }	
+				        } else if (ControlData.solverType == Param.SOLVER_CBC1.intValue()||ControlData.solverType == Param.SOLVER_CBC.intValue()){
+				        	
+				        	if(!ControlData.useCplexLpString) ILP.closeCplexLpFile(); // prevent double-locked by both wrims and ilp
+				        	
+
+				        	CbcSolver.newProblem();
+				        	
+				        	// check solving errors and put them in Error.error_solving
+				            if (Error.error_solving.size()<1) {
+				            	if (ILP.logging && (ILP.loggingAllCycles || isLastCycle ) )  { 
+				            		
+				            		if(!ControlData.useCplexLpString) ILP.reOpenCplexLpFile(true);
+				            		// write objValue in lp file
+				            		ILP.writeObjValue_Clp0_Cbc0();
+				            		if(ControlData.saveCplexLpStringToFile) ILP.saveCplexLpStringToFile();
+				            		if (ILP.loggingVariableValue) { 
+				            			// TODO: write solution
+				            			ILP.writeDvarValue_Clp0_Cbc0(CbcSolver.varDoubleMap);
+				            		}
+				            	}
+				            }
+
+				        } else if (ControlData.solverType == Param.SOLVER_CLP1.intValue()){
+				        	
+				        	ILP.closeCplexLpFile(); // prevent double-locked by both wrims and ilp
+				        	
+				        	// send lp file path to clp 
+				        	ClpSolver.newProblem(ILP.cplexLpFilePath, true);
+				        	
+				        	// check solving errors and put them in Error.error_solving
+				            if (Error.error_solving.size()<1) {
+				            	if (ILP.logging && (ILP.loggingAllCycles || isLastCycle ) )  { 
+				            		
+				            		ILP.reOpenCplexLpFile(true);
+				            		// write objValue in lp file
+				            		ILP.writeObjValue_Clp0_Cbc0();
+				            		if (ILP.loggingVariableValue) { 
+				            			// TODO: write solution
+				            			ILP.writeDvarValue_Clp0_Cbc0(ClpSolver.varDoubleMap);
+				            		}
+				            	}
+				            }					            			        	
+				            
 				        } else {
-							//long startTimeInMillis = Calendar.getInstance().getTimeInMillis();
-							new XASolver(); // default
-							//System.exit(9);
-							//long endTimeInMillis = Calendar.getInstance().getTimeInMillis();
-							//long runPeriod=(long) (endTimeInMillis-startTimeInMillis);
-							//System.out.println(" XA runtime: "+runPeriod/60000+"min"+Math.round((runPeriod/60000.0-runPeriod/60000)*60)+"sec");
+
+							new XASolver(); 
 							
 							if (ILP.logging && (ILP.loggingAllCycles || isLastCycle ) ) {
 								ILP.writeObjValue_XA();
@@ -524,6 +663,8 @@ public class ControllerBatch {
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
 
+						if (ControlData.solverType == Param.SOLVER_CBC1.intValue()||ControlData.solverType == Param.SOLVER_CBC.intValue()) { CbcSolver.resetModel();}
+						
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){
 							VariableTimeStep.currTimeAddOneMonth();
@@ -550,11 +691,19 @@ public class ControllerBatch {
 		}
 		if (ControlData.solverType == Param.SOLVER_LPSOLVE) {
 			//ControlData.lpssolver.deleteLp();
+		} else if (ControlData.solverType == Param.SOLVER_CLP0) {
+			// close clp exe
+		} else if (ControlData.solverType == Param.SOLVER_CBC0) {
+			// close cbc exe
+		} else if (ControlData.solverType == Param.SOLVER_CBC || ControlData.solverType == Param.SOLVER_CBC1) {
+			CbcSolver.close();
+		} else if (ControlData.solverType == Param.SOLVER_CLP1 || ControlData.solverType == Param.SOLVER_CLP) {
+			ClpSolver.close();
 		} else {
 			ControlData.xasolver.close();
 		}
 		if (ControlData.writeInitToDVOutput){
-			DssOperation.writeInitDvarAliasToDSS();
+		DssOperation.writeInitDvarAliasToDSS();
 		}
 		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
@@ -898,4 +1047,459 @@ public class ControllerBatch {
 			HDF5Writer.closeDataStructure();
 		}
 	}
+
+	public void runModelClp(StudyDataSet sds){
+		ArrayList<String> modelList=sds.getModelList();
+		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
+		
+		ClpSolver.init(false); 
+
+		if (Error.getTotalError()>0){
+			System.out.println("Model run exits due to error.");
+			System.exit(1);
+		}
+		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
+		boolean noError=true;
+		VariableTimeStep.initialCurrTimeStep(modelList);
+		VariableTimeStep.initialCycleStartDate();
+		VariableTimeStep.setCycleEndDate(sds);
+		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
+					
+			ClearValue.clearValues(modelList, modelDataSetMap);
+			sds.clearVarTimeArrayCycleValueMap();
+			sds.clearVarCycleIndexByTimeStep();
+			int i=0;
+			while (i<modelList.size()  && noError){  
+				
+				String model=modelList.get(i);
+				ModelDataSet mds=modelDataSetMap.get(model);
+				ControlData.currModelDataSet=mds;
+				ControlData.currCycleName=model;
+				ControlData.currCycleIndex=i;
+				VariableTimeStep.setCycleTimeStep(sds);
+				VariableTimeStep.setCurrentDate(sds, ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear);
+				
+				while(VariableTimeStep.checkEndDate(ControlData.currDay, ControlData.currMonth, ControlData.currYear, ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear)<0 && noError){
+					
+					if (ControlData.currMonth==1){
+						
+					}
+					
+					ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
+					boolean condition=false;
+					try{
+						modelCondition.evaluator();
+						condition=modelCondition.evalCondition;
+					}catch (Exception e){
+						Error.addEvaluationError("Model condition evaluation has error.");
+						condition=false;
+					}
+					modelCondition.reset();
+				
+					if (condition){
+						ClearValue.clearCycleLoopValue(modelList, modelDataSetMap);
+						ControlData.currSvMap=mds.svMap;
+						ControlData.currSvFutMap=mds.svFutMap;
+						ControlData.currDvMap=mds.dvMap;
+						ControlData.currDvSlackSurplusMap=mds.dvSlackSurplusMap;
+						ControlData.currAliasMap=mds.asMap;
+						ControlData.currGoalMap=mds.gMap;
+						ControlData.currTsMap=mds.tsMap;
+						ControlData.isPostProcessing=false;
+						mds.processModel();
+						if (Error.error_evaluation.size()>=1){
+							Error.writeEvaluationErrorFile("Error_evaluation.txt");
+							Error.writeErrorLog();
+							noError=false;
+						}
+						String lpProblemlName = ControlData.currYear+"_"+ControlData.currMonth+"_c"+(ControlData.currCycleIndex+1);
+						
+						ClpSolver.newProblem(lpProblemlName, false);
+						
+						// check monitored dvar list. they are slack and surplus generated automatically 
+						// from the weight group deviation penalty
+						// give error if they are not zero or greater than a small tolerance.
+						noError = !ErrorCheck.checkDeviationSlackSurplus(mds.deviationSlackSurplus_toleranceMap, mds.dvMap);
+						
+						if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
+						if (Error.error_solving.size()<1){
+							ControlData.isPostProcessing=true;
+							mds.processAlias();
+							if (ControlData.showRunTimeMessage) System.out.println("Assign Alias Done.");
+						}else{
+							Error.writeSolvingErrorFile("Error_solving.txt");
+							Error.writeErrorLog();
+							noError=false;
+						}
+						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
+						if (Error.error_evaluation.size()>=1) noError=false;
+	
+						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
+						if (ControlData.timeStep.equals("1MON")){
+							VariableTimeStep.currTimeAddOneMonth();
+						}else{
+							VariableTimeStep.currTimeAddOneDay();
+						}
+					}else{
+						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Skipped. ("+model+")");
+						new AssignPastCycleVariable();
+						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
+						if (ControlData.timeStep.equals("1MON")){
+							VariableTimeStep.currTimeAddOneMonth();
+						}else{
+							VariableTimeStep.currTimeAddOneDay();
+						}	
+					}
+				}
+				i=i+1;
+			}
+			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
+			VariableTimeStep.setCycleEndDate(sds);
+			try{
+				if (enableConfigProgress) {
+					FileWriter progressFile = progressFile= new FileWriter(StudyUtils.configFilePath+".prgss");
+					PrintWriter pw = new PrintWriter(progressFile);
+					pw.println("Run to "+ControlData.currYear +"/"+ ControlData.currMonth +"/"+ ControlData.currDay);
+					pw.close();
+				}else if(enableProgressLog){
+					FileWriter progressFile= new FileWriter(FilePaths.mainDirectory + "progress.txt");
+					PrintWriter pw = new PrintWriter(progressFile);
+					int cy = 0;
+					if (ControlData.currYear > cy) {
+						cy = ControlData.currYear;
+						pw.println(ControlData.startYear + " " + ControlData.endYear + " " + ControlData.currYear +" "+ ControlData.currMonth);
+						pw.close();
+					}
+				}
+			}catch(IOException e){
+				e.printStackTrace();
+			}
+
+		}
+		ClpSolver.close();
+		if (ControlData.writeInitToDVOutput){
+			DssOperation.writeInitDvarAliasToDSS();
+		}
+		DssOperation.writeDVAliasToDSS();
+		ControlData.writer.closeDSSFile();
+		
+		// write complete or fail
+		if (enableProgressLog || enableConfigProgress) {
+			try {
+				FileWriter progressFile;
+				if (enableConfigProgress){
+					progressFile= new FileWriter(StudyUtils.configFilePath+".prgss");
+				}else{
+					progressFile= new FileWriter(FilePaths.mainDirectory + "progress.txt", true);
+				}
+				PrintWriter pw = new PrintWriter(progressFile);
+				if (Error.getTotalError() > 0) {
+					pw.println("Run failed.");
+				} else {
+					pw.println("Run completed.");
+				}
+				pw.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void runModelCbc(StudyDataSet sds){
+		
+		ArrayList<String> modelList=sds.getModelList();
+		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
+		
+		CbcSolver.init(false); 	if (ControlData.cbc_debug_routeXA || ControlData.cbc_debug_routeCbc) {new InitialXASolver();}
+		if (Error.getTotalError()>0){
+			System.out.println("Model run exits due to error.");
+			System.exit(1);
+		}
+		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
+		boolean noError=true;
+		VariableTimeStep.initialCurrTimeStep(modelList);
+		VariableTimeStep.initialCycleStartDate();
+		VariableTimeStep.setCycleEndDate(sds);
+		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
+					
+			ClearValue.clearValues(modelList, modelDataSetMap);
+			sds.clearVarTimeArrayCycleValueMap();
+			sds.clearVarCycleIndexByTimeStep();
+			int i=0;
+			while (i<modelList.size()  && noError){  
+				
+				String model=modelList.get(i);
+				ModelDataSet mds=modelDataSetMap.get(model);
+				ControlData.currModelDataSet=mds;
+				ControlData.currCycleName=model;
+				ControlData.currCycleIndex=i;
+				VariableTimeStep.setCycleTimeStep(sds);
+				VariableTimeStep.setCurrentDate(sds, ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear);
+				
+				while(VariableTimeStep.checkEndDate(ControlData.currDay, ControlData.currMonth, ControlData.currYear, ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear)<0 && noError){
+					ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
+					boolean condition=false;
+					try{
+						modelCondition.evaluator();
+						condition=modelCondition.evalCondition;
+					}catch (Exception e){
+						Error.addEvaluationError("Model condition evaluation has error.");
+						condition=false;
+					}
+					modelCondition.reset();
+				
+					if (condition){
+						ClearValue.clearCycleLoopValue(modelList, modelDataSetMap);
+						ControlData.currSvMap=mds.svMap;
+						ControlData.currSvFutMap=mds.svFutMap;
+						ControlData.currDvMap=mds.dvMap;
+						ControlData.currDvSlackSurplusMap=mds.dvSlackSurplusMap;
+						ControlData.currAliasMap=mds.asMap;
+						ControlData.currGoalMap=mds.gMap;
+						ControlData.currTsMap=mds.tsMap;
+						ControlData.isPostProcessing=false;
+						mds.processModel();
+						if (Error.error_evaluation.size()>=1){
+							Error.writeEvaluationErrorFile("Error_evaluation.txt");
+							Error.writeErrorLog();
+							noError=false;
+						}
+						
+						HashSet<String> originalDvarKeys=null;
+						
+						if (ControlData.cbc_debug_routeCbc || ControlData.cbc_debug_routeXA) {
+							originalDvarKeys = new LinkedHashSet<String>(SolverData.getDvarMap().keySet());
+						}
+						
+						if (ControlData.cbc_debug_routeCbc) {
+							new XASolver();
+							SolverData.getDvarMap().keySet().retainAll(originalDvarKeys);
+							if (Error.error_solving.size() > 0) {
+								String msg = "XA solving error.";
+								ILP.writeNoteLn("", msg);
+								System.out.println("" + msg);
+								Error.writeErrorLog();
+								Error.error_solving.clear();
+							}
+							
+						}
+						
+						CbcSolver.newProblem(); 
+						
+						if (ControlData.cbc_debug_routeXA) {
+							SolverData.getDvarMap().keySet().retainAll(originalDvarKeys);
+							new XASolver();
+						}
+						
+						// check monitored dvar list. they are slack and surplus generated automatically 
+						// from the weight group deviation penalty
+						// give error if they are not zero or greater than a small tolerance.
+						noError = !ErrorCheck.checkDeviationSlackSurplus(mds.deviationSlackSurplus_toleranceMap, mds.dvMap);
+						
+						if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
+						if (Error.error_solving.size()<1){
+							ControlData.isPostProcessing=true;
+							mds.processAlias();
+							if (ControlData.showRunTimeMessage) System.out.println("Assign Alias Done.");
+						}else{
+							Error.writeSolvingErrorFile("Error_solving.txt");
+							Error.writeErrorLog();
+							noError=false;
+						}
+						int cycleI=i+1;
+						if (ControlData.outputHDF5 && ControlData.outputCycle) HDF5Writer.writeOneCycle(mds, cycleI);
+						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
+						if (Error.error_evaluation.size()>=1) noError=false;
+
+						
+						if (CbcSolver.intLog && (!ControlData.cbc_debug_routeXA && !ControlData.cbc_debug_routeCbc)) {
+							
+							String cbc_int = "";
+							if (ControlData.cycIntDvMap != null) {
+								ArrayList<String> intDVs = new ArrayList<String>(ControlData.cycIntDvMap.get(ControlData.currCycleIndex));
+								for (String v : ControlData.allIntDv) {
+									if (intDVs.contains(v)){
+										//xa_int  += " "+ Math.round(ControlData.xasolver.getColumnActivity(v));
+										if (Error.getTotalError()==0) {
+											cbc_int += " "+ Math.round(CbcSolver.varDoubleMap.get(v));
+										} else {
+											cbc_int += " ?";
+										}
+									} else {
+										//xa_int  += "  ";
+										cbc_int += "  ";
+									}
+								}
+							}
+							// write solve time
+							cbc_int +=  "  "+String.format("%8.2f",ControlData.solverTime_cbc_this);
+							
+							// write solve name
+							cbc_int +=  "  "+CbcSolver.solveName;
+
+							ILP.writeNoteLn(ILP.getYearMonthCycle(), ""+ cbc_int, ILP._noteFile_cbc_int_log);
+							
+						}
+						
+						
+						if (ControlData.cbc_debug_routeXA ||ControlData.cbc_debug_routeCbc ) {
+																			
+							// write watch var values
+							boolean recordLP = false;
+							double wa_cbc = 0;
+							double wa_xa  = 0;
+							if (ControlData.watchList != null) {
+								String wa_cbc_str = "";
+								String wa_xa_str = "";
+								for (String s : ControlData.watchList) {
+									if (ControlData.currModelDataSet.dvList.contains(s)){
+									
+										//System.out.println(s);
+										wa_cbc = CbcSolver.varDoubleMap.get(s);
+										wa_xa  = ControlData.xasolver.getColumnActivity(s);
+										wa_cbc_str += String.format("%14.3f", wa_cbc) + "  ";
+										wa_xa_str += String.format("%14.3f",  wa_xa) + "  ";
+										
+										if (Math.abs(wa_xa-wa_cbc)>ControlData.watchList_tolerance) recordLP=true; 
+									}
+								}
+								ILP.writeNoteLn(ILP.getYearMonthCycle(), wa_cbc_str, ILP._watchFile_cbc);
+								ILP.writeNoteLn(ILP.getYearMonthCycle(), wa_xa_str, ILP._watchFile_xa);
+								
+							}
+							
+							// write int value, time, and obj diff
+							ILP.writeNoteLn(ILP.getYearMonthCycle(), ""+ControlData.xasolver.getObjective(), ILP._noteFile_xa_obj);
+							ILP.writeNoteLn(ILP.getYearMonthCycle(), ""+ControlData.clp_cbc_objective, ILP._noteFile_cbc_obj);
+							
+							String xa_int = "";
+							String cbc_int = "";
+							if (ControlData.cycIntDvMap != null) {
+								ArrayList<String> intDVs = new ArrayList<String>(ControlData.cycIntDvMap.get(ControlData.currCycleIndex));
+								for (String v : ControlData.allIntDv) {
+									if (intDVs.contains(v)){
+										xa_int  += " "+ Math.round(ControlData.xasolver.getColumnActivity(v));
+										if (Error.getTotalError()==0) {
+											cbc_int += " "+ Math.round(CbcSolver.varDoubleMap.get(v));
+										} else {
+											cbc_int += " ?";
+										}
+									} else {
+										xa_int  += "  ";
+										cbc_int += "  ";
+									}
+								}
+							}
+							
+							// write solve name
+							cbc_int +=  "  "+CbcSolver.solveName;
+							xa_int  +=  "  "+CbcSolver.solveName;
+							
+							if (Error.getTotalError() == 0) {
+								if (recordLP) {
+									CbcSolver.reloadAndWriteLp("_watch_diff", true);
+								}
+								
+								double diff = ControlData.clp_cbc_objective - ControlData.xasolver.getObjective();
+								if (Math.abs(diff) > CbcSolver.record_if_obj_diff) {
+									CbcSolver.reloadAndWriteLp("_obj"+Math.round(diff), true);
+								}
+								if (Math.abs(diff) > CbcSolver.log_if_obj_diff) {
+									xa_int += "  obj: " + String.format("%16.3f", diff);
+									cbc_int += "  obj: " + String.format("%16.3f", diff);
+									if (diff>CbcSolver.maxObjDiff){
+										CbcSolver.maxObjDiff = diff;
+										CbcSolver.maxObjDiff_id = ILP.getYearMonthCycle();
+									} else if(diff<CbcSolver.maxObjDiff_minus){
+										CbcSolver.maxObjDiff_minus = diff;
+										CbcSolver.maxObjDiff_minus_id = ILP.getYearMonthCycle();										
+									}
+								}
+							}
+							ILP.writeNoteLn(ILP.getYearMonthCycle(), ""+ xa_int, ILP._noteFile_xa_int);
+							ILP.writeNoteLn(ILP.getYearMonthCycle(), ""+ cbc_int, ILP._noteFile_cbc_int);
+							
+						}
+						
+						CbcSolver.resetModel();
+						
+						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
+						if (ControlData.timeStep.equals("1MON")){
+							VariableTimeStep.currTimeAddOneMonth();
+						}else{
+							VariableTimeStep.currTimeAddOneDay();
+						}
+					}else{
+						int cycleI=i+1;
+						if (ControlData.outputHDF5 && ControlData.outputCycle) HDF5Writer.skipOneCycle(mds, cycleI);
+						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Skipped. ("+model+")");
+						new AssignPastCycleVariable();
+						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
+						if (ControlData.timeStep.equals("1MON")){
+							VariableTimeStep.currTimeAddOneMonth();
+						}else{
+							VariableTimeStep.currTimeAddOneDay();
+						}	
+					}
+				}
+				i=i+1;
+			}
+			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
+			VariableTimeStep.setCycleEndDate(sds);
+			try{
+				if (enableConfigProgress) {
+					FileWriter progressFile = progressFile= new FileWriter(StudyUtils.configFilePath+".prgss");
+					PrintWriter pw = new PrintWriter(progressFile);
+					pw.println("Run to "+ControlData.currYear +"/"+ ControlData.currMonth +"/"+ ControlData.currDay);
+					pw.close();
+				}else if(enableProgressLog){
+					FileWriter progressFile= new FileWriter(FilePaths.mainDirectory + "progress.txt");
+					PrintWriter pw = new PrintWriter(progressFile);
+					int cy = 0;
+					if (ControlData.currYear > cy) {
+						cy = ControlData.currYear;
+						pw.println(ControlData.startYear + " " + ControlData.endYear + " " + ControlData.currYear +" "+ ControlData.currMonth);
+						pw.close();
+					}
+				}
+			}catch(IOException e){
+				e.printStackTrace();
+			}
+		}
+		CbcSolver.close(); if (ControlData.cbc_debug_routeXA || ControlData.cbc_debug_routeCbc) {ControlData.xasolver.close();}
+		if (ControlData.writeInitToDVOutput){
+			DssOperation.writeInitDvarAliasToDSS();
+		}
+		DssOperation.writeDVAliasToDSS();
+		ControlData.writer.closeDSSFile();
+		
+		if (ControlData.outputHDF5){
+			HDF5Writer.createDvarAliasLookup();
+			HDF5Writer.writeTimestepData();
+			HDF5Writer.closeDataStructure();
+		}
+		
+		// write complete or fail
+		if (enableProgressLog || enableConfigProgress) {
+			try {
+				FileWriter progressFile;
+				if (enableConfigProgress){
+					progressFile= new FileWriter(StudyUtils.configFilePath+".prgss");
+				}else{
+					progressFile= new FileWriter(FilePaths.mainDirectory + "progress.txt", true);
+				}
+				PrintWriter pw = new PrintWriter(progressFile);
+				if (Error.getTotalError() > 0) {
+					pw.println("Run failed.");
+				} else {
+					pw.println("Run completed.");
+				}
+				pw.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+
 }
