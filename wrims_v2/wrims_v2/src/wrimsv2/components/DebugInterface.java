@@ -59,10 +59,12 @@ import wrimsv2.evaluator.ValueEvaluation;
 import wrimsv2.evaluator.ValueEvaluatorLexer;
 import wrimsv2.evaluator.ValueEvaluatorParser;
 import wrimsv2.ilp.ILP;
+import wrimsv2.solver.CbcSolver;
 import wrimsv2.solver.CloseCurrentSolver;
 import wrimsv2.solver.InitialXASolver;
 import wrimsv2.solver.LPSolveSolver;
 import wrimsv2.solver.SetXALog;
+import wrimsv2.solver.Gurobi.GurobiSolver;
 import wrimsv2.wreslparser.elements.FileParser;
 import wrimsv2.wreslparser.elements.SimulationDataSet;
 import wrimsv2.wreslparser.elements.StudyParser;
@@ -349,6 +351,8 @@ public class DebugInterface {
 			if (isDebugging){
 				if (ControlData.solverName.equalsIgnoreCase("XA") || ControlData.solverName.equalsIgnoreCase("XALOG")) {
 					ControlData.xasolver.close();
+				}else if (ControlData.solverName.equalsIgnoreCase("Cbc")){
+					CbcSolver.close();
 				}
 				DssOperation.writeInitDvarAliasToDSS();
 				DssOperation.writeDVAliasToDSS();
@@ -2203,8 +2207,24 @@ public class DebugInterface {
 			ChangeSolver.loadLPSolveConfigFile();
 		}else if(solverName.equals("Gurobi")){
 			ControlData.solverName="Gurobi";
+			GurobiSolver.initialize();
 			ILP.loggingCplexLp=true;
 			ILP.loggingLpSolve=false;
+			if (log.equals("None")){
+				ILP.logging=false;
+				ILP.loggingVariableValue=false;
+				System.out.println("Log file turn off");
+			}else if (log.equals("Log")){
+				ILP.logging=true;
+				ILP.loggingVariableValue=true;
+				System.out.println("Log file turn on");
+			}
+			ILP.initializeIlp();
+		}else if (solverName.equals("CBC")){
+			ControlData.solverName="CBC";
+			CbcSolver.init(false);
+			ILP.loggingLpSolve=true;
+			ILP.loggingCplexLp=false;
 			if (log.equals("None")){
 				ILP.logging=false;
 				ILP.loggingVariableValue=false;
