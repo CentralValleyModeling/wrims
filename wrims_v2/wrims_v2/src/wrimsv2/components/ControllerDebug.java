@@ -218,6 +218,7 @@ public class ControllerDebug extends Thread {
 	
 	public void runModelSolvers(StudyDataSet sds){
 		
+		ILP.getIlpDir();
 		ILP.initializeIlp();
 		
 		ArrayList<String> modelList=sds.getModelList();
@@ -301,11 +302,17 @@ public class ControllerDebug extends Thread {
 				        }else if (ControlData.solverName.equalsIgnoreCase("CBC")){
 				        	ILP.setIlpFile();
 							ILP.writeIlp();
-							ILP.setVarFile();
-							ILP.writeSvarValue();
-							CbcSolver.newProblem(); 
-							ILP.writeObjValue_Clp0_Cbc0();
-							ILP.writeDvarValue_Clp0_Cbc0(CbcSolver.varDoubleMap);
+							if (ILP.loggingVariableValue){
+								ILP.setVarFile();
+								ILP.writeSvarValue();
+							}
+							CbcSolver.newProblem();
+							if (Error.error_solving.size()<1) {
+				            	if (ILP.logging) {
+				            		ILP.writeObjValue_Clp0_Cbc0();
+				            		if (ILP.loggingVariableValue) ILP.writeDvarValue_Clp0_Cbc0(CbcSolver.varDoubleMap);
+				            	}
+							}
 				        }else if (ControlData.solverName.equalsIgnoreCase("LPSolve")) {
 							ILP.setIlpFile();
 							ILP.writeIlp();
