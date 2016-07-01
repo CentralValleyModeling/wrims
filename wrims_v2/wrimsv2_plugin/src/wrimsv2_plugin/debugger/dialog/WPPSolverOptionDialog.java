@@ -63,6 +63,7 @@ public class WPPSolverOptionDialog extends PopupDialog {
 		
 		final Combo solverCombo = new Combo(dialogArea, SWT.BORDER);
 		solverCombo.add("XA");
+		solverCombo.add("CBC");
 		solverCombo.add("LPSolve");
 		
 		Label label2 =  new Label(dialogArea, SWT.NONE);
@@ -74,8 +75,10 @@ public class WPPSolverOptionDialog extends PopupDialog {
 		
 		if (DebugCorePlugin.solver.equals("XA")){
 			solverCombo.select(0);
-		}else if (DebugCorePlugin.solver.equals("LPSolve")){
+		}else if (DebugCorePlugin.solver.equals("CBC")){
 			solverCombo.select(1);
+		}else if (DebugCorePlugin.solver.equals("LPSolve")){
+			solverCombo.select(2);
 		}
 		if (DebugCorePlugin.target==null){
 			solverCombo.setEnabled(true);
