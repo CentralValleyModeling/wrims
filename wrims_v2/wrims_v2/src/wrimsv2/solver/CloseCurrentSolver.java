@@ -10,7 +10,7 @@ public class CloseCurrentSolver {
 		}else if (currentSolver.equalsIgnoreCase("Gurobi")){
 			GurobiSolver.dispose();
 		}else if (currentSolver.equalsIgnoreCase("Cbc")){
-			ControlData.otsolver.delete();
+			CbcSolver.close();
 		}
 	}
 }

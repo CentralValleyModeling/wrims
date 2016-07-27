@@ -65,6 +65,7 @@ import wrimsv2.solver.InitialXASolver;
 import wrimsv2.solver.LPSolveSolver;
 import wrimsv2.solver.SetXALog;
 import wrimsv2.solver.Gurobi.GurobiSolver;
+import wrimsv2.tools.Warmstart;
 import wrimsv2.wreslparser.elements.FileParser;
 import wrimsv2.wreslparser.elements.SimulationDataSet;
 import wrimsv2.wreslparser.elements.StudyParser;
@@ -2207,7 +2208,6 @@ public class DebugInterface {
 			ChangeSolver.loadLPSolveConfigFile();
 		}else if(solverName.equals("Gurobi")){
 			ControlData.solverName="Gurobi";
-			GurobiSolver.initialize();
 			ILP.loggingCplexLp=true;
 			ILP.loggingLpSolve=false;
 			if (log.equals("None")){
@@ -2219,10 +2219,11 @@ public class DebugInterface {
 				ILP.loggingVariableValue=true;
 				System.out.println("Log file turn on");
 			}
+			ILP.getIlpDir();
 			ILP.initializeIlp();
+			GurobiSolver.initialize();
 		}else if (solverName.equals("CBC")){
 			ControlData.solverName="CBC";
-			CbcSolver.init(false);
 			ILP.loggingLpSolve=true;
 			ILP.loggingCplexLp=false;
 			if (log.equals("None")){
@@ -2234,7 +2235,16 @@ public class DebugInterface {
 				ILP.loggingVariableValue=true;
 				System.out.println("Log file turn on");
 			}
+			if (ControlData.useCbcWarmStart || ControlData.cbc_debug_routeCbc || ControlData.cbc_debug_routeXA){
+				if (ControlData.solverName.equalsIgnoreCase("Cbc")  || ControlData.solverName.equalsIgnoreCase("Cbc1")){
+					
+					Warmstart.collectIntegerDV_2(ControlData.currStudyDataSet);			
+				
+				}
+			}
+			ILP.getIlpDir();
 			ILP.initializeIlp();
+			CbcSolver.init(false);
 		}
 	}
 	

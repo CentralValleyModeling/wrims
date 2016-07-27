@@ -360,11 +360,11 @@ public class ControllerDebug extends Thread {
 						int cycleI=modelIndex+1;
 						if (ControlData.outputHDF5 && ControlData.outputCycle) HDF5Writer.writeOneCycle(mds, cycleI);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
+						if (ControlData.solverName.equalsIgnoreCase("CBC")){CbcSolver.resetModel();}
 						pauseForDebug(modelIndex);
 						if (Error.error_evaluation.size()>=1) noError=false;
 						if (Error.getTotalError()==0) noError=true;
 						//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==2) new RCCComparison();
-						if (ControlData.solverName.equalsIgnoreCase("CBC")){CbcSolver.resetModel();}
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){
 							VariableTimeStep.currTimeAddOneMonth();
