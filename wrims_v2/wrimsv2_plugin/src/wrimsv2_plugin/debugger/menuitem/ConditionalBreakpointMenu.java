@@ -14,11 +14,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.PlatformUI;
 
-import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.dialog.WPPConditionalBreakpointDialog;
-import wrimsv2_plugin.debugger.dialog.WPPCycleDialog;
-import wrimsv2_plugin.debugger.dialog.WPPReSimDialog;
-import wrimsv2_plugin.debugger.exception.WPPException;
 
 public class ConditionalBreakpointMenu implements IWorkbenchWindowActionDelegate {
 	public ConditionalBreakpointMenu(){
@@ -31,8 +27,8 @@ public class ConditionalBreakpointMenu implements IWorkbenchWindowActionDelegate
 		workbench.getDisplay().asyncExec(new Runnable(){
 			public void run(){
 				Shell shell=workbench.getActiveWorkbenchWindow().getShell();
-				WPPConditionalBreakpointDialog dialog= new WPPConditionalBreakpointDialog(shell, SWT.BORDER|SWT.APPLICATION_MODAL, true, false, false, false, false, "Conditional Breakpoint", "Conditional Breakpoint");
-				dialog.open(1);
+				WPPConditionalBreakpointDialog dialog= new WPPConditionalBreakpointDialog(shell);
+				dialog.openDialog();
 			}
 		});
 	}

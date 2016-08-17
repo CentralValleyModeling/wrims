@@ -26,7 +26,7 @@ import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.view.WPPVarDetailView;
 
-public class WPPCycleDialog extends PopupDialog {
+public class WPPCycleDialog extends Dialog {
 
 	private int row;
 	private int col;
@@ -35,24 +35,24 @@ public class WPPCycleDialog extends PopupDialog {
 	private String varName;
 	private String input;
 	
-	public WPPCycleDialog(Shell parent, int shellStyle,
-			boolean takeFocusOnOpen, boolean persistSize,
-			boolean persistLocation, boolean showDialogMenu,
-			boolean showPersistActions, String titleText, String infoText) {
-		super(parent, shellStyle, takeFocusOnOpen, persistSize, persistLocation,
-				showDialogMenu, showPersistActions, titleText, infoText);
-		// TODO Auto-generated constructor stub
-	}
-
-	public void open(int row, int col, TableItem item, Table table, String varName){
+	public WPPCycleDialog(Shell parent, int row, int col, TableItem item, Table table, String varName) {
+		super(parent, SWT.MIN);
 		this.row=row;
 		this.col=col;
 		this.item=item;
 		this.table=table;
 		this.varName=varName;
-		create();
-		getShell().setSize(300, 200);
-		open();
+		setText("Modify Value");
+	}
+
+	public void openDialog(){
+		Shell shell=new Shell(getParent(), getStyle());
+		shell.setText(getText());
+		createContents(shell);
+		shell.setSize(300, 200);
+		shell.setLocation(450, 300);
+		//shell.pack();
+		shell.open();
 	}
 	
 	public String getInput(){
@@ -63,49 +63,47 @@ public class WPPCycleDialog extends PopupDialog {
 		this.input=input;
 	}
 
-	@Override
-	 protected Control createDialogArea(Composite parent) {
-		Composite dialogArea = (Composite) super.createDialogArea(parent);
-		dialogArea.setLayout(new GridLayout(2, true));
+	 protected void createContents(final Shell shell) {
+		shell.setLayout(new GridLayout(2, true));
 		
 		GridData data=new GridData(GridData.FILL_HORIZONTAL);
 		data.horizontalSpan=1;
 		
-		Label label0_0 = new Label(dialogArea, SWT.NONE);
+		Label label0_0 = new Label(shell, SWT.NONE);
 		label0_0.setText("Variable:");
 		label0_0.setLayoutData(data);
 		
-		Label label0_1 = new Label(dialogArea, SWT.NONE);
+		Label label0_1 = new Label(shell, SWT.NONE);
 		label0_1.setText(varName);
 		label0_1.setLayoutData(data);
 		
-		Label label1_0 = new Label(dialogArea, SWT.NONE);
+		Label label1_0 = new Label(shell, SWT.NONE);
 		label1_0.setText("Cycle Index:");
 		label1_0.setLayoutData(data);
 		
-		Label label1_1 = new Label(dialogArea, SWT.NONE);
+		Label label1_1 = new Label(shell, SWT.NONE);
 		final String itemText0=item.getText(0);
 		label1_1.setText(itemText0);
 		label1_1.setLayoutData(data);
 		
-		Label label2_0 = new Label(dialogArea, SWT.NONE);
+		Label label2_0 = new Label(shell, SWT.NONE);
 		label2_0.setText("Cycle Name:");
 		label2_0.setLayoutData(data);
 		
-		Label label2_1 = new Label(dialogArea, SWT.NONE);
+		Label label2_1 = new Label(shell, SWT.NONE);
 		final String itemText1=item.getText(1);
 		label2_1.setText(itemText1);
 		label2_1.setLayoutData(data);
 		
-		Label label3 = new Label(dialogArea, SWT.NONE);
+		Label label3 = new Label(shell, SWT.NONE);
 		label3.setText("Value:");
 		label3.setLayoutData(data);
 		
-		final Text text=new Text(dialogArea, SWT.BORDER);
+		final Text text=new Text(shell, SWT.BORDER);
 		text.setText(item.getText(2));
 		text.setLayoutData(data);
 		
-		Button ok = new Button(dialogArea, SWT.PUSH);
+		Button ok = new Button(shell, SWT.PUSH);
 		ok.setText("OK");
 		ok.setLayoutData(data);
 		ok.addSelectionListener(new SelectionAdapter(){
@@ -132,20 +130,19 @@ public class WPPCycleDialog extends PopupDialog {
 				} catch (DebugException e) {
 					WPPException.handleException(e);
 				}
-				close();
+				shell.close();
 			}
 		});
 		
-		Button cancel = new Button(dialogArea, SWT.PUSH);
+		Button cancel = new Button(shell, SWT.PUSH);
 		cancel.setText("Cancel");
 		cancel.setLayoutData(data);
 		cancel.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent event){
-				close();
+				shell.close();
 			}
 		});
 		
-		dialogArea.getShell().setDefaultButton(ok);
-		return dialogArea;
+		shell.setDefaultButton(ok);
 	 }
 }

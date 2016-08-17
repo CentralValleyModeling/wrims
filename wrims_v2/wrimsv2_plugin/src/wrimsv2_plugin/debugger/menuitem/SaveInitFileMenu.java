@@ -14,12 +14,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.PlatformUI;
 
-import wrimsv2_plugin.debugger.core.DebugCorePlugin;
-import wrimsv2_plugin.debugger.dialog.WPPCycleDialog;
-import wrimsv2_plugin.debugger.dialog.WPPReSimDialog;
 import wrimsv2_plugin.debugger.dialog.WPPSaveFileDialog;
-import wrimsv2_plugin.debugger.dialog.WPPSolverOptionDialog;
-import wrimsv2_plugin.debugger.exception.WPPException;
 
 public class SaveInitFileMenu implements IWorkbenchWindowActionDelegate {
 	public SaveInitFileMenu(){

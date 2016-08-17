@@ -45,40 +45,38 @@ import wrimsv2_plugin.debugger.view.WPPVarDetailView;
 import wrimsv2_plugin.debugger.view.WPPVariableView;
 import wrimsv2_plugin.tools.SearchTable;
 
-public class WPPConditionalBreakpointDialog extends PopupDialog {
+public class WPPConditionalBreakpointDialog extends Dialog {
 	
-	public WPPConditionalBreakpointDialog(Shell parent, int shellStyle,
-			boolean takeFocusOnOpen, boolean persistSize,
-			boolean persistLocation, boolean showDialogMenu,
-			boolean showPersistActions, String titleText, String infoText) {
-		super(parent, shellStyle, takeFocusOnOpen, persistSize, persistLocation,
-				showDialogMenu, showPersistActions, titleText, infoText);
-		// TODO Auto-generated constructor stub
+	public WPPConditionalBreakpointDialog(Shell parent) {
+		super(parent, SWT.MIN);
+		setText("Conditional Breakpoint");
 	}
 
-	public void open(int i){
-		create();
-		getShell().setSize(600, 230);
-		open();
+	public void openDialog(){
+		Shell shell=new Shell(getParent(), getStyle());
+		shell.setText(getText());
+		createContents(shell);
+		shell.setSize(600, 200);
+		shell.setLocation(450, 300);
+		//shell.pack();
+		shell.open();
 	}
 
-	@Override
-	 protected Control createDialogArea(Composite parent) {
-		Composite dialogArea = (Composite) super.createDialogArea(parent);
+	 protected void createContents(final Shell shell) {
 		FillLayout layout=new FillLayout(SWT.VERTICAL);
 		layout.marginWidth=20;
-		layout.marginHeight=20;
-		dialogArea.setLayout(layout);
+		layout.marginHeight=10;
+		shell.setLayout(layout);
 		
-		Label label1=new Label(dialogArea, SWT.NONE);
+		Label label1=new Label(shell, SWT.NONE);
 		label1.setText("Set condition:");
 		
-		final Text text1=new Text(dialogArea, SWT.BORDER|SWT.H_SCROLL);
+		final Text text1=new Text(shell, SWT.BORDER|SWT.H_SCROLL);
 		text1.setText(DebugCorePlugin.conditionalBreakpoint);
 				
 		RowLayout layout1=new RowLayout(SWT.HORIZONTAL);
 		layout1.fill=true;
-		Composite line3=new Composite(dialogArea, SWT.NONE);
+		Composite line3=new Composite(shell, SWT.NONE);
 		line3.setLayout(layout1);
 		Button ok = new Button(line3, SWT.PUSH);
 		ok.setText("OK");
@@ -86,7 +84,7 @@ public class WPPConditionalBreakpointDialog extends PopupDialog {
 			public void widgetSelected(SelectionEvent event){
 				DebugCorePlugin.conditionalBreakpoint=text1.getText();
 				setConditionalBreakpoint();
-				close();
+				shell.close();
 			}
 		});
 		
@@ -102,12 +100,11 @@ public class WPPConditionalBreakpointDialog extends PopupDialog {
 		cancel.setText("Cancel");
 		cancel.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent event){
-				close();
+				shell.close();
 			}
 		});
 		
-		dialogArea.getShell().setDefaultButton(ok);
-		return dialogArea;
+		shell.setDefaultButton(ok);
 	 }
 	
 	public void setConditionalBreakpoint(){

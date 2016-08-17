@@ -47,8 +47,8 @@ public class AddWatch extends ActionDelegate implements IViewActionDelegate{
 		workbench.getDisplay().asyncExec(new Runnable(){
 			public void run(){
 				Shell shell=workbench.getActiveWorkbenchWindow().getShell();
-				WPPAddWatchDialog dialog= new WPPAddWatchDialog(shell, SWT.BORDER|SWT.APPLICATION_MODAL, true, false, false, false, false, "Add Watch", "Add Watch");
-				dialog.open(view);
+				WPPAddWatchDialog dialog= new WPPAddWatchDialog(shell, view);
+				dialog.openDialog();
 			}
 		});
 	}

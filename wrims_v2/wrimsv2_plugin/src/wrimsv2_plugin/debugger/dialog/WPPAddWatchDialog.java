@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.eclipse.debug.core.DebugException;
-import org.eclipse.jface.dialogs.PopupDialog;
 import org.eclipse.jface.viewers.TableTreeViewer;
 import org.eclipse.jface.viewers.CellEditor.LayoutData;
 import org.eclipse.jface.viewers.TableViewer;
@@ -49,42 +48,41 @@ import wrimsv2_plugin.tools.ProcWatchItem;
 import wrimsv2_plugin.tools.SearchTable;
 import wrimsv2_plugin.tools.ShowDuplicatedWatch;
 
-public class WPPAddWatchDialog extends PopupDialog {
+public class WPPAddWatchDialog extends Dialog {
 	
 	private IViewPart view;
 	
-	public WPPAddWatchDialog(Shell parent, int shellStyle,
-			boolean takeFocusOnOpen, boolean persistSize,
-			boolean persistLocation, boolean showDialogMenu,
-			boolean showPersistActions, String titleText, String infoText) {
-		super(parent, shellStyle, takeFocusOnOpen, persistSize, persistLocation,
-				showDialogMenu, showPersistActions, titleText, infoText);
-		// TODO Auto-generated constructor stub
-	}
-
-	public void open(IViewPart view){
+	public WPPAddWatchDialog(Shell parentShell, IViewPart view) {
+		super(parentShell, SWT.MIN);
 		this.view=view;
-		create();
-		getShell().setSize(250, 150);
-		open();
+		setText("Add Watched Variables");
 	}
 
-	@Override
-	 protected Control createDialogArea(Composite parent) {
-		Composite dialogArea = (Composite) super.createDialogArea(parent);
+	public void openDialog(){
+		Shell shell=new Shell(getParent(), getStyle());
+		shell.setText(getText());
+		createContents(shell);
+		shell.setSize(400, 170);
+		shell.setLocation(450, 300);
+		//shell.pack();
+		shell.open();
+	}
+
+	 protected void createContents(final Shell shell) {
 		FillLayout layout=new FillLayout(SWT.VERTICAL);
+		layout.marginHeight=10;
 		layout.marginWidth=20;
-		dialogArea.setLayout(layout);
+		shell.setLayout(layout);
 		
-		Label label1=new Label(dialogArea, SWT.NONE);
+		Label label1=new Label(shell, SWT.NONE);
 		label1.setText("Watch:");
 		
-		final Text text1=new Text(dialogArea, SWT.BORDER);
+		final Text text1=new Text(shell, SWT.BORDER);
 						
 		RowLayout layout1=new RowLayout(SWT.HORIZONTAL);
 		layout1.fill=true;
 		//layout.pack=true;
-		Composite line3=new Composite(dialogArea, SWT.NONE);
+		Composite line3=new Composite(shell, SWT.NONE);
 		line3.setLayout(layout1);
 		Button ok = new Button(line3, SWT.PUSH);
 		ok.setText("OK");
@@ -110,7 +108,7 @@ public class WPPAddWatchDialog extends PopupDialog {
 						}
 					});
 					}
-					close();
+					shell.close();
 				}
 			}
 		});
@@ -119,11 +117,10 @@ public class WPPAddWatchDialog extends PopupDialog {
 		cancel.setText("Cancel");
 		cancel.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent event){
-				close();
+				shell.close();
 			}
 		});
 		
-		dialogArea.getShell().setDefaultButton(ok);
-		return dialogArea;
+		shell.setDefaultButton(ok);
 	}
 }

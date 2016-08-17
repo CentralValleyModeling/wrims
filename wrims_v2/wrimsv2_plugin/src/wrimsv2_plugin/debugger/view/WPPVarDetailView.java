@@ -95,6 +95,7 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 			}
 		}
     };
+	private TableCursor cursor;
 	
 	
 	@Override
@@ -293,7 +294,8 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 	    }
 	    fillAltTimeseries(table, variableNames.get(0), timeseries);
 	    table.redraw();
-	    final TableCursor cursor = new TableCursor(table, SWT.NONE);
+	    if (cursor !=null) cursor.dispose();
+	    cursor = new TableCursor(table, SWT.NONE);
 	    cursor.addKeyListener(new TableCursorCopyListener(table));
 	    cursor.addSelectionListener(new SelectionAdapter(){
 
@@ -308,9 +310,11 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 						final IWorkbench workbench=PlatformUI.getWorkbench();
 						workbench.getDisplay().asyncExec(new Runnable(){
 							public void run(){
-								Shell shell=workbench.getActiveWorkbenchWindow().getShell();
-								WPPTimeSeriesDialog dialog= new WPPTimeSeriesDialog(shell, SWT.BORDER|SWT.APPLICATION_MODAL, true, false, false, false, false, "Modify Value", varName);
-								dialog.open(row, col, ti, table, varName);
+								if (DebugCorePlugin.varDetailChoice==0){
+									Shell shell=workbench.getActiveWorkbenchWindow().getShell();
+									WPPTimeSeriesDialog dialog= new WPPTimeSeriesDialog(shell, row, col, ti, table, varName);
+									dialog.openDialog();
+								}
 							}
 						});
 					}
@@ -439,7 +443,8 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 	    	item.setText(itemStrings);
 	    }
 	    table.redraw();
-	    final TableCursor cursor = new TableCursor(table, SWT.NONE);
+	    if (cursor !=null) cursor.dispose();
+	    cursor = new TableCursor(table, SWT.NONE);
 	    cursor.addKeyListener(new TableCursorCopyListener(table));
 	    cursor.addSelectionListener(new SelectionAdapter(){
 
@@ -454,9 +459,11 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 						final IWorkbench workbench=PlatformUI.getWorkbench();
 						workbench.getDisplay().asyncExec(new Runnable(){
 							public void run(){
-								Shell shell=workbench.getActiveWorkbenchWindow().getShell();
-								WPPCycleDialog dialog= new WPPCycleDialog(shell, SWT.BORDER|SWT.APPLICATION_MODAL, true, false, false, false, false, "Modify Value", varName);
-								dialog.open(row, col, item, table, varName);
+								if (DebugCorePlugin.varDetailChoice==2){
+									Shell shell=workbench.getActiveWorkbenchWindow().getShell();
+									WPPCycleDialog dialog= new WPPCycleDialog(shell, row, col, item, table, varName);
+									dialog.openDialog();
+								}
 							}
 						});
 					}
