@@ -61,8 +61,8 @@ public class CycleWresl extends AbstractHandler {
 				workbench.getDisplay().asyncExec(new Runnable(){
 					public void run(){
 						Shell shell=workbench.getActiveWorkbenchWindow().getShell();
-						WPPCycleWreslDialog dialog= new WPPCycleWreslDialog(shell, SWT.BORDER|SWT.APPLICATION_MODAL, true, false, false, false, false, "Cycle WRESL Files", "WRESL Files Included in the Selected Cycle");
-						dialog.open(1);
+						WPPCycleWreslDialog dialog= new WPPCycleWreslDialog(shell);
+						dialog.openDialog();
 					}
 				});
 		    }

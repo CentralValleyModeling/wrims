@@ -45,71 +45,68 @@ import wrimsv2_plugin.debugger.view.WPPFileIncExploreView;
 import wrimsv2_plugin.debugger.view.WPPVarDetailView;
 import wrimsv2_plugin.tools.FileProcess;
 
-public class WPPCycleWreslDialog extends PopupDialog {
+public class WPPCycleWreslDialog extends Dialog {
 	
-	public WPPCycleWreslDialog(Shell parent, int shellStyle,
-			boolean takeFocusOnOpen, boolean persistSize,
-			boolean persistLocation, boolean showDialogMenu,
-			boolean showPersistActions, String titleText, String infoText) {
-		super(parent, shellStyle, takeFocusOnOpen, persistSize, persistLocation,
-				showDialogMenu, showPersistActions, titleText, infoText);
-		// TODO Auto-generated constructor stub
+	public WPPCycleWreslDialog(Shell parent) {
+		super(parent, SWT.MIN);
+		setText("WRESL Files in A Cycle");
 	}
 	
-	public void open(int i){
-		create();
-		getShell().setSize(250, 150);
-		open();
+	public void openDialog(){
+		Shell shell=new Shell(getParent(), getStyle());
+		shell.setText(getText());
+		createContents(shell);
+		shell.setSize(400, 150);
+		shell.setLocation(450, 300);
+		//shell.pack();
+		shell.open();
 	}
 
-	@Override
-	 protected Control createDialogArea(Composite parent) {
-		Composite dialogArea = (Composite) super.createDialogArea(parent);
+	 protected void createContents(final Shell shell) {
 		GridLayout layout=new GridLayout(2, false);
 		layout.marginWidth=20;
-		layout.marginHeight=20;
-		dialogArea.setLayout(layout);
+		layout.marginHeight=10;
+		shell.setLayout(layout);
 		
 		GridData gridData=new GridData(GridData.FILL_BOTH);
 		gridData.horizontalSpan=1;
 		
-		Label label1 = new Label(dialogArea, SWT.NONE);
+		Label label1 = new Label(shell, SWT.NONE);
 		label1.setText("Cycle:");
 		
-		final Combo cycleCombo = new Combo(dialogArea, SWT.BORDER);
+		final Combo cycleCombo = new Combo(shell, SWT.BORDER);
 		for (int i=1; i<=99; i++){
 			cycleCombo.add(String.valueOf(i));
 		}
 		cycleCombo.select(0);
 		
-		Button ok = new Button(dialogArea, SWT.PUSH);
+		Button ok = new Button(shell, SWT.PUSH);
 		ok.setText("OK");
 		ok.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent event){
 				int cycleIndex = Integer.parseInt(cycleCombo.getText())-1;
-				procCycleWresl(cycleIndex);
-				close();
+				procCycleWresl(shell, cycleIndex);
+				shell.close();
 			}
 		});
 		
-		Button cancel = new Button(dialogArea, SWT.PUSH);
+		Button cancel = new Button(shell, SWT.PUSH);
 		cancel.setText("Cancel");
 		cancel.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent event){
-				close();
+				shell.close();
 			}
 		});
 		
-		dialogArea.getShell().setDefaultButton(ok);
-		return dialogArea;
+		shell.setDefaultButton(ok);
 	 }
 	
-	public void procCycleWresl(final int index){
+	public void procCycleWresl(Shell shell, final int index){
 		WPPDebugTarget target = DebugCorePlugin.target;
 		final String path = DebugCorePlugin.cycleWreslMainFilePath;
 		
 		if (path.equals("")){
-			close();
+			shell.close();
 		}else{
 			final IWorkbench workbench=PlatformUI.getWorkbench();
 			workbench.getDisplay().asyncExec(new Runnable(){

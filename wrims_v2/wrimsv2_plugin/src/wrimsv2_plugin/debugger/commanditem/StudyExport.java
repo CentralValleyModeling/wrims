@@ -61,8 +61,8 @@ public class StudyExport extends AbstractHandler {
 				workbench.getDisplay().asyncExec(new Runnable(){
 					public void run(){
 						Shell shell=workbench.getActiveWorkbenchWindow().getShell();
-						WPPExportStudyDialog dialog= new WPPExportStudyDialog(shell);
-						dialog.open(selFilePath, ifile);
+						WPPExportStudyDialog dialog= new WPPExportStudyDialog(shell, selFilePath, ifile);
+						dialog.openDialog();
 					}
 				});
 		    }

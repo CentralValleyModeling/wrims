@@ -4,44 +4,29 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.debug.core.DebugException;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunchConfiguration;
-import org.eclipse.debug.core.ILaunchConfigurationType;
 import org.eclipse.debug.core.ILaunchManager;
-import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.DirectoryDialog;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
@@ -49,11 +34,10 @@ import org.eclipse.ui.PlatformUI;
 import wrimsv2.components.IncFileCollector;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
-import wrimsv2_plugin.debugger.menuitem.EnableMenus;
-import wrimsv2_plugin.debugger.model.WPPValue;
-import wrimsv2_plugin.debugger.view.WPPAllGoalView;
-import wrimsv2_plugin.debugger.view.WPPVarDetailView;
-import wrimsv2_plugin.tools.DataProcess;
+import wrimsv2_plugin.debugger.view.UpdateView;
+import wrimsv2_plugin.debugger.view.WPPWatchView;
+import wrimsv2_plugin.tools.ProcWatchItem;
+import wrimsv2_plugin.tools.ShowDuplicatedWatch;
 
 public class WPPExportStudyDialog extends Dialog {
 	private String selFilePath;
@@ -61,32 +45,33 @@ public class WPPExportStudyDialog extends Dialog {
 	private String targetFolder;
 	private IFile selFile;
 	
-	public WPPExportStudyDialog(Shell parentShell) {
-		super(parentShell);
-		// TODO Auto-generated constructor stub
-	}
-
-	public void open(String selFilePath, IFile ifile){
+	public WPPExportStudyDialog(Shell parentShell, String selFilePath, IFile ifile) {
+		super(parentShell, SWT.MIN);
 		this.selFilePath=selFilePath;
 		this.selFile=ifile;
-		create();
-		getShell().setSize(600, 200);
-		getShell().setText("Export Study");
-		open();
+		setText("Export Study");
 	}
 
-	@Override
-	protected Control createDialogArea(Composite parent) {
-		Composite dialogArea = (Composite) super.createDialogArea(parent);
+	public void openDialog(){
+		Shell shell=new Shell(getParent(), getStyle());
+		shell.setText(getText());
+		createContents(shell);
+		shell.setSize(600, 200);
+		shell.setLocation(450, 300);
+		//shell.pack();
+		shell.open();
+	}
+
+	protected void createContents(final Shell shell) {
 		FillLayout fl = new FillLayout(SWT.VERTICAL);
-		dialogArea.setLayout(fl);
+		shell.setLayout(fl);
 		fl.marginWidth=10;
 		fl.marginHeight=15;
 		
-		Label label1=new Label(dialogArea, SWT.NONE);
+		Label label1=new Label(shell, SWT.NONE);
 		label1.setText("Please select a folder to export the study to:");
 				
-		Composite fileSelection = new Composite(dialogArea, SWT.NONE);
+		Composite fileSelection = new Composite(shell, SWT.NONE);
 		GridLayout layout = new GridLayout(15, true);
 		fileSelection.setLayout(layout);
 		targetText = new Text(fileSelection, SWT.SINGLE | SWT.BORDER);
@@ -107,25 +92,48 @@ public class WPPExportStudyDialog extends Dialog {
 				workbench.getDisplay().asyncExec(new Runnable(){
 					public void run(){
 						Shell shell=workbench.getActiveWorkbenchWindow().getShell();
-						DirectoryDialog dlg =new DirectoryDialog(getShell(),SWT.OPEN);
+						DirectoryDialog dlg =new DirectoryDialog(shell,SWT.OPEN);
 						targetText.setText(dlg.open());
 					}
 				});
 			}
 		});
 		
-		return dialogArea;
+		Composite okCancel=new Composite(shell, SWT.NONE);
+		okCancel.setLayout(layout);
+		Button ok = new Button(okCancel, SWT.PUSH);
+		ok.setText("OK");
+		GridData gd3 = new GridData(GridData.FILL_HORIZONTAL);
+		gd3.horizontalSpan = 2;
+		ok.setLayoutData(gd3);
+		ok.addSelectionListener(new SelectionAdapter(){
+			public void widgetSelected(SelectionEvent event){
+				okPressed(shell);
+			}
+		});
+		
+		Button cancel = new Button(okCancel, SWT.PUSH);
+		cancel.setText("Cancel");
+		GridData gd4 = new GridData(GridData.FILL_HORIZONTAL);
+		gd4.horizontalSpan = 2;
+		cancel.setLayoutData(gd4);
+		cancel.addSelectionListener(new SelectionAdapter(){
+			public void widgetSelected(SelectionEvent event){
+				shell.close();
+			}
+		});
+		
+		shell.setDefaultButton(ok);
 	}
-	
-	@Override
-	public void okPressed(){
+
+	public void okPressed(Shell shell){
 		targetFolder=targetText.getText();
 		if (selFilePath.toLowerCase().endsWith(".wresl")){
 			procMainFile();
 		}else if (selFilePath.toLowerCase().endsWith(".launch")){
 			procLaunchFile();
 		}
-		close();
+		shell.close();
 	}
 	
 	protected void procMainFile(){

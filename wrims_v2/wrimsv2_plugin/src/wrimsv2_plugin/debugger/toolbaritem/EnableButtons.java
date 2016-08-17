@@ -34,8 +34,10 @@ public class EnableButtons {
 						IToolBarManager toolBarManager = actionBars.getToolBarManager();
 						IContributionItem contributionItem = toolBarManager.find(id);
 						PluginActionContributionItem pACI = ((PluginActionContributionItem)contributionItem);
-						IAction action = pACI.getAction();
-						action.setEnabled(enableButtonMap.get(id));
+						if (pACI !=null){
+							IAction action = pACI.getAction();
+							action.setEnabled(enableButtonMap.get(id));
+						}
 					}
 				}
 			}
