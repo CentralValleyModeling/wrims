@@ -1,44 +1,26 @@
 package wrimsv2_plugin.debugger.dialog;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.debug.core.DebugException;
-import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
@@ -58,36 +40,37 @@ public class WPPFilterGoalsDialog extends Dialog {
 	private boolean doFilter=false;
 	
 	public WPPFilterGoalsDialog(Shell parentShell) {
-		super(parentShell);
-		// TODO Auto-generated constructor stub
+		super(parentShell, SWT.MIN);
+		setText("Filter Goals");
 	}
 
 	public void openDialog(){
-		create();
-		getShell().setSize(600, 240);
-		getShell().setText("Filter Goals");
-		open();
+		Shell shell=new Shell(getParent(), getStyle());
+		shell.setText(getText());
+		createContents(shell);
+		shell.setSize(620, 200);
+		shell.setLocation(450, 300);
+		//shell.pack();
+		shell.open();
 	}
 
-	@Override
-	protected Control createDialogArea(Composite parent) {
-		Composite dialogArea = (Composite) super.createDialogArea(parent);
+	protected void createContents(final Shell shell) {
 		FillLayout fl = new FillLayout(SWT.VERTICAL);
-		dialogArea.setLayout(fl);
-		fl.marginWidth=10;
+		shell.setLayout(fl);
+		fl.marginWidth=20;
 		fl.marginHeight=15;
 		
 		GridLayout layout = new GridLayout(15, true);
 		GridData gd1 = new GridData(GridData.FILL_HORIZONTAL);
-		gd1.horizontalSpan = 12;
+		gd1.horizontalSpan = 13;
 		GridData gd2 = new GridData(GridData.FILL_HORIZONTAL);
-		gd2.horizontalSpan = 3;
+		gd2.horizontalSpan = 2;
 		
-		Label label3=new Label(dialogArea, SWT.NONE);
+		Label label3=new Label(shell, SWT.NONE);
 		label3.setText("Optional goals filter:");
 		filterName=DebugCorePlugin.filterFileName;
 		
-		Composite filterSelection = new Composite(dialogArea, SWT.NONE);
+		Composite filterSelection = new Composite(shell, SWT.NONE);
 		filterSelection.setLayout(layout);
 		filterText = new Text(filterSelection, SWT.SINGLE | SWT.BORDER);
 		filterText.setLayoutData(gd1);
@@ -118,14 +101,37 @@ public class WPPFilterGoalsDialog extends Dialog {
 			}
 		});
 		
-		return dialogArea;
+		Composite okCancel=new Composite(shell, SWT.NONE);
+		okCancel.setLayout(layout);
+		Button ok = new Button(okCancel, SWT.PUSH);
+		ok.setText("OK");
+		GridData gd3 = new GridData(GridData.FILL_HORIZONTAL);
+		gd3.horizontalSpan = 2;
+		ok.setLayoutData(gd3);
+		ok.addSelectionListener(new SelectionAdapter(){
+			public void widgetSelected(SelectionEvent event){
+				okPressed(shell);
+			}
+		});
+		
+		Button cancel = new Button(okCancel, SWT.PUSH);
+		cancel.setText("Cancel");
+		GridData gd4 = new GridData(GridData.FILL_HORIZONTAL);
+		gd4.horizontalSpan = 2;
+		cancel.setLayoutData(gd4);
+		cancel.addSelectionListener(new SelectionAdapter(){
+			public void widgetSelected(SelectionEvent event){
+				shell.close();
+			}
+		});
+		
+		shell.setDefaultButton(ok);
 	}
 	
-	@Override
-	public void okPressed(){
+	public void okPressed(Shell shell){
 		procFilterFile();
 		if (doFilter){
-			close();
+			shell.close();
 		}else{
 			showWarningMessage(1);
 		}

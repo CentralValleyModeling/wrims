@@ -35,8 +35,8 @@ public class VarGoalSearch 	extends ActionDelegate implements IViewActionDelegat
 		workbench.getDisplay().asyncExec(new Runnable(){
 			public void run(){
 				Shell shell=workbench.getActiveWorkbenchWindow().getShell();
-				WPPVarGoalSearchDialog dialog= new WPPVarGoalSearchDialog(shell, SWT.BORDER|SWT.APPLICATION_MODAL, true, false, false, false, false, "Search", "Search");
-				dialog.open(view);
+				WPPVarGoalSearchDialog dialog= new WPPVarGoalSearchDialog(shell, view);
+				dialog.openDialog();
 			}
 		});
 	}

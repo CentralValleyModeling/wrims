@@ -5,8 +5,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -15,42 +13,27 @@ import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.debug.core.DebugException;
-import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 
-import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
-import wrimsv2_plugin.debugger.menuitem.EnableMenus;
-import wrimsv2_plugin.debugger.view.WPPVarDetailView;
+
 
 public class WPPLoadZipFileDialog extends Dialog {
-	private int flag=1;
 	private Text fileText;
 	private	String fileName="";
 	private final int BUFFER_SIZE = 4096;
@@ -58,30 +41,30 @@ public class WPPLoadZipFileDialog extends Dialog {
 	private boolean projectExist;
 	
 	public WPPLoadZipFileDialog(Shell parentShell) {
-		super(parentShell);
-		// TODO Auto-generated constructor stub
+		super(parentShell, SWT.MIN);
+		setText("Load Zip File");
 	}
 
-	public void open(int flag){
-		this.flag=flag;
-		create();
-		getShell().setSize(600, 200);
-		getShell().setText("Load Zip File");
-		open();
+	public void openDialog(){
+		Shell shell=new Shell(getParent(), getStyle());
+		shell.setText(getText());
+		createContents(shell);
+		shell.setSize(600, 200);
+		shell.setLocation(450, 300);
+		//shell.pack();
+		shell.open();
 	}
 
-	@Override
-	protected Control createDialogArea(Composite parent) {
-		Composite dialogArea = (Composite) super.createDialogArea(parent);
+	protected void createContents(final Shell shell) {
 		FillLayout fl = new FillLayout(SWT.VERTICAL);
-		dialogArea.setLayout(fl);
+		shell.setLayout(fl);
 		fl.marginWidth=10;
 		fl.marginHeight=15;
 		
-		Label label1=new Label(dialogArea, SWT.NONE);
+		Label label1=new Label(shell, SWT.NONE);
 		label1.setText("Please select a zip file to load:");
 		
-		Composite fileSelection = new Composite(dialogArea, SWT.NONE);
+		Composite fileSelection = new Composite(shell, SWT.NONE);
 		GridLayout layout = new GridLayout(15, true);
 		fileSelection.setLayout(layout);
 		fileText = new Text(fileSelection, SWT.SINGLE | SWT.BORDER);
@@ -114,19 +97,42 @@ public class WPPLoadZipFileDialog extends Dialog {
 				});
 			}
 		});
+	
+		Composite okCancel=new Composite(shell, SWT.NONE);
+		okCancel.setLayout(layout);
+		Button ok = new Button(okCancel, SWT.PUSH);
+		ok.setText("OK");
+		GridData gd3 = new GridData(GridData.FILL_HORIZONTAL);
+		gd3.horizontalSpan = 2;
+		ok.setLayoutData(gd3);
+		ok.addSelectionListener(new SelectionAdapter(){
+			public void widgetSelected(SelectionEvent event){
+				okPressed(shell);
+			}
+		});
 		
-		return dialogArea;
+		Button cancel = new Button(okCancel, SWT.PUSH);
+		cancel.setText("Cancel");
+		GridData gd4 = new GridData(GridData.FILL_HORIZONTAL);
+		gd4.horizontalSpan = 2;
+		cancel.setLayoutData(gd4);
+		cancel.addSelectionListener(new SelectionAdapter(){
+			public void widgetSelected(SelectionEvent event){
+				shell.close();
+			}
+		});
+		
+		shell.setDefaultButton(ok);
 	}
 	
-	@Override
-	public void okPressed(){
+	public void okPressed(Shell shell){
 		fileName=fileText.getText();
 		if (unzipFile()){
 			loadStudy();
 		}else{
 			showUnzipFailed();
 		}
-		close();
+		shell.close();
 	}
 	
 	public boolean unzipFile(){

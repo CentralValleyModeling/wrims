@@ -27,8 +27,8 @@ public class SaveInitFileMenu implements IWorkbenchWindowActionDelegate {
 		workbench.getDisplay().asyncExec(new Runnable(){
 			public void run(){
 				Shell shell=workbench.getActiveWorkbenchWindow().getShell();
-				WPPSaveFileDialog dialog= new WPPSaveFileDialog(shell);
-				dialog.open(0);
+				WPPSaveFileDialog dialog= new WPPSaveFileDialog(shell, 0);
+				dialog.openDialog();
 			}
 		});
 	}

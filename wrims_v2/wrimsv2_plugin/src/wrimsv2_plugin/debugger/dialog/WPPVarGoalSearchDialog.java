@@ -1,30 +1,14 @@
 package wrimsv2_plugin.debugger.dialog;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import org.eclipse.debug.core.DebugException;
-import org.eclipse.jface.dialogs.PopupDialog;
-import org.eclipse.jface.viewers.TableTreeViewer;
-import org.eclipse.jface.viewers.CellEditor.LayoutData;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.TableTree;
-import org.eclipse.swt.custom.TableTreeItem;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Dialog;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
@@ -36,52 +20,48 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
-import wrimsv2_plugin.debugger.exception.WPPException;
-import wrimsv2_plugin.debugger.menuitem.EnableMenus;
 import wrimsv2_plugin.debugger.view.WPPAllGoalView;
 import wrimsv2_plugin.debugger.view.WPPAllVariableView;
 import wrimsv2_plugin.debugger.view.WPPGoalView;
-import wrimsv2_plugin.debugger.view.WPPVarDetailView;
 import wrimsv2_plugin.debugger.view.WPPVariableView;
 import wrimsv2_plugin.tools.SearchTable;
 
-public class WPPVarGoalSearchDialog extends PopupDialog {
+public class WPPVarGoalSearchDialog extends Dialog {
 	
 	private IViewPart view;
 	
-	public WPPVarGoalSearchDialog(Shell parent, int shellStyle,
-			boolean takeFocusOnOpen, boolean persistSize,
-			boolean persistLocation, boolean showDialogMenu,
-			boolean showPersistActions, String titleText, String infoText) {
-		super(parent, shellStyle, takeFocusOnOpen, persistSize, persistLocation,
-				showDialogMenu, showPersistActions, titleText, infoText);
-		// TODO Auto-generated constructor stub
-	}
-
-	public void open(IViewPart view){
+	public WPPVarGoalSearchDialog(Shell parent, IViewPart view) {
+		super(parent, SWT.MIN);
 		this.view=view;
-		create();
-		getShell().setSize(250, 150);
-		open();
+		setText("Search");
 	}
 
-	@Override
-	 protected Control createDialogArea(Composite parent) {
-		Composite dialogArea = (Composite) super.createDialogArea(parent);
+	public void openDialog(){
+		Shell shell=new Shell(getParent(), getStyle());
+		shell.setText(getText());
+		createContents(shell);
+		shell.setSize(250, 170);
+		shell.setLocation(450, 300);
+		//shell.pack();
+		shell.open();
+	}
+
+	protected void createContents(final Shell shell) {
 		FillLayout layout=new FillLayout(SWT.VERTICAL);
+		layout.marginHeight=15;
 		layout.marginWidth=20;
-		dialogArea.setLayout(layout);
+		shell.setLayout(layout);
 		
-		Label label1=new Label(dialogArea, SWT.NONE);
+		Label label1=new Label(shell, SWT.NONE);
 		label1.setText("Search:");
 		
-		final Text text1=new Text(dialogArea, SWT.BORDER);
+		final Text text1=new Text(shell, SWT.BORDER);
 		text1.setText(DebugCorePlugin.textVarGoalSearch);
 				
 		RowLayout layout1=new RowLayout(SWT.HORIZONTAL);
 		layout1.fill=true;
 		//layout.pack=true;
-		Composite line3=new Composite(dialogArea, SWT.NONE);
+		Composite line3=new Composite(shell, SWT.NONE);
 		line3.setLayout(layout1);
 		Button ok = new Button(line3, SWT.PUSH);
 		ok.setText("OK");
@@ -98,7 +78,7 @@ public class WPPVarGoalSearchDialog extends PopupDialog {
 				}else if (view instanceof WPPAllGoalView){
 					search(textString);
 				}
-				close();
+				shell.close();
 			}
 		});
 		
@@ -106,12 +86,11 @@ public class WPPVarGoalSearchDialog extends PopupDialog {
 		cancel.setText("Cancel");
 		cancel.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent event){
-				close();
+				shell.close();
 			}
 		});
 		
-		dialogArea.getShell().setDefaultButton(ok);
-		return dialogArea;
+		shell.setDefaultButton(ok);
 	 }
 	
 	public void search(String text){

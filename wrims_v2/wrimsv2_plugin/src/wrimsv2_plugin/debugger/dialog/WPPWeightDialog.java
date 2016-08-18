@@ -1,101 +1,79 @@
 package wrimsv2_plugin.debugger.dialog;
 
 import java.text.Collator;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.debug.core.DebugException;
-import org.eclipse.debug.core.model.IValue;
-import org.eclipse.jface.dialogs.PopupDialog;
-import org.eclipse.jface.viewers.TableTreeViewer;
-import org.eclipse.jface.viewers.CellEditor.LayoutData;
-import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.TableTree;
-import org.eclipse.swt.custom.TableTreeItem;
-import org.eclipse.swt.dnd.Clipboard;
-import org.eclipse.swt.dnd.TextTransfer;
-import org.eclipse.swt.dnd.Transfer;
-import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.KeyListener;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.IViewPart;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PlatformUI;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.listener.TableCopyListener;
-import wrimsv2_plugin.debugger.menuitem.EnableMenus;
 import wrimsv2_plugin.debugger.model.WPPValue;
 import wrimsv2_plugin.debugger.view.ProcessAltColumn;
-import wrimsv2_plugin.debugger.view.WPPAllGoalView;
-import wrimsv2_plugin.debugger.view.WPPAllVariableView;
-import wrimsv2_plugin.debugger.view.WPPGoalView;
-import wrimsv2_plugin.debugger.view.WPPVarDetailView;
-import wrimsv2_plugin.debugger.view.WPPVarMonitorView;
-import wrimsv2_plugin.debugger.view.WPPVariableView;
 import wrimsv2_plugin.tools.DataProcess;
-import wrimsv2_plugin.tools.SearchTable;
 
 public class WPPWeightDialog extends Dialog {
 	
 	private boolean firstAlt=false;
 	
 	public WPPWeightDialog(Shell parent) {
-		super(parent);
-		setShellStyle(SWT.MIN);
+		super(parent, SWT.MIN);
+		setText("Weighted Variables");
 	}
 	
 	public void openDialog(){
-		create();
-		getShell().setSize(820, 520);
-		getShell().setText("Weighted Variables");
-		open();
+		Shell shell=new Shell(getParent(), getStyle());
+		shell.setText(getText());
+		createContents(shell);
+		shell.setSize(820, 520);
+		shell.setLocation(450, 300);
+		//shell.pack();
+		shell.open();
 	}
 	
-	@Override
-	 protected Control createDialogArea(Composite parent) {
-		Composite dialogArea = (Composite) super.createDialogArea(parent);
+	protected void createContents(final Shell shell) {
 		GridLayout layout=new GridLayout();
 		layout.numColumns=1;
+		layout.marginHeight=15;
 		layout.marginWidth=20;
-		dialogArea.setLayout(layout);
+		shell.setLayout(layout);
 				
-		Table table = new Table(dialogArea, SWT.MULTI|SWT.FULL_SELECTION);
+		Table table = new Table(shell, SWT.MULTI|SWT.FULL_SELECTION);
 		GridData gd1=new GridData(750, 390);
 		table.setLayoutData(gd1);
 	    constructTable(table);
-	    	    
-		dialogArea.pack();
-		return dialogArea;
+	    
+	    Composite okCancel=new Composite(shell, SWT.NONE);
+		okCancel.setLayout(layout);
+		Button ok = new Button(okCancel, SWT.PUSH);
+		ok.setText("OK");
+		GridData gd3 = new GridData(100, 25);
+		gd3.horizontalSpan = 15;
+		ok.setLayoutData(gd3);
+		ok.addSelectionListener(new SelectionAdapter(){
+			public void widgetSelected(SelectionEvent event){
+				shell.close();
+			}
+		});
+	    
+		shell.pack();
 	 }
 	
 	public void constructTable(final Table table){

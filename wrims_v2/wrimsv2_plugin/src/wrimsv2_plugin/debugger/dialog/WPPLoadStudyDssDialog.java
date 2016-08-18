@@ -3,35 +3,22 @@ package wrimsv2_plugin.debugger.dialog;
 import hec.heclib.dss.HecDss;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
 
-import org.eclipse.debug.core.DebugException;
-import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.DirectoryDialog;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
@@ -39,11 +26,6 @@ import org.eclipse.ui.PlatformUI;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
-import wrimsv2_plugin.debugger.menuitem.EnableMenus;
-import wrimsv2_plugin.debugger.view.WPPAllGoalView;
-import wrimsv2_plugin.debugger.view.WPPAllVariableView;
-import wrimsv2_plugin.debugger.view.WPPGoalView;
-import wrimsv2_plugin.debugger.view.WPPVarDetailView;
 import wrimsv2_plugin.debugger.view.WPPVariableView;
 import wrimsv2_plugin.debugger.view.WPPWatchView;
 import wrimsv2_plugin.tools.DataProcess;
@@ -61,34 +43,36 @@ public class WPPLoadStudyDssDialog extends Dialog {
 	private String errorFiles="";
 	
 	public WPPLoadStudyDssDialog(Shell parentShell) {
-		super(parentShell);
-		// TODO Auto-generated constructor stub
+		super(parentShell, SWT.MIN);
+		setText("Load Alt DV/SV or Study");
 	}
 
 	public void openDialog(){
-		create();
-		getShell().setSize(900, 550);
-		getShell().setText("Load Alt DV/SV or Study");
-		open();
+		Shell shell=new Shell(getParent(), getStyle());
+		shell.setText(getText());
+		createContents(shell);
+		shell.setSize(900, 550);
+		shell.setLocation(450, 300);
+		//shell.pack();
+		shell.open();
 	}
 
-	@Override
-	protected Control createDialogArea(Composite parent) {
-		Composite dialogArea = (Composite) super.createDialogArea(parent);
+	protected void createContents(final Shell shell) {
 		FillLayout fl = new FillLayout(SWT.VERTICAL);
-		dialogArea.setLayout(fl);
+		shell.setLayout(fl);
 		fl.marginWidth=10;
 		fl.marginHeight=15;
 		
-		Label label1=new Label(dialogArea, SWT.NONE);
+		Label label1=new Label(shell, SWT.NONE);
 		label1.setText("Please select DV and SV files or study folders for alternatives");
+		
+		GridLayout layout = new GridLayout(37, true);
 		
 		Composite[] fileSelection = new Composite[8];
 		
 		for (int i=0; i<4; i++){
 			final int j=i;
-			fileSelection[i] = new Composite(dialogArea, SWT.NONE);
-			GridLayout layout = new GridLayout(37, true);
+			fileSelection[i] = new Composite(shell, SWT.NONE);
 			fileSelection[i].setLayout(layout);
 			
 			checkBox[i]=new Button(fileSelection[i], SWT.CHECK);
@@ -174,8 +158,7 @@ public class WPPLoadStudyDssDialog extends Dialog {
 		
 		for (int i=4; i<8; i++){
 			final int j=i-4;
-			fileSelection[i] = new Composite(dialogArea, SWT.NONE);
-			GridLayout layout = new GridLayout(37, true);
+			fileSelection[i] = new Composite(shell, SWT.NONE);
 			fileSelection[i].setLayout(layout);
 			
 			checkBox[i]=new Button(fileSelection[i], SWT.CHECK);
@@ -225,16 +208,39 @@ public class WPPLoadStudyDssDialog extends Dialog {
 			});
 		}
 		
-		return dialogArea;
+		Composite okCancel=new Composite(shell, SWT.NONE);
+		okCancel.setLayout(layout);
+		Button ok = new Button(okCancel, SWT.PUSH);
+		ok.setText("OK");
+		GridData gd3 = new GridData(GridData.FILL_HORIZONTAL);
+		gd3.horizontalSpan = 5;
+		ok.setLayoutData(gd3);
+		ok.addSelectionListener(new SelectionAdapter(){
+			public void widgetSelected(SelectionEvent event){
+				okPressed(shell);
+			}
+		});
+		
+		Button cancel = new Button(okCancel, SWT.PUSH);
+		cancel.setText("Cancel");
+		GridData gd4 = new GridData(GridData.FILL_HORIZONTAL);
+		gd4.horizontalSpan = 5;
+		cancel.setLayoutData(gd4);
+		cancel.addSelectionListener(new SelectionAdapter(){
+			public void widgetSelected(SelectionEvent event){
+				shell.close();
+			}
+		});
+		
+		shell.setDefaultButton(ok);
 	}
 	
-	@Override
-	public void okPressed(){
+	public void okPressed(Shell shell){
 		selectFiles();
 		if (DebugCorePlugin.selectedStudies[0] || DebugCorePlugin.selectedStudies[1] || DebugCorePlugin.selectedStudies[2] || DebugCorePlugin.selectedStudies[3]){
 			if (checkFilesExist()){
 				if (openDssFiles()){
-					close();
+					shell.close();
 					processViews();
 				}else{
 					showDssFileErrorDialog(1);
@@ -244,7 +250,7 @@ public class WPPLoadStudyDssDialog extends Dialog {
 			}
 		}else{
 			if (checkFoldersExist()){
-				close();
+				shell.close();
 				processViews();
 			}else{
 				showDssFileErrorDialog(2);

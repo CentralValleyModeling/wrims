@@ -28,7 +28,7 @@ public class LoadZipFileMenu implements IWorkbenchWindowActionDelegate {
 			public void run(){
 				Shell shell=workbench.getActiveWorkbenchWindow().getShell();
 				WPPLoadZipFileDialog dialog= new WPPLoadZipFileDialog(shell);
-				dialog.open(1);
+				dialog.openDialog();
 			}
 		});
 	}

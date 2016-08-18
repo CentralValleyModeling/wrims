@@ -26,7 +26,6 @@ import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.reporttool.Report;
 
 
-
 public class WPPReportToolDialog extends Dialog {
 	
 	private Text templateFileText;

@@ -1,75 +1,59 @@
 package wrimsv2_plugin.debugger.dialog;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.eclipse.debug.core.DebugException;
-import org.eclipse.jface.dialogs.PopupDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Dialog;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableItem;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.PlatformUI;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
-import wrimsv2_plugin.debugger.menuitem.EnableMenus;
-import wrimsv2_plugin.debugger.view.WPPVarDetailView;
 
-public class WPPSolverOptionDialog extends PopupDialog {
+public class WPPSolverOptionDialog extends Dialog {
 	
-	public WPPSolverOptionDialog(Shell parent, int shellStyle,
-			boolean takeFocusOnOpen, boolean persistSize,
-			boolean persistLocation, boolean showDialogMenu,
-			boolean showPersistActions, String titleText, String infoText) {
-		super(parent, shellStyle, takeFocusOnOpen, persistSize, persistLocation,
-				showDialogMenu, showPersistActions, titleText, infoText);
-		// TODO Auto-generated constructor stub
+	public WPPSolverOptionDialog(Shell parent) {
+		super(parent, SWT.MIN);
+		setText("Solver Option");
 	}
 
-	public void open(int i){
-		create();
-		getShell().setSize(300, 170);
-		open();
+	public void openDialog(){
+		Shell shell=new Shell(getParent(), getStyle());
+		shell.setText(getText());
+		createContents(shell);
+		shell.setSize(300, 170);
+		shell.setLocation(450, 300);
+		//shell.pack();
+		shell.open();
 	}
 
-	@Override
-	 protected Control createDialogArea(Composite parent) {
-		Composite dialogArea = (Composite) super.createDialogArea(parent);
+	protected void createContents(final Shell shell) {
 		GridLayout layout=new GridLayout(2, false);
-		dialogArea.setLayout(layout);
+		layout.marginWidth=20;
+		layout.marginHeight=15;
+		shell.setLayout(layout);
 		
 		GridData gridData=new GridData(GridData.FILL_BOTH);
 		gridData.horizontalSpan=1;
 		
-		Label label1 = new Label(dialogArea, SWT.NONE);
+		Label label1 = new Label(shell, SWT.NONE);
 		label1.setText("Solver:");
 		
-		final Combo solverCombo = new Combo(dialogArea, SWT.BORDER);
+		final Combo solverCombo = new Combo(shell, SWT.BORDER);
 		solverCombo.add("XA");
 		solverCombo.add("CBC");
 		solverCombo.add("LPSolve");
 		
-		Label label2 =  new Label(dialogArea, SWT.NONE);
+		Label label2 =  new Label(shell, SWT.NONE);
 		label2.setText("Log:");
 		
-		final Combo logCombo = new Combo(dialogArea, SWT.BORDER);
+		final Combo logCombo = new Combo(shell, SWT.BORDER);
 		logCombo.add("None");
 		logCombo.add("Log");
 		
@@ -100,7 +84,7 @@ public class WPPSolverOptionDialog extends PopupDialog {
 			logCombo.select(1);
 		}
 		
-		Button ok = new Button(dialogArea, SWT.PUSH);
+		Button ok = new Button(shell, SWT.PUSH);
 		ok.setText("OK");
 		ok.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent event){
@@ -113,19 +97,18 @@ public class WPPSolverOptionDialog extends PopupDialog {
 						WPPException.handleException(e);
 					}
 				}
-				close();
+				shell.close();
 			}
 		});
 		
-		Button cancel = new Button(dialogArea, SWT.PUSH);
+		Button cancel = new Button(shell, SWT.PUSH);
 		cancel.setText("Cancel");
 		cancel.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent event){
-				close();
+				shell.close();
 			}
 		});
 		
-		dialogArea.getShell().setDefaultButton(ok);
-		return dialogArea;
+		shell.setDefaultButton(ok);
 	 }
 }

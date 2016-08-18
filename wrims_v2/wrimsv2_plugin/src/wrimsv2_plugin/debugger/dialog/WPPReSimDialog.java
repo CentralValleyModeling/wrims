@@ -1,68 +1,56 @@
 package wrimsv2_plugin.debugger.dialog;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.eclipse.debug.core.DebugException;
-import org.eclipse.jface.dialogs.PopupDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Dialog;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableItem;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.PlatformUI;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.menuitem.EnableMenus;
 import wrimsv2_plugin.debugger.toolbaritem.EnableButtons;
 import wrimsv2_plugin.debugger.toolbaritem.HandlePauseResumeButton;
-import wrimsv2_plugin.debugger.view.WPPVarDetailView;
 
-public class WPPReSimDialog extends PopupDialog {
+public class WPPReSimDialog extends Dialog {
 	Combo year;
 	Combo month;
 	Combo day;
 	Combo cycle;
 	
 	
-	public WPPReSimDialog(Shell parent, int shellStyle,
-			boolean takeFocusOnOpen, boolean persistSize,
-			boolean persistLocation, boolean showDialogMenu,
-			boolean showPersistActions, String titleText, String infoText) {
-		super(parent, shellStyle, takeFocusOnOpen, persistSize, persistLocation,
-				showDialogMenu, showPersistActions, titleText, infoText);
-		// TODO Auto-generated constructor stub
+	public WPPReSimDialog(Shell parent) {
+		super(parent, SWT.MIN);
+		setText("Re-Simulation");
 	}
 
-	public void open(int i){
-		create();
-		getShell().setSize(450, 280);
-		open();
+	public void openDialog(){
+		Shell shell=new Shell(getParent(), getStyle());
+		shell.setText(getText());
+		createContents(shell);
+		shell.setSize(450, 280);
+		shell.setLocation(450, 300);
+		//shell.pack();
+		shell.open();
 	}
 
-	@Override
-	 protected Control createDialogArea(Composite parent) {
-		Composite dialogArea = (Composite) super.createDialogArea(parent);
+	 protected void createContents(final Shell shell) {
 		RowLayout layout=new RowLayout(SWT.VERTICAL);
-		dialogArea.setLayout(layout);
+		layout.marginHeight=10;
+		layout.marginWidth=20;
+		shell.setLayout(layout);
 		
-		Composite line1=new Composite(dialogArea, SWT.NONE);
+		Composite line1=new Composite(shell, SWT.NONE);
 		layout=new RowLayout(SWT.HORIZONTAL);
 		layout.justify=true;
 		layout.pack=true;
@@ -70,7 +58,7 @@ public class WPPReSimDialog extends PopupDialog {
 		Label label1=new Label(line1, SWT.NONE);
 		label1.setText("Re-simulate from:");
 		
-		Composite line2=new Composite(dialogArea, SWT.NONE);
+		Composite line2=new Composite(shell, SWT.NONE);
 		line2.setLayout(layout);
 		final Button but1=new Button(line2, SWT.RADIO);
 		but1.setText("1st cycle of year");
@@ -91,7 +79,7 @@ public class WPPReSimDialog extends PopupDialog {
 		fillCombo(day, 1, 31);
 		day.setText(String.valueOf(suspendedDay));
 		
-		Composite line3=new Composite(dialogArea, SWT.NONE);
+		Composite line3=new Composite(shell, SWT.NONE);
 		line3.setLayout(layout);
 		final Button but2=new Button(line3, SWT.RADIO);
 		but2.setText("Cycle");
@@ -102,16 +90,16 @@ public class WPPReSimDialog extends PopupDialog {
 		Label label2=new Label(line3, SWT.NONE);
 		label2.setText("of current step");
 		
-		final Button but3=new Button(dialogArea, SWT.CHECK);
+		final Button but3=new Button(shell, SWT.CHECK);
 		but3.setText("Re-compile wresl code");
 		
-		final Button but4=new Button(dialogArea, SWT.CHECK);
+		final Button but4=new Button(shell, SWT.CHECK);
 		but4.setText("Re-read data from SV file");
 		
-		final Button but5=new Button(dialogArea, SWT.CHECK);
+		final Button but5=new Button(shell, SWT.CHECK);
 		but5.setText("Re-load lookup table");
 		
-		Composite line7=new Composite(dialogArea, SWT.NONE);
+		Composite line7=new Composite(shell, SWT.NONE);
 		line7.setLayout(layout);
 		Button ok = new Button(line7, SWT.PUSH);
 		ok.setText("OK");
@@ -162,7 +150,7 @@ public class WPPReSimDialog extends PopupDialog {
 						WPPException.handleException(e);
 					}
 				}
-				close();
+				shell.close();
 			}
 		});
 		
@@ -170,7 +158,7 @@ public class WPPReSimDialog extends PopupDialog {
 		cancel.setText("Cancel");
 		cancel.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent event){
-				close();
+				shell.close();
 			}
 		});
 		
@@ -219,8 +207,7 @@ public class WPPReSimDialog extends PopupDialog {
 			
 		});
 		
-		dialogArea.getShell().setDefaultButton(ok);
-		return dialogArea;
+		shell.setDefaultButton(ok);
 	 }
 	
 	public void fillCombo(Combo combo, int start, int end){

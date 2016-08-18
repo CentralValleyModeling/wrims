@@ -27,8 +27,8 @@ public class SolverOptionMenu implements IWorkbenchWindowActionDelegate {
 		workbench.getDisplay().asyncExec(new Runnable(){
 			public void run(){
 				Shell shell=workbench.getActiveWorkbenchWindow().getShell();
-				WPPSolverOptionDialog dialog= new WPPSolverOptionDialog(shell, SWT.BORDER|SWT.APPLICATION_MODAL, true, false, false, false, false, "Solver Option", "Solver Option");
-				dialog.open(1);
+				WPPSolverOptionDialog dialog= new WPPSolverOptionDialog(shell);
+				dialog.openDialog();
 			}
 		});
 	}

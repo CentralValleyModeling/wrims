@@ -27,8 +27,8 @@ public class ReSimMenu implements IWorkbenchWindowActionDelegate {
 		workbench.getDisplay().asyncExec(new Runnable(){
 			public void run(){
 				Shell shell=workbench.getActiveWorkbenchWindow().getShell();
-				WPPReSimDialog dialog= new WPPReSimDialog(shell, SWT.BORDER|SWT.APPLICATION_MODAL, true, false, false, false, false, "Re-Simulation", "Re-Simulation");
-				dialog.open(1);
+				WPPReSimDialog dialog= new WPPReSimDialog(shell);
+				dialog.openDialog();
 			}
 		});
 	}
