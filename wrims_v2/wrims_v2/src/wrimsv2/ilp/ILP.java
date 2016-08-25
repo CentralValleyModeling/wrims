@@ -701,6 +701,11 @@ public class ILP {
 		outFile.flush();
 	}
 
+	public static void writeNoteLn(String msg) {		
+		
+		writeNoteLn(msg, _noteFile);
+	}
+	
 	public static void writeNoteLn(String msg, String noteStr) {		
 		
 		writeNoteLn(msg, noteStr, _noteFile);
@@ -716,6 +721,12 @@ public class ILP {
 		outFile.flush();
 	}
 
+	public static void writeNoteLn(String msg, PrintWriter outFile) {		
+		
+		outFile.println(msg);
+		outFile.flush();
+	}
+	
 	public static void writeNote(String msg, PrintWriter outFile) {		
 		
 		outFile.print(msg);

@@ -2,6 +2,7 @@ package wrimsv2.solver;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -47,6 +48,18 @@ public class CbcSolver {
 	private static SWIGTYPE_p_CbcModel model; // = jCbc.new_jCbcModel();// This defines a new empty CbcModel
 	private static SWIGTYPE_p_CoinModel modelObject; 
 
+	private static Map<String, String> iisPossibleConstraintMap;
+	private static Set<String> iisConfirmConstraint;
+	//private static LinkedHashSet<String> iisReport;
+	private static LinkedHashMap<Integer, String> iisSlackMap;
+	private static LinkedHashMap<String, String> iisConstraintSignMap;
+	private static LinkedHashMap<String, Double> iisConstraintRHSMap;
+	private static LinkedHashMap<String, int[]> iisConstraintIndexMap;
+	private static LinkedHashMap<String, double[]> iisConstraintElementMap;
+	private static ArrayList<String> iisSlacks;
+	//private static ArrayList<String> iisDvarList;
+	private static final double iisWeight = 3000;
+	
 	private static  Map<String, Dvar> dvarMap;
 	private static BiMap<Integer, String> dvBiMap;
 	private static BiMap<String, Integer> dvBiMapInverse;
@@ -218,7 +231,7 @@ public class CbcSolver {
 //			reloadAndWriteLp("stuck_possible",true);
 //			
 //		} 
-		
+		jCbc.writeLp1(model, "test", 1e-14, 14);
 		long beginT = System.currentTimeMillis();
 		int[] modelStatus = solve();
 		long endT = System.currentTimeMillis();
@@ -294,6 +307,75 @@ public class CbcSolver {
 		setDVars();
 		setConstraints();
 		jCbc.setModelName(solver, modelName);
+		
+	}
+	
+	private static void reloadProblemConfirm(String skipThisConstraint) {
+
+		// restore original state
+		SolverData.getDvarMap().keySet().retainAll(originalDvarKeys);
+		int sizeA = ControlData.currModelDataSet.dvList.size();
+		int sizeB = ControlData.currModelDataSet.dvTimeArrayList.size();
+		dvBiMap.clear();
+		for (int i=0; i<sizeA; i++){
+			dvBiMap.put(i,ControlData.currModelDataSet.dvList.get(i));				
+		}
+		for (int i=sizeA; i<sizeA+sizeB; i++){
+			dvBiMap.put(i,ControlData.currModelDataSet.dvTimeArrayList.get(i));				
+		}
+		dvBiMapInverse = dvBiMap.inverse();
+		
+		// clean up
+		jCbc.delete_jCbcModel(model);
+		model = null;
+		jCbc.delete_jCoinModel(modelObject);
+		
+		// new model
+		model = jCbc.new_jCbcModel();
+		solver = jCbc.new_jOsiClpSolverInterface(); 
+		jCbc.assignSolver(model,solver); 
+		modelObject = jCbc.new_jCoinModel();
+
+		setDVars();
+		setConstraintsSkip(skipThisConstraint);
+		jCbc.setModelName(solver, modelName);
+		
+	}
+	
+	private static void loadProblemIIS(boolean isFirstTimeRun, Set<String> enforceThisConstraint) {
+		
+		iisSlackMap = new LinkedHashMap<Integer, String>();
+		// restore original state
+		SolverData.getDvarMap().keySet().retainAll(originalDvarKeys);
+		int sizeA = ControlData.currModelDataSet.dvList.size();
+		int sizeB = ControlData.currModelDataSet.dvTimeArrayList.size();
+		dvBiMap.clear();
+		for (int i=0; i<sizeA; i++){
+			dvBiMap.put(i,ControlData.currModelDataSet.dvList.get(i));				
+		}
+		for (int i=sizeA; i<sizeA+sizeB; i++){
+			dvBiMap.put(i,ControlData.currModelDataSet.dvTimeArrayList.get(i));				
+		}
+		dvBiMapInverse = dvBiMap.inverse();
+		
+		
+		
+		// clean up
+		jCbc.delete_jCbcModel(model);
+		model = null;
+		jCbc.delete_jCoinModel(modelObject);
+		//ControlData.clp_cbc_objective=null;
+		
+		
+		// new model
+		model = jCbc.new_jCbcModel();
+		solver = jCbc.new_jOsiClpSolverInterface(); 
+		jCbc.assignSolver(model,solver); 
+		modelObject = jCbc.new_jCoinModel();
+
+		setDVarsIIS();
+		setConstraintsIIS(isFirstTimeRun, enforceThisConstraint);
+		jCbc.setModelName(solver, modelName+"_iis");
 		
 	}
 	
@@ -426,6 +508,203 @@ public class CbcSolver {
 		
 		 jCbc.addRows(solver,modelObject);
 	}
+	
+	private static void setConstraintsSkip(String skipThisConstraint) {
+		Map<String, EvalConstraint> constraintMap = SolverData.getConstraintDataMap();
+		
+		int rowCounter=0; // row index
+		for (int i=0; i<=1; i++){
+			ArrayList<String> constraintCollection;
+			if (i==0){
+				constraintCollection = new ArrayList<String>(ControlData.currModelDataSet.gList);
+				constraintCollection.retainAll(constraintMap.keySet());
+			}else{
+				constraintCollection = new ArrayList<String>(ControlData.currModelDataSet.gTimeArrayList);
+			}
+			Iterator<String> constraintIterator = constraintCollection.iterator();
+		
+			
+			while(constraintIterator.hasNext()){        
+				
+				double GT=-999;
+				double LT= 999;
+				
+				
+				String constraintName=(String)constraintIterator.next();
+				EvalConstraint ec=constraintMap.get(constraintName);
+			
+				if (ec.getSign().equals("=")) {
+					GT = -ec.getEvalExpression().getValue().getData().doubleValue();
+					if(Math.abs(GT)<ControlData.zeroTolerance) {GT=0;} 
+					LT = GT;
+				}
+				else if (ec.getSign().equals("<") || ec.getSign().equals("<=")){
+					GT = -maxValue;
+					LT = -ec.getEvalExpression().getValue().getData().doubleValue();
+					if(Math.abs(LT)<ControlData.zeroTolerance) {LT=0;} 
+				}
+				else if (ec.getSign().equals(">")){
+					GT = -ec.getEvalExpression().getValue().getData().doubleValue();
+					if(Math.abs(GT)<ControlData.zeroTolerance) {GT=0;} 
+					LT = maxValue;
+				}
+				else {
+					// error!!
+					System.out.println("error in CbcSolver!");
+				}
+			
+				HashMap<String, IntDouble> multMap = ec.getEvalExpression().getMultiplier();
+				Set multCollection = multMap.keySet();
+				Iterator multIterator = multCollection.iterator();				
+				
+				index = new int[multMap.keySet().size()];	
+				elements = new double[multMap.keySet().size()];	
+				
+				int j=0;
+				while(multIterator.hasNext()){
+					String multName=(String)multIterator.next();
+										
+					if (!dvarMap.containsKey(multName)){ 
+						int sizeDv = dvBiMap.size();
+						dvBiMap.put(sizeDv, multName);
+						dvBiMapInverse.put(multName, sizeDv);
+						
+						addConditionalSlackSurplusToDvarMap(dvarMap, multName);
+					
+					}					
+					
+					index[j]=dvBiMapInverse.get(multName);
+					double temp = multMap.get(multName).getData().doubleValue();
+					if(Math.abs(temp)<ControlData.zeroTolerance) {temp=0;} 
+					elements[j]=temp;
+					
+					j++;
+				}
+				if(!skipThisConstraint.equalsIgnoreCase(constraintName)){
+					jCbc.addRow(modelObject,multMap.keySet().size(), index, elements, GT, LT, constraintName);
+				}
+				rowCounter++; 
+				
+			}
+		}
+		
+		 jCbc.addRows(solver,modelObject);
+	}
+	
+	private static void setConstraintsIIS(boolean firstTimeRun, Set<String> enforceThisConstraint) {
+		
+		Map<String, EvalConstraint> constraintMap = SolverData.getConstraintDataMap();
+		
+		for (int i=0; i<=1; i++){
+			ArrayList<String> constraintCollection;
+			if (i==0){
+				constraintCollection = new ArrayList<String>(ControlData.currModelDataSet.gList);
+				constraintCollection.retainAll(constraintMap.keySet());
+			}else{
+				constraintCollection = new ArrayList<String>(ControlData.currModelDataSet.gTimeArrayList);
+			}
+			Iterator<String> constraintIterator = constraintCollection.iterator();
+		
+			
+			while(constraintIterator.hasNext()){        
+				
+				double GT=-999;
+				double LT= 999;
+				
+				String constraintName=(String)constraintIterator.next();
+				EvalConstraint ec=constraintMap.get(constraintName);
+			
+				if (ec.getSign().equals("=")) {
+					GT = -ec.getEvalExpression().getValue().getData().doubleValue();
+					if(Math.abs(GT)<ControlData.zeroTolerance) {GT=0;} 
+					LT = GT;
+				}
+				else if (ec.getSign().equals("<") || ec.getSign().equals("<=")){
+					GT = -maxValue;
+					LT = -ec.getEvalExpression().getValue().getData().doubleValue();
+					if(Math.abs(LT)<ControlData.zeroTolerance) {LT=0;} 
+				}
+				else if (ec.getSign().equals(">")){
+					GT = -ec.getEvalExpression().getValue().getData().doubleValue();
+					if(Math.abs(GT)<ControlData.zeroTolerance) {GT=0;} 
+					LT = maxValue; 
+				}
+				else {
+					// error!!
+					System.out.println("error in CbcSolver!");
+				}
+			
+				HashMap<String, IntDouble> multMap = ec.getEvalExpression().getMultiplier();
+				Set multCollection = multMap.keySet();
+				Iterator multIterator = multCollection.iterator();				
+				
+				index = new int[multMap.keySet().size()+2];	
+				elements = new double[multMap.keySet().size()+2];	
+				
+				int j=0;
+				while(multIterator.hasNext()){
+					String multName=(String)multIterator.next();
+										
+					if (!dvarMap.containsKey(multName)){ 
+						int sizeDv = dvBiMap.size();
+						dvBiMap.put(sizeDv, multName);
+						dvBiMapInverse.put(multName, sizeDv);
+						
+						addConditionalSlackSurplusToDvarMap(dvarMap, multName);
+					
+					}					
+					
+					index[j]=dvBiMapInverse.get(multName);
+					double temp = multMap.get(multName).getData().doubleValue();
+					if(Math.abs(temp)<ControlData.zeroTolerance) {temp=0;} 
+					elements[j]=temp;
+					
+					j++;
+				}
+
+				if (firstTimeRun) {
+					int[] newIndex = Arrays.copyOfRange(index, 0, index.length - 2);
+					double[] newElements = Arrays.copyOfRange(elements, 0, elements.length - 2);
+					iisConstraintIndexMap.put(constraintName, newIndex);
+					iisConstraintElementMap.put(constraintName, newElements);
+					iisConstraintSignMap.put(constraintName, ec.getSign());
+					iisConstraintRHSMap.put(constraintName, -ec.getEvalExpression().getValue().getData().doubleValue());
+				}
+				// TODO: add index and elements here for IIS
+				String iisNameP = constraintName + "_p";
+				String iisNameN = constraintName + "_n";
+				
+				double coef = 1;
+				
+				if (enforceThisConstraint.contains(constraintName)){ coef = 0; }
+				
+				int z = dvBiMap.size();
+				
+				dvBiMap.put(z, iisNameP);
+				dvBiMapInverse.put(iisNameP, z);
+				index[j] = dvBiMapInverse.get(iisNameP);
+				elements[j] = coef;
+				j++;				
+				iisSlackMap.put(z, constraintName);
+				//iisC
+				jCbc.addCol(modelObject, 0, maxValue, iisWeight, iisNameP, false); 
+				
+				dvBiMap.put(z+1, iisNameN);
+				dvBiMapInverse.put(iisNameN, z+1);
+				index[j] = dvBiMapInverse.get(iisNameN);
+				elements[j] = -coef;
+				j++;				
+				iisSlackMap.put(z+1, constraintName);
+				jCbc.addCol(modelObject, 0, maxValue, iisWeight, iisNameN, false); 
+				
+				
+				jCbc.addRow(modelObject,multMap.keySet().size()+2, index, elements, GT, LT, constraintName);
+				
+			}
+		}
+		
+		 jCbc.addRows(solver,modelObject);
+	}
     
 	private static void setDVars() {
 				
@@ -442,6 +721,18 @@ public class CbcSolver {
 			}
 			//System.out.println("weight of: "+dvName+"="+w);
 		    jCbc.addCol(modelObject , dvObj.lowerBoundValue.doubleValue(), dvObj.upperBoundValue.doubleValue(), w, dvName, dvObj.integer==Param.yes ); 
+			
+		}
+		
+	}
+	
+	private static void setDVarsIIS() {
+		
+		for (int i=0; i<dvBiMap.size(); i++){
+			String dvName = dvBiMap.get(i);
+			Dvar dvObj = dvarMap.get(dvName);
+			
+		    jCbc.addCol(modelObject , dvObj.lowerBoundValue.doubleValue(), dvObj.upperBoundValue.doubleValue(), 0, dvName, dvObj.integer==Param.yes ); 
 			
 		}
 		
@@ -618,10 +909,10 @@ public class CbcSolver {
 		if (ControlData.writeCbcSolvingTime) ILP.writeNoteLn(jCbc.getModelName(solver), " "+ time_second);
 		
 		if (status != 0 || status2 != 0) {
-
+			//System.out.println("hello");
 			reloadAndWriteLp("_infeasible", true);
-			
 			getSolverInformation(status, status2);
+			iis();
 		}
 
 		return new int[]{status, status2};
@@ -629,6 +920,168 @@ public class CbcSolver {
 	}
 	
 	
+	private static void iis() {
+		iisConstraintIndexMap = new LinkedHashMap<String, int[]>();
+		iisConstraintElementMap = new LinkedHashMap<String, double[]>();
+		iisConstraintSignMap = new LinkedHashMap<String, String>();
+		iisConstraintRHSMap = new LinkedHashMap<String, Double>();
+		iisSlacks = new ArrayList<String>();
+		iisPossibleConstraintMap = new LinkedHashMap<String, String>();
+		iisConfirmConstraint = new LinkedHashSet<String>();
+
+		boolean success = iisSolve(true, new HashSet());
+
+		if (!success) {
+			return;
+		} else {
+			System.out.print("Finding constraints that cause infeasibility");
+		}
+		
+		Set<String> aa = new HashSet<String>();
+		Set<String> bb = new HashSet<String>(); 
+		Set<String> ss = new HashSet<String>();
+
+		while (aa.size()<iisPossibleConstraintMap.size()){
+			System.out.print(".");
+			bb = new HashSet<String>(iisPossibleConstraintMap.keySet());
+			bb.removeAll(aa);
+		    aa = new HashSet<String>(iisPossibleConstraintMap.keySet());   
+		    
+			for (String s : bb) {
+				ss = new HashSet<String>();
+				ss.add(s);
+				success = iisSolve(false, ss);
+			}
+			
+		}
+		
+		while (success){
+			System.out.print(".");
+			success = iisSolve(false, iisPossibleConstraintMap.keySet());
+		}
+		
+		for (String c : iisPossibleConstraintMap.keySet()){
+			if(iisSolveConfirm(c)){
+				System.out.print(".");
+				iisConfirmConstraint.add(c);
+			}
+		}
+		System.out.println("");
+		
+		Set<String> iisReport;
+		
+		if (iisConfirmConstraint.size()>0) {
+			iisReport = iisConfirmConstraint;
+		} else {
+			iisReport = iisPossibleConstraintMap.keySet();
+		}
+		
+		String errString = "One or more of the following constraints might cause infeasibility:\r\n";
+
+		for (String c : iisReport){
+				errString += iisPossibleConstraintMap.get(c) + "\r\n";
+		}
+		Error.addSolvingError(errString);
+		System.out.println("Check \"Error.log\" under the folder \"=ILP=\" for more information.");
+		System.out.println();
+
+	}
+
+	private static boolean iisSolveConfirm(String skipThisConstraint) {
+		boolean success = false;
+
+		reloadProblemConfirm(skipThisConstraint);
+		//jCbc.writeLp1(model, "confirm", 1e-14, 14);
+		solve_3();
+		//jCbc.callCbc("-log 0 -preprocess off -presolve off -cutsOnOff off -integerT 1e-9 -solve", model);
+		int s = jCbc.status(model);
+		int s2 = jCbc.secondaryStatus(model);
+
+		if (s == 0 && s2 == 0) {
+			success = true;
+		} else {
+			success = false;
+		}
+
+		return success;
+	}
+	
+	private static boolean iisSolve(boolean isFirstTimeRun, Set<String> enforceThisConstraint) {
+		boolean success = false;
+
+		loadProblemIIS(isFirstTimeRun, enforceThisConstraint);
+		//iisTriedConstraintSet.add(enforceThisConstraint);
+		//jCbc.writeLp1(model, "iis", 1e-14, 14);
+		solve_2();
+		int s = jCbc.status(model);
+		int s2 = jCbc.secondaryStatus(model);
+//		System.out.println("s: " + s);
+//		System.out.println("s2: " + s2);
+		// System.out.println(iisDvarMap);
+		// scan iis dvar solution
+
+		// for (int j = 0; j < jCbc.getNumCols(model); j++){
+		// System.out.println(jCbc.getColName(model,j)+"::"+jCbc.jarray_double_getitem(jCbc.getColSolution(solver),j));
+		//
+		// }
+
+		if (s == 0 && s2 == 0) {
+//			System.out.println("A set the following constraints might cause infeasibility:");
+//			System.out.println("============================================================");
+			for (int j : iisSlackMap.keySet()) {
+				String name = iisSlackMap.get(j);
+				String name2 = jCbc.getColName(model, j);
+				// System.out.println(name);
+				// System.out.println(jCbc.getColName(model,j));
+				// check if name matches
+				if (!name2.substring(0, name2.length() - 2).equalsIgnoreCase(name)) {
+					System.out.println("@@ " + jCbc.getColName(model, j));
+					System.out.println("@@ " + name);
+				} else {
+					// check if solution not zero
+					if (jCbc.jarray_double_getitem(jCbc.getColSolution(solver), j) > 0) {
+						//iisFinalConstraintSet.add(name);
+						//iisToTryConstraintSet.add(name);
+						//System.out.println(jCbc.getColName(model, j) + ":" + jCbc.jarray_double_getitem(jCbc.getColSolution(solver), j));
+						// print this constraint
+						int[] index = iisConstraintIndexMap.get(name);
+						double[] coeff = iisConstraintElementMap.get(name);
+						String show = name + ": ";
+						// for (int r=index.length-1;r>-1;r--){
+						for (int r = 0; r < index.length; r++) {
+							int k = index[r];
+							String var = dvBiMap.get(k);
+							double coef = coeff[r];
+							if (r != 0) {
+								if (coef >= 0) {
+									show = show + " + ";
+								} else {
+									show = show + " ";
+								}
+							}
+							show = show + Tools.noZerofmt(coef) + " " + var;
+
+						}
+						show += " " + iisConstraintSignMap.get(name);
+						show += " " + Tools.noZerofmt(iisConstraintRHSMap.get(name));
+						iisPossibleConstraintMap.put(name, show);
+						//System.out.println(show);
+						
+
+					}
+				}
+
+			}
+			//System.out.println("============================================================");
+
+			success = true;
+		} else {
+			success = false;
+		}
+
+		return success;
+	}
+
 	private static void collectDvar() {
 
 		int ColumnSize = jCbc.getNumCols(model);

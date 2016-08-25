@@ -564,5 +564,11 @@ public class Tools {
 
 		}
 
-
+		public static String noZerofmt(double d)
+		{
+		    if(d == (long) d)
+		        return String.format("%d",(long)d);
+		    else
+		        return String.format("%s",d);
+		}
 }
