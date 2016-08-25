@@ -2224,8 +2224,9 @@ public class DebugInterface {
 			GurobiSolver.initialize();
 		}else if (solverName.equals("CBC")){
 			ControlData.solverName="CBC";
-			ILP.loggingLpSolve=true;
-			ILP.loggingCplexLp=false;
+			ILP.loggingLpSolve=false;
+			ILP.loggingCplexLp=true;
+			ILP.loggingAllCycles=true;
 			if (log.equals("None")){
 				ILP.logging=false;
 				ILP.loggingVariableValue=false;
