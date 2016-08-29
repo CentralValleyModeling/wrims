@@ -215,6 +215,17 @@ public class Error {
 		error_solving.add(getCurrentDateCycleModel()+": "+error);
 		System.err.println("# Error :"+error);
 	}
+
+	public static void addInfeasibleHint(String goalName, String moreMsg){
+		ModelDataSet mds = ControlData.currModelDataSet;
+		String sourceLocation = "";
+		if (mds.gMap.containsKey(goalName)){
+			Goal goal=mds.gMap.get(goalName);
+			sourceLocation="("+goal.fromWresl+":"+goal.line+")";
+		}
+		error_solving.add(sourceLocation+ " "+moreMsg);
+		System.err.println(sourceLocation+ " "+goalName);
+	}
 	
 	public static void addEngineError(String error){
 		error_engine.add("Engine Error: "+error);

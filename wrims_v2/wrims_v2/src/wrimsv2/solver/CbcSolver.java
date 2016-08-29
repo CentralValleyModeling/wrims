@@ -982,6 +982,9 @@ public class CbcSolver {
 				errString += iisPossibleConstraintMap.get(c) + "\r\n";
 		}
 		Error.addSolvingError(errString);
+		for (String c : iisReport){
+			Error.addInfeasibleHint(c, iisPossibleConstraintMap.get(c));
+		}
 		System.out.println("Check \"Error.log\" under the folder \"=ILP=\" for more information.");
 		System.out.println();
 
