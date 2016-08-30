@@ -1057,13 +1057,22 @@ public class CbcSolver {
 							double coef = coeff[r];
 							if (r != 0) {
 								if (coef >= 0) {
-									show = show + " + ";
+									show = show + " +";
 								} else {
 									show = show + " ";
 								}
 							}
-							show = show + Tools.noZerofmt(coef) + " " + var;
+							
+							String coefPrint = "";
 
+							if(coef==-1){
+								coefPrint = "-";
+							} else if(coef==1){
+								coefPrint = "";
+							} else {
+								coefPrint = Tools.noZerofmt(coef);
+							}
+							show = show + coefPrint + " " + var;
 						}
 						show += " " + iisConstraintSignMap.get(name);
 						show += " " + Tools.noZerofmt(iisConstraintRHSMap.get(name));
