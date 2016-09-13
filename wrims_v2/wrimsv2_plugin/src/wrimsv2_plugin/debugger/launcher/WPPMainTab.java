@@ -227,7 +227,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		});
 		
 		mainFileDt = new DropTarget(fMainFileText, DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK);
-		mainFileDt.setTransfer(new Transfer[] { FileTransfer.getInstance(), PluginTransfer.getInstance() });
+		mainFileDt.setTransfer(new Transfer[] { FileTransfer.getInstance()});
 		mainFileDt.addDropListener(new DropTargetAdapter() {
             public void drop(DropTargetEvent event) {
                 String fileList[] = null;
@@ -266,7 +266,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		});
 		
 		dvarFileDt = new DropTarget(fDvarFileText, DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK);
-		dvarFileDt.setTransfer(new Transfer[] { FileTransfer.getInstance(), PluginTransfer.getInstance() });
+		dvarFileDt.setTransfer(new Transfer[] { FileTransfer.getInstance()});
 		dvarFileDt.addDropListener(new DropTargetAdapter() {
             public void drop(DropTargetEvent event) {
                 String fileList[] = null;
@@ -305,7 +305,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		});
 		
 		svarFileDt = new DropTarget(fSvarFileText, DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK);
-		svarFileDt.setTransfer(new Transfer[] { FileTransfer.getInstance(), PluginTransfer.getInstance() });
+		svarFileDt.setTransfer(new Transfer[] { FileTransfer.getInstance()});
 		svarFileDt.addDropListener(new DropTargetAdapter() {
             public void drop(DropTargetEvent event) {
                 String fileList[] = null;
@@ -344,7 +344,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		});
 		
 		initFileDt = new DropTarget(fInitFileText, DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK);
-		initFileDt.setTransfer(new Transfer[] { FileTransfer.getInstance(), PluginTransfer.getInstance() });
+		initFileDt.setTransfer(new Transfer[] { FileTransfer.getInstance()});
 		initFileDt.addDropListener(new DropTargetAdapter() {
             public void drop(DropTargetEvent event) {
                 String fileList[] = null;
@@ -383,7 +383,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		});
 		
 		groundWaterFolderDt = new DropTarget(groundWaterFolderText, DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK);
-		groundWaterFolderDt.setTransfer(new Transfer[] { FileTransfer.getInstance(), PluginTransfer.getInstance() });
+		groundWaterFolderDt.setTransfer(new Transfer[] { FileTransfer.getInstance()});
 		groundWaterFolderDt.addDropListener(new DropTargetAdapter() {
             public void drop(DropTargetEvent event) {
                 String fileList[] = null;

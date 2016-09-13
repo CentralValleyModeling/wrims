@@ -201,7 +201,7 @@ public class DSSFileView extends ViewPart {
 			dvFileText[i].setText(DebugCorePlugin.studyDvFileNames[i]);
 			
 			dvDt[i] = new DropTarget(dvFileText[i], DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK);
-	        dvDt[i].setTransfer(new Transfer[] { FileTransfer.getInstance(), PluginTransfer.getInstance() });
+	        dvDt[i].setTransfer(new Transfer[] { FileTransfer.getInstance()});
 	        dvDt[i].addDropListener(new DropTargetAdapter() {
 	            public void drop(DropTargetEvent event) {
 	                String fileList[] = null;
@@ -245,7 +245,7 @@ public class DSSFileView extends ViewPart {
 			svFileText[i].setText(DebugCorePlugin.studySvFileNames[i]);
 
 			svDt[i] = new DropTarget(svFileText[i], DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK);
-	        svDt[i].setTransfer(new Transfer[] { FileTransfer.getInstance(), PluginTransfer.getInstance() });
+	        svDt[i].setTransfer(new Transfer[] { FileTransfer.getInstance()});
 	        svDt[i].addDropListener(new DropTargetAdapter() {
 	            public void drop(DropTargetEvent event) {
 	                String fileList[] = null;
