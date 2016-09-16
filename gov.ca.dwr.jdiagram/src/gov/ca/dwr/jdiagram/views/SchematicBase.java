@@ -511,7 +511,7 @@ public abstract class SchematicBase extends ViewPart {
 		forwardAction = new Action("Forward", Activator.getImageDescriptor("forward.png")){
 			
 			public void run(){
-				int twSize=SchematicPluginCore._twSelections.size();
+				int twSize=DssPluginCore._schematicTwSelections.size();
 				Combo dateList = dateCombo.getDateList();
 				int size=dateList.getItemCount();
 				if (SchematicPluginCore.selIndex<twSize){
@@ -532,7 +532,7 @@ public abstract class SchematicBase extends ViewPart {
 		backwardAction = new Action("Backward", Activator.getImageDescriptor("backward.png")){
 			
 			public void run(){
-				int twSize=SchematicPluginCore._twSelections.size();
+				int twSize=DssPluginCore._schematicTwSelections.size();
 				Combo dateList = dateCombo.getDateList();
 				int size=dateList.getItemCount();
 				if (SchematicPluginCore.selIndex<=twSize){
@@ -774,7 +774,7 @@ public abstract class SchematicBase extends ViewPart {
 	}
 	
 	public Hashtable<String, String>[] retrieveUndebug(String date, Hashtable<String, Object> names){
-		ArrayList<String> tws = SchematicPluginCore._twSelections;
+		ArrayList<String> tws = DssPluginCore._schematicTwSelections;
 		for (int i=0; i<tws.size()-1; i++){
 			if (date.equals(tws.get(i+1))){
 				if (DssPluginCore.units.equals(DssPluginCore.cfs)){

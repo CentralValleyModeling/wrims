@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import gov.ca.dwr.hecdssvue.DssPluginCore;
 import gov.ca.dwr.jdiagram.SchematicPluginCore;
 
 import org.eclipse.jface.dialogs.PopupDialog;
@@ -99,10 +100,10 @@ public class AddTimeWindowDialog extends PopupDialog {
 		ok.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent event){
 				int index=validateTW();
-				if (index==SchematicPluginCore._twSelections.size()){
+				if (index==DssPluginCore._schematicTwSelections.size()){
 					dateList.add(newTW, index);
 					dateList.select(index);
-					SchematicPluginCore._twSelections.add(index, newTW);
+					DssPluginCore._schematicTwSelections.add(index, newTW);
 					saveTWFile();
 					close();
 				}else if (index>=0){
@@ -136,7 +137,7 @@ public class AddTimeWindowDialog extends PopupDialog {
 	        return -1;
 		}else{
 			newTW=month1.getText()+startyear+" - "+month2.getText()+endyear;
-			int size=SchematicPluginCore._twSelections.size();
+			int size=DssPluginCore._schematicTwSelections.size();
 			int index=size;
 			for (int i=0; i<index; i++){
 				if (dateList.getItem(i).equals(newTW)){
@@ -169,10 +170,10 @@ public class AddTimeWindowDialog extends PopupDialog {
 			}
 			FileWriter fw = new FileWriter(file.getAbsolutePath());
 			PrintWriter out = new PrintWriter(fw);
-			int size = SchematicPluginCore._twSelections.size();
+			int size = DssPluginCore._schematicTwSelections.size();
 			if (size>1){
 				for (int i=1; i<size; i++){
-					out.println(SchematicPluginCore._twSelections.get(i));
+					out.println(DssPluginCore._schematicTwSelections.get(i));
 				}
 			}
 			out.close();

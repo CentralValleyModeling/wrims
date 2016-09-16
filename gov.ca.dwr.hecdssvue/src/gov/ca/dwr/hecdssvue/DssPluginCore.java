@@ -58,6 +58,12 @@ public class DssPluginCore {
 		"OCT1976 - SEP1977","OCT1994 - SEP2003","OCT2000 - SEP2009",
 		"OCT1997 - SEP2007", "Add..."));
 	
+	public static ArrayList<String> _schematicTwSelections = new ArrayList<String>(
+			Arrays.asList( "Add...", "OCT1921 - SEP2009","OCT1921 - SEP2003",
+			"OCT1928 - SEP1934","OCT1986 - SEP1992","OCT1975 - SEP1977",
+			"OCT1976 - SEP1977","OCT1994 - SEP2003","OCT2000 - SEP2009", 
+			"OCT1997 - SEP2007"));
+	
 	public static String twFile="twDSS.prf";
 	public static boolean isAllWaterYear=true;
 	public static HashSet<Integer> filterWaterYear=new HashSet<Integer>();
@@ -78,6 +84,15 @@ public class DssPluginCore {
 	public static HashMap<Integer, ArrayList<HashMap<String, Double>>> longTermAverageDataTAF=new HashMap();
 	public static HashMap<String, String>[] allSchematicVariableUnitsCFS=new HashMap[4];
 	public static HashMap<String, String>[] allSchematicVariableUnitsTAF=new HashMap[4];
+	
+	public static ArrayList<String> geoSchematicVariableNames = new ArrayList<String>();
+	public static HashMap<String, HecMath>[] geoSchematicVariableData=new HashMap[4];
+	public static HashMap<Integer, ArrayList<HashMap<String, Double>>> geoLongTermAverageDataCFS=new HashMap();
+	public static HashMap<Integer, ArrayList<HashMap<String, Double>>> geoLongTermAverageDataTAF=new HashMap();
+	public static HashMap<String, String>[] geoSchematicVariableUnitsCFS=new HashMap[4];
+	public static HashMap<String, String>[] geoSchematicVariableUnitsTAF=new HashMap[4];
+	
+	
 	public static String dssPerspectiveID="DSS";
 	
 	public static SwingEngine swix;

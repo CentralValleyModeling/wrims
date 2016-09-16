@@ -87,8 +87,8 @@ public class DateCombo extends
 	public void setDateCombo(int startMonth, int startYear, int endMonth, int endYear){
 		dateList.removeAll();
 		procTWFile();
-		for (int i=0; i<SchematicPluginCore._twSelections.size(); i++){
-			dateList.add(SchematicPluginCore._twSelections.get(i));
+		for (int i=0; i<DssPluginCore._schematicTwSelections.size(); i++){
+			dateList.add(DssPluginCore._schematicTwSelections.get(i));
 		}
 		int j=startMonth;
 		for (int i=startYear; i<=endYear; i++){
@@ -114,14 +114,14 @@ public class DateCombo extends
 			if (!file.exists()){
 				file.createNewFile();
 			}else{
-				SchematicPluginCore._twSelections=new ArrayList<String>();
-				SchematicPluginCore._twSelections.add("Add...");
+				DssPluginCore._schematicTwSelections=new ArrayList<String>();
+				DssPluginCore._schematicTwSelections.add("Add...");
 				FileInputStream fs = new FileInputStream(file.getAbsolutePath());
 				BufferedReader br = new BufferedReader(new InputStreamReader(fs));
 				LineNumberReader reader = new LineNumberReader(br);
 				String line;
 				while((line = br.readLine())!=null){
-					SchematicPluginCore._twSelections.add(line);
+					DssPluginCore._schematicTwSelections.add(line);
 				}
 			}
 		} catch (Exception e) {

@@ -301,7 +301,9 @@ public class DSSCatalogView extends AbstractDSSView {
 								DssPluginCore.dssArray.add(dss);
 								viewer.setInput(DssPluginCore.dssArray);
 								resetDssFileView();
+								DataOps.clearGeoSchematicVariableData();
 								DataOps.loadAllSchematicVariableData();
+
 							} catch (Exception ex) {
 								Status status = new Status(IStatus.ERROR,
 								                Activator.PLUGIN_ID,

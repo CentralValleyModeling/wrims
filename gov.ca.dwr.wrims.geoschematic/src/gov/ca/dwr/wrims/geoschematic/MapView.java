@@ -1,6 +1,7 @@
 package gov.ca.dwr.wrims.geoschematic;
 
 
+import gov.ca.dwr.hecdssvue.DssPluginCore;
 import gov.ca.dwr.jdiagram.Activator;
 import gov.ca.dwr.jdiagram.SchematicPluginCore;
 
@@ -154,7 +155,7 @@ public class MapView extends ViewPart implements MapPart, IAdaptable {
 		forwardAction = new Action("Forward", Activator.getImageDescriptor("forward.png")){
 			
 			public void run(){
-				int twSize=SchematicPluginCore._twSelections.size();
+				int twSize=DssPluginCore._schematicTwSelections.size();
 				Combo dateList = dateSelector.getDateList();
 				int size=dateList.getItemCount();
 				if (SchematicPluginCore.selIndex<twSize){
@@ -175,7 +176,7 @@ public class MapView extends ViewPart implements MapPart, IAdaptable {
 		backwardAction = new Action("Backward", Activator.getImageDescriptor("backward.png")){
 			
 			public void run(){
-				int twSize=SchematicPluginCore._twSelections.size();
+				int twSize=DssPluginCore._schematicTwSelections.size();
 				Combo dateList = dateSelector.getDateList();
 				int size=dateList.getItemCount();
 				if (SchematicPluginCore.selIndex<=twSize){

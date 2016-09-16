@@ -207,6 +207,37 @@ public class DataOps {
 		
 	}
 	
+	public static void clearGeoSchematicVariableData(){
+		DssPluginCore.geoSchematicVariableNames=new ArrayList<String>();
+		DssPluginCore.geoSchematicVariableData = new HashMap[4];
+		DssPluginCore.geoSchematicVariableUnitsCFS=new HashMap[4];
+		DssPluginCore.geoSchematicVariableUnitsTAF=new HashMap[4];
+		DssPluginCore.geoLongTermAverageDataCFS=new HashMap();
+		DssPluginCore.geoLongTermAverageDataTAF=new HashMap();
+		
+		for (int kk=0; kk<4; kk++){
+			HashMap<String, HecMath> data= new HashMap<String, HecMath>();
+			DssPluginCore.geoSchematicVariableData[kk]=data;
+			HashMap<String, String> cfsUnitsMap = new HashMap<String, String>();
+			DssPluginCore.geoSchematicVariableUnitsCFS[kk]=cfsUnitsMap;
+			HashMap<String, String> tafUnitsMap = new HashMap<String, String>();
+			DssPluginCore.geoSchematicVariableUnitsTAF[kk]=tafUnitsMap;
+		}
+		
+		for (int ii=0; ii<DssPluginCore._schematicTwSelections.size()-1; ii++){
+			ArrayList<HashMap<String, Double>> dataCFS=new ArrayList<HashMap<String, Double>>();
+			DssPluginCore.geoLongTermAverageDataCFS.put(ii, dataCFS);
+			ArrayList<HashMap<String, Double>> dataTAF=new ArrayList<HashMap<String, Double>>();
+			DssPluginCore.geoLongTermAverageDataTAF.put(ii, dataTAF);
+			for (int kk=0; kk<4; kk++){
+				HashMap<String, Double> altDataCFS=new HashMap<String, Double>();
+				dataCFS.add(altDataCFS);
+				HashMap<String, Double> altDataTAF=new HashMap<String, Double>();
+				dataTAF.add(altDataTAF);
+			}
+		}
+	}
+	
 	public static void loadAllSchematicVariableData(){
 		DssPluginCore.allSchematicVariableUnitsCFS=new HashMap[4];
 		DssPluginCore.allSchematicVariableUnitsTAF=new HashMap[4];

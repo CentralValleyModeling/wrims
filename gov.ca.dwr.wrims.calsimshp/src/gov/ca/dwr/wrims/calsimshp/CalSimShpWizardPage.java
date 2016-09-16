@@ -315,7 +315,9 @@ public class CalSimShpWizardPage extends AbstractUDIGImportPage implements Modif
 	    	subTypeFieldCombo.setItems(fieldNames);
 	    	
 	    	for(String fieldName : fieldNames) {
-	    		if(fieldName.equals("CalSim_ID")) {
+	    		if(fieldName.equals("Arc_ID")) {
+	    			idFieldCombo.setText(fieldName);
+	    		}else if(fieldName.equals("CalSim_ID")) {
 	    			idFieldCombo.setText(fieldName);
 	    		}
 	    		if(fieldName.equals("Type")) {

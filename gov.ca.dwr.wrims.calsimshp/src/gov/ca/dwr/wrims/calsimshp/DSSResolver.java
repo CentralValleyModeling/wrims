@@ -1,5 +1,26 @@
 package gov.ca.dwr.wrims.calsimshp;
 
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Set;
+
+import gov.ca.dwr.hecdssvue.DssPluginCore;
+import gov.ca.dwr.jdiagram.SchematicPluginCore;
+import hec.heclib.dss.CondensedReference;
+import hec.heclib.dss.HecDss;
+import hec.heclib.util.HecTime;
+import hec.hecmath.HecMath;
+import hec.hecmath.HecMathException;
+import hec.io.TimeSeriesContainer;
+
+import org.opengis.filter.identity.FeatureId;
+
+import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+import wrimsv2_plugin.tools.TimeOperation;
+
 /**
  * This class is intended to contain all of the logic required to retrieve the DSS values
  * associated with a given feature.
@@ -12,9 +33,8 @@ public class DSSResolver {
 	public static final int NUM_DSS = 4;
 	
 	private final int firstDssIndex;
-
-	// TODO Hao 
-	// please add any additional members and/or constructor parameters required by the DSSResolver
+	
+	private static double FACTOR = 1000. * 43560 / (24 * 60 * 60);
 
 	/**
 	 * Create a new DSSResolver based key points of the featureType on which the Resolver is
@@ -34,15 +54,22 @@ public class DSSResolver {
 	 * @param values an array of the feature's attributes, to be updated with the new DSS value
 	 * @param index the index of the attribute to be updated, if it is a DSS attribute
 	 */
-	public void resolve(Object[] values, int index) {
+	public void resolve(Object[] values, int index, FeatureId id, Object baseValue) {
+		
 		if(index >= firstDssIndex && index < firstDssIndex + NUM_DSS) {
+			String name=id.getID();
+			if (!DssPluginCore.geoSchematicVariableNames.contains(name)){
+				DssPluginCore.geoSchematicVariableNames.add(name);
+				loadGeoSchematicVariableData(name);
+			}
+			
 			// from 0 to (NUM_DSS - 1), this specifies which dataset to retrieve data from
 			int dssIndex = index - firstDssIndex; 
-			
-			// TODO Hao
-			// determine the DSS value for the currently selected date, for this feature
-			// values[idIndex] is the value of the ID column for this feature
-			values[index] = Math.round(Math.random()*10000); 
+			if (DebugCorePlugin.selectedStudies[dssIndex]){
+				values[index] = retrieveUndebug(dssIndex, name, baseValue);
+			}else{
+				values[index] = "";
+			}
 		}
 	}
 
@@ -51,12 +78,481 @@ public class DSSResolver {
 	 * 
 	 * @param values an array of the feature's attributes, to be updated with the new DSS value(s)
 	 */
-	public void resolveAll(Object[] values) {
+	public void resolveAll(Object[] values, FeatureId id) {
 		// this approach simply reuses the single-value lookup from above
 		// if there is a more efficient way to do this, please go ahead
+		
+		Object baseValue="0";
+		boolean updateBaseValue=true;
 		for(int index = firstDssIndex; index < firstDssIndex + NUM_DSS; index++) {
-			resolve(values, index);
+			resolve(values, index, id, baseValue);
+			if (updateBaseValue){
+				baseValue=values[index];
+				updateBaseValue=false;
+			}
 		}
 	}
 
+	public void loadGeoSchematicVariableData(String name){
+		if (DssPluginCore.allPathName.containsKey(name)){
+			String pathName = DssPluginCore.allPathName.get(name);
+			for (int i=0; i<4; i++){
+				if (DebugCorePlugin.selectedStudies[i]){
+					HecMath dataSet=null;
+					HecDss dvFile = DebugCorePlugin.dvDss[i];
+					HecDss svFile = DebugCorePlugin.svDss[i];
+					if (dvFile != null){
+						try {
+							dataSet= dvFile.read(pathName);
+							if (dataSet ==null){
+								readFromSV(svFile, pathName, name, i);
+								continue;
+							}else{
+								DssPluginCore.geoSchematicVariableData[i].put(name, dataSet);
+								DssPluginCore.geoSchematicVariableUnitsCFS[i].put(name, dataSet.getUnits());
+								DssPluginCore.geoSchematicVariableUnitsTAF[i].put(name, dataSet.getUnits());
+								continue;
+							}
+						} catch (Exception e) {
+							readFromSV(svFile, pathName, name, i);
+						}
+					}else{
+						readFromSV(svFile, pathName, name, i);
+					}
+				}
+			}
+		}else{
+			for (int i=0; i<4; i++){
+				if (DebugCorePlugin.selectedStudies[i]){
+					HecMath dataSet=null;
+					HecDss dvFile = DebugCorePlugin.dvDss[i];
+					HecDss svFile = DebugCorePlugin.svDss[i];
+				
+					String pathName=DssPluginCore.dvPathnameMap[i].get(name);
+					if (pathName !=null){
+						try {
+							dataSet= dvFile.read(pathName);
+							DssPluginCore.geoSchematicVariableData[i].put(name, dataSet);
+							DssPluginCore.geoSchematicVariableUnitsCFS[i].put(name, dataSet.getUnits());
+							DssPluginCore.geoSchematicVariableUnitsTAF[i].put(name, dataSet.getUnits());
+						}catch (Exception e) {
+						}
+					}
+					pathName=DssPluginCore.svPathnameMap[i].get(name);
+					if (pathName !=null){
+						try {
+							dataSet= svFile.read(pathName);
+							DssPluginCore.geoSchematicVariableData[i].put(name, dataSet);
+							DssPluginCore.geoSchematicVariableUnitsCFS[i].put(name, dataSet.getUnits());
+							DssPluginCore.geoSchematicVariableUnitsTAF[i].put(name, dataSet.getUnits());
+						}catch (Exception e) {
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	public void readFromSV(HecDss svFile, String pathName, String name, int i){
+		try {
+			HecMath dataSet = svFile.read(pathName);
+			if (dataSet !=null){
+				DssPluginCore.geoSchematicVariableData[i].put(name, dataSet);
+				DssPluginCore.geoSchematicVariableUnitsCFS[i].put(name, dataSet.getUnits());
+				DssPluginCore.geoSchematicVariableUnitsTAF[i].put(name, dataSet.getUnits());
+			}
+		} catch (Exception e) {
+		}
+	}
+	
+	public String retrieveUndebug(int index, String name, Object baseValue){
+		ArrayList<String> tws = DssPluginCore._schematicTwSelections;
+		String date=SchematicPluginCore.selDate;
+		for (int i=0; i<tws.size()-1; i++){
+			if (date.equals(tws.get(i+1))){
+				if (DssPluginCore.units.equals(DssPluginCore.cfs)){
+					if (DssPluginCore.months.size()<12){
+						return retrieveLongTermAverageSelectedMonths(date, index, name, true, baseValue);
+					}else{
+						return retrieveLongTermAverage(i, date, index, name, true, baseValue);
+					}
+				}else{
+					if (DssPluginCore.months.size()<12){
+						return retrieveLongTermAverageSelectedMonths(date, index, name, false, baseValue);
+					}else{
+						return retrieveLongTermAverage(i, date, index, name, false, baseValue);
+					}
+				}
+			}
+		}
+		
+		String result="";
+
+		ArrayList<String[]> pathParts = new ArrayList<String[]>();
+		CondensedReference found = null;
+		boolean isStorage=false;
+		String value = "";			
+		if (DssPluginCore.geoSchematicVariableData[index].containsKey(name)){
+			try {
+				HecMath dataSet = DssPluginCore.geoSchematicVariableData[index].get(name);
+				if (DssPluginCore.allStorageNames.contains(name)) isStorage=true;
+				TimeSeriesContainer tsc = (TimeSeriesContainer)dataSet.getData();
+				if (tsc !=null) {
+					boolean isTAFSelected = (DssPluginCore.units.equalsIgnoreCase("taf") ? true
+							: false);
+					tsc = unitsConversion(isStorage, tsc, isTAFSelected, index, name);
+					HecTime hecStartTime = new HecTime();
+					hecStartTime.set(tsc.startTime);
+					HecTime ht = new HecTime();
+							
+					ht.setDate(date);
+					int valueIndex = (ht.year() - hecStartTime.year())
+								* 12 + (ht.month() - hecStartTime.month());
+					if (valueIndex < 0 || valueIndex > tsc.values.length - 1) {
+						value = "N/A";
+					} else {
+						Double value_temp=tsc.values[valueIndex];
+						if (Math.abs(value_temp)>100000000) {//empty value
+							value="N/A";
+						} else {
+							value = tsc.values[valueIndex] + " "
+									+ tsc.units;
+						}
+					}
+														
+					if (DssPluginCore.mode.equals(DssPluginCore.diff)) {
+						String[] altFields = value.split("\\s");
+						try {
+							double baseVal = Double.parseDouble((String)baseValue);
+							double altVal = Double.parseDouble(altFields[0]);
+							result=(altVal - baseVal) + " " + altFields[1];
+						} catch (NumberFormatException nfe) {
+							result=value;
+						}
+					} else {
+						result=value;
+					}
+				}else{
+					result=value;
+				}
+			} catch (Exception e) {
+				//WPPException.handleException(e);
+				result=value;
+			}
+		}		
+		
+		return result;
+	}
+	
+public double calculateLongTermAverage(String date, int di, String name, boolean isCFS, HashMap<String, Double> altAverage){
+		
+		double result=0;
+				
+		int index = 0;
+		int month = -1;
+		int year = -1;
+
+		HecTime startDate = new HecTime();
+		HecTime endDate = new HecTime();
+		
+		String[] split = date.split(" - ");
+		startDate.setDate(split[0]); 
+		startDate.setTime("0100");
+
+		endDate.setDate(split[1]); 
+		endDate.setTime("2400");
+		month = endDate.month() + 1;
+		year = endDate.year();
+		if (month == 13) {
+			year = startDate.year() + 1;
+		}
+		String monthName = TimeOperation.getMonthText(month);
+		endDate.setDate(monthName + year);
+		endDate.add(-1440);
+		
+		HecTime ht = new HecTime();
+		HecTime hecStartTime = new HecTime();
+		HecTime hecEndTime = new HecTime();
+		
+		HashMap<String, HecMath> altGeoSchematicVariableData = DssPluginCore.geoSchematicVariableData[di];
+		if (altGeoSchematicVariableData.containsKey(name)){
+			HecMath dataSet=altGeoSchematicVariableData.get(name);
+			boolean isStorage=false;
+			try {
+				TimeSeriesContainer tsc = (TimeSeriesContainer)dataSet.getData();
+				if (DssPluginCore.allStorageNames.contains(name)) isStorage=true;
+				boolean isTAFSelected = (DssPluginCore.units.equalsIgnoreCase("taf") ? true
+						: false);
+				tsc=unitsConversion(isStorage, tsc, isTAFSelected, di, name);
+				ht.set(startDate);
+				hecStartTime.set(tsc.startTime);
+				hecEndTime.set(tsc.endTime);
+				int count=0;
+				double sum=0.0;
+				boolean inRange=false;
+				while (ht.compareTimes(hecEndTime)<=0 && ht.compareTimes(endDate)<=0){
+					if (ht.compareTimes(hecStartTime) >= 0){
+						int valueIndex = (ht.year() - hecStartTime
+								.year())
+								* 12
+								+ (ht.month() - hecStartTime
+										.month());
+						sum += tsc.values[valueIndex];
+						count++;
+						inRange=true;
+					}
+					month = ht.month() + 1;
+					if (month == 13) {
+						month = 1;
+						year = ht.year() + 1;
+					} else {
+						year = ht.year();
+					}
+					ht.setDate(TimeOperation.getMonthText(month)+
+							+ year);
+				}
+				if (inRange) {
+					result=sum/count;
+				}
+			} catch (HecMathException e) {
+				e.printStackTrace();
+			}
+		}
+		altAverage.put(name, result);
+		
+		return result;
+	}	
+	
+	public double calculateLongTermAverageSelectedMonths(String date, int di, String name, boolean isCFS){
+		
+		double result=0;
+				
+		int index = 0;
+		int month = -1;
+		int year = -1;
+
+		HecTime startDate = new HecTime();
+		HecTime endDate = new HecTime();
+		
+		String[] split = date.split(" - ");
+		startDate.setDate(split[0]); 
+		startDate.setTime("0100");
+
+		endDate.setDate(split[1]); 
+		endDate.setTime("2400");
+		month = endDate.month() + 1;
+		year = endDate.year();
+		if (month == 13) {
+			year = startDate.year() + 1;
+		}
+		String monthName = TimeOperation.getMonthText(month);
+		endDate.setDate(monthName + year);
+		endDate.add(-1440);
+		
+		HecTime ht = new HecTime();
+		HecTime hecStartTime = new HecTime();
+		HecTime hecEndTime = new HecTime();
+		
+		HashMap<String, HecMath> altGeoSchematicVariableData = DssPluginCore.geoSchematicVariableData[di];
+		if (altGeoSchematicVariableData.containsKey(name)){
+			HecMath dataSet=altGeoSchematicVariableData.get(name);
+			boolean isStorage=false;
+			try {
+				TimeSeriesContainer tsc = (TimeSeriesContainer)dataSet.getData();
+				if (DssPluginCore.allStorageNames.contains(name)) isStorage=true;
+				boolean isTAFSelected = (DssPluginCore.units.equalsIgnoreCase("taf") ? true
+						: false);
+				tsc=unitsConversion(isStorage, tsc, isTAFSelected, di, name);
+				ht.set(startDate);
+				hecStartTime.set(tsc.startTime);
+				hecEndTime.set(tsc.endTime);
+				int count=0;
+				double sum=0.0;
+				boolean inRange=false;
+				while (ht.compareTimes(hecEndTime)<=0 && ht.compareTimes(endDate)<=0){
+					if (ht.compareTimes(hecStartTime) >= 0 && DssPluginCore.months.contains(ht.month())){
+						int valueIndex = (ht.year() - hecStartTime
+								.year())
+								* 12
+								+ (ht.month() - hecStartTime
+										.month());
+						sum += tsc.values[valueIndex];
+						count++;
+						inRange=true;
+					}
+					month = ht.month() + 1;
+					if (month == 13) {
+						month = 1;
+						year = ht.year() + 1;
+					} else {
+						year = ht.year();
+					}
+					ht.setDate(TimeOperation.getMonthText(month)+
+							+ year);
+				}
+				if (inRange) {
+					result=sum/count;
+				}
+			} catch (HecMathException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
+	}	
+	
+	public String retrieveLongTermAverage(int pi, String date, int di, String name, boolean isCFS, Object baseValue){
+		
+		String result = "";
+		
+		ArrayList<HashMap<String, Double>> termAverage;
+		if (isCFS){
+			termAverage=DssPluginCore.geoLongTermAverageDataCFS.get(pi);
+		}else{
+			termAverage=DssPluginCore.geoLongTermAverageDataTAF.get(pi);
+		}
+		
+		ArrayList<String[]> pathParts = new ArrayList<String[]>();
+		CondensedReference found = null;
+		boolean isStorage=false;
+		if (DssPluginCore.allStorageNames.contains(name)) isStorage=true;
+		String value = "";			
+		HashMap<String, Double> altAverage = termAverage.get(di);
+		if (altAverage.containsKey(name)){
+			double data = altAverage.get(name);
+			boolean isTAFSelected = (DssPluginCore.units.equalsIgnoreCase("taf") ? true
+					: false);
+			String units;
+			if (isCFS){
+				units=DssPluginCore.geoSchematicVariableUnitsCFS[di].get(name);
+			}else{
+				units=DssPluginCore.geoSchematicVariableUnitsTAF[di].get(name);
+			}
+			if (data>100000000) {
+				value="N/A";
+			} else {
+				value = data + " " + units;
+			}
+			if (DssPluginCore.mode.equals(DssPluginCore.diff)) {
+				String[] altFields = value.split("\\s");
+				try {
+					double baseVal = Double.parseDouble((String)baseValue);
+					double altVal = Double.parseDouble(altFields[0]);
+					result = (altVal - baseVal) + " " + altFields[1];
+				} catch (NumberFormatException nfe) {
+					result=value;
+				}
+			}else {
+				result=value;
+			}
+		}else {
+			calculateLongTermAverage(date, di, name, isCFS, altAverage);
+		}
+
+		return result;
+	}
+	
+	public String retrieveLongTermAverageSelectedMonths(String date, int di, String name, boolean isCFS, Object baseValue){
+				
+		String result="";
+		
+		double termAverage = calculateLongTermAverageSelectedMonths(date, di, name, isCFS);
+		
+		boolean isStorage=false;
+		if (DssPluginCore.allStorageNames.contains(name)) isStorage=true;
+		String value = "";			
+		double data = termAverage;
+		boolean isTAFSelected = (DssPluginCore.units.equalsIgnoreCase("taf") ? true
+					: false);
+		String units;
+		if (isCFS){
+			units=DssPluginCore.geoSchematicVariableUnitsCFS[di].get(name);
+		}else{
+			units=DssPluginCore.geoSchematicVariableUnitsTAF[di].get(name);
+		}
+		if (data>100000000) {
+			value="N/A";
+		} else {
+			value = data + " " + units;
+		}
+		if (DssPluginCore.mode.equals(DssPluginCore.diff)) {
+			String[] altFields = value.split("\\s");
+			try {
+				double baseVal = Double.parseDouble((String)baseValue);
+				double altVal = Double.parseDouble(altFields[0]);
+				result=(altVal - baseVal) + " " + altFields[1];
+			} catch (NumberFormatException nfe) {
+				result=value;
+			}
+		}
+		return result;
+	}
+	
+	public TimeSeriesContainer unitsConversion(boolean isStorage, TimeSeriesContainer dataSet, boolean force, int index, String name) {
+
+		if ((DssPluginCore.units.equals("TAF") || force || isStorage)
+				&& dataSet.units.equals("CFS")) {
+			// CB dataSet = adjustMonthlyData(dataSet, 1.9834631 / 1000.);
+			dataSet = adjustMonthlyData(dataSet, true); // CB added constant IV FACTOR
+			// so do not need to pass a
+			// factor
+			dataSet.units="TAF";
+			DssPluginCore.geoSchematicVariableUnitsTAF[index].put(name, "TAF");
+
+		} else if (DssPluginCore.units.equals("CFS") && dataSet.units.equals("TAF")
+				&& !force && !isStorage) { // CB added section
+			dataSet = adjustMonthlyData(dataSet, false); // CB added constant IV
+			// FACTOR so do not
+			// need to pass a
+			// factor
+			dataSet.units="CFS";
+			DssPluginCore.geoSchematicVariableUnitsCFS[index].put(name, "CFS");
+		}
+		return dataSet;
+	}
+	
+	public TimeSeriesContainer adjustMonthlyData(TimeSeriesContainer tsc, boolean isCFStoTAF) { // CB added
+		// the
+		// boolean
+		// and
+		// made
+		// a
+		// constant
+		// IV
+		// factor
+		HecTime ht = null;
+		try {
+			double[] nvalues = new double[tsc.values.length];
+			int[] times = tsc.times;
+			int ndays = 0;
+			ht = new HecTime();
+			for (int i = 0; i < times.length; i++) {
+				ht.set(times[i]);
+				// FIX: subtract 1 min
+				ht.add(-1);
+				ndays = ht.day();
+				/*
+				 * HecTime BUG: sometimes ht.day() returns a day later than *
+				 * should???? I wasted a lot of time on this!!
+				 * 
+				 * returns ht.day() == 1, ht.hour() == 0 AS OPPOSED TO ht.day()
+				 * == 28,30,31 (depending on month), ht.hour() == 24
+				 */
+
+				// if (DEBUG) System.out.println(ht.year()+" "+ht.month()+
+				// " "+ht.day()+ht.hour()+" "+ht.minute()+" "+ht.second()+" "+times[i]+"
+				// "+values[i]);
+				// CB nvalues[i] = tsc.values[i] * ndays * factor;
+				if (isCFStoTAF) {
+					nvalues[i] = tsc.values[i] * ndays / FACTOR;
+				} else {
+					nvalues[i] = tsc.values[i] / ndays * FACTOR;
+				}
+			}
+			tsc.values = nvalues;
+		} catch (Exception e) {
+			System.out.println("Exception adjustMonthlyData: " + e);
+		}
+		return tsc;
+	}
 }

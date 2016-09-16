@@ -17,8 +17,8 @@
       </factory>
       <wizardPage
             class="gov.ca.dwr.wrims.calsimshp.CalSimShpWizardPage"
-            description="CalSim Shapefiles for Arcs and Nodes"
-            name="CalSim Shapefiles">
+            description="WRIMS Shapefiles for Arcs and Nodes"
+            name="WRIMS Shapefiles">
       </wizardPage>
    </extension>
 </plugin>

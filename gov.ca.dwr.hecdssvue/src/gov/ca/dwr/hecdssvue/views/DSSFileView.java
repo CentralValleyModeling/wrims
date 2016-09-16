@@ -543,6 +543,7 @@ public class DSSFileView extends ViewPart {
                                         .getActivePage().showView(DSSCatalogView.ID);
 					try {
 						dcv.getViewer().setInput(DssPluginCore.dssArray);
+						DataOps.clearGeoSchematicVariableData();
 						DataOps.loadAllSchematicVariableData();
 //						dcv.setInput(dssArray);
 //						dcv.updateData();
