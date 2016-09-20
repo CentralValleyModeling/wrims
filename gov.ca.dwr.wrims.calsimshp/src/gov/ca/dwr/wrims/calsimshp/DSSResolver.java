@@ -34,7 +34,11 @@ public class DSSResolver {
 	
 	private final int firstDssIndex;
 	
+	private final String name;
+	
 	private static double FACTOR = 1000. * 43560 / (24 * 60 * 60);
+	
+	private int precision = 0; 
 
 	/**
 	 * Create a new DSSResolver based key points of the featureType on which the Resolver is
@@ -43,8 +47,9 @@ public class DSSResolver {
 	 * 						the NUM_DSS DSS attributes are contiguous from this index
 	 * @param idIndex the index of the attribute which contains the identifier of the feature
 	 */
-	public DSSResolver(int firstDssIndex) {
+	public DSSResolver(int firstDssIndex, String name) {
 		this.firstDssIndex = firstDssIndex;
+		this.name=name;
 	}
 
 	/**
@@ -54,19 +59,19 @@ public class DSSResolver {
 	 * @param values an array of the feature's attributes, to be updated with the new DSS value
 	 * @param index the index of the attribute to be updated, if it is a DSS attribute
 	 */
-	public void resolve(Object[] values, int index, FeatureId id, Object baseValue) {
+	public void resolve(Object[] values, int index, Object baseValue) {
 		
 		if(index >= firstDssIndex && index < firstDssIndex + NUM_DSS) {
-			String name=id.getID();
 			if (!DssPluginCore.geoSchematicVariableNames.contains(name)){
 				DssPluginCore.geoSchematicVariableNames.add(name);
-				loadGeoSchematicVariableData(name);
+				loadGeoSchematicVariableData();
 			}
 			
 			// from 0 to (NUM_DSS - 1), this specifies which dataset to retrieve data from
 			int dssIndex = index - firstDssIndex; 
 			if (DebugCorePlugin.selectedStudies[dssIndex]){
-				values[index] = retrieveUndebug(dssIndex, name, baseValue);
+				values[index] = truncateAfterDecimal(retrieveUndebug(dssIndex, baseValue), precision,
+						true);
 			}else{
 				values[index] = "";
 			}
@@ -78,14 +83,14 @@ public class DSSResolver {
 	 * 
 	 * @param values an array of the feature's attributes, to be updated with the new DSS value(s)
 	 */
-	public void resolveAll(Object[] values, FeatureId id) {
+	public void resolveAll(Object[] values) {
 		// this approach simply reuses the single-value lookup from above
 		// if there is a more efficient way to do this, please go ahead
 		
 		Object baseValue="0";
 		boolean updateBaseValue=true;
 		for(int index = firstDssIndex; index < firstDssIndex + NUM_DSS; index++) {
-			resolve(values, index, id, baseValue);
+			resolve(values, index, baseValue);
 			if (updateBaseValue){
 				baseValue=values[index];
 				updateBaseValue=false;
@@ -93,7 +98,7 @@ public class DSSResolver {
 		}
 	}
 
-	public void loadGeoSchematicVariableData(String name){
+	public void loadGeoSchematicVariableData(){
 		if (DssPluginCore.allPathName.containsKey(name)){
 			String pathName = DssPluginCore.allPathName.get(name);
 			for (int i=0; i<4; i++){
@@ -105,7 +110,7 @@ public class DSSResolver {
 						try {
 							dataSet= dvFile.read(pathName);
 							if (dataSet ==null){
-								readFromSV(svFile, pathName, name, i);
+								readFromSV(svFile, pathName, i);
 								continue;
 							}else{
 								DssPluginCore.geoSchematicVariableData[i].put(name, dataSet);
@@ -114,10 +119,10 @@ public class DSSResolver {
 								continue;
 							}
 						} catch (Exception e) {
-							readFromSV(svFile, pathName, name, i);
+							readFromSV(svFile, pathName, i);
 						}
 					}else{
-						readFromSV(svFile, pathName, name, i);
+						readFromSV(svFile, pathName, i);
 					}
 				}
 			}
@@ -153,7 +158,7 @@ public class DSSResolver {
 		}
 	}
 	
-	public void readFromSV(HecDss svFile, String pathName, String name, int i){
+	public void readFromSV(HecDss svFile, String pathName, int i){
 		try {
 			HecMath dataSet = svFile.read(pathName);
 			if (dataSet !=null){
@@ -165,22 +170,22 @@ public class DSSResolver {
 		}
 	}
 	
-	public String retrieveUndebug(int index, String name, Object baseValue){
+	public String retrieveUndebug(int index, Object baseValue){
 		ArrayList<String> tws = DssPluginCore._schematicTwSelections;
 		String date=SchematicPluginCore.selDate;
 		for (int i=0; i<tws.size()-1; i++){
 			if (date.equals(tws.get(i+1))){
 				if (DssPluginCore.units.equals(DssPluginCore.cfs)){
 					if (DssPluginCore.months.size()<12){
-						return retrieveLongTermAverageSelectedMonths(date, index, name, true, baseValue);
+						return retrieveLongTermAverageSelectedMonths(date, index, true, baseValue);
 					}else{
-						return retrieveLongTermAverage(i, date, index, name, true, baseValue);
+						return retrieveLongTermAverage(i, date, index, true, baseValue);
 					}
 				}else{
 					if (DssPluginCore.months.size()<12){
-						return retrieveLongTermAverageSelectedMonths(date, index, name, false, baseValue);
+						return retrieveLongTermAverageSelectedMonths(date, index, false, baseValue);
 					}else{
-						return retrieveLongTermAverage(i, date, index, name, false, baseValue);
+						return retrieveLongTermAverage(i, date, index, false, baseValue);
 					}
 				}
 			}
@@ -200,7 +205,7 @@ public class DSSResolver {
 				if (tsc !=null) {
 					boolean isTAFSelected = (DssPluginCore.units.equalsIgnoreCase("taf") ? true
 							: false);
-					tsc = unitsConversion(isStorage, tsc, isTAFSelected, index, name);
+					tsc = unitsConversion(isStorage, tsc, isTAFSelected, index);
 					HecTime hecStartTime = new HecTime();
 					hecStartTime.set(tsc.startTime);
 					HecTime ht = new HecTime();
@@ -244,9 +249,9 @@ public class DSSResolver {
 		return result;
 	}
 	
-public double calculateLongTermAverage(String date, int di, String name, boolean isCFS, HashMap<String, Double> altAverage){
+public Double calculateLongTermAverage(String date, int di, boolean isCFS, HashMap<String, Double> altAverage){
 		
-		double result=0;
+		Double result=null;
 				
 		int index = 0;
 		int month = -1;
@@ -283,7 +288,7 @@ public double calculateLongTermAverage(String date, int di, String name, boolean
 				if (DssPluginCore.allStorageNames.contains(name)) isStorage=true;
 				boolean isTAFSelected = (DssPluginCore.units.equalsIgnoreCase("taf") ? true
 						: false);
-				tsc=unitsConversion(isStorage, tsc, isTAFSelected, di, name);
+				tsc=unitsConversion(isStorage, tsc, isTAFSelected, di);
 				ht.set(startDate);
 				hecStartTime.set(tsc.startTime);
 				hecEndTime.set(tsc.endTime);
@@ -317,15 +322,15 @@ public double calculateLongTermAverage(String date, int di, String name, boolean
 			} catch (HecMathException e) {
 				e.printStackTrace();
 			}
+			altAverage.put(name, result);
 		}
-		altAverage.put(name, result);
 		
 		return result;
 	}	
 	
-	public double calculateLongTermAverageSelectedMonths(String date, int di, String name, boolean isCFS){
+	public Double calculateLongTermAverageSelectedMonths(String date, int di, boolean isCFS){
 		
-		double result=0;
+		Double result=null;
 				
 		int index = 0;
 		int month = -1;
@@ -362,7 +367,7 @@ public double calculateLongTermAverage(String date, int di, String name, boolean
 				if (DssPluginCore.allStorageNames.contains(name)) isStorage=true;
 				boolean isTAFSelected = (DssPluginCore.units.equalsIgnoreCase("taf") ? true
 						: false);
-				tsc=unitsConversion(isStorage, tsc, isTAFSelected, di, name);
+				tsc=unitsConversion(isStorage, tsc, isTAFSelected, di);
 				ht.set(startDate);
 				hecStartTime.set(tsc.startTime);
 				hecEndTime.set(tsc.endTime);
@@ -401,7 +406,7 @@ public double calculateLongTermAverage(String date, int di, String name, boolean
 		return result;
 	}	
 	
-	public String retrieveLongTermAverage(int pi, String date, int di, String name, boolean isCFS, Object baseValue){
+	public String retrieveLongTermAverage(int pi, String date, int di, boolean isCFS, Object baseValue){
 		
 		String result = "";
 		
@@ -446,22 +451,37 @@ public double calculateLongTermAverage(String date, int di, String name, boolean
 				result=value;
 			}
 		}else {
-			calculateLongTermAverage(date, di, name, isCFS, altAverage);
+			boolean isTAFSelected = (DssPluginCore.units.equalsIgnoreCase("taf") ? true
+					: false);
+			String units;
+			if (isCFS){
+				units=DssPluginCore.geoSchematicVariableUnitsCFS[di].get(name);
+			}else{
+				units=DssPluginCore.geoSchematicVariableUnitsTAF[di].get(name);
+			}
+			Double data=calculateLongTermAverage(date, di, isCFS, altAverage);
+			if (data==null){
+				result = "";
+			}else{
+				result=String.valueOf(data)+ " " + units;
+			}
 		}
 
 		return result;
 	}
 	
-	public String retrieveLongTermAverageSelectedMonths(String date, int di, String name, boolean isCFS, Object baseValue){
+	public String retrieveLongTermAverageSelectedMonths(String date, int di, boolean isCFS, Object baseValue){
 				
 		String result="";
 		
-		double termAverage = calculateLongTermAverageSelectedMonths(date, di, name, isCFS);
+		Double data = calculateLongTermAverageSelectedMonths(date, di, isCFS);
+		if (data==null){
+			return result;
+		}
 		
 		boolean isStorage=false;
 		if (DssPluginCore.allStorageNames.contains(name)) isStorage=true;
 		String value = "";			
-		double data = termAverage;
 		boolean isTAFSelected = (DssPluginCore.units.equalsIgnoreCase("taf") ? true
 					: false);
 		String units;
@@ -488,7 +508,7 @@ public double calculateLongTermAverage(String date, int di, String name, boolean
 		return result;
 	}
 	
-	public TimeSeriesContainer unitsConversion(boolean isStorage, TimeSeriesContainer dataSet, boolean force, int index, String name) {
+	public TimeSeriesContainer unitsConversion(boolean isStorage, TimeSeriesContainer dataSet, boolean force, int index) {
 
 		if ((DssPluginCore.units.equals("TAF") || force || isStorage)
 				&& dataSet.units.equals("CFS")) {
@@ -554,5 +574,18 @@ public double calculateLongTermAverage(String date, int di, String name, boolean
 			System.out.println("Exception adjustMonthlyData: " + e);
 		}
 		return tsc;
+	}
+	
+	private String truncateAfterDecimal(String value, int i,
+			boolean displayUnits) {
+		if (value == null) {
+			return null;
+		}
+		String[] fields = value.split("\\s");
+		if (fields.length < 2) {
+			return value;
+		}
+		return String.format("%." + i + "f %s", Double.parseDouble(fields[0]),
+				displayUnits ? fields[1] : "");
 	}
 }

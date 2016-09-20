@@ -19,7 +19,7 @@ public class CalSimShpFeature extends SimpleFeatureImpl {
 
     public Object getAttribute(int index) throws IndexOutOfBoundsException {
     	Object baseValue="0";
-   		dssResolver.resolve(values, index, id, baseValue);
+   		dssResolver.resolve(values, index, baseValue);
    		if(index >= values.length) {
    			System.out.println("foo");
    		}
@@ -27,7 +27,7 @@ public class CalSimShpFeature extends SimpleFeatureImpl {
     }
     
     public List<Object> getAttributes() {
-   		dssResolver.resolveAll(values, id);
+   		dssResolver.resolveAll(values);
         return new ArrayList<Object>(Arrays.asList( values ));
     }
 

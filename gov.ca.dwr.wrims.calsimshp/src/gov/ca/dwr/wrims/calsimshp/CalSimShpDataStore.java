@@ -64,8 +64,6 @@ public class CalSimShpDataStore extends ContentDataStore {
 	    	typeBuilder.nillable(true).add("dss4", Double.class);
 	    	schema = typeBuilder.buildFeatureType();
 	    	
-	    	DSSResolver dssResolver = new DSSResolver(shpType.getAttributeCount());
-	    	
 	    	memory = new HashMap<String,CalSimShpFeature>();
 	    	while(reader.hasNext()) {
 	    		SimpleFeature baseFeature = reader.next();
@@ -73,7 +71,8 @@ public class CalSimShpDataStore extends ContentDataStore {
 	    		for(int i = 0; i < baseFeature.getAttributeCount(); i++) {
 	    			values[i] = baseFeature.getAttribute(i);
 	    		}
-	    		CalSimShpFeature f = new CalSimShpFeature(values, schema, baseFeature.getIdentifier(), dssResolver); 
+	    		DSSResolver dssResolver = new DSSResolver(shpType.getAttributeCount(), (String)baseFeature.getAttribute(idFieldName));
+	    		CalSimShpFeature f = new CalSimShpFeature(values, schema, baseFeature.getIdentifier(), dssResolver);
 	    		memory.put(f.getID(), f);
 	    	}
 		} finally {
