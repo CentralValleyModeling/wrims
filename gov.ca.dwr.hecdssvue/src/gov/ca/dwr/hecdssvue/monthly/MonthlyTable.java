@@ -55,33 +55,38 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.text.Document;
 
-import rma.awt.DecimalCellRenderer;
-import rma.awt.FixedLengthDocument;
-import rma.awt.IParameterScale;
-import rma.awt.RMACalendarField;
-import rma.awt.RMACellEditor;
-import rma.awt.RMAColorComboBox;
-import rma.awt.RMADSSPathPartField;
-import rma.awt.RMADateField;
-import rma.awt.RMADecimalField;
-import rma.awt.RMAIntegerField;
-import rma.awt.RMAListModel;
-import rma.awt.RMAMiltaryTimeField;
-import rma.awt.RmaCellRenderer;
-import rma.awt.RmaColorRenderer;
-import rma.awt.RmaJCheckBox;
-import rma.awt.RmaJComboBox;
-import rma.awt.RmaJFrame;
-import rma.awt.RmaJLabel;
-import rma.awt.RmaJTextArea;
-import rma.awt.RmaJTextField;
-import rma.awt.RmaTableModel;
-import rma.awt.ToggleDocument;
-import rma.awt.UnitsComponent;
-import rma.awt.event.TableChangeListener;
-import rma.awt.event.TableUpdateEvent;
-import rma.awt.print.PageText;
-import rma.awt.table.*;
+import rma.swing.table.DecimalCellRenderer;
+import rma.swing.text.FixedLengthDocument;
+import rma.swing.IParameterScale;
+import rma.swing.list.RmaListModel;
+import rma.swing.table.RmaCellEditor;
+import rma.swing.table.RmaCellRenderer;
+import rma.swing.table.RmaColorRenderer;
+import rma.swing.EditableComponent;
+import rma.swing.FormManagementListener;
+import rma.swing.InsertDlg;
+import rma.swing.RmaJ24HourTimeField;
+import rma.swing.RmaJCalendarField;
+import rma.swing.RmaJCheckBox;
+import rma.swing.RmaJColorComboBox;
+import rma.swing.RmaJComboBox;
+import rma.swing.RmaJDateField;
+import rma.swing.RmaJDecimalField;
+import rma.swing.RmaJDssPathPartField;
+import rma.swing.RmaJFrame;
+import rma.swing.RmaJIntegerField;
+import rma.swing.RmaJLabel;
+import rma.swing.RmaJTextArea;
+import rma.swing.RmaJTextField;
+import rma.swing.RmaValidComponent;
+import rma.swing.table.RmaTableModel;
+import rma.swing.ToggleDocument;
+import rma.services.tz.TimeZoneComponent;
+import rma.services.units.UnitsComponent;
+import rma.swing.event.TableChangeListener;
+import rma.swing.event.TableUpdateEvent;
+import rma.swing.print.PageText;
+import rma.swing.table.*;
 import rma.util.RMAIO;
 import gov.ca.dwr.hecdssvue.monthly.MonthlyTableModel.SingleMonthlyTable;
 import hec.data.ParamDouble;
@@ -157,9 +162,9 @@ import hec.io.TimeSeriesContainer;
 public class MonthlyTable extends JTable
 		 implements ActionListener, CellEditorListener, TextListener,
 		KeyListener, MouseListener, DocumentListener, ItemListener,
-		javax.swing.event.TableModelListener, rma.awt.FormManagementListener, Printable,
-		rma.lang.Modifiable, rma.awt.EditableComponent, rma.awt.UnitsComponent, rma.awt.TimeZoneComponent,
-		rma.awt.RMAValidComponent
+		javax.swing.event.TableModelListener, Printable,
+		rma.lang.Modifiable, FormManagementListener, EditableComponent, UnitsComponent, TimeZoneComponent,
+		RmaValidComponent
 {
 	TablePrintManager _printManager;
 	Component _parent = null;
@@ -205,7 +210,7 @@ public class MonthlyTable extends JTable
 	CurrencyCellRenderer _currencyCellRend;
 	RmaCellRenderer _rmaCellRend;
 	DecimalCellRenderer _decCellRend;
-	rma.awt.table.MultiLineCellRenderer _mlCellRend;
+	MultiLineCellRenderer _mlCellRend;
 	boolean _useRmaCellRenderer = false;
 	boolean _addedToScrollPane = false;
 	/** whether the consume the enter and escape keys */
@@ -480,14 +485,14 @@ public class MonthlyTable extends JTable
 
 			TableCellRenderer tcr = tcm.getColumn(i).getCellRenderer();
 
-			if (tcr instanceof rma.awt.RmaCellRenderer)
+			if (tcr instanceof RmaCellRenderer)
 			{
-				((rma.awt.RmaCellRenderer) tcr).setDisplayScaleFactor(i, paramId, scaleFactor);
+				((RmaCellRenderer) tcr).setDisplayScaleFactor(i, paramId, scaleFactor);
 			}
 			TableCellEditor tce = tcm.getColumn(i).getCellEditor();
-			if (tce instanceof RMACellEditor)
+			if (tce instanceof RmaCellEditor)
 			{
-				((RMACellEditor) tce).setDisplayScaleFactor(paramId, scaleFactor);
+				((RmaCellEditor)tce).setDisplayScaleFactor(paramId, scaleFactor);
 			}
 		}
 
@@ -529,16 +534,16 @@ public class MonthlyTable extends JTable
 		Iterator iter = defaultEditorsByColumnClass.values().iterator();
 		while (iter.hasNext()){
 			Object o = iter.next();
-			if (!(o instanceof RMACellEditor)) continue;
-			RMACellEditor editor = (RMACellEditor)o;
+			if (!(o instanceof RmaCellEditor)) continue;
+			RmaCellEditor editor = (RmaCellEditor)o;
 			editor.setDisplayUnitSystem(unitSystem);
 		}
 
 		iter = defaultRenderersByColumnClass.values().iterator();
 		while (iter.hasNext()){
 			Object o = iter.next();
-			if (!(o instanceof rma.awt.table.UnitsCellRenderer)) continue;
-			rma.awt.table.UnitsCellRenderer renderer = (rma.awt.table.UnitsCellRenderer)o;
+			if (!(o instanceof UnitsCellRenderer)) continue;
+			UnitsCellRenderer renderer = (UnitsCellRenderer)o;
 			renderer.setDisplayUnitsSystem(unitSystem);
 		}
 
@@ -549,28 +554,28 @@ public class MonthlyTable extends JTable
 			TableCellRenderer tcr = tcm.getColumn(i).getHeaderRenderer();
 			if (tcr instanceof UnitsCellRenderer)
 			{
-				((rma.awt.table.UnitsCellRenderer) tcr).setDisplayUnitsSystem(unitSystem);
+				((UnitsCellRenderer) tcr).setDisplayUnitsSystem(unitSystem);
 			}
 			tcr = tcm.getColumn(i).getCellRenderer();
-			if (tcr instanceof rma.awt.table.UnitsCellRenderer)
+			if (tcr instanceof UnitsCellRenderer)
 			{
-				((rma.awt.table.UnitsCellRenderer) tcr).setDisplayUnitsSystem(unitSystem);
+				((UnitsCellRenderer) tcr).setDisplayUnitsSystem(unitSystem);
 			}
 			TableCellEditor tce = tcm.getColumn(i).getCellEditor();
-			if (tce instanceof RMACellEditor)
+			if (tce instanceof RmaCellEditor)
 			{
-				((RMACellEditor) tce).setDisplayUnitSystem(unitSystem);
+				((RmaCellEditor)tce).setDisplayUnitSystem(unitSystem);
 			}
 			//see if there are column groups
 			JTableHeader header = getTableHeader();
-			if (header instanceof rma.awt.table.GroupableTableHeader)
+			if (header instanceof GroupableTableHeader)
 			{
 				Enumeration e = ((GroupableTableHeader) header).getColumnGroups(tcm.getColumn(i));
 
 				while (e != null && e.hasMoreElements())
 				{
 					cg = (ColumnGroup) e.nextElement();
-					if (cg.getHeaderRenderer() instanceof rma.awt.table.UnitsCellRenderer)
+					if (cg.getHeaderRenderer() instanceof UnitsCellRenderer)
 					{
 						((UnitsCellRenderer) cg.getHeaderRenderer()).setDisplayUnitsSystem(unitSystem);
 					}
@@ -582,7 +587,7 @@ public class MonthlyTable extends JTable
 			_rowheaderTbl.setDisplayUnitsSystem(unitSystem);
 		}
 		TableModel model = getModel();
-		if (model instanceof rma.awt.table.RmaTableModelInterface)
+		if (model instanceof RmaTableModelInterface)
 		{
 			((RmaTableModelInterface) model).setDisplayUnitsSystem(unitSystem);
 		}
@@ -614,17 +619,17 @@ public class MonthlyTable extends JTable
 		for (int i = 0; i < tcm.getColumnCount(); i++)
 		{
 			TableCellRenderer tcr = tcm.getColumn(i).getCellRenderer();
-			if (tcr instanceof rma.awt.table.RmaDateTimeRenderer)
+			if (tcr instanceof RmaDateTimeRenderer)
 			{
 				((RmaDateTimeRenderer) tcr).setTimeZone(tz);
 			}
 			TableCellEditor tce = tcm.getColumn(i).getCellEditor();
-			if (tce instanceof rma.awt.table.RmaDateTimeEditor)
+			if (tce instanceof RmaDateTimeEditor)
 			{
 				((RmaDateTimeEditor) tce).setTimeZone(tz);
 			}
 			TableCellRenderer hdr = tcm.getColumn(i).getHeaderRenderer();
-			if (hdr instanceof rma.awt.table.TimeZoneHeaderRenderer)
+			if (hdr instanceof TimeZoneHeaderRenderer)
 			{
 				((TimeZoneHeaderRenderer) hdr).setTimeZone(tz);
 			}
@@ -737,7 +742,7 @@ public class MonthlyTable extends JTable
 		TableCellRenderer renderer = super.getDefaultRenderer(columnClass);
 		if (renderer == null)
 		{
-			renderer = new rma.awt.RmaCellRenderer();
+			renderer = new RmaCellRenderer();
 		}
 		if(renderer instanceof UnitsCellRenderer) {
 			((UnitsCellRenderer)renderer).setDisplayUnitsSystem(this.getDisplayUnitSystem());
@@ -780,24 +785,24 @@ public class MonthlyTable extends JTable
 		}
 
 		textField.setBorder(_defaultBorder);
-		RMACellEditor dce;
-		dce = new RMACellEditor(textField);
+		RmaCellEditor dce;
+		dce = new RmaCellEditor(textField);
 		dce.setClickCountToStart(_clickCountToStart);
 		setDefaultEditor(getClassForName("java.lang.Object"), dce);
 		setDefaultEditor(getClassForName("java.lang.String"), dce);
 
 		// Numbers
-		RMADecimalField rightAlignedTextField = new RMADecimalField();
+		RmaJDecimalField rightAlignedTextField = new RmaJDecimalField();
 		rightAlignedTextField.setHorizontalAlignment(JTextField.RIGHT);
 		rightAlignedTextField.setBorder(_defaultBorder);
-		dce = new RMACellEditor(rightAlignedTextField);
+		dce = new RmaCellEditor(rightAlignedTextField);
 		dce.setClickCountToStart(_clickCountToStart);
 		setDefaultEditor(java.lang.Number.class, dce);
 		setDefaultEditor(getClassForName("hec.data.ParamDouble"), dce);
 
 		// Booleans
 ////        JCheckBox centeredCheckBox = new JCheckBox();
-		rma.awt.RmaJCheckBox centeredCheckBox = new rma.awt.RmaJCheckBox();
+		RmaJCheckBox centeredCheckBox = new RmaJCheckBox();
 		//for modification Alerts
 		centeredCheckBox.setHorizontalAlignment(JCheckBox.CENTER);
 		//setDefaultEditor(getClassForName("java.lang.Boolean"), new OneClickCheckBoxEditor(centeredCheckBox));
@@ -813,7 +818,7 @@ public class MonthlyTable extends JTable
 		defaultRenderersByColumnClass = new Hashtable();
 
 		// Objects
-		rma.awt.RmaCellRenderer label1 = new rma.awt.RmaCellRenderer(new javax.swing.JLabel());
+		RmaCellRenderer label1 = new RmaCellRenderer(new javax.swing.JLabel());
 		setDefaultRenderer(getClassForName("java.lang.Object"), label1);
 
 		// Strings
@@ -863,7 +868,7 @@ public class MonthlyTable extends JTable
 	
 	protected JTableHeader createDefaultTableHeader()
 	{
-		return new rma.awt.table.ToolTipHeader(getColumnModel());
+		return new ToolTipHeader(getColumnModel());
 	}
 	/**
 	 *  Method Description
@@ -920,7 +925,7 @@ public class MonthlyTable extends JTable
 				return;
 			}
 			tf.addMouseListener(this);
-			RMACellEditor dcf = new RMACellEditor(tf);
+			RmaCellEditor dcf = new RmaCellEditor(tf);
 			dcf.setClickCountToStart(_clickCountToStart);
 			//dfc.addCellEditorListener(this);
 			tc.setCellEditor(dcf);
@@ -1535,18 +1540,18 @@ public class MonthlyTable extends JTable
 		{
 
 			Component comp = null;
-			if (editor instanceof RMACellEditor)
+			if (editor instanceof RmaCellEditor)
 			{
-				comp = ((RMACellEditor) editor).getComponent();
+				comp = ((RmaCellEditor) editor).getComponent();
 			}
 			/*
 			 *  else if ( editor instanceof RMACellEditor )
 			 *  comp = ((RMACellEditor)editor).getComponent();
 			 */
 			final Object value = editor.getCellEditorValue();
-			if (comp instanceof rma.awt.RMAValidComponent)
+			if (comp instanceof RmaValidComponent)
 			{
-				if (!((rma.awt.RMAValidComponent) comp).isValid(true) || !isValid(true))
+				if (!((RmaValidComponent) comp).isValid(true) || !isValid(true))
 				{
 					final int row = editingRow;
 					final int col = editingColumn;
@@ -2441,7 +2446,7 @@ public class MonthlyTable extends JTable
 				RmaJTextField tf = new RmaJTextField();
 				tf.setBorder(_defaultBorder);
 				tf.addMouseListener(this);
-				RMACellEditor dcf = new RMACellEditor(tf);
+				RmaCellEditor dcf = new RmaCellEditor(tf);
 				dcf.setClickCountToStart(_clickCountToStart);
 				//dcf.addCellEditorListener(this);
 				tc.setCellEditor(dcf);
@@ -3164,9 +3169,9 @@ public class MonthlyTable extends JTable
 			// make sure that the mouselistener get set so that the popup menu works
 			TableCellEditor tce = getDefaultEditor(cls);
 			tc.setCellEditor(tce);
-			if (tce instanceof RMACellEditor)
+			if (tce instanceof RmaCellEditor)
 			{
-				RMACellEditor dce = (RMACellEditor) tce;
+				RmaCellEditor dce = (RmaCellEditor) tce;
 				dce.setClickCountToStart(_clickCountToStart);
 				Component c = dce.getComponent();
 				if (c != null)
@@ -3329,7 +3334,7 @@ public class MonthlyTable extends JTable
 		_tabToEditCell = tabToEditCell;
 	}
 
-	public RMADecimalField setCurrencyCellEditor(int col)
+	public RmaJDecimalField setCurrencyCellEditor(int col)
 	{
 		TableColumnModel tcm = getColumnModel();
 		TableColumn tc;
@@ -3349,10 +3354,10 @@ public class MonthlyTable extends JTable
 			return null;
 		}
 
-		RMADecimalField ta = new RMADecimalField();
+		RmaJDecimalField ta = new RmaJDecimalField();
 		ta.setPrecision(2);
 		ta.addMouseListener(this);
-		RMACellEditor dcf = new RMACellEditor(ta);
+		RmaCellEditor dcf = new RmaCellEditor(ta);
 		setHorizontalAlignment(SwingConstants.RIGHT, col);
 		//dcf.addCellEditorListener(this);
 		dcf.setClickCountToStart(_clickCountToStart);
@@ -3377,7 +3382,7 @@ public class MonthlyTable extends JTable
 		TableColumn tc;
 		if (_mlCellRend == null)
 		{
-			_mlCellRend = new rma.awt.table.MultiLineCellRenderer();
+			_mlCellRend = new MultiLineCellRenderer();
 		}
 
 		if (col >= tcm.getColumnCount() || col < 0)
@@ -3396,7 +3401,7 @@ public class MonthlyTable extends JTable
 		ta.setToolTipText("");
 		ta.setFont(getFont());
 		ta.addMouseListener(this);
-		RMACellEditor dcf = new RMACellEditor(ta,addSrcollPane);
+		RmaCellEditor dcf = new RmaCellEditor(ta,addSrcollPane);
 		//dcf.addCellEditorListener(this);
 		dcf.setClickCountToStart(_clickCountToStart);
 		tc.setCellEditor(dcf);
@@ -3438,7 +3443,7 @@ public class MonthlyTable extends JTable
 		RmaJTextField tf = new RmaJTextField(td, "" + key1, 5);
 		tf.setBorder(_defaultBorder);
 		tf.addMouseListener(this);
-		RMACellEditor dcf = new RMACellEditor(tf);
+		RmaCellEditor dcf = new RmaCellEditor(tf);
 		//dcf.addCellEditorListener(this);
 		dcf.setClickCountToStart(_clickCountToStart);
 		tc.setCellEditor(dcf);
@@ -3455,7 +3460,7 @@ public class MonthlyTable extends JTable
 		button.setFocusPainted(false);
 		//button.setBorderPainted(true);
 		//button.setBackground(this.getColumnBackground(col));
-		RMACellEditor ce = new RMACellEditor(button);
+		RmaCellEditor ce = new RmaCellEditor(button);
 		getColumnModel().getColumn(col).setCellEditor(ce);
 		getColumnModel().getColumn(col).setCellRenderer(new ButtonRenderer());
 		return button;
@@ -3519,7 +3524,7 @@ public class MonthlyTable extends JTable
 	 *@param  col  The new DoubleCellEditor value
 	 *@return      Description
 	 */
-	public rma.awt.RMADecimalField setDoubleCellEditor(int col)
+	public RmaJDecimalField setDoubleCellEditor(int col)
 	{
 		return (setDoubleCellEditor(col, false));
 	}
@@ -3531,7 +3536,7 @@ public class MonthlyTable extends JTable
 	 *@param  showFormatting  The new DoubleCellEditor value
 	 *@return                 Description
 	 */
-	public rma.awt.RMADecimalField setDoubleCellEditor(int col, boolean showFormatting)
+	public RmaJDecimalField setDoubleCellEditor(int col, boolean showFormatting)
 	{
 		TableColumnModel tcm = getColumnModel();
 		TableColumn tc;
@@ -3550,12 +3555,12 @@ public class MonthlyTable extends JTable
 			return null;
 		}
 
-		RMADecimalField df = new RMADecimalField(0, 5);
+		RmaJDecimalField df = new RmaJDecimalField(0,5);
 		df.setPrecision(_precision);
 		//df.setShowErrorMsg(false);
-		df.setHorizontalAlignment(RMADecimalField.RIGHT);
+		df.setHorizontalAlignment(RmaJDecimalField.RIGHT);
 		df.addMouseListener(this);
-		RMACellEditor dcf = new RMACellEditor(df);
+		RmaCellEditor dcf = new RmaCellEditor(df);
 		dcf.setDisplayUnitSystem(getDisplayUnitSystem());
 		ParameterScale ps = (ParameterScale) _parameterScaleTable.get(new Integer(convertColumnIndexToModel(col)));
 		if (ps != null)
@@ -3581,7 +3586,7 @@ public class MonthlyTable extends JTable
 		return df;
 	}
 
-	public RMAIntegerField setIntegerCellEditor(int col)
+	public RmaJIntegerField setIntegerCellEditor(int col)
 	{
 		TableColumnModel tcm = getColumnModel();
 		TableColumn tc;
@@ -3596,10 +3601,10 @@ public class MonthlyTable extends JTable
 			return null;
 		}
 
-		RMAIntegerField df = new RMAIntegerField(0, 5);
-		df.setHorizontalAlignment(RMADecimalField.RIGHT);
+		RmaJIntegerField df = new RmaJIntegerField(0, 5);
+		df.setHorizontalAlignment(RmaJDecimalField.RIGHT);
 		df.addMouseListener(this);
-		RMACellEditor dcf = new RMACellEditor(df);
+		RmaCellEditor dcf = new RmaCellEditor(df);
 		dcf.setDisplayUnitSystem(getDisplayUnitSystem());
 		ParameterScale ps = (ParameterScale) _parameterScaleTable.get(new Integer(convertColumnIndexToModel(col)));
 		if (ps != null)
@@ -3624,7 +3629,7 @@ public class MonthlyTable extends JTable
 	 *@param  col  The new TimeCellEditor value
 	 *@return      Description
 	 */
-	public rma.awt.RMAMiltaryTimeField setTimeCellEditor(int col)
+	public RmaJ24HourTimeField setTimeCellEditor(int col)
 	{
 		TableColumnModel tcm = getColumnModel();
 		TableColumn tc;
@@ -3637,10 +3642,10 @@ public class MonthlyTable extends JTable
 		{
 			return null;
 		}
-		RMAMiltaryTimeField mf = new RMAMiltaryTimeField();
+		RmaJ24HourTimeField mf = new RmaJ24HourTimeField();
 		//mf.setShowErrorMsg(false);
 		mf.addMouseListener(this);
-		RMACellEditor dcf = new RMACellEditor(mf);
+		RmaCellEditor dcf = new RmaCellEditor(mf);
 		dcf.setClickCountToStart(_clickCountToStart);
 		tc.setCellEditor(dcf);
 
@@ -3659,12 +3664,12 @@ public class MonthlyTable extends JTable
 	 *@param  format  The new DateCellEditor value
 	 *@return         Description
 	 */
-	public rma.awt.RMACalendarField setDateCellEditor(int col, String format)
+	public RmaJCalendarField setDateCellEditor(int col, String format)
 	{
-		return (rma.awt.RMACalendarField)setDateCellEditor(col,format,true);
+		return (RmaJCalendarField)setDateCellEditor(col,format,true);
 	}
 
-	public rma.awt.RMADateField setDateCellEditor(int col, String format, boolean showCalendar)
+	public RmaJDateField setDateCellEditor(int col, String format, boolean showCalendar)
 	{
 		TableColumnModel tcm = getColumnModel();
 		TableColumn tc;
@@ -3677,18 +3682,18 @@ public class MonthlyTable extends JTable
 		{
 			return null;
 		}
-		RMADateField df = null;
+		RmaJDateField df = null;
 		if (showCalendar)
 		{
-			df = new RMACalendarField(format, "");
+			df = new RmaJCalendarField(format, "");
 		}
 		else
 		{
-			df = new RMADateField(format, "");
+			df = new RmaJDateField(format, "");
 		}
 		//df.setShowErrorMsg(false);
 		df.addMouseListener(this);
-		RMACellEditor dcf = new RMACellEditor(df);
+		RmaCellEditor dcf = new RmaCellEditor(df);
 		dcf.setClickCountToStart(_clickCountToStart);
 		tc.setCellEditor(dcf);
 
@@ -3706,7 +3711,7 @@ public class MonthlyTable extends JTable
 	 *@param  col  The new DssPathPartCellEditor value
 	 *@return      Description
 	 */
-	public rma.awt.RMADSSPathPartField setDssPathPartCellEditor(int col)
+	public RmaJDssPathPartField setDssPathPartCellEditor(int col)
 	{
 		TableColumnModel tcm = getColumnModel();
 		TableColumn tc;
@@ -3719,10 +3724,10 @@ public class MonthlyTable extends JTable
 		{
 			return null;
 		}
-		RMADSSPathPartField df = new RMADSSPathPartField();
+		RmaJDssPathPartField df = new RmaJDssPathPartField();
 		//df.setShowErrorMsg(false);
 		df.addMouseListener(this);
-		RMACellEditor dcf = new RMACellEditor(df);
+		RmaCellEditor dcf = new RmaCellEditor(df);
 		dcf.setClickCountToStart(_clickCountToStart);
 		tc.setCellEditor(dcf);
 
@@ -3752,9 +3757,9 @@ public class MonthlyTable extends JTable
 			return ;
 		}
 		TableCellEditor tce = tc.getCellEditor();
-		if ( tce instanceof rma.awt.table.RowCellEditor )
+		if ( tce instanceof RowCellEditor )
 		{
-			rma.awt.table.RowCellEditor rce = (rma.awt.table.RowCellEditor)tce;
+			RowCellEditor rce = (RowCellEditor)tce;
 			Map map = rce.getCellEditorTable();
 			Collection values = map.values();
 			Iterator iter =  values.iterator();
@@ -3807,10 +3812,10 @@ public class MonthlyTable extends JTable
 		cb.getEditor().getEditorComponent().addMouseListener(this);
 		TableCellEditor tce = tc.getCellEditor();
 
-		RMACellEditor dcf = new RMACellEditor(cb);
+		RmaCellEditor dcf = new RmaCellEditor(cb);
 		dcf.setClickCountToStart(1);//_clickCountToStart);
 
-		if (tce instanceof rma.awt.table.RowCellEditor)
+		if (tce instanceof RowCellEditor)
 		{
 
 			((RowCellEditor) tce).add(row, dcf);
@@ -3823,7 +3828,7 @@ public class MonthlyTable extends JTable
 			tc.setCellEditor(rce);
 		}
 		dcf.setClickCountToStart(1);//_clickCountToStart);
-		tc.setCellRenderer(new rma.awt.table.ComboBoxRenderer());
+		tc.setCellRenderer(new ComboBoxRenderer());
 
 		return cb;
 	}
@@ -3834,7 +3839,7 @@ public class MonthlyTable extends JTable
 	 *@param  col  The new ColorComboBoxEditor value
 	 *@return      Description
 	 */
-	public RMAColorComboBox setColorComboBoxEditor(int col)
+	public RmaJColorComboBox setColorComboBoxEditor(int col)
 	{
 		TableColumnModel tcm = getColumnModel();
 		TableColumn tc;
@@ -3849,12 +3854,12 @@ public class MonthlyTable extends JTable
 			return null;
 		}
 
-		RMAColorComboBox cb = new RMAColorComboBox();
+		RmaJColorComboBox cb = new RmaJColorComboBox();
 
 		cb.addMouseListener(this);
 		cb.getEditor().getEditorComponent().addMouseListener(this);
 		//cb.setBackground(getColumnBackground(col));
-		RMACellEditor dcf = new RMACellEditor(cb);
+		RmaCellEditor dcf = new RmaCellEditor(cb);
 		dcf.setClickCountToStart(_clickCountToStart);
 		tc.setCellRenderer(new RmaColorRenderer());
 		//dcf.addCellEditorListener(this);
@@ -3900,7 +3905,7 @@ public class MonthlyTable extends JTable
 		}
 
 ///       JComboBox cb = new JComboBox(data);
-		RMAListModel model = new RMAListModel(sortData, data);
+		RmaListModel model = new RmaListModel(sortData, data);
 		RmaJComboBox cb = new RmaJComboBox(model);
 		//for modification events
 		cb.setModifiable(true);
@@ -3908,9 +3913,9 @@ public class MonthlyTable extends JTable
 		cb.addMouseListener(this);
 		cb.getEditor().getEditorComponent().addMouseListener(this);
 		//cb.setBackground(getColumnBackground(col));
-		RMACellEditor dcf = new RMACellEditor(cb);
+		RmaCellEditor dcf = new RmaCellEditor(cb);
 		dcf.setClickCountToStart(1);//_clickCountToStart);
-		tc.setCellRenderer(new rma.awt.table.ComboBoxRenderer());
+		tc.setCellRenderer(new ComboBoxRenderer());
 		//dcf.addCellEditorListener(this);
 		tc.setCellEditor(dcf);
 		return cb;
@@ -3946,9 +3951,9 @@ public class MonthlyTable extends JTable
 
 		cb.addMouseListener(this);
 		cb.getEditor().getEditorComponent().addMouseListener(this);
-		RMACellEditor dcf = new RMACellEditor(cb);
+		RmaCellEditor dcf = new RmaCellEditor(cb);
 		dcf.setClickCountToStart(1);//_clickCountToStart);
-		tc.setCellRenderer(new rma.awt.table.ComboBoxRenderer());
+		tc.setCellRenderer(new ComboBoxRenderer());
 		tc.setCellEditor(dcf);
 		return cb;
 	}
@@ -3959,7 +3964,7 @@ public class MonthlyTable extends JTable
 	 *@param  col     The new ColumnEditor value
 	 *@param  editor  The new ColumnEditor value
 	 */
-	public void setColumnEditor(int col, RMACellEditor editor)
+	public void setColumnEditor(int col, RmaCellEditor editor)
 	{
 		TableColumnModel tcm = getColumnModel();
 		TableColumn tc;
@@ -4014,7 +4019,7 @@ public class MonthlyTable extends JTable
 		RmaJTextField tf = new RmaJTextField(fld, "", length);
 		tf.setBorder(_defaultBorder);
 		tf.addMouseListener(this);
-		RMACellEditor dcf = new RMACellEditor(tf);
+		RmaCellEditor dcf = new RmaCellEditor(tf);
 		dcf.setClickCountToStart(_clickCountToStart);
 
 		//dcf.addCellEditorListener(this);
@@ -4118,7 +4123,7 @@ public class MonthlyTable extends JTable
 		//df.addMouseListener(this);
 		//OneClickCheckBoxEditor dcf = new OneClickCheckBoxEditor(cb);
 		//DefaultCellEditor dcf = new DefaultCellEditor(cb);
-		RMACellEditor dcf = new RMACellEditor(cb);
+		RmaCellEditor dcf = new RmaCellEditor(cb);
 		dcf.setClickCountToStart(1/*_oneClickToStart*/);
 		//dcf.addCellEditorListener(this);
 		tc.setCellEditor(dcf);
@@ -4328,9 +4333,9 @@ public class MonthlyTable extends JTable
 			return;
 		}
 		TableModel tm = getModel();
-		if (tm instanceof rma.awt.RmaTableModel)
+		if (tm instanceof RmaTableModel)
 		{
-			((rma.awt.RmaTableModel) tm).setCellEnabled(enable, row, col);
+			((RmaTableModel) tm).setCellEnabled(enable, row, col);
 		}
 		else
 		{
@@ -5483,7 +5488,7 @@ public class MonthlyTable extends JTable
 	 */
 	public void fill()
 	{
-		cellEditor = (RMACellEditor)getCellEditor();
+		cellEditor = (RmaCellEditor)getCellEditor();
 		if (cellEditor != null)
 		{
 		   cellEditor.stopCellEditing();
@@ -5657,11 +5662,11 @@ System.out.println("linearFill: "+nfe);
 						//    value = new Double(stepValue*j);
 						TableColumn tc = getColumnModel().getColumn(c);
 						TableCellEditor tce = tc.getCellEditor();
-						if (tce instanceof RMACellEditor)
+						if (tce instanceof RmaCellEditor)
 						{
-							Component cmp = ((RMACellEditor) tce).getComponent();
+							Component cmp = ((RmaCellEditor) tce).getComponent();
 
-							if (cmp instanceof RMADecimalField)
+							if (cmp instanceof RmaJDecimalField)
 							{
 								if (getValueAt(startRow + j, c) instanceof hec.data.ParamDouble)
 								{
@@ -5682,7 +5687,7 @@ System.out.println("linearFill: "+nfe);
 									setValueAt(new Double(RMAIO.setPrecision2(value, _precision)), startRow + j, c);
 								}
 							}
-							else if (cmp instanceof RMAIntegerField)
+							else if (cmp instanceof RmaJIntegerField)
 							{
 								setValueAt(new Integer(RMAIO.setPrecision2(value, 0)), startRow + j, c);
 							}
@@ -6482,10 +6487,10 @@ System.out.println("linearFill: "+nfe);
 			}
 			tc = tcm.getColumn(c);
 			editor = tc.getCellEditor();
-			if (editor instanceof RMACellEditor)
+			if (editor instanceof RmaCellEditor)
 			{
-				comp = ((RMACellEditor) editor).getComponent();
-				if (comp instanceof rma.awt.RmaJTextField)
+				comp = ((RmaCellEditor) editor).getComponent();
+				if (comp instanceof RmaJTextField)
 				{
 					((RmaJTextField) comp).setText(str);
 					if (!((RmaJTextField) comp).isValid(false))
@@ -6539,9 +6544,9 @@ System.out.println("linearFill: "+nfe);
 		TableColumnModel tcm = getColumnModel();
 		TableColumn tc = tcm.getColumn(col);
 		TableCellEditor editor = tc.getCellEditor();
-		if (editor instanceof RMACellEditor)
+		if (editor instanceof RmaCellEditor)
 		{
-			Component comp = ((RMACellEditor) editor).getComponent();
+			Component comp = ((RmaCellEditor) editor).getComponent();
 			if (comp instanceof JComboBox)
 			{
 				editCellAt(row, col);
@@ -6819,12 +6824,12 @@ System.out.println("linearFill: "+nfe);
 		{
 			return;
 		}
-		rma.awt.InsertDlg dialog = null;
+		InsertDlg dialog = null;
 		Window w = SwingUtilities.windowForComponent(this);
 		if(w instanceof Dialog) {
-			dialog = new rma.awt.InsertDlg((java.awt.Dialog)w,"Insert Rows", true);
+			dialog = new InsertDlg((java.awt.Dialog)w,"Insert Rows", true);
 		} else if(w instanceof Frame) {
-			dialog = new rma.awt.InsertDlg((java.awt.Frame)w,"Insert Rows", true);
+			dialog = new InsertDlg((java.awt.Frame)w,"Insert Rows", true);
 		} else {
 			//should not get here but lets take care of the problem if we do
 			rma.util.RMAIO.postWarning(this, "Can't open Insert Row Dialog, because there is not\na valid window component parent for this"+
@@ -7450,7 +7455,7 @@ System.out.println("linearFill: "+nfe);
 		int height = -1;
 		for(int i=0; i < this.getColumnCount(); i++) {
 			TableCellRenderer r = getColumnModel().getColumn(i).getCellRenderer();
-			if(r instanceof rma.awt.table.MultiLineCellRenderer) {
+			if(r instanceof MultiLineCellRenderer) {
 				int width = getColumnModel().getColumn(i).getWidth();
 				Insets ins = ((MultiLineCellRenderer)r).getInsets();
 				width -= getColumnModel().getColumnMargin();
@@ -7736,7 +7741,7 @@ System.out.println("linearFill: "+nfe);
 	 */
 	public void printData()
 	{
-		cellEditor = (RMACellEditor)getCellEditor();
+		cellEditor = (RmaCellEditor)getCellEditor();
 		if (cellEditor != null)
 		   cellEditor.stopCellEditing();
 
@@ -8080,7 +8085,7 @@ System.out.println("linearFill: "+nfe);
 	 */
 	public void printPreview()
 	{
-		cellEditor = (RMACellEditor)getCellEditor();
+		cellEditor = (RmaCellEditor)getCellEditor();
 		if (cellEditor != null)
 		   cellEditor.stopCellEditing();
 
@@ -8406,7 +8411,7 @@ System.out.println("linearFill: "+nfe);
 	 *@deprecated use DefaultCellEditor instead
 	 */
 	@Deprecated
-	public class OneClickCheckBoxEditor extends RMACellEditor
+	public class OneClickCheckBoxEditor extends RmaCellEditor
 	{
 		/**
 		 *  Constructor for the OneClickCheckBoxEditor object
@@ -9773,7 +9778,7 @@ System.out.println("linearFill: "+nfe);
 			v.addElement(data[i][2]);
 		}
 		tbl.setComboBoxEditor(2, v);
-		RMADecimalField df = tbl.setDoubleCellEditor(3);
+		RmaJDecimalField df = tbl.setDoubleCellEditor(3);
 		df.setMinValue(0);
 		df.setMaxValue(20);
 		tbl.setPrecision(2);
@@ -10363,7 +10368,7 @@ System.out.println("linearFill: "+nfe);
 	}
 
 	public void stopEditing() {
-		cellEditor = (RMACellEditor) getCellEditor();
+		cellEditor = (RmaCellEditor) getCellEditor();
 		if (cellEditor != null)
 			cellEditor.stopCellEditing();
 	}

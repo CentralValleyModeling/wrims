@@ -5,7 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
 
-import rma.awt.*;
+import rma.swing.*;
 
 /**
  * Title:        General CWMS Project
@@ -16,7 +16,7 @@ import rma.awt.*;
  *
  */
 
-public class RmaModJTableFillDialog extends RMAJDialog
+public class RmaModJTableFillDialog extends RmaJDialog
 {
 	private boolean _canceled;
 
@@ -24,8 +24,8 @@ public class RmaModJTableFillDialog extends RMAJDialog
 	private RmaJRadioButton _repeatFillCB;
 	private RmaJRadioButton _constantFillCB;
 	private RmaJRadioButton _factorFillCB;
-	private RMADecimalField _constantTxt;
-	private RMADecimalField _factorTxt;
+	private RmaJDecimalField _constantTxt;
+	private RmaJDecimalField _factorTxt;
 	private ButtonCmdPanel _cmdPanel;
 
 	private MonthlyTable _table;
@@ -71,7 +71,7 @@ public class RmaModJTableFillDialog extends RMAJDialog
 		//gbc.weighty = 1.0;
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.insets = RMAInsets.insets(5,5,0,5);
+		gbc.insets = RmaInsets.insets(5,5,0,5);
 		getContentPane().add(_linearFillCB, gbc);
 
 		_repeatFillCB = new RmaJRadioButton("Repeat Fill");
@@ -83,7 +83,7 @@ public class RmaModJTableFillDialog extends RMAJDialog
 		//gbc.weighty = 1.0;
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.insets = RMAInsets.insets(5,5,0,5);
+		gbc.insets = RmaInsets.insets(5,5,0,5);
 		getContentPane().add(_repeatFillCB, gbc);
 
 		_constantFillCB = new RmaJRadioButton("Add Constant:");
@@ -95,10 +95,10 @@ public class RmaModJTableFillDialog extends RMAJDialog
 		//gbc.weighty = 1.0;
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.insets = RMAInsets.insets(5,5,0,5);
+		gbc.insets = RmaInsets.insets(5,5,0,5);
 		getContentPane().add(_constantFillCB, gbc);
 
-		_constantTxt = new RMADecimalField();
+		_constantTxt = new RmaJDecimalField();
 		_constantTxt.setEnabled(false);
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
@@ -108,7 +108,7 @@ public class RmaModJTableFillDialog extends RMAJDialog
 		//gbc.weighty = 1.0;
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.insets = RMAInsets.insets(5,5,0,5);
+		gbc.insets = RmaInsets.insets(5,5,0,5);
 		getContentPane().add(_constantTxt, gbc);
 
 
@@ -121,10 +121,10 @@ public class RmaModJTableFillDialog extends RMAJDialog
 		//gbc.weighty = 1.0;
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.insets = RMAInsets.insets(5,5,0,5);
+		gbc.insets = RmaInsets.insets(5,5,0,5);
 		getContentPane().add(_factorFillCB, gbc);
 
-		_factorTxt = new RMADecimalField();
+		_factorTxt = new RmaJDecimalField();
 		_factorTxt.setEnabled(false);
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
@@ -134,7 +134,7 @@ public class RmaModJTableFillDialog extends RMAJDialog
 		//gbc.weighty = 1.0;
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.insets = RMAInsets.insets(5,5,0,5);
+		gbc.insets = RmaInsets.insets(5,5,0,5);
 		getContentPane().add(_factorTxt, gbc);
 
 		_cmdPanel = new ButtonCmdPanel(ButtonCmdPanel.OK_CANCEL_BUTTONS);
@@ -146,7 +146,7 @@ public class RmaModJTableFillDialog extends RMAJDialog
 		//gbc.weighty = 1.0;
 		gbc.anchor = GridBagConstraints.SOUTHWEST;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.insets = RMAInsets.insets(5,5,0,5);
+		gbc.insets = RmaInsets.insets(5,5,0,5);
 		getContentPane().add(_cmdPanel, gbc);
 
 		_cmdPanel.addCmdPanelListener(new ButtonCmdPanelListener()

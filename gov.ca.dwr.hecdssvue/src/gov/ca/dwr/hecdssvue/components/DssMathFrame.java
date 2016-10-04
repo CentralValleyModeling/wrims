@@ -13,14 +13,14 @@ import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 
-import rma.awt.RmaImage;
+import rma.swing.RmaImage;
 import wrimsv2_plugin.debugger.exception.WPPException;
-
 import gov.ca.dwr.hecdssvue.DssPluginCore;
 import gov.ca.dwr.hecdssvue.views.DSSCatalogView;
 import hec.dssgui.ListSelection;
 import hec.dssgui.MathFrame2;
 import hec.dssgui.MathPanel;
+import hec.heclib.dss.HecDss;
 import hec.hecmath.DSS;
 import hec.hecmath.DSSFile;
 import hec.hecmath.HecMathException;
@@ -163,11 +163,11 @@ public class DssMathFrame extends MathFrame2 {
 				if ( dc.modified )
 				{
 					String fileName=dc.fileName;
-					DSSFile dssFile = DSS.open(fileName);
 					try {
-						dssFile.write(dc);
+						HecDss dssFile= HecDss.open(fileName);
+						dssFile.save(dc);
 						_dssFileModified=true;
-					} catch (HecMathException e) {
+					} catch (Exception e) {
 						WPPException.handleException(e);
 					}
 				}

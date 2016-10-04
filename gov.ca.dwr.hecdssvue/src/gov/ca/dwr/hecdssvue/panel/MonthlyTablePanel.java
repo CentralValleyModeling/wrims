@@ -47,7 +47,7 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.internal.WorkbenchPartReference;
 
-import rma.awt.table.TableExportOptions;
+import rma.swing.table.TableExportOptions;
 import rma.util.RMAIO;
 
 public class MonthlyTablePanel extends JPanel implements ActionListener {

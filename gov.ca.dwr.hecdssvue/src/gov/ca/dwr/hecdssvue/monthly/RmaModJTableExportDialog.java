@@ -2,17 +2,20 @@ package gov.ca.dwr.hecdssvue.monthly;
 
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
 import javax.swing.event.*;
-import rma.awt.ButtonCmdPanel;
-import rma.awt.ButtonCmdPanelListener;
-import rma.awt.RMAInsets;
-import rma.awt.RMAJDialog;
-import rma.awt.RmaJCheckBox;
-import rma.awt.RmaJComboBox;
-import rma.awt.RmaJTable;
-import rma.awt.RmaJTextField;
-import rma.awt.table.TableExportOptions;
+
+import rma.swing.ButtonCmdPanel;
+import rma.swing.ButtonCmdPanelListener;
+import rma.swing.RmaInsets;
+import rma.swing.RmaJDialog;
+import rma.swing.RmaJCheckBox;
+import rma.swing.RmaJComboBox;
+import rma.swing.RmaJTable;
+import rma.swing.RmaJTextField;
+import rma.swing.table.TableExportOptions;
+import rma.swing.IExportOptions;
 
 import java.util.prefs.Preferences;
 
@@ -24,7 +27,7 @@ import java.util.prefs.Preferences;
  *@created    October 10, 2001
  */
 
-public class RmaModJTableExportDialog extends RMAJDialog implements rma.awt.IExportOptions
+public class RmaModJTableExportDialog extends RmaJDialog implements IExportOptions
 {
 
 	private boolean _canceled;
@@ -116,7 +119,7 @@ public class RmaModJTableExportDialog extends RMAJDialog implements rma.awt.IExp
 		//gbc.weighty = 1.0;
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.insets = RMAInsets.insets(7, 5, 0, 5);
+		gbc.insets = RmaInsets.insets(7, 5, 0, 5);
 		getContentPane().add(label, gbc);
 
 		_delimiterCombo = new RmaJComboBox(DELIMITERS);
@@ -128,7 +131,7 @@ public class RmaModJTableExportDialog extends RMAJDialog implements rma.awt.IExp
 		//gbc.weighty = 1.0;
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.insets = RMAInsets.insets(5, 5, 0, 5);
+		gbc.insets = RmaInsets.insets(5, 5, 0, 5);
 		getContentPane().add(_delimiterCombo, gbc);
 
 		_fixedWidthColumnsCB = new RmaJCheckBox("Fixed Width Columns");
@@ -140,7 +143,7 @@ public class RmaModJTableExportDialog extends RMAJDialog implements rma.awt.IExp
 		//gbc.weighty = 1.0;
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.insets = RMAInsets.insets(5, 5, 0, 5);
+		gbc.insets = RmaInsets.insets(5, 5, 0, 5);
 		getContentPane().add(_fixedWidthColumnsCB, gbc);
 
 		_quotedStringsCB = new RmaJCheckBox("Quoted Strings");
@@ -152,7 +155,7 @@ public class RmaModJTableExportDialog extends RMAJDialog implements rma.awt.IExp
 		//gbc.weighty = 1.0;
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.insets = RMAInsets.insets(5, 5, 0, 5);
+		gbc.insets = RmaInsets.insets(5, 5, 0, 5);
 		getContentPane().add(_quotedStringsCB, gbc);
 
 		_columnHeadersCB = new RmaJCheckBox("Include Column Headers",true);
@@ -164,7 +167,7 @@ public class RmaModJTableExportDialog extends RMAJDialog implements rma.awt.IExp
 		//gbc.weighty = 1.0;
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.insets = RMAInsets.insets(5, 5, 0, 5);
+		gbc.insets = RmaInsets.insets(5, 5, 0, 5);
 		getContentPane().add(_columnHeadersCB, gbc);
 
 		_rowHeadersCB = new RmaJCheckBox("Include Row Headers");
@@ -176,7 +179,7 @@ public class RmaModJTableExportDialog extends RMAJDialog implements rma.awt.IExp
 		//gbc.weighty = 1.0;
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.insets = RMAInsets.insets(5, 5, 0, 5);
+		gbc.insets = RmaInsets.insets(5, 5, 0, 5);
 		getContentPane().add(_rowHeadersCB, gbc);
 
 		_gridLinesCB = new RmaJCheckBox("Print GridLines");
@@ -188,7 +191,7 @@ public class RmaModJTableExportDialog extends RMAJDialog implements rma.awt.IExp
 		//gbc.weighty = 1.0;
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.insets = RMAInsets.insets(5, 5, 0, 5);
+		gbc.insets = RmaInsets.insets(5, 5, 0, 5);
 		getContentPane().add(_gridLinesCB, gbc);
 
 		JPanel panel = new JPanel(new GridBagLayout());
@@ -200,7 +203,7 @@ public class RmaModJTableExportDialog extends RMAJDialog implements rma.awt.IExp
 		//gbc.weighty = 1.0;
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.insets = RMAInsets.insets(0, 0, 0, 0);
+		gbc.insets = RmaInsets.insets(0, 0, 0, 0);
 		getContentPane().add(panel, gbc);
 
 		_titleCB = new RmaJCheckBox("Print Title:");
@@ -212,7 +215,7 @@ public class RmaModJTableExportDialog extends RMAJDialog implements rma.awt.IExp
 		//gbc.weighty = 1.0;
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.insets = RMAInsets.insets(5, 5, 0, 5);
+		gbc.insets = RmaInsets.insets(5, 5, 0, 5);
 		panel.add(_titleCB, gbc);
 
 		_titleField = new RmaJTextField(17);
@@ -225,7 +228,7 @@ public class RmaModJTableExportDialog extends RMAJDialog implements rma.awt.IExp
 		//gbc.weighty = 1.0;
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.insets = RMAInsets.insets(5, 5, 0, 5);
+		gbc.insets = RmaInsets.insets(5, 5, 0, 5);
 		panel.add(_titleField, gbc);
 
 		_cmdPanel = new ButtonCmdPanel(ButtonCmdPanel.OK_CANCEL_BUTTONS);
@@ -237,7 +240,7 @@ public class RmaModJTableExportDialog extends RMAJDialog implements rma.awt.IExp
 		//gbc.weighty = 1.0;
 		gbc.anchor = GridBagConstraints.SOUTHWEST;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.insets = RMAInsets.insets(5, 5, 0, 5);
+		gbc.insets = RmaInsets.insets(5, 5, 0, 5);
 		getContentPane().add(_cmdPanel, gbc);
 
 		_cmdPanel.addCmdPanelListener(

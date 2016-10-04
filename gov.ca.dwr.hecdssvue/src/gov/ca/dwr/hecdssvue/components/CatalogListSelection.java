@@ -551,7 +551,6 @@ public class CatalogListSelection extends ListSelection {
 				setCursorDefault();
 				if (_secondDataManager.checkForSevereError()){
 					//_dssVueProgressBar.done(1);
-					errorProcessing();
 					_secondDataManager.done();
 					return;
 				}
