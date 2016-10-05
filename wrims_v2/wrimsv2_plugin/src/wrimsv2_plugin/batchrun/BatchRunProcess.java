@@ -436,13 +436,15 @@ public class BatchRunProcess {
 				}else if (DebugCorePlugin.solver.equals("LPSolve")){
 					configMap.put("IlpLogFormat".toLowerCase(), "LpSolve");
 				}else if (DebugCorePlugin.solver.equals("CBC")){
-					configMap.put("IlpLogFormat".toLowerCase(), "Cbc");
+					configMap.put("IlpLogFormat".toLowerCase(), "CplexLp");
 				}
 				configMap.put("IlpLogVarValue".toLowerCase(), "Yes");
+				configMap.put("IlpLogAllCycles".toLowerCase(), "Yes");
 			} else {
 				configMap.put("IlpLog".toLowerCase(), "No");
 				configMap.put("IlpLogFormat".toLowerCase(), "None");
 				configMap.put("IlpLogVarValue".toLowerCase(), "No");
+				configMap.put("IlpLogAllCycles".toLowerCase(), "No");
 			}
 			
 			configMap.put("WreslPlus".toLowerCase(), wreslPlus);
@@ -510,6 +512,7 @@ public class BatchRunProcess {
 			out.println("IlpLog             "+configMap.get("IlpLog".toLowerCase()));
 			out.println("IlpLogFormat       "+configMap.get("IlpLogFormat".toLowerCase()));
 			out.println("IlpLogVarValue     "+configMap.get("IlpLogVarValue".toLowerCase()));
+			out.println("IlpLogAllCycles    "+configMap.get("IlpLogAllCycles".toLowerCase()));
 			out.println("WreslPlus          "+configMap.get("WreslPlus".toLowerCase()));
 			out.println("AllowSvTsInit      "+configMap.get("AllowSvTsInit".toLowerCase()));
 			

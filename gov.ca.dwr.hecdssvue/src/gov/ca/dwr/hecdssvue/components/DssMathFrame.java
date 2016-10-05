@@ -120,6 +120,11 @@ public class DssMathFrame extends MathFrame2 {
 			dssSaveAction();
 			if (_dssFileModified || _forceCatalogUpdate) {
 				_dssFileModified = false;
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					WPPException.handleException(e);
+				}
 				updateCatalog();
 			}
 		}
@@ -164,8 +169,18 @@ public class DssMathFrame extends MathFrame2 {
 				{
 					String fileName=dc.fileName;
 					try {
-						HecDss dssFile= HecDss.open(fileName);
-						dssFile.save(dc);
+						HecDss dssFile= HecDss.open(fileName);			
+						Vector<String> selectedPathnames = new Vector<String>();
+						Vector pathNameList = dssFile.getPathnameList();
+						String[] parts=dc.fullName.split("/");
+						for (int k=0; k<pathNameList.size(); k++){
+							String pathname=(String)pathNameList.get(k);
+							if (DataOps.containParts(pathname, parts)){
+								selectedPathnames.add(pathname);
+							}
+						}
+						dssFile.delete(selectedPathnames);
+						dssFile.write(dc);
 						_dssFileModified=true;
 					} catch (Exception e) {
 						WPPException.handleException(e);
