@@ -1018,7 +1018,7 @@ public class ILP {
 			if (v!=0) {
 				svarFile.print(svName + ":  " + String.format("%15s", df.format(v)) +"\n"  );
 			} else {
-				svarFile.print(svName + ":  " + String.format("%15s", "0"));
+				svarFile.print(svName + ":  " + String.format("%15s", "0") +"\n" );
 			}
 			
 			
