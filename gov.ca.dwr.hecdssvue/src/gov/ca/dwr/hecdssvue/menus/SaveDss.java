@@ -22,8 +22,14 @@ public class SaveDss implements IWorkbenchWindowActionDelegate{
 		DSSTableView dssTableView=(DSSTableView) workBenchPage.findView(DssPluginCore.ID_DSSVue_DSSTableView);
 		
 		if (dssTableView != null){
-			HecDataTable table = dssTableView.getTable();
-			if (table != null) DataOps.saveData(table);
+			final HecDataTable table = dssTableView.getTable();
+			if (table != null) {
+				javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			        public void run() {
+			        	DataOps.saveData(table);
+			        }
+			    });
+			}
 		}
 	}
 

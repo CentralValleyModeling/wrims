@@ -1,6 +1,9 @@
 package gov.ca.dwr.hecdssvue.menus;
 
+import javax.swing.SwingWorker;
+
 import gov.ca.dwr.hecdssvue.DssPluginCore;
+import gov.ca.dwr.hecdssvue.views.DSSCatalogView;
 import gov.ca.dwr.hecdssvue.views.DSSTableView;
 import hec.dataTable.HecDataTable;
 
@@ -19,20 +22,29 @@ public class InsertRows implements IWorkbenchWindowActionDelegate{
 
 	@Override
 	public void run(IAction action) {
-		IWorkbench workbench=PlatformUI.getWorkbench();
-		IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
-		DSSTableView dssTableView=(DSSTableView) workBenchPage.findView(DssPluginCore.ID_DSSVue_DSSTableView);
-		
-		if (dssTableView !=null){
-			final HecDataTable table = dssTableView.getTable();
-			if (DssPluginCore.dssEditable){
-				javax.swing.SwingUtilities.invokeLater(new Runnable() {
-			        public void run() {
-						table.insertRow();
-			        }
-			    });
+		final IWorkbench workbench=PlatformUI.getWorkbench();
+		workbench.getDisplay().asyncExec(new Runnable(){
+			public void run(){
+				IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
+				DSSTableView dssTableView=(DSSTableView) workBenchPage.findView(DssPluginCore.ID_DSSVue_DSSTableView);
+				DSSCatalogView catalogView=(DSSCatalogView)workBenchPage.findView(DssPluginCore.ID_DSSVue_DSSCatalogView);
+				catalogView.setFocus();
+				
+				if (dssTableView !=null){
+					final HecDataTable table = dssTableView.getTable();
+					if (DssPluginCore.dssEditable){
+				
+						javax.swing.SwingUtilities.invokeLater(new Runnable() {
+							public void run() {
+								table.clearSelection();
+								table.insertTimeSeriesRow(-1);
+							}
+						});
+			    			
+					}
+				}
 			}
-		}
+		});
 	}
 
 	@Override
