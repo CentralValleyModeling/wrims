@@ -86,7 +86,7 @@ public class ManualTimeseries implements IWorkbenchWindowActionDelegate{
 					        public void windowClosing(WindowEvent e) {
 								
 					        	final IWorkbench workbench=PlatformUI.getWorkbench();
-					    		workbench.getDisplay().asyncExec(new Runnable(){
+					    		workbench.getDisplay().syncExec(new Runnable(){
 					    			public void run(){
 					    				IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
 										DSSCatalogView dssCatalogView=(DSSCatalogView) workBenchPage.findView(DssPluginCore.ID_DSSVue_DSSCatalogView);

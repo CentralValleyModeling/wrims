@@ -120,11 +120,13 @@ public class DssMathFrame extends MathFrame2 {
 			dssSaveAction();
 			if (_dssFileModified || _forceCatalogUpdate) {
 				_dssFileModified = false;
+				/*
 				try {
 					Thread.sleep(2000);
 				} catch (InterruptedException e) {
 					WPPException.handleException(e);
 				}
+				*/
 				updateCatalog();
 			}
 		}
@@ -194,7 +196,7 @@ public class DssMathFrame extends MathFrame2 {
 	
 	public void updateCatalog() {
 		final IWorkbench workbench=PlatformUI.getWorkbench();
-		workbench.getDisplay().asyncExec(new Runnable(){
+		workbench.getDisplay().syncExec(new Runnable(){
 			public void run(){
 				DSSCatalogView dssCatalogView = (DSSCatalogView)workbench.getActiveWorkbenchWindow().getActivePage().findView(DssPluginCore.ID_DSSVue_DSSCatalogView);
 				TableViewer viewer = dssCatalogView.getViewer();
