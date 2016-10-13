@@ -55,6 +55,10 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.text.Document;
 
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PlatformUI;
+
 import rma.swing.table.DecimalCellRenderer;
 import rma.swing.text.FixedLengthDocument;
 import rma.swing.IParameterScale;
@@ -88,7 +92,11 @@ import rma.swing.event.TableUpdateEvent;
 import rma.swing.print.PageText;
 import rma.swing.table.*;
 import rma.util.RMAIO;
+import gov.ca.dwr.hecdssvue.DssPluginCore;
 import gov.ca.dwr.hecdssvue.monthly.MonthlyTableModel.SingleMonthlyTable;
+import gov.ca.dwr.hecdssvue.views.DSSCatalogView;
+import gov.ca.dwr.hecdssvue.views.DSSOpsView;
+import gov.ca.dwr.hecdssvue.views.DSSTableView;
 import hec.data.ParamDouble;
 import hec.data.Parameter;
 import hec.data.Units;
@@ -263,6 +271,8 @@ public class MonthlyTable extends JTable
 	private MonthlyTableModel _tableModel;
 
 	private Component _parentFrame;
+	
+	private MonthlyTable thisTable = this;
 	
 	class JTableInCellRenderer extends JScrollPane implements TableCellRenderer {
 
@@ -8754,61 +8764,78 @@ System.out.println("linearFill: "+nfe);
 	 *  export the table to file in tab delimited format
 	 */
 	public void exportData()
-	{
-		if (_exportOptionsDialog == null)
-		{
-			_exportOptionsDialog = RmaModJTableExportDialog.getExportDialog(this);
-		}
-		_exportOptionsDialog.setVisible(true);
-		if (_exportOptionsDialog.isCanceled())
-		{
-			return;
-		}
-		Frame parent = JOptionPane.getFrameForComponent(this);
-		if (parent != null)
-		{
-			parent.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-		}
-		JFileChooser fileDialog = new JFileChooser();
-		Preferences preferences = Preferences.userNodeForPackage(getClass());
-		String exportDirectory = preferences.get("ExportDirectory", "");
-		if (exportDirectory.length() == 0)
-			exportDirectory = System.getProperty("user.dir");
-		fileDialog.setCurrentDirectory(new File(exportDirectory));
-		//fileDialog.setTitle("Export...");
-		if (parent != null)
-		{
-			parent.setCursor(Cursor.getDefaultCursor());
-		}
-		fileDialog.showSaveDialog(null);
-		File file = fileDialog.getSelectedFile();
-		if (file == null)
-		{
-			return;
-		}
-		File f = fileDialog.getCurrentDirectory();
-		preferences.put("ExportDirectory", f.getAbsolutePath());
-		BufferedWriter writer;
-		try
-		{
-			writer = new BufferedWriter(new FileWriter(file));
-		}
-		catch (java.io.IOException ioe)
-		{
-			System.out.println("exportData: failed to open file " + file.getPath() + " error " + ioe);
-			JOptionPane.showMessageDialog(this, "Failed to open export file " + file.getPath());
-			return;
-		}
-		exportData(writer, _exportOptionsDialog.getExportOptions());
+	{	
+		final IWorkbench workbench=PlatformUI.getWorkbench();
+		workbench.getDisplay().asyncExec(new Runnable(){
+			public void run(){
+				final IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
+				DSSCatalogView catalogView=(DSSCatalogView)workBenchPage.findView(DssPluginCore.ID_DSSVue_DSSCatalogView);
+				catalogView.setFocus();
+				
+				javax.swing.SwingUtilities.invokeLater(new Runnable() {
+					public void run() {
+						if (_exportOptionsDialog == null)
+						{
+							_exportOptionsDialog = RmaModJTableExportDialog.getExportDialog(thisTable);
+						}
+						_exportOptionsDialog.setVisible(true);
+						
+						if (_exportOptionsDialog.isCanceled())
+						{
+							return;
+						}
+						
+						Frame parent = JOptionPane.getFrameForComponent(thisTable);
+						if (parent != null)
+						{
+							parent.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+						}
+						
+						JFileChooser fileDialog = new JFileChooser();
+						Preferences preferences = Preferences.userNodeForPackage(getClass());
+						String exportDirectory = preferences.get("ExportDirectory", "");
+						if (exportDirectory.length() == 0)
+							exportDirectory = System.getProperty("user.dir");
+						fileDialog.setCurrentDirectory(new File(exportDirectory));
+						//fileDialog.setTitle("Export...");
+						if (parent != null)
+						{
+							parent.setCursor(Cursor.getDefaultCursor());
+						}
 
-		try
-		{
-			writer.close();
-		}
-		catch (java.io.IOException ioe)
-		{
-		}
+						fileDialog.showSaveDialog(null);
+						File file = fileDialog.getSelectedFile();
+						if (file == null)
+						{
+							return;
+						}
+						File f = fileDialog.getCurrentDirectory();
+						preferences.put("ExportDirectory", f.getAbsolutePath());
+						BufferedWriter writer;
+						try
+						{
+							writer = new BufferedWriter(new FileWriter(file));
+						}
+						catch (java.io.IOException ioe)
+						{
+							System.out.println("exportData: failed to open file " + file.getPath() + " error " + ioe);
+							JOptionPane.showMessageDialog(thisTable, "Failed to open export file " + file.getPath());
+							return;
+						}
+						exportData(writer, _exportOptionsDialog.getExportOptions());
 
+						try
+						{
+							writer.close();
+						}
+						catch (java.io.IOException ioe)
+						{
+						}
+					}
+				});
+
+			}
+		});
 	}
 
 	/**
