@@ -93,6 +93,7 @@ import rma.swing.print.PageText;
 import rma.swing.table.*;
 import rma.util.RMAIO;
 import gov.ca.dwr.hecdssvue.DssPluginCore;
+import gov.ca.dwr.hecdssvue.components.Focus;
 import gov.ca.dwr.hecdssvue.monthly.MonthlyTableModel.SingleMonthlyTable;
 import gov.ca.dwr.hecdssvue.views.DSSCatalogView;
 import gov.ca.dwr.hecdssvue.views.DSSOpsView;
@@ -8770,7 +8771,7 @@ System.out.println("linearFill: "+nfe);
 			public void run(){
 				final IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
 				DSSCatalogView catalogView=(DSSCatalogView)workBenchPage.findView(DssPluginCore.ID_DSSVue_DSSCatalogView);
-				catalogView.setFocus();
+				Focus.setFocus(catalogView, workBenchPage);
 				
 				javax.swing.SwingUtilities.invokeLater(new Runnable() {
 					public void run() {
