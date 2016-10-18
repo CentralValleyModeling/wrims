@@ -81,6 +81,7 @@ public class DSSFileView extends ViewPart {
 
 	private Label fileLabel;
 
+	private Composite dialogArea;
 	
 	/**
 	 * The constructor.
@@ -91,7 +92,7 @@ public class DSSFileView extends ViewPart {
 
 	public void createPartControl(Composite parent) {
 
-		Composite dialogArea = new Composite(parent, SWT.NONE);
+		dialogArea = new Composite(parent, SWT.NONE);
 		FillLayout fl = new FillLayout(SWT.VERTICAL);
 		dialogArea.setLayout(fl);
 		fl.marginWidth=10;
@@ -424,13 +425,6 @@ public class DSSFileView extends ViewPart {
 		return success;
 	}
 	
-	/**
-	 * Passing the focus request to the viewer's control.
-	 */
-	public void setFocus() {
-//		contentPane.requestFocus();
-	}
-	
 	public void openProject(String fn){
 		
 		for (int i=0; i<checkBox.length; i++){
@@ -569,5 +563,11 @@ public class DSSFileView extends ViewPart {
 //				showDssFileErrorDialog(2);
 //			}
 		}
+	}
+
+
+	@Override
+	public void setFocus() {
+		dialogArea.setFocus();
 	}
 }

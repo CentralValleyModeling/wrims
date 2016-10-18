@@ -24,6 +24,7 @@ import org.eclipse.ui.part.ViewPart;
 public abstract class AbstractDSSView extends ViewPart {
 
 	protected Container contentPane;
+	protected Composite swingContainer;
 
 	public AbstractDSSView() {
 		super();
@@ -35,7 +36,7 @@ public abstract class AbstractDSSView extends ViewPart {
 	 */
 	public void createPartControl(Composite parent) {
 		System.setProperty("sun.awt.noerasebackground", "true");
-		Composite swingContainer = new Composite(parent, SWT.BACKGROUND
+		swingContainer = new Composite(parent, SWT.BACKGROUND
 				| SWT.EMBEDDED);
 		final Frame frame = SWT_AWT.new_Frame(swingContainer);
 		@SuppressWarnings("serial")
@@ -92,7 +93,7 @@ public abstract class AbstractDSSView extends ViewPart {
 	 * Passing the focus request to the viewer's control.
 	 */
 	public void setFocus() {
-		contentPane.requestFocus();
+		swingContainer.setFocus();
 	}
 	
 	protected abstract void showSelected(Vector<DataContainer> dataVector);

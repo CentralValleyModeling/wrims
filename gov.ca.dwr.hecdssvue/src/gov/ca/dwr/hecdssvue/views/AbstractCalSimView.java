@@ -23,6 +23,7 @@ import org.eclipse.ui.part.ViewPart;
 public abstract class AbstractCalSimView extends ViewPart {
 
 	protected Container contentPane;
+	protected Composite swingContainer;
 
 	public AbstractCalSimView() {
 		super();
@@ -34,7 +35,7 @@ public abstract class AbstractCalSimView extends ViewPart {
 	 */
 	public void createPartControl(Composite parent) {
 		System.setProperty("sun.awt.noerasebackground", "true");
-		Composite swingContainer = new Composite(parent, SWT.BACKGROUND
+		swingContainer = new Composite(parent, SWT.BACKGROUND
 				| SWT.EMBEDDED);
 		final Frame frame = SWT_AWT.new_Frame(swingContainer);
 		@SuppressWarnings("serial")
@@ -68,7 +69,7 @@ public abstract class AbstractCalSimView extends ViewPart {
 	 * Passing the focus request to the viewer's control.
 	 */
 	public void setFocus() {
-		contentPane.requestFocus();
+		swingContainer.setFocus();
 	}
 
 }
