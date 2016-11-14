@@ -128,6 +128,11 @@ public class ControlData {
 	public static double zeroTolerance =  1e-11;
 	public static Double xaIntegerT =  null;
 	public static String xaSort = null;
+	public static boolean resimDate=false;
+	public static boolean resimGroundwater=false;
+	public static int resimYear;
+	public static int resimMonth;
+	public static int resimDay;
 	
 	public ControlData(){
 	}

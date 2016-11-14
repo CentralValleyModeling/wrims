@@ -35,10 +35,12 @@ public class WaterYearView extends ViewPart {
 	
 	private Button[][] index= new Button[4][5];
 	
+	private Composite area;
+	
 	@Override
 	public void createPartControl(Composite parent) {
 		initialWaterYearMap();
-		Composite area = new Composite(parent, SWT.NONE);
+		area = new Composite(parent, SWT.NONE);
 		area.setLayout(new GridLayout(40, true));
 		
 		Label sac=new Label(area, SWT.NONE);
@@ -193,12 +195,6 @@ public class WaterYearView extends ViewPart {
 			});
 		}
 	}
-
-	@Override
-	public void setFocus() {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	public void wateryearFilter(){
 		DssPluginCore.isAllWaterYear=true;
@@ -312,6 +308,11 @@ public class WaterYearView extends ViewPart {
 		}
 
 		return lookups;
+	}
+
+	@Override
+	public void setFocus() {
+		area.setFocus();		
 	}
 
 }

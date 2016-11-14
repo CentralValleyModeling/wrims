@@ -388,8 +388,8 @@ public class ControllerDebug extends Thread {
 				modelIndex=modelIndex+1;
 			}
 			updateVarMonitor();
-			if (di.resimDate){
-				di.resimDate=false;
+			if (ControlData.resimDate){
+				ControlData.resimDate=false;
 				noError=true;
 				sds=ControlData.currStudyDataSet;
 				modelList=sds.getModelList();
@@ -428,9 +428,9 @@ public class ControllerDebug extends Thread {
 		for(int i=0; i<initialTimeStep.size(); i++){
 			String timeStep=sds.getModelTimeStepList().get(i);
 			if (timeStep.equals("1MON")){
-				diffTimeStep=(ControlData.cycleStartYear-di.resimYear)*12+(ControlData.cycleStartMonth-di.resimMonth);
+				diffTimeStep=(ControlData.cycleStartYear-ControlData.resimYear)*12+(ControlData.cycleStartMonth-ControlData.resimMonth);
 			}else{
-				Date startDate = new Date (di.resimYear-1900, di.resimMonth-1, di.resimDay);
+				Date startDate = new Date (ControlData.resimYear-1900, ControlData.resimMonth-1, ControlData.resimDay);
 				Date endDate=new Date (ControlData.cycleStartYear-1900, ControlData.cycleStartMonth-1, ControlData.cycleStartDay);
 				long startTime=startDate.getTime();
 				long endTime=endDate.getTime();
@@ -438,9 +438,9 @@ public class ControllerDebug extends Thread {
 			}
 			ControlData.currTimeStep.set(i, initialTimeStep.get(i)-diffTimeStep);
 		}
-		ControlData.cycleEndYear=di.resimYear;
-		ControlData.cycleEndMonth=di.resimMonth;
-		ControlData.cycleEndDay=di.resimDay;
+		ControlData.cycleEndYear=ControlData.resimYear;
+		ControlData.cycleEndMonth=ControlData.resimMonth;
+		ControlData.cycleEndDay=ControlData.resimDay;
 	}
 	
 	public void pauseForDebug(int i){

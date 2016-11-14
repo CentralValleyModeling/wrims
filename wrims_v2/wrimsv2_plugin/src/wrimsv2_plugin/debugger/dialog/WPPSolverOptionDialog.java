@@ -10,8 +10,14 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Dialog;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.console.IConsoleConstants;
+import org.eclipse.ui.internal.Workbench;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
@@ -97,6 +103,7 @@ public class WPPSolverOptionDialog extends Dialog {
 						WPPException.handleException(e);
 					}
 				}
+				showSolverStatus();
 				shell.close();
 			}
 		});
@@ -110,5 +117,27 @@ public class WPPSolverOptionDialog extends Dialog {
 		});
 		
 		shell.setDefaultButton(ok);
-	 }
+	}
+	
+	public void showSolverStatus(){
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				String log="";
+				if (!DebugCorePlugin.log.equalsIgnoreCase("NONE")){
+					log=DebugCorePlugin.log;
+				}
+				String status=DebugCorePlugin.solver+"  "+log;
+				
+				IWorkbenchPage page = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage();
+				try {
+					IViewPart console = page.showView( IConsoleConstants.ID_CONSOLE_VIEW );
+					if (console != null){
+						console.getViewSite().getActionBars().getStatusLineManager().setMessage(status);
+					}
+				} catch (PartInitException e) {
+					WPPException.handleException(e);
+				} 
+			}
+		});
+	}
 }

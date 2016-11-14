@@ -12,27 +12,30 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.PlatformUI;
 
-import wrimsv2_plugin.debugger.core.DebugCorePlugin;
-import wrimsv2_plugin.debugger.view.WPPVarMonitorView;
-
 public class InsertRows implements IWorkbenchWindowActionDelegate{
 
 	@Override
 	public void run(IAction action) {
-		IWorkbench workbench=PlatformUI.getWorkbench();
-		IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
-		DSSTableView dssTableView=(DSSTableView) workBenchPage.findView(DssPluginCore.ID_DSSVue_DSSTableView);
-		
-		if (dssTableView !=null){
-			final HecDataTable table = dssTableView.getTable();
-			if (DssPluginCore.dssEditable){
-				javax.swing.SwingUtilities.invokeLater(new Runnable() {
-			        public void run() {
-						table.insertRow();
-			        }
-			    });
+		final IWorkbench workbench=PlatformUI.getWorkbench();
+		workbench.getDisplay().asyncExec(new Runnable(){
+			public void run(){
+				IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
+				DSSTableView dssTableView=(DSSTableView) workBenchPage.findView(DssPluginCore.ID_DSSVue_DSSTableView);
+												
+				if (dssTableView !=null){
+					final HecDataTable table = dssTableView.getTable();
+					if (DssPluginCore.dssEditable){
+				
+						javax.swing.SwingUtilities.invokeLater(new Runnable() {
+							public void run() {
+								table.insertRow();
+							}
+						});
+			    			
+					}
+				}
 			}
-		}
+		});
 	}
 
 	@Override

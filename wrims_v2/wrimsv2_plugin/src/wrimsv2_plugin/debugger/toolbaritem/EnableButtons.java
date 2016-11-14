@@ -22,16 +22,16 @@ public class EnableButtons {
 	public EnableButtons(final HashMap<String, Boolean> enableButtonMap){
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() {
-				Set<String> keys = enableButtonMap.keySet();
-				Iterator<String> iterator = keys.iterator();
-				while (iterator.hasNext()){
-					String id=iterator.next();
-					IWorkbenchPage page = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage();
-					IViewPart viewPart = page.findView( IConsoleConstants.ID_CONSOLE_VIEW ); 
-					if (viewPart != null){
-						IViewSite viewSite = viewPart.getViewSite(); 
-						IActionBars actionBars = viewSite.getActionBars(); 
-						IToolBarManager toolBarManager = actionBars.getToolBarManager();
+				IWorkbenchPage page = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage();
+				IViewPart viewPart = page.findView( IConsoleConstants.ID_CONSOLE_VIEW ); 
+				if (viewPart != null){
+					IViewSite viewSite = viewPart.getViewSite(); 
+					IActionBars actionBars = viewSite.getActionBars(); 
+					IToolBarManager toolBarManager = actionBars.getToolBarManager();
+					Set<String> keys = enableButtonMap.keySet();
+					Iterator<String> iterator = keys.iterator();
+					while (iterator.hasNext()){
+						String id=iterator.next();
 						IContributionItem contributionItem = toolBarManager.find(id);
 						PluginActionContributionItem pACI = ((PluginActionContributionItem)contributionItem);
 						if (pACI !=null){
