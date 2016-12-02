@@ -231,7 +231,7 @@ public class CbcSolver {
 //			reloadAndWriteLp("stuck_possible",true);
 //			
 //		} 
-		jCbc.writeLp1(model, "test", 1e-14, 14);
+		//jCbc.writeLp1(model, "test", 1e-14, 14);
 		long beginT = System.currentTimeMillis();
 		int[] modelStatus = solve();
 		long endT = System.currentTimeMillis();
