@@ -77,6 +77,7 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 		gd.horizontalSpan = 1;
 		xaButton.setLayoutData(gd);
 		xaButton.setFont(font);
+		xaButton.setEnabled(false);
 		xaButton.addSelectionListener(new SelectionListener(){
 			
 			@Override

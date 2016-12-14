@@ -47,7 +47,6 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
@@ -584,8 +583,8 @@ public class OpsPanel extends JPanel {
 					workbench.getDisplay().asyncExec(new Runnable(){
 						public void run(){
 							Shell shell=workbench.getActiveWorkbenchWindow().getShell();
-							InsertTimeWindowDialog dialog= new InsertTimeWindowDialog(shell, SWT.BORDER|SWT.APPLICATION_MODAL, true, false, false, false, false, "Add Time Window", "Add Time Window");
-							dialog.open(twbox);
+							InsertTimeWindowDialog dialog= new InsertTimeWindowDialog(shell, twbox);
+							dialog.openDialog();;
 						}
 					});
 				}else{

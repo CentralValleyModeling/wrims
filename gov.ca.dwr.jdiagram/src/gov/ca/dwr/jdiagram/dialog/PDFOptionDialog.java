@@ -5,26 +5,31 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import gov.ca.dwr.hecdssvue.DssPluginCore;
 import gov.ca.dwr.jdiagram.SchematicPluginCore;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Slider;
-import org.eclipse.swt.widgets.Text;
 
+import com.mindfusion.diagramming.Diagram;
+import com.mindfusion.diagramming.export.PdfExporter;
+import com.mindfusion.pdf.AutoScale;
 import com.mindfusion.pdf.PageSizesEnum;
 
 public class PDFOptionDialog extends Dialog {
 	
+	private String filename;
+	private Diagram diagram;
 	private Combo pageSize;
 	private String[] pageSizeNames={"Schematic Size",
 			"A0",                 
@@ -89,37 +94,74 @@ public class PDFOptionDialog extends Dialog {
 		put("Note", PageSizesEnum.Note);
 	}};
 	
-	public PDFOptionDialog(Shell parent) {
-		super(parent);
+	public PDFOptionDialog(Shell parent, String filename, Diagram diagram) {
+		super(parent, SWT.MIN);
+		this.filename=filename;
+		this.diagram=diagram;
+		setText("PDF Options");
 	}
 
-	public int openDialog(){
-		create();
-		getShell().setText("PDF Options");
-		return open();
+	public void openDialog(){
+		Shell shell=new Shell(getParent(), getStyle());
+		shell.setText(getText());
+		createContents(shell);
+		shell.setSize(400, 150);
+		shell.setLocation(450, 300);
+		//shell.pack();
+		shell.open();
 	}
 	
-	@Override
-	protected Control createDialogArea(Composite parent) {
-		Composite dialogArea = (Composite) super.createDialogArea(parent);
-		dialogArea.setLayout(new GridLayout(2, false));
-		Label label = new Label(dialogArea, SWT.NULL);
-		label.setText("Page Size:");
+	protected void createContents(final Shell shell) {
+		GridLayout layout=new GridLayout();
+		layout.numColumns = 14;
+		layout.makeColumnsEqualWidth = true;
+		layout.marginWidth=20;
+		layout.marginHeight=20;
+		shell.setLayout(layout);
 		
-		pageSize=new Combo(dialogArea, SWT.BORDER);
+		GridData gd = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+		gd.horizontalSpan=6;
+		Label label = new Label(shell, SWT.NULL);
+		label.setText("Page Size:");
+		label.setLayoutData(gd);
+		
+		pageSize=new Combo(shell, SWT.BORDER);
 		for (int i=0; i<pageSizeNames.length; i++){
 			pageSize.add(pageSizeNames[i]);
 		}
 		pageSize.select(0);
-		pageSize.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_CENTER));
-		dialogArea.pack();
-		return dialogArea;
-	}
-	
-	@Override
-	protected void okPressed() {
-		SchematicPluginCore.pageSize=pageSizeMap.get(pageSize.getText());
-		super.okPressed();
+		GridData gd1 = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+		gd1.horizontalSpan=8;
+		pageSize.setLayoutData(gd1);
+		
+		Button ok = new Button(shell, SWT.PUSH);
+		GridData gd2 = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+		gd2.horizontalSpan=3;
+		ok.setLayoutData(gd2);
+		ok.setText("OK");
+		ok.addSelectionListener(new SelectionAdapter(){
+			public void widgetSelected(SelectionEvent event){
+				SchematicPluginCore.pageSize=pageSizeMap.get(pageSize.getText());
+				PdfExporter pdfExp = new PdfExporter();
+				pdfExp.setPageSize(SchematicPluginCore.pageSize);
+				pdfExp.setAutoScale(AutoScale.FitToPage);
+				//pdfExp.setScale(SchematicPluginCore.scale);
+				pdfExp.export(diagram, filename);
+				shell.close();
+			}
+		});
+		
+		Button cancel = new Button(shell, SWT.PUSH);
+		cancel.setLayoutData(gd2);
+		cancel.setText("Cancel");
+		cancel.addSelectionListener(new SelectionAdapter(){
+			public void widgetSelected(SelectionEvent event){
+				shell.close();
+			}
+		});
+		
+		shell.setDefaultButton(ok);
+		shell.pack();
 	}
 
 }

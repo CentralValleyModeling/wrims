@@ -73,8 +73,8 @@ public class DateCombo extends
 					workbench.getDisplay().asyncExec(new Runnable(){
 						public void run(){
 							Shell shell=workbench.getActiveWorkbenchWindow().getShell();
-							AddTimeWindowDialog dialog= new AddTimeWindowDialog(shell, SWT.BORDER|SWT.APPLICATION_MODAL, true, false, false, false, false, "Add Time Window", "Add Time Window");
-							dialog.open(getDateList());
+							AddTimeWindowDialog dialog= new AddTimeWindowDialog(shell, getDateList());
+							dialog.openDialog();
 						}
 					});
 				}

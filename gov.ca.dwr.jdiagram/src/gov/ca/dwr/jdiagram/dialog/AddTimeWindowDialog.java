@@ -8,7 +8,6 @@ import java.io.PrintWriter;
 import gov.ca.dwr.hecdssvue.DssPluginCore;
 import gov.ca.dwr.jdiagram.SchematicPluginCore;
 
-import org.eclipse.jface.dialogs.PopupDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -16,8 +15,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
@@ -27,7 +25,7 @@ import org.eclipse.ui.PlatformUI;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 
-public class AddTimeWindowDialog extends PopupDialog {
+public class AddTimeWindowDialog extends Dialog {
 	//private DateCombo dateCombo;
 	private Combo dateList;
 	private static String[] _monthSelections = { "JAN", "FEB", "MAR", "APR", "MAY", "JUN",
@@ -37,34 +35,34 @@ public class AddTimeWindowDialog extends PopupDialog {
 	private Combo month1, month2;
 	private String newTW="OCT1921 - SEP2009";
 	
-	public AddTimeWindowDialog(Shell parent, int shellStyle,
-			boolean takeFocusOnOpen, boolean persistSize,
-			boolean persistLocation, boolean showDialogMenu,
-			boolean showPersistActions, String titleText, String infoText) {
+	public AddTimeWindowDialog(Shell parent, Combo dateList) {
 		
-		super(parent, shellStyle, takeFocusOnOpen, persistSize, persistLocation,
-				showDialogMenu, showPersistActions, titleText, infoText);
+		super(parent, SWT.MIN);
+		this.dateList=dateList;
+		setText("Add Time Window");
+		
 		// TODO Auto-generated constructor stub
 	}
 
-	public void open(Combo dateList){
-		this.dateList=dateList;
-		create();
-		getShell().setSize(400, 150);
-		open();
+	public void openDialog(){
+		Shell shell=new Shell(getParent(), getStyle());
+		shell.setText(getText());
+		createContents(shell);
+		shell.setSize(400, 150);
+		shell.setLocation(450, 300);
+		//shell.pack();
+		shell.open();
 	}
 
-	@Override
-	 protected Control createDialogArea(Composite parent) {
-		Composite dialogArea = (Composite) super.createDialogArea(parent);
+	protected void createContents(final Shell shell) {
 		GridLayout layout=new GridLayout();
 		layout.numColumns = 5;
 		layout.makeColumnsEqualWidth = true;
 		layout.marginWidth=20;
 		layout.marginHeight=20;
-		dialogArea.setLayout(layout);
+		shell.setLayout(layout);
 		
-		month1=new Combo(dialogArea, SWT.NONE);
+		month1=new Combo(shell, SWT.NONE);
 		for (int i=0; i<_monthSelections.length; i++){
 			month1.add(_monthSelections[i]);
 		}
@@ -73,28 +71,28 @@ public class AddTimeWindowDialog extends PopupDialog {
 		gd.horizontalSpan = 1;
 		month1.setLayoutData(gd);
 		
-		year1= new Text(dialogArea, SWT.BORDER);
+		year1= new Text(shell, SWT.BORDER);
 		year1.setToolTipText("Year");
 		year1.setText("1921");
 		year1.setLayoutData(gd);
 		
-		Label label1=new Label(dialogArea, SWT.NONE);
+		Label label1=new Label(shell, SWT.NONE);
 		label1.setText("To");
 		label1.setLayoutData(gd);
 		
-		month2=new Combo(dialogArea, SWT.NONE);
+		month2=new Combo(shell, SWT.NONE);
 		for (int i=0; i<_monthSelections.length; i++){
 			month2.add(_monthSelections[i]);
 		}
 		month2.select(8);
 		month2.setLayoutData(gd);
 		
-		year2= new Text(dialogArea, SWT.BORDER);
+		year2= new Text(shell, SWT.BORDER);
 		year2.setToolTipText("Year");
 		year2.setText("2009");
 		year2.setLayoutData(gd);
 		
-		Button ok = new Button(dialogArea, SWT.PUSH);
+		Button ok = new Button(shell, SWT.PUSH);
 		ok.setLayoutData(gd);
 		ok.setText("OK");
 		ok.addSelectionListener(new SelectionAdapter(){
@@ -105,25 +103,24 @@ public class AddTimeWindowDialog extends PopupDialog {
 					dateList.select(index);
 					DssPluginCore._schematicTwSelections.add(index, newTW);
 					saveTWFile();
-					close();
+					shell.close();
 				}else if (index>=0){
 					dateList.select(index);
-					close();
+					shell.close();
 				}
 			}
 		});
 		
-		Button cancel = new Button(dialogArea, SWT.PUSH);
+		Button cancel = new Button(shell, SWT.PUSH);
 		cancel.setLayoutData(gd);
 		cancel.setText("Cancel");
 		cancel.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent event){
-				close();
+				shell.close();
 			}
 		});
 		
-		dialogArea.getShell().setDefaultButton(ok);
-		return dialogArea;
+		shell.setDefaultButton(ok);
 	}
 	
 	public int validateTW(){
