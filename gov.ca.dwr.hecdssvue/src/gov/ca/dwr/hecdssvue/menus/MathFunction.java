@@ -35,7 +35,7 @@ public class MathFunction implements IWorkbenchWindowActionDelegate{
 			dataVector[0]=new Vector<DataContainer>();
 			for (int i=0; i<size; i++){
 				String[] parts = selectedParts.get(i);
-				dataVector_path = dssCatalogView.getData(dssCatalogView.getPathname(parts));
+				dataVector_path = dssCatalogView.getData(dssCatalogView.getPathname(parts), parts);
 				dataVector[0].addAll(dataVector_path);
 			}
 			

@@ -6,6 +6,9 @@ import gov.ca.dwr.hecdssvue.components.DataOps;
 import hec.heclib.dss.CondensedReference;
 import hec.heclib.dss.HecDss;
 import hec.heclib.util.HecTime;
+import hec.hecmath.HecMath;
+import hec.hecmath.HecMathException;
+import hec.hecmath.TimeSeriesMath;
 import hec.io.DataContainer;
 import hec.io.TimeSeriesContainer;
 
@@ -59,6 +62,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.statushandlers.StatusManager;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+import wrimsv2_plugin.debugger.exception.WPPException;
 
 //public class DSSCatalogView extends ViewPart {
 public class DSSCatalogView extends AbstractDSSView {
@@ -479,7 +483,7 @@ public class DSSCatalogView extends AbstractDSSView {
 	/* 
 	 * return path data from multiple files
 	 */
-	public Vector<DataContainer> getData(String pathname) {
+	public Vector<DataContainer> getData(String pathname, String[] parts) {
 		Vector<DataContainer> dataVector_path = new Vector<DataContainer>();
 //		DataContainer dataVector_file = new DataContainer();
 		TimeSeriesContainer dataVector_file = new TimeSeriesContainer();
@@ -493,11 +497,23 @@ public class DSSCatalogView extends AbstractDSSView {
 				try{
 //				  dataVector_file = dssArray.get(i).get(pathname, true);
 				  if (DssPluginCore.tw.equals("All")){	
-					  dataVector_file = DataOps.getMonthlyData((TimeSeriesContainer)dssArray.get(i).get(pathname, true), DssPluginCore.months);
+					  HecDss hecDss = dssArray.get(i);
+					  TimeSeriesContainer tsc = (TimeSeriesContainer)hecDss.get(pathname, true);
+					  if (tsc == null || tsc.numberValues==0){
+						  String pathname_new=getPathNameIgnorePartAF(i/2, parts, pathname);
+						  if (!pathname.equals(pathname_new)) tsc = (TimeSeriesContainer)hecDss.get(pathname_new, true);
+					  }
+					  dataVector_file = DataOps.getMonthlyData(tsc, DssPluginCore.months);
 				  }else{
 					  String startTime=DssPluginCore.tw.substring(0, 13);
 					  String endTime=DssPluginCore.tw.substring(15, 28);
-					  dataVector_file = DataOps.getMonthlyData((TimeSeriesContainer)dssArray.get(i).get(pathname, startTime, endTime), DssPluginCore.months);
+					  HecDss hecDss = dssArray.get(i);
+					  TimeSeriesContainer tsc = (TimeSeriesContainer)hecDss.get(pathname, startTime, endTime);
+					  if (tsc == null || tsc.numberValues==0){
+						  String pathname_new=getPathNameIgnorePartAF(i/2, parts, pathname);
+						  if (!pathname.equals(pathname_new)) tsc = (TimeSeriesContainer)hecDss.get(pathname_new, startTime, endTime);
+					  }
+					  dataVector_file = DataOps.getMonthlyData(tsc, DssPluginCore.months);
 				  }
 				} catch (Exception ex) {
 				  dataVector_file = null;
@@ -518,11 +534,23 @@ public class DSSCatalogView extends AbstractDSSView {
 				  try{
 //					dataVector_file = dssArray.get(i).get(pathname, true);
 					if (DssPluginCore.tw.equals("All")){  
-						dataVector_file = DataOps.getMonthlyData((TimeSeriesContainer)dssArray.get(i).get(pathname, true), DssPluginCore.months);
+						HecDss hecDss = dssArray.get(i);
+						  TimeSeriesContainer tsc = (TimeSeriesContainer)hecDss.get(pathname, true);
+						  if (tsc == null || tsc.numberValues==0){
+							  String pathname_new=getPathNameIgnorePartAF(i/2, parts, pathname);
+							  if (!pathname.equals(pathname_new)) tsc = (TimeSeriesContainer)hecDss.get(pathname_new, true);
+						  }
+						  dataVector_file = DataOps.getMonthlyData(tsc, DssPluginCore.months);
 					}else{ 
 						String startTime=DssPluginCore.tw.substring(0, 13);
 						String endTime=DssPluginCore.tw.substring(15, 28);
-						dataVector_file = DataOps.getMonthlyData((TimeSeriesContainer)dssArray.get(i).get(pathname, startTime, endTime), DssPluginCore.months);
+						HecDss hecDss = dssArray.get(i);
+						TimeSeriesContainer tsc = (TimeSeriesContainer)hecDss.get(pathname, startTime, endTime);
+						if (tsc == null || tsc.numberValues==0){
+							String pathname_new=getPathNameIgnorePartAF(i/2, parts, pathname);
+							if (!pathname.equals(pathname_new)) tsc = (TimeSeriesContainer)hecDss.get(pathname_new, startTime, endTime);
+						}
+						dataVector_file = DataOps.getMonthlyData(tsc, DssPluginCore.months);
 					}
 				  } catch (Exception ex) {
 				    dataVector_file = null;
@@ -639,5 +667,21 @@ public class DSSCatalogView extends AbstractDSSView {
 				break;
 		}
 		return match;
+	}
+	
+	public String getPathNameIgnorePartAF(int j, String[] parts, String pathname){
+		boolean found=false;
+		int k=0;
+		ArrayList<String> pathnameList = DssPluginCore.pathnameLists[j];
+		while (k<pathnameList.size() && !found) {
+			String pathName_new = pathnameList.get(k);
+			String[] parts_new = pathName_new.split("/");
+			if (parts[2].equals(parts_new[2]) && parts[3].equals(parts_new[3])){
+				found = true;
+				pathname=pathName_new;
+			}
+			k++;
+		}
+		return pathname;
 	}
 }

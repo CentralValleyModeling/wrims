@@ -71,7 +71,7 @@ public abstract class AbstractDSSView extends ViewPart {
 //						}
 //						dataVector.add(data);
                         // read multiple files
-						dataVector_path = catalogView.getData(catalogView.getPathname(parts));
+						dataVector_path = catalogView.getData(catalogView.getPathname(parts), parts);
 						if (dataVector_path == null) {
 							continue;
 						}
