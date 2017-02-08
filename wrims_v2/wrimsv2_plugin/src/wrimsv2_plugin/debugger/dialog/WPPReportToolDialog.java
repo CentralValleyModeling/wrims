@@ -333,7 +333,7 @@ public class WPPReportToolDialog extends Dialog {
 		reportButton.setLayoutData(gd0);
 		reportButton.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void widgetSelected(SelectionEvent e) {
+			public void widgetSelected(SelectionEvent e) {				
 				generateReport(shell);
 			}
 		});
@@ -391,6 +391,10 @@ public class WPPReportToolDialog extends Dialog {
 			MessageDialog.openInformation(shell,
 					"Error", "The source DSS file for the alternative study doesn't exist");
 		}else{
+			if (new File(DebugCorePlugin.reportFileName).exists()){
+				boolean overwrite=MessageDialog.openQuestion(shell, "Overwrite?", "Report file "+DebugCorePlugin.reportFileName+" exists. Do you want to overwrite it?");
+				if (!overwrite) return;
+			}
 			try {
 				// Create an inputstream from template file;
 				FileInputStream fin = new FileInputStream(DebugCorePlugin.repTemplateFile);
