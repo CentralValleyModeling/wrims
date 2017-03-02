@@ -455,19 +455,6 @@ public class DSSCatalogView extends AbstractDSSView {
 	public void setFocus() {
 		viewer.getControl().setFocus();
 	}
-
-	public String getPathname(String[] parts) {
-		StringBuilder sb = new StringBuilder();
-		sb.append("/");
-		for (int i = 1; i < parts.length; i++) {
-			if (i == 4) {
-				sb.append(parts[i].split("-")[0].trim()).append("/");
-			} else {
-				sb.append(parts[i]).append("/");
-			}
-		}
-		return sb.toString();
-	}
 	
 	/* 
 	 * return path data from 1 file
@@ -613,7 +600,7 @@ public class DSSCatalogView extends AbstractDSSView {
 				.iterator();
 		while(iterator.hasNext()){
 			String[] parts = (String[]) iterator.next();
-			selectedPathnames.add(getPathname(parts));
+			selectedPathnames.add(DataOps.getPathname(parts));
 		}
 		return selectedPathnames;
 	}

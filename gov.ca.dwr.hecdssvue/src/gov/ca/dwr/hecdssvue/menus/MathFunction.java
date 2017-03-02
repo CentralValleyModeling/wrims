@@ -6,6 +6,7 @@ import javax.swing.SwingUtilities;
 
 import gov.ca.dwr.hecdssvue.DssPluginCore;
 import gov.ca.dwr.hecdssvue.components.CatalogListSelection;
+import gov.ca.dwr.hecdssvue.components.DataOps;
 import gov.ca.dwr.hecdssvue.components.DssMathFrame;
 import gov.ca.dwr.hecdssvue.views.DSSCatalogView;
 import hec.io.DataContainer;
@@ -35,7 +36,7 @@ public class MathFunction implements IWorkbenchWindowActionDelegate{
 			dataVector[0]=new Vector<DataContainer>();
 			for (int i=0; i<size; i++){
 				String[] parts = selectedParts.get(i);
-				dataVector_path = dssCatalogView.getData(dssCatalogView.getPathname(parts), parts);
+				dataVector_path = dssCatalogView.getData(DataOps.getPathname(parts), parts);
 				dataVector[0].addAll(dataVector_path);
 			}
 			

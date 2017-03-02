@@ -84,6 +84,7 @@ public class DssPluginCore {
 	public static HashMap<Integer, ArrayList<HashMap<String, Double>>> longTermAverageDataTAF=new HashMap();
 	public static HashMap<String, String>[] allSchematicVariableUnitsCFS=new HashMap[4];
 	public static HashMap<String, String>[] allSchematicVariableUnitsTAF=new HashMap[4];
+	//public static HashMap<String, String>[] allVariableUnits=new HashMap[4];
 	
 	public static ArrayList<String> geoSchematicVariableNames = new ArrayList<String>();
 	public static HashMap<String, HecMath>[] geoSchematicVariableData=new HashMap[4];

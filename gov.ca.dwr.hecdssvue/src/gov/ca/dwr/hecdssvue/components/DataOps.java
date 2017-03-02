@@ -16,7 +16,9 @@ import hec.io.TimeSeriesContainer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 
 import org.eclipse.jface.viewers.TableViewer;
@@ -56,10 +58,56 @@ public class DataOps {
 			int size = dataVector.size();
 			for (int i=0; i<size; i++){
 				DataContainer dc=dataVector.get(i);
-				String fileName=dc.fileName;
+				TimeSeriesContainer tsc=(TimeSeriesContainer)dc;
+				TimeSeriesContainer ntsc = (TimeSeriesContainer)tsc.clone();
+				
+				int k=-1;
+				int j=0;
+				
+				while (k<i & j<4){
+					if (DebugCorePlugin.selectedStudies[j]){
+						k++;
+					}
+					j++;
+				}
+				
+				String fileName=ntsc.fileName;
 				DSSFile dssFile = DSS.open(fileName);
+				
+				if (k>=0 & k<4){
+					String partB=ntsc.location;
+					String partC=ntsc.parameter;
+					boolean isStorage = partC.trim().toLowerCase().startsWith("storage");
+					if (!isStorage){
+						ArrayList<String> pathnameLists = DssPluginCore.pathnameLists[k];
+						Iterator<String> it = pathnameLists.iterator();
+						boolean found = false;
+						String pathname;
+						while (it.hasNext() & !found){
+							pathname=it.next();
+							String[] parts = pathname.split("/");
+							if (parts[2].equalsIgnoreCase(partB) & parts[3].equalsIgnoreCase(partC)){
+								try {
+									HecMath origTsc = dssFile.read(getPathname(parts));
+									String units=origTsc.getUnits();
+									ntsc.units=units;
+									
+									if (tsc.units.equals(DssPluginCore.taf) && units.equals(DssPluginCore.cfs)){
+										ntsc = adjustMonthlyData(ntsc, false); 
+									} else if (tsc.units.equals(DssPluginCore.cfs) && units.equals(DssPluginCore.taf)){
+										ntsc = adjustMonthlyData(ntsc, true); 
+									}
+									found=true;
+								} catch (HecMathException e) {
+								}
+							}
+						}
+					}
+				}
+				
+				
 				try {
-					dssFile.write(dc);
+					dssFile.write(ntsc);
 					dssFile.close();
 				} catch (HecMathException e) {
 					WPPException.handleException(e);
@@ -241,6 +289,7 @@ public class DataOps {
 	public static void loadAllSchematicVariableData(){
 		DssPluginCore.allSchematicVariableUnitsCFS=new HashMap[4];
 		DssPluginCore.allSchematicVariableUnitsTAF=new HashMap[4];
+		//DssPluginCore.allVariableUnits=new HashMap[4];
 		DssPluginCore.longTermAverageDataCFS=new HashMap();
 		DssPluginCore.longTermAverageDataTAF=new HashMap();
 		DssPluginCore.allSchematicVariableData = new HashMap[4];
@@ -251,6 +300,8 @@ public class DataOps {
 			DssPluginCore.allSchematicVariableUnitsCFS[kk]=cfsUnitsMap;
 			HashMap<String, String> tafUnitsMap = new HashMap<String, String>();
 			DssPluginCore.allSchematicVariableUnitsTAF[kk]=tafUnitsMap;
+			HashMap<String, String> unitsMap = new HashMap<String, String>();
+			//DssPluginCore.allVariableUnits[kk] = unitsMap;
 			
 			if (DebugCorePlugin.selectedStudies[kk]){
 				if (DebugCorePlugin.dvDss[kk] !=null){
@@ -298,9 +349,10 @@ public class DataOps {
 									readFromSV(svFile, pathName, name, i);
 									continue;
 								}else{
+									String unit=dataSet.getUnits();
 									DssPluginCore.allSchematicVariableData[i].put(name, dataSet);
-									DssPluginCore.allSchematicVariableUnitsCFS[i].put(name, dataSet.getUnits());
-									DssPluginCore.allSchematicVariableUnitsTAF[i].put(name, dataSet.getUnits());
+									DssPluginCore.allSchematicVariableUnitsCFS[i].put(name, unit);
+									DssPluginCore.allSchematicVariableUnitsTAF[i].put(name, unit);
 									continue;
 								}
 							} catch (Exception e) {
@@ -322,9 +374,10 @@ public class DataOps {
 						if (pathName !=null){
 							try {
 								dataSet= dvFile.read(pathName);
+								String unit=dataSet.getUnits();
 								DssPluginCore.allSchematicVariableData[i].put(name, dataSet);
-								DssPluginCore.allSchematicVariableUnitsCFS[i].put(name, dataSet.getUnits());
-								DssPluginCore.allSchematicVariableUnitsTAF[i].put(name, dataSet.getUnits());
+								DssPluginCore.allSchematicVariableUnitsCFS[i].put(name, unit);
+								DssPluginCore.allSchematicVariableUnitsTAF[i].put(name, unit);
 							}catch (Exception e) {
 							}
 						}
@@ -332,9 +385,10 @@ public class DataOps {
 						if (pathName !=null){
 							try {
 								dataSet= svFile.read(pathName);
+								String unit=dataSet.getUnits();
 								DssPluginCore.allSchematicVariableData[i].put(name, dataSet);
-								DssPluginCore.allSchematicVariableUnitsCFS[i].put(name, dataSet.getUnits());
-								DssPluginCore.allSchematicVariableUnitsTAF[i].put(name, dataSet.getUnits());
+								DssPluginCore.allSchematicVariableUnitsCFS[i].put(name, unit);
+								DssPluginCore.allSchematicVariableUnitsTAF[i].put(name, unit);
 							}catch (Exception e) {
 							}
 						}
@@ -349,9 +403,10 @@ public class DataOps {
 		try {
 			HecMath dataSet = svFile.read(pathName);
 			if (dataSet !=null){
+				String unit=dataSet.getUnits();
 				DssPluginCore.allSchematicVariableData[i].put(name, dataSet);
-				DssPluginCore.allSchematicVariableUnitsCFS[i].put(name, dataSet.getUnits());
-				DssPluginCore.allSchematicVariableUnitsTAF[i].put(name, dataSet.getUnits());
+				DssPluginCore.allSchematicVariableUnitsCFS[i].put(name, unit);
+				DssPluginCore.allSchematicVariableUnitsTAF[i].put(name, unit);
 			}
 		} catch (Exception e) {
 		}
@@ -387,5 +442,16 @@ public class DataOps {
 		}
 	}
 	
-	
+	public static String getPathname(String[] parts) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("/");
+		for (int i = 1; i < parts.length; i++) {
+			if (i == 4) {
+				sb.append(parts[i].split("-")[0].trim()).append("/");
+			} else {
+				sb.append(parts[i]).append("/");
+			}
+		}
+		return sb.toString();
+	}
 }

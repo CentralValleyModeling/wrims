@@ -1,6 +1,7 @@
 package gov.ca.dwr.hecdssvue.views;
 
 import gov.ca.dwr.hecdssvue.components.ClearAllCheckBox;
+import gov.ca.dwr.hecdssvue.components.DataOps;
 import hec.io.DataContainer;
 
 import java.awt.BorderLayout;
@@ -71,7 +72,7 @@ public abstract class AbstractDSSView extends ViewPart {
 //						}
 //						dataVector.add(data);
                         // read multiple files
-						dataVector_path = catalogView.getData(catalogView.getPathname(parts), parts);
+						dataVector_path = catalogView.getData(DataOps.getPathname(parts), parts);
 						if (dataVector_path == null) {
 							continue;
 						}

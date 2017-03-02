@@ -29,13 +29,16 @@ public class Functioninitgwsystem extends ExternalFunction{
 		int iNTimeSteps = VariableTimeStep.getTotalTimeStep(ControlData.defaultTimeStep);
 		int iSimBeginMonth;
 		int iSimBeginYear;
+		int iResimulate;
 		if (ControlData.resimGroundwater){
 			ControlData.resimGroundwater=false;
 			iSimBeginMonth = ControlData.resimMonth;
 			iSimBeginYear = ControlData.resimYear;
+			iResimulate=1;
 		}else{
 			iSimBeginMonth = ControlData.startMonth;
 			iSimBeginYear = ControlData.startYear;
+			iResimulate=0;
 		}
 		int iSimMode=0;
 		
@@ -45,10 +48,10 @@ public class Functioninitgwsystem extends ExternalFunction{
 
 		int iNRestartFiles=12;
 		
-		float result = initgwsystem(cGWPath,iLenGWPath,cOutPath,iLenOutPath,cTimeStep,iNTimeSteps,iSimBeginMonth,iSimBeginYear,iSimMode, iNRestartFiles);
+		float result = initgwsystem(cGWPath,iLenGWPath,cOutPath,iLenOutPath,cTimeStep,iNTimeSteps,iSimBeginMonth,iSimBeginYear,iSimMode,iNRestartFiles,iResimulate);
 		// push the result on the Stack
 		stack.push(new Float(result));
 	}
 
-	public native float initgwsystem(String cGWPath, int iLenGWPath,String cOutPath, int iLenOutPath, String cTimeStep, int iNTimeSteps, int iSimBeginMonth, int iSimBeginYear, int iSimMode, int iNRestartFiles);
+	public native float initgwsystem(String cGWPath, int iLenGWPath,String cOutPath, int iLenOutPath, String cTimeStep, int iNTimeSteps, int iSimBeginMonth, int iSimBeginYear, int iSimMode, int iNRestartFiles, int iResimulate);
 }

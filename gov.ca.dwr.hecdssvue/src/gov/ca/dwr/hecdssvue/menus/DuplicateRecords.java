@@ -3,6 +3,7 @@ package gov.ca.dwr.hecdssvue.menus;
 import java.util.Vector;
 
 import gov.ca.dwr.hecdssvue.DssPluginCore;
+import gov.ca.dwr.hecdssvue.components.DataOps;
 import gov.ca.dwr.hecdssvue.views.DSSCatalogView;
 import gov.ca.dwr.hecdssvue.views.DSSTableView;
 import hec.dataTable.HecDataTable;
@@ -36,7 +37,7 @@ public class DuplicateRecords implements IWorkbenchWindowActionDelegate{
 			final Vector<String[]> selectedParts=dssCatalogView.getSelectedParts();
 			final Vector<String> selectedPathnames=new Vector<String>();
 			for (int l=0; l<selectedParts.size(); l++){
-				selectedPathnames.add(dssCatalogView.getPathname(selectedParts.get(l)));
+				selectedPathnames.add(DataOps.getPathname(selectedParts.get(l)));
 			}
 			
 			javax.swing.SwingUtilities.invokeLater(new Runnable() {
