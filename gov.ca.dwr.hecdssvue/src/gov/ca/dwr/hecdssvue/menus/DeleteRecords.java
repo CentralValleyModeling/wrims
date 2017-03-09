@@ -35,7 +35,7 @@ public class DeleteRecords implements IWorkbenchWindowActionDelegate{
 				Shell shell=workbench.getActiveWorkbenchWindow().getShell();
 				boolean delete = MessageDialog.openConfirm(shell, "Delete Confirmation", "Do you want to delete selected timeseries?");
 				if (delete){
-					deleteSelected();
+					DataOps.deleteSelected();
 				}
 			}
 		}); 
@@ -59,51 +59,4 @@ public class DeleteRecords implements IWorkbenchWindowActionDelegate{
 		
 	}
 	
-	public void deleteSelected(){
-		IWorkbench workbench=PlatformUI.getWorkbench();
-		IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
-		DSSCatalogView dssCatalogView=(DSSCatalogView) workBenchPage.findView(DssPluginCore.ID_DSSVue_DSSCatalogView);
-		boolean[] foundInDv={false, false, false, false};
-		
-		if (dssCatalogView !=null){
-			Vector<String[]> selectedParts=dssCatalogView.getSelectedParts();
-			for (int i=0; i<3; i++){
-				if (DebugCorePlugin.selectedStudies[i]){
-					HecDss dvFile = DebugCorePlugin.dvDss[i];
-					if (dvFile !=null){
-						Vector dvPathNameList = dvFile.getPathnameList();
-						for (int j=0; j<selectedParts.size(); j++){
-							Vector<String> selectedPathname = new Vector<String>();
-							String[] parts=selectedParts.get(j);
-							for (int k=0; k<dvPathNameList.size(); k++){
-								String pathname=(String)dvPathNameList.get(k);
-								if (DataOps.containParts(pathname, parts)){
-									selectedPathname.add(pathname);
-									foundInDv[i]=true;
-								}
-							}
-							dvFile.delete(selectedPathname);
-						}
-					}
-					HecDss svFile = DebugCorePlugin.svDss[i];
-					if (!foundInDv[i] && svFile !=null){
-						Vector svPathNameList = svFile.getPathnameList();
-						for (int j=0; j<selectedParts.size(); j++){	
-							Vector<String> selectedPathname = new Vector<String>();
-							String[] parts=selectedParts.get(j);
-							for (int k=0; k<svPathNameList.size(); k++){
-								String pathname=(String)svPathNameList.get(k);
-								if (DataOps.containParts(pathname, parts)){
-									selectedPathname.add(pathname);
-								}
-							}
-							svFile.delete(selectedPathname);
-						}
-					}
-				}
-			}
-		}
-		TableViewer viewer = dssCatalogView.getViewer();
-		viewer.setInput(viewer.getInput());
-	}
 }

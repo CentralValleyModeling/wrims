@@ -2,7 +2,9 @@ package gov.ca.dwr.hecdssvue.views;
 
 import gov.ca.dwr.hecdssvue.Activator;
 import gov.ca.dwr.hecdssvue.DssPluginCore;
+import gov.ca.dwr.hecdssvue.components.CatalogListSelection;
 import gov.ca.dwr.hecdssvue.components.DataOps;
+import hec.dssgui.NewPartsDialog;
 import hec.heclib.dss.CondensedReference;
 import hec.heclib.dss.HecDss;
 import hec.heclib.util.HecTime;
@@ -49,13 +51,16 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchActionConstants;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -76,11 +81,18 @@ public class DSSCatalogView extends AbstractDSSView {
 	private Action plotAction;
 	private Action tabulateAction;
 	private Action doubleClickAction;
+	private Action deleteAction;
+	private Action duplicateAction;
+	private Action renameAction;
+	private Action copytoAction;
 	private HecDss dss;
 //	private ArrayList<HecDss> dssArray = new ArrayList<HecDss> ();
 //	private ArrayList<HecDss> dssArray;
 	
 	private TableViewSorter comparator;
+	
+	private Vector<String> oldPathnameVector;
+	private Vector<String> newPathnameVector;
 
 	class TableViewSorter extends ViewerComparator {
 		private int propertyIndex;
@@ -380,13 +392,21 @@ public class DSSCatalogView extends AbstractDSSView {
 
 	private void fillLocalPullDown(IMenuManager manager) {
 		manager.add(plotAction);
-		manager.add(new Separator());
+		//manager.add(new Separator());
 		manager.add(tabulateAction);
+		manager.add(deleteAction);
+		manager.add(duplicateAction);
+		manager.add(renameAction);
+		manager.add(copytoAction);
 	}
 
 	private void fillContextMenu(IMenuManager manager) {
 		manager.add(plotAction);
 		manager.add(tabulateAction);
+		manager.add(deleteAction);
+		manager.add(duplicateAction);
+		manager.add(renameAction);
+		manager.add(copytoAction);
 		// Other plug-ins can contribute there actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 	}
@@ -394,6 +414,10 @@ public class DSSCatalogView extends AbstractDSSView {
 	private void fillLocalToolBar(IToolBarManager manager) {
 		manager.add(plotAction);
 		manager.add(tabulateAction);
+		manager.add(deleteAction);
+		manager.add(duplicateAction);
+		manager.add(renameAction);
+		manager.add(copytoAction);
 	}
 
 	private void makeActions() {
@@ -418,14 +442,214 @@ public class DSSCatalogView extends AbstractDSSView {
 
 		tabulateAction = new Action() {
 			public void run() {
-				showMessage("Action 2 executed");
+				try {
+					getSite().getWorkbenchWindow().getActivePage()
+							.showView(DSSMonthlyView.ID);
+				} catch (PartInitException ex) {
+					Status status = new Status(IStatus.ERROR,
+							Activator.PLUGIN_ID,
+							"Error opening DSS Monthly Table View ", ex);
+					StatusManager.getManager()
+							.handle(status, StatusManager.LOG);
+				}
 			}
 		};
-		tabulateAction.setText("Action 2");
-		tabulateAction.setToolTipText("Action 2 tooltip");
+		tabulateAction.setText("Monthly Table");
+		tabulateAction.setToolTipText("Monthly Table");
 		tabulateAction.setImageDescriptor(PlatformUI.getWorkbench()
 				.getSharedImages()
+				.getImageDescriptor(ISharedImages.IMG_OBJ_ELEMENT));
+		
+		deleteAction = new Action() {
+			public void run() {
+				final IWorkbench workbench=PlatformUI.getWorkbench();
+				workbench.getDisplay().asyncExec(new Runnable(){
+					public void run(){
+						Shell shell=workbench.getActiveWorkbenchWindow().getShell();
+						boolean delete = MessageDialog.openConfirm(shell, "Delete Confirmation", "Do you want to delete selected timeseries?");
+						if (delete){
+							DataOps.deleteSelected();
+						}
+					}
+				}); 
+			}
+		};
+		deleteAction.setText("Delete");
+		deleteAction.setToolTipText("Delete");
+		deleteAction.setImageDescriptor(PlatformUI.getWorkbench()
+				.getSharedImages()
+				.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
+		
+		
+		duplicateAction = new Action() {
+			public void run() {
+				IWorkbench workbench=PlatformUI.getWorkbench();
+				IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
+				final DSSCatalogView dssCatalogView=(DSSCatalogView) workBenchPage.findView(DssPluginCore.ID_DSSVue_DSSCatalogView);
+
+				if (dssCatalogView !=null){
+					final Vector<String[]> selectedParts=dssCatalogView.getSelectedParts();
+					final Vector<String> selectedPathnames=new Vector<String>();
+					for (int l=0; l<selectedParts.size(); l++){
+						selectedPathnames.add(DataOps.getPathname(selectedParts.get(l)));
+					}
+					
+					javax.swing.SwingUtilities.invokeLater(new Runnable() {
+						public void run() {
+					       	NewPartsDialog newParts = new NewPartsDialog("New pathname parts for duplicate records:", selectedPathnames);
+					       	newParts.show();
+					       	Vector newPathnames = newParts.getNewPathnames();
+					       	if (newPathnames == null) {
+					       		return;
+					       	}
+					       	boolean[] foundInDv={false, false, false, false};
+					       	for (int i=0; i<3; i++){
+								if (DebugCorePlugin.selectedStudies[i]){
+									HecDss dvFile = DebugCorePlugin.dvDss[i];
+									if (dvFile !=null){
+										Vector dvPathNameList = dvFile.getPathnameList();
+										Vector<String> selectedPathnames = new Vector<String>();
+										for (int j=0; j<selectedParts.size(); j++){
+											String[] parts=selectedParts.get(j);
+											oldPathnameVector=new Vector<String>();
+											newPathnameVector=new Vector<String>();	
+											for (int k=0; k<dvPathNameList.size(); k++){
+												String pathname=(String)dvPathNameList.get(k);
+												if (containParts(pathname, parts, (String)newPathnames.get(j))){
+													foundInDv[i]=true;
+												}
+											}
+											dvFile.duplicateRecords(oldPathnameVector, newPathnameVector);
+										}
+									}
+									HecDss svFile = DebugCorePlugin.svDss[i];
+									if (!foundInDv[i] && svFile !=null){
+										Vector svPathNameList = svFile.getPathnameList();
+										Vector<String> selectedPathnames = new Vector<String>();
+										for (int j=0; j<selectedParts.size(); j++){
+											String[] parts=selectedParts.get(j);
+											oldPathnameVector=new Vector<String>();
+											newPathnameVector=new Vector<String>();	
+											for (int k=0; k<svPathNameList.size(); k++){
+												String pathname=(String)svPathNameList.get(k);
+												containParts(pathname, parts, (String)newPathnames.get(j));
+											}
+											svFile.duplicateRecords(oldPathnameVector, newPathnameVector);
+										}
+									}
+								}
+							}
+					       	final IWorkbench workbench=PlatformUI.getWorkbench();
+							workbench.getDisplay().asyncExec(new Runnable(){
+								public void run(){
+									TableViewer viewer = dssCatalogView.getViewer();
+									viewer.setInput(viewer.getInput());
+								}
+							});
+						}
+					});
+				}
+			}
+		};
+		duplicateAction.setText("Duplicate");
+		duplicateAction.setToolTipText("Duplicate");
+		duplicateAction.setImageDescriptor(PlatformUI.getWorkbench()
+				.getSharedImages()
+				.getImageDescriptor(ISharedImages.IMG_OBJ_ADD));
+		
+		renameAction = new Action() {
+			public void run() {
+				final IWorkbench workbench=PlatformUI.getWorkbench();
+				workbench.getDisplay().asyncExec(new Runnable(){
+					public void run(){
+						IWorkbench workbench=PlatformUI.getWorkbench();
+						IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
+						final DSSCatalogView dssCatalogView=(DSSCatalogView) workBenchPage.findView(DssPluginCore.ID_DSSVue_DSSCatalogView);
+
+						if (dssCatalogView !=null){
+							final Vector<String[]> selectedParts=dssCatalogView.getSelectedParts();
+							final Vector<String> selectedPathnames=new Vector<String>();
+							for (int l=0; l<selectedParts.size(); l++){
+								selectedPathnames.add(DataOps.getPathname(selectedParts.get(l)));
+							}
+							
+							javax.swing.SwingUtilities.invokeLater(new Runnable() {
+								public void run() {
+							       	NewPartsDialog newParts = new NewPartsDialog("New pathname parts for duplicate records:", selectedPathnames);
+							       	newParts.show();
+							       	Vector newPathnames = newParts.getNewPathnames();
+							       	if (newPathnames == null) {
+							       		return;
+							       	}
+							       	boolean[] foundInDv={false, false, false, false};
+							       	for (int i=0; i<3; i++){
+										if (DebugCorePlugin.selectedStudies[i]){
+											HecDss dvFile = DebugCorePlugin.dvDss[i];
+											if (dvFile !=null){
+												Vector dvPathNameList = dvFile.getPathnameList();
+												Vector<String> selectedPathnames = new Vector<String>();
+												for (int j=0; j<selectedParts.size(); j++){
+													String[] parts=selectedParts.get(j);
+													oldPathnameVector=new Vector<String>();
+													newPathnameVector=new Vector<String>();	
+													for (int k=0; k<dvPathNameList.size(); k++){
+														String pathname=(String)dvPathNameList.get(k);
+														if (containParts(pathname, parts, (String)newPathnames.get(j))){
+															foundInDv[i]=true;
+														}
+													}
+													dvFile.renameRecords(oldPathnameVector, newPathnameVector);
+												}
+											}
+											HecDss svFile = DebugCorePlugin.svDss[i];
+											if (!foundInDv[i] && svFile !=null){
+												Vector svPathNameList = svFile.getPathnameList();
+												Vector<String> selectedPathnames = new Vector<String>();
+												for (int j=0; j<selectedParts.size(); j++){
+													String[] parts=selectedParts.get(j);
+													oldPathnameVector=new Vector<String>();
+													newPathnameVector=new Vector<String>();	
+													for (int k=0; k<svPathNameList.size(); k++){
+														String pathname=(String)svPathNameList.get(k);
+														containParts(pathname, parts, (String)newPathnames.get(j));
+													}
+													svFile.renameRecords(oldPathnameVector, newPathnameVector);
+												}
+											}
+										}
+									}
+							       	final IWorkbench workbench=PlatformUI.getWorkbench();
+									workbench.getDisplay().asyncExec(new Runnable(){
+										public void run(){
+											TableViewer viewer = dssCatalogView.getViewer();
+											viewer.setInput(viewer.getInput());
+										}
+									});
+								}
+							});
+						}
+					}
+				}); 
+			}
+		};
+		renameAction.setText("Rename");
+		renameAction.setToolTipText("Rename");
+		renameAction.setImageDescriptor(PlatformUI.getWorkbench()
+				.getSharedImages()
 				.getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+		
+		copytoAction = new Action() {
+			public void run() {
+				final CatalogListSelection ls = new CatalogListSelection();
+				ls.copyRecords(true);
+			}
+		};
+		copytoAction.setText("Copy to");
+		copytoAction.setToolTipText("Copy to");
+		copytoAction.setImageDescriptor(PlatformUI.getWorkbench()
+				.getSharedImages()
+				.getImageDescriptor(ISharedImages.IMG_TOOL_COPY));
+		
 		doubleClickAction = new Action() {
 			public void run() {
 				ISelection selection = viewer.getSelection();
@@ -670,5 +894,36 @@ public class DSSCatalogView extends AbstractDSSView {
 			k++;
 		}
 		return pathname;
+	}
+	
+	public boolean containParts(String pathName, String[] selectedParts, String newPathname){
+		String start="/";
+		String end="/";
+		for (int i=1; i<4; i++){
+			start=start+selectedParts[i]+"/";
+		}
+		for (int i=5; i<7; i++){
+			end=end+selectedParts[i]+"/";
+		}
+		if (pathName.startsWith(start) && pathName.endsWith(end)){
+			oldPathnameVector.add(pathName);
+			int oldPart4Start=nthOccurrence(pathName, "/", 3);
+			int oldPart4End=nthOccurrence(pathName, "/", 4);
+			String part4=pathName.substring(oldPart4Start, oldPart4End);
+			int newPart4Start=nthOccurrence(newPathname, "/", 3);
+			int newPart4End=nthOccurrence(newPathname, "/", 4);
+			String modNewPathname=newPathname.substring(0, newPart4Start)+part4+newPathname.substring(newPart4End);
+			newPathnameVector.add(modNewPathname);
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	public static int nthOccurrence(String str, String c, int n) {
+	    int pos = str.indexOf(c, 0);
+	    while (n-- > 0 && pos != -1)
+	        pos = str.indexOf(c, pos+1);
+	    return pos;
 	}
 }
