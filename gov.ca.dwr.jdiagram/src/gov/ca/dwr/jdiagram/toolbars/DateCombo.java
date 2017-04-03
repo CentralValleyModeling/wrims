@@ -53,7 +53,7 @@ public class DateCombo extends
 		dateList = new Combo(container, SWT.BORDER | SWT.READ_ONLY
             | SWT.DROP_DOWN);
 		dateList.setLayoutData(glReader);
-		setDateCombo(10, 1921, 9, 2009);
+		setDateCombo(10, 1921, 9, 3000);
 		dateList.addModifyListener(new ModifyListener(){
 
 			@Override
