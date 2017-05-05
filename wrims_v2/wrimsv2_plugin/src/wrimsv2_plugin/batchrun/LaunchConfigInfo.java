@@ -15,6 +15,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunchConfigurationType;
+import org.eclipse.debug.core.ILaunchManager;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -59,11 +60,15 @@ public class LaunchConfigInfo {
 			return;
 		}
 		
-		ILaunchConfigurationType type = DebugPlugin.getDefault().getLaunchManager().getLaunchConfigurationType(id);
-		if (type == null) {
-			return;
+		DebugPlugin debugPlugin = DebugPlugin.getDefault();
+		if (debugPlugin !=null){
+			ILaunchManager launchManager = debugPlugin.getLaunchManager();
+			ILaunchConfigurationType type = launchManager.getLaunchConfigurationType(id);
+			if (type == null) {
+				return;
+			}
+			setType(type);
 		}
-		setType(type);
 		
 		NodeList list = root.getChildNodes();
 		int length = list.getLength();
