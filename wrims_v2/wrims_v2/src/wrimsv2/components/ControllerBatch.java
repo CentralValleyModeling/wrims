@@ -36,6 +36,8 @@ import wrimsv2.solver.InitialXASolver;
 import wrimsv2.solver.Gurobi.GurobiSolver;
 import wrimsv2.solver.mpmodel.MPModel;
 import wrimsv2.solver.ortools.OrToolsSolver;
+import wrimsv2.sql.MySQLCWriter;
+import wrimsv2.sql.MySQLRWriter;
 import wrimsv2.wreslparser.elements.StudyUtils;
 import wrimsv2.wreslparser.elements.Tools;
 import wrimsv2.wreslplus.elements.procedures.ErrorCheck;
@@ -316,7 +318,7 @@ public class ControllerBatch {
 							noError=false;
 						}
 						int cycleI=i+1;
-						if (ControlData.outputHDF5 && ControlData.outputCycle) HDF5Writer.writeOneCycle(mds, cycleI);
+						if (ControlData.outputType==1 && ControlData.outputCycle) HDF5Writer.writeOneCycle(mds, cycleI);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
 
@@ -328,7 +330,7 @@ public class ControllerBatch {
 						}
 					}else{
 						int cycleI=i+1;
-						if (ControlData.outputHDF5 && ControlData.outputCycle) HDF5Writer.skipOneCycle(mds, cycleI);
+						if (ControlData.outputType==1 && ControlData.outputCycle) HDF5Writer.skipOneCycle(mds, cycleI);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Skipped. ("+model+")");
 						new AssignPastCycleVariable();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
@@ -364,16 +366,20 @@ public class ControllerBatch {
 			}
 		}
 		ControlData.xasolver.close();
-		if (ControlData.writeInitToDVOutput){
-			DssOperation.writeInitDvarAliasToDSS();
-		}
-		DssOperation.writeDVAliasToDSS();
-		ControlData.writer.closeDSSFile();
-		
-		if (ControlData.outputHDF5){
+		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
 			HDF5Writer.writeTimestepData();
 			HDF5Writer.closeDataStructure();
+		}else if (ControlData.outputType==2){
+			new MySQLCWriter();
+		}else if (ControlData.outputType==3){
+			new MySQLRWriter();
+		}else{
+			if (ControlData.writeInitToDVOutput){
+				DssOperation.writeInitDvarAliasToDSS();
+			}
+			DssOperation.writeDVAliasToDSS();
+			ControlData.writer.closeDSSFile();
 		}
 		
 		// write complete or fail
@@ -659,7 +665,7 @@ public class ControllerBatch {
 							noError=false;
 						}
 						int cycleI=i+1;
-						if (ControlData.outputHDF5 && ControlData.outputCycle) HDF5Writer.writeOneCycle(mds, cycleI);
+						if (ControlData.outputType==1 && ControlData.outputCycle) HDF5Writer.writeOneCycle(mds, cycleI);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
 
@@ -673,7 +679,7 @@ public class ControllerBatch {
 						}
 					}else{
 						int cycleI=i+1;
-						if (ControlData.outputHDF5 && ControlData.outputCycle) HDF5Writer.skipOneCycle(mds, cycleI);
+						if (ControlData.outputType==1 && ControlData.outputCycle) HDF5Writer.skipOneCycle(mds, cycleI);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Skipped. ("+model+")");
 						new AssignPastCycleVariable();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
@@ -702,16 +708,21 @@ public class ControllerBatch {
 		} else {
 			ControlData.xasolver.close();
 		}
-		if (ControlData.writeInitToDVOutput){
-		DssOperation.writeInitDvarAliasToDSS();
-		}
-		DssOperation.writeDVAliasToDSS();
-		ControlData.writer.closeDSSFile();
 		
-		if (ControlData.outputHDF5){
+		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
 			HDF5Writer.writeTimestepData();
 			HDF5Writer.closeDataStructure();
+		}else if (ControlData.outputType==2){
+			new MySQLCWriter();
+		}else if (ControlData.outputType==3){
+			new MySQLRWriter();
+		}else{
+			if (ControlData.writeInitToDVOutput){
+				DssOperation.writeInitDvarAliasToDSS();
+			}
+			DssOperation.writeDVAliasToDSS();
+			ControlData.writer.closeDSSFile();
 		}
 	}
 
@@ -806,7 +817,7 @@ public class ControllerBatch {
 							noError=false;
 						}
 						int cycleI=i+1;
-						if (ControlData.outputHDF5 && ControlData.outputCycle) HDF5Writer.writeOneCycle(mds, cycleI);
+						if (ControlData.outputType==1 && ControlData.outputCycle) HDF5Writer.writeOneCycle(mds, cycleI);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
 
@@ -818,7 +829,7 @@ public class ControllerBatch {
 						}
 					}else{
 						int cycleI=i+1;
-						if (ControlData.outputHDF5 && ControlData.outputCycle) HDF5Writer.skipOneCycle(mds, cycleI);
+						if (ControlData.outputType==1 && ControlData.outputCycle) HDF5Writer.skipOneCycle(mds, cycleI);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Skipped. ("+model+")");
 						new AssignPastCycleVariable();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
@@ -835,16 +846,20 @@ public class ControllerBatch {
 			VariableTimeStep.setCycleEndDate(sds);
 		}
 		GurobiSolver.dispose();
-		if (ControlData.writeInitToDVOutput){
-			DssOperation.writeInitDvarAliasToDSS();
-		}
-		DssOperation.writeDVAliasToDSS();
-		ControlData.writer.closeDSSFile();
-		
-		if (ControlData.outputHDF5){
+		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
 			HDF5Writer.writeTimestepData();
 			HDF5Writer.closeDataStructure();
+		}else if (ControlData.outputType==2){
+			new MySQLCWriter();
+		}else if (ControlData.outputType==3){
+			new MySQLRWriter();
+		}else{
+			if (ControlData.writeInitToDVOutput){
+				DssOperation.writeInitDvarAliasToDSS();
+			}
+			DssOperation.writeDVAliasToDSS();
+			ControlData.writer.closeDSSFile();
 		}
 	}
 
@@ -1006,7 +1021,7 @@ public class ControllerBatch {
 							noError=false;
 						}
 						int cycleI=i+1;
-						if (ControlData.outputHDF5 && ControlData.outputCycle) HDF5Writer.writeOneCycle(mds, cycleI);
+						if (ControlData.outputType==1 && ControlData.outputCycle) HDF5Writer.writeOneCycle(mds, cycleI);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
 
@@ -1018,7 +1033,7 @@ public class ControllerBatch {
 						}
 					}else{
 						int cycleI=i+1;
-						if (ControlData.outputHDF5 && ControlData.outputCycle) HDF5Writer.skipOneCycle(mds, cycleI);
+						if (ControlData.outputType==1 && ControlData.outputCycle) HDF5Writer.skipOneCycle(mds, cycleI);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Skipped. ("+model+")");
 						new AssignPastCycleVariable();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
@@ -1035,16 +1050,20 @@ public class ControllerBatch {
 			VariableTimeStep.setCycleEndDate(sds);
 		}
 		ControlData.otsolver.delete();
-		if (ControlData.writeInitToDVOutput){
-			DssOperation.writeInitDvarAliasToDSS();
-		}
-		DssOperation.writeDVAliasToDSS();
-		ControlData.writer.closeDSSFile();
-		
-		if (ControlData.outputHDF5){
+		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
 			HDF5Writer.writeTimestepData();
 			HDF5Writer.closeDataStructure();
+		}else if (ControlData.outputType==2){
+			new MySQLCWriter();
+		}else if (ControlData.outputType==3){
+			new MySQLRWriter();
+		}else{
+			if (ControlData.writeInitToDVOutput){
+				DssOperation.writeInitDvarAliasToDSS();
+			}
+			DssOperation.writeDVAliasToDSS();
+			ControlData.writer.closeDSSFile();
 		}
 	}
 
@@ -1131,7 +1150,9 @@ public class ControllerBatch {
 							Error.writeErrorLog();
 							noError=false;
 						}
-						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
+						int cycleI=i+1;
+						if (ControlData.outputType==1 && ControlData.outputCycle) HDF5Writer.writeOneCycle(mds, cycleI);
+						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
 	
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
@@ -1141,7 +1162,9 @@ public class ControllerBatch {
 							VariableTimeStep.currTimeAddOneDay();
 						}
 					}else{
-						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Skipped. ("+model+")");
+						int cycleI=i+1;
+						if (ControlData.outputType==1 && ControlData.outputCycle) HDF5Writer.skipOneCycle(mds, cycleI);
+						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Skipped. ("+model+")");
 						new AssignPastCycleVariable();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){
@@ -1177,11 +1200,21 @@ public class ControllerBatch {
 
 		}
 		ClpSolver.close();
-		if (ControlData.writeInitToDVOutput){
-			DssOperation.writeInitDvarAliasToDSS();
+		if (ControlData.outputType==1){
+			HDF5Writer.createDvarAliasLookup();
+			HDF5Writer.writeTimestepData();
+			HDF5Writer.closeDataStructure();
+		}else if (ControlData.outputType==2){
+			new MySQLCWriter();
+		}else if (ControlData.outputType==3){
+			new MySQLRWriter();
+		}else{
+			if (ControlData.writeInitToDVOutput){
+				DssOperation.writeInitDvarAliasToDSS();
+			}
+			DssOperation.writeDVAliasToDSS();
+			ControlData.writer.closeDSSFile();
 		}
-		DssOperation.writeDVAliasToDSS();
-		ControlData.writer.closeDSSFile();
 		
 		// write complete or fail
 		if (enableProgressLog || enableConfigProgress) {
@@ -1307,7 +1340,7 @@ public class ControllerBatch {
 							noError=false;
 						}
 						int cycleI=i+1;
-						if (ControlData.outputHDF5 && ControlData.outputCycle) HDF5Writer.writeOneCycle(mds, cycleI);
+						if (ControlData.outputType==1 && ControlData.outputCycle) HDF5Writer.writeOneCycle(mds, cycleI);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
 
@@ -1431,7 +1464,7 @@ public class ControllerBatch {
 						}
 					}else{
 						int cycleI=i+1;
-						if (ControlData.outputHDF5 && ControlData.outputCycle) HDF5Writer.skipOneCycle(mds, cycleI);
+						if (ControlData.outputType==1 && ControlData.outputCycle) HDF5Writer.skipOneCycle(mds, cycleI);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Skipped. ("+model+")");
 						new AssignPastCycleVariable();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
@@ -1467,16 +1500,21 @@ public class ControllerBatch {
 			}
 		}
 		CbcSolver.close(); if (ControlData.cbc_debug_routeXA || ControlData.cbc_debug_routeCbc) {ControlData.xasolver.close();}
-		if (ControlData.writeInitToDVOutput){
-			DssOperation.writeInitDvarAliasToDSS();
-		}
-		DssOperation.writeDVAliasToDSS();
-		ControlData.writer.closeDSSFile();
 		
-		if (ControlData.outputHDF5){
+		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
 			HDF5Writer.writeTimestepData();
 			HDF5Writer.closeDataStructure();
+		}else if (ControlData.outputType==2){
+			new MySQLCWriter();
+		}else if (ControlData.outputType==3){
+			new MySQLRWriter();
+		}else{
+			if (ControlData.writeInitToDVOutput){
+				DssOperation.writeInitDvarAliasToDSS();
+			}
+			DssOperation.writeDVAliasToDSS();
+			ControlData.writer.closeDSSFile();
 		}
 		
 		// write complete or fail

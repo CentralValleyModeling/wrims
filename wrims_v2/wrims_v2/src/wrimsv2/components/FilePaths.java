@@ -22,6 +22,7 @@ public class FilePaths {
 	public static String ilpFileDirectory="";
 	public static String csvFolderName="";
 	public static String lookupSubDirectory="";
+	public static String sqlTableName="";
 
 
 	public static void setMainFilePaths(String fullPath){
@@ -40,13 +41,25 @@ public class FilePaths {
 	
 	public static void setDvarFilePaths(String fullPath){
 		if (fullPath.toLowerCase().endsWith(".h5")){
-			ControlData.outputHDF5=true;
+			ControlData.outputType=1;
 			ControlData.outputCycle=true;
 			fullDvarHDF5Path=fullPath;
 			int index=fullPath.lastIndexOf(".");
 			fullPath=fullPath.substring(0, index+1)+"dss";
+		}else if (fullPath.toLowerCase().endsWith(".mysqlc")){
+			ControlData.outputType=2;
+			ControlData.outputCycle=false;
+			int index1=fullPath.lastIndexOf(File.separator);
+			int index2=fullPath.lastIndexOf(".");
+			sqlTableName=fullPath.substring(index1+1,index2);
+		}else if (fullPath.toLowerCase().endsWith(".mysqlr")){
+			ControlData.outputType=3;
+			ControlData.outputCycle=false;
+			int index1=fullPath.lastIndexOf(File.separator);
+			int index2=fullPath.lastIndexOf(".");
+			sqlTableName=fullPath.substring(index1+1,index2);
 		}else{
-			ControlData.outputHDF5=false;
+			ControlData.outputType=0;
 			ControlData.outputCycle=false;
 		}
 		fullDvarDssPath=fullPath;

@@ -61,6 +61,8 @@ import wrimsv2.solver.XASolver;
 import wrimsv2.solver.SetXALog;
 import wrimsv2.solver.InitialXASolver;
 import wrimsv2.solver.Gurobi.GurobiSolver;
+import wrimsv2.sql.MySQLCWriter;
+import wrimsv2.sql.MySQLRWriter;
 import wrimsv2.tools.RCCComparison;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.StudyConfig;
@@ -210,7 +212,7 @@ public class ControllerDebug extends Thread {
 		}else{
 			Error.addConfigError("Solver name not recognized: "+ControlData.solverName);
 			Error.writeErrorLog();
-			ControlData.writer.closeDSSFile();
+			if (ControlData.outputType==0) ControlData.writer.closeDSSFile();
 			return;
 		}
 		System.out.println("=================Run ends!================");
@@ -358,7 +360,7 @@ public class ControllerDebug extends Thread {
 							noError=false;
 						}
 						int cycleI=modelIndex+1;
-						if (ControlData.outputHDF5 && ControlData.outputCycle) HDF5Writer.writeOneCycle(mds, cycleI);
+						if (ControlData.outputType==1 && ControlData.outputCycle) HDF5Writer.writeOneCycle(mds, cycleI);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (ControlData.solverName.equalsIgnoreCase("CBC")){CbcSolver.resetModel();}
 						pauseForDebug(modelIndex);
@@ -373,7 +375,7 @@ public class ControllerDebug extends Thread {
 						}
 					}else{
 						int cycleI=modelIndex+1;
-						if (ControlData.outputHDF5 && ControlData.outputCycle) HDF5Writer.skipOneCycle(mds, cycleI);
+						if (ControlData.outputType==1 && ControlData.outputCycle) HDF5Writer.skipOneCycle(mds, cycleI);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" skipped. ("+model+")");
 						new AssignPastCycleVariable();
 						deferPause(modelIndex);
@@ -402,16 +404,20 @@ public class ControllerDebug extends Thread {
 			VariableTimeStep.setCycleEndDate(sds);
 		}
 		new CloseCurrentSolver(ControlData.solverName);
-		if (ControlData.writeInitToDVOutput){
-			DssOperation.writeInitDvarAliasToDSS();
-		}
-		DssOperation.writeDVAliasToDSS();
-		ControlData.writer.closeDSSFile();
-		
-		if (ControlData.outputHDF5){
+		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
 			HDF5Writer.writeTimestepData();
 			HDF5Writer.closeDataStructure();
+		}else if (ControlData.outputType==2){
+			new MySQLCWriter();
+		}else if (ControlData.outputType==3){
+			new MySQLRWriter();
+		}else{
+			if (ControlData.writeInitToDVOutput){
+				DssOperation.writeInitDvarAliasToDSS();
+			}
+			DssOperation.writeDVAliasToDSS();
+			ControlData.writer.closeDSSFile();
 		}
 	}
 	

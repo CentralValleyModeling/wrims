@@ -124,6 +124,34 @@ public class TimeOperation {
 		}
 	}
 	
+	public static String monthNameNumeric(int month){
+		if (month == 1){
+			return "01";
+		}else if (month == 2){
+			return "02";
+		}else if (month == 3){
+			return "03";
+		}else if (month == 4){
+			return "04";
+		}else if (month == 5){
+			return "05";
+		}else if (month == 6){
+			return "06";
+		}else if (month == 7){
+			return "07";
+		}else if (month == 8){
+			return "08";
+		}else if (month == 9){
+			return "09";
+		}else if (month == 10){
+			return "10";
+		}else if (month == 11){
+			return "11";
+		}else{
+			return "12";
+		}
+	}
+	
 	public static boolean isLeapYear(int year){
 		if (year % 4 == 0) {
 		    if (year % 100 != 0) {

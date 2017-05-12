@@ -32,15 +32,17 @@ public class PreRunModel {
 		ControlData.monthlyStartTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, TimeOperation.numberOfDays(ControlData.startMonth, ControlData.startYear));
 		ControlData.dailyStartTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
 
-		ControlData.writer = new DSSDataWriter(FilePaths.fullDvarDssPath);
-		try {
-			ControlData.writer.openDSSFile();
-		} catch (Exception e) {
-			ControlData.writer.closeDSSFile();
-			Error.addEngineError("Could not open dv file. "+e);
-			return;
+		if (ControlData.outputType==0){
+			ControlData.writer = new DSSDataWriter(FilePaths.fullDvarDssPath);
+			try {
+				ControlData.writer.openDSSFile();
+			} catch (Exception e) {
+				ControlData.writer.closeDSSFile();
+				Error.addEngineError("Could not open dv file. "+e);
+				return;
+			}
 		}
-
+		
 		if (!(new File(FilePaths.fullInitFilePath)).exists()){
 			System.out.println("Error: Initial file "+ FilePaths.fullInitFilePath+" doesn't exist.");
 			System.out.println("=======Run Complete Unsuccessfully=======");
@@ -79,7 +81,7 @@ public class PreRunModel {
 			processExternal();
 		}
 
-		if (ControlData.outputHDF5){
+		if (ControlData.outputType==1){
 			System.out.println("Create HDF5 output data structure.");
 			HDF5Writer.createDataStructure();
 			if (ControlData.outputCycle){

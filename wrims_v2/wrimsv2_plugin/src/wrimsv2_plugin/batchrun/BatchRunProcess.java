@@ -70,7 +70,8 @@ public class BatchRunProcess {
 	private int ms=1;
 	private boolean useMainFile=true;
 	private int launchType;
-	public int msDuration;
+	public int[] msDuration={12};
+	public int msDurationIndex=0;
 	public int msStartYear;
 	public int msStartMonth;
 	public int msStartDay;
@@ -183,11 +184,11 @@ public class BatchRunProcess {
 		
 		String isFixDuration=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_ISFIXDURATION, "yes");
 		if (isFixDuration.equals("yes")){
-			DebugCorePlugin.msDuration=new int[1];
-			DebugCorePlugin.msDuration[0]=Integer.parseInt(configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_FIXEDDURATION, "12"));
+			msDuration=new int[1];
+			msDuration[0]=Integer.parseInt(configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_FIXEDDURATION, "12"));
 		}else{
 			String variableDuration=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_VARIABLEDURATION, "");
-			DebugCorePlugin.msDuration=MSRUtil.loadMSDuration(variableDuration, launchFilePath);
+			msDuration=MSRUtil.loadMSDuration(variableDuration, launchFilePath);
 		}
 		
 		MSRDataTransferBR dataTxfr=new MSRDataTransferBR();

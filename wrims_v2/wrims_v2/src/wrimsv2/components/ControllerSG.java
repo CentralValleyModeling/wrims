@@ -278,7 +278,7 @@ public class ControllerSG {
 							noError=false;
 						}
 						int cycleI=i+1;
-						if (ControlData.outputHDF5 && ControlData.outputCycle) HDF5Writer.writeOneCycle(mds, cycleI);
+						if (ControlData.outputType==1 && ControlData.outputCycle) HDF5Writer.writeOneCycle(mds, cycleI);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
 						//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==2) new RCCComparison();
@@ -290,7 +290,7 @@ public class ControllerSG {
 						}
 					}else{
 						int cycleI=i+1;
-						if (ControlData.outputHDF5 && ControlData.outputCycle) HDF5Writer.skipOneCycle(mds, cycleI);
+						if (ControlData.outputType==1 && ControlData.outputCycle) HDF5Writer.skipOneCycle(mds, cycleI);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" skipped. ("+model+")");
 						new AssignPastCycleVariable();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
@@ -307,16 +307,16 @@ public class ControllerSG {
 			VariableTimeStep.setCycleEndDate(sds);
 		}
 		ControlData.xasolver.close();
-		if (ControlData.writeInitToDVOutput){
-			DssOperation.writeInitDvarAliasToDSS();
-		}
-		DssOperation.writeDVAliasToDSS();
-		ControlData.writer.closeDSSFile();
-		
-		if (ControlData.outputHDF5){
+		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
 			HDF5Writer.writeTimestepData();
 			HDF5Writer.closeDataStructure();
+		}else{
+			if (ControlData.writeInitToDVOutput){
+				DssOperation.writeInitDvarAliasToDSS();
+			}
+			DssOperation.writeDVAliasToDSS();
+			ControlData.writer.closeDSSFile();
 		}
 	}
 	
@@ -422,7 +422,7 @@ public class ControllerSG {
 							noError=false;
 						}
 						int cycleI=i+1;
-						if (ControlData.outputHDF5 && ControlData.outputCycle) HDF5Writer.writeOneCycle(mds, cycleI);
+						if (ControlData.outputType==1 && ControlData.outputCycle) HDF5Writer.writeOneCycle(mds, cycleI);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
 
@@ -546,7 +546,7 @@ public class ControllerSG {
 						}
 					}else{
 						int cycleI=i+1;
-						if (ControlData.outputHDF5 && ControlData.outputCycle) HDF5Writer.skipOneCycle(mds, cycleI);
+						if (ControlData.outputType==1 && ControlData.outputCycle) HDF5Writer.skipOneCycle(mds, cycleI);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Skipped. ("+model+")");
 						new AssignPastCycleVariable();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
@@ -563,16 +563,17 @@ public class ControllerSG {
 			VariableTimeStep.setCycleEndDate(sds);
 		}
 		CbcSolver.close(); if (ControlData.cbc_debug_routeXA || ControlData.cbc_debug_routeCbc) {ControlData.xasolver.close();}
-		if (ControlData.writeInitToDVOutput){
-			DssOperation.writeInitDvarAliasToDSS();
-		}
-		DssOperation.writeDVAliasToDSS();
-		ControlData.writer.closeDSSFile();
 		
-		if (ControlData.outputHDF5){
+		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
 			HDF5Writer.writeTimestepData();
 			HDF5Writer.closeDataStructure();
+		}else{
+			if (ControlData.writeInitToDVOutput){
+				DssOperation.writeInitDvarAliasToDSS();
+			}
+			DssOperation.writeDVAliasToDSS();
+			ControlData.writer.closeDSSFile();
 		}
 	}
 

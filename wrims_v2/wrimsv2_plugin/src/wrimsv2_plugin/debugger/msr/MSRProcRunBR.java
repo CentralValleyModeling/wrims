@@ -4,6 +4,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
 
 import wrimsv2_plugin.batchrun.BatchRunProcess;
+import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.tools.TimeOperation;
 
@@ -23,6 +24,7 @@ public class MSRProcRunBR {
 	}
 	
 	public void initialMSTime(BatchRunProcess brp){	
+		brp.msDurationIndex=0;
 		brp.msStartYear=brp.startYear;
 		brp.msStartMonth=brp.startMonth;
 		brp.msStartDay=brp.startDay;
@@ -34,11 +36,14 @@ public class MSRProcRunBR {
 	
 	public void updateMSTime(BatchRunProcess brp){
 		getMSStartTime(brp);
+		if (brp.msDurationIndex<brp.msDuration.length-1){
+			brp.msDurationIndex++;
+		}
 		getMSEndTime(brp);
 	}
 	
 	public void getMSEndTime(BatchRunProcess brp){
-		int month=brp.msStartMonth+brp.msDuration;
+		int month=brp.msStartMonth+brp.msDuration[brp.msDurationIndex];
 		int year=(month-1)/12;
 		brp.msEndYear=brp.msStartYear+year;
 		brp.msEndMonth=month-year*12;
@@ -69,7 +74,7 @@ public class MSRProcRunBR {
 		preMSStartMonth=brp.msStartMonth;
 		preMSStartDay=brp.msStartDay;
 		
-		int month=brp.msStartMonth+brp.msDuration;
+		int month=brp.msStartMonth+brp.msDuration[brp.msDurationIndex];
 		int year=(month-1)/12;
 		brp.msStartYear=brp.msStartYear+year;
 		brp.msStartMonth=month-year*12;

@@ -100,7 +100,7 @@ public class ControlData {
 	public static boolean isParseStudy=true;
 	public static boolean ignoreError=false;
 	public static boolean allowSvTsInit=false;
-	public static boolean outputHDF5=false;
+	public static int outputType=0;
 	public static boolean outputCycle=false;
 	public static boolean initHDF5=false;
 	public static double solverTime_xa=0;
