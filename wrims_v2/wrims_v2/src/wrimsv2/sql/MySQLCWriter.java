@@ -1,13 +1,18 @@
 package wrimsv2.sql;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.TreeSet;
+
+import com.sun.java.util.collections.Collections;
 
 import wrimsv2.components.ControlData;
 import wrimsv2.components.FilePaths;
@@ -19,8 +24,8 @@ import wrimsv2.evaluator.TimeOperation;
 public class MySQLCWriter {
 	
 	private String JDBC_DRIVER = "com.mysql.jdbc.Driver";       
-	private String database="callite";                                  //input
-	private String DB_URL = "jdbc:mysql://localhost:3306/"+database;    //input
+	private String database="calsim";                                  //input
+	private String URL = "jdbc:mysql://localhost:3306";                //input
 
 	private String USER = "hxie";                                       //input
 	private String PASS = "BDOisNo1";                                   //input
@@ -28,18 +33,21 @@ public class MySQLCWriter {
 	private Connection conn = null;
 	private Statement stmt = null;
 	
-	private ArrayList<String> monthlyEntries;
-	private ArrayList<String> dailyEntries;
+	private ArrayList<ArrayList<String>> monthlyEntriesArr;
+	private ArrayList<ArrayList<String>> dailyEntriesArr;
 	
 	private String monthlyTableName=FilePaths.sqlTableName+"_"+ControlData.partA+"_"+ControlData.svDvPartF+"_M";
 	private String dailyTableName=FilePaths.sqlTableName+"_"+ControlData.partA+"_"+ControlData.svDvPartF+"_D";
 	
 	private int col_limit=750;
 	
+	private String slackPrefix="slack__";
+	private String surplusPrefix="surplus__";
+	
 	public MySQLCWriter(){   
 		connectToDataBase();
 		deleteTablesIfExist();
-		createTable();
+		createTables();
 		writeData();
 	}
 			
@@ -48,7 +56,12 @@ public class MySQLCWriter {
 		try {
 			Class.forName(JDBC_DRIVER);
 			System.out.println("Connecting to a selected database...");
-			conn = DriverManager.getConnection(DB_URL, USER, PASS);
+			conn = DriverManager.getConnection(URL, USER, PASS);
+			stmt = conn.createStatement();
+			String sql="CREATE DATABASE IF NOT EXISTS "+database;
+			stmt.executeUpdate(sql);
+			sql="USE "+database;
+			stmt.executeUpdate(sql);
 			System.out.println("Connected database successfully");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -58,63 +71,119 @@ public class MySQLCWriter {
 	}
 		   
 	public void deleteTablesIfExist(){
+		System.out.println("Deleting old table...");
+		deleteTablesByNames(monthlyTableName);	
+		deleteTablesByNames(dailyTableName);	
+		System.out.println("Deleted old table");
+		
+	}
+	
+	public void deleteTablesByNames(String tableName){
 		try {
-			System.out.println("Deleting old table...");
+			int i=0;
+			tableName=tableName.toUpperCase();
+			String modTableName = tableName+"_"+i;
 			stmt = conn.createStatement();
-			String sql="DROP TABLE IF EXISTS "+monthlyTableName;
-			stmt.executeUpdate(sql);
-			sql="DROP TABLE IF EXISTS "+dailyTableName;
-			stmt.executeUpdate(sql);
-			System.out.println("Deleted old table");
+			DatabaseMetaData dbm = conn.getMetaData();
+			ResultSet rs = dbm.getTables(database, null, modTableName, null);
+			while (rs.next()){
+				rs.close();
+				String sql="DROP TABLE " + modTableName;
+				stmt.executeUpdate(sql);
+				i++;
+				modTableName = tableName+"_"+i;
+				rs = dbm.getTables(database, null, modTableName, null);
+			}
+			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void createTable(){
+	public void createTables(){
 		System.out.println("Creating table in given database...");
 		try {
-			monthlyEntries=new ArrayList<String>();
-			dailyEntries=new ArrayList<String>();
 			stmt = conn.createStatement();
-			String sqlMonthly = "CREATE TABLE " + monthlyTableName + " (Date DATE, ";
-			String sqlDaily = "CREATE TABLE " + dailyTableName + " (Date DATE, ";
-			Set<String> keys = DataTimeSeries.dvAliasTS.keySet();
+			monthlyEntriesArr=new ArrayList<ArrayList<String>>();
+			dailyEntriesArr=new ArrayList<ArrayList<String>>();
+			ArrayList<String> sqlMonthlyArr=new ArrayList<String>();
+			ArrayList<String> sqlDailyArr=new ArrayList<String>();
+			int kd=0;
+			int km=0;
+			int jm=0;
+			int jd=0;
+			
+			Set<String> orgKeys = DataTimeSeries.dvAliasTS.keySet();
+			TreeSet<String> keys = new TreeSet<String>(orgKeys);			
 			Iterator<String> it = keys.iterator();
-			if (it.hasNext()){
+			String sqlMonthly = "CREATE TABLE " + monthlyTableName+"_"+jm + " (Date DATE, ";
+			String sqlDaily = "CREATE TABLE " + dailyTableName+"_"+jd + " (Date DATE, ";
+			ArrayList<String> monthlyEntries = new ArrayList<String>();
+			ArrayList<String> dailyEntries = new ArrayList<String>();
+			while (it.hasNext()){
 				String name=it.next();
-				name=it.next();
-				DssDataSetFixLength ts = DataTimeSeries.dvAliasTS.get(name);
-				String timestep=ts.getTimeStep().toUpperCase();
-				if (timestep.equals("1DAY")){
-					sqlDaily=sqlDaily+formPathName(ts, name, timestep)+"$"+formUnitsName(ts)+" Double";
-					dailyEntries.add(name);
-				}else{
-					sqlMonthly=sqlMonthly+formPathName(ts, name, timestep)+"$"+formUnitsName(ts)+" Double";
-					monthlyEntries.add(name);
-				}
-				int kd=1;
-				int km=1;
-				while (it.hasNext()){
-					name=it.next();
-					ts = DataTimeSeries.dvAliasTS.get(name);
-					timestep=ts.getTimeStep().toUpperCase();
-					if (timestep.equals("1DAY") && kd<col_limit){
-						sqlDaily=sqlDaily+", "+formPathName(ts, name, timestep)+"$"+formUnitsName(ts)+" DOUBLE";
-						dailyEntries.add(name);
-						kd++;
-					}else if (km<col_limit){
-						sqlMonthly=sqlMonthly+", "+formPathName(ts, name, timestep)+"$"+formUnitsName(ts)+" DOUBLE";
-						monthlyEntries.add(name);
-						km++;
+				if (!name.startsWith(surplusPrefix) && !name.startsWith(slackPrefix)){
+					DssDataSetFixLength ts = DataTimeSeries.dvAliasTS.get(name);
+					String timestep = ts.getTimeStep().toUpperCase();
+					if (timestep.equals("1DAY")){
+						if (kd<col_limit){
+							sqlDaily=sqlDaily+formPathName(ts, name, timestep)+"$"+formUnitsName(ts)+" DOUBLE, ";
+							dailyEntries.add(name);
+							kd++;
+						}else{
+							int endIndex = sqlDaily.lastIndexOf(", ");
+							sqlDaily=sqlDaily.substring(0, endIndex)+")";
+							sqlDailyArr.add(sqlDaily);
+							dailyEntriesArr.add(dailyEntries);
+							kd=0;
+							jd++;
+							sqlDaily="CREATE TABLE " + dailyTableName+"_"+jd + " (Date DATE, ";
+							sqlDaily=sqlDaily+formPathName(ts, name, timestep)+"$"+formUnitsName(ts)+" DOUBLE, ";
+							dailyEntries=new ArrayList<String>();
+							dailyEntries.add(name);
+						}
+					}else{ 
+						if (km<col_limit){
+							sqlMonthly=sqlMonthly+formPathName(ts, name, timestep)+"$"+formUnitsName(ts)+" DOUBLE, ";
+							monthlyEntries.add(name);
+							km++;
+						}else{
+							int endIndex = sqlMonthly.lastIndexOf(", ");
+							sqlMonthly=sqlMonthly.substring(0, endIndex)+")";
+							sqlMonthlyArr.add(sqlMonthly);
+							monthlyEntriesArr.add(monthlyEntries);
+							km=0;
+							jm++;
+							sqlMonthly="CREATE TABLE " + monthlyTableName+"_"+jm + " (Date DATE, ";
+							sqlMonthly=sqlMonthly+formPathName(ts, name, timestep)+"$"+formUnitsName(ts)+" DOUBLE, ";
+							monthlyEntries=new ArrayList<String>();
+							monthlyEntries.add(name);
+						}
 					}
 				}
-				sqlMonthly=sqlMonthly+")";
-				sqlDaily=sqlDaily+")";
-				if (monthlyEntries.size()>0) stmt.executeUpdate(sqlMonthly);
-				if (dailyEntries.size()>0)stmt.executeUpdate(sqlDaily);
-				System.out.println("Created tables in given database");
 			}
+			
+			if (monthlyEntries.size()>0) {
+				int endIndex = sqlMonthly.lastIndexOf(", ");
+				sqlMonthly=sqlMonthly.substring(0, endIndex)+")";
+				sqlMonthlyArr.add(sqlMonthly);
+				monthlyEntriesArr.add(monthlyEntries);
+			}
+			if (dailyEntries.size()>0){
+				int endIndex = sqlDaily.lastIndexOf(", ");
+				sqlDaily=sqlDaily.substring(0, endIndex)+")";
+				sqlDailyArr.add(sqlDaily);
+				dailyEntriesArr.add(dailyEntries);
+			}
+			
+			for (int i=0; i<monthlyEntriesArr.size(); i++){
+				stmt.executeUpdate(sqlMonthlyArr.get(i));
+			}
+			
+			for (int i=0; i<dailyEntriesArr.size(); i++){
+				stmt.executeUpdate(sqlDailyArr.get(i));
+			}
+			System.out.println("Created tables in given database");	
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -128,8 +197,11 @@ public class MySQLCWriter {
 	}
 	
 	public void writeMonthlyData(){
-		if (monthlyEntries.size()>0){
-			try {
+		int size = monthlyEntriesArr.size();
+		try {
+			for (int k=0; k<size; k++){
+				String modMonthlyTableName = monthlyTableName+"_"+k;
+			    ArrayList<String> monthlyEntries = monthlyEntriesArr.get(k);	
 				String name = monthlyEntries.get(0);
 				DssDataSetFixLength ts = DataTimeSeries.dvAliasTS.get(name);
 				Date date = ts.getStartTime();
@@ -137,7 +209,7 @@ public class MySQLCWriter {
 				for (int i=0; i<data.length; i++){
 					Statement statement;
 					statement = conn.createStatement();
-					String sql="INSERT INTO " + monthlyTableName +" VALUES (";
+					String sql="INSERT INTO " + modMonthlyTableName +" VALUES (";
 					sql=sql+"'"+formDateData(date)+"', ";
 					sql=sql+data[i];
 					for (int j=1; j<monthlyEntries.size(); j++){
@@ -150,15 +222,18 @@ public class MySQLCWriter {
 					statement.executeUpdate(sql);
 					date=addOneMonth(date);				
 				}
-			} catch (SQLException e) {
-				e.printStackTrace();
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 	
 	public void writeDailyData(){
-		if (dailyEntries.size()>0){
-			try {
+		int size = dailyEntriesArr.size();
+		try {
+			for (int k=0; k<size; k++){
+				String modDailyTableName = dailyTableName+"_"+k;
+			    ArrayList<String> dailyEntries = dailyEntriesArr.get(k);
 				String name = dailyEntries.get(0);
 				DssDataSetFixLength ts = DataTimeSeries.dvAliasTS.get(name);
 				Date date = ts.getStartTime();
@@ -169,7 +244,7 @@ public class MySQLCWriter {
 					String sql="INSERT INTO " + dailyTableName + " VALUES (";
 					sql=sql+"'"+formDateData(date)+"', ";
 					sql=sql+data[i];
-					for (int j=1; j<monthlyEntries.size(); j++){
+					for (int j=1; j<dailyEntries.size(); j++){
 						name=dailyEntries.get(j);
 						ts = DataTimeSeries.dvAliasTS.get(name);
 						data=ts.getData();
@@ -179,9 +254,9 @@ public class MySQLCWriter {
 					statement.executeUpdate(sql);
 					date=addOneDay(date);				
 				}
-			} catch (SQLException e) {
-				e.printStackTrace();
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 	

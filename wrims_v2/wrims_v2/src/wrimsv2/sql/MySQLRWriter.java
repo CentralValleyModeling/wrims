@@ -20,9 +20,9 @@ import wrimsv2.evaluator.TimeOperation;
 public class MySQLRWriter{
 	
 	private String JDBC_DRIVER = "com.mysql.jdbc.Driver";       
-	private String database="callite";                                  //input
-	private String DB_URL = "jdbc:mysql://localhost:3306/"+database;    //input
-	private String tableName = "DCR2015";                               //input
+	private String database="calsim";                                  //input
+	private String URL = "jdbc:mysql://localhost:3306"; 			   //input
+	private String tableName = "DCR2015";                              //input
 	private String scenarioTableName="Scenario";
 	
 	private String USER = "root";                                       //input
@@ -39,6 +39,7 @@ public class MySQLRWriter{
 	
 	public MySQLRWriter(){   
 		connectToDataBase();
+		
 		if (tableName.equalsIgnoreCase(scenarioTableName)){
 			tableName=tableName+"_Studies";
 		}
@@ -53,7 +54,12 @@ public class MySQLRWriter{
 		try {
 			Class.forName(JDBC_DRIVER);
 			System.out.println("Connecting to a selected database...");
-			conn = DriverManager.getConnection(DB_URL, USER, PASS);
+			conn = DriverManager.getConnection(URL, USER, PASS);
+			stmt = conn.createStatement();
+			String sql="CREATE DATABASE IF NOT EXISTS "+database;
+			stmt.executeUpdate(sql);
+			sql="USE "+database;
+			stmt.executeUpdate(sql);
 			System.out.println("Connected database successfully");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
