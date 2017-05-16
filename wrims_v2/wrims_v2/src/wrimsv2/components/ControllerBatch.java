@@ -256,6 +256,7 @@ public class ControllerBatch {
 		VariableTimeStep.initialCurrTimeStep(modelList);
 		VariableTimeStep.initialCycleStartDate();
 		VariableTimeStep.setCycleEndDate(sds);
+		time_marching:
 		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
 			if (ControlData.solverName.equalsIgnoreCase("XALOG")) SetXALog.enableXALog();
 			ClearValue.clearValues(modelList, modelDataSetMap);
@@ -298,7 +299,7 @@ public class ControllerBatch {
 						if (Error.error_evaluation.size()>=1){
 							Error.writeEvaluationErrorFile("Error_evaluation.txt");
 							Error.writeErrorLog();
-							noError=false;
+							noError=false;break time_marching;
 						}
 						new XASolver();
 						
@@ -375,11 +376,11 @@ public class ControllerBatch {
 		}else if (ControlData.outputType==3){
 			new MySQLRWriter();
 		}else{
-			if (ControlData.writeInitToDVOutput){
-				DssOperation.writeInitDvarAliasToDSS();
-			}
-			DssOperation.writeDVAliasToDSS();
-			ControlData.writer.closeDSSFile();
+		if (ControlData.writeInitToDVOutput){
+			DssOperation.writeInitDvarAliasToDSS();
+		}
+		DssOperation.writeDVAliasToDSS();
+		ControlData.writer.closeDSSFile();
 		}
 		
 		// write complete or fail
@@ -465,6 +466,7 @@ public class ControllerBatch {
 		VariableTimeStep.initialCurrTimeStep(modelList);
 		VariableTimeStep.initialCycleStartDate();
 		VariableTimeStep.setCycleEndDate(sds);
+		time_marching:
 		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
 			if (ControlData.solverType == Param.SOLVER_XA && ControlData.solverName.toLowerCase().contains("xalog")) SetXALog.enableXALog();
 			ClearValue.clearValues(modelList, modelDataSetMap);
@@ -526,7 +528,7 @@ public class ControllerBatch {
 						if (Error.error_evaluation.size()>=1){
 							Error.writeEvaluationErrorFile("Error_evaluation.txt");
 							Error.writeErrorLog();
-							noError=false;
+							noError=false;break time_marching;
 						}
 					
 						// choose solver to solve. TODO: this is not efficient. need to be done outside ILP
@@ -718,11 +720,11 @@ public class ControllerBatch {
 		}else if (ControlData.outputType==3){
 			new MySQLRWriter();
 		}else{
-			if (ControlData.writeInitToDVOutput){
-				DssOperation.writeInitDvarAliasToDSS();
-			}
-			DssOperation.writeDVAliasToDSS();
-			ControlData.writer.closeDSSFile();
+		if (ControlData.writeInitToDVOutput){
+		DssOperation.writeInitDvarAliasToDSS();
+		}
+		DssOperation.writeDVAliasToDSS();
+		ControlData.writer.closeDSSFile();
 		}
 	}
 
@@ -855,11 +857,11 @@ public class ControllerBatch {
 		}else if (ControlData.outputType==3){
 			new MySQLRWriter();
 		}else{
-			if (ControlData.writeInitToDVOutput){
-				DssOperation.writeInitDvarAliasToDSS();
-			}
-			DssOperation.writeDVAliasToDSS();
-			ControlData.writer.closeDSSFile();
+		if (ControlData.writeInitToDVOutput){
+			DssOperation.writeInitDvarAliasToDSS();
+		}
+		DssOperation.writeDVAliasToDSS();
+		ControlData.writer.closeDSSFile();
 		}
 	}
 
@@ -1059,11 +1061,11 @@ public class ControllerBatch {
 		}else if (ControlData.outputType==3){
 			new MySQLRWriter();
 		}else{
-			if (ControlData.writeInitToDVOutput){
-				DssOperation.writeInitDvarAliasToDSS();
-			}
-			DssOperation.writeDVAliasToDSS();
-			ControlData.writer.closeDSSFile();
+		if (ControlData.writeInitToDVOutput){
+			DssOperation.writeInitDvarAliasToDSS();
+		}
+		DssOperation.writeDVAliasToDSS();
+		ControlData.writer.closeDSSFile();
 		}
 	}
 
@@ -1209,11 +1211,11 @@ public class ControllerBatch {
 		}else if (ControlData.outputType==3){
 			new MySQLRWriter();
 		}else{
-			if (ControlData.writeInitToDVOutput){
-				DssOperation.writeInitDvarAliasToDSS();
-			}
-			DssOperation.writeDVAliasToDSS();
-			ControlData.writer.closeDSSFile();
+		if (ControlData.writeInitToDVOutput){
+			DssOperation.writeInitDvarAliasToDSS();
+		}
+		DssOperation.writeDVAliasToDSS();
+		ControlData.writer.closeDSSFile();
 		}
 		
 		// write complete or fail
@@ -1268,7 +1270,7 @@ public class ControllerBatch {
 				ControlData.currCycleIndex=i;
 				VariableTimeStep.setCycleTimeStep(sds);
 				VariableTimeStep.setCurrentDate(sds, ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear);
-				
+				time_marching:
 				while(VariableTimeStep.checkEndDate(ControlData.currDay, ControlData.currMonth, ControlData.currYear, ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear)<0 && noError){
 					ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
 					boolean condition=false;
@@ -1295,7 +1297,7 @@ public class ControllerBatch {
 						if (Error.error_evaluation.size()>=1){
 							Error.writeEvaluationErrorFile("Error_evaluation.txt");
 							Error.writeErrorLog();
-							noError=false;
+							noError=false;break time_marching;
 						}
 						
 						HashSet<String> originalDvarKeys=null;
@@ -1510,11 +1512,11 @@ public class ControllerBatch {
 		}else if (ControlData.outputType==3){
 			new MySQLRWriter();
 		}else{
-			if (ControlData.writeInitToDVOutput){
-				DssOperation.writeInitDvarAliasToDSS();
-			}
-			DssOperation.writeDVAliasToDSS();
-			ControlData.writer.closeDSSFile();
+		if (ControlData.writeInitToDVOutput){
+			DssOperation.writeInitDvarAliasToDSS();
+		}
+		DssOperation.writeDVAliasToDSS();
+		ControlData.writer.closeDSSFile();
 		}
 		
 		// write complete or fail

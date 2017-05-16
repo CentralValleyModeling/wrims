@@ -64,7 +64,7 @@ public class CbcSolver {
 	private static BiMap<Integer, String> dvBiMap;
 	private static BiMap<String, Integer> dvBiMapInverse;
 	
-	private static  double maxValue = Double.MAX_VALUE;
+	private static  double maxValue = 1e38; //Double.POSITIVE_INFINITY;
 	//public static final double zeroTolerence =  1e-10;
 	public static double solve_2_primalT =  1e-8;
 	public static final double solve_2_primalT_relax =  1e-6;
@@ -455,16 +455,19 @@ public class CbcSolver {
 				if (ec.getSign().equals("=")) {
 					GT = -ec.getEvalExpression().getValue().getData().doubleValue();
 					if(Math.abs(GT)<ControlData.zeroTolerance) {GT=0;} 
+					else if (Math.abs(GT)>maxValue) {GT=maxValue*Math.signum(GT);}
 					LT = GT;
 				}
 				else if (ec.getSign().equals("<") || ec.getSign().equals("<=")){
 					GT = -maxValue;
 					LT = -ec.getEvalExpression().getValue().getData().doubleValue();
 					if(Math.abs(LT)<ControlData.zeroTolerance) {LT=0;} 
+					else if (Math.abs(LT)>maxValue) {LT=maxValue*Math.signum(LT);}
 				}
 				else if (ec.getSign().equals(">")){
 					GT = -ec.getEvalExpression().getValue().getData().doubleValue();
 					if(Math.abs(GT)<ControlData.zeroTolerance) {GT=0;} 
+					else if (Math.abs(GT)>maxValue) {GT=maxValue*Math.signum(GT);}
 					LT = maxValue;
 				}
 				else {
@@ -940,8 +943,18 @@ public class CbcSolver {
 		Set<String> aa = new HashSet<String>();
 		Set<String> bb = new HashSet<String>(); 
 		Set<String> ss = new HashSet<String>();
-
+		
+		long ts = Calendar.getInstance().getTimeInMillis();
+		long c1=0;long c2=0;int tr=0;int t_max=60;
+		
 		while (aa.size()<iisPossibleConstraintMap.size()){
+			
+			c1 = Calendar.getInstance().getTimeInMillis();
+			tr =(int) (c1-ts)/1000;
+			if (tr>t_max) {
+				System.out.println("\nAnalysis stopped due to time limit exceeded.");
+				return;}
+			
 			System.out.print(".");
 			bb = new HashSet<String>(iisPossibleConstraintMap.keySet());
 			bb.removeAll(aa);
@@ -954,12 +967,18 @@ public class CbcSolver {
 			}
 			
 		}
-		
+		System.out.print(" ");
 		while (success){
+			
+			c2 = Calendar.getInstance().getTimeInMillis();
+			tr =(int) (c2-ts)/1000;
+			if (tr>t_max) {
+				System.out.println("\nAnalysis stopped due to time limit exceeded.");
+				return;}
 			System.out.print(".");
 			success = iisSolve(false, iisPossibleConstraintMap.keySet());
 		}
-		
+		System.out.print(" ");
 		for (String c : iisPossibleConstraintMap.keySet()){
 			if(iisSolveConfirm(c)){
 				System.out.print(".");
