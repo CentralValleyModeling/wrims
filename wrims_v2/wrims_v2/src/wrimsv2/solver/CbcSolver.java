@@ -64,7 +64,7 @@ public class CbcSolver {
 	private static BiMap<Integer, String> dvBiMap;
 	private static BiMap<String, Integer> dvBiMapInverse;
 	
-	private static  double maxValue = 1e38; //Double.POSITIVE_INFINITY;
+	private static  double maxValue = 1e28; //Double.POSITIVE_INFINITY;
 	//public static final double zeroTolerence =  1e-10;
 	public static double solve_2_primalT =  1e-8;
 	public static final double solve_2_primalT_relax =  1e-6;
