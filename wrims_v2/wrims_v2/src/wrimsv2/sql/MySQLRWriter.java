@@ -22,7 +22,7 @@ public class MySQLRWriter{
 	private String JDBC_DRIVER = "com.mysql.jdbc.Driver";       
 	private String database="calsim";                                  //input
 	private String URL = "jdbc:mysql://localhost:3306"; 			   //input
-	private String tableName = "DCR2015";                              //input
+	private String tableName = ControlData.sqlGroup;                              //input
 	private String scenarioTableName="Scenario";
 	
 	private String USER = "root";                                       //input

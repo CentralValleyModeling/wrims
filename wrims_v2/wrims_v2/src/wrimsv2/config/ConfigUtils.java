@@ -730,6 +730,7 @@ public class ConfigUtils {
 		}
 		System.out.println("AllowSvTsInit:    " + ControlData.allowSvTsInit);
 		
+		ControlData.sqlGroup = configMap.get("sqlgroup");
 
 		//if (Error.getTotalError()<1) readParameter(configFile);
 		
@@ -989,6 +990,7 @@ public class ConfigUtils {
 		configMap.put("IlpLogVarValue".toLowerCase(), "no");
 		configMap.put("WreslPlus".toLowerCase(), "no");
 		configMap.put("AllowSvTsInit".toLowerCase(), "no");
+		configMap.put("SQLGroup".toLowerCase(), "calsim");
 
 		return configMap;
 
