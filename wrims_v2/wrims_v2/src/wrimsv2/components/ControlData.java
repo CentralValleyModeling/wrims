@@ -133,6 +133,7 @@ public class ControlData {
 	public static int resimYear;
 	public static int resimMonth;
 	public static int resimDay;
+	public static String sqlGroup="calsim";
 	
 	public ControlData(){
 	}
