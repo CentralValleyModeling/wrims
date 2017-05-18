@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="WRIMSv2" name="Create Standalone Runnable Jar for WRIMSv2">
+
+	<target name="WRIMSv2" depends="Clean_files, generate-version, Build_jar_zip">
+
+		<echo message="Finish WRIMS v2" />
+		
+	</target>
+
+	<target name="Clean_files" >
+		<echo message="Running Clean_Files" />
+		<delete file="bin/wrimsv2/version.props"/>
+		<delete dir="jar_out"/>
+		<delete file="zip_out/*.zip"/>
+		<delete dir="zip_out"/>
+		<mkdir dir="jar_out"/>
+		<mkdir dir="zip_out"/>
+	</target>
+	
+	<target name="generate-version">
+
+	    <exec executable="git" outputproperty="version.revisions">
+	        <arg value="log"/>
+	        <arg value="--oneline"/>
+	    </exec>
+
+	    <resourcecount property="version.revision" count="0" when="eq">
+	        <tokens>
+	            <concat>
+	                <filterchain>
+	                    <tokenfilter>
+	                        <stringtokenizer delims="\r" />
+	                    </tokenfilter>
+	                </filterchain>
+	            <propertyresource name="version.revisions" />
+	            </concat>
+	        </tokens>
+	    </resourcecount>
+	    <echo>Revision : ${version.revision}</echo>
+
+	    <exec executable="git" outputproperty="version.hash">
+	        <arg value="rev-parse"/>
+	        <arg value="--short"/>
+	        <arg value="HEAD"/>
+	    </exec>
+	    <echo>Hash : ${version.hash}</echo>
+
+
+	    <exec executable="git" outputproperty="version.branch">
+	        <arg value="rev-parse"/>
+	        <arg value="--abbrev-ref"/>
+	        <arg value="HEAD"/>
+	    </exec>
+	    <echo>Branch : ${version.branch}</echo>
+
+	    <exec executable="git" outputproperty="version.diff">
+	        <arg value="diff"/>
+	    </exec>
+
+	    <condition property="version.dirty" value="" else="-dirty">
+	        <equals arg1="${version.diff}" arg2=""/>
+	    </condition>
+
+	    <tstamp>
+	        <format property="version.date" pattern="yyyy-mm-dd.HH:mm:ss" locale="en,US"/>
+	    </tstamp>
+	    <echo>Date : ${version.date}</echo>
+
+	    <property name="version" value="${version.revision}.${version.hash}.${version.branch}${version.dirty}.${version.date}" />
+
+	    <echo>Version : ${version}</echo>
+
+	    <echo file="bin/wrimsv2/version.props" append="false">version = ${version}</echo>
+
+	</target>
+
+	<target name="Build_jar_zip" >
+
+		<available file="bin/wrimsv2/version.props" property="version_file.present" />
+		<fail>
+			<condition>
+				<not>
+					<isset property="version_file.present" />
+				</not>
+			</condition>
+		</fail>
+
+		<echo message="Running Build_jar_zip" />
+
+		<jar destfile="jar_out/WRIMSv2.jar" filesetmanifest="mergewithoutmain">
+			<manifest>
+				<attribute name="Main-Class" value="wrimsv2.components.Controller"/>
+				<attribute name="Class-Path" value="."/>
+			</manifest>
+			<fileset dir="bin">
+				<include name="wrimsv2/**/*.class"/>
+				<include name="wrimsv2/version.props"/>
+				<exclude name="**/*.g"/>
+			</fileset>
+			<zipfileset excludes="META-INF/*.SF" src="src/wrimsv2/lib/antlr-runtime-3.2.jar"/>
+		</jar>
+
+		<zip destfile="zip_out/WRIMSv2.zip"  basedir="jar_out" />
+
+		<available file="zip_out/WRIMSv2.zip" property="zip_file.present" />
+		<fail>
+			<condition>
+				<not>
+					<isset property="zip_file.present" />
+				</not>
+			</condition>
+		</fail>
+		
+		<echo message="Finished Build_jar_zip" />
+
+	</target>
+
+</project>
