@@ -29,7 +29,7 @@ public class MySQLRWriterAlt {
 	private Connection conn = null;
 	private Statement stmt = null;
 	
-	private String scenarioName=FilePaths.sqlTableName;
+	private String scenarioName=FilePaths.sqlScenarioName;
 	
 	public MySQLRWriterAlt(){   
 		connectToDataBase();

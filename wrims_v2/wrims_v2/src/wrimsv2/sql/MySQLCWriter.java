@@ -36,8 +36,8 @@ public class MySQLCWriter {
 	private ArrayList<ArrayList<String>> monthlyEntriesArr;
 	private ArrayList<ArrayList<String>> dailyEntriesArr;
 	
-	private String monthlyTableName=FilePaths.sqlTableName+"_"+ControlData.partA+"_"+ControlData.svDvPartF+"_M";
-	private String dailyTableName=FilePaths.sqlTableName+"_"+ControlData.partA+"_"+ControlData.svDvPartF+"_D";
+	private String monthlyTableName=FilePaths.sqlScenarioName+"_"+ControlData.partA+"_"+ControlData.svDvPartF+"_M";
+	private String dailyTableName=FilePaths.sqlScenarioName+"_"+ControlData.partA+"_"+ControlData.svDvPartF+"_D";
 	
 	private int col_limit=750;
 	

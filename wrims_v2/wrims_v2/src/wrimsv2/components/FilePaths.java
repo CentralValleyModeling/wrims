@@ -22,7 +22,7 @@ public class FilePaths {
 	public static String ilpFileDirectory="";
 	public static String csvFolderName="";
 	public static String lookupSubDirectory="";
-	public static String sqlTableName="";
+	public static String sqlScenarioName="";
 
 
 	public static void setMainFilePaths(String fullPath){
@@ -51,13 +51,13 @@ public class FilePaths {
 			ControlData.outputCycle=false;
 			int index1=fullPath.lastIndexOf(File.separator);
 			int index2=fullPath.lastIndexOf(".");
-			sqlTableName=fullPath.substring(index1+1,index2);
+			sqlScenarioName=fullPath.substring(index1+1,index2);
 		}else if (fullPath.toLowerCase().endsWith(".mysqlr")){
 			ControlData.outputType=3;
 			ControlData.outputCycle=false;
 			int index1=fullPath.lastIndexOf(File.separator);
 			int index2=fullPath.lastIndexOf(".");
-			sqlTableName=fullPath.substring(index1+1,index2);
+			sqlScenarioName=fullPath.substring(index1+1,index2);
 		}else{
 			ControlData.outputType=0;
 			ControlData.outputCycle=false;

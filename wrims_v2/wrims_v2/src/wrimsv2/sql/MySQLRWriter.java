@@ -22,7 +22,7 @@ public class MySQLRWriter{
 	private String JDBC_DRIVER = "com.mysql.jdbc.Driver";       
 	private String database="calsim";                                  //input
 	private String URL = "jdbc:mysql://localhost:3306"; 			   //input
-	private String tableName = ControlData.sqlGroup;                              //input
+    private String tableName = ControlData.sqlGroup;                 //input 
 	private String scenarioTableName="Scenario";
 	
 	private String USER = "root";                                       //input
@@ -31,7 +31,7 @@ public class MySQLRWriter{
 	private Connection conn = null;
 	private Statement stmt = null;
 	
-	private String scenarioName=FilePaths.sqlTableName;
+	private String scenarioName=FilePaths.sqlScenarioName;
 	private int scenarioIndex;
 	
 	private String slackPrefix="slack__";
@@ -72,9 +72,9 @@ public class MySQLRWriter{
 		System.out.println("Setting scenario index...");
 		try {
 			stmt = conn.createStatement();
-			String sql = "CREATE TABLE IF NOT EXISTS "+scenarioTableName + " (ID Integer NOT NULL, Scenario VarChar(40), Part_A VarChar(20), Part_F VarChar(30), PRIMARY KEY(ID))";
+			String sql = "CREATE TABLE IF NOT EXISTS "+scenarioTableName + " (ID Integer NOT NULL, Table_Name VarChar(40), Scenario VarChar(80), Part_A VarChar(20), Part_F VarChar(30), PRIMARY KEY(ID))";
 			stmt.executeUpdate(sql);
-			sql="select ID FROM "+scenarioTableName+" WHERE SCENARIO='"+scenarioName+"' AND PART_A='"+ControlData.partA+"' AND PART_F='"+ControlData.svDvPartF+"'";
+			sql="select ID FROM "+scenarioTableName+" WHERE TABLE_NAME='"+tableName+"' AND SCENARIO='"+scenarioName+"' AND PART_A='"+ControlData.partA+"' AND PART_F='"+ControlData.svDvPartF+"'";
 			ResultSet rs1 = stmt.executeQuery(sql);
 			if (!rs1.next()){
 				rs1.close();
@@ -93,7 +93,7 @@ public class MySQLRWriter{
 					rs3.close();
 					scenarioIndex=maxIndex+1;
 				}
-				sql="INSERT into "+scenarioTableName+" VALUES ("+scenarioIndex+", '"+scenarioName+"', '"+ControlData.partA+"', '"+ControlData.svDvPartF+"')";
+				sql="INSERT into "+scenarioTableName+" VALUES ("+scenarioIndex+", '" + tableName + "', '"+scenarioName+"', '"+ControlData.partA+"', '"+ControlData.svDvPartF+"')";
 				stmt.executeUpdate(sql);
 			}else{
 				scenarioIndex=rs1.getInt("ID");
@@ -109,7 +109,7 @@ public class MySQLRWriter{
 		System.out.println("Creating table in given database...");
 		try {
 			stmt = conn.createStatement();
-			String sql = "CREATE TABLE IF NOT EXISTS "+tableName + " (ID int, Timestep VarChar(8), Units VarChar(20), Date DATE, Variable VarChar(80), Value Double)";
+			String sql = "CREATE TABLE IF NOT EXISTS "+tableName + " (ID int, Timestep VarChar(8), Units VarChar(20), Date DATE, Variable VarChar(40), Kind VarChar(30), Value Double)";
 			stmt.executeUpdate(sql);
 			System.out.println("Created tables in given database");
 		} catch (SQLException e) {
@@ -143,9 +143,12 @@ public class MySQLRWriter{
 					if (timestep.equals("1DAY")){
 						String sql="INSERT into "+tableName+" VALUES ";
 						Date date = ts.getStartTime();
+						String unitsName=formUnitsName(ts);
+						String variableName=formVariableName(name);
+						String kindName=formKindName(ts.getKind());
 						double[] data = ts.getData();
 						for (int i=0; i<data.length; i++){
-							sql=sql +"("+ scenarioIndex+", '1DAY', '"+formUnitsName(ts)+"', '"+formDateData(date)+"', '"+formVariableName(name)+"', "+data[i]+"), ";
+							sql=sql +"("+ scenarioIndex+", '1DAY', '"+unitsName+"', '"+formDateData(date)+"', '"+variableName+"', '"+kindName+"', "+data[i]+"), ";
 							date=addOneDay(date);
 						}
 						if (sql.endsWith(", ")){
@@ -155,9 +158,12 @@ public class MySQLRWriter{
 					}else{
 						String sql="INSERT into "+tableName+" VALUES ";
 						Date date = ts.getStartTime();
+						String unitsName=formUnitsName(ts);
+						String variableName=formVariableName(name);
+						String kindName=formKindName(ts.getKind());
 						double[] data = ts.getData();
 						for (int i=0; i<data.length; i++){
-							sql=sql +"("+ scenarioIndex+", '1MON', '"+formUnitsName(ts)+"', '"+formDateData(date)+"', '"+formVariableName(name)+"', "+data[i]+"), ";
+							sql=sql +"("+ scenarioIndex+", '1MON', '"+unitsName+"', '"+formDateData(date)+"', '"+variableName+"', '"+kindName+"', "+data[i]+"), ";
 							date=addOneMonth(date);
 						}
 						if (sql.endsWith(", ")){
@@ -181,6 +187,11 @@ public class MySQLRWriter{
 	public String formVariableName(String name){
 		String variableName = DssOperation.getTSName(name).replaceAll("-", "_");
 		return variableName;
+	}
+	
+	public String formKindName(String name){
+		String kindName = name.replaceAll("-", "_");
+		return kindName;
 	}
 	
 	public String formDateData(Date date){
