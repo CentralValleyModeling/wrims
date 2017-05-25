@@ -684,14 +684,16 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 			out.println("Solver             "+DebugCorePlugin.solver.toLowerCase());
 			String dvarFile = fDvarFileText.getText();
 			if (new File(dvarFile).isAbsolute()){
-				String wsidiDvarFile=createWsiDiDvarFileName(dvarFile);
-				out.println("DvarFile           "+wsidiDvarFile.toLowerCase());
-				setDvarFileNameWsiDiGen(wsidiDvarFile);
+				String wsidiDvarPath=getWsiDiDvarFilePath(dvarFile);
+				String lookupPath=getLookupFolderPath(mainFileAbsPath);
+				out.println("DvarFile           "+wsidiDvarPath.toLowerCase());
+				createWsiDiMain(wsidiDvarPath, lookupPath);
 			}else{
 				String procDvarFile=procRelativePath(dvarFile);
-				String wsidiDvarFile=createWsiDiDvarFileName(procDvarFile);
+				String wsidiDvarFile=getWsiDiDvarFilePath(procDvarFile);
+				String lookupFolder=getLookupFolderPath(mainFileAbsPath);
 				out.println("DvarFile           " + wsidiDvarFile.toLowerCase());
-				setDvarFileNameWsiDiGen(wsidiDvarFile);
+				createWsiDiMain(wsidiDvarFile, lookupFolder);
 			}
 			String svarFile = fSvarFileText.getText();
 			if (new File(svarFile).isAbsolute()){
@@ -768,7 +770,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		}
 	}
 	
-	public void setDvarFileNameWsiDiGen(String dvarFile){
+	public void createWsiDiMain(String dvarPath, String lookupPath){
 		String wsidiMainTemplate = ".\\WSIDIGenerator\\Main_template.py";
 		String wsidiMainFile = ".\\WSIDIGenerator\\Main.py";
 		try {
@@ -781,7 +783,9 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	         while((line = br.readLine())!=null){
 	              count++;
 	              if(count==28){
-	                    writer.write("        studyDvName=r\""+dvarFile+"\"\n");
+	            	  writer.write("        studyDvName=r\""+dvarPath+"\"\n");
+	              }else if (count==29){
+	            	  writer.write("        lookupName=r\""+lookupPath+"\"\n");
 	              }else{
 	                  writer.append(line+"\n");
 	              }
@@ -793,9 +797,16 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	    }
 	}
 	
-	public String createWsiDiDvarFileName(String dvFileName){
+	public String getWsiDiDvarFilePath(String dvFileName){
 		File dvFile=new File(dvFileName);
 		return dvFile.getParentFile().getAbsolutePath()+"\\genwsidi_dv.dss";
+	}
+	
+	public String getLookupFolderPath(String mainFilePath){
+		int index = mainFilePath.lastIndexOf(File.separator);
+		String mainDirectory = mainFilePath.substring(0, index + 1);
+		String lookupPath = mainDirectory + "lookup";
+		return lookupPath;
 	}
 	
 	public String procRelativePath(String path){
