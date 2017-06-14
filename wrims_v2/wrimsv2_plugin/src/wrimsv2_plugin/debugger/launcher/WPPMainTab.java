@@ -729,6 +729,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 			out.println("IlpLogVarValue     "+"no");
 			out.println("WreslPlus          "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_WRESLPLUS, "no"));
 			out.println("AllowSvTsInit      "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_ALLOWSVTSINIT, "no"));
+			out.println("DatabaseURL        "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_DATABASEURL, "none"));
 			out.println("SQLGroup           "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_SQLGROUP, "calsim"));
 			
 			if (DebugCorePlugin.solver.equalsIgnoreCase("LpSolve")) {

@@ -24,11 +24,9 @@ import wrimsv2.evaluator.TimeOperation;
 public class MySQLCWriter {
 	
 	private String JDBC_DRIVER = "com.mysql.jdbc.Driver";       
-	private String database="calsim";                                  //input
-	private String URL = "jdbc:mysql://localhost:3306";                //input
-
-	private String USER = "hxie";                                       //input
-	private String PASS = "BDOisNo1";                                   //input
+	
+	private String URL;
+	private String database;
 	
 	private Connection conn = null;
 	private Statement stmt = null;
@@ -46,17 +44,29 @@ public class MySQLCWriter {
 	
 	public MySQLCWriter(){   
 		connectToDataBase();
+	}
+	
+	public void process(){
 		deleteTablesIfExist();
 		createTables();
 		writeData();
 	}
-			
+	
 	public void connectToDataBase(){	
 		
 		try {
+			if (ControlData.databaseURL.contains("/")){
+				int index=ControlData.databaseURL.lastIndexOf("/");
+				URL=ControlData.databaseURL.substring(0, index);
+				database=ControlData.databaseURL.substring(index+1);
+			}else{
+				URL=ControlData.databaseURL;
+				database=ControlData.databaseURL;
+			}
+			
 			Class.forName(JDBC_DRIVER);
 			System.out.println("Connecting to a selected database...");
-			conn = DriverManager.getConnection(URL, USER, PASS);
+			conn = DriverManager.getConnection(URL, ControlData.USER, ControlData.PASS);
 			stmt = conn.createStatement();
 			String sql="CREATE DATABASE IF NOT EXISTS "+database;
 			stmt.executeUpdate(sql);
@@ -64,9 +74,13 @@ public class MySQLCWriter {
 			stmt.executeUpdate(sql);
 			System.out.println("Connected database successfully");
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			System.err.println("Failed to load database. Please install the database driver.");
+			System.out.println("Model run terminated.");
+			System.exit(1);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.err.println("Failed to connect to the database. Please check your database URL and user profile.");
+			System.out.println("Model run terminated.");
+			System.exit(1);
 		}
 	}
 		   
@@ -101,7 +115,7 @@ public class MySQLCWriter {
 	}
 	
 	public void createTables(){
-		System.out.println("Creating table in given database...");
+		System.out.println("Creating tables in given database...");
 		try {
 			stmt = conn.createStatement();
 			monthlyEntriesArr=new ArrayList<ArrayList<String>>();

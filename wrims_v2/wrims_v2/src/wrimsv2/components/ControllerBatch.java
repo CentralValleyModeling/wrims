@@ -36,6 +36,7 @@ import wrimsv2.solver.InitialXASolver;
 import wrimsv2.solver.Gurobi.GurobiSolver;
 import wrimsv2.solver.mpmodel.MPModel;
 import wrimsv2.solver.ortools.OrToolsSolver;
+import wrimsv2.sql.DataBaseProfile;
 import wrimsv2.sql.MySQLCWriter;
 import wrimsv2.sql.MySQLRWriter;
 import wrimsv2.wreslparser.elements.StudyUtils;
@@ -46,13 +47,17 @@ public class ControllerBatch {
 	
 	public boolean enableProgressLog = false;
 	public boolean enableConfigProgress = false;
+	private MySQLCWriter mySQLCWriter;
+	private MySQLRWriter mySQLRWriter;
 	
 	public ControllerBatch() {} // do nothing
 	
 	public ControllerBatch(String[] args) {
 		long startTimeInMillis = Calendar.getInstance().getTimeInMillis();
 		try {
+			new DataBaseProfile(args);
 			processArgs(args);
+			connectToDataBase();
 			if (enableConfigProgress) {
 				try {
 					FileWriter progressFile= new FileWriter(StudyUtils.configFilePath+".prgss");
@@ -372,9 +377,9 @@ public class ControllerBatch {
 			HDF5Writer.writeTimestepData();
 			HDF5Writer.closeDataStructure();
 		}else if (ControlData.outputType==2){
-			new MySQLCWriter();
+			mySQLCWriter.process();
 		}else if (ControlData.outputType==3){
-			new MySQLRWriter();
+			mySQLRWriter.process();
 		}else{
 		if (ControlData.writeInitToDVOutput){
 			DssOperation.writeInitDvarAliasToDSS();
@@ -716,9 +721,9 @@ public class ControllerBatch {
 			HDF5Writer.writeTimestepData();
 			HDF5Writer.closeDataStructure();
 		}else if (ControlData.outputType==2){
-			new MySQLCWriter();
+			mySQLCWriter.process();
 		}else if (ControlData.outputType==3){
-			new MySQLRWriter();
+			mySQLRWriter.process();
 		}else{
 		if (ControlData.writeInitToDVOutput){
 		DssOperation.writeInitDvarAliasToDSS();
@@ -853,9 +858,9 @@ public class ControllerBatch {
 			HDF5Writer.writeTimestepData();
 			HDF5Writer.closeDataStructure();
 		}else if (ControlData.outputType==2){
-			new MySQLCWriter();
+			mySQLCWriter.process();
 		}else if (ControlData.outputType==3){
-			new MySQLRWriter();
+			mySQLRWriter.process();
 		}else{
 		if (ControlData.writeInitToDVOutput){
 			DssOperation.writeInitDvarAliasToDSS();
@@ -1057,9 +1062,9 @@ public class ControllerBatch {
 			HDF5Writer.writeTimestepData();
 			HDF5Writer.closeDataStructure();
 		}else if (ControlData.outputType==2){
-			new MySQLCWriter();
+			mySQLCWriter.process();
 		}else if (ControlData.outputType==3){
-			new MySQLRWriter();
+			mySQLRWriter.process();
 		}else{
 		if (ControlData.writeInitToDVOutput){
 			DssOperation.writeInitDvarAliasToDSS();
@@ -1207,9 +1212,9 @@ public class ControllerBatch {
 			HDF5Writer.writeTimestepData();
 			HDF5Writer.closeDataStructure();
 		}else if (ControlData.outputType==2){
-			new MySQLCWriter();
+			mySQLCWriter.process();
 		}else if (ControlData.outputType==3){
-			new MySQLRWriter();
+			mySQLRWriter.process();
 		}else{
 		if (ControlData.writeInitToDVOutput){
 			DssOperation.writeInitDvarAliasToDSS();
@@ -1508,9 +1513,9 @@ public class ControllerBatch {
 			HDF5Writer.writeTimestepData();
 			HDF5Writer.closeDataStructure();
 		}else if (ControlData.outputType==2){
-			new MySQLCWriter();
+			mySQLCWriter.process();
 		}else if (ControlData.outputType==3){
-			new MySQLRWriter();
+			mySQLRWriter.process();
 		}else{
 		if (ControlData.writeInitToDVOutput){
 			DssOperation.writeInitDvarAliasToDSS();
@@ -1541,5 +1546,11 @@ public class ControllerBatch {
 		}
 	}
 
-
+	public void connectToDataBase(){
+		if (ControlData.outputType==2){
+			mySQLCWriter=new MySQLCWriter();
+		}else if (ControlData.outputType==3){
+			mySQLRWriter=new MySQLRWriter();
+		}
+	}
 }

@@ -61,6 +61,7 @@ import wrimsv2.solver.XASolver;
 import wrimsv2.solver.SetXALog;
 import wrimsv2.solver.InitialXASolver;
 import wrimsv2.solver.Gurobi.GurobiSolver;
+import wrimsv2.sql.DataBaseProfile;
 import wrimsv2.sql.MySQLCWriter;
 import wrimsv2.sql.MySQLRWriter;
 import wrimsv2.tools.RCCComparison;
@@ -85,6 +86,9 @@ public class ControllerDebug extends Thread {
 	public String[] args;
 	public int modelIndex;
 	public static ArrayList<Integer> initialTimeStep;
+	
+	private MySQLCWriter mySQLCWriter;
+	private MySQLRWriter mySQLRWriter;
 		
 	public ControllerDebug(String[] args, DebugInterface di) {
 		this.di=di;
@@ -93,7 +97,9 @@ public class ControllerDebug extends Thread {
 	
 	@Override
 	public void run() {
+		new DataBaseProfile(args);
 		ConfigUtils.loadArgs(args);
+		connectToDataBase();
 		//generateStudyFile();
 		try {
 			StudyDataSet sds = parse();
@@ -409,9 +415,9 @@ public class ControllerDebug extends Thread {
 			HDF5Writer.writeTimestepData();
 			HDF5Writer.closeDataStructure();
 		}else if (ControlData.outputType==2){
-			new MySQLCWriter();
+			mySQLCWriter.process();
 		}else if (ControlData.outputType==3){
-			new MySQLRWriter();
+			mySQLRWriter.process();
 		}else{
 			if (ControlData.writeInitToDVOutput){
 				DssOperation.writeInitDvarAliasToDSS();
@@ -608,6 +614,14 @@ public class ControllerDebug extends Thread {
 			}else if(ControlData.timeStep.equals("1DAY") && ControlData.currDay==31){
 				DssOperation.writeDVAliasToDSS();
 			}
+		}
+	}
+	
+	public void connectToDataBase(){
+		if (ControlData.outputType==2){
+			mySQLCWriter=new MySQLCWriter();
+		}else if (ControlData.outputType==3){
+			mySQLRWriter=new MySQLRWriter();
 		}
 	}
 }

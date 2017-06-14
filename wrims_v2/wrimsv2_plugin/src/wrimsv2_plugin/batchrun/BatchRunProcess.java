@@ -11,11 +11,15 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.datatools.connectivity.IConnectionProfile;
+import org.eclipse.datatools.connectivity.ProfileManager;
+import org.eclipse.datatools.connectivity.drivers.jdbc.IJDBCConnectionProfileConstants;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.model.IDebugTarget;
@@ -92,6 +96,7 @@ public class BatchRunProcess {
 	public int paEndYear;
 	public int paEndMonth;
 	public int paEndDay;
+	private String databaseURL="none";
 	private String sqlGroup="calsim";
 	
 	private int terminateCode=0;
@@ -362,6 +367,7 @@ public class BatchRunProcess {
 		}
 		allowSvTsInit=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_ALLOWSVTSINIT, "no");
 		
+		databaseURL=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_DATABASEURL, "none");
 		sqlGroup=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_SQLGROUP, "calsim");
 		
 		String mainFileAbsPath;
@@ -382,6 +388,10 @@ public class BatchRunProcess {
 			generateBatch(out, configFilePath);
 		}catch (IOException e) {
 			WPPException.handleException(e);
+		}
+		
+		if (dvarFile.toLowerCase().endsWith("mysqlr") || dvarFile.toLowerCase().endsWith("mysqlc")){
+			generateDatabaseUserProfileFile(launchFilePath);
 		}
 	}
 	
@@ -454,6 +464,7 @@ public class BatchRunProcess {
 			configMap.put("WreslPlus".toLowerCase(), wreslPlus);
 			configMap.put("AllowSvTsInit".toLowerCase(), allowSvTsInit);
 			
+			configMap.put("DatabaseURL".toLowerCase(), databaseURL);
 			configMap.put("SQLGroup".toLowerCase(), sqlGroup);
 			
 			if (launchType==1 || (ms>1 && afterFirstRound)){
@@ -521,6 +532,7 @@ public class BatchRunProcess {
 			out.println("IlpLogAllCycles    "+configMap.get("IlpLogAllCycles".toLowerCase()));
 			out.println("WreslPlus          "+configMap.get("WreslPlus".toLowerCase()));
 			out.println("AllowSvTsInit      "+configMap.get("AllowSvTsInit".toLowerCase()));
+			out.println("DatabaseURL        "+configMap.get("DatabaseURL".toLowerCase()));
 			out.println("SQLGroup           "+configMap.get("SQLGroup".toLowerCase()));
 			
 			if (DebugCorePlugin.solver.equalsIgnoreCase("LpSolve")) {
@@ -543,6 +555,35 @@ public class BatchRunProcess {
 
 		return configFilePath;
 			
+	}
+	
+	public void generateDatabaseUserProfileFile(String launchFilePath){
+		IConnectionProfile[] profiles = ProfileManager.getInstance().getProfiles();
+		int i=0;
+		boolean isProfileCreated=false;
+		while (i<profiles.length && !isProfileCreated){
+			Properties baseProperties = profiles[i].getBaseProperties();
+			String urlProperty=baseProperties.getProperty(IJDBCConnectionProfileConstants.URL_PROP_ID);
+			if (urlProperty.equalsIgnoreCase(databaseURL)){
+				String username=baseProperties.getProperty(IJDBCConnectionProfileConstants.USERNAME_PROP_ID);
+				String password=baseProperties.getProperty(IJDBCConnectionProfileConstants.PASSWORD_PROP_ID);		
+				
+				String profileFileName = launchFilePath +".dpf";
+				File f = new File(profileFileName);
+				try {
+					f.createNewFile();
+					PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(f)));
+					out.println(username);
+					out.println(password);
+					out.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				isProfileCreated=true;
+			}
+			i++;
+		}
 	}
 	
 	/**
