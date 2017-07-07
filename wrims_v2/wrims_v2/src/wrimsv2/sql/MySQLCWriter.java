@@ -50,6 +50,7 @@ public class MySQLCWriter {
 		deleteTablesIfExist();
 		createTables();
 		writeData();
+		close();
 	}
 	
 	public void connectToDataBase(){	
@@ -308,5 +309,14 @@ public class MySQLCWriter {
 		long newTime=date.getTime()+1 * 24 * 60 * 60 * 1000l;
 		Date newDate = new Date (newTime);
 		return newDate;
+	}
+	
+	public void close(){
+		try {
+			stmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

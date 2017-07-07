@@ -32,7 +32,7 @@ public class PreRunModel {
 		ControlData.monthlyStartTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, TimeOperation.numberOfDays(ControlData.startMonth, ControlData.startYear));
 		ControlData.dailyStartTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
 
-		if (ControlData.outputType==0){
+		if (ControlData.outputType==0 || ControlData.outputType==2 || ControlData.outputType==3 || ControlData.outputType==4){
 			ControlData.writer = new DSSDataWriter(FilePaths.fullDvarDssPath);
 			try {
 				ControlData.writer.openDSSFile();

@@ -64,6 +64,7 @@ import wrimsv2.solver.Gurobi.GurobiSolver;
 import wrimsv2.sql.DataBaseProfile;
 import wrimsv2.sql.MySQLCWriter;
 import wrimsv2.sql.MySQLRWriter;
+import wrimsv2.sql.SQLServerRWriter;
 import wrimsv2.tools.RCCComparison;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.StudyConfig;
@@ -89,6 +90,7 @@ public class ControllerDebug extends Thread {
 	
 	private MySQLCWriter mySQLCWriter;
 	private MySQLRWriter mySQLRWriter;
+	private SQLServerRWriter sqlServerRWriter;
 		
 	public ControllerDebug(String[] args, DebugInterface di) {
 		this.di=di;
@@ -410,6 +412,12 @@ public class ControllerDebug extends Thread {
 			VariableTimeStep.setCycleEndDate(sds);
 		}
 		new CloseCurrentSolver(ControlData.solverName);
+		
+		if (ControlData.writeInitToDVOutput){
+			DssOperation.writeInitDvarAliasToDSS();
+		}
+		DssOperation.writeDVAliasToDSS();
+		ControlData.writer.closeDSSFile();
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
 			HDF5Writer.writeTimestepData();
@@ -418,12 +426,8 @@ public class ControllerDebug extends Thread {
 			mySQLCWriter.process();
 		}else if (ControlData.outputType==3){
 			mySQLRWriter.process();
-		}else{
-			if (ControlData.writeInitToDVOutput){
-				DssOperation.writeInitDvarAliasToDSS();
-			}
-			DssOperation.writeDVAliasToDSS();
-			ControlData.writer.closeDSSFile();
+		}else if (ControlData.outputType==4){
+			sqlServerRWriter.process();
 		}
 	}
 	
@@ -622,6 +626,8 @@ public class ControllerDebug extends Thread {
 			mySQLCWriter=new MySQLCWriter();
 		}else if (ControlData.outputType==3){
 			mySQLRWriter=new MySQLRWriter();
+		}else if (ControlData.outputType==4){
+			sqlServerRWriter=new SQLServerRWriter();
 		}
 	}
 }
