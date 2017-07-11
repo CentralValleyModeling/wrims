@@ -1,5 +1,9 @@
 package wrimsv2.sql;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -35,6 +39,10 @@ public class MySQLRWriter{
 	private String slackPrefix="slack__";
 	private String surplusPrefix="surplus__";
 	
+	private String csvRemotePath;
+	private String csvLocalPath;
+	private File csvFile;
+	
 	public MySQLRWriter(){   
 		connectToDataBase();
 	}
@@ -46,6 +54,7 @@ public class MySQLRWriter{
 		setScenarioIndex();
 		createTable();
 		deleteOldData();
+		createCSV();
 		writeData();
 		close();
 	}
@@ -143,10 +152,28 @@ public class MySQLRWriter{
 		}
 	}
 	
-	public void writeData(){
+	public void createCSV(){
+		String line;
+		System.out.println("Writing output to CSV file");
+		String host=URL.toLowerCase().replaceFirst("jdbc:mysql://", "");
+		host="\\\\"+host.substring(0, host.lastIndexOf(":"));
+		if (host.equals("\\\\localhost")){
+			int index = FilePaths.fullDvarDssPath.lastIndexOf(".");
+			csvRemotePath = FilePaths.fullDvarDssPath.substring(0, index)+".csv";
+			csvLocalPath = csvRemotePath.replace("\\", "\\\\");
+		}else{
+			int index = FilePaths.fullDvarDssPath.lastIndexOf(".");
+			String csvFilePath = FilePaths.fullDvarDssPath.substring(0, index)+".csv";
+			csvFilePath=csvFilePath.replaceFirst(":", "");
+			csvLocalPath="G:\\\\tempCSV\\\\"+ControlData.USER+"\\\\"+csvFilePath.replace("\\", "\\\\");
+			csvRemotePath=host+"\\tempCSV\\"+ControlData.USER+"\\"+csvFilePath;
+		}
+		
 		try {
-			System.out.println("Writing output in table...");
-			Statement statement = conn.createStatement();
+			csvFile= new File(csvRemotePath);
+			csvFile.getParentFile().mkdirs();
+			FileWriter fw = new FileWriter(csvFile);
+			BufferedWriter bw = new BufferedWriter(fw, 8192);
 			Set<String> keys = DataTimeSeries.dvAliasTS.keySet();
 			Iterator<String> it = keys.iterator();
 			while (it.hasNext()){
@@ -155,42 +182,49 @@ public class MySQLRWriter{
 					DssDataSetFixLength ts = DataTimeSeries.dvAliasTS.get(name);
 					String timestep=ts.getTimeStep().toUpperCase();
 					if (timestep.equals("1DAY")){
-						String sql="INSERT into "+tableName+" VALUES ";
 						Date date = ts.getStartTime();
 						String unitsName=formUnitsName(ts);
 						String variableName=formVariableName(name);
 						String kindName=formKindName(ts.getKind());
 						double[] data = ts.getData();
 						for (int i=0; i<data.length; i++){
-							sql=sql +"("+ scenarioIndex+", '1DAY', '"+unitsName+"', '"+formDateData(date)+"', '"+variableName+"', '"+kindName+"', "+data[i]+"), ";
+							line = scenarioIndex+",1DAY,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+data[i]+"\n";
+							bw.write(line);
 							date=addOneDay(date);
 						}
-						if (sql.endsWith(", ")){
-							sql=sql.substring(0, sql.lastIndexOf(","));
-						}
-						stmt.executeUpdate(sql);
 					}else{
-						String sql="INSERT into "+tableName+" VALUES ";
 						Date date = ts.getStartTime();
 						String unitsName=formUnitsName(ts);
 						String variableName=formVariableName(name);
 						String kindName=formKindName(ts.getKind());
 						double[] data = ts.getData();
 						for (int i=0; i<data.length; i++){
-							sql=sql +"("+ scenarioIndex+", '1MON', '"+unitsName+"', '"+formDateData(date)+"', '"+variableName+"', '"+kindName+"', "+data[i]+"), ";
+							line = scenarioIndex+",1MON,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+data[i]+"\n";
+							bw.write(line);
 							date=addOneMonth(date);
 						}
-						if (sql.endsWith(", ")){
-							sql=sql.substring(0, sql.lastIndexOf(","));
-						}
-						stmt.executeUpdate(sql);
 					}
 				}
 			}
-			System.out.println("Wrote output in table");
-		} catch (SQLException e) {
+			bw.close();
+			fw.close();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		System.out.println("Wrote output to CSV file");
+	}
+	
+	public void writeData(){
+		try {
+			System.out.println("Importing output into table...");
+			stmt = conn.createStatement();
+			String sql = "LOAD DATA LOCAL INFILE '"+csvLocalPath+"' INTO TABLE " + tableName + " CHARACTER SET UTF8 FIELDS TERMINATED BY ',' ENCLOSED BY '\"' LINES TERMINATED BY '\n'";
+			stmt.executeUpdate(sql);
+			System.out.println("Imported output into table");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
 	}
 	
 	public String formUnitsName(DssDataSetFixLength ts){
@@ -237,6 +271,7 @@ public class MySQLRWriter{
 		try {
 			stmt.close();
 			conn.close();
+			if (csvFile.exists()) csvFile.delete();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
