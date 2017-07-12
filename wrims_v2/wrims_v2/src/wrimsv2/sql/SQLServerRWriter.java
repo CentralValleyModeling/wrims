@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -20,6 +21,7 @@ import wrimsv2.evaluator.DataTimeSeries;
 import wrimsv2.evaluator.DssDataSetFixLength;
 import wrimsv2.evaluator.DssOperation;
 import wrimsv2.evaluator.TimeOperation;
+import wrimsv2.sql.socket.Client;
 
 public class SQLServerRWriter{
 	
@@ -42,6 +44,7 @@ public class SQLServerRWriter{
 	private String csvRemotePath;
 	private String csvLocalPath;
 	private File csvFile;
+	private String host;
 	
 	public SQLServerRWriter(){   
 		connectToDataBase();
@@ -55,7 +58,9 @@ public class SQLServerRWriter{
 		createTable();
 		deleteOldData();
 		createCSV();
-		writeData();
+		if (transferCSV()){
+			writeData();
+		}
 		close();
 	}
 	
@@ -134,6 +139,8 @@ public class SQLServerRWriter{
 			stmt = conn.createStatement();
 			String sql = "IF (object_id('"+tableName+"', 'U') IS NULL) CREATE TABLE " + tableName + " (ID int, Timestep VarChar(8), Units VarChar(20), Date_Time smalldatetime, Variable VarChar(40), Kind VarChar(30), Value Float(8))";
 			stmt.executeUpdate(sql);
+			sql = "IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'Variable_Index' AND object_id = OBJECT_ID('"+tableName+"')) CREATE INDEX Variable_Index ON "+tableName+" (ID, Variable)";
+			stmt.executeUpdate(sql);
 			System.out.println("Created table in given database");
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -154,23 +161,15 @@ public class SQLServerRWriter{
 	
 	public void createCSV(){
 		String line;
-		System.out.println("Writing output to CSV file");
-		String host=URL.toLowerCase().replaceFirst("jdbc:sqlserver://", "");
-		host="\\\\"+host.substring(0, host.lastIndexOf(":"));
-		if (host.equals("\\\\localhost")){
-			int index = FilePaths.fullDvarDssPath.lastIndexOf(".");
-			csvRemotePath = FilePaths.fullDvarDssPath.substring(0, index)+".csv";
-			csvLocalPath = csvRemotePath;
-		}else{
-			int index = FilePaths.fullDvarDssPath.lastIndexOf(".");
-			String csvFilePath = FilePaths.fullDvarDssPath.substring(0, index)+".csv";
-			csvFilePath=csvFilePath.replaceFirst(":", "");
-			csvLocalPath="G:\\tempCSV\\"+ControlData.USER+"\\"+csvFilePath;
-			csvRemotePath=host+"\\tempCSV\\"+ControlData.USER+"\\"+csvFilePath;
-		}
-		
+		System.out.println("Writing output to CSV file...");
+		host=URL.toLowerCase().replaceFirst("jdbc:sqlserver://", "");
+		host= host.substring(0, host.lastIndexOf(":"));
+		int index = FilePaths.fullDvarDssPath.lastIndexOf(".");
+		csvLocalPath = FilePaths.fullDvarDssPath.substring(0, index)+".csv";
+		csvRemotePath = "G:\\tempCSV\\"+csvLocalPath.substring(csvLocalPath.lastIndexOf("\\") + 1, csvLocalPath.length());;
+				
 		try {
-			csvFile= new File(csvRemotePath);
+			csvFile= new File(csvLocalPath);
 			csvFile.getParentFile().mkdirs();
 			FileWriter fw = new FileWriter(csvFile);
 			BufferedWriter bw = new BufferedWriter(fw, 8192);
@@ -215,11 +214,17 @@ public class SQLServerRWriter{
 		System.out.println("Wrote output to CSV file");
 	}
 	
+	public boolean transferCSV(){
+		Client client=new Client();
+		client.connect(host, csvLocalPath);
+		return client.sendFile();
+	}
+	
 	public void writeData(){
 		try {
 			System.out.println("Importing output into table...");
 			stmt = conn.createStatement();
-			String sql = "Bulk INSERT "+tableName+" From '"+csvLocalPath+"' WITH (FIELDTERMINATOR=',', ROWTERMINATOR='\n')";
+			String sql = "Bulk INSERT "+tableName+" From '"+csvRemotePath+"' WITH (FIELDTERMINATOR=',', ROWTERMINATOR='\n')";
 			stmt.executeUpdate(sql);
 			System.out.println("Imported output into table");
 		} catch (SQLException e) {
