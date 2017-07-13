@@ -61,6 +61,7 @@ public class SQLServerRWriter{
 		if (transferCSV()){
 			writeData();
 		}
+		createIndex();
 		close();
 	}
 	
@@ -139,7 +140,7 @@ public class SQLServerRWriter{
 			stmt = conn.createStatement();
 			String sql = "IF (object_id('"+tableName+"', 'U') IS NULL) CREATE TABLE " + tableName + " (ID int, Timestep VarChar(8), Units VarChar(20), Date_Time smalldatetime, Variable VarChar(40), Kind VarChar(30), Value Float(8))";
 			stmt.executeUpdate(sql);
-			sql = "IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'Variable_Index' AND object_id = OBJECT_ID('"+tableName+"')) CREATE INDEX Variable_Index ON "+tableName+" (ID, Variable)";
+			sql = "IF EXISTS (SELECT * FROM sys.indexes WHERE name = 'Variable_Index' AND object_id = OBJECT_ID('"+tableName+"')) DROP INDEX Variable_Index ON "+tableName;
 			stmt.executeUpdate(sql);
 			System.out.println("Created table in given database");
 		} catch (SQLException e) {
@@ -150,7 +151,7 @@ public class SQLServerRWriter{
 	public void deleteOldData(){
 		try {
 			System.out.println("Deleting old data in table...");
-			Statement statement = conn.createStatement();
+			stmt = conn.createStatement();
 			String sql="DELETE FROM "+tableName+" WHERE ID="+scenarioIndex;
 			stmt.executeUpdate(sql);
 			System.out.println("Deleted old data in table");
@@ -270,6 +271,18 @@ public class SQLServerRWriter{
 		long newTime=date.getTime()+1 * 24 * 60 * 60 * 1000l;
 		Date newDate = new Date (newTime);
 		return newDate;
+	}
+	
+	public void createIndex(){
+		try {
+			System.out.println("Creating Table Index...");
+			stmt = conn.createStatement();
+			String sql = "IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'Variable_Index' AND object_id = OBJECT_ID('"+tableName+"')) CREATE INDEX Variable_Index ON "+tableName+" (ID, Variable)";
+			stmt.executeUpdate(sql);
+			System.out.println("Created Table Index");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void close(){

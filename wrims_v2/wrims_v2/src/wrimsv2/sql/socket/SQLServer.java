@@ -39,6 +39,21 @@ public class SQLServer {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+			if (socket != null){
+				try {
+					socket.close();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+			if (serverSocket != null){
+				try {
+					serverSocket.close();
+				} catch (IOException e2) {
+					e2.printStackTrace();
+				}
+			}
+			newServer();
 		}
 	}
 	
@@ -82,6 +97,11 @@ public class SQLServer {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} 
+	}
+	
+	public void newServer(){
+		SQLServer sqlServer = new SQLServer();
+		sqlServer.process();
 	}
 	
 	public static void main (String [] args ) {
