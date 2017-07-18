@@ -2,12 +2,15 @@ package wrimsv2.sql;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -18,6 +21,7 @@ import java.util.Set;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.FilePaths;
 import wrimsv2.evaluator.DataTimeSeries;
+import wrimsv2.evaluator.DssDataSet;
 import wrimsv2.evaluator.DssDataSetFixLength;
 import wrimsv2.evaluator.DssOperation;
 import wrimsv2.evaluator.TimeOperation;
@@ -56,6 +60,7 @@ public class SQLServerRWriter{
 		}
 		setScenarioIndex();
 		createTable();
+		createScenarioCSV();
 		deleteOldData();
 		createCSV();
 		if (transferCSV()){
@@ -134,6 +139,34 @@ public class SQLServerRWriter{
 		System.out.println("Set scenario index");
 	}
 	
+	public void createScenarioCSV(){
+		try {
+			String sql="select * from "+scenarioTableName;
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			PrintWriter csvWriter = new PrintWriter(new File(FilePaths.dvarDssDirectory+"\\scenario.csv")) ;
+		    ResultSetMetaData meta = rs.getMetaData() ; 
+		    int numberOfColumns = meta.getColumnCount() ; 
+		    String dataHeaders = meta.getColumnName(1) ; 
+		    for (int i = 2 ; i < numberOfColumns + 1 ; i ++ ) { 
+		    	dataHeaders += "," + meta.getColumnName(i);
+		    }
+		    csvWriter.println(dataHeaders) ;
+		    while (rs.next()) {
+		    	String row = rs.getString(1); 
+		        for (int i = 2 ; i < numberOfColumns + 1 ; i ++ ) {
+		        	row += "," + rs.getString(i);
+		        }
+		        csvWriter.println(row) ;
+		    }
+		    csvWriter.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void createTable(){
 		System.out.println("Creating table in given database...");
 		try {
@@ -174,6 +207,8 @@ public class SQLServerRWriter{
 			csvFile.getParentFile().mkdirs();
 			FileWriter fw = new FileWriter(csvFile);
 			BufferedWriter bw = new BufferedWriter(fw, 8192);
+			line="ID,Timestep,Units,Date_Time,Variable,Kind,Value\n";
+			bw.write(line);
 			Set<String> keys = DataTimeSeries.dvAliasTS.keySet();
 			Iterator<String> it = keys.iterator();
 			while (it.hasNext()){
@@ -183,7 +218,7 @@ public class SQLServerRWriter{
 					String timestep=ts.getTimeStep().toUpperCase();
 					if (timestep.equals("1DAY")){
 						Date date = ts.getStartTime();
-						String unitsName=formUnitsName(ts);
+						String unitsName=formUnitsName(ts.getUnits());
 						String variableName=formVariableName(name);
 						String kindName=formKindName(ts.getKind());
 						double[] data = ts.getData();
@@ -194,12 +229,76 @@ public class SQLServerRWriter{
 						}
 					}else{
 						Date date = ts.getStartTime();
-						String unitsName=formUnitsName(ts);
+						String unitsName=formUnitsName(ts.getUnits());
 						String variableName=formVariableName(name);
 						String kindName=formKindName(ts.getKind());
 						double[] data = ts.getData();
 						for (int i=0; i<data.length; i++){
 							line = scenarioIndex+",1MON,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+data[i]+"\n";
+							bw.write(line);
+							date=addOneMonth(date);
+						}
+					}
+				}
+			}
+			keys = DataTimeSeries.svTS.keySet();
+			it = keys.iterator();
+			while (it.hasNext()){
+				String name=it.next();
+				if (!name.startsWith(slackPrefix) && !name.startsWith(surplusPrefix)){
+					DssDataSet ts = DataTimeSeries.svTS.get(name);
+					String timestep=ts.getTimeStep().toUpperCase();
+					if (timestep.equals("1DAY")){
+						Date date = ts.getStartTime();
+						String unitsName=formUnitsName(ts.getUnits());
+						String variableName=formVariableName(name);
+						String kindName=formKindName(ts.getKind());
+						ArrayList<Double> data = ts.getData();
+						for (int i=0; i<data.size(); i++){
+							line = scenarioIndex+",1DAY,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+data.get(i)+"\n";
+							bw.write(line);
+							date=addOneDay(date);
+						}
+					}else{
+						Date date = ts.getStartTime();
+						String unitsName=formUnitsName(ts.getUnits());
+						String variableName=formVariableName(name);
+						String kindName=formKindName(ts.getKind());
+						ArrayList<Double> data = ts.getData();
+						for (int i=0; i<data.size(); i++){
+							line = scenarioIndex+",1MON,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+data.get(i)+"\n";
+							bw.write(line);
+							date=addOneMonth(date);
+						}
+					}
+				}
+			}
+			keys = DataTimeSeries.dvAliasInit.keySet();
+			it = keys.iterator();
+			while (it.hasNext()){
+				String name=it.next();
+				if (!name.startsWith(slackPrefix) && !name.startsWith(surplusPrefix)){
+					DssDataSet ts = DataTimeSeries.dvAliasInit.get(name);
+					String timestep=ts.getTimeStep().toUpperCase();
+					if (timestep.equals("1DAY")){
+						Date date = ts.getStartTime();
+						String unitsName=formUnitsName(ts.getUnits());
+						String variableName=formVariableName(name);
+						String kindName=formKindName(ts.getKind());
+						ArrayList<Double> data = ts.getData();
+						for (int i=0; i<data.size(); i++){
+							line = scenarioIndex+",1DAY,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+data.get(i)+"\n";
+							bw.write(line);
+							date=addOneDay(date);
+						}
+					}else{
+						Date date = ts.getStartTime();
+						String unitsName=formUnitsName(ts.getUnits());
+						String variableName=formVariableName(name);
+						String kindName=formKindName(ts.getKind());
+						ArrayList<Double> data = ts.getData();
+						for (int i=0; i<data.size(); i++){
+							line = scenarioIndex+",1MON,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+data.get(i)+"\n";
 							bw.write(line);
 							date=addOneMonth(date);
 						}
@@ -225,7 +324,7 @@ public class SQLServerRWriter{
 		try {
 			System.out.println("Importing output into table...");
 			stmt = conn.createStatement();
-			String sql = "Bulk INSERT "+tableName+" From '"+csvRemotePath+"' WITH (FIELDTERMINATOR=',', ROWTERMINATOR='\n')";
+			String sql = "Bulk INSERT "+tableName+" From '"+csvRemotePath+"' WITH (FIELDTERMINATOR=',', ROWTERMINATOR='\n', FIRSTROW=2)";
 			stmt.executeUpdate(sql);
 			System.out.println("Imported output into table");
 		} catch (SQLException e) {
@@ -233,9 +332,9 @@ public class SQLServerRWriter{
 		}
 	}
 	
-	public String formUnitsName(DssDataSetFixLength ts){
-		String units=ts.getUnits().replaceAll("/", "_").replaceAll("-", "_");
-		return units;
+	public String formUnitsName(String units){
+		String newUnits=units.replaceAll("/", "_").replaceAll("-", "_");
+		return newUnits;
 	}
 	
 	public String formVariableName(String name){
@@ -289,7 +388,7 @@ public class SQLServerRWriter{
 		try {
 			stmt.close();
 			conn.close();
-			if (csvFile.exists()) csvFile.delete();
+			//if (csvFile.exists()) csvFile.delete();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

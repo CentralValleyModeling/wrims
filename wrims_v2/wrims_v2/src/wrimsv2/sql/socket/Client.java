@@ -26,6 +26,11 @@ public class Client {
 				isConnected = true;
 			} catch (IOException e) {
 				e.printStackTrace();
+				try {
+					Thread.sleep(10000);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
 			}
 		}
 		System.out.println("Server Client Connected");

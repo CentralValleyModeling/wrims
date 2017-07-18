@@ -2,11 +2,14 @@ package wrimsv2.sql;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -17,6 +20,7 @@ import java.util.Set;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.FilePaths;
 import wrimsv2.evaluator.DataTimeSeries;
+import wrimsv2.evaluator.DssDataSet;
 import wrimsv2.evaluator.DssDataSetFixLength;
 import wrimsv2.evaluator.DssOperation;
 import wrimsv2.evaluator.TimeOperation;
@@ -39,8 +43,8 @@ public class MySQLRWriter{
 	private String slackPrefix="slack__";
 	private String surplusPrefix="surplus__";
 	
-	private String csvRemotePath;
-	private String csvLocalPath;
+	private String csvPath;
+	private String csvMySQLPath;
 	private File csvFile;
 	
 	public MySQLRWriter(){   
@@ -52,10 +56,12 @@ public class MySQLRWriter{
 			tableName=tableName+"_Studies";
 		}
 		setScenarioIndex();
+		createScenarioCSV();
 		createTable();
 		deleteOldData();
 		createCSV();
 		writeData();
+		createIndex();
 		close();
 	}
 	
@@ -128,12 +134,50 @@ public class MySQLRWriter{
 		System.out.println("Set scenario index");
 	}
 	
+	public void createScenarioCSV(){
+		try {
+			String sql="select * from "+scenarioTableName;
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			PrintWriter csvWriter = new PrintWriter(new File(FilePaths.dvarDssDirectory+"\\scenario.csv")) ;
+		    ResultSetMetaData meta = rs.getMetaData() ; 
+		    int numberOfColumns = meta.getColumnCount() ; 
+		    String dataHeaders = meta.getColumnName(1) ; 
+		    for (int i = 2 ; i < numberOfColumns + 1 ; i ++ ) { 
+		    	dataHeaders += "," + meta.getColumnName(i);
+		    }
+		    csvWriter.println(dataHeaders) ;
+		    while (rs.next()) {
+		    	String row = rs.getString(1); 
+		        for (int i = 2 ; i < numberOfColumns + 1 ; i ++ ) {
+		        	row += "," + rs.getString(i);
+		        }
+		        csvWriter.println(row) ;
+		    }
+		    csvWriter.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void createTable(){
 		System.out.println("Creating table in given database...");
 		try {
 			stmt = conn.createStatement();
-			String sql = "CREATE TABLE IF NOT EXISTS "+tableName + " (ID int, Timestep VarChar(8), Units VarChar(20), Date DATE, Variable VarChar(40), Kind VarChar(30), Value Double)";
+			String sql = "CREATE TABLE IF NOT EXISTS "+tableName + " (ID int, Timestep VarChar(8), Units VarChar(20), Date_Time DATE, Variable VarChar(40), Kind VarChar(30), Value Double)";
 			stmt.executeUpdate(sql);
+			
+			sql = "SELECT COUNT(*) as rowcount FROM INFORMATION_SCHEMA.STATISTICS WHERE table_schema = '"+database+"' AND table_name='"+tableName+"' AND index_name = 'Variable_Index'"; 
+			ResultSet rs = stmt.executeQuery(sql);
+			rs.next();
+			int count=rs.getInt("rowcount");
+			rs.close();
+			if (count>0){
+				sql="DROP INDEX Variable_Index ON "+tableName;
+				stmt.executeUpdate(sql);
+			}
 			System.out.println("Created table in given database");
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -157,23 +201,17 @@ public class MySQLRWriter{
 		System.out.println("Writing output to CSV file");
 		String host=URL.toLowerCase().replaceFirst("jdbc:mysql://", "");
 		host="\\\\"+host.substring(0, host.lastIndexOf(":"));
-		if (host.equals("\\\\localhost")){
-			int index = FilePaths.fullDvarDssPath.lastIndexOf(".");
-			csvRemotePath = FilePaths.fullDvarDssPath.substring(0, index)+".csv";
-			csvLocalPath = csvRemotePath.replace("\\", "\\\\");
-		}else{
-			int index = FilePaths.fullDvarDssPath.lastIndexOf(".");
-			String csvFilePath = FilePaths.fullDvarDssPath.substring(0, index)+".csv";
-			csvFilePath=csvFilePath.replaceFirst(":", "");
-			csvLocalPath="G:\\\\tempCSV\\\\"+ControlData.USER+"\\\\"+csvFilePath.replace("\\", "\\\\");
-			csvRemotePath=host+"\\tempCSV\\"+ControlData.USER+"\\"+csvFilePath;
-		}
+		int index = FilePaths.fullDvarDssPath.lastIndexOf(".");
+		csvPath = FilePaths.fullDvarDssPath.substring(0, index)+".csv";
+		csvMySQLPath = csvPath.replace("\\", "\\\\");
 		
 		try {
-			csvFile= new File(csvRemotePath);
+			csvFile= new File(csvPath);
 			csvFile.getParentFile().mkdirs();
 			FileWriter fw = new FileWriter(csvFile);
 			BufferedWriter bw = new BufferedWriter(fw, 8192);
+			line="ID,Timestep,Units,Date_Time,Variable,Kind,Value\n";
+			bw.write(line);
 			Set<String> keys = DataTimeSeries.dvAliasTS.keySet();
 			Iterator<String> it = keys.iterator();
 			while (it.hasNext()){
@@ -183,7 +221,7 @@ public class MySQLRWriter{
 					String timestep=ts.getTimeStep().toUpperCase();
 					if (timestep.equals("1DAY")){
 						Date date = ts.getStartTime();
-						String unitsName=formUnitsName(ts);
+						String unitsName=formUnitsName(ts.getUnits());
 						String variableName=formVariableName(name);
 						String kindName=formKindName(ts.getKind());
 						double[] data = ts.getData();
@@ -194,12 +232,76 @@ public class MySQLRWriter{
 						}
 					}else{
 						Date date = ts.getStartTime();
-						String unitsName=formUnitsName(ts);
+						String unitsName=formUnitsName(ts.getUnits());
 						String variableName=formVariableName(name);
 						String kindName=formKindName(ts.getKind());
 						double[] data = ts.getData();
 						for (int i=0; i<data.length; i++){
 							line = scenarioIndex+",1MON,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+data[i]+"\n";
+							bw.write(line);
+							date=addOneMonth(date);
+						}
+					}
+				}
+			}
+			keys = DataTimeSeries.svTS.keySet();
+			it = keys.iterator();
+			while (it.hasNext()){
+				String name=it.next();
+				if (!name.startsWith(slackPrefix) && !name.startsWith(surplusPrefix)){
+					DssDataSet ts = DataTimeSeries.svTS.get(name);
+					String timestep=ts.getTimeStep().toUpperCase();
+					if (timestep.equals("1DAY")){
+						Date date = ts.getStartTime();
+						String unitsName=formUnitsName(ts.getUnits());
+						String variableName=formVariableName(name);
+						String kindName=formKindName(ts.getKind());
+						ArrayList<Double> data = ts.getData();
+						for (int i=0; i<data.size(); i++){
+							line = scenarioIndex+",1DAY,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+data.get(i)+"\n";
+							bw.write(line);
+							date=addOneDay(date);
+						}
+					}else{
+						Date date = ts.getStartTime();
+						String unitsName=formUnitsName(ts.getUnits());
+						String variableName=formVariableName(name);
+						String kindName=formKindName(ts.getKind());
+						ArrayList<Double> data = ts.getData();
+						for (int i=0; i<data.size(); i++){
+							line = scenarioIndex+",1MON,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+data.get(i)+"\n";
+							bw.write(line);
+							date=addOneMonth(date);
+						}
+					}
+				}
+			}
+			keys = DataTimeSeries.dvAliasInit.keySet();
+			it = keys.iterator();
+			while (it.hasNext()){
+				String name=it.next();
+				if (!name.startsWith(slackPrefix) && !name.startsWith(surplusPrefix)){
+					DssDataSet ts = DataTimeSeries.dvAliasInit.get(name);
+					String timestep=ts.getTimeStep().toUpperCase();
+					if (timestep.equals("1DAY")){
+						Date date = ts.getStartTime();
+						String unitsName=formUnitsName(ts.getUnits());
+						String variableName=formVariableName(name);
+						String kindName=formKindName(ts.getKind());
+						ArrayList<Double> data = ts.getData();
+						for (int i=0; i<data.size(); i++){
+							line = scenarioIndex+",1DAY,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+data.get(i)+"\n";
+							bw.write(line);
+							date=addOneDay(date);
+						}
+					}else{
+						Date date = ts.getStartTime();
+						String unitsName=formUnitsName(ts.getUnits());
+						String variableName=formVariableName(name);
+						String kindName=formKindName(ts.getKind());
+						ArrayList<Double> data = ts.getData();
+						for (int i=0; i<data.size(); i++){
+							line = scenarioIndex+",1MON,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+data.get(i)+"\n";
 							bw.write(line);
 							date=addOneMonth(date);
 						}
@@ -219,7 +321,7 @@ public class MySQLRWriter{
 		try {
 			System.out.println("Importing output into table...");
 			stmt = conn.createStatement();
-			String sql = "LOAD DATA LOCAL INFILE '"+csvLocalPath+"' INTO TABLE " + tableName + " CHARACTER SET UTF8 FIELDS TERMINATED BY ',' ENCLOSED BY '\"' LINES TERMINATED BY '\n'";
+			String sql = "LOAD DATA LOCAL INFILE '"+csvMySQLPath+"' INTO TABLE " + tableName + " CHARACTER SET UTF8 FIELDS TERMINATED BY ',' ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 LINES";
 			stmt.executeUpdate(sql);
 			System.out.println("Imported output into table");
 		} catch (SQLException e) {
@@ -227,9 +329,9 @@ public class MySQLRWriter{
 		} 
 	}
 	
-	public String formUnitsName(DssDataSetFixLength ts){
-		String units=ts.getUnits().replaceAll("/", "_").replaceAll("-", "_");
-		return units;
+	public String formUnitsName(String units){
+		String newUnits=units.replaceAll("/", "_").replaceAll("-", "_");
+		return newUnits;
 	}
 	
 	public String formVariableName(String name){
@@ -267,11 +369,30 @@ public class MySQLRWriter{
 		return newDate;
 	}
 	
+	public void createIndex(){
+		try {
+			System.out.println("Creating Table Index...");
+			stmt = conn.createStatement();
+			String sql = "SELECT COUNT(*) as rowcount FROM INFORMATION_SCHEMA.STATISTICS WHERE table_schema = '"+database+"' AND table_name='"+tableName+"' AND index_name = 'Variable_Index'"; 
+			ResultSet rs = stmt.executeQuery(sql);
+			rs.next();
+			int count=rs.getInt("rowcount");
+			rs.close();
+			if (count==0){
+				sql="CREATE INDEX Variable_Index ON "+tableName+" (ID, Variable)";
+				stmt.executeUpdate(sql);
+			}
+			System.out.println("Created Table Index");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void close(){
 		try {
 			stmt.close();
 			conn.close();
-			if (csvFile.exists()) csvFile.delete();
+			//if (csvFile.exists()) csvFile.delete();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
