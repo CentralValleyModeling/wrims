@@ -46,6 +46,7 @@ public class MySQLRWriter{
 	private String csvPath;
 	private String csvMySQLPath;
 	private File csvFile;
+	private boolean outputMissingValue = true;
 	
 	public MySQLRWriter(){   
 		connectToDataBase();
@@ -64,7 +65,7 @@ public class MySQLRWriter{
 		createIndex();
 		close();
 	}
-	
+		
 	public void connectToDataBase(){	
 		
 		try {
@@ -216,7 +217,8 @@ public class MySQLRWriter{
 			Iterator<String> it = keys.iterator();
 			while (it.hasNext()){
 				String name=it.next();
-				if (!name.startsWith(slackPrefix) && !name.startsWith(surplusPrefix)){
+				String nameLow=name.toLowerCase();
+				if (!nameLow.startsWith(slackPrefix) && !nameLow.startsWith(surplusPrefix)){
 					DssDataSetFixLength ts = DataTimeSeries.dvAliasTS.get(name);
 					String timestep=ts.getTimeStep().toUpperCase();
 					if (timestep.equals("1DAY")){
@@ -226,8 +228,16 @@ public class MySQLRWriter{
 						String kindName=formKindName(ts.getKind());
 						double[] data = ts.getData();
 						for (int i=0; i<data.length; i++){
-							line = scenarioIndex+",1DAY,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+data[i]+"\n";
-							bw.write(line);
+							double value = data[i];
+							if (value != -901.0 && value !=-902.0){
+								line = scenarioIndex+",1DAY,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+ value +"\n";
+								bw.write(line);
+							}else{
+								if (outputMissingValue){
+									line = scenarioIndex+",1DAY,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+ value +"\n";
+									bw.write(line);
+								}
+							}
 							date=addOneDay(date);
 						}
 					}else{
@@ -237,8 +247,16 @@ public class MySQLRWriter{
 						String kindName=formKindName(ts.getKind());
 						double[] data = ts.getData();
 						for (int i=0; i<data.length; i++){
-							line = scenarioIndex+",1MON,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+data[i]+"\n";
-							bw.write(line);
+							double value = data[i];
+							if (value != -901.0 && value !=-902.0){
+								line = scenarioIndex+",1MON,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+ value +"\n";
+								bw.write(line);
+							}else{
+								if (outputMissingValue){
+									line = scenarioIndex+",1MON,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+ value +"\n";
+									bw.write(line);
+								}
+							}
 							date=addOneMonth(date);
 						}
 					}
@@ -248,7 +266,8 @@ public class MySQLRWriter{
 			it = keys.iterator();
 			while (it.hasNext()){
 				String name=it.next();
-				if (!name.startsWith(slackPrefix) && !name.startsWith(surplusPrefix)){
+				String nameLow=name.toLowerCase();
+				if (!nameLow.startsWith(slackPrefix) && !nameLow.startsWith(surplusPrefix)){
 					DssDataSet ts = DataTimeSeries.svTS.get(name);
 					String timestep=ts.getTimeStep().toUpperCase();
 					if (timestep.equals("1DAY")){
@@ -258,8 +277,11 @@ public class MySQLRWriter{
 						String kindName=formKindName(ts.getKind());
 						ArrayList<Double> data = ts.getData();
 						for (int i=0; i<data.size(); i++){
-							line = scenarioIndex+",1DAY,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+data.get(i)+"\n";
-							bw.write(line);
+							double value = data.get(i);
+							if (value != -901.0 && value !=-902.0){
+								line = scenarioIndex+",1DAY,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+ value +"\n";
+								bw.write(line);
+							}
 							date=addOneDay(date);
 						}
 					}else{
@@ -269,8 +291,11 @@ public class MySQLRWriter{
 						String kindName=formKindName(ts.getKind());
 						ArrayList<Double> data = ts.getData();
 						for (int i=0; i<data.size(); i++){
-							line = scenarioIndex+",1MON,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+data.get(i)+"\n";
-							bw.write(line);
+							double value = data.get(i);
+							if (value != -901.0 && value !=-902.0){
+								line = scenarioIndex+",1MON,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+value+"\n";
+								bw.write(line);
+							}
 							date=addOneMonth(date);
 						}
 					}
@@ -280,7 +305,8 @@ public class MySQLRWriter{
 			it = keys.iterator();
 			while (it.hasNext()){
 				String name=it.next();
-				if (!name.startsWith(slackPrefix) && !name.startsWith(surplusPrefix)){
+				String nameLow=name.toLowerCase();
+				if (!nameLow.startsWith(slackPrefix) && !nameLow.startsWith(surplusPrefix)){
 					DssDataSet ts = DataTimeSeries.dvAliasInit.get(name);
 					String timestep=ts.getTimeStep().toUpperCase();
 					if (timestep.equals("1DAY")){
@@ -290,8 +316,11 @@ public class MySQLRWriter{
 						String kindName=formKindName(ts.getKind());
 						ArrayList<Double> data = ts.getData();
 						for (int i=0; i<data.size(); i++){
-							line = scenarioIndex+",1DAY,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+data.get(i)+"\n";
-							bw.write(line);
+							double value = data.get(i);
+							if (value != -901.0 && value !=-902.0){
+								line = scenarioIndex+",1DAY,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+value+"\n";
+								bw.write(line);
+							}
 							date=addOneDay(date);
 						}
 					}else{
@@ -301,8 +330,11 @@ public class MySQLRWriter{
 						String kindName=formKindName(ts.getKind());
 						ArrayList<Double> data = ts.getData();
 						for (int i=0; i<data.size(); i++){
-							line = scenarioIndex+",1MON,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+data.get(i)+"\n";
-							bw.write(line);
+							double value = data.get(i);
+							if (value != -901.0 && value !=-902.0){
+								line = scenarioIndex+",1MON,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+value+"\n";
+								bw.write(line);
+							}
 							date=addOneMonth(date);
 						}
 					}
@@ -396,5 +428,9 @@ public class MySQLRWriter{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void setOutputMissingValue(boolean outputMissingValue){
+		this.outputMissingValue =outputMissingValue;
 	}
 }
