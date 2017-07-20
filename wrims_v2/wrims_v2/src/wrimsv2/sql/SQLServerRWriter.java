@@ -49,7 +49,8 @@ public class SQLServerRWriter{
 	private String csvLocalPath;
 	private File csvFile;
 	private String host;
-	public boolean outputMissingValue=true;
+	
+	public boolean isSimOutput=true;
 	
 	public SQLServerRWriter(){   
 		connectToDataBase();
@@ -216,21 +217,22 @@ public class SQLServerRWriter{
 				String name=it.next();
 				String nameLow=name.toLowerCase();
 				if (!nameLow.startsWith(slackPrefix) && !nameLow.startsWith(surplusPrefix)){
-					DssDataSetFixLength ts = DataTimeSeries.dvAliasTS.get(name);
-					String timestep=ts.getTimeStep().toUpperCase();
+					DssDataSetFixLength dds = DataTimeSeries.dvAliasTS.get(name);
+					String timestep=dds.getTimeStep().toUpperCase();
+					Date date = dds.getStartTime();
+					String unitsName=formUnitsName(dds.getUnits());
+					String variableName=formVariableName(name);
+					String kindName=formKindName(dds.getKind());
+					double[] data = dds.getData();
 					if (timestep.equals("1DAY")){
-						Date date = ts.getStartTime();
-						String unitsName=formUnitsName(ts.getUnits());
-						String variableName=formVariableName(name);
-						String kindName=formKindName(ts.getKind());
-						double[] data = ts.getData();
+						if (!isSimOutput) date=backOneDay(date);
 						for (int i=0; i<data.length; i++){
 							double value = data[i];
 							if (value != -901.0 && value !=-902.0){
 								line = scenarioIndex+",1DAY,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+ value +"\n";
 								bw.write(line);
 							}else{
-								if (outputMissingValue){
+								if (isSimOutput){
 									line = scenarioIndex+",1DAY,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+ value +"\n";
 									bw.write(line);
 								}
@@ -238,18 +240,14 @@ public class SQLServerRWriter{
 							date=addOneDay(date);
 						}
 					}else{
-						Date date = ts.getStartTime();
-						String unitsName=formUnitsName(ts.getUnits());
-						String variableName=formVariableName(name);
-						String kindName=formKindName(ts.getKind());
-						double[] data = ts.getData();
+						if (!isSimOutput) date=backOneMonth(date);
 						for (int i=0; i<data.length; i++){
 							double value = data[i];
 							if (value != -901.0 && value !=-902.0){
 								line = scenarioIndex+",1MON,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+ value +"\n";
 								bw.write(line);
 							}else{
-								if (outputMissingValue){
+								if (isSimOutput){
 									line = scenarioIndex+",1MON,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+ value +"\n";
 									bw.write(line);
 								}
@@ -265,32 +263,31 @@ public class SQLServerRWriter{
 				String name=it.next();
 				String nameLow=name.toLowerCase();
 				if (!nameLow.startsWith(slackPrefix) && !nameLow.startsWith(surplusPrefix)){
-					DssDataSet ts = DataTimeSeries.svTS.get(name);
-					String timestep=ts.getTimeStep().toUpperCase();
+					DssDataSet dds = DataTimeSeries.svTS.get(name);
+					String timestep=dds.getTimeStep().toUpperCase();
+					String units=dds.getUnits();
+					String unitsName=formUnitsName(units);
+					String convertToUnits = dds.getConvertToUnits();
+					Date date = dds.getStartTime();
+					String variableName=formVariableName(name);
+					String kindName=formKindName(dds.getKind());
+					ArrayList<Double> data = dds.getData();
 					if (timestep.equals("1DAY")){
-						Date date = ts.getStartTime();
-						String unitsName=formUnitsName(ts.getUnits());
-						String variableName=formVariableName(name);
-						String kindName=formKindName(ts.getKind());
-						ArrayList<Double> data = ts.getData();
+						date=backOneDay(date);
 						for (int i=0; i<data.size(); i++){
 							double value = data.get(i);
 							if (value != -901.0 && value !=-902.0){
-								line = scenarioIndex+",1DAY,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+ value +"\n";
+								line = scenarioIndex+",1DAY,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+ convertValue(value, units, convertToUnits, date, timestep) +"\n";
 								bw.write(line);
 							}
 							date=addOneDay(date);
 						}
 					}else{
-						Date date = ts.getStartTime();
-						String unitsName=formUnitsName(ts.getUnits());
-						String variableName=formVariableName(name);
-						String kindName=formKindName(ts.getKind());
-						ArrayList<Double> data = ts.getData();
+						date=backOneMonth(date);
 						for (int i=0; i<data.size(); i++){
 							double value = data.get(i);
 							if (value != -901.0 && value !=-902.0){
-								line = scenarioIndex+",1MON,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+value+"\n";
+								line = scenarioIndex+",1MON,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+convertValue(value, units, convertToUnits, date, timestep)+"\n";
 								bw.write(line);
 							}
 							date=addOneMonth(date);
@@ -304,32 +301,31 @@ public class SQLServerRWriter{
 				String name=it.next();
 				String nameLow=name.toLowerCase();
 				if (!nameLow.startsWith(slackPrefix) && !nameLow.startsWith(surplusPrefix)){
-					DssDataSet ts = DataTimeSeries.dvAliasInit.get(name);
-					String timestep=ts.getTimeStep().toUpperCase();
+					DssDataSet dds = DataTimeSeries.dvAliasInit.get(name);
+					String timestep=dds.getTimeStep().toUpperCase();
+					Date date = dds.getStartTime();
+					String units=dds.getUnits();
+					String unitsName=formUnitsName(units);
+					String convertToUnits=dds.getConvertToUnits();
+					String variableName=formVariableName(name);
+					String kindName=formKindName(dds.getKind());
+					ArrayList<Double> data = dds.getData();
 					if (timestep.equals("1DAY")){
-						Date date = ts.getStartTime();
-						String unitsName=formUnitsName(ts.getUnits());
-						String variableName=formVariableName(name);
-						String kindName=formKindName(ts.getKind());
-						ArrayList<Double> data = ts.getData();
+						date=backOneDay(date);
 						for (int i=0; i<data.size(); i++){
 							double value = data.get(i);
 							if (value != -901.0 && value !=-902.0){
-								line = scenarioIndex+",1DAY,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+value+"\n";
+								line = scenarioIndex+",1DAY,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+convertValue(value, units, convertToUnits, date, timestep)+"\n";
 								bw.write(line);
 							}
 							date=addOneDay(date);
 						}
 					}else{
-						Date date = ts.getStartTime();
-						String unitsName=formUnitsName(ts.getUnits());
-						String variableName=formVariableName(name);
-						String kindName=formKindName(ts.getKind());
-						ArrayList<Double> data = ts.getData();
+						date=backOneMonth(date);
 						for (int i=0; i<data.size(); i++){
 							double value = data.get(i);
 							if (value != -901.0 && value !=-902.0){
-								line = scenarioIndex+",1MON,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+value+"\n";
+								line = scenarioIndex+",1MON,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+convertValue(value, units, convertToUnits, date, timestep)+"\n";
 								bw.write(line);
 							}
 							date=addOneMonth(date);
@@ -404,6 +400,24 @@ public class SQLServerRWriter{
 		return newDate;
 	}
 	
+	public Date backOneMonth(Date date){
+		int month=date.getMonth()-1;
+		int year=date.getYear();
+		if (month<0){
+			month=month+12;
+			year=year-1;
+		}
+		int day=TimeOperation.numberOfDays(month+1, year+1900);
+		Date newDate = new Date(year, month, day);
+		return newDate;
+	}
+	
+	public Date backOneDay(Date date){
+		long newTime=date.getTime()-1 * 24 * 60 * 60 * 1000l;
+		Date newDate = new Date (newTime);
+		return newDate;
+	}
+	
 	public void createIndex(){
 		try {
 			System.out.println("Creating Table Index...");
@@ -426,7 +440,39 @@ public class SQLServerRWriter{
 		}
 	}
 	
-	public void setOutputMissingValue(boolean outputMissingValue){
-		this.outputMissingValue=outputMissingValue;
+	public void setSimOutput(boolean isSimOutput){
+		this.isSimOutput=isSimOutput;
+	}
+	
+	public double convertValue(double value, String units, String convertToUnits, Date date, String timestep){
+		if (units.equalsIgnoreCase("cfs") && convertToUnits.equalsIgnoreCase("taf")){
+			return value*factorTafToCfs(date, timestep);
+		}else if (units.equalsIgnoreCase("taf") && convertToUnits.equalsIgnoreCase("cfs")){
+			return value*factorCfsToTaf(date, timestep);
+		}else{
+			return value;
+		}
+	}
+	
+	public double factorTafToCfs(Date date, String timestep){
+		if (timestep.equals("1MON")){
+			int year=date.getYear()+1900;
+			int month=date.getMonth()+1;
+			int daysInMonth=TimeOperation.numberOfDays(month, year);
+			return 504.1666667 / daysInMonth;
+		}else{
+			return 504.1666667;
+		}
+	}
+	
+	public double factorCfsToTaf(Date date, String timestep){
+		if (timestep.equals("1MON")){
+			int year=date.getYear()+1900;
+			int month=date.getMonth()+1;
+			int daysInMonth=TimeOperation.numberOfDays(month, year);
+			return daysInMonth / 504.1666667;
+		}else{
+			return 1 / 504.1666667;
+		}
 	}
 }

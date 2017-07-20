@@ -9,6 +9,7 @@ public class DssDataSet {
 	private ArrayList<Double> data;
 	private String timeStep;
 	private String units;
+	private String convertToUnits="";
 	private String kind;
 	private Date startTime;
 	private boolean fromDssFile=false;
@@ -48,6 +49,14 @@ public class DssDataSet {
 	
 	public void setUnits(String units){
 		this.units=units;
+	}
+	
+	public String getConvertToUnits(){
+		return convertToUnits;
+	}
+	
+	public void setConvertToUnits(String convertToUnits){
+		this.convertToUnits=convertToUnits;
 	}
 	
 	public String getUnits(){
