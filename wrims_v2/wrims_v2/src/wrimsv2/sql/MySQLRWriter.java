@@ -259,8 +259,8 @@ public class MySQLRWriter{
 					}
 				}
 			}
-			keys = DataTimeSeries.svTS.keySet();
-			it = keys.iterator();
+			Set<String> svKeys = DataTimeSeries.svTS.keySet();
+			it = svKeys.iterator();
 			while (it.hasNext()){
 				String name=it.next();
 				String nameLow=name.toLowerCase();
@@ -301,36 +301,78 @@ public class MySQLRWriter{
 			it = keys.iterator();
 			while (it.hasNext()){
 				String name=it.next();
-				String nameLow=name.toLowerCase();
-				if (!nameLow.startsWith(slackPrefix) && !nameLow.startsWith(surplusPrefix)){
-					DssDataSet dds = DataTimeSeries.dvAliasInit.get(name);
-					String timestep=dds.getTimeStep().toUpperCase();
-					Date date = dds.getStartTime();
-					String units=dds.getUnits();
-					String unitsName=formUnitsName(units);
-					String convertToUnits=dds.getConvertToUnits();
-					String variableName=formVariableName(name);
-					String kindName=formKindName(dds.getKind());
-					ArrayList<Double> data = dds.getData();
-					if (timestep.equals("1DAY")){
-						date=backOneDay(date);
-						for (int i=0; i<data.size(); i++){
-							double value = data.get(i);
-							if (value != -901.0 && value !=-902.0){
-								line = scenarioIndex+",1DAY,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+convertValue(value, units, convertToUnits, date, timestep)+"\n";
-								bw.write(line);
+				if (isSimOutput || svKeys.contains(name)){
+					String nameLow=name.toLowerCase();
+					if (!nameLow.startsWith(slackPrefix) && !nameLow.startsWith(surplusPrefix)){
+						DssDataSet dds = DataTimeSeries.dvAliasInit.get(name);
+						String timestep=dds.getTimeStep().toUpperCase();
+						Date date = dds.getStartTime();
+						String units=dds.getUnits();
+						String unitsName=formUnitsName(units);
+						String convertToUnits=dds.getConvertToUnits();
+						String variableName=formVariableName(name);
+						String kindName=formKindName(dds.getKind());
+						ArrayList<Double> data = dds.getData();
+						if (timestep.equals("1DAY")){
+							date=backOneDay(date);
+							for (int i=0; i<data.size(); i++){
+								double value = data.get(i);
+								if (value != -901.0 && value !=-902.0){
+									line = scenarioIndex+",1DAY,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+convertValue(value, units, convertToUnits, date, timestep)+"\n";
+									bw.write(line);
+								}
+								date=addOneDay(date);
 							}
-							date=addOneDay(date);
+						}else{
+							date=backOneMonth(date);
+							for (int i=0; i<data.size(); i++){
+								double value = data.get(i);
+								if (value != -901.0 && value !=-902.0){
+									line = scenarioIndex+",1MON,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+convertValue(value, units, convertToUnits, date, timestep)+"\n";
+									bw.write(line);
+								}
+								date=addOneMonth(date);
+							}
 						}
-					}else{
-						date=backOneMonth(date);
-						for (int i=0; i<data.size(); i++){
-							double value = data.get(i);
-							if (value != -901.0 && value !=-902.0){
-								line = scenarioIndex+",1MON,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+convertValue(value, units, convertToUnits, date, timestep)+"\n";
-								bw.write(line);
+					}
+				}
+			}
+			if (isSimOutput){
+				keys = DataTimeSeries.svInit.keySet();
+				it = keys.iterator();
+				while (it.hasNext()){
+					String name=it.next();
+					String nameLow=name.toLowerCase();
+					if (!nameLow.startsWith(slackPrefix) && !nameLow.startsWith(surplusPrefix)){
+						DssDataSet dds = DataTimeSeries.svInit.get(name);
+						String timestep=dds.getTimeStep().toUpperCase();
+						Date date = dds.getStartTime();
+						String units=dds.getUnits();
+						String unitsName=formUnitsName(units);
+						String convertToUnits=dds.getConvertToUnits();
+						String variableName=formVariableName(name);
+						String kindName=formKindName(dds.getKind());
+						ArrayList<Double> data = dds.getData();
+						if (timestep.equals("1DAY")){
+							date=backOneDay(date);
+							for (int i=0; i<data.size(); i++){
+								double value = data.get(i);
+								if (value != -901.0 && value !=-902.0){
+									line = scenarioIndex+",1DAY,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+convertValue(value, units, convertToUnits, date, timestep)+"\n";
+									bw.write(line);
+								}
+								date=addOneDay(date);
 							}
-							date=addOneMonth(date);
+						}else{
+							date=backOneMonth(date);
+							for (int i=0; i<data.size(); i++){
+								double value = data.get(i);
+								if (value != -901.0 && value !=-902.0){
+									line = scenarioIndex+",1MON,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+convertValue(value, units, convertToUnits, date, timestep)+"\n";
+									bw.write(line);
+								}
+								date=addOneMonth(date);
+							}
 						}
 					}
 				}

@@ -7,20 +7,28 @@ import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.PlatformUI;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+import wrimsv2_plugin.debugger.dialog.WPPDssToSqlDialog;
 import wrimsv2_plugin.debugger.exception.WPPException;
 
 public class WPPSQLTab extends AbstractLaunchConfigurationTab {
 
 	private Text databaseURLText;
 	private Text groupText;
+	private Button dssConvert;
 
 	@Override
 	public void createControl(Composite parent) {
@@ -73,7 +81,26 @@ public class WPPSQLTab extends AbstractLaunchConfigurationTab {
 				updateLaunchConfigurationDialog();
 			}
 		});
-		
+	
+		dssConvert = new Button(comp, SWT.NONE);
+		dssConvert.setText("&Convert from DSS");
+		gd = new GridData(GridData.BEGINNING);
+		gd.horizontalSpan=2;
+		dssConvert.setLayoutData(gd);
+		dssConvert.setFont(font);
+		dssConvert.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				final IWorkbench workbench=PlatformUI.getWorkbench();
+				workbench.getDisplay().asyncExec(new Runnable(){
+					public void run(){
+						Shell shell=workbench.getActiveWorkbenchWindow().getShell();
+						WPPDssToSqlDialog dialog = new WPPDssToSqlDialog(shell, databaseURLText.getText(), groupText.getText());
+						dialog.openDialog();
+					}
+				});
+			}
+		});
 	}
 
 	@Override
