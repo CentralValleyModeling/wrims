@@ -82,6 +82,7 @@ public class DssOperation {
 			}
 		}
 		dds.setUnits(ts.units);
+		dds.setConvertToUnits(ts.convertToUnits);
 		dds.setKind(partC);
         dds.setData(dataArray);
         dds.setTimeStep(rts.getTimeInterval().toString());
@@ -150,6 +151,7 @@ public class DssOperation {
 			}
 		}
 		dds.setUnits(ts.units);
+		dds.setConvertToUnits(ts.convertToUnits);
 		dds.setKind(ts.kind);
         dds.setData(dataArray);
         dds.setTimeStep(rts.getTimeInterval().toString());

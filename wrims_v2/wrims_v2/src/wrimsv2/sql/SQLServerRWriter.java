@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -24,10 +25,11 @@ import wrimsv2.evaluator.DssDataSet;
 import wrimsv2.evaluator.DssDataSetFixLength;
 import wrimsv2.evaluator.DssOperation;
 import wrimsv2.evaluator.TimeOperation;
+import wrimsv2.sql.socket.Client;
 
-public class MySQLRWriter{
+public class SQLServerRWriter{
 	
-	private String JDBC_DRIVER = "com.mysql.jdbc.Driver";       
+	private String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";       
     private String tableName = ControlData.sqlGroup;                 //input 
 	private String scenarioTableName="Scenario";
 	
@@ -43,12 +45,14 @@ public class MySQLRWriter{
 	private String slackPrefix="slack__";
 	private String surplusPrefix="surplus__";
 	
-	private String csvPath;
-	private String csvMySQLPath;
+	private String csvRemotePath;
+	private String csvLocalPath;
 	private File csvFile;
-	private boolean isSimOutput = true;
+	private String host;
 	
-	public MySQLRWriter(){   
+	public boolean isSimOutput=true;
+	
+	public SQLServerRWriter(){   
 		connectToDataBase();
 	}
 			
@@ -57,22 +61,24 @@ public class MySQLRWriter{
 			tableName=tableName+"_Studies";
 		}
 		setScenarioIndex();
-		createScenarioCSV();
 		createTable();
+		createScenarioCSV();
 		deleteOldData();
 		createCSV();
-		writeData();
+		if (transferCSV()){
+			writeData();
+		}
 		createIndex();
 		close();
 	}
-		
+	
 	public void connectToDataBase(){	
 		
 		try {
-			if (ControlData.databaseURL.contains("/")){
-				int index=ControlData.databaseURL.lastIndexOf("/");
+			if (ControlData.databaseURL.contains(";")){
+				int index=ControlData.databaseURL.lastIndexOf(";");
 				URL=ControlData.databaseURL.substring(0, index);
-				database=ControlData.databaseURL.substring(index+1);
+				database=ControlData.databaseURL.substring(index+14);
 			}else{
 				URL=ControlData.databaseURL;
 				database=ControlData.databaseURL;
@@ -82,7 +88,7 @@ public class MySQLRWriter{
 			System.out.println("Connecting to a selected database...");
 			conn = DriverManager.getConnection(URL, ControlData.USER, ControlData.PASS);
 			stmt = conn.createStatement();
-			String sql="CREATE DATABASE IF NOT EXISTS "+database;
+			String sql="IF (db_id('"+database+"') IS NULL) CREATE DATABASE "+database;
 			stmt.executeUpdate(sql);
 			sql="USE "+database;
 			stmt.executeUpdate(sql);
@@ -102,16 +108,16 @@ public class MySQLRWriter{
 		System.out.println("Setting scenario index...");
 		try {
 			stmt = conn.createStatement();
-			String sql = "CREATE TABLE IF NOT EXISTS "+scenarioTableName + " (ID Integer NOT NULL, Table_Name VarChar(40), Scenario VarChar(80), Part_A VarChar(20), Part_F VarChar(30), PRIMARY KEY(ID))";
+			String sql = "IF (object_id('"+scenarioTableName+"', 'U') IS NULL) CREATE TABLE "+ scenarioTableName + " (ID Integer NOT NULL, Table_Name VarChar(40), Scenario VarChar(80), Part_A VarChar(20), Part_F VarChar(30), PRIMARY KEY(ID))";
 			stmt.executeUpdate(sql);
 			sql="select ID FROM "+scenarioTableName+" WHERE TABLE_NAME='"+tableName+"' AND SCENARIO='"+scenarioName+"' AND PART_A='"+ControlData.partA+"' AND PART_F='"+ControlData.svDvPartF+"'";
 			ResultSet rs1 = stmt.executeQuery(sql);
 			if (!rs1.next()){
 				rs1.close();
-				sql="select count(*) AS rowcount from "+scenarioTableName;
+				sql="select count(*) AS rc from "+scenarioTableName;
 				ResultSet rs2 = stmt.executeQuery(sql);
 				rs2.next();
-				int count=rs2.getInt("rowcount");
+				int count=rs2.getInt("rc");
 				rs2.close();
 				if (count==0){
 					scenarioIndex=0;
@@ -167,18 +173,10 @@ public class MySQLRWriter{
 		System.out.println("Creating table in given database...");
 		try {
 			stmt = conn.createStatement();
-			String sql = "CREATE TABLE IF NOT EXISTS "+tableName + " (ID int, Timestep VarChar(8), Units VarChar(20), Date_Time DATE, Variable VarChar(40), Kind VarChar(30), Value Double)";
+			String sql = "IF (object_id('"+tableName+"', 'U') IS NULL) CREATE TABLE " + tableName + " (ID int, Timestep VarChar(8), Units VarChar(20), Date_Time smalldatetime, Variable VarChar(40), Kind VarChar(30), Value Float(8))";
 			stmt.executeUpdate(sql);
-			
-			sql = "SELECT COUNT(*) as rowcount FROM INFORMATION_SCHEMA.STATISTICS WHERE table_schema = '"+database+"' AND table_name='"+tableName+"' AND index_name = 'Variable_Index'"; 
-			ResultSet rs = stmt.executeQuery(sql);
-			rs.next();
-			int count=rs.getInt("rowcount");
-			rs.close();
-			if (count>0){
-				sql="DROP INDEX Variable_Index ON "+tableName;
-				stmt.executeUpdate(sql);
-			}
+			sql = "IF EXISTS (SELECT * FROM sys.indexes WHERE name = 'Variable_Index' AND object_id = OBJECT_ID('"+tableName+"')) DROP INDEX Variable_Index ON "+tableName;
+			stmt.executeUpdate(sql);
 			System.out.println("Created table in given database");
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -188,7 +186,7 @@ public class MySQLRWriter{
 	public void deleteOldData(){
 		try {
 			System.out.println("Deleting old data in table...");
-			Statement statement = conn.createStatement();
+			stmt = conn.createStatement();
 			String sql="DELETE FROM "+tableName+" WHERE ID="+scenarioIndex;
 			stmt.executeUpdate(sql);
 			System.out.println("Deleted old data in table");
@@ -199,15 +197,15 @@ public class MySQLRWriter{
 	
 	public void createCSV(){
 		String line;
-		System.out.println("Writing output to CSV file");
-		String host=URL.toLowerCase().replaceFirst("jdbc:mysql://", "");
-		host="\\\\"+host.substring(0, host.lastIndexOf(":"));
+		System.out.println("Writing output to CSV file...");
+		host=URL.toLowerCase().replaceFirst("jdbc:sqlserver://", "");
+		host= host.substring(0, host.lastIndexOf(":"));
 		int index = FilePaths.fullDvarDssPath.lastIndexOf(".");
-		csvPath = FilePaths.fullDvarDssPath.substring(0, index)+".csv";
-		csvMySQLPath = csvPath.replace("\\", "\\\\");
-		
+		csvLocalPath = FilePaths.fullDvarDssPath.substring(0, index)+".csv";
+		csvRemotePath = "G:\\tempCSV\\"+csvLocalPath.substring(csvLocalPath.lastIndexOf("\\") + 1, csvLocalPath.length());;
+				
 		try {
-			csvFile= new File(csvPath);
+			csvFile= new File(csvLocalPath);
 			csvFile.getParentFile().mkdirs();
 			FileWriter fw = new FileWriter(csvFile);
 			BufferedWriter bw = new BufferedWriter(fw, 8192);
@@ -386,16 +384,22 @@ public class MySQLRWriter{
 		System.out.println("Wrote output to CSV file");
 	}
 	
+	public boolean transferCSV(){
+		Client client=new Client();
+		client.connect(host, csvLocalPath);
+		return client.sendFile();
+	}
+	
 	public void writeData(){
 		try {
 			System.out.println("Importing output into table...");
 			stmt = conn.createStatement();
-			String sql = "LOAD DATA LOCAL INFILE '"+csvMySQLPath+"' INTO TABLE " + tableName + " CHARACTER SET UTF8 FIELDS TERMINATED BY ',' ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 LINES";
+			String sql = "Bulk INSERT "+tableName+" From '"+csvRemotePath+"' WITH (FIELDTERMINATOR=',', ROWTERMINATOR='\n', FIRSTROW=2)";
 			stmt.executeUpdate(sql);
 			System.out.println("Imported output into table");
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} 
+		}
 	}
 	
 	public String formUnitsName(String units){
@@ -417,7 +421,7 @@ public class MySQLRWriter{
 		int year=date.getYear()+1900;
 		int month=date.getMonth()+1;
 		int day = date.getDate();
-		return year+"-"+TimeOperation.monthNameNumeric(month)+"-"+TimeOperation.dayName(day);
+		return year+"-"+TimeOperation.monthNameNumeric(month)+"-"+TimeOperation.dayName(day)+" 00:00:00";
 	}
 	
 	public Date addOneMonth(Date date){
@@ -460,15 +464,8 @@ public class MySQLRWriter{
 		try {
 			System.out.println("Creating Table Index...");
 			stmt = conn.createStatement();
-			String sql = "SELECT COUNT(*) as rowcount FROM INFORMATION_SCHEMA.STATISTICS WHERE table_schema = '"+database+"' AND table_name='"+tableName+"' AND index_name = 'Variable_Index'"; 
-			ResultSet rs = stmt.executeQuery(sql);
-			rs.next();
-			int count=rs.getInt("rowcount");
-			rs.close();
-			if (count==0){
-				sql="CREATE INDEX Variable_Index ON "+tableName+" (ID, Variable)";
-				stmt.executeUpdate(sql);
-			}
+			String sql = "IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'Variable_Index' AND object_id = OBJECT_ID('"+tableName+"')) CREATE INDEX Variable_Index ON "+tableName+" (ID, Variable)";
+			stmt.executeUpdate(sql);
 			System.out.println("Created Table Index");
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -486,7 +483,7 @@ public class MySQLRWriter{
 	}
 	
 	public void setSimOutput(boolean isSimOutput){
-		this.isSimOutput = isSimOutput;
+		this.isSimOutput=isSimOutput;
 	}
 	
 	public double convertValue(double value, String units, String convertToUnits, Date date, String timestep){

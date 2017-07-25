@@ -17,9 +17,9 @@ import wrimsv2.evaluator.DssDataSetFixLength;
 import wrimsv2.evaluator.DssOperation;
 import wrimsv2.evaluator.TimeOperation;
 
-public class MySQLRWriterAlt{
+public class SQLServerRWriterAlt{
 	
-	private String JDBC_DRIVER = "com.mysql.jdbc.Driver";       
+	private String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";       
     private String tableName = ControlData.sqlGroup;                 //input 
 	private String scenarioTableName="Scenario";
 	
@@ -35,7 +35,7 @@ public class MySQLRWriterAlt{
 	private String slackPrefix="slack__";
 	private String surplusPrefix="surplus__";
 	
-	public MySQLRWriterAlt(){   
+	public SQLServerRWriterAlt(){   
 		connectToDataBase();
 	}
 			
@@ -53,10 +53,10 @@ public class MySQLRWriterAlt{
 	public void connectToDataBase(){	
 		
 		try {
-			if (ControlData.databaseURL.contains("/")){
-				int index=ControlData.databaseURL.lastIndexOf("/");
+			if (ControlData.databaseURL.contains(";")){
+				int index=ControlData.databaseURL.lastIndexOf(";");
 				URL=ControlData.databaseURL.substring(0, index);
-				database=ControlData.databaseURL.substring(index+1);
+				database=ControlData.databaseURL.substring(index+14);
 			}else{
 				URL=ControlData.databaseURL;
 				database=ControlData.databaseURL;
@@ -66,7 +66,7 @@ public class MySQLRWriterAlt{
 			System.out.println("Connecting to a selected database...");
 			conn = DriverManager.getConnection(URL, ControlData.USER, ControlData.PASS);
 			stmt = conn.createStatement();
-			String sql="CREATE DATABASE IF NOT EXISTS "+database;
+			String sql="IF (db_id('"+database+"') IS NULL) CREATE DATABASE "+database;
 			stmt.executeUpdate(sql);
 			sql="USE "+database;
 			stmt.executeUpdate(sql);
@@ -86,16 +86,16 @@ public class MySQLRWriterAlt{
 		System.out.println("Setting scenario index...");
 		try {
 			stmt = conn.createStatement();
-			String sql = "CREATE TABLE IF NOT EXISTS "+scenarioTableName + " (ID Integer NOT NULL, Table_Name VarChar(40), Scenario VarChar(80), Part_A VarChar(20), Part_F VarChar(30), PRIMARY KEY(ID))";
+			String sql = "IF (object_id('"+scenarioTableName+"', 'U') IS NULL) CREATE TABLE "+ scenarioTableName + " (ID Integer NOT NULL, Table_Name VarChar(40), Scenario VarChar(80), Part_A VarChar(20), Part_F VarChar(30), PRIMARY KEY(ID))";
 			stmt.executeUpdate(sql);
 			sql="select ID FROM "+scenarioTableName+" WHERE TABLE_NAME='"+tableName+"' AND SCENARIO='"+scenarioName+"' AND PART_A='"+ControlData.partA+"' AND PART_F='"+ControlData.svDvPartF+"'";
 			ResultSet rs1 = stmt.executeQuery(sql);
 			if (!rs1.next()){
 				rs1.close();
-				sql="select count(*) AS rowcount from "+scenarioTableName;
+				sql="select count(*) AS rc from "+scenarioTableName;
 				ResultSet rs2 = stmt.executeQuery(sql);
 				rs2.next();
-				int count=rs2.getInt("rowcount");
+				int count=rs2.getInt("rc");
 				rs2.close();
 				if (count==0){
 					scenarioIndex=0;
@@ -123,7 +123,7 @@ public class MySQLRWriterAlt{
 		System.out.println("Creating table in given database...");
 		try {
 			stmt = conn.createStatement();
-			String sql = "CREATE TABLE IF NOT EXISTS "+tableName + " (ID int, Timestep VarChar(8), Units VarChar(20), Date DATE, Variable VarChar(40), Kind VarChar(30), Value Double)";
+			String sql = "IF (object_id('"+tableName+"', 'U') IS NULL) CREATE TABLE " + tableName + " (ID int, Timestep VarChar(8), Units VarChar(20), Date_Time smalldatetime, Variable VarChar(40), Kind VarChar(30), Value Float(8))";
 			stmt.executeUpdate(sql);
 			System.out.println("Created table in given database");
 		} catch (SQLException e) {
@@ -145,8 +145,10 @@ public class MySQLRWriterAlt{
 	
 	public void writeData(){
 		try {
+			final int batchSize=1000;
+			int count=0;
 			System.out.println("Writing output in table...");
-			Statement statement = conn.createStatement();
+			stmt = conn.createStatement();
 			Set<String> keys = DataTimeSeries.dvAliasTS.keySet();
 			Iterator<String> it = keys.iterator();
 			while (it.hasNext()){
@@ -155,38 +157,34 @@ public class MySQLRWriterAlt{
 					DssDataSetFixLength ts = DataTimeSeries.dvAliasTS.get(name);
 					String timestep=ts.getTimeStep().toUpperCase();
 					if (timestep.equals("1DAY")){
-						String sql="INSERT into "+tableName+" VALUES ";
 						Date date = ts.getStartTime();
 						String unitsName=formUnitsName(ts);
 						String variableName=formVariableName(name);
 						String kindName=formKindName(ts.getKind());
 						double[] data = ts.getData();
 						for (int i=0; i<data.length; i++){
-							sql=sql +"("+ scenarioIndex+", '1DAY', '"+unitsName+"', '"+formDateData(date)+"', '"+variableName+"', '"+kindName+"', "+data[i]+"), ";
+							String sql = "INSERT into "+tableName+" VALUES ("+ scenarioIndex+", '1DAY', '"+unitsName+"', '"+formDateData(date)+"', '"+variableName+"', '"+kindName+"', "+data[i]+")";
+							count++;
+							if (count % batchSize==0) stmt.executeBatch();
 							date=addOneDay(date);
 						}
-						if (sql.endsWith(", ")){
-							sql=sql.substring(0, sql.lastIndexOf(","));
-						}
-						stmt.executeUpdate(sql);
 					}else{
-						String sql="INSERT into "+tableName+" VALUES ";
 						Date date = ts.getStartTime();
 						String unitsName=formUnitsName(ts);
 						String variableName=formVariableName(name);
 						String kindName=formKindName(ts.getKind());
 						double[] data = ts.getData();
 						for (int i=0; i<data.length; i++){
-							sql=sql +"("+ scenarioIndex+", '1MON', '"+unitsName+"', '"+formDateData(date)+"', '"+variableName+"', '"+kindName+"', "+data[i]+"), ";
+							String sql="INSERT into "+tableName+" VALUES ("+ scenarioIndex+", '1MON', '"+unitsName+"', '"+formDateData(date)+"', '"+variableName+"', '"+kindName+"', "+data[i]+")";
+							stmt.addBatch(sql);
+							count++;
+							if (count % batchSize==0) stmt.executeBatch();
 							date=addOneMonth(date);
 						}
-						if (sql.endsWith(", ")){
-							sql=sql.substring(0, sql.lastIndexOf(","));
-						}
-						stmt.executeUpdate(sql);
 					}
 				}
 			}
+			stmt.executeBatch();
 			System.out.println("Wrote output in table");
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -212,7 +210,7 @@ public class MySQLRWriterAlt{
 		int year=date.getYear()+1900;
 		int month=date.getMonth()+1;
 		int day = date.getDate();
-		return year+"-"+TimeOperation.monthNameNumeric(month)+"-"+TimeOperation.dayName(day);
+		return year+"-"+TimeOperation.monthNameNumeric(month)+"-"+TimeOperation.dayName(day)+" 00:00:00";
 	}
 	
 	public Date addOneMonth(Date date){

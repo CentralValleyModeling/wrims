@@ -684,14 +684,16 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 			out.println("Solver             "+DebugCorePlugin.solver.toLowerCase());
 			String dvarFile = fDvarFileText.getText();
 			if (new File(dvarFile).isAbsolute()){
-				String wsidiDvarFile=createWsiDiDvarFileName(dvarFile);
-				out.println("DvarFile           "+wsidiDvarFile.toLowerCase());
-				setDvarFileNameWsiDiGen(wsidiDvarFile);
+				String wsidiDvarPath=getWsiDiDvarFilePath(dvarFile);
+				String lookupPath=getLookupFolderPath(mainFileAbsPath);
+				out.println("DvarFile           "+wsidiDvarPath.toLowerCase());
+				createWsiDiMain(wsidiDvarPath, lookupPath);
 			}else{
 				String procDvarFile=procRelativePath(dvarFile);
-				String wsidiDvarFile=createWsiDiDvarFileName(procDvarFile);
+				String wsidiDvarFile=getWsiDiDvarFilePath(procDvarFile);
+				String lookupFolder=getLookupFolderPath(mainFileAbsPath);
 				out.println("DvarFile           " + wsidiDvarFile.toLowerCase());
-				setDvarFileNameWsiDiGen(wsidiDvarFile);
+				createWsiDiMain(wsidiDvarFile, lookupFolder);
 			}
 			String svarFile = fSvarFileText.getText();
 			if (new File(svarFile).isAbsolute()){
@@ -727,6 +729,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 			out.println("IlpLogVarValue     "+"no");
 			out.println("WreslPlus          "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_WRESLPLUS, "no"));
 			out.println("AllowSvTsInit      "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_ALLOWSVTSINIT, "no"));
+			out.println("DatabaseURL        "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_DATABASEURL, "none"));
 			out.println("SQLGroup           "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_SQLGROUP, "calsim"));
 			
 			if (DebugCorePlugin.solver.equalsIgnoreCase("LpSolve")) {
@@ -761,14 +764,14 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 			if (System.getProperty("os.arch").equalsIgnoreCase("amd64")){
 				xmx="4096m";
 			}
-			out.println("jre\\bin\\java -Xmx"+xmx+" -Xss1024K -Duser.timezone=UTC -Djava.library.path=\"" + externalPath + ";lib\" -cp \""+externalPath+";"+"lib\\external;lib\\WRIMSv2.jar;lib\\commons-io-2.1.jar;lib\\"+jarXA+";lib\\lpsolve55j.jar;lib\\coinor.jar;lib\\gurobi.jar;lib\\heclib.jar;lib\\jnios.jar;lib\\jpy.jar;lib\\misc.jar;lib\\pd.jar;lib\\vista.jar;lib\\guava-11.0.2.jar;lib\\javatuples-1.2.jar;lib\\kryo-2.24.0.jar;lib\\minlog-1.2.jar;lib\\objenesis-1.2.jar;lib\\jarh5obj.jar;lib\\jarhdf-2.10.0.jar;lib\\jarhdf5-2.10.0.jar;lib\\jarhdfobj.jar;lib\\slf4j-api-1.7.5.jar;lib\\slf4j-nop-1.7.5.jar;lib\\mysql-connector-java-5.1.42-bin.jar\" wrimsv2.components.ControllerBatch "+"-config="+configFilePath);
+			out.println("jre\\bin\\java -Xmx"+xmx+" -Xss1024K -Duser.timezone=UTC -Djava.library.path=\"" + externalPath + ";lib\" -cp \""+externalPath+";"+"lib\\external;lib\\WRIMSv2.jar;lib\\commons-io-2.1.jar;lib\\"+jarXA+";lib\\lpsolve55j.jar;lib\\coinor.jar;lib\\gurobi.jar;lib\\heclib.jar;lib\\jnios.jar;lib\\jpy.jar;lib\\misc.jar;lib\\pd.jar;lib\\vista.jar;lib\\guava-11.0.2.jar;lib\\javatuples-1.2.jar;lib\\kryo-2.24.0.jar;lib\\minlog-1.2.jar;lib\\objenesis-1.2.jar;lib\\jarh5obj.jar;lib\\jarhdf-2.10.0.jar;lib\\jarhdf5-2.10.0.jar;lib\\jarhdfobj.jar;lib\\slf4j-api-1.7.5.jar;lib\\slf4j-nop-1.7.5.jar;lib\\mysql-connector-java-5.1.42-bin.jar;lib\\sqljdbc4-2.0.jar\" wrimsv2.components.ControllerBatch "+"-config="+configFilePath);
 			out.close();
 		} catch (CoreException e) {
 			WPPException.handleException(e);
 		}
 	}
 	
-	public void setDvarFileNameWsiDiGen(String dvarFile){
+	public void createWsiDiMain(String dvarPath, String lookupPath){
 		String wsidiMainTemplate = ".\\WSIDIGenerator\\Main_template.py";
 		String wsidiMainFile = ".\\WSIDIGenerator\\Main.py";
 		try {
@@ -781,7 +784,9 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	         while((line = br.readLine())!=null){
 	              count++;
 	              if(count==28){
-	                    writer.write("        studyDvName=r\""+dvarFile+"\"\n");
+	            	  writer.write("        studyDvName=r\""+dvarPath+"\"\n");
+	              }else if (count==29){
+	            	  writer.write("        lookupName=r\""+lookupPath+"\"\n");
 	              }else{
 	                  writer.append(line+"\n");
 	              }
@@ -793,9 +798,16 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	    }
 	}
 	
-	public String createWsiDiDvarFileName(String dvFileName){
+	public String getWsiDiDvarFilePath(String dvFileName){
 		File dvFile=new File(dvFileName);
 		return dvFile.getParentFile().getAbsolutePath()+"\\genwsidi_dv.dss";
+	}
+	
+	public String getLookupFolderPath(String mainFilePath){
+		int index = mainFilePath.lastIndexOf(File.separator);
+		String mainDirectory = mainFilePath.substring(0, index + 1);
+		String lookupPath = mainDirectory + "lookup";
+		return lookupPath;
 	}
 	
 	public String procRelativePath(String path){

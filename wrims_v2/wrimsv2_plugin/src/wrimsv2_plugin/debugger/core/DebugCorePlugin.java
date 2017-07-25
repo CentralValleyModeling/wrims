@@ -220,6 +220,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static final String ATTR_WPP_PADVSTARTYEAR=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_PADVSTARTYEAR";
 	public static final String ATTR_WPP_PADVSTARTMONTH=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_PADVSTARTMONTH";
 	public static final String ATTR_WPP_PADVSTARTDAY=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_PADVSTARTDAY";
+	public static final String ATTR_WPP_DATABASEURL=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_DATABASEURL";
 	public static final String ATTR_WPP_SQLGROUP=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_SQLGROUP";
 	
 	public static final String lineSep=System.getProperty("line.separator");

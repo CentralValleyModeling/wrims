@@ -293,7 +293,7 @@ public class ValueEvaluation {
 			}
 			
 		} catch (Exception e) {
-			Error.addEvaluationError("The function " +ident+" is not defined in the WRIMS engine. Re-run preprocessor for dlls.");
+			Error.addEvaluationError("The function " +ident+" has an error.");
 			result=new IntDouble (1.0,false);
 			return result;
 		}
@@ -358,7 +358,7 @@ public class ValueEvaluation {
 			}
 			
 		} catch (Exception e) {
-			Error.addEvaluationError("The function " +ident+" is not defined in the WRIMS engine. Re-run preprocessor for dlls.");
+			Error.addEvaluationError("The function " +ident+" has an error.");
 			result=new IntDouble (1.0,false);
 			return result;
 		}

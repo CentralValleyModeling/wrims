@@ -16,6 +16,7 @@ import wrimsv2.evaluator.LoopIndex;
 import wrimsv2.external.ExternalFunction;
 import wrimsv2.solver.ortools.OrToolsSolver;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -133,6 +134,10 @@ public class ControlData {
 	public static int resimYear;
 	public static int resimMonth;
 	public static int resimDay;
+	    
+	public static String USER;       
+	public static String PASS;  
+	public static String databaseURL;
 	public static String sqlGroup="calsim";
 	
 	public ControlData(){
