@@ -139,6 +139,7 @@ public class ControlData {
 	public static String PASS;  
 	public static String databaseURL;
 	public static String sqlGroup="calsim";
+	public static boolean isSimOutput = true;
 	
 	public ControlData(){
 	}

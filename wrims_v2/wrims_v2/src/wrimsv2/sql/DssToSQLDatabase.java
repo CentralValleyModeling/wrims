@@ -58,11 +58,11 @@ public class DssToSQLDatabase {
 	public void convertData(){
 		if (ControlData.databaseURL.startsWith("jdbc:sqlserver")){
 			SQLServerRWriter sqlServerRWriter = new SQLServerRWriter();
-			sqlServerRWriter.setSimOutput(false);
+			ControlData.isSimOutput=false;
 			sqlServerRWriter.process();
 		}else if (ControlData.databaseURL.startsWith("jdbc:mysql")){
 			MySQLRWriter mySqlRWriter = new MySQLRWriter();
-			mySqlRWriter.setSimOutput(false);
+			ControlData.isSimOutput=false;
 			mySqlRWriter.process();
 		}
 	}

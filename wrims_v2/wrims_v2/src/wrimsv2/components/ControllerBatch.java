@@ -19,6 +19,7 @@ import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.config.ConfigUtils;
 import wrimsv2.evaluator.AssignPastCycleVariable;
+import wrimsv2.evaluator.CsvOperation;
 import wrimsv2.evaluator.DssOperation;
 import wrimsv2.evaluator.PreEvaluator;
 import wrimsv2.evaluator.ValueEvaluatorParser;
@@ -389,6 +390,9 @@ public class ControllerBatch {
 			mySQLRWriter.process();
 		}else if (ControlData.outputType==4){
 			sqlServerRWriter.process();
+		}else if (ControlData.outputType==5){
+			CsvOperation co = new CsvOperation();
+			co.ouputCSV(FilePaths.fullCsvPath, 0);
 		}
 		
 		// write complete or fail
@@ -734,6 +738,9 @@ public class ControllerBatch {
 			mySQLRWriter.process();
 		}else if (ControlData.outputType==4){
 			sqlServerRWriter.process();
+		}else if (ControlData.outputType==5){
+			CsvOperation co = new CsvOperation();
+			co.ouputCSV(FilePaths.fullCsvPath, 0);
 		}
 	}
 
@@ -873,6 +880,9 @@ public class ControllerBatch {
 			mySQLRWriter.process();
 		}else if (ControlData.outputType==4){
 			sqlServerRWriter.process();
+		}else if (ControlData.outputType==5){
+			CsvOperation co = new CsvOperation();
+			co.ouputCSV(FilePaths.fullCsvPath, 0);
 		}
 	}
 
@@ -1079,6 +1089,9 @@ public class ControllerBatch {
 			mySQLRWriter.process();
 		}else if (ControlData.outputType==4){
 			sqlServerRWriter.process();
+		}else if (ControlData.outputType==5){
+			CsvOperation co = new CsvOperation();
+			co.ouputCSV(FilePaths.fullCsvPath, 0);
 		}
 	}
 
@@ -1231,6 +1244,9 @@ public class ControllerBatch {
 			mySQLRWriter.process();
 		}else if (ControlData.outputType==4){
 			sqlServerRWriter.process();
+		}else if (ControlData.outputType==5){
+			CsvOperation co = new CsvOperation();
+			co.ouputCSV(FilePaths.fullCsvPath, 0);
 		}
 		
 		// write complete or fail
@@ -1533,6 +1549,9 @@ public class ControllerBatch {
 			mySQLRWriter.process();
 		}else if (ControlData.outputType==4){
 			sqlServerRWriter.process();
+		}else if (ControlData.outputType==5){
+			CsvOperation co = new CsvOperation();
+			co.ouputCSV(FilePaths.fullCsvPath, 0);
 		}
 		
 		// write complete or fail
