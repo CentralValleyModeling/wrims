@@ -37,6 +37,7 @@ import wrimsv2.commondata.wresldata.WeightElement;
 import wrimsv2.config.ConfigUtils;
 import wrimsv2.debug.ReProcessExternal;
 import wrimsv2.evaluator.AssignPastCycleVariable;
+import wrimsv2.evaluator.CsvOperation;
 import wrimsv2.evaluator.DataTimeSeries;
 import wrimsv2.evaluator.DssDataSet;
 import wrimsv2.evaluator.DssDataSetFixLength;
@@ -220,7 +221,7 @@ public class ControllerDebug extends Thread {
 		}else{
 			Error.addConfigError("Solver name not recognized: "+ControlData.solverName);
 			Error.writeErrorLog();
-			if (ControlData.outputType==0) ControlData.writer.closeDSSFile();
+			if (ControlData.outputType!=1) ControlData.writer.closeDSSFile();
 			return;
 		}
 		System.out.println("=================Run ends!================");
@@ -428,6 +429,9 @@ public class ControllerDebug extends Thread {
 			mySQLRWriter.process();
 		}else if (ControlData.outputType==4){
 			sqlServerRWriter.process();
+		}else if (ControlData.outputType==5){
+			CsvOperation co = new CsvOperation();
+			co.ouputCSV(FilePaths.fullCsvPath, 0);
 		}
 	}
 	

@@ -14,6 +14,7 @@ public class FilePaths {
 	public static String dvarDssFile="";
 	public static String dvarDssDirectory="";
 	public static String fullDvarHDF5Path="";
+	public static String fullCsvPath="";
 	public static String fullInitFilePath="";
 	public static String initFile="";
 	public static String initFileDirectory="";
@@ -67,9 +68,18 @@ public class FilePaths {
 			int index2=fullPath.lastIndexOf(".");
 			sqlScenarioName=fullPath.substring(index1+1,index2);
 			fullDvarDssPath=fullPath.substring(0, index2+1)+"dss";
+		}else if (fullPath.toLowerCase().endsWith(".csv")){
+			ControlData.outputType=5;
+			ControlData.outputCycle=false;
+			int index1=fullPath.lastIndexOf(File.separator);
+			int index2=fullPath.lastIndexOf(".");
+			sqlScenarioName=fullPath.substring(index1+1,index2);
+			fullDvarDssPath=fullPath.substring(0, index2+1)+"dss";
+			fullCsvPath=fullPath;
 		}else{
 			ControlData.outputType=0;
 			ControlData.outputCycle=false;
+			fullDvarDssPath=fullPath;
 		}
 		int index=fullPath.lastIndexOf(File.separator);
 		dvarDssDirectory=fullPath.substring(0,index+1);
