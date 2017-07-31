@@ -617,7 +617,7 @@ public class ConfigUtils {
 					ILP.loggingAllCycles = false;
 				}
 				else {
-					ILP.loggingAllCycles = false;
+					ILP.loggingAllCycles = true;
 				}
 			}
 			// IlpLogVarValue
