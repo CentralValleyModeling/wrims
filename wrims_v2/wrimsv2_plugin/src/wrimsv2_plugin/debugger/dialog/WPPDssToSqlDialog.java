@@ -26,6 +26,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 
 import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.tools.Encryption;
 
 
 public class WPPDssToSqlDialog extends Dialog {
@@ -162,15 +163,15 @@ public class WPPDssToSqlDialog extends Dialog {
 			if (urlProperty.equalsIgnoreCase(databaseURL)){
 				String username=baseProperties.getProperty(IJDBCConnectionProfileConstants.USERNAME_PROP_ID);
 				String password=baseProperties.getProperty(IJDBCConnectionProfileConstants.PASSWORD_PROP_ID);
-				out.println(username);
-				out.println(password);
+				out.println(Encryption.procEncryption(username));
+				out.println(Encryption.procEncryption(password));
 				isProfileCreated=true;
 			}
 			i++;
 		}
 		if (!isProfileCreated){
-			out.println(userDefault);
-			out.println(passDefault);
+			out.println(Encryption.procEncryption(userDefault));
+			out.println(Encryption.procEncryption(passDefault));
 		}
 	}
 	

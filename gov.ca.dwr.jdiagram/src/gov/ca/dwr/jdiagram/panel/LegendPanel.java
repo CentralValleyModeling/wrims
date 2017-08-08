@@ -30,8 +30,8 @@ import com.mindfusion.diagramming.LinkEvent;
 import com.mindfusion.diagramming.LinkValidationEvent;
 import com.mindfusion.diagramming.NodeEvent;
 import com.mindfusion.diagramming.NodeValidationEvent;
-import com.mindfusion.diagramming.Pen;
 import com.mindfusion.diagramming.ShapeNode;
+import com.mindfusion.drawing.Pen;
 
 public class LegendPanel extends JPanel {
 	private Diagram legendDiagram;
@@ -100,7 +100,7 @@ public class LegendPanel extends JPanel {
 			}
 
 			public void linkSelected(LinkEvent e) {
-				e.getLink().setSnapToNodeBorder(true);
+				e.getLink().setSelected(true);
 			}
 
 			public void nodeClicked(NodeEvent e) {
@@ -139,7 +139,7 @@ public class LegendPanel extends JPanel {
 			int x;
 			int y;
 
-			Point2D event = e.getMousePosition();
+			Point2D event = e.getPointerPosition();
 			x = (int) event.getX();
 			y = (int) event.getY();
 			Point mousePos = getMousePosition();
@@ -159,7 +159,7 @@ public class LegendPanel extends JPanel {
 			int x;
 			int y;
 
-			Point2D event = e.getMousePosition();
+			Point2D event = e.getPointerPosition();
 			x = (int) event.getX();
 			y = (int) event.getY();
 			Point mousePos = getMousePosition();

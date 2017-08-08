@@ -25,6 +25,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.prefs.Preferences;
 
@@ -46,10 +47,8 @@ import org.w3c.dom.Document;
 import wrimsv2_plugin.debugger.exception.WPPException;
 
 import com.mindfusion.diagramming.Behavior;
-import com.mindfusion.diagramming.Brush;
 import com.mindfusion.diagramming.CompositeCmd;
 import com.mindfusion.diagramming.CustomDraw;
-import com.mindfusion.diagramming.DashStyle;
 import com.mindfusion.diagramming.Diagram;
 import com.mindfusion.diagramming.DiagramAdapter;
 import com.mindfusion.diagramming.DiagramEvent;
@@ -64,18 +63,22 @@ import com.mindfusion.diagramming.DrawNodeEvent;
 import com.mindfusion.diagramming.DummyNode;
 import com.mindfusion.diagramming.GridStyle;
 import com.mindfusion.diagramming.HandlesStyle;
+import com.mindfusion.diagramming.InplaceEditable;
 import com.mindfusion.diagramming.LinkEvent;
 import com.mindfusion.diagramming.NodeEvent;
 import com.mindfusion.diagramming.Orientation;
-import com.mindfusion.diagramming.Pen;
-import com.mindfusion.diagramming.PointList;
 import com.mindfusion.diagramming.RerouteLinks;
 import com.mindfusion.diagramming.RoutingOptions;
 import com.mindfusion.diagramming.Shape;
 import com.mindfusion.diagramming.ShapeNode;
-import com.mindfusion.diagramming.SolidBrush;
 import com.mindfusion.diagramming.UndoEvent;
 import com.mindfusion.diagramming.UndoManager;
+import com.mindfusion.diagramming.XmlException;
+import com.mindfusion.drawing.Brush;
+import com.mindfusion.drawing.DashStyle;
+import com.mindfusion.drawing.Pen;
+import com.mindfusion.drawing.PointList;
+import com.mindfusion.drawing.SolidBrush;
 import com.mindfusion.graphs.Point;
 
 public abstract class SchematicEditor extends SchematicBase {
@@ -277,7 +280,7 @@ public abstract class SchematicEditor extends SchematicBase {
 			}
 
 			public void linkSelected(LinkEvent e) {
-				e.getLink().setSnapToNodeBorder(true);
+				e.getLink().setSelected(true);
 			}
 
 			public void nodeClicked(NodeEvent e) {
@@ -518,6 +521,8 @@ public abstract class SchematicEditor extends SchematicBase {
 			diagramView.copyToClipboard(true);
 		} catch (IOException e) {
 			WPPException.handleException(e);
+		} catch (XmlException e) {
+			WPPException.handleException(e);
 		}
 		
 		SchematicPluginCore.copyDiagram=d;
@@ -648,6 +653,8 @@ public abstract class SchematicEditor extends SchematicBase {
 				diagramView.pasteFromClipboard(delX, delY, false);
 			} catch (IOException e) {
 				WPPException.handleException(e);
+			} catch (XmlException e) {
+				WPPException.handleException(e);
 			}
 		}
 	}
@@ -659,7 +666,7 @@ public abstract class SchematicEditor extends SchematicBase {
 			int x;
 			int y;
 
-			Point2D event = e.getMousePosition();
+			Point2D event = e.getPointerPosition();
 			x = (int) event.getX();
 			y = (int) event.getY();
 			Component contentPane = getContentPane();
@@ -678,7 +685,7 @@ public abstract class SchematicEditor extends SchematicBase {
 			int x;
 			int y;
 
-			Point2D event = e.getMousePosition();
+			Point2D event = e.getPointerPosition();
 			x = (int) event.getX();
 			y = (int) event.getY();
 			Component contentPane = getContentPane();
@@ -698,7 +705,7 @@ public abstract class SchematicEditor extends SchematicBase {
 			int x;
 			int y;
 
-			Point2D event = e.getMousePosition();
+			Point2D event = e.getPointerPosition();
 			x = (int) event.getX();
 			y = (int) event.getY();
 			Component contentPane = getContentPane();
@@ -714,8 +721,10 @@ public abstract class SchematicEditor extends SchematicBase {
 	public void onShortenPoints(DiagramLink link) {
 		try {
 			PointList controlPoints = link.getControlPoints();
-			controlPoints.removeRange(1, Math
-					.max(1, link.getSegmentCount() - 1));
+			for (int i=1; i<=Math
+					.max(1, link.getSegmentCount() - 1); i++){
+				controlPoints.remove(i);
+			}
 			// link.updateFromPoints(false, true);
 			link.updateFromPoints();
 			// link.route();
@@ -753,7 +762,7 @@ public abstract class SchematicEditor extends SchematicBase {
 					float1 = float2;
 				}
 			}
-			link.updateFromPoints(true, true);
+			link.updateFromPoints(true);
 			//link.updateFromPoints();
 			// link.route();
 		} catch (Exception e1) {
@@ -762,14 +771,14 @@ public abstract class SchematicEditor extends SchematicBase {
 
 	}
 
-	public void alignSelectedLinks(int direction) {
+	public void alignSelectedLinks(Orientation direction) {
 		for (DiagramLink link : getDiagram().getSelection().getLinks()) {
 			alignLinkPoints(link, direction);
 		}
 		getDiagram().repaint();
 	}
 
-	public void alignLinkPoints(DiagramLink link, int direction) {
+	public void alignLinkPoints(DiagramLink link, Orientation direction) {
 		PointList controlPoints = link.getControlPoints();
 		if (link.getOrigin() instanceof DummyNode
 				|| link.getDestination() instanceof DummyNode) {
@@ -817,7 +826,7 @@ public abstract class SchematicEditor extends SchematicBase {
 		}
 
 		try {
-			link.updateFromPoints(false, false);
+			link.updateFromPoints(false);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -826,7 +835,7 @@ public abstract class SchematicEditor extends SchematicBase {
 
 	private boolean spaceNodesEvenly = false;
 
-	public void alignSelectedNodes(final int orientation) {
+	public void alignSelectedNodes(final Orientation orientation) {
 		Diagram diagram = getDiagram();
 		DiagramNodeList nodes = diagram.getSelection().getNodes();
 		ArrayList<DiagramNode> sortedNodes = new ArrayList<DiagramNode>();
@@ -900,7 +909,7 @@ public abstract class SchematicEditor extends SchematicBase {
 		if (clickedItem instanceof ShapeNode) {
 			ShapeNode shapeNode = (ShapeNode) clickedItem;
 			shapeNode.getShape().setId(editPanel.getShape());
-			shapeNode.setTextColor(editPanel.getColor());
+			shapeNode.getPen().setColor(editPanel.getColor());
 		}
 		if (clickedItem instanceof DiagramLink) {
 			DiagramLink link = (DiagramLink) clickedItem;
@@ -953,12 +962,12 @@ public abstract class SchematicEditor extends SchematicBase {
 				Color fillColor = null;
 				Brush brush = s.getBrush();
 				Shape shape=s.getShape();
-				int customdraw=s.getCustomDraw();
+				CustomDraw customdraw=s.getCustomDraw();
 				if (brush instanceof SolidBrush) {
 					fillColor = ((SolidBrush) brush).getColor();
 				} else {
 					System.err.println("brush type is :" + brush.getClass()
-							+ " for node: " + n.getTextToEdit());
+							+ " for node: " + ((InplaceEditable)n).getTextToEdit());
 				}
 				String id = getIdFor(n);
 				if (id.length() > 40){
@@ -1004,7 +1013,7 @@ public abstract class SchematicEditor extends SchematicBase {
 				Pen pen = mapper.parsePen(line_attr);
 				Brush brush = mapper.parseBrush(line_attr);
 				Shape shape = mapper.parseShape(line_attr);
-				int customdraw = mapper.parseCustomDraw(line_attr);
+				CustomDraw customdraw = mapper.parseCustomDraw(line_attr);
 				
 				attr = new AttributeMapper.Attribute();
 				attr.pen = pen;
@@ -1040,7 +1049,7 @@ public abstract class SchematicEditor extends SchematicBase {
 	}
 	
 	public String getIdFor(DiagramNode n){
-		String text = n.getTextToEdit();
+		String text = ((InplaceEditable)n).getTextToEdit();
 		//return text == null ? null : text.split("\n")[0].trim();
 		return text == null ? null : text.trim().replace("\n", "*#*");
 	}
@@ -1120,7 +1129,7 @@ public abstract class SchematicEditor extends SchematicBase {
 		routingOptions.setLengthCost((short) 100);
 		routingOptions.setSmartPolylineEnds(true);
 		routingOptions.setMinSegmentsMode();
-		routingOptions.setTriggerRerouting(RerouteLinks.Never);
+		routingOptions.setTriggerRerouting(EnumSet.noneOf(RerouteLinks.class));
 
 		UndoManager undoManager = getDiagram().getUndoManager();
 		undoManager.setUndoEnabled(true);

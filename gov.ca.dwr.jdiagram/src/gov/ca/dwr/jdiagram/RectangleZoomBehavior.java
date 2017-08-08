@@ -10,6 +10,7 @@ import java.awt.geom.Rectangle2D;
 
 import javax.swing.SwingUtilities;
 
+import com.mindfusion.common.ByRef;
 import com.mindfusion.diagramming.BehaviorBase;
 import com.mindfusion.diagramming.CursorHint;
 import com.mindfusion.diagramming.DiagramView;
@@ -24,28 +25,18 @@ public class RectangleZoomBehavior extends BehaviorBase {
 
 	}
 
-	public CursorHint setMouseCursor(Point2D point, Boolean startInteraction) {
-		startInteraction = false;
-		Cursor zoomRectCursor = Toolkit.getDefaultToolkit().createCustomCursor(
-				ImageUtil.createImageIcon(
-						"images/zoom_in.png")
-						.getImage(), new Point(0, 0), "zoom rectangle");
-		getDiagramView().setCursor(zoomRectCursor);
-		return CursorHint.DontChange;
-	}
-
 	public InteractionState startDraw(Point2D point, MouseEvent e) {
 		return null;
 	}
 
-	public void mousePressed(Point mousePosition, MouseEvent e) {
+	public void pointerDown(Point mousePosition, MouseEvent e) {
 		ptStartDragDev = mousePosition;
 	}
 
-	public void mouseMoved(Point mousePosition) {
+	public void pointerMove(Point mousePosition) {
 	}
 
-	public void mouseReleased(Point mousePosition, MouseEvent e) {
+	public void pointerUp(Point mousePosition, MouseEvent e) {
 		getDiagramView().setCursor(getDiagramView().getPointerCursor());
 		getDiagramView().recreateCacheImage();
 		Rectangle r = createRectFromDiagonalPoints(ptStartDragDev,
@@ -56,7 +47,7 @@ public class RectangleZoomBehavior extends BehaviorBase {
 
 	}
 
-	public void mouseDragged(Point mousePosition, MouseEvent e) {
+	public void pointerMove(Point mousePosition, MouseEvent e) {
 		final DiagramView view = getDiagramView();
 		final Rectangle r = createRectFromDiagonalPoints(ptStartDragDev,
 				mousePosition);
@@ -81,4 +72,15 @@ public class RectangleZoomBehavior extends BehaviorBase {
 	}
 
 	private Point ptStartDragDev;
+
+	@Override
+	protected CursorHint setMouseCursor(Point2D arg0, ByRef<Boolean> arg1) {
+		boolean startInteraction = false;
+		Cursor zoomRectCursor = Toolkit.getDefaultToolkit().createCustomCursor(
+				ImageUtil.createImageIcon(
+						"images/zoom_in.png")
+						.getImage(), new Point(0, 0), "zoom rectangle");
+		getDiagramView().setCursor(zoomRectCursor);
+		return CursorHint.DontChange;
+	}
 }

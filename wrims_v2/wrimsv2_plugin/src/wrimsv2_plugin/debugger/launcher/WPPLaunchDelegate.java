@@ -45,6 +45,7 @@ import wrimsv2_plugin.debugger.msr.MSRUtil;
 import wrimsv2_plugin.debugger.pa.PAProcDV;
 import wrimsv2_plugin.debugger.pa.PAProcInit;
 import wrimsv2_plugin.debugger.pa.PAProcRun;
+import wrimsv2_plugin.tools.Encryption;
 import wrimsv2_plugin.tools.FileProcess;
 import wrimsv2_plugin.tools.TimeOperation;
 
@@ -650,8 +651,8 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 				try {
 					f.createNewFile();
 					PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(f)));
-					out.println(username);
-					out.println(password);
+					out.println(Encryption.procEncryption(username));
+					out.println(Encryption.procEncryption(password));
 					out.close();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block

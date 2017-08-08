@@ -97,7 +97,7 @@
 				<include name="wrimsv2/version.props"/>
 				<exclude name="**/*.g"/>
 			</fileset>
-			<zipfileset excludes="META-INF/*.SF" src="src/wrimsv2/lib/antlr-runtime-3.2.jar"/>
+			<zipfileset excludes="META-INF/*.SF" src="src/wrimsv2/lib/antlr-3.5.2-runtime.jar"/>
 		</jar>
 
 		<zip destfile="zip_out/WRIMSv2.zip"  basedir="jar_out" />

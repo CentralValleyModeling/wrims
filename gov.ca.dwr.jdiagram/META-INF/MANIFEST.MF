@@ -25,7 +25,8 @@ Export-Package: com.mindfusion.common,
 Bundle-ClassPath: JDiagram.jar,
  .
 Bundle-Vendor: California Department of Water Resources
-Import-Package: gov.ca.dwr.hecdssvue,
+Import-Package: com.mindfusion.drawing,
+ gov.ca.dwr.hecdssvue,
  gov.ca.dwr.hecdssvue.views,
  hec.appInterface,
  hec.chart,
