@@ -80,7 +80,6 @@ import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.tools.TimeOperation;
 
-import com.mindfusion.diagramming.Align;
 import com.mindfusion.diagramming.AttachToNode;
 import com.mindfusion.diagramming.Behavior;
 import com.mindfusion.diagramming.Diagram;
@@ -92,13 +91,15 @@ import com.mindfusion.diagramming.DiagramNode;
 import com.mindfusion.diagramming.DiagramNodeList;
 import com.mindfusion.diagramming.DiagramView;
 import com.mindfusion.diagramming.Group;
+import com.mindfusion.diagramming.InplaceEditable;
 import com.mindfusion.diagramming.LinkEvent;
 import com.mindfusion.diagramming.NodeEvent;
 import com.mindfusion.diagramming.Overview;
 import com.mindfusion.diagramming.ShapeNode;
-import com.mindfusion.diagramming.TextFormat;
 import com.mindfusion.diagramming.export.PdfExporter;
 import com.mindfusion.diagramming.export.SvgExporter;
+import com.mindfusion.drawing.Align;
+import com.mindfusion.drawing.TextFormat;
 import com.mindfusion.pdf.AutoScale;
 
 /**
@@ -221,7 +222,8 @@ public abstract class SchematicBase extends ViewPart {
 
 			@Override
 			public void nodeDoubleClicked(NodeEvent e) {
-				showDSS(e.getNode().getTextToEdit());
+				DiagramNode n = e.getNode();
+				showDSS(((InplaceEditable)n).getTextToEdit());
 			}
 			
 			public void openDSSPerspective(final String perspectiveId, final String name) { 
@@ -380,7 +382,7 @@ public abstract class SchematicBase extends ViewPart {
 							diagramView.suspendRepaint();
 							if (file.endsWith(".xml")) {
 								diagram.loadFromXml(file);
-							} else {
+							}else {
 								diagram.loadFrom(file);
 							}
 							Rectangle2D rect = diagram.getBounds();
@@ -422,7 +424,7 @@ public abstract class SchematicBase extends ViewPart {
 
 			public void run() {
 				_zoomFactor = 100;
-				diagramView.setZoomFactor(_zoomFactor);
+				diagramView.zoomToFit(); 
 			};
 		};
 		zoomInAction = new Action("Zoom In",
@@ -449,7 +451,7 @@ public abstract class SchematicBase extends ViewPart {
 		
 		zoomRectAction = new Action("Zoom to Rectangular", Activator.getImageDescriptor("zoom_region.png")) {
 
-			private int behavior = 0;
+			private Behavior behavior=Behavior.SelectOnly;
 			
 			public void run() {
 				SchematicPluginCore.zoomToRect=!SchematicPluginCore.zoomToRect;
@@ -458,7 +460,7 @@ public abstract class SchematicBase extends ViewPart {
 					diagramView.setCustomBehavior(new RectangleZoomBehavior(
 							diagramView));
 				} else {
-					diagramView.setBehavior(0);
+					diagramView.setBehavior(Behavior.SelectOnly);
 					diagramView.setBehavior(behavior);
 				}
 			}
@@ -699,7 +701,8 @@ public abstract class SchematicBase extends ViewPart {
 				if (i>0){
 					buf.append(", ");
 				}
-				buf.append(diagramLink.getOrigin().getTextToEdit());
+				DiagramNode orig = diagramLink.getOrigin();
+				buf.append(((InplaceEditable)orig).getTextToEdit());
 			}
 			return buf.toString();
 		}
@@ -712,7 +715,8 @@ public abstract class SchematicBase extends ViewPart {
 				if (i>0){
 					buf.append(", ");
 				}
-				buf.append(diagramLink.getDestination().getTextToEdit());
+				DiagramNode dest = diagramLink.getDestination();
+				buf.append(((InplaceEditable)dest).getTextToEdit());
 			}
 			return buf.toString();
 		}
@@ -1339,13 +1343,13 @@ public abstract class SchematicBase extends ViewPart {
 //								diagramNode = createTextNode(studyId, shapeNode);
 							}
 							if (diagramNode != null) {
-								diagramNode.setEditedText(value);
+								((InplaceEditable)diagramNode).setEditedText(value);
 								if (DssPluginCore.mode.equals(DssPluginCore.diff) && studyId > 0) {
 									((ShapeNode) diagramNode)
-											.setTextColor(Color.red);
+											.getPen().setColor(Color.red);
 								} else {
 									((ShapeNode) diagramNode)
-									.setTextColor(Color.black);
+									.getPen().setColor(Color.black);
 								}
 								((ShapeNode) diagramNode)
 										.setToolTip(getToolTip(index, studyId, DssPluginCore.mode.equals(DssPluginCore.diff)));
@@ -1406,7 +1410,7 @@ public abstract class SchematicBase extends ViewPart {
 		Float r = shapeNode.getBounds();
 		Rectangle2D.Float r2 = null;
 		TextFormat tf = null;
-		int attachPos = AttachToNode.BottomLeft;
+		AttachToNode attachPos = AttachToNode.BottomLeft;
 		switch (studyId) {
 		case 0:
 			attachPos = AttachToNode.BottomLeft;
@@ -1704,7 +1708,7 @@ public abstract class SchematicBase extends ViewPart {
 		for (int i_node = 1; i_node <= n_node; i_node++){
 			final int index_currentnode = (i_node + index_lastnode) % n_node;
 			final DiagramNode n = nodes.get(index_currentnode);
-			String nodeText = n.getTextToEdit();
+			String nodeText = ((InplaceEditable)n).getTextToEdit();
 			if (nodeText != null && nodeText.toLowerCase().contains(text)) {
 				SwingUtilities.invokeLater(new Runnable(){
 

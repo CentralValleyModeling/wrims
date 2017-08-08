@@ -64,7 +64,7 @@
 				<include name="version.xml"/>
 				<exclude name="**/*.g"/>
 			</fileset>
-			<zipfileset excludes="META-INF/*.SF" src="D:/cvwrsm/trunk/wrims_v2/wrims_v2/src/wrimsv2/lib/antlr-runtime-3.2.jar"/>
+			<zipfileset excludes="META-INF/*.SF" src="D:/cvwrsm/trunk/wrims_v2/wrims_v2/src/wrimsv2/lib/antlr-3.5.2-runtime.jar"/>
 		</jar>
 
 		<zip destfile="zip_out/WreslCheck_standalone.zip"  basedir="jar_out" />

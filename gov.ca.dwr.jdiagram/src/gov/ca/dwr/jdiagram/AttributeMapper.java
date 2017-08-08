@@ -6,12 +6,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Properties;
 
-import com.mindfusion.diagramming.Brush;
 import com.mindfusion.diagramming.CustomDraw;
-import com.mindfusion.diagramming.DashStyle;
-import com.mindfusion.diagramming.Pen;
 import com.mindfusion.diagramming.Shape;
-import com.mindfusion.diagramming.SolidBrush;
+import com.mindfusion.drawing.Brush;
+import com.mindfusion.drawing.DashStyle;
+import com.mindfusion.drawing.Pen;
+import com.mindfusion.drawing.SolidBrush;
 
 public class AttributeMapper {
 
@@ -20,7 +20,7 @@ public class AttributeMapper {
 		public Pen pen;
 		public Brush brush;
 		public Shape shape;
-		public int customdraw;
+		public CustomDraw customdraw;
 	}
 
 	// pen attribute consists of color, dashstyle, width
@@ -69,7 +69,10 @@ public class AttributeMapper {
 		Color c = parseColor(fields[0]);
 		DashStyle s = parseStyle(fields[1]);
 		float width = Float.parseFloat(fields[2]);
-		return new Pen(width, c, s);
+		Pen p= new Pen(c);
+		p.setDashStyle(s);
+		p.setWidth(width);
+		return p;
 	}
 
 	public String formatColor(Color c) {
@@ -131,7 +134,7 @@ public class AttributeMapper {
 		return s.getId();
 	}
 	
-	public int parseCustomDraw(String value){
+	public CustomDraw parseCustomDraw(String value){
 		if (value == null || value.trim().equals("")) {
 			return CustomDraw.None;
 		}
@@ -139,19 +142,24 @@ public class AttributeMapper {
 		if (fields == null) {
 			return CustomDraw.None;
 		}
+		/*
 		int d=Integer.parseInt(fields[5]);
 		
 		if(d == CustomDraw.Additional){
 			return d;
 		}
+		
 		return CustomDraw.None;
+		*/
+		
+		return CustomDraw.Additional;
 	}
 	
-	public String formatCustomDraw(int c){
-		return String.format("%d", c);
+	public String formatCustomDraw(CustomDraw customdraw){
+		return String.format("%d", customdraw);
 	}
 
-	public String getAttributeName(Pen p, Brush b, Shape s, int customdraw) {
+	public String getAttributeName(Pen p, Brush b, Shape s, CustomDraw customdraw) {
 		for (String name : nameToAttributeMap.keySet()) {
 			Attribute attr = nameToAttributeMap.get(name);
 			if (isSame(attr.pen, p) && isSame(attr.brush, b) && isSame(attr.shape,s) && attr.customdraw == customdraw) {

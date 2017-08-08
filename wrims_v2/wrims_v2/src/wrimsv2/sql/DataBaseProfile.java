@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 
 import wrimsv2.components.ControlData;
+import wrimsv2.tools.Decryption;
 
 public class DataBaseProfile {
 	
@@ -25,8 +26,8 @@ public class DataBaseProfile {
 					try {
 						FileInputStream fs = new FileInputStream(profileFile.getAbsolutePath());
 						BufferedReader br = new BufferedReader(new InputStreamReader(fs));
-					    ControlData.USER = br.readLine();
-					    ControlData.PASS = br.readLine();
+					    ControlData.USER = Decryption.procDecryption(br.readLine());
+					    ControlData.PASS = Decryption.procDecryption(br.readLine());
 					    br.close();
 					    fs.close();
 					} catch (FileNotFoundException e) {
@@ -44,8 +45,8 @@ public class DataBaseProfile {
 					try {
 						FileInputStream fs = new FileInputStream(configFile.getAbsolutePath());
 						BufferedReader br = new BufferedReader(new InputStreamReader(fs));
-					    ControlData.USER = br.readLine();
-					    ControlData.PASS = br.readLine();
+					    ControlData.USER = Decryption.procDecryption(br.readLine());
+					    ControlData.PASS = Decryption.procDecryption(br.readLine());
 					    ControlData.databaseURL = br.readLine().toLowerCase();
 					    ControlData.sqlGroup = br.readLine();
 					    DssToSQLDatabase.dssInfoFilePath = br.readLine();
