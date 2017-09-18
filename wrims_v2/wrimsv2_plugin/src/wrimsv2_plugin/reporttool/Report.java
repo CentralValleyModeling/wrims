@@ -272,7 +272,7 @@ public class Report {
 							"Time", PlotType.TIME_SERIES);
 				} else if (pathMap.report_type.startsWith("exceedance")) {
 					generatePlot(Utils.buildExceedanceArray(refAlt, refBase,
-							pathMap.var_category == "S_SEPT", tw), dataIndex,
+							pathMap.var_category.equalsIgnoreCase("S_SEPT"), tw), dataIndex,
 							Utils.getExceedancePlotTitle(pathMap), series_name,
 							data_type + "(" + data_units + ")",
 							"Percent at or above", PlotType.EXCEEDANCE);
@@ -283,7 +283,7 @@ public class Report {
 							series_name, data_type + "(" + data_units + ")",
 							"Time", PlotType.TIME_SERIES);
 					generatePlot(Utils.buildExceedanceArray(refAlt, refBase,
-							pathMap.var_category == "S_SEPT", tw), dataIndex,
+							pathMap.var_category.equalsIgnoreCase("S_SEPT"), tw), dataIndex,
 							Utils.getExceedancePlotTitle(pathMap), series_name,
 							data_type + "(" + data_units + ")",
 							"Percent at or above", PlotType.EXCEEDANCE);
