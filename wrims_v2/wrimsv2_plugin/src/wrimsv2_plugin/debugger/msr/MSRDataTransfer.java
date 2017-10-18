@@ -35,7 +35,7 @@ public class MSRDataTransfer {
 	
 	private String timestep="1MON";
 	
-	public void procDataTxfrFile (ILaunchConfiguration configuration, int ms){
+	public void procDataTxfrFile (ILaunchConfiguration configuration, int ms, boolean isSensitivity, int sri){
 		int size=ms-1;
 		dvFNs=new String[size];
 		svFNs=new String[size];
@@ -64,6 +64,7 @@ public class MSRDataTransfer {
 				if (!new File(dvFN).isAbsolute()){
 					dvFN=FileProcess.procRelativePath(dvFN, configuration);
 				}
+				if (isSensitivity) dvFN=FileProcess.createSensitivityFilePath(dvFN, sri);
 				
 				String initFN = null;
 				initFN = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_DVARFILE+suffix, (String)null);				
