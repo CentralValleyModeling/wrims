@@ -352,7 +352,7 @@ public class ReportPDFWriter implements Writer {
 			double[] dataArray = buildDataArray.get(j);
 			Month m = new Month(new Date(Math.round(dataArray[0])));
 			for (int i = 0; i < seriesName.length; i++) {
-				datasets.getSeries(i).add(m, dataArray[i + 1], false);
+				datasets.getSeries(i).add(m, dataArray[seriesName.length-i], false);
 			}
 		}
 		final JFreeChart tsChart = ChartFactory.createTimeSeriesChart(title, xAxisLabel, yAxisLabel, datasets, true);
