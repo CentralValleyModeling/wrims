@@ -26,6 +26,8 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 
+import calsim.app.AppUtils;
+import calsim.app.Project;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
 
@@ -502,5 +504,35 @@ public class DataOps {
 		}
 		TableViewer viewer = dssCatalogView.getViewer();
 		viewer.setInput(viewer.getInput());
+	}
+	
+	public static void setProject(){
+		Project prj = new Project();
+		prj.setDVFile(DebugCorePlugin.studyDvFileNames[0]);
+		prj.setDV2File(DebugCorePlugin.studyDvFileNames[1]);
+		prj.setDV3File(DebugCorePlugin.studyDvFileNames[2]);
+		prj.setDV4File(DebugCorePlugin.studyDvFileNames[3]);
+		
+		prj.setSVFile(DebugCorePlugin.studySvFileNames[0]);
+		prj.setSV2File(DebugCorePlugin.studySvFileNames[1]);
+		prj.setSV3File(DebugCorePlugin.studySvFileNames[2]);
+		prj.setSV4File(DebugCorePlugin.studySvFileNames[3]);
+		
+		AppUtils.selectedStudies=DebugCorePlugin.selectedStudies;
+		
+		prj.setDVHashtable();
+		prj.setSVHashtable();
+		prj.openDVGroup();
+		prj.openDV2Group();
+		prj.openDV3Group();
+		prj.openDV4Group();
+		prj.openSVGroup();
+		prj.openSV2Group();
+		prj.openSV3Group();
+		prj.openSV4Group();
+		
+		AppUtils.setCurrentProject(prj);
+		
+		
 	}
 }

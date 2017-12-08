@@ -80,6 +80,12 @@
             class="gov.ca.dwr.hecdssvue.views.DeliveryShortagesView"
             id="gov.ca.dwr.hecdssvue.views.DeliveryShortagesView">
       </view>
+      <view
+            name="DTS"
+            category="gov.ca.dwr.hecdssvue"
+            class="gov.ca.dwr.hecdssvue.views.DTSView"
+            id="gov.ca.dwr.hecdssvue.views.DTSView">
+      </view>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">

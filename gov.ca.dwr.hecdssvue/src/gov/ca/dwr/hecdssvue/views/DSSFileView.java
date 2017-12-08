@@ -115,6 +115,7 @@ public class DSSFileView extends ViewPart {
 		    @Override
 		    public void widgetSelected(SelectionEvent e) {
 		    	selectFiles();
+		    	DataOps.setProject();
 		    }
 		});
 		
@@ -136,6 +137,7 @@ public class DSSFileView extends ViewPart {
 						String file=dlg.open();
 						fileLabel.setText(file);
 						openProject(file);
+						DataOps.setProject();
 					}
 				});
 		    }
