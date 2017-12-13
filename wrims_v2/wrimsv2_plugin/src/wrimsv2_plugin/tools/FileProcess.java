@@ -106,4 +106,11 @@ public class FileProcess {
 		absPath=absPath+"\\"+path;
 		return absPath;
 	}
+	
+	public static String createSensitivityFilePath(String path, int sri){
+		int index=path.lastIndexOf(File.separator)+1;
+		String directory = path.substring(0,index);
+		String fn = "SR"+sri+"_"+path.substring(index);
+		return directory+fn;
+	}
 }

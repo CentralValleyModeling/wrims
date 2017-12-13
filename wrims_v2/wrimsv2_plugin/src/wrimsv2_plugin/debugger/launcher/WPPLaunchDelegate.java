@@ -45,6 +45,7 @@ import wrimsv2_plugin.debugger.msr.MSRUtil;
 import wrimsv2_plugin.debugger.pa.PAProcDV;
 import wrimsv2_plugin.debugger.pa.PAProcInit;
 import wrimsv2_plugin.debugger.pa.PAProcRun;
+import wrimsv2_plugin.sensitivity.SensitivityRun;
 import wrimsv2_plugin.tools.Encryption;
 import wrimsv2_plugin.tools.FileProcess;
 import wrimsv2_plugin.tools.TimeOperation;
@@ -79,12 +80,34 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 	private boolean useMainFile=true;
 	private String databaseURL="none";
 	private String sqlGroup="calsim";
+	private boolean isSensitivity=false;
+	private int sri=1;
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.ILaunchConfigurationDelegate#launch(org.eclipse.debug.core.ILaunchConfiguration, java.lang.String, org.eclipse.debug.core.ILaunch, org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
 	public void launch(ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException{		
+		String sensitivityString=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ISSENSITIVITYRUN, "no");
+		if (sensitivityString.equalsIgnoreCase("yes")){
+			isSensitivity=true;
+			sensitivityLaunch(configuration, mode, launch, monitor);
+		} 
+		else{
+			isSensitivity=false;
+			singleLaunch(configuration, mode, launch, monitor);
+		}
+	}
+	
+	public void sensitivityLaunch(ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException{		
+		SensitivityRun sr=new SensitivityRun(configuration);
+		for (sri=1; sri<=sr.getNumRuns(); sri++){
+			sr.createSensitivityTable(sri);
+			singleLaunch(configuration, mode, launch, monitor);
+		}
+	}
+	
+	public void singleLaunch(ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException{		
 		if (DebugCorePlugin.target !=null && !DebugCorePlugin.target.isTerminated()){		
 			DebugCorePlugin.target.sendRequest("terminate");
 		}
@@ -219,7 +242,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 		}
 			
 		MSRDataTransfer dataTxfr=new MSRDataTransfer();
-		dataTxfr.procDataTxfrFile(configuration, ms);
+		dataTxfr.procDataTxfrFile(configuration, ms, isSensitivity, sri);
 		
 		MSRProcRun msr=new MSRProcRun();
 		msr.initialMSTime();
@@ -567,6 +590,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 				DebugCorePlugin.savedDvFileName=dvarFile;
 			}else{
 				String procDvarFile=FileProcess.procRelativePath(dvarFile, configuration);
+				if (isSensitivity) procDvarFile=FileProcess.createSensitivityFilePath(procDvarFile, sri);
 				out.println("DvarFile           " + procDvarFile);
 				DebugCorePlugin.savedDvFileName=procDvarFile;
 			}

@@ -173,7 +173,6 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	 */
 	public static final String ID_WPP_LAUNCH_CONFIGURATION_TYPE = "wpp.launchType";	
 	
-	
 	public static final String TITLE_ALLVARIABLES_VIEW="All Variables";
 	public static final String TITLE_VARIABLES_VIEW="Variables";
 	public static final String TITLE_ALLGOALS_VIEW="All Goals";
@@ -222,6 +221,9 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static final String ATTR_WPP_PADVSTARTDAY=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_PADVSTARTDAY";
 	public static final String ATTR_WPP_DATABASEURL=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_DATABASEURL";
 	public static final String ATTR_WPP_SQLGROUP=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_SQLGROUP";
+	public static final String ATTR_WPP_ISSENSITIVITYRUN=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_ISSENSITIVITYRUN";
+	public static final String ATTR_WPP_SENSITIVITYINDEXTABLENAME=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_SENSITIVITYINDEXTABLENAME";
+	public static final String ATTR_WPP_NUMSENSITIVITYRUN=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_NUMSENSITIVITYRUN";
 	
 	public static final String lineSep=System.getProperty("line.separator");
 	public static final String tab="\t";
