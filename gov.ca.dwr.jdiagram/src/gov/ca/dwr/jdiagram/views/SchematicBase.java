@@ -189,6 +189,7 @@ public abstract class SchematicBase extends ViewPart {
 		//JLayeredPane layeredPane = new JLayeredPane();
 		//contentPane.add(layeredPane);
 		diagramView = new DiagramView(diagram = new Diagram());
+		DiagramView.setLicenseKey("AQAAADEAAAAoAAAAAQAACBsIvJ6TqJ6Lmo2ylpGbuYqMlpCR0buWnpiNnpKSlpGY0bWeiZ5uSnEFZ5kp95H1RGyzvJ0ujmsyQtAvHsv6pq5QSIn+bYJpUI0gl6+sIDhBXOtsGtA=");
 		diagramView.setAllowInplaceEdit(false);
 		diagramView.setBehavior(Behavior.Pan);
 		getSite().setSelectionProvider(
