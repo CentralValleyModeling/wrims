@@ -31,8 +31,7 @@ public class PDFOptionDialog extends Dialog {
 	private String filename;
 	private Diagram diagram;
 	private Combo pageSize;
-	private String[] pageSizeNames={"Schematic Size",
-			"A0",                 
+	private String[] pageSizeNames={"A0",                 
 			"A1", 		    
 			"A10", 		    
 			"A2", 		    
@@ -62,7 +61,6 @@ public class PDFOptionDialog extends Dialog {
 			"Letter11x17", 	    
 			"Note"};
 	private Map<String, PageSizesEnum> pageSizeMap = new HashMap<String, PageSizesEnum>(){{
-		put("Schematic Size", PageSizesEnum.Document);
 		put("A0", PageSizesEnum.A0);               
 		put("A1", PageSizesEnum.A1);
 		put("A10", PageSizesEnum.A10);

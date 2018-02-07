@@ -27,6 +27,7 @@ import org.eclipse.ui.internal.Workbench;
 import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.part.ViewPart;
 
+import wrimsv2_plugin.calsimhydro.DefaultCalSimHydro;
 import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.menuitem.EnableMenus;
 import wrimsv2_plugin.debugger.toolbaritem.EnableButtons;
@@ -120,7 +121,11 @@ public class DebuggerStartUp implements IStartup {
 					@Override
 					public void perspectiveChanged(IWorkbenchPage page,
 							IPerspectiveDescriptor perspective, String changeId) {
-						
+						String label=perspective.getLabel();
+						if (label.equalsIgnoreCase("CalSim Hydro")){
+							DefaultCalSimHydro dch = new DefaultCalSimHydro();
+							dch.load();
+						}
 					}
 				});
 			}

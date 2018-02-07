@@ -732,14 +732,14 @@ public class DSSCatalogView extends AbstractDSSView {
 				if (DssPluginCore.mode.equals(DssPluginCore.diff) && i>1 && dataVector_file !=null){
 					dataVector_file=DataOps.diff(dataVector_file, (TimeSeriesContainer)dataVector_path.get(0));
 				}
-				if (dataVector_file !=null) dataVector_path.add(dataVector_file);
+				if (dataVector_file !=null && dataVector_file.values.length !=0) dataVector_path.add(dataVector_file);
 //				dataVector_file.units//TODO
                 break;
 			  case 1:
 //				if (dataVector_file.numberValues == 0){
 //				if (dataVector_path.get((i-1)/2).numberValues == 0){
 //				if (dataVector_file.fullName==""){//TODO:prev null
-				if ((dataVector_file==null)||(dataVector_file.fullName=="")){//TODO
+				if ((dataVector_file==null)||(dataVector_file.fullName=="")||(dataVector_file.values.length==0)){//TODO
 //				if (dataVector_file==null){//TODO
 //				if (dataVector_path.get((i-1)/2).equals(null)){
 				  try{

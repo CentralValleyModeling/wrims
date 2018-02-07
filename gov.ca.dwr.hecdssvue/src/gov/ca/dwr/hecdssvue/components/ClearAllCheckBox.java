@@ -20,13 +20,13 @@ public class ClearAllCheckBox {
 				public void run(){
 					IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
 					StorageFlowsView storageFlowsView = (StorageFlowsView) workBenchPage.findView(StorageFlowsView.ID);
-					storageFlowsView.clearAll();
+					if (storageFlowsView != null) storageFlowsView.clearAll();
 					SanJoaquinRiverView sanJoaquinRiverView = (SanJoaquinRiverView)workBenchPage.findView(SanJoaquinRiverView.ID);
-					sanJoaquinRiverView.clearAll();
+					if (sanJoaquinRiverView != null) sanJoaquinRiverView.clearAll();
 					WaterManagementActionsView waterManagementActionsView = (WaterManagementActionsView)workBenchPage.findView(WaterManagementActionsView.ID);
-					waterManagementActionsView.clearAll();
+					if (waterManagementActionsView !=null) waterManagementActionsView.clearAll();
 					DeliveryShortagesView deliveryShortagesView = (DeliveryShortagesView)workBenchPage.findView(DeliveryShortagesView.ID);
-					deliveryShortagesView.clearAll();
+					if (deliveryShortagesView !=null) deliveryShortagesView.clearAll();
 				}
 			});
 		} catch (Exception e) {

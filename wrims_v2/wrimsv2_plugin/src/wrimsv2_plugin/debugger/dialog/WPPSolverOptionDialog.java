@@ -54,7 +54,7 @@ public class WPPSolverOptionDialog extends Dialog {
 		final Combo solverCombo = new Combo(shell, SWT.BORDER);
 		solverCombo.add("XA");
 		solverCombo.add("CBC");
-		solverCombo.add("LPSolve");
+		//solverCombo.add("LPSolve");
 		
 		Label label2 =  new Label(shell, SWT.NONE);
 		label2.setText("Log:");
