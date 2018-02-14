@@ -24,7 +24,7 @@ public class CsvOperation {
 			csvFile.getParentFile().mkdirs();
 			FileWriter fw = new FileWriter(csvFile);
 			BufferedWriter bw = new BufferedWriter(fw, 8192);
-			String line="ID,Timestep,Units,Date_Time,Variable,Kind,Value\n";
+			String line="id,Timestep,Units,Date_Time,Variable,Kind,Value\n";
 			bw.write(line);
 			Set<String> keys = DataTimeSeries.dvAliasTS.keySet();
 			Iterator<String> it = keys.iterator();

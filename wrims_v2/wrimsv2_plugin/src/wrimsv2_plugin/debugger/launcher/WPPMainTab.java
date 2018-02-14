@@ -101,6 +101,9 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	private Label msl;
 	private Combo ms;
 	private Button wsidigen;
+	private Button ch;
+	private Text calsimHydroText;
+	private Button calsimHydroButton;
 	
 	private ILaunchConfiguration launchConfig;
 	String externalPath="";
@@ -116,6 +119,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	private DropTarget svarFileDt;
 	private DropTarget initFileDt;
 	private DropTarget groundWaterFolderDt;	
+	private DropTarget calsimHydroDt;
 	
 	public static String[] months = { "oct", "nov", "dec", "jan", "feb", "mar",
 		"apr", "may", "jun", "jul", "aug", "sep" };
@@ -620,7 +624,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		wsidigen = new Button(comp, SWT.NONE);
 		wsidigen.setText("&Wsi-Di Generator");
 		gd = new GridData(GridData.BEGINNING);
-		gd.horizontalSpan=2;
+		gd.horizontalSpan=3;
 		wsidigen.setLayoutData(gd);
 		wsidigen.setFont(font);
 		wsidigen.addSelectionListener(new SelectionAdapter() {
@@ -629,6 +633,57 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 				wsidigenerator();
 			}
 		});
+		
+		ch = new Button(comp, SWT.CHECK);
+		ch.setText("CalSim Hydro");
+		gd = new GridData(GridData.BEGINNING);
+		gd.horizontalSpan=1;
+		ch.setLayoutData(gd);
+		ch.setFont(font);
+		ch.addSelectionListener(new SelectionAdapter() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				updateLaunchConfigurationDialog();
+			}
+			
+		});
+		
+		calsimHydroText = new Text(comp, SWT.SINGLE | SWT.BORDER);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 5;
+		calsimHydroText.setLayoutData(gd);
+		calsimHydroText.setFont(font);
+		calsimHydroText.addModifyListener(new ModifyListener() {
+			@Override
+			public void modifyText(ModifyEvent e) {
+				updateLaunchConfigurationDialog();
+			}
+		});
+		
+		calsimHydroDt = new DropTarget(calsimHydroText, DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK);
+		calsimHydroDt.setTransfer(new Transfer[] { FileTransfer.getInstance()});
+		calsimHydroDt.addDropListener(new DropTargetAdapter() {
+            public void drop(DropTargetEvent event) {
+                String fileList[] = null;
+                FileTransfer ft = FileTransfer.getInstance();
+                if (ft.isSupportedType(event.currentDataType)) {
+                    fileList = (String[]) event.data;
+                    calsimHydroText.setText(fileList[0]);
+                }
+            }
+        });
+		
+		calsimHydroButton = createPushButton(comp, "&Browse", null); //$NON-NLS-1$
+		calsimHydroButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				browseFiles(calsimHydroText);
+			}
+		});
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 1;
+		calsimHydroButton.setLayoutData(gd);
 	}
 	
 	public void wsidigenerator(){
@@ -986,6 +1041,18 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 			}else{
 				ms.select(msv-1);
 			}
+			
+			String chr="0";
+			chr = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_CALSIMHYDRORUN, "0");
+			if (chr.equals("1")){
+				ch.setSelection(true);
+			}else{
+				ch.setSelection(false);
+			}
+			
+			String che="";
+			che = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_CALSIMHYDROEXE, "");
+			calsimHydroText.setText(che);
 		} catch (CoreException e) {
 			setErrorMessage(e.getMessage());
 		}
@@ -1078,7 +1145,16 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		}else{
 			lt="0";
 		}
-		String msr=ms.getText().trim(); 
+		String msr=ms.getText().trim();
+		
+		String chr="0";
+		if (ch.getSelection()){
+			chr="1";
+		}else{
+			chr="0";
+		}
+		
+		String che=calsimHydroText.getText();
 		
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_STUDY, studyName);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_AUTHOR, author);
@@ -1101,6 +1177,8 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_ENDDAY, endDay);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_LAUNCHTYPE, lt);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_MULTISTUDY, msr);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_CALSIMHYDRORUN, chr);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_CALSIMHYDROEXE, che);
 	}
 	
 	/* (non-Javadoc)

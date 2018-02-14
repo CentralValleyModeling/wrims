@@ -224,6 +224,8 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static final String ATTR_WPP_ISSENSITIVITYRUN=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_ISSENSITIVITYRUN";
 	public static final String ATTR_WPP_SENSITIVITYINDEXTABLENAME=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_SENSITIVITYINDEXTABLENAME";
 	public static final String ATTR_WPP_NUMSENSITIVITYRUN=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_NUMSENSITIVITYRUN";
+	public static final String ATTR_WPP_CALSIMHYDRORUN=ID_WPP_DEBUG_MODEL + ".CALSIMHYDRORUN";
+	public static final String ATTR_WPP_CALSIMHYDROEXE=ID_WPP_DEBUG_MODEL + ".CALSIMHYDROEXE";
 	
 	public static final String lineSep=System.getProperty("line.separator");
 	public static final String tab="\t";

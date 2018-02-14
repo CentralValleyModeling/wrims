@@ -1,6 +1,7 @@
 package wrimsv2_plugin.calsimhydro;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
@@ -32,6 +33,23 @@ public class DefaultCalSimHydro {
 			WPPException.handleException(e);
 		}
 		
+	}
+	
+	public void run(){
+		String chd="CalSimHydroDefault\\bin";
+		String che="RUN.bat";
+		try {
+		    String[] commands = {"cmd.exe", "/c", "start", "/w", che};
+		    ProcessBuilder builder = new ProcessBuilder(commands);
+		    builder.directory(new File(chd));
+		    Process process = builder.start();
+		    process.waitFor();
+			int terminateCode=process.exitValue();
+		} catch (IOException e) {
+			WPPException.handleException(e);
+		} catch (InterruptedException e) {
+			WPPException.handleException(e);
+		}
 	}
 	
 }
