@@ -635,7 +635,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		});
 		
 		ch = new Button(comp, SWT.CHECK);
-		ch.setText("CalSim Hydro");
+		ch.setText("CalSimHydro");
 		gd = new GridData(GridData.BEGINNING);
 		gd.horizontalSpan=1;
 		ch.setLayoutData(gd);

@@ -122,7 +122,7 @@ public class DebuggerStartUp implements IStartup {
 					public void perspectiveChanged(IWorkbenchPage page,
 							IPerspectiveDescriptor perspective, String changeId) {
 						String label=perspective.getLabel();
-						if (label.equalsIgnoreCase("CalSim Hydro")){
+						if (label.equalsIgnoreCase("CalSimHydro")){
 							DefaultCalSimHydro dch = new DefaultCalSimHydro();
 							dch.load();
 						}

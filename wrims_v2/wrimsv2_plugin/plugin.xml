@@ -54,6 +54,16 @@
              category="wpp.category.wrims2"
           class="wrimsv2_plugin.debugger.view.WPPAllGoalView"/>
 </extension>
+<extension point="org.eclipse.ui.views">
+        <category 
+           id="wpp.category.wrims2"
+           name="WRIMS2">
+        </category>
+        <view id="wpp.calsimhydroview"
+             name="CalSimHydro"
+             category="wpp.category.wrims2"
+          class="wrimsv2_plugin.debugger.view.CalSimHydroView"/>
+</extension>
 <extension point="org.eclipse.ui.viewActions"> 
   <viewContribution 
       id="org.eclipse.ui.articles.action.contribution.view" 

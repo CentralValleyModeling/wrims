@@ -17,7 +17,7 @@ import wrimsv2_plugin.tools.FileProcess;
 public class CalSimHydro {
 
 	public void run(ILaunchConfiguration configuration){
-		System.out.println("CalSim Hydro Run Started");
+		System.out.println("CalSimHydro Run Started");
 		try {
 			String che = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_CALSIMHYDROEXE, "");
 			if (che.trim().equals("")){
@@ -28,7 +28,13 @@ public class CalSimHydro {
 				if (!new File(che).isAbsolute()){
 					cheAbs=FileProcess.procRelativePath(che, configuration);
 				}
-				Process process = Runtime.getRuntime().exec(new String[] {"cmd.exe", "/c", "start", "/w", cheAbs});
+				int index=cheAbs.lastIndexOf(File.separator);
+				String cheAbsDir=cheAbs.substring(0, index+1);
+				String cheAbsFile=cheAbs.substring(index+1);
+				String[] commands = {"cmd.exe", "/c", "start", "/w", cheAbsFile};
+			    ProcessBuilder builder = new ProcessBuilder(commands);
+			    builder.directory(new File(cheAbsDir));
+			    Process process = builder.start();
 				process.waitFor();
 				int terminateCode=process.exitValue();
 			}
@@ -39,7 +45,7 @@ public class CalSimHydro {
 		} catch (InterruptedException e) {
 			WPPException.handleException(e);
 		}
-		System.out.println("CalSim Hydro Run Completed");
+		System.out.println("CalSimHydro Run Completed");
 	}
 	
 }
