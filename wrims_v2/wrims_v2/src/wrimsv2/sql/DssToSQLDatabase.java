@@ -57,13 +57,12 @@ public class DssToSQLDatabase {
 	}
 	
 	public void convertData(){
+		ControlData.isSimOutput=false;
 		if (ControlData.databaseURL.startsWith("jdbc:sqlserver")){
 			SQLServerRWriter sqlServerRWriter = new SQLServerRWriter();
-			ControlData.isSimOutput=false;
 			sqlServerRWriter.process();
 		}else if (ControlData.databaseURL.startsWith("jdbc:mysql")){
 			MySQLRWriter mySqlRWriter = new MySQLRWriter();
-			ControlData.isSimOutput=false;
 			mySqlRWriter.process();
 		}else{
 			CsvOperation co = new CsvOperation();
