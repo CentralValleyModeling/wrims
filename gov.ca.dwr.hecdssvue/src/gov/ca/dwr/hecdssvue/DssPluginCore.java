@@ -55,15 +55,15 @@ public class DssPluginCore {
 	}};
 	
 	public static ArrayList<String> _twSelections = new ArrayList<String>(
-		    Arrays.asList("All", "OCT1921 - SEP2009","OCT1921 - SEP2003",
+		    Arrays.asList("All", "OCT1921 - SEP2015","OCT1921 - SEP2003",
 		"OCT1928 - SEP1934","OCT1986 - SEP1992","OCT1975 - SEP1977",
-		"OCT1976 - SEP1977","OCT1994 - SEP2003","OCT2000 - SEP2009",
+		"OCT1976 - SEP1977","OCT1994 - SEP2003","OCT2000 - SEP2015",
 		"OCT1997 - SEP2007", "Add..."));
 	
 	public static ArrayList<String> _schematicTwSelections = new ArrayList<String>(
-			Arrays.asList( "Add...", "OCT1921 - SEP2009","OCT1921 - SEP2003",
+			Arrays.asList( "Add...", "OCT1921 - SEP2015","OCT1921 - SEP2003",
 			"OCT1928 - SEP1934","OCT1986 - SEP1992","OCT1975 - SEP1977",
-			"OCT1976 - SEP1977","OCT1994 - SEP2003","OCT2000 - SEP2009", 
+			"OCT1976 - SEP1977","OCT1994 - SEP2003","OCT2000 - SEP2015", 
 			"OCT1997 - SEP2007"));
 	
 	public static String twFile="twDSS.prf";

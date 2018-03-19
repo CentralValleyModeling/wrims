@@ -112,7 +112,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static boolean isDebugging=false;
 	public static boolean updateSelectedVariable=true;
 	
-	public static String solver="XA";
+	public static String solver="CBC";
 	public static String log="None";
 	
 	public static String savedSvFileName="";
@@ -132,7 +132,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static int[] studyTypes={0,0,0,0};
 	@SuppressWarnings("unchecked")
 	public static Map<String, String>[] studiesData=new HashMap[4];
-	public static String timeWindow="31Oct1921 2400 30Sep2009 2400";
+	public static String timeWindow="31Oct1921 2400 30Sep3000 2400";
 	
 	public static String aPart="";
 	public static String initFPart="";

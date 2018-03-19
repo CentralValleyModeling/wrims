@@ -645,7 +645,7 @@ public class OpsPanel extends JPanel {
 					+ startYear + " 2400 " + daysInEndMonth
 					+ endMonth + endYear + " 2400";
 			} catch (NumberFormatException nfe) {
-				DssPluginCore.tw = "31Oct1921 2400 30Sep2009 2400"; 
+				DssPluginCore.tw = "31Oct1921 2400 30Sep2015 2400"; 
 			}
 		}
 	}

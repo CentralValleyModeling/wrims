@@ -1336,36 +1336,39 @@ public final class MonthlyTableModel extends AbstractTableModel { // extends
 						}
 					}
 				}
-				for (int i = 0; i < averageColumnValues.length; ++i) {
-					averageColumnValues[i] = averageColumnValues[i]
+				if (averageColumnValues!=null){
+					for (int i = 0; i < averageColumnValues.length; ++i) {
+						averageColumnValues[i] = averageColumnValues[i]
 							/ numColumnValues[i];
-				}
+					}
 
-				// replace the avgColumnValues row's avg column (last column)
-				// value with actual average, cause columns can have different
-				// number of data)
-				// avgColumnValues[avgColumnValues.length - 1] =
-				// totalSum/totalNumValid;
-				averageColumnValues[averageColumnValues.length - 1] = totalSum/numColumnValues[numColumnValues.length-1];
-				row = new Object[2];
-				row[0] = "AVG";
-				row[1] = new HecDoubleArray(averageColumnValues);
-				((HecDoubleArray) row[1]).setPrecision(precision);
-				_data.add(row);
-				row = new Object[2];
-				row[0] = "MIN";
-				row[1] = new HecDoubleArray(minColumnValues);
-				((HecDoubleArray) row[1]).setPrecision(precision);
-				_data.add(row);
-				row = new Object[2];
-				row[0] = "MAX";
-				row[1] = new HecDoubleArray(maxColumnValues);
-				((HecDoubleArray) row[1]).setPrecision(precision);
-				_data.add(row);
-				initVisibleColumns();
-				if (!showTotalColumn)
-					setColumnVisibility(_columnNames.size() - 1,
+					// replace the avgColumnValues row's avg column (last column)
+					// value with actual average, cause columns can have different
+					// number of data)
+					// avgColumnValues[avgColumnValues.length - 1] =
+					// totalSum/totalNumValid;
+					averageColumnValues[averageColumnValues.length - 1] = totalSum/numColumnValues[numColumnValues.length-1];
+					row = new Object[2];
+					row[0] = "AVG";
+					row[1] = new HecDoubleArray(averageColumnValues);
+					((HecDoubleArray) row[1]).setPrecision(precision);
+					_data.add(row);
+					row = new Object[2];
+					row[0] = "MIN";
+					row[1] = new HecDoubleArray(minColumnValues);
+					((HecDoubleArray) row[1]).setPrecision(precision);
+					_data.add(row);
+					row = new Object[2];
+					row[0] = "MAX";
+					row[1] = new HecDoubleArray(maxColumnValues);
+					((HecDoubleArray) row[1]).setPrecision(precision);
+					_data.add(row);
+					initVisibleColumns();
+					if (!showTotalColumn)
+						setColumnVisibility(_columnNames.size() - 1,
 							showTotalColumn);
+				}
+				
 			}
 
 			/**
@@ -1381,7 +1384,7 @@ public final class MonthlyTableModel extends AbstractTableModel { // extends
 			}
 
 			public boolean getColumnVisibility(int index) {
-				if (index < _visibleColumns.length && index > 0)
+				if (_visibleColumns!=null && index < _visibleColumns.length && index > 0)
 					return _visibleColumns[index];
 				else
 					return false;
@@ -1530,7 +1533,7 @@ public final class MonthlyTableModel extends AbstractTableModel { // extends
 				// return _columnNames.size(); // ALL columns visible
 				int count = 0;
 				for (int i = 0; i < _columnNames.size(); ++i)
-					if (_visibleColumns[i])
+					if (_visibleColumns!=null && _visibleColumns[i])
 						++count;
 				return count;
 			}

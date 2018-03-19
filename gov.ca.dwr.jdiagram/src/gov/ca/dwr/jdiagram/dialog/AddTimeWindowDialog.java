@@ -33,7 +33,7 @@ public class AddTimeWindowDialog extends Dialog {
 	
 	private Text year1, year2;
 	private Combo month1, month2;
-	private String newTW="OCT1921 - SEP2009";
+	private String newTW="OCT1921 - SEP2015";
 	
 	public AddTimeWindowDialog(Shell parent, Combo dateList) {
 		
@@ -89,7 +89,7 @@ public class AddTimeWindowDialog extends Dialog {
 		
 		year2= new Text(shell, SWT.BORDER);
 		year2.setToolTipText("Year");
-		year2.setText("2009");
+		year2.setText("2015");
 		year2.setLayoutData(gd);
 		
 		Button ok = new Button(shell, SWT.PUSH);
