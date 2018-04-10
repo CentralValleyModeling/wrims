@@ -63,9 +63,9 @@ public class WPPSolverOptionDialog extends Dialog {
 		logCombo.add("None");
 		logCombo.add("Log");
 		
-		if (DebugCorePlugin.solver.equals("XA")){
+		if (DebugCorePlugin.solver.equals("CBC")){
 			solverCombo.select(0);
-		}else if (DebugCorePlugin.solver.equals("CBC")){
+		}else if (DebugCorePlugin.solver.equals("XA")){
 			solverCombo.select(1);
 		}else if (DebugCorePlugin.solver.equals("LPSolve")){
 			solverCombo.select(2);
