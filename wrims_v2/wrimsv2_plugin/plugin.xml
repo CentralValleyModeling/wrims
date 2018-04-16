@@ -654,4 +654,11 @@
           </instanceof></enablement>
     </consolePageParticipant>
  </extension>
+ <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="wrimsv2_plugin.perspective.IDEPerspectiveFactory"
+            id="wpp.ideperspective"
+            name="IDE"/>
+ </extension>
 </plugin>

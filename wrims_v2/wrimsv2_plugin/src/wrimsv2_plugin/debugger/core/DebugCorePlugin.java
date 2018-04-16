@@ -151,6 +151,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static final String ID_WPP_ALLGOAL_VIEW="wpp.allgoalview";
 	public static final String ID_WPP_FILEINCEXPLORE_VIEW = "wpp.fileincexploreview";
 	public static final String ID_WPP_CALSIMHYDRO_VIEW = "wpp.calsimhydroview";
+	public static final String ID_WPP_EXCEPTION_VIEW = "wpp.exceptionview";
 	public static final String ID_WPP_EDITOR="wpp.editor";
 	public static final String ID_WPP_RESUMEMENU="wpp.resume";
 	public static final String ID_WPP_TERMINATEMENU="wpp.terminate";
