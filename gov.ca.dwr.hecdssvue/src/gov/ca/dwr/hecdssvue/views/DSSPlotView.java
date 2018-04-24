@@ -1,5 +1,6 @@
 package gov.ca.dwr.hecdssvue.views;
 
+import gov.ca.dwr.hecdssvue.Activator;
 import gov.ca.dwr.hecdssvue.DssPluginCore;
 import gov.ca.dwr.hecdssvue.components.DataOps;
 import hec.gfx2d.G2dMouseAdapter;
@@ -14,12 +15,34 @@ import hec.io.DataContainer;
 import hec.io.PairedDataContainer;
 import hec.io.TimeSeriesContainer;
 
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
+
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IContributionItem;
+import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.swt.dnd.ImageTransfer;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.IViewSite;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.statushandlers.StatusManager;
 
 import wrimsv2_plugin.tools.TimeOperation;
 
@@ -36,13 +59,22 @@ public class DSSPlotView extends AbstractDSSView {
 	 */
 	public static final String ID = "gov.ca.dwr.hecdssvue.views.DSSPlotView";
 	G2dPanel plot;
+	private Action copyAction;
+	private Viewport[] viewPorts;
 
 	/**
 	 * The constructor.
 	 */
 	public DSSPlotView() {
+		
 	}
 
+	public void createPartControl(Composite parent){
+		super.createPartControl(parent);
+		makeActions();
+		contributeToActionBars();
+	}
+	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	/**
@@ -114,8 +146,10 @@ public class DSSPlotView extends AbstractDSSView {
 
 		}
 		plot.buildComponents(g2dataVector, false, true);
-		Viewport[] viewPorts = plot.getViewports();
-		if (viewPorts.length>0) plot.setMouseAdapter(new G2dZoomAdapter(viewPorts[0], plot));
+		viewPorts = plot.getViewports();
+		if (viewPorts.length>0) {
+			plot.setMouseAdapter(new G2dZoomAdapter(viewPorts[0], plot));
+		};
 	}
 	
 	public PairedDataContainer getExceedence(TimeSeriesContainer tsc) {
@@ -492,4 +526,73 @@ public class DSSPlotView extends AbstractDSSView {
 
 		return ntsc;
 	}
+	
+	private void contributeToActionBars() {
+		IViewSite vs = getViewSite();
+		IActionBars bars = vs.getActionBars();
+		//fillLocalPullDown(bars.getMenuManager());
+		fillLocalToolBar(bars.getToolBarManager());
+	}
+	
+	private void fillLocalToolBar(IToolBarManager manager) {
+		IContributionItem[] items = manager.getItems();
+		manager.add(copyAction);
+	}
+	
+	private void makeActions() {
+		copyAction = new Action() {
+			public void run() {
+				BufferedImage bi = new
+					    BufferedImage(plot.getWidth(), plot.getHeight(), BufferedImage.TYPE_INT_ARGB);
+				Graphics g = bi.getGraphics();
+				plot.printAll(g);
+				Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+				TransferableImage selection = new TransferableImage(bi);
+				clipboard.setContents(selection, null);
+			}
+		};
+		copyAction.setText("Copy");
+		copyAction.setToolTipText("Copy");
+		copyAction.setImageDescriptor(Activator
+				.getImageDescriptor(ISharedImages.IMG_TOOL_COPY));
+	}
+
+    private class TransferableImage implements Transferable {
+
+        Image i;
+
+        public TransferableImage( Image i ) {
+            this.i = i;
+        }
+
+		@Override
+		public Object getTransferData(DataFlavor flavor)
+				throws UnsupportedFlavorException, IOException {
+			if ( flavor.equals( DataFlavor.imageFlavor ) && i != null ) {
+                return i;
+            }
+            else {
+                throw new UnsupportedFlavorException( flavor );
+            }
+		}
+
+		@Override
+		public DataFlavor[] getTransferDataFlavors() {
+            DataFlavor[] flavors = new DataFlavor[ 1 ];
+            flavors[ 0 ] = DataFlavor.imageFlavor;
+            return flavors;
+		}
+
+		@Override
+		public boolean isDataFlavorSupported(DataFlavor flavor) {
+            DataFlavor[] flavors = getTransferDataFlavors();
+            for ( int i = 0; i < flavors.length; i++ ) {
+                if ( flavor.equals( flavors[ i ] ) ) {
+                    return true;
+                }
+            }
+
+            return false;
+		}
+    }
 }
