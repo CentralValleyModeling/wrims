@@ -15,7 +15,7 @@
 	<classpathentry exported="true" kind="lib" path="lib_x64/jdom.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib_x64/COM.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib_x64/vista.jar"/>
-	<classpathentry kind="lib" path="lib_x64/calsimgui.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib_x64/calsimgui.jar"/>
 	<classpathentry kind="lib" path="lib_x64/collections.jar"/>
 	<classpathentry kind="lib" path="lib_x64/jpython.jar"/>
 	<classpathentry kind="output" path="bin"/>
