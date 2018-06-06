@@ -117,8 +117,8 @@ public class ControlData {
 	public static boolean saveCplexLpStringToFile=false;
 	public static boolean useCbcWarmStart=true;
 	public static boolean writeCbcSolvingTime=false;
-	public static Map<Integer,LinkedHashSet<String>> cycIntDvMap;
-	public static LinkedHashSet<String> allIntDv;
+	//public static Map<Integer,LinkedHashSet<String>> cycIntDvMap;
+	//public static LinkedHashSet<String> allIntDv;
 	public static ArrayList<Integer> cycWarmStart;
 	public static ArrayList<Integer> cycWarmStop;
 	public static ArrayList<Integer> cycWarmUse;

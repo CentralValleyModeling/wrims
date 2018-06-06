@@ -457,11 +457,11 @@ public class ControllerBatch {
 		} else if (ControlData.solverName.equalsIgnoreCase("cbc1")) {
 			ControlData.solverType = Param.SOLVER_CBC1;
 			// initiate cbc file passing jni
-			CbcSolver.init(true);
+			CbcSolver.init(true, sds);
 		} else if (ControlData.solverName.equalsIgnoreCase("cbc")) {
 			ControlData.solverType = Param.SOLVER_CBC;
 			// initiate cbc file passing jni
-			CbcSolver.init(false);
+			CbcSolver.init(false, sds);
 		} else if (ControlData.solverName.equalsIgnoreCase("lpsolve")) {
 			ControlData.solverType = Param.SOLVER_LPSOLVE;
 			// initiate lpsolve
@@ -1276,7 +1276,7 @@ public class ControllerBatch {
 		ArrayList<String> modelList=sds.getModelList();
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
 		
-		CbcSolver.init(false); 	if (ControlData.cbc_debug_routeXA || ControlData.cbc_debug_routeCbc) {new InitialXASolver();}
+		CbcSolver.init(false, sds); 	if (ControlData.cbc_debug_routeXA || ControlData.cbc_debug_routeCbc) {new InitialXASolver();}
 		if (Error.getTotalError()>0){
 			System.out.println("Model run exits due to error.");
 			System.exit(1);
@@ -1381,9 +1381,9 @@ public class ControllerBatch {
 						if (CbcSolver.intLog && (!ControlData.cbc_debug_routeXA && !ControlData.cbc_debug_routeCbc)) {
 							
 							String cbc_int = "";
-							if (ControlData.cycIntDvMap != null) {
-								ArrayList<String> intDVs = new ArrayList<String>(ControlData.cycIntDvMap.get(ControlData.currCycleIndex));
-								for (String v : ControlData.allIntDv) {
+							if (sds.cycIntDvMap != null && sds.cycIntDvMap.containsKey(ControlData.currCycleIndex)) {
+								ArrayList<String> intDVs = new ArrayList<String>(sds.cycIntDvMap.get(ControlData.currCycleIndex));
+								for (String v : sds.allIntDv) {
 									if (intDVs.contains(v)){
 										//xa_int  += " "+ Math.round(ControlData.xasolver.getColumnActivity(v));
 										if (Error.getTotalError()==0) {
@@ -1440,9 +1440,9 @@ public class ControllerBatch {
 							
 							String xa_int = "";
 							String cbc_int = "";
-							if (ControlData.cycIntDvMap != null) {
-								ArrayList<String> intDVs = new ArrayList<String>(ControlData.cycIntDvMap.get(ControlData.currCycleIndex));
-								for (String v : ControlData.allIntDv) {
+							if (sds.cycIntDvMap != null) {
+								ArrayList<String> intDVs = new ArrayList<String>(sds.cycIntDvMap.get(ControlData.currCycleIndex));
+								for (String v :sds.allIntDv) {
 									if (intDVs.contains(v)){
 										xa_int  += " "+ Math.round(ControlData.xasolver.getColumnActivity(v));
 										if (Error.getTotalError()==0) {

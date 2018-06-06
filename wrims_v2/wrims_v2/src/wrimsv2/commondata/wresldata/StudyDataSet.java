@@ -3,6 +3,7 @@ package wrimsv2.commondata.wresldata;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 
 import wrimsv2.components.IntDouble;
@@ -37,6 +38,9 @@ public class StudyDataSet implements Serializable {
 	private Map<String, Map<String, IntDouble>> varCycleIndexValueMap = new HashMap<String, Map<String, IntDouble>>();
 	private ArrayList<String> varCycleIndexList = new ArrayList<String>();
 	private ArrayList<String> dvarTimeArrayCycleIndexList = new ArrayList<String>();
+	
+	public static LinkedHashSet<String> allIntDv=new LinkedHashSet<String>();
+	public static Map<Integer,LinkedHashSet<String>> cycIntDvMap=new HashMap<Integer,LinkedHashSet<String>>();
 	
 	public ArrayList<String> getParameterList() {
 		return new ArrayList<String>(parameterList);

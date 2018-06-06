@@ -2243,7 +2243,7 @@ public class DebugInterface {
 			}
 			ILP.getIlpDir();
 			ILP.initializeIlp();
-			CbcSolver.init(false);
+			CbcSolver.init(false, ControlData.currStudyDataSet);
 		}
 	}
 	
