@@ -112,7 +112,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static boolean isDebugging=false;
 	public static boolean updateSelectedVariable=true;
 	
-	public static String solver="XA";
+	public static String solver="CBC";
 	public static String log="None";
 	
 	public static String savedSvFileName="";
@@ -132,7 +132,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static int[] studyTypes={0,0,0,0};
 	@SuppressWarnings("unchecked")
 	public static Map<String, String>[] studiesData=new HashMap[4];
-	public static String timeWindow="31Oct1921 2400 30Sep2009 2400";
+	public static String timeWindow="31Oct1921 2400 30Sep3000 2400";
 	
 	public static String aPart="";
 	public static String initFPart="";
@@ -150,6 +150,8 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static final String ID_WPP_GOAL_VIEW="wpp.goalview";
 	public static final String ID_WPP_ALLGOAL_VIEW="wpp.allgoalview";
 	public static final String ID_WPP_FILEINCEXPLORE_VIEW = "wpp.fileincexploreview";
+	public static final String ID_WPP_CALSIMHYDRO_VIEW = "wpp.calsimhydroview";
+	public static final String ID_WPP_EXCEPTION_VIEW = "wpp.exceptionview";
 	public static final String ID_WPP_EDITOR="wpp.editor";
 	public static final String ID_WPP_RESUMEMENU="wpp.resume";
 	public static final String ID_WPP_TERMINATEMENU="wpp.terminate";
@@ -224,6 +226,8 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static final String ATTR_WPP_ISSENSITIVITYRUN=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_ISSENSITIVITYRUN";
 	public static final String ATTR_WPP_SENSITIVITYINDEXTABLENAME=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_SENSITIVITYINDEXTABLENAME";
 	public static final String ATTR_WPP_NUMSENSITIVITYRUN=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_NUMSENSITIVITYRUN";
+	public static final String ATTR_WPP_CALSIMHYDRORUN=ID_WPP_DEBUG_MODEL + ".CALSIMHYDRORUN";
+	public static final String ATTR_WPP_CALSIMHYDROEXE=ID_WPP_DEBUG_MODEL + ".CALSIMHYDROEXE";
 	
 	public static final String lineSep=System.getProperty("line.separator");
 	public static final String tab="\t";

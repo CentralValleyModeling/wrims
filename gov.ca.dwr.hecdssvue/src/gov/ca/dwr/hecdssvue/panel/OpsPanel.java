@@ -52,6 +52,8 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 
+import calsim.app.AppUtils;
+import calsim.app.Project;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.tools.TimeOperation;
 
@@ -196,44 +198,57 @@ public class OpsPanel extends JPanel {
 			@Override
 			public void valueChanged(ListSelectionEvent arg0) {
 				DssPluginCore.months=new ArrayList<Integer>();
+				AppUtils.months=new ArrayList<Integer>();
 				int[] sels=list.getSelectedIndices();
 				for (int i=0; i<sels.length; i++){
 					switch (sels[i]) {
 		            	case 0:  
 		            		DssPluginCore.months.add(10);
+		            		AppUtils.months.add(10);
 		            		break;
 		            	case 1:  
 		            		DssPluginCore.months.add(11);
+		            		AppUtils.months.add(11);
 		            		break;
 		            	case 2:  
 		            		DssPluginCore.months.add(12);
+		            		AppUtils.months.add(12);
 		            		break;
 		            	case 3:  
 		            		DssPluginCore.months.add(1);
+		            		AppUtils.months.add(1);
 		            		break;
 		            	case 4:  
 		            		DssPluginCore.months.add(2);
+		            		AppUtils.months.add(2);
 		            		break;
 		            	case 5:  
 		            		DssPluginCore.months.add(3);
+		            		AppUtils.months.add(3);
 		            		break;
 		            	case 6:  
 		            		DssPluginCore.months.add(4);
+		            		AppUtils.months.add(4);
 		            		break;
 		            	case 7:  
 		            		DssPluginCore.months.add(5);
+		            		AppUtils.months.add(5);
 		            		break;
 		            	case 8:  
 		            		DssPluginCore.months.add(6);
+		            		AppUtils.months.add(6);
 		            		break;
 		            	case 9:  
 		            		DssPluginCore.months.add(7);
+		            		AppUtils.months.add(7);
 		            		break;
 		            	case 10:  
 		            		DssPluginCore.months.add(8);
+		            		AppUtils.months.add(8);
 		            		break;
 		            	case 11:  
 		            		DssPluginCore.months.add(9);
+		            		AppUtils.months.add(9);
 		            		break;
 		            	default:
 		            		break;
@@ -334,12 +349,14 @@ public class OpsPanel extends JPanel {
 		taf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DssPluginCore.units=DssPluginCore.taf;
+				AppUtils.useUnits(DssPluginCore.taf);
 				ShowSelected.showSelected();
 			}
 		});
 		cfs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DssPluginCore.units=DssPluginCore.cfs;
+				AppUtils.useUnits(DssPluginCore.cfs);
 				ShowSelected.showSelected();
 			}
 		});
@@ -385,6 +402,8 @@ public class OpsPanel extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				DssPluginCore.mode=comp.getText();
+				AppUtils.plotComparitive = true;
+				AppUtils.plotDifference = false;
 				ShowSelected.showSelected();
 			}
 
@@ -418,6 +437,8 @@ public class OpsPanel extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				DssPluginCore.mode=diff.getText();
+				AppUtils.plotComparitive = false;
+				AppUtils.plotDifference = true;
 				ShowSelected.showSelected();
 			}
 
@@ -624,9 +645,12 @@ public class OpsPanel extends JPanel {
 	}
 	
 	public void setTimeWindow(String twSel) {
+		Project prj = AppUtils.getCurrentProject();
 		if (twSel.equals("All")){
 			DssPluginCore.tw="All";
+			prj.setTimeWindow(AppUtils.DEFAULT_TIME_WINDOW);
 		}else{
+			prj.setTimeWindow(twSel);
 			String[] split = twSel.split(" +");
 			String startMonth = split[0].substring(0, 3);
 			String endMonth = split[2].substring(0, 3);
@@ -645,7 +669,7 @@ public class OpsPanel extends JPanel {
 					+ startYear + " 2400 " + daysInEndMonth
 					+ endMonth + endYear + " 2400";
 			} catch (NumberFormatException nfe) {
-				DssPluginCore.tw = "31Oct1921 2400 30Sep2009 2400"; 
+				DssPluginCore.tw = "31Oct1921 2400 30Sep2015 2400"; 
 			}
 		}
 	}

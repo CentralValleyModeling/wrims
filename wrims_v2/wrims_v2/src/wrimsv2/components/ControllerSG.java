@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
+
 import org.antlr.runtime.RecognitionException;
 
 import wrimsv2.commondata.solverdata.SolverData;
@@ -325,7 +326,7 @@ public class ControllerSG {
 		ArrayList<String> modelList=sds.getModelList();
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
 		
-		CbcSolver.init(false); 	if (ControlData.cbc_debug_routeXA || ControlData.cbc_debug_routeCbc) {new InitialXASolver();}
+		CbcSolver.init(false, sds); 	if (ControlData.cbc_debug_routeXA || ControlData.cbc_debug_routeCbc) {new InitialXASolver();}
 		if (Error.getTotalError()>0){
 			System.out.println("Model run exits due to error.");
 			System.exit(1);
@@ -430,9 +431,9 @@ public class ControllerSG {
 						if (CbcSolver.intLog && (!ControlData.cbc_debug_routeXA && !ControlData.cbc_debug_routeCbc)) {
 							
 							String cbc_int = "";
-							if (ControlData.cycIntDvMap != null) {
-								ArrayList<String> intDVs = new ArrayList<String>(ControlData.cycIntDvMap.get(ControlData.currCycleIndex));
-								for (String v : ControlData.allIntDv) {
+							if (sds.cycIntDvMap != null && sds.cycIntDvMap.containsKey(ControlData.currCycleIndex)) {
+								ArrayList<String> intDVs = new ArrayList<String>(sds.cycIntDvMap.get(ControlData.currCycleIndex));
+								for (String v : sds.allIntDv) {
 									if (intDVs.contains(v)){
 										//xa_int  += " "+ Math.round(ControlData.xasolver.getColumnActivity(v));
 										if (Error.getTotalError()==0) {
@@ -489,9 +490,9 @@ public class ControllerSG {
 							
 							String xa_int = "";
 							String cbc_int = "";
-							if (ControlData.cycIntDvMap != null) {
-								ArrayList<String> intDVs = new ArrayList<String>(ControlData.cycIntDvMap.get(ControlData.currCycleIndex));
-								for (String v : ControlData.allIntDv) {
+							if (sds.cycIntDvMap != null) {
+								ArrayList<String> intDVs = new ArrayList<String>(sds.cycIntDvMap.get(ControlData.currCycleIndex));
+								for (String v : sds.allIntDv) {
 									if (intDVs.contains(v)){
 										xa_int  += " "+ Math.round(ControlData.xasolver.getColumnActivity(v));
 										if (Error.getTotalError()==0) {

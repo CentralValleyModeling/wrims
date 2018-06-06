@@ -62,10 +62,16 @@
             class="gov.ca.dwr.jdiagram.PerspectiveFactory"
             fixed="true"
             id="gov.ca.dwr.jdiagram.perspective"
-            icon="icons/resource_persp.gif"
             name="Schematic">
       </perspective>
    </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="gov.ca.dwr.jdiagram.SchematicEditorPerspectiveFactory"
+            id="gov.ca.dwr.jdiagram.schematiceditorperspective"
+            name="Schematic Editor"/>
+   </extension> 
    <extension
          point="org.eclipse.search.textSearchQueryProvider">
       <textSearchQueryProvider

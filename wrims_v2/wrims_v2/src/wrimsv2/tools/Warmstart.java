@@ -19,8 +19,8 @@ public class Warmstart {
 
 	public static void collectIntegerDV_1(StudyTemp st) {
 			// TODO: put result in control data.
-			ControlData.cycIntDvMap = new HashMap<Integer,LinkedHashSet<String>>();		
-			ControlData.allIntDv = new LinkedHashSet<String>();
+			ControlData.currStudyDataSet.cycIntDvMap = new HashMap<Integer,LinkedHashSet<String>>();		
+			ControlData.currStudyDataSet.allIntDv = new LinkedHashSet<String>();
 			
 			
 			//System.out.println("st.seqList: "+st.seqList);
@@ -32,8 +32,8 @@ public class Warmstart {
 					for (String dvName: seq.dvList){
 						if (seq.dvMap.get(dvName).isInteger) intDVSet.add(dvName);
 					}
-					ControlData.cycIntDvMap.put(cyc, intDVSet);
-					ControlData.allIntDv.addAll(intDVSet);
+					ControlData.currStudyDataSet.cycIntDvMap.put(cyc, intDVSet);
+					ControlData.currStudyDataSet.allIntDv.addAll(intDVSet);
 				}
 				
 				//System.out.println(st.seqMap.get(k).dvList);
@@ -42,8 +42,8 @@ public class Warmstart {
 			
 			
 			
-			for (int c: ControlData.cycIntDvMap.keySet()){
-				System.out.println("cycle: "+c+"\n"+ControlData.cycIntDvMap.get(c));
+			for (int c: ControlData.currStudyDataSet.cycIntDvMap.keySet()){
+				System.out.println("cycle: "+c+"\n"+ControlData.currStudyDataSet.cycIntDvMap.get(c));
 				System.out.println();
 				System.out.println();
 				//System.out.println(ControlData.cycIntDvMap.get(c));
@@ -81,7 +81,7 @@ public class Warmstart {
 	//		test.put(12, w12);		
 	//		ControlData.cycIntDvMap = test;
 			
-			int nCyc = ControlData.cycIntDvMap.size();
+			int nCyc = ControlData.currStudyDataSet.cycIntDvMap.size();
 			
 			int firstCycWarmStart=9999;
 			ArrayList<Integer> cycWarmStart = new ArrayList<Integer>();
@@ -90,7 +90,7 @@ public class Warmstart {
 			
 			
 			for (int i=0; i<nCyc-1; i++){
-				if (ControlData.cycIntDvMap.get(i).size()>Param.cbcMinIntNumber) {
+				if (ControlData.currStudyDataSet.cycIntDvMap.get(i).size()>Param.cbcMinIntNumber) {
 					firstCycWarmStart = i;
 					cycWarmStart.add(i);
 					break;
@@ -138,8 +138,8 @@ public class Warmstart {
 			System.out.println("cycWarmUse: " + ControlData.cycWarmUse);
 			
 			String w = ControlData.cycWarmStart.toString() + "\n" + ControlData.cycWarmUse.toString() + "\n";
-			for (int c : ControlData.cycIntDvMap.keySet()) {
-				ArrayList<String> t = new ArrayList<String>(ControlData.cycIntDvMap.get(c));
+			for (int c : ControlData.currStudyDataSet.cycIntDvMap.keySet()) {
+				ArrayList<String> t = new ArrayList<String>(ControlData.currStudyDataSet.cycIntDvMap.get(c));
 				Collections.sort(t);
 				w = w + "cycle: " + c + "\n" + t.toString() + "\n";
 			}
@@ -148,8 +148,8 @@ public class Warmstart {
 
 	public static void collectIntegerDV_2(StudyDataSet sd) {
 			// TODO: put result in control data.
-			ControlData.cycIntDvMap = new HashMap<Integer,LinkedHashSet<String>>();		
-			ControlData.allIntDv = new LinkedHashSet<String>();
+			sd.cycIntDvMap = new HashMap<Integer,LinkedHashSet<String>>();		
+			sd.allIntDv = new LinkedHashSet<String>();
 			
 			
 			//System.out.println("st.seqList: "+st.seqList);
@@ -164,8 +164,8 @@ public class Warmstart {
 					for (String dvName: dvList){
 						if (dvMap.get(dvName).integer==Param.yes) intDVSet.add(dvName);
 					}
-					ControlData.cycIntDvMap.put(cyc, intDVSet);
-					ControlData.allIntDv.addAll(intDVSet);
+					sd.cycIntDvMap.put(cyc, intDVSet);
+					sd.allIntDv.addAll(intDVSet);
 				}
 				
 				//System.out.println(st.seqMap.get(k).dvList);
@@ -182,7 +182,7 @@ public class Warmstart {
 			
 
 			
-			int nCyc = ControlData.cycIntDvMap.size();
+			int nCyc = sd.cycIntDvMap.size();
 			
 			int firstCycWarmStart=9999;
 			ArrayList<Integer> cycWarmStart = new ArrayList<Integer>();
@@ -191,7 +191,7 @@ public class Warmstart {
 			
 			
 			for (int i=0; i<nCyc-1; i++){
-				if (ControlData.cycIntDvMap.get(i).size()>Param.cbcMinIntNumber) {
+				if (sd.cycIntDvMap.get(i).size()>Param.cbcMinIntNumber) {
 					firstCycWarmStart = i;
 					cycWarmStart.add(i);
 					break;
@@ -241,8 +241,8 @@ public class Warmstart {
 			if (ControlData.cycWarmStart != null && ControlData.cycWarmUse != null) {
 
 				String w = ControlData.cycWarmStart.toString() + "\n" + ControlData.cycWarmUse.toString() + "\n";
-				for (int c : ControlData.cycIntDvMap.keySet()) {
-					ArrayList<String> t = new ArrayList<String>(ControlData.cycIntDvMap.get(c));
+				for (int c : sd.cycIntDvMap.keySet()) {
+					ArrayList<String> t = new ArrayList<String>(sd.cycIntDvMap.get(c));
 					Collections.sort(t);
 					w = w + "cycle: " + c + "\n" + t.toString() + "\n";
 				}

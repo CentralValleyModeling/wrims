@@ -37,6 +37,8 @@ public class WaterYearView extends ViewPart {
 	
 	private Composite area;
 	
+	public static final String ID = "gov.ca.dwr.hecdssvue.views.WaterYearView";
+	
 	@Override
 	public void createPartControl(Composite parent) {
 		initialWaterYearMap();

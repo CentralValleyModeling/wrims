@@ -36,6 +36,7 @@ import org.eclipse.debug.core.model.IDebugTarget;
 import org.eclipse.debug.core.model.IProcess;
 import org.eclipse.debug.core.model.LaunchConfigurationDelegate;
 
+import wrimsv2_plugin.calsimhydro.CalSimHydro;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
@@ -88,6 +89,12 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 	 */
 	@Override
 	public void launch(ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException{		
+		String chr = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_CALSIMHYDRORUN, "0");
+		if (chr.equals("1")){
+			CalSimHydro ch = new CalSimHydro();
+			ch.run(configuration);
+		}
+		
 		String sensitivityString=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ISSENSITIVITYRUN, "no");
 		if (sensitivityString.equalsIgnoreCase("yes")){
 			isSensitivity=true;

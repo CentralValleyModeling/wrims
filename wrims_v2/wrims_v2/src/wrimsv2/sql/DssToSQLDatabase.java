@@ -19,6 +19,7 @@ import vista.set.Group;
 import vista.set.RegularTimeSeries;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.FilePaths;
+import wrimsv2.evaluator.CsvOperation;
 import wrimsv2.evaluator.DataTimeSeries;
 import wrimsv2.evaluator.DssDataSet;
 import wrimsv2.evaluator.DssDataSetFixLength;
@@ -56,14 +57,18 @@ public class DssToSQLDatabase {
 	}
 	
 	public void convertData(){
+		ControlData.isSimOutput=false;
 		if (ControlData.databaseURL.startsWith("jdbc:sqlserver")){
 			SQLServerRWriter sqlServerRWriter = new SQLServerRWriter();
-			ControlData.isSimOutput=false;
 			sqlServerRWriter.process();
 		}else if (ControlData.databaseURL.startsWith("jdbc:mysql")){
 			MySQLRWriter mySqlRWriter = new MySQLRWriter();
-			ControlData.isSimOutput=false;
 			mySqlRWriter.process();
+		}else{
+			CsvOperation co = new CsvOperation();
+			int index = FilePaths.fullDvarDssPath.lastIndexOf(".");
+			String csvPath = FilePaths.fullDvarDssPath.substring(0, index)+".csv";
+			co.ouputCSV(csvPath, 0);
 		}
 	}
 	

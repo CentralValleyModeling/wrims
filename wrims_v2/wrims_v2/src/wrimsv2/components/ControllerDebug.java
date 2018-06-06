@@ -242,7 +242,7 @@ public class ControllerDebug extends Thread {
 				di.handleRequest("suspend");
 			}
 		}else if (ControlData.solverName.equalsIgnoreCase("CBC")){
-			CbcSolver.init(false);
+			CbcSolver.init(false, sds);
 		}else if (ControlData.solverName.equalsIgnoreCase("Gurobi")){
 			GurobiSolver.initialize();
 		}

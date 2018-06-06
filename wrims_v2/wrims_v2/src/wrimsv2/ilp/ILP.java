@@ -107,10 +107,10 @@ public class ILP {
 				_noteFile_xa_int = Tools.openFile(_ilpDir.getAbsolutePath(), "Note_xa_int.log");
 				_noteFile_cbc_int = Tools.openFile(_ilpDir.getAbsolutePath(), "Note_cbc_int.log");
 				
-				if (ControlData.cycIntDvMap!=null) {
+				if (ControlData.currStudyDataSet.cycIntDvMap!=null) {
 					ILP.writeNote("cyc ", _noteFile_cbc_int);
 					ILP.writeNote("cyc ", _noteFile_xa_int);
-					for (String s:ControlData.allIntDv ){
+					for (String s:ControlData.currStudyDataSet.allIntDv ){
 						ILP.writeNote( s+" ", _noteFile_cbc_int);
 						ILP.writeNote( s+" ", _noteFile_xa_int);
 					}
@@ -135,10 +135,10 @@ public class ILP {
 				_noteFile_cbc_obj = Tools.openFile(_ilpDir.getAbsolutePath(), "Note_cbc_obj.log");
 			} else if (CbcSolver.intLog && ControlData.solverName.equalsIgnoreCase("Cbc")){
 				_noteFile_cbc_int_log = Tools.openFile(_ilpDir.getAbsolutePath(), "Note_cbc_int_check.log");
-				if (ControlData.cycIntDvMap!=null) {
+				if (ControlData.currStudyDataSet.cycIntDvMap!=null) {
 					ILP.writeNote("cyc ", _noteFile_cbc_int_log);
 					//ILP.writeNote("cyc ", _noteFile_xa_int);
-					for (String s:ControlData.allIntDv ){
+					for (String s:ControlData.currStudyDataSet.allIntDv ){
 						ILP.writeNote( s+" ", _noteFile_cbc_int_log);
 						//ILP.writeNote( s+" ", _noteFile_xa_int);
 					}

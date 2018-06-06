@@ -137,7 +137,7 @@ public class CbcSolver {
 	
 	private CbcSolver(){}
 	
-	public static void init(boolean useLpFile){
+	public static void init(boolean useLpFile, StudyDataSet sds){
 		//useLpFile=false;
 		CbcSolver.useLpFile = useLpFile;
 		System.loadLibrary(cbcLibName);
@@ -146,7 +146,7 @@ public class CbcSolver {
 		
 		if (ControlData.useCbcWarmStart || ControlData.cbc_debug_routeCbc || ControlData.cbc_debug_routeXA){
 			dvIntMap = new LinkedHashMap<String, Integer>();
-			for (String d: ControlData.allIntDv){
+			for (String d: sds.allIntDv){
 				dvIntMap.put(d, 0);
 			}
 		}
@@ -765,12 +765,12 @@ public class CbcSolver {
 					warmArrayExist = false;
 				}
 
-				intSolSize = ControlData.cycIntDvMap.get(ControlData.currCycleIndex).size();
+				intSolSize = ControlData.currStudyDataSet.cycIntDvMap.get(ControlData.currCycleIndex).size();
 				names = jCbc.new_jarray_string(intSolSize);
 				values = jCbc.new_jarray_int(intSolSize);
 				warmArrayExist = true;
 				int k = 0;
-				for (String dvN : ControlData.cycIntDvMap.get(ControlData.currCycleIndex)) {
+				for (String dvN : ControlData.currStudyDataSet.cycIntDvMap.get(ControlData.currCycleIndex)) {
 					jCbc.jarray_string_setitem(names, k, dvN);
 					jCbc.jarray_int_setitem(values, k, dvIntMap.get(dvN));
 					k++;
@@ -829,12 +829,12 @@ public class CbcSolver {
 				warmArrayExist = false;
 			}			
 			
-			intSolSize = ControlData.cycIntDvMap.get(ControlData.currCycleIndex).size();
+			intSolSize = ControlData.currStudyDataSet.cycIntDvMap.get(ControlData.currCycleIndex).size();
 			names = jCbc.new_jarray_string(intSolSize);
 			values = jCbc.new_jarray_int(intSolSize);
 			warmArrayExist = true;
 			int k=0;
-			for (String dvN: ControlData.cycIntDvMap.get(ControlData.currCycleIndex)){
+			for (String dvN: ControlData.currStudyDataSet.cycIntDvMap.get(ControlData.currCycleIndex)){
 				jCbc.jarray_string_setitem(names,k,dvN);
 				jCbc.jarray_int_setitem(values,k,dvIntMap.get(dvN));
 				k++;
@@ -1291,11 +1291,11 @@ public class CbcSolver {
 	
 	private static void logIntVars(String label){
 		
-		if (ControlData.cycIntDvMap != null) {
-			if (ControlData.cycIntDvMap.get(ControlData.currCycleIndex).size() > 0) {
+		if (ControlData.currStudyDataSet.cycIntDvMap != null) {
+			if (ControlData.currStudyDataSet.cycIntDvMap.get(ControlData.currCycleIndex).size() > 0) {
 
 				String c = "";
-				for (String dvN : ControlData.cycIntDvMap.get(ControlData.currCycleIndex)) {
+				for (String dvN : ControlData.currStudyDataSet.cycIntDvMap.get(ControlData.currCycleIndex)) {
 					c = c + dvN + "," + dvIntMap.get(dvN) + "\n";
 				}
 				Tools.quickLog(label + "_intVars", c);

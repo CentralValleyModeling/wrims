@@ -224,4 +224,18 @@
        </action>
     </actionSet>
  </extension>
+  <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="gov.ca.dwr.hecdssvue.perspective.CalSimHydroPerspectiveFactory"
+            id="wpp.calsimhydroperspective"
+            name="CalSimHydro"/>
+ </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="gov.ca.dwr.hecdssvue.perspective.DSSPerspectiveFactory"
+            id="wpp.dssperspective"
+            name="DSS"/>
+ </extension> 
 </plugin>
