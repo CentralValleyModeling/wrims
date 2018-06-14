@@ -42,6 +42,7 @@ public class DebuggerStartUp implements IStartup {
 
 	@Override
 	public void earlyStartup() {
+		SettingPref.load();
 		enableRunMenu();
 		initialStudyData();
 		DataProcess.initialVariableValueAlt();
@@ -78,7 +79,7 @@ public class DebuggerStartUp implements IStartup {
 			studiesData[i]=new HashMap<String, String>();
 		}
 	}
-	
+		
 	public void showSolverStatus(){
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() {
@@ -113,7 +114,7 @@ public class DebuggerStartUp implements IStartup {
 					public void perspectiveActivated(IWorkbenchPage page,
 							IPerspectiveDescriptor perspective) {
 						String label=perspective.getLabel();
-						if (label.equalsIgnoreCase("WRIMS2")){
+						if (label.equalsIgnoreCase("IDE")){
 							showSolverStatus();
 						}
 					}
