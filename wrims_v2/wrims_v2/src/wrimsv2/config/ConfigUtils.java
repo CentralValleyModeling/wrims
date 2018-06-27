@@ -732,6 +732,8 @@ public class ConfigUtils {
 		
 		ControlData.databaseURL = configMap.get("databaseurl");
 		ControlData.sqlGroup = configMap.get("sqlgroup");
+		ControlData.ovOption = Integer.parseInt(configMap.get("ovoption"));
+		ControlData.ovFile = configMap.get("ovfile");
 
 		//if (Error.getTotalError()<1) readParameter(configFile);
 		
