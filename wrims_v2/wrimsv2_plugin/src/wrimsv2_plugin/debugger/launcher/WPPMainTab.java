@@ -66,6 +66,7 @@ import org.eclipse.ui.part.PluginTransfer;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.dialog.WPPLoadStudyDssDialog;
 import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.tools.FileProcess;
 import wrimsv2_plugin.tools.TimeOperation;
 
 /**
@@ -786,7 +787,19 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 			out.println("AllowSvTsInit      "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_ALLOWSVTSINIT, "no"));
 			out.println("DatabaseURL        "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_DATABASEURL, "none"));
 			out.println("SQLGroup           "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_SQLGROUP, "calsim"));
-			
+			String ovOption=launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_OVOPTION, "0");
+			String ovFile=launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_OVFILE, "");
+			if (ovFile.trim().equals("")){
+				out.println("OVOption           0");
+				out.println("OVFile             .");
+			}else if (new File(ovFile).isAbsolute()){
+				out.println("OVOption           "+ovOption);
+				out.println("OVFile             "+ovFile);
+			}else{
+				out.println("OVOption           "+ovOption);
+				out.println("OVFile             "+FileProcess.procRelativePath(ovFile, launchConfig));
+			}
+					
 			if (DebugCorePlugin.solver.equalsIgnoreCase("LpSolve")) {
 				out.println("LpSolveConfigFile         callite.lpsolve");
 				out.println("LpSolveNumberOfRetries    2");				

@@ -9,6 +9,7 @@ import java.util.Properties;
 import org.eclipse.datatools.connectivity.IConnectionProfile;
 import org.eclipse.datatools.connectivity.ProfileManager;
 import org.eclipse.datatools.connectivity.drivers.jdbc.IJDBCConnectionProfileConstants;
+import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -27,6 +28,7 @@ import org.eclipse.ui.PlatformUI;
 
 import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.tools.Encryption;
+import wrimsv2_plugin.tools.FileProcess;
 
 
 public class WPPDssToSqlDialog extends Dialog {
@@ -36,11 +38,17 @@ public class WPPDssToSqlDialog extends Dialog {
 	private String sqlGroup="calsim";
 	private final String userDefault="root";
 	private final String passDefault="none";
+	private String ovOption="0";
+	private String ovFile;
+	private ILaunchConfiguration configuration;
 	
-	public WPPDssToSqlDialog(Shell parentShell, String databaseURL, String sqlGroup) {
+	public WPPDssToSqlDialog(Shell parentShell, String databaseURL, String sqlGroup, String ovOption, String ovFile, ILaunchConfiguration configuration) {
 		super(parentShell, SWT.APPLICATION_MODAL);
 		this.databaseURL=databaseURL;
 		this.sqlGroup=sqlGroup;
+		this.ovOption=ovOption;
+		this.ovFile=ovFile;
+		this.configuration=configuration;
 		setText("Dss to SQL Database");
 	}
 
@@ -145,6 +153,16 @@ public class WPPDssToSqlDialog extends Dialog {
 			out.println(databaseURL);
 			out.println(sqlGroup);
 			out.println(dssInfoFilePath);
+			if (ovFile.trim().equals("")){
+				out.println("0");
+				out.println(".");
+			}else if (new File(ovFile).isAbsolute()){
+				out.println(ovOption);
+				out.println(ovFile);
+			}else{
+				out.println(ovOption);
+				out.println(FileProcess.procRelativePath(ovFile, configuration));
+			}
 			out.close();
 			fw.close();
 		} catch (IOException e) {

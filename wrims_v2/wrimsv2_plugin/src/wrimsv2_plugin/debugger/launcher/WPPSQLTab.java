@@ -36,6 +36,7 @@ public class WPPSQLTab extends AbstractLaunchConfigurationTab {
 	private Button buttonAV;
 	private Button buttonOV;
 	private Text ovFileText;
+	private ILaunchConfiguration launchConfig;
 
 	@Override
 	public void createControl(Composite parent) {
@@ -200,8 +201,13 @@ public class WPPSQLTab extends AbstractLaunchConfigurationTab {
 				workbench.getDisplay().asyncExec(new Runnable(){
 					public void run(){
 						Shell shell=workbench.getActiveWorkbenchWindow().getShell();
-						WPPDssToSqlDialog dialog = new WPPDssToSqlDialog(shell, databaseURLText.getText(), groupText.getText());
-						dialog.openDialog();
+						if (buttonAV.getSelection()){
+							WPPDssToSqlDialog dialog = new WPPDssToSqlDialog(shell, databaseURLText.getText(), groupText.getText(), "0", ovFileText.getText(), launchConfig);
+							dialog.openDialog();
+						}else{
+							WPPDssToSqlDialog dialog = new WPPDssToSqlDialog(shell, databaseURLText.getText(), groupText.getText(), "1", ovFileText.getText(), launchConfig);
+							dialog.openDialog();
+						}
 					}
 				});
 			}
@@ -241,6 +247,7 @@ public class WPPSQLTab extends AbstractLaunchConfigurationTab {
 		} catch (CoreException e) {
 			WPPException.handleException(e);
 		}
+		launchConfig=configuration;
 	}
 
 	@Override
