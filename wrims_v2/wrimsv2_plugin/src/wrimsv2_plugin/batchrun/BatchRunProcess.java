@@ -99,6 +99,8 @@ public class BatchRunProcess {
 	public int paEndDay;
 	private String databaseURL="none";
 	private String sqlGroup="calsim";
+	private String ovOption="0";
+	private String ovFile="";
 	
 	private int terminateCode=0;
 	private Process process;
@@ -370,6 +372,8 @@ public class BatchRunProcess {
 		
 		databaseURL=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_DATABASEURL, "none");
 		sqlGroup=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_SQLGROUP, "calsim");
+		ovOption=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_OVOPTION, "0");
+		ovFile=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_OVFILE, "");
 		
 		String mainFileAbsPath;
 		if (new File(mainFile).isAbsolute()){
@@ -468,6 +472,16 @@ public class BatchRunProcess {
 			configMap.put("DatabaseURL".toLowerCase(), databaseURL);
 			configMap.put("SQLGroup".toLowerCase(), sqlGroup);
 			
+			configMap.put("OVOption".toLowerCase(), ovOption);
+			if (ovFile.trim().equals("")){
+				configMap.put("OVOption".toLowerCase(), "0");
+				configMap.put("OVFile".toLowerCase(), ".");
+			}else if (new File(ovFile).isAbsolute()){
+				configMap.put("OVFile".toLowerCase(), ovFile);
+			}else{
+				configMap.put("OVFile".toLowerCase(), FileProcess.procRelativePath(ovFile, launchFilePath));
+			}
+			
 			if (launchType==1 || (ms>1 && afterFirstRound)){
 				configMap.put("prefixinittodvarfile", "no");
 			}
@@ -535,6 +549,8 @@ public class BatchRunProcess {
 			out.println("AllowSvTsInit      "+configMap.get("AllowSvTsInit".toLowerCase()));
 			out.println("DatabaseURL        "+configMap.get("DatabaseURL".toLowerCase()));
 			out.println("SQLGroup           "+configMap.get("SQLGroup".toLowerCase()));
+			out.println("OVOption           "+configMap.get("OVOption".toLowerCase()));
+			out.println("OVFile             "+configMap.get("OVFile".toLowerCase()));
 			
 			if (DebugCorePlugin.solver.equalsIgnoreCase("LpSolve")) {
 				

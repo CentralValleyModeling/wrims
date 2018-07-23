@@ -20,6 +20,7 @@ import org.eclipse.ui.console.IConsoleConstants;
 import org.eclipse.ui.internal.Workbench;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+import wrimsv2_plugin.debugger.core.SettingPref;
 import wrimsv2_plugin.debugger.exception.WPPException;
 
 public class WPPSolverOptionDialog extends Dialog {
@@ -96,6 +97,7 @@ public class WPPSolverOptionDialog extends Dialog {
 			public void widgetSelected(SelectionEvent event){
 				DebugCorePlugin.solver=solverCombo.getText();
 				DebugCorePlugin.log=logCombo.getText();
+				SettingPref.save();
 				if (DebugCorePlugin.isDebugging){
 					try {
 						DebugCorePlugin.target.sendRequest("solveroption:"+DebugCorePlugin.solver+":"+DebugCorePlugin.log);

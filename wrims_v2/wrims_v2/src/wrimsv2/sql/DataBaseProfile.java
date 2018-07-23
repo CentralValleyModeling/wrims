@@ -50,6 +50,8 @@ public class DataBaseProfile {
 					    ControlData.databaseURL = br.readLine().toLowerCase();
 					    ControlData.sqlGroup = br.readLine();
 					    DssToSQLDatabase.dssInfoFilePath = br.readLine();
+					    ControlData.ovOption = Integer.parseInt(br.readLine());
+					    ControlData.ovFile = br.readLine();
 					    br.close();
 					    fs.close();
 					} catch (FileNotFoundException e) {

@@ -139,6 +139,8 @@ public class ControlData {
 	public static String PASS;  
 	public static String databaseURL;
 	public static String sqlGroup="calsim";
+	public static int ovOption=0;
+	public static String ovFile="";
 	public static boolean isSimOutput = true;
 	
 	public ControlData(){

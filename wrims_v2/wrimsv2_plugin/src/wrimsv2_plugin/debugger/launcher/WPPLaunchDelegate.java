@@ -81,6 +81,8 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 	private boolean useMainFile=true;
 	private String databaseURL="none";
 	private String sqlGroup="calsim";
+	private String ovOption="0";
+	private String ovFile="";
 	private boolean isSensitivity=false;
 	private int sri=1;
 
@@ -456,6 +458,8 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			
 			databaseURL=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_DATABASEURL, "none");
 			sqlGroup=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SQLGROUP, "calsim");
+			ovOption=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_OVOPTION, "0");
+			ovFile=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_OVFILE, "");
 			
 			String mainFileAbsPath;
 			if (new File(mainFile).isAbsolute()){
@@ -561,6 +565,17 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			
 			configMap.put("DatabaseURL".toLowerCase(), databaseURL);
 			configMap.put("SQLGroup".toLowerCase(), sqlGroup);
+						
+			configMap.put("OVOption".toLowerCase(), ovOption);
+			
+			if (ovFile.trim().equals("")){
+				configMap.put("OVOption".toLowerCase(), "0");
+				configMap.put("OVFile".toLowerCase(), ".");
+			}else if (new File(ovFile).isAbsolute()){
+				configMap.put("OVFile".toLowerCase(), ovFile);
+			}else{
+				configMap.put("OVFile".toLowerCase(), FileProcess.procRelativePath(ovFile, configuration));
+			}
 			
 			if (DebugCorePlugin.launchType==1 || (ms>1 && afterFirstRound)){
 				configMap.put("prefixinittodvarfile", "no");
@@ -640,6 +655,8 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			out.println("AllowSvTsInit      "+configMap.get("AllowSvTsInit".toLowerCase()));
 			out.println("DatabaseURL        "+configMap.get("DatabaseURL".toLowerCase()));
 			out.println("SQLGroup           "+configMap.get("SQLGroup".toLowerCase()));
+			out.println("OVOption           "+configMap.get("OVOption".toLowerCase()));
+			out.println("OVFile             "+configMap.get("OVFile".toLowerCase()));
 			
 			if (DebugCorePlugin.solver.equalsIgnoreCase("LpSolve")) {
 				

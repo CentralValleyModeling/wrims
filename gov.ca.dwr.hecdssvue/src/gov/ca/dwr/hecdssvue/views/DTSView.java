@@ -10,6 +10,7 @@ import hec.io.DataContainer;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -50,6 +51,14 @@ public class DTSView extends AbstractCalSimView{
 		final DTSTable table = DssPluginCore.dtp.getTable();
 		JButton opencurrent = table.opencurrent;
 		opencurrent.addActionListener(new GuiTaskListener("Retrieving...") {
+			public void doWork(){
+				Vector<DataContainer> v = table.retrieveData();
+				showSelected(v);
+			}
+		});
+		
+		JMenuItem open = dtm.open;
+		open.addActionListener(new GuiTaskListener("Retrieving...") {
 			public void doWork(){
 				Vector<DataContainer> v = table.retrieveData();
 				showSelected(v);
