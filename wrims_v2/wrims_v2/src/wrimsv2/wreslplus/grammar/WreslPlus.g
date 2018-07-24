@@ -901,9 +901,11 @@ mathFunc_simple
   |  SIN '(' expr_add_simple ')' 
   |  COS '(' expr_add_simple ')' 
   |  TAN '(' expr_add_simple ')' 
+  |  COT '(' expr_add_simple ')' 
   |  ASIN '(' expr_add_simple ')' 
   |  ACOS '(' expr_add_simple ')' 
   |  ATAN '(' expr_add_simple ')' 
+  |  ACOT '(' expr_add_simple ')' 
   ;
   
 unitFunc_simple
@@ -1145,9 +1147,11 @@ MOD : 'mod' | 'MOD' ;
 SIN : 'sin' | 'SIN' ;
 COS : 'cos' | 'COS' ;
 TAN : 'tan' | 'TAN' ;
+COT : 'cot' | 'COT' ;
 ASIN : 'asin' | 'ASIN' ;
 ACOS : 'acos' | 'ACOS' ;
 ATAN : 'atan' | 'ATAN' ;
+ACOT : 'acot' | 'ACOT' ;
 CFS_TAF : 'cfs_taf' | 'CFS_TAF' ;
 TAF_CFS : 'taf_cfs' | 'TAF_CFS' ;
 
