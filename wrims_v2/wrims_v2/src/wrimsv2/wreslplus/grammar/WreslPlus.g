@@ -898,6 +898,12 @@ mathFunc_simple
   |  INT_word '(' expr_add_simple ')' 
   |  ROUND '(' expr_add_simple ')' 
   |  MOD '(' expr_add_simple ',' expr_add_simple ')' 
+  |  SIN '(' expr_add_simple ')' 
+  |  COS '(' expr_add_simple ')' 
+  |  TAN '(' expr_add_simple ')' 
+  |  ASIN '(' expr_add_simple ')' 
+  |  ACOS '(' expr_add_simple ')' 
+  |  ATAN '(' expr_add_simple ')' 
   ;
   
 unitFunc_simple
@@ -1136,6 +1142,12 @@ LOG : 'log' | 'LOG' ;
 MAX : 'max' | 'MAX' ;
 MIN : 'min' | 'MIN' ;
 MOD : 'mod' | 'MOD' ;
+SIN : 'sin' | 'SIN' ;
+COS : 'cos' | 'COS' ;
+TAN : 'tan' | 'TAN' ;
+ASIN : 'asin' | 'ASIN' ;
+ACOS : 'acos' | 'ACOS' ;
+ATAN : 'atan' | 'ATAN' ;
 CFS_TAF : 'cfs_taf' | 'CFS_TAF' ;
 TAF_CFS : 'taf_cfs' | 'TAF_CFS' ;
 
