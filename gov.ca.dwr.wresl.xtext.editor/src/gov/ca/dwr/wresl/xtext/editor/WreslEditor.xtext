@@ -220,7 +220,7 @@ Term:
 	ref=[Declaration] | n=Number | f=Function | '(' e=Expression ')'| s=SpecialIdent | MultiStep;
 
 Function:
-	ExternalFunction1 | ExternalFunction2 | MaxFunction | MinFunction | '(' SumContent ')' | ModFunction | IntFunction | AbsFunction | RoundFunction | PowFunction | LogFunction | VarModel | VarModelStep | VarModelIndex | VarModelIndexStep;
+	ExternalFunction1 | ExternalFunction2 | MaxFunction | MinFunction | '(' SumContent ')' | ModFunction | IntFunction | AbsFunction | RoundFunction | PowFunction | LogFunction | SinFunction | CosFunction | TanFunction | CotFunction | AsinFunction | AcosFunction | AtanFunction | AcotFunction | VarModel | VarModelStep | VarModelIndex | VarModelIndexStep;
 
 ExternalFunction1:
 	((ref=[Declaration])|TafCfs|Month) '(' e1=(Expression|TrunkTimeArray) (',' e2+=(Expression|TrunkTimeArray))* ')';
@@ -257,6 +257,30 @@ PowFunction:
 	
 LogFunction:
 	LOG '(' e=Expression ')';
+	
+SinFunction:
+	SIN '(' e=Expression ')';
+	
+CosFunction:
+	COS '(' e=Expression ')';
+
+TanFunction:
+	TAN '(' e=Expression ')';
+
+CotFunction:
+	COT '(' e=Expression ')';
+	
+AsinFunction:
+	ASIN '(' e=Expression ')';
+	
+AcosFunction:
+	ACOS '(' e=Expression ')';
+
+AtanFunction:
+	ATAN '(' e=Expression ')';
+
+AcotFunction:
+	ACOT '(' e=Expression ')';
 
 LogicalFunction:
 	RangeFunction;
@@ -355,6 +379,30 @@ terminal POW:
 	
 terminal LOG:
 	'log' | 'LOG' | 'log10' | 'LOG10';
+	
+terminal SIN:
+	'sin' | 'SIN';
+	
+terminal COS: 
+	'cos' | 'COS';
+	
+terminal TAN: 
+	'tan' | 'TAN';
+	
+terminal COT: 
+	'cot' | 'COT';
+
+terminal ASIN: 
+	'asin' | 'ASIN';
+	
+terminal ACOS: 
+	'acos' | 'ACOS';
+	
+terminal ATAN: 
+	'atan' | 'ATAN';
+	
+terminal ACOT: 
+	'acot' | 'ACOT';
 
 terminal FLOAT:
 	INT '.' (INT)* | '.' (INT)+;

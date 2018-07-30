@@ -3,8 +3,8 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/gov.ca.dwr.wresl.xtext.editor/src-gen" editDirectory="/gov.ca.dwr.wresl.xtext.editor.edit/src"
     editorDirectory="/gov.ca.dwr.wresl.xtext.editor.editor/src" modelPluginID="gov.ca.dwr.wresl.xtext.editor"
     forceOverwrite="true" modelName="WreslEditor" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
-    complianceLevel="5.0" copyrightFields="false" editPluginID="gov.ca.dwr.wresl.xtext.editor.edit"
-    editorPluginID="gov.ca.dwr.wresl.xtext.editor.editor" runtimeVersion="2.8">
+    complianceLevel="6.0" copyrightFields="false" editPluginID="gov.ca.dwr.wresl.xtext.editor.edit"
+    editorPluginID="gov.ca.dwr.wresl.xtext.editor.editor" runtimeVersion="2.10">
   <genPackages prefix="WreslEditor" basePackage="gov.ca.dwr.wresl.xtext.editor" disposableProviderFactory="true"
       ecorePackage="WreslEditor.ecore#/">
     <genClasses ecoreClass="WreslEditor.ecore#//WreslEvaluator">
@@ -285,6 +285,30 @@
     </genClasses>
     <genClasses ecoreClass="WreslEditor.ecore#//LogFunction">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//LogFunction/e"/>
+    </genClasses>
+    <genClasses ecoreClass="WreslEditor.ecore#//SinFunction">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//SinFunction/e"/>
+    </genClasses>
+    <genClasses ecoreClass="WreslEditor.ecore#//CosFunction">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//CosFunction/e"/>
+    </genClasses>
+    <genClasses ecoreClass="WreslEditor.ecore#//TanFunction">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//TanFunction/e"/>
+    </genClasses>
+    <genClasses ecoreClass="WreslEditor.ecore#//CotFunction">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//CotFunction/e"/>
+    </genClasses>
+    <genClasses ecoreClass="WreslEditor.ecore#//AsinFunction">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//AsinFunction/e"/>
+    </genClasses>
+    <genClasses ecoreClass="WreslEditor.ecore#//AcosFunction">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//AcosFunction/e"/>
+    </genClasses>
+    <genClasses ecoreClass="WreslEditor.ecore#//AtanFunction">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//AtanFunction/e"/>
+    </genClasses>
+    <genClasses ecoreClass="WreslEditor.ecore#//AcotFunction">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//AcotFunction/e"/>
     </genClasses>
     <genClasses ecoreClass="WreslEditor.ecore#//VarModel">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//VarModel/ref1"/>

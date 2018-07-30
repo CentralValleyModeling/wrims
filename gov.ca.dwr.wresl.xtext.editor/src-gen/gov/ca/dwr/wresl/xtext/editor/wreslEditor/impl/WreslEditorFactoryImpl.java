@@ -30,7 +30,7 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
   {
     try
     {
-      WreslEditorFactory theWreslEditorFactory = (WreslEditorFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor"); 
+      WreslEditorFactory theWreslEditorFactory = (WreslEditorFactory)EPackage.Registry.INSTANCE.getEFactory(WreslEditorPackage.eNS_URI);
       if (theWreslEditorFactory != null)
       {
         return theWreslEditorFactory;
@@ -144,6 +144,14 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
       case WreslEditorPackage.ROUND_FUNCTION: return createRoundFunction();
       case WreslEditorPackage.POW_FUNCTION: return createPowFunction();
       case WreslEditorPackage.LOG_FUNCTION: return createLogFunction();
+      case WreslEditorPackage.SIN_FUNCTION: return createSinFunction();
+      case WreslEditorPackage.COS_FUNCTION: return createCosFunction();
+      case WreslEditorPackage.TAN_FUNCTION: return createTanFunction();
+      case WreslEditorPackage.COT_FUNCTION: return createCotFunction();
+      case WreslEditorPackage.ASIN_FUNCTION: return createAsinFunction();
+      case WreslEditorPackage.ACOS_FUNCTION: return createAcosFunction();
+      case WreslEditorPackage.ATAN_FUNCTION: return createAtanFunction();
+      case WreslEditorPackage.ACOT_FUNCTION: return createAcotFunction();
       case WreslEditorPackage.VAR_MODEL: return createVarModel();
       case WreslEditorPackage.VAR_MODEL_STEP: return createVarModelStep();
       case WreslEditorPackage.VAR_MODEL_INDEX: return createVarModelIndex();
@@ -1033,6 +1041,94 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
   {
     LogFunctionImpl logFunction = new LogFunctionImpl();
     return logFunction;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public SinFunction createSinFunction()
+  {
+    SinFunctionImpl sinFunction = new SinFunctionImpl();
+    return sinFunction;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public CosFunction createCosFunction()
+  {
+    CosFunctionImpl cosFunction = new CosFunctionImpl();
+    return cosFunction;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public TanFunction createTanFunction()
+  {
+    TanFunctionImpl tanFunction = new TanFunctionImpl();
+    return tanFunction;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public CotFunction createCotFunction()
+  {
+    CotFunctionImpl cotFunction = new CotFunctionImpl();
+    return cotFunction;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public AsinFunction createAsinFunction()
+  {
+    AsinFunctionImpl asinFunction = new AsinFunctionImpl();
+    return asinFunction;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public AcosFunction createAcosFunction()
+  {
+    AcosFunctionImpl acosFunction = new AcosFunctionImpl();
+    return acosFunction;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public AtanFunction createAtanFunction()
+  {
+    AtanFunctionImpl atanFunction = new AtanFunctionImpl();
+    return atanFunction;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public AcotFunction createAcotFunction()
+  {
+    AcotFunctionImpl acotFunction = new AcotFunctionImpl();
+    return acotFunction;
   }
 
   /**

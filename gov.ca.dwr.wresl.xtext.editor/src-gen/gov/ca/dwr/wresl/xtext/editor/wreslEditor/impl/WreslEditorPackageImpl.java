@@ -3,15 +3,21 @@
 package gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl;
 
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.AbsFunction;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.AcosFunction;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.AcotFunction;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Add;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Alias;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.AsinFunction;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Assignment;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.AtanFunction;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.CaseContent;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Condition;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ConditionalTerm;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ConditionalUnary;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ConstDef;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Constraint;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.CosFunction;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.CotFunction;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DVar;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DVarInteger;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DVarIntegerNonStd;
@@ -64,12 +70,14 @@ import gov.ca.dwr.wresl.xtext.editor.wreslEditor.SVarExpression;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.SVarSum;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.SVarTable;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Sequence;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.SinFunction;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.StateVariable;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.SubContent;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.SumContent;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.SumHeader;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.SvarDef;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.TableContent;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.TanFunction;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Term;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.TermSimple;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.TimeArraySize;
@@ -665,6 +673,62 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * @generated
    */
   private EClass logFunctionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass sinFunctionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass cosFunctionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass tanFunctionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass cotFunctionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass asinFunctionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass acosFunctionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass atanFunctionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass acotFunctionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -2896,6 +2960,166 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getSinFunction()
+  {
+    return sinFunctionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSinFunction_E()
+  {
+    return (EReference)sinFunctionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getCosFunction()
+  {
+    return cosFunctionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getCosFunction_E()
+  {
+    return (EReference)cosFunctionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getTanFunction()
+  {
+    return tanFunctionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTanFunction_E()
+  {
+    return (EReference)tanFunctionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getCotFunction()
+  {
+    return cotFunctionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getCotFunction_E()
+  {
+    return (EReference)cotFunctionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getAsinFunction()
+  {
+    return asinFunctionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAsinFunction_E()
+  {
+    return (EReference)asinFunctionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getAcosFunction()
+  {
+    return acosFunctionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAcosFunction_E()
+  {
+    return (EReference)acosFunctionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getAtanFunction()
+  {
+    return atanFunctionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAtanFunction_E()
+  {
+    return (EReference)atanFunctionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getAcotFunction()
+  {
+    return acotFunctionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAcotFunction_E()
+  {
+    return (EReference)acotFunctionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getVarModel()
   {
     return varModelEClass;
@@ -3373,6 +3597,30 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     logFunctionEClass = createEClass(LOG_FUNCTION);
     createEReference(logFunctionEClass, LOG_FUNCTION__E);
 
+    sinFunctionEClass = createEClass(SIN_FUNCTION);
+    createEReference(sinFunctionEClass, SIN_FUNCTION__E);
+
+    cosFunctionEClass = createEClass(COS_FUNCTION);
+    createEReference(cosFunctionEClass, COS_FUNCTION__E);
+
+    tanFunctionEClass = createEClass(TAN_FUNCTION);
+    createEReference(tanFunctionEClass, TAN_FUNCTION__E);
+
+    cotFunctionEClass = createEClass(COT_FUNCTION);
+    createEReference(cotFunctionEClass, COT_FUNCTION__E);
+
+    asinFunctionEClass = createEClass(ASIN_FUNCTION);
+    createEReference(asinFunctionEClass, ASIN_FUNCTION__E);
+
+    acosFunctionEClass = createEClass(ACOS_FUNCTION);
+    createEReference(acosFunctionEClass, ACOS_FUNCTION__E);
+
+    atanFunctionEClass = createEClass(ATAN_FUNCTION);
+    createEReference(atanFunctionEClass, ATAN_FUNCTION__E);
+
+    acotFunctionEClass = createEClass(ACOT_FUNCTION);
+    createEReference(acotFunctionEClass, ACOT_FUNCTION__E);
+
     varModelEClass = createEClass(VAR_MODEL);
     createEReference(varModelEClass, VAR_MODEL__REF1);
     createEReference(varModelEClass, VAR_MODEL__REF2);
@@ -3465,6 +3713,14 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     roundFunctionEClass.getESuperTypes().add(this.getFunction());
     powFunctionEClass.getESuperTypes().add(this.getFunction());
     logFunctionEClass.getESuperTypes().add(this.getFunction());
+    sinFunctionEClass.getESuperTypes().add(this.getFunction());
+    cosFunctionEClass.getESuperTypes().add(this.getFunction());
+    tanFunctionEClass.getESuperTypes().add(this.getFunction());
+    cotFunctionEClass.getESuperTypes().add(this.getFunction());
+    asinFunctionEClass.getESuperTypes().add(this.getFunction());
+    acosFunctionEClass.getESuperTypes().add(this.getFunction());
+    atanFunctionEClass.getESuperTypes().add(this.getFunction());
+    acotFunctionEClass.getESuperTypes().add(this.getFunction());
     varModelEClass.getESuperTypes().add(this.getFunction());
     varModelStepEClass.getESuperTypes().add(this.getFunction());
     varModelIndexEClass.getESuperTypes().add(this.getFunction());
@@ -3763,6 +4019,30 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
 
     initEClass(logFunctionEClass, LogFunction.class, "LogFunction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getLogFunction_E(), this.getExpression(), null, "e", null, 0, 1, LogFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(sinFunctionEClass, SinFunction.class, "SinFunction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getSinFunction_E(), this.getExpression(), null, "e", null, 0, 1, SinFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(cosFunctionEClass, CosFunction.class, "CosFunction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getCosFunction_E(), this.getExpression(), null, "e", null, 0, 1, CosFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(tanFunctionEClass, TanFunction.class, "TanFunction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getTanFunction_E(), this.getExpression(), null, "e", null, 0, 1, TanFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(cotFunctionEClass, CotFunction.class, "CotFunction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getCotFunction_E(), this.getExpression(), null, "e", null, 0, 1, CotFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(asinFunctionEClass, AsinFunction.class, "AsinFunction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAsinFunction_E(), this.getExpression(), null, "e", null, 0, 1, AsinFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(acosFunctionEClass, AcosFunction.class, "AcosFunction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAcosFunction_E(), this.getExpression(), null, "e", null, 0, 1, AcosFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(atanFunctionEClass, AtanFunction.class, "AtanFunction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAtanFunction_E(), this.getExpression(), null, "e", null, 0, 1, AtanFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(acotFunctionEClass, AcotFunction.class, "AcotFunction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAcotFunction_E(), this.getExpression(), null, "e", null, 0, 1, AcotFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(varModelEClass, VarModel.class, "VarModel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getVarModel_Ref1(), this.getDeclaration(), null, "ref1", null, 0, 1, VarModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

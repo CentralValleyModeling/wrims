@@ -700,6 +700,78 @@ public class WreslEditorSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case WreslEditorPackage.SIN_FUNCTION:
+      {
+        SinFunction sinFunction = (SinFunction)theEObject;
+        T result = caseSinFunction(sinFunction);
+        if (result == null) result = caseFunction(sinFunction);
+        if (result == null) result = caseTermSimple(sinFunction);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case WreslEditorPackage.COS_FUNCTION:
+      {
+        CosFunction cosFunction = (CosFunction)theEObject;
+        T result = caseCosFunction(cosFunction);
+        if (result == null) result = caseFunction(cosFunction);
+        if (result == null) result = caseTermSimple(cosFunction);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case WreslEditorPackage.TAN_FUNCTION:
+      {
+        TanFunction tanFunction = (TanFunction)theEObject;
+        T result = caseTanFunction(tanFunction);
+        if (result == null) result = caseFunction(tanFunction);
+        if (result == null) result = caseTermSimple(tanFunction);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case WreslEditorPackage.COT_FUNCTION:
+      {
+        CotFunction cotFunction = (CotFunction)theEObject;
+        T result = caseCotFunction(cotFunction);
+        if (result == null) result = caseFunction(cotFunction);
+        if (result == null) result = caseTermSimple(cotFunction);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case WreslEditorPackage.ASIN_FUNCTION:
+      {
+        AsinFunction asinFunction = (AsinFunction)theEObject;
+        T result = caseAsinFunction(asinFunction);
+        if (result == null) result = caseFunction(asinFunction);
+        if (result == null) result = caseTermSimple(asinFunction);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case WreslEditorPackage.ACOS_FUNCTION:
+      {
+        AcosFunction acosFunction = (AcosFunction)theEObject;
+        T result = caseAcosFunction(acosFunction);
+        if (result == null) result = caseFunction(acosFunction);
+        if (result == null) result = caseTermSimple(acosFunction);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case WreslEditorPackage.ATAN_FUNCTION:
+      {
+        AtanFunction atanFunction = (AtanFunction)theEObject;
+        T result = caseAtanFunction(atanFunction);
+        if (result == null) result = caseFunction(atanFunction);
+        if (result == null) result = caseTermSimple(atanFunction);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case WreslEditorPackage.ACOT_FUNCTION:
+      {
+        AcotFunction acotFunction = (AcotFunction)theEObject;
+        T result = caseAcotFunction(acotFunction);
+        if (result == null) result = caseFunction(acotFunction);
+        if (result == null) result = caseTermSimple(acotFunction);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case WreslEditorPackage.VAR_MODEL:
       {
         VarModel varModel = (VarModel)theEObject;
@@ -2031,6 +2103,134 @@ public class WreslEditorSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseLogFunction(LogFunction object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Sin Function</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Sin Function</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSinFunction(SinFunction object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Cos Function</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Cos Function</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseCosFunction(CosFunction object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Tan Function</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Tan Function</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseTanFunction(TanFunction object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Cot Function</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Cot Function</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseCotFunction(CotFunction object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Asin Function</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Asin Function</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAsinFunction(AsinFunction object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Acos Function</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Acos Function</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAcosFunction(AcosFunction object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Atan Function</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Atan Function</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAtanFunction(AtanFunction object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Acot Function</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Acot Function</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAcotFunction(AcotFunction object)
   {
     return null;
   }

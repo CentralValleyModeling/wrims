@@ -743,6 +743,78 @@ public interface WreslEditorFactory extends EFactory
   LogFunction createLogFunction();
 
   /**
+   * Returns a new object of class '<em>Sin Function</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Sin Function</em>'.
+   * @generated
+   */
+  SinFunction createSinFunction();
+
+  /**
+   * Returns a new object of class '<em>Cos Function</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Cos Function</em>'.
+   * @generated
+   */
+  CosFunction createCosFunction();
+
+  /**
+   * Returns a new object of class '<em>Tan Function</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Tan Function</em>'.
+   * @generated
+   */
+  TanFunction createTanFunction();
+
+  /**
+   * Returns a new object of class '<em>Cot Function</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Cot Function</em>'.
+   * @generated
+   */
+  CotFunction createCotFunction();
+
+  /**
+   * Returns a new object of class '<em>Asin Function</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Asin Function</em>'.
+   * @generated
+   */
+  AsinFunction createAsinFunction();
+
+  /**
+   * Returns a new object of class '<em>Acos Function</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Acos Function</em>'.
+   * @generated
+   */
+  AcosFunction createAcosFunction();
+
+  /**
+   * Returns a new object of class '<em>Atan Function</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Atan Function</em>'.
+   * @generated
+   */
+  AtanFunction createAtanFunction();
+
+  /**
+   * Returns a new object of class '<em>Acot Function</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Acot Function</em>'.
+   * @generated
+   */
+  AcotFunction createAcotFunction();
+
+  /**
    * Returns a new object of class '<em>Var Model</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

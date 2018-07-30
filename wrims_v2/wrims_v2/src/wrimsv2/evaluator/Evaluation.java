@@ -1251,6 +1251,92 @@ public class Evaluation {
 		return id;
 	}
 	
+	public static EvalExpression sin(EvalExpression ee1){
+		if (!ee1.isNumeric()){
+			Error.addEvaluationError("variable inside sin function should not contain decision variable.");
+		}
+		
+		double degrees = ee1.getValue().getData().doubleValue();
+		double radians = Math.toRadians(degrees);
+		return new EvalExpression(new IntDouble(Math.sin(radians), false));		
+	}
+	
+	public static EvalExpression cos(EvalExpression ee1){
+		if (!ee1.isNumeric()){
+			Error.addEvaluationError("variable inside cos function should not contain decision variable.");
+		}
+		
+		double degrees = ee1.getValue().getData().doubleValue();
+		double radians = Math.toRadians(degrees);
+		return new EvalExpression(new IntDouble(Math.cos(radians), false));		
+	}
+	
+	public static EvalExpression tan(EvalExpression ee1){
+		if (!ee1.isNumeric()){
+			Error.addEvaluationError("variable inside tan function should not contain decision variable.");
+		}
+		
+		double degrees = ee1.getValue().getData().doubleValue();
+		double radians = Math.toRadians(degrees);
+		return new EvalExpression(new IntDouble(Math.tan(radians), false));		
+	}
+	
+	public static EvalExpression cot(EvalExpression ee1){
+		if (!ee1.isNumeric()){
+			Error.addEvaluationError("variable inside cot function should not contain decision variable.");
+		}
+		
+		double degrees = ee1.getValue().getData().doubleValue();
+		if (degrees==90.0){
+			return new EvalExpression(new IntDouble(0.0, false));
+		}
+		double radians = Math.toRadians(degrees);
+		return new EvalExpression(new IntDouble(1.0/Math.tan(radians), false));		
+	}
+	
+	public static EvalExpression asin(EvalExpression ee1){
+		if (!ee1.isNumeric()){
+			Error.addEvaluationError("variable inside asin function should not contain decision variable.");
+		}
+		
+		double value = ee1.getValue().getData().doubleValue();
+		double radians = Math.asin(value);
+		return new EvalExpression(new IntDouble(Math.toDegrees(radians), false));		
+	}
+	
+	public static EvalExpression acos(EvalExpression ee1){
+		if (!ee1.isNumeric()){
+			Error.addEvaluationError("variable inside acos function should not contain decision variable.");
+		}
+		
+		double value = ee1.getValue().getData().doubleValue();
+		double radians = Math.acos(value);
+		return new EvalExpression(new IntDouble(Math.toDegrees(radians), false));		
+	}
+	
+	public static EvalExpression atan(EvalExpression ee1){
+		if (!ee1.isNumeric()){
+			Error.addEvaluationError("variable inside atan function should not contain decision variable.");
+		}
+		
+		double value = ee1.getValue().getData().doubleValue();
+		double radians = Math.atan(value);
+		return new EvalExpression(new IntDouble(Math.toDegrees(radians), false));		
+	}
+	
+	public static EvalExpression acot(EvalExpression ee1){
+		if (!ee1.isNumeric()){
+			Error.addEvaluationError("variable inside acot function should not contain decision variable.");
+		}
+		
+		double value = ee1.getValue().getData().doubleValue();
+		if (value == 0.){
+			return new EvalExpression(new IntDouble(90.0, false));
+		}
+		double radians = Math.atan(1.0/value);
+		return new EvalExpression(new IntDouble(Math.toDegrees(radians), false));		
+	}
+	
 	public static EvalExpression daysIn(){
 		int days=TimeOperation.numberOfDays(ControlData.currMonth, ControlData.currYear);
 		IntDouble id=new IntDouble(days, true);

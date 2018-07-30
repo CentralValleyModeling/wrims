@@ -42,5 +42,7 @@ Import-Package: org.apache.commons.logging,
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: gov.ca.dwr.wresl.xtext.editor.ui.contentassist.antlr,
  gov.ca.dwr.wresl.xtext.editor.ui.internal,
- gov.ca.dwr.wresl.xtext.editor.ui.contentassist
+ gov.ca.dwr.wresl.xtext.editor.ui.contentassist,
+ gov.ca.dwr.wresl.xtext.editor.ui.quickfix,
+ gov.ca.dwr.wresl.xtext.editor.ui.contentassist.antlr.internal
 Bundle-Activator: gov.ca.dwr.wresl.xtext.editor.ui.internal.WreslEditorActivator

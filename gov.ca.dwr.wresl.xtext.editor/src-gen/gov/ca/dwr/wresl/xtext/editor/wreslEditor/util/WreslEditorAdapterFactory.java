@@ -475,6 +475,46 @@ public class WreslEditorAdapterFactory extends AdapterFactoryImpl
         return createLogFunctionAdapter();
       }
       @Override
+      public Adapter caseSinFunction(SinFunction object)
+      {
+        return createSinFunctionAdapter();
+      }
+      @Override
+      public Adapter caseCosFunction(CosFunction object)
+      {
+        return createCosFunctionAdapter();
+      }
+      @Override
+      public Adapter caseTanFunction(TanFunction object)
+      {
+        return createTanFunctionAdapter();
+      }
+      @Override
+      public Adapter caseCotFunction(CotFunction object)
+      {
+        return createCotFunctionAdapter();
+      }
+      @Override
+      public Adapter caseAsinFunction(AsinFunction object)
+      {
+        return createAsinFunctionAdapter();
+      }
+      @Override
+      public Adapter caseAcosFunction(AcosFunction object)
+      {
+        return createAcosFunctionAdapter();
+      }
+      @Override
+      public Adapter caseAtanFunction(AtanFunction object)
+      {
+        return createAtanFunctionAdapter();
+      }
+      @Override
+      public Adapter caseAcotFunction(AcotFunction object)
+      {
+        return createAcotFunctionAdapter();
+      }
+      @Override
       public Adapter caseVarModel(VarModel object)
       {
         return createVarModelAdapter();
@@ -1722,6 +1762,126 @@ public class WreslEditorAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createLogFunctionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.SinFunction <em>Sin Function</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.SinFunction
+   * @generated
+   */
+  public Adapter createSinFunctionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.CosFunction <em>Cos Function</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.CosFunction
+   * @generated
+   */
+  public Adapter createCosFunctionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.TanFunction <em>Tan Function</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.TanFunction
+   * @generated
+   */
+  public Adapter createTanFunctionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.CotFunction <em>Cot Function</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.CotFunction
+   * @generated
+   */
+  public Adapter createCotFunctionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.AsinFunction <em>Asin Function</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.AsinFunction
+   * @generated
+   */
+  public Adapter createAsinFunctionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.AcosFunction <em>Acos Function</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.AcosFunction
+   * @generated
+   */
+  public Adapter createAcosFunctionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.AtanFunction <em>Atan Function</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.AtanFunction
+   * @generated
+   */
+  public Adapter createAtanFunctionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.AcotFunction <em>Acot Function</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.AcotFunction
+   * @generated
+   */
+  public Adapter createAcotFunctionAdapter()
   {
     return null;
   }

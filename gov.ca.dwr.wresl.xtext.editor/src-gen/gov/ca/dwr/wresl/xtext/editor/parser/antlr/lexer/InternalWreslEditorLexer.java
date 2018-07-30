@@ -12,130 +12,138 @@ import java.util.ArrayList;
 
 @SuppressWarnings("all")
 public class InternalWreslEditorLexer extends Lexer {
-    public static final int RULE_ID=123;
-    public static final int RULE_ANY_OTHER=126;
-    public static final int RULE_OR=117;
-    public static final int KEYWORD_56=45;
-    public static final int KEYWORD_55=44;
-    public static final int KEYWORD_54=43;
-    public static final int KEYWORD_53=42;
-    public static final int RULE_AND=116;
-    public static final int KEYWORD_52=41;
-    public static final int KEYWORD_51=40;
-    public static final int KEYWORD_50=60;
-    public static final int EOF=-1;
-    public static final int KEYWORD_59=48;
-    public static final int KEYWORD_58=47;
-    public static final int KEYWORD_57=46;
+    public static final int Oct=74;
+    public static final int Apr=61;
+    public static final int Std=77;
+    public static final int Wateryear=11;
+    public static final int LessThanSign=94;
+    public static final int Prevjul=27;
+    public static final int Prevfeb=25;
+    public static final int Prevjun=28;
+    public static final int Month=47;
+    public static final int Goal=58;
+    public static final int Define=38;
+    public static final int LeftParenthesis=86;
+    public static final int Constrain=8;
+    public static final int RULE_ASIN=118;
+    public static final int RULE_OR=125;
+    public static final int GreaterThanSign=96;
+    public static final int RULE_ATAN=120;
     public static final int RULE_MOD=108;
-    public static final int KEYWORD_65=37;
-    public static final int KEYWORD_64=36;
-    public static final int KEYWORD_67=39;
-    public static final int KEYWORD_66=38;
-    public static final int KEYWORD_61=50;
-    public static final int KEYWORD_60=49;
-    public static final int KEYWORD_63=35;
-    public static final int KEYWORD_62=51;
-    public static final int KEYWORD_69=16;
-    public static final int KEYWORD_68=15;
-    public static final int RULE_MIN=106;
-    public static final int KEYWORD_30=68;
-    public static final int KEYWORD_34=72;
-    public static final int KEYWORD_33=71;
-    public static final int KEYWORD_32=70;
-    public static final int KEYWORD_31=69;
-    public static final int KEYWORD_38=76;
-    public static final int KEYWORD_37=75;
-    public static final int KEYWORD_36=74;
-    public static final int KEYWORD_35=73;
-    public static final int RULE_ML_COMMENT=124;
-    public static final int RULE_RANGE=105;
-    public static final int KEYWORD_39=77;
-    public static final int RULE_INTFUNC=109;
-    public static final int RULE_STRING=121;
-    public static final int KEYWORD_41=79;
-    public static final int KEYWORD_40=78;
-    public static final int KEYWORD_43=53;
-    public static final int KEYWORD_42=52;
-    public static final int KEYWORD_45=55;
-    public static final int KEYWORD_44=54;
-    public static final int KEYWORD_47=57;
-    public static final int KEYWORD_46=56;
-    public static final int RULE_ABS=110;
-    public static final int KEYWORD_49=59;
-    public static final int RULE_IF=102;
-    public static final int KEYWORD_48=58;
-    public static final int RULE_LOG=113;
-    public static final int KEYWORD_97=5;
-    public static final int KEYWORD_98=4;
-    public static final int KEYWORD_93=9;
-    public static final int KEYWORD_94=10;
-    public static final int KEYWORD_95=11;
-    public static final int KEYWORD_96=6;
-    public static final int KEYWORD_90=14;
-    public static final int KEYWORD_19=82;
-    public static final int RULE_MAX=107;
-    public static final int KEYWORD_92=8;
-    public static final int KEYWORD_17=80;
-    public static final int KEYWORD_91=7;
-    public static final int KEYWORD_18=81;
-    public static final int KEYWORD_15=100;
-    public static final int KEYWORD_16=101;
-    public static final int KEYWORD_13=98;
-    public static final int KEYWORD_14=99;
-    public static final int KEYWORD_11=96;
-    public static final int KEYWORD_12=97;
-    public static final int RULE_NOT=118;
-    public static final int KEYWORD_10=95;
-    public static final int RULE_ELSEIF=103;
+    public static final int RULE_ID=131;
+    public static final int Local=44;
+    public static final int Sum=78;
+    public static final int Timestep=14;
+    public static final int GreaterThanSignEqualsSign=84;
+    public static final int EqualsSignEqualsSign=83;
+    public static final int PlusSign=89;
+    public static final int RULE_INT=122;
+    public static final int RULE_ML_COMMENT=132;
+    public static final int LeftSquareBracket=97;
+    public static final int Where=51;
+    public static final int Mar=71;
+    public static final int Sep=76;
+    public static final int Group=43;
+    public static final int May=72;
+    public static final int Daysin=37;
+    public static final int Timeseries=6;
+    public static final int Given=42;
+    public static final int I=99;
+    public static final int Initial_1=19;
+    public static final int M=80;
+    public static final int Daysinmonth=5;
     public static final int RULE_POW=112;
-    public static final int KEYWORD_6=91;
-    public static final int KEYWORD_7=92;
-    public static final int KEYWORD_8=93;
-    public static final int KEYWORD_9=94;
+    public static final int Case=55;
+    public static final int Comma=90;
+    public static final int HyphenMinus=91;
+    public static final int Cfs_af=36;
+    public static final int RULE_MIN=106;
+    public static final int Lhs=70;
+    public static final int RULE_IF=102;
+    public static final int RULE_LOG=113;
+    public static final int LessThanSignEqualsSign=82;
+    public static final int Solidus=92;
+    public static final int RightCurlyBracket=101;
+    public static final int Upper=49;
+    public static final int Jul=68;
+    public static final int Feb=66;
+    public static final int Jun=69;
+    public static final int Convert=17;
+    public static final int Use=79;
+    public static final int Prevmar=29;
+    public static final int Prevsep=33;
+    public static final int Declare=15;
+    public static final int Unbounded=10;
+    public static final int Taf_cfs=34;
+    public static final int Prevmay=30;
+    public static final int Select=39;
+    public static final int Model=46;
+    public static final int RULE_FLOAT=123;
+    public static final int DAY=53;
+    public static final int Day=63;
     public static final int RULE_ROUND=111;
-    public static final int KEYWORD_28=66;
-    public static final int KEYWORD_29=67;
-    public static final int RULE_INT=114;
-    public static final int KEYWORD_24=62;
-    public static final int KEYWORD_25=63;
-    public static final int KEYWORD_26=64;
-    public static final int KEYWORD_27=65;
-    public static final int KEYWORD_20=83;
-    public static final int KEYWORD_21=84;
-    public static final int KEYWORD_22=85;
-    public static final int KEYWORD_23=61;
-    public static final int RULE_ORDER=120;
-    public static final int KEYWORD_79=26;
-    public static final int KEYWORD_71=18;
-    public static final int KEYWORD_72=19;
-    public static final int KEYWORD_73=20;
-    public static final int KEYWORD_74=21;
-    public static final int KEYWORD_75=22;
-    public static final int KEYWORD_76=23;
-    public static final int KEYWORD_77=24;
-    public static final int KEYWORD_78=25;
-    public static final int KEYWORD_1=86;
-    public static final int KEYWORD_5=90;
-    public static final int KEYWORD_4=89;
-    public static final int KEYWORD_70=17;
-    public static final int KEYWORD_3=88;
-    public static final int KEYWORD_2=87;
-    public static final int RULE_FLOAT=115;
-    public static final int RULE_SL_COMMENT=122;
-    public static final int KEYWORD_84=31;
-    public static final int KEYWORD_85=32;
-    public static final int KEYWORD_82=29;
-    public static final int KEYWORD_83=30;
-    public static final int KEYWORD_88=12;
-    public static final int KEYWORD_89=13;
-    public static final int KEYWORD_86=33;
-    public static final int KEYWORD_87=34;
-    public static final int RULE_ALWAYS=119;
-    public static final int KEYWORD_81=28;
-    public static final int KEYWORD_80=27;
-    public static final int RULE_WS=125;
+    public static final int Lower=45;
+    public static final int RULE_TAN=116;
+    public static final int SolidusEqualsSign=81;
+    public static final int Include=18;
+    public static final int Prevdec=24;
+    public static final int RULE_ELSEIF=103;
+    public static final int Aug=62;
+    public static final int Kind=59;
+    public static final int RightSquareBracket=98;
+    public static final int RULE_COS=115;
+    public static final int RULE_COT=117;
+    public static final int Prevjan=26;
+    public static final int RightParenthesis=87;
+    public static final int Sequence=13;
+    public static final int Prevoct=32;
+    public static final int Units=48;
+    public static final int Objective=9;
+    public static final int Prevapr=22;
+    public static final int Nov=73;
+    public static final int RULE_ABS=110;
+    public static final int External=12;
+    public static final int Value=50;
+    public static final int F90_1=65;
+    public static final int I_1=85;
+    public static final int RULE_MAX=107;
     public static final int RULE_ELSE=104;
+    public static final int Prevaug=23;
+    public static final int Af_cfs=35;
+    public static final int Dll=52;
+    public static final int RULE_ACOS=119;
+    public static final int RULE_ACOT=121;
+    public static final int RULE_STRING=129;
+    public static final int RULE_NOT=126;
+    public static final int RULE_SIN=114;
+    public static final int RULE_AND=124;
+    public static final int RULE_SL_COMMENT=130;
+    public static final int EqualsSign=95;
+    public static final int Const_1=41;
+    public static final int Colon=93;
+    public static final int Rhs=75;
+    public static final int EOF=-1;
+    public static final int Asterisk=88;
+    public static final int Condition=7;
+    public static final int Prevnov=31;
+    public static final int Dvar_1=56;
+    public static final int Dec=64;
+    public static final int RULE_WS=133;
+    public static final int Svar_1=60;
+    public static final int LeftCurlyBracket=100;
+    public static final int RULE_ORDER=128;
+    public static final int RULE_ALWAYS=127;
+    public static final int From=57;
+    public static final int RULE_ANY_OTHER=134;
+    public static final int MON=54;
+    public static final int Penalty=21;
+    public static final int Daysintimestep=4;
+    public static final int Integer=20;
+    public static final int Alias=40;
+    public static final int Jan=67;
+    public static final int RULE_INTFUNC=109;
+    public static final int Cfs_taf=16;
+    public static final int RULE_RANGE=105;
 
     // delegates
     // delegators
@@ -148,15 +156,15 @@ public class InternalWreslEditorLexer extends Lexer {
         super(input,state);
 
     }
-    public String getGrammarFileName() { return "../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g"; }
+    public String getGrammarFileName() { return "InternalWreslEditorLexer.g"; }
 
-    // $ANTLR start "KEYWORD_98"
-    public final void mKEYWORD_98() throws RecognitionException {
+    // $ANTLR start "Daysintimestep"
+    public final void mDaysintimestep() throws RecognitionException {
         try {
-            int _type = KEYWORD_98;
+            int _type = Daysintimestep;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:19:12: ( ( 'D' | 'd' ) ( 'A' | 'a' ) ( 'Y' | 'y' ) ( 'S' | 's' ) ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'T' | 't' ) ( 'I' | 'i' ) ( 'M' | 'm' ) ( 'E' | 'e' ) ( 'S' | 's' ) ( 'T' | 't' ) ( 'E' | 'e' ) ( 'P' | 'p' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:19:14: ( 'D' | 'd' ) ( 'A' | 'a' ) ( 'Y' | 'y' ) ( 'S' | 's' ) ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'T' | 't' ) ( 'I' | 'i' ) ( 'M' | 'm' ) ( 'E' | 'e' ) ( 'S' | 's' ) ( 'T' | 't' ) ( 'E' | 'e' ) ( 'P' | 'p' )
+            // InternalWreslEditorLexer.g:19:16: ( ( 'D' | 'd' ) ( 'A' | 'a' ) ( 'Y' | 'y' ) ( 'S' | 's' ) ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'T' | 't' ) ( 'I' | 'i' ) ( 'M' | 'm' ) ( 'E' | 'e' ) ( 'S' | 's' ) ( 'T' | 't' ) ( 'E' | 'e' ) ( 'P' | 'p' ) )
+            // InternalWreslEditorLexer.g:19:18: ( 'D' | 'd' ) ( 'A' | 'a' ) ( 'Y' | 'y' ) ( 'S' | 's' ) ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'T' | 't' ) ( 'I' | 'i' ) ( 'M' | 'm' ) ( 'E' | 'e' ) ( 'S' | 's' ) ( 'T' | 't' ) ( 'E' | 'e' ) ( 'P' | 'p' )
             {
             if ( input.LA(1)=='D'||input.LA(1)=='d' ) {
                 input.consume();
@@ -293,15 +301,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_98"
+    // $ANTLR end "Daysintimestep"
 
-    // $ANTLR start "KEYWORD_97"
-    public final void mKEYWORD_97() throws RecognitionException {
+    // $ANTLR start "Daysinmonth"
+    public final void mDaysinmonth() throws RecognitionException {
         try {
-            int _type = KEYWORD_97;
+            int _type = Daysinmonth;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:21:12: ( ( 'D' | 'd' ) ( 'A' | 'a' ) ( 'Y' | 'y' ) ( 'S' | 's' ) ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'M' | 'm' ) ( 'O' | 'o' ) ( 'N' | 'n' ) ( 'T' | 't' ) ( 'H' | 'h' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:21:14: ( 'D' | 'd' ) ( 'A' | 'a' ) ( 'Y' | 'y' ) ( 'S' | 's' ) ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'M' | 'm' ) ( 'O' | 'o' ) ( 'N' | 'n' ) ( 'T' | 't' ) ( 'H' | 'h' )
+            // InternalWreslEditorLexer.g:21:13: ( ( 'D' | 'd' ) ( 'A' | 'a' ) ( 'Y' | 'y' ) ( 'S' | 's' ) ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'M' | 'm' ) ( 'O' | 'o' ) ( 'N' | 'n' ) ( 'T' | 't' ) ( 'H' | 'h' ) )
+            // InternalWreslEditorLexer.g:21:15: ( 'D' | 'd' ) ( 'A' | 'a' ) ( 'Y' | 'y' ) ( 'S' | 's' ) ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'M' | 'm' ) ( 'O' | 'o' ) ( 'N' | 'n' ) ( 'T' | 't' ) ( 'H' | 'h' )
             {
             if ( input.LA(1)=='D'||input.LA(1)=='d' ) {
                 input.consume();
@@ -411,15 +419,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_97"
+    // $ANTLR end "Daysinmonth"
 
-    // $ANTLR start "KEYWORD_96"
-    public final void mKEYWORD_96() throws RecognitionException {
+    // $ANTLR start "Timeseries"
+    public final void mTimeseries() throws RecognitionException {
         try {
-            int _type = KEYWORD_96;
+            int _type = Timeseries;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:23:12: ( ( 'T' | 't' ) ( 'I' | 'i' ) ( 'M' | 'm' ) ( 'E' | 'e' ) ( 'S' | 's' ) ( 'E' | 'e' ) ( 'R' | 'r' ) ( 'I' | 'i' ) ( 'E' | 'e' ) ( 'S' | 's' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:23:14: ( 'T' | 't' ) ( 'I' | 'i' ) ( 'M' | 'm' ) ( 'E' | 'e' ) ( 'S' | 's' ) ( 'E' | 'e' ) ( 'R' | 'r' ) ( 'I' | 'i' ) ( 'E' | 'e' ) ( 'S' | 's' )
+            // InternalWreslEditorLexer.g:23:12: ( ( 'T' | 't' ) ( 'I' | 'i' ) ( 'M' | 'm' ) ( 'E' | 'e' ) ( 'S' | 's' ) ( 'E' | 'e' ) ( 'R' | 'r' ) ( 'I' | 'i' ) ( 'E' | 'e' ) ( 'S' | 's' ) )
+            // InternalWreslEditorLexer.g:23:14: ( 'T' | 't' ) ( 'I' | 'i' ) ( 'M' | 'm' ) ( 'E' | 'e' ) ( 'S' | 's' ) ( 'E' | 'e' ) ( 'R' | 'r' ) ( 'I' | 'i' ) ( 'E' | 'e' ) ( 'S' | 's' )
             {
             if ( input.LA(1)=='T'||input.LA(1)=='t' ) {
                 input.consume();
@@ -520,15 +528,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_96"
+    // $ANTLR end "Timeseries"
 
-    // $ANTLR start "KEYWORD_91"
-    public final void mKEYWORD_91() throws RecognitionException {
+    // $ANTLR start "Condition"
+    public final void mCondition() throws RecognitionException {
         try {
-            int _type = KEYWORD_91;
+            int _type = Condition;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:25:12: ( ( 'C' | 'c' ) ( 'O' | 'o' ) ( 'N' | 'n' ) ( 'D' | 'd' ) ( 'I' | 'i' ) ( 'T' | 't' ) ( 'I' | 'i' ) ( 'O' | 'o' ) ( 'N' | 'n' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:25:14: ( 'C' | 'c' ) ( 'O' | 'o' ) ( 'N' | 'n' ) ( 'D' | 'd' ) ( 'I' | 'i' ) ( 'T' | 't' ) ( 'I' | 'i' ) ( 'O' | 'o' ) ( 'N' | 'n' )
+            // InternalWreslEditorLexer.g:25:11: ( ( 'C' | 'c' ) ( 'O' | 'o' ) ( 'N' | 'n' ) ( 'D' | 'd' ) ( 'I' | 'i' ) ( 'T' | 't' ) ( 'I' | 'i' ) ( 'O' | 'o' ) ( 'N' | 'n' ) )
+            // InternalWreslEditorLexer.g:25:13: ( 'C' | 'c' ) ( 'O' | 'o' ) ( 'N' | 'n' ) ( 'D' | 'd' ) ( 'I' | 'i' ) ( 'T' | 't' ) ( 'I' | 'i' ) ( 'O' | 'o' ) ( 'N' | 'n' )
             {
             if ( input.LA(1)=='C'||input.LA(1)=='c' ) {
                 input.consume();
@@ -620,15 +628,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_91"
+    // $ANTLR end "Condition"
 
-    // $ANTLR start "KEYWORD_92"
-    public final void mKEYWORD_92() throws RecognitionException {
+    // $ANTLR start "Constrain"
+    public final void mConstrain() throws RecognitionException {
         try {
-            int _type = KEYWORD_92;
+            int _type = Constrain;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:27:12: ( ( 'C' | 'c' ) ( 'O' | 'o' ) ( 'N' | 'n' ) ( 'S' | 's' ) ( 'T' | 't' ) ( 'R' | 'r' ) ( 'A' | 'a' ) ( 'I' | 'i' ) ( 'N' | 'n' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:27:14: ( 'C' | 'c' ) ( 'O' | 'o' ) ( 'N' | 'n' ) ( 'S' | 's' ) ( 'T' | 't' ) ( 'R' | 'r' ) ( 'A' | 'a' ) ( 'I' | 'i' ) ( 'N' | 'n' )
+            // InternalWreslEditorLexer.g:27:11: ( ( 'C' | 'c' ) ( 'O' | 'o' ) ( 'N' | 'n' ) ( 'S' | 's' ) ( 'T' | 't' ) ( 'R' | 'r' ) ( 'A' | 'a' ) ( 'I' | 'i' ) ( 'N' | 'n' ) )
+            // InternalWreslEditorLexer.g:27:13: ( 'C' | 'c' ) ( 'O' | 'o' ) ( 'N' | 'n' ) ( 'S' | 's' ) ( 'T' | 't' ) ( 'R' | 'r' ) ( 'A' | 'a' ) ( 'I' | 'i' ) ( 'N' | 'n' )
             {
             if ( input.LA(1)=='C'||input.LA(1)=='c' ) {
                 input.consume();
@@ -720,15 +728,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_92"
+    // $ANTLR end "Constrain"
 
-    // $ANTLR start "KEYWORD_93"
-    public final void mKEYWORD_93() throws RecognitionException {
+    // $ANTLR start "Objective"
+    public final void mObjective() throws RecognitionException {
         try {
-            int _type = KEYWORD_93;
+            int _type = Objective;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:29:12: ( ( 'O' | 'o' ) ( 'B' | 'b' ) ( 'J' | 'j' ) ( 'E' | 'e' ) ( 'C' | 'c' ) ( 'T' | 't' ) ( 'I' | 'i' ) ( 'V' | 'v' ) ( 'E' | 'e' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:29:14: ( 'O' | 'o' ) ( 'B' | 'b' ) ( 'J' | 'j' ) ( 'E' | 'e' ) ( 'C' | 'c' ) ( 'T' | 't' ) ( 'I' | 'i' ) ( 'V' | 'v' ) ( 'E' | 'e' )
+            // InternalWreslEditorLexer.g:29:11: ( ( 'O' | 'o' ) ( 'B' | 'b' ) ( 'J' | 'j' ) ( 'E' | 'e' ) ( 'C' | 'c' ) ( 'T' | 't' ) ( 'I' | 'i' ) ( 'V' | 'v' ) ( 'E' | 'e' ) )
+            // InternalWreslEditorLexer.g:29:13: ( 'O' | 'o' ) ( 'B' | 'b' ) ( 'J' | 'j' ) ( 'E' | 'e' ) ( 'C' | 'c' ) ( 'T' | 't' ) ( 'I' | 'i' ) ( 'V' | 'v' ) ( 'E' | 'e' )
             {
             if ( input.LA(1)=='O'||input.LA(1)=='o' ) {
                 input.consume();
@@ -820,15 +828,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_93"
+    // $ANTLR end "Objective"
 
-    // $ANTLR start "KEYWORD_94"
-    public final void mKEYWORD_94() throws RecognitionException {
+    // $ANTLR start "Unbounded"
+    public final void mUnbounded() throws RecognitionException {
         try {
-            int _type = KEYWORD_94;
+            int _type = Unbounded;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:31:12: ( ( 'U' | 'u' ) ( 'N' | 'n' ) ( 'B' | 'b' ) ( 'O' | 'o' ) ( 'U' | 'u' ) ( 'N' | 'n' ) ( 'D' | 'd' ) ( 'E' | 'e' ) ( 'D' | 'd' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:31:14: ( 'U' | 'u' ) ( 'N' | 'n' ) ( 'B' | 'b' ) ( 'O' | 'o' ) ( 'U' | 'u' ) ( 'N' | 'n' ) ( 'D' | 'd' ) ( 'E' | 'e' ) ( 'D' | 'd' )
+            // InternalWreslEditorLexer.g:31:11: ( ( 'U' | 'u' ) ( 'N' | 'n' ) ( 'B' | 'b' ) ( 'O' | 'o' ) ( 'U' | 'u' ) ( 'N' | 'n' ) ( 'D' | 'd' ) ( 'E' | 'e' ) ( 'D' | 'd' ) )
+            // InternalWreslEditorLexer.g:31:13: ( 'U' | 'u' ) ( 'N' | 'n' ) ( 'B' | 'b' ) ( 'O' | 'o' ) ( 'U' | 'u' ) ( 'N' | 'n' ) ( 'D' | 'd' ) ( 'E' | 'e' ) ( 'D' | 'd' )
             {
             if ( input.LA(1)=='U'||input.LA(1)=='u' ) {
                 input.consume();
@@ -920,15 +928,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_94"
+    // $ANTLR end "Unbounded"
 
-    // $ANTLR start "KEYWORD_95"
-    public final void mKEYWORD_95() throws RecognitionException {
+    // $ANTLR start "Wateryear"
+    public final void mWateryear() throws RecognitionException {
         try {
-            int _type = KEYWORD_95;
+            int _type = Wateryear;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:33:12: ( ( 'W' | 'w' ) ( 'A' | 'a' ) ( 'T' | 't' ) ( 'E' | 'e' ) ( 'R' | 'r' ) ( 'Y' | 'y' ) ( 'E' | 'e' ) ( 'A' | 'a' ) ( 'R' | 'r' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:33:14: ( 'W' | 'w' ) ( 'A' | 'a' ) ( 'T' | 't' ) ( 'E' | 'e' ) ( 'R' | 'r' ) ( 'Y' | 'y' ) ( 'E' | 'e' ) ( 'A' | 'a' ) ( 'R' | 'r' )
+            // InternalWreslEditorLexer.g:33:11: ( ( 'W' | 'w' ) ( 'A' | 'a' ) ( 'T' | 't' ) ( 'E' | 'e' ) ( 'R' | 'r' ) ( 'Y' | 'y' ) ( 'E' | 'e' ) ( 'A' | 'a' ) ( 'R' | 'r' ) )
+            // InternalWreslEditorLexer.g:33:13: ( 'W' | 'w' ) ( 'A' | 'a' ) ( 'T' | 't' ) ( 'E' | 'e' ) ( 'R' | 'r' ) ( 'Y' | 'y' ) ( 'E' | 'e' ) ( 'A' | 'a' ) ( 'R' | 'r' )
             {
             if ( input.LA(1)=='W'||input.LA(1)=='w' ) {
                 input.consume();
@@ -1020,15 +1028,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_95"
+    // $ANTLR end "Wateryear"
 
-    // $ANTLR start "KEYWORD_88"
-    public final void mKEYWORD_88() throws RecognitionException {
+    // $ANTLR start "External"
+    public final void mExternal() throws RecognitionException {
         try {
-            int _type = KEYWORD_88;
+            int _type = External;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:35:12: ( ( 'E' | 'e' ) ( 'X' | 'x' ) ( 'T' | 't' ) ( 'E' | 'e' ) ( 'R' | 'r' ) ( 'N' | 'n' ) ( 'A' | 'a' ) ( 'L' | 'l' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:35:14: ( 'E' | 'e' ) ( 'X' | 'x' ) ( 'T' | 't' ) ( 'E' | 'e' ) ( 'R' | 'r' ) ( 'N' | 'n' ) ( 'A' | 'a' ) ( 'L' | 'l' )
+            // InternalWreslEditorLexer.g:35:10: ( ( 'E' | 'e' ) ( 'X' | 'x' ) ( 'T' | 't' ) ( 'E' | 'e' ) ( 'R' | 'r' ) ( 'N' | 'n' ) ( 'A' | 'a' ) ( 'L' | 'l' ) )
+            // InternalWreslEditorLexer.g:35:12: ( 'E' | 'e' ) ( 'X' | 'x' ) ( 'T' | 't' ) ( 'E' | 'e' ) ( 'R' | 'r' ) ( 'N' | 'n' ) ( 'A' | 'a' ) ( 'L' | 'l' )
             {
             if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
                 input.consume();
@@ -1111,15 +1119,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_88"
+    // $ANTLR end "External"
 
-    // $ANTLR start "KEYWORD_89"
-    public final void mKEYWORD_89() throws RecognitionException {
+    // $ANTLR start "Sequence"
+    public final void mSequence() throws RecognitionException {
         try {
-            int _type = KEYWORD_89;
+            int _type = Sequence;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:37:12: ( ( 'S' | 's' ) ( 'E' | 'e' ) ( 'Q' | 'q' ) ( 'U' | 'u' ) ( 'E' | 'e' ) ( 'N' | 'n' ) ( 'C' | 'c' ) ( 'E' | 'e' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:37:14: ( 'S' | 's' ) ( 'E' | 'e' ) ( 'Q' | 'q' ) ( 'U' | 'u' ) ( 'E' | 'e' ) ( 'N' | 'n' ) ( 'C' | 'c' ) ( 'E' | 'e' )
+            // InternalWreslEditorLexer.g:37:10: ( ( 'S' | 's' ) ( 'E' | 'e' ) ( 'Q' | 'q' ) ( 'U' | 'u' ) ( 'E' | 'e' ) ( 'N' | 'n' ) ( 'C' | 'c' ) ( 'E' | 'e' ) )
+            // InternalWreslEditorLexer.g:37:12: ( 'S' | 's' ) ( 'E' | 'e' ) ( 'Q' | 'q' ) ( 'U' | 'u' ) ( 'E' | 'e' ) ( 'N' | 'n' ) ( 'C' | 'c' ) ( 'E' | 'e' )
             {
             if ( input.LA(1)=='S'||input.LA(1)=='s' ) {
                 input.consume();
@@ -1202,15 +1210,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_89"
+    // $ANTLR end "Sequence"
 
-    // $ANTLR start "KEYWORD_90"
-    public final void mKEYWORD_90() throws RecognitionException {
+    // $ANTLR start "Timestep"
+    public final void mTimestep() throws RecognitionException {
         try {
-            int _type = KEYWORD_90;
+            int _type = Timestep;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:39:12: ( ( 'T' | 't' ) ( 'I' | 'i' ) ( 'M' | 'm' ) ( 'E' | 'e' ) ( 'S' | 's' ) ( 'T' | 't' ) ( 'E' | 'e' ) ( 'P' | 'p' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:39:14: ( 'T' | 't' ) ( 'I' | 'i' ) ( 'M' | 'm' ) ( 'E' | 'e' ) ( 'S' | 's' ) ( 'T' | 't' ) ( 'E' | 'e' ) ( 'P' | 'p' )
+            // InternalWreslEditorLexer.g:39:10: ( ( 'T' | 't' ) ( 'I' | 'i' ) ( 'M' | 'm' ) ( 'E' | 'e' ) ( 'S' | 's' ) ( 'T' | 't' ) ( 'E' | 'e' ) ( 'P' | 'p' ) )
+            // InternalWreslEditorLexer.g:39:12: ( 'T' | 't' ) ( 'I' | 'i' ) ( 'M' | 'm' ) ( 'E' | 'e' ) ( 'S' | 's' ) ( 'T' | 't' ) ( 'E' | 'e' ) ( 'P' | 'p' )
             {
             if ( input.LA(1)=='T'||input.LA(1)=='t' ) {
                 input.consume();
@@ -1293,15 +1301,171 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_90"
+    // $ANTLR end "Timestep"
 
-    // $ANTLR start "KEYWORD_68"
-    public final void mKEYWORD_68() throws RecognitionException {
+    // $ANTLR start "Declare"
+    public final void mDeclare() throws RecognitionException {
         try {
-            int _type = KEYWORD_68;
+            int _type = Declare;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:41:12: ( ( 'C' | 'c' ) ( 'O' | 'o' ) ( 'N' | 'n' ) ( 'V' | 'v' ) ( 'E' | 'e' ) ( 'R' | 'r' ) ( 'T' | 't' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:41:14: ( 'C' | 'c' ) ( 'O' | 'o' ) ( 'N' | 'n' ) ( 'V' | 'v' ) ( 'E' | 'e' ) ( 'R' | 'r' ) ( 'T' | 't' )
+            // InternalWreslEditorLexer.g:41:9: ( ( 'D' | 'd' ) ( 'E' | 'e' ) ( 'C' | 'c' ) ( 'L' | 'l' ) ( 'A' | 'a' ) ( 'R' | 'r' ) ( 'E' | 'e' ) )
+            // InternalWreslEditorLexer.g:41:11: ( 'D' | 'd' ) ( 'E' | 'e' ) ( 'C' | 'c' ) ( 'L' | 'l' ) ( 'A' | 'a' ) ( 'R' | 'r' ) ( 'E' | 'e' )
+            {
+            if ( input.LA(1)=='D'||input.LA(1)=='d' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='C'||input.LA(1)=='c' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='L'||input.LA(1)=='l' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='A'||input.LA(1)=='a' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='R'||input.LA(1)=='r' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "Declare"
+
+    // $ANTLR start "Cfs_taf"
+    public final void mCfs_taf() throws RecognitionException {
+        try {
+            int _type = Cfs_taf;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // InternalWreslEditorLexer.g:43:9: ( ( 'C' | 'c' ) ( 'F' | 'f' ) ( 'S' | 's' ) '_' ( 'T' | 't' ) ( 'A' | 'a' ) ( 'F' | 'f' ) )
+            // InternalWreslEditorLexer.g:43:11: ( 'C' | 'c' ) ( 'F' | 'f' ) ( 'S' | 's' ) '_' ( 'T' | 't' ) ( 'A' | 'a' ) ( 'F' | 'f' )
+            {
+            if ( input.LA(1)=='C'||input.LA(1)=='c' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='F'||input.LA(1)=='f' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='S'||input.LA(1)=='s' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            match('_'); 
+            if ( input.LA(1)=='T'||input.LA(1)=='t' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='A'||input.LA(1)=='a' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='F'||input.LA(1)=='f' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "Cfs_taf"
+
+    // $ANTLR start "Convert"
+    public final void mConvert() throws RecognitionException {
+        try {
+            int _type = Convert;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // InternalWreslEditorLexer.g:45:9: ( ( 'C' | 'c' ) ( 'O' | 'o' ) ( 'N' | 'n' ) ( 'V' | 'v' ) ( 'E' | 'e' ) ( 'R' | 'r' ) ( 'T' | 't' ) )
+            // InternalWreslEditorLexer.g:45:11: ( 'C' | 'c' ) ( 'O' | 'o' ) ( 'N' | 'n' ) ( 'V' | 'v' ) ( 'E' | 'e' ) ( 'R' | 'r' ) ( 'T' | 't' )
             {
             if ( input.LA(1)=='C'||input.LA(1)=='c' ) {
                 input.consume();
@@ -1375,97 +1539,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_68"
+    // $ANTLR end "Convert"
 
-    // $ANTLR start "KEYWORD_69"
-    public final void mKEYWORD_69() throws RecognitionException {
+    // $ANTLR start "Include"
+    public final void mInclude() throws RecognitionException {
         try {
-            int _type = KEYWORD_69;
+            int _type = Include;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:43:12: ( ( 'D' | 'd' ) ( 'E' | 'e' ) ( 'C' | 'c' ) ( 'L' | 'l' ) ( 'A' | 'a' ) ( 'R' | 'r' ) ( 'E' | 'e' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:43:14: ( 'D' | 'd' ) ( 'E' | 'e' ) ( 'C' | 'c' ) ( 'L' | 'l' ) ( 'A' | 'a' ) ( 'R' | 'r' ) ( 'E' | 'e' )
-            {
-            if ( input.LA(1)=='D'||input.LA(1)=='d' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='C'||input.LA(1)=='c' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='L'||input.LA(1)=='l' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='A'||input.LA(1)=='a' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='R'||input.LA(1)=='r' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-
-            }
-
-            state.type = _type;
-            state.channel = _channel;
-        }
-        finally {
-        }
-    }
-    // $ANTLR end "KEYWORD_69"
-
-    // $ANTLR start "KEYWORD_70"
-    public final void mKEYWORD_70() throws RecognitionException {
-        try {
-            int _type = KEYWORD_70;
-            int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:45:12: ( ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'C' | 'c' ) ( 'L' | 'l' ) ( 'U' | 'u' ) ( 'D' | 'd' ) ( 'E' | 'e' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:45:14: ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'C' | 'c' ) ( 'L' | 'l' ) ( 'U' | 'u' ) ( 'D' | 'd' ) ( 'E' | 'e' )
+            // InternalWreslEditorLexer.g:47:9: ( ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'C' | 'c' ) ( 'L' | 'l' ) ( 'U' | 'u' ) ( 'D' | 'd' ) ( 'E' | 'e' ) )
+            // InternalWreslEditorLexer.g:47:11: ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'C' | 'c' ) ( 'L' | 'l' ) ( 'U' | 'u' ) ( 'D' | 'd' ) ( 'E' | 'e' )
             {
             if ( input.LA(1)=='I'||input.LA(1)=='i' ) {
                 input.consume();
@@ -1539,15 +1621,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_70"
+    // $ANTLR end "Include"
 
-    // $ANTLR start "KEYWORD_71"
-    public final void mKEYWORD_71() throws RecognitionException {
+    // $ANTLR start "Initial_1"
+    public final void mInitial_1() throws RecognitionException {
         try {
-            int _type = KEYWORD_71;
+            int _type = Initial_1;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:47:12: ( ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'I' | 'i' ) ( 'T' | 't' ) ( 'I' | 'i' ) ( 'A' | 'a' ) ( 'L' | 'l' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:47:14: ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'I' | 'i' ) ( 'T' | 't' ) ( 'I' | 'i' ) ( 'A' | 'a' ) ( 'L' | 'l' )
+            // InternalWreslEditorLexer.g:49:11: ( ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'I' | 'i' ) ( 'T' | 't' ) ( 'I' | 'i' ) ( 'A' | 'a' ) ( 'L' | 'l' ) )
+            // InternalWreslEditorLexer.g:49:13: ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'I' | 'i' ) ( 'T' | 't' ) ( 'I' | 'i' ) ( 'A' | 'a' ) ( 'L' | 'l' )
             {
             if ( input.LA(1)=='I'||input.LA(1)=='i' ) {
                 input.consume();
@@ -1621,15 +1703,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_71"
+    // $ANTLR end "Initial_1"
 
-    // $ANTLR start "KEYWORD_72"
-    public final void mKEYWORD_72() throws RecognitionException {
+    // $ANTLR start "Integer"
+    public final void mInteger() throws RecognitionException {
         try {
-            int _type = KEYWORD_72;
+            int _type = Integer;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:49:12: ( ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'T' | 't' ) ( 'E' | 'e' ) ( 'G' | 'g' ) ( 'E' | 'e' ) ( 'R' | 'r' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:49:14: ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'T' | 't' ) ( 'E' | 'e' ) ( 'G' | 'g' ) ( 'E' | 'e' ) ( 'R' | 'r' )
+            // InternalWreslEditorLexer.g:51:9: ( ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'T' | 't' ) ( 'E' | 'e' ) ( 'G' | 'g' ) ( 'E' | 'e' ) ( 'R' | 'r' ) )
+            // InternalWreslEditorLexer.g:51:11: ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'T' | 't' ) ( 'E' | 'e' ) ( 'G' | 'g' ) ( 'E' | 'e' ) ( 'R' | 'r' )
             {
             if ( input.LA(1)=='I'||input.LA(1)=='i' ) {
                 input.consume();
@@ -1703,15 +1785,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_72"
+    // $ANTLR end "Integer"
 
-    // $ANTLR start "KEYWORD_73"
-    public final void mKEYWORD_73() throws RecognitionException {
+    // $ANTLR start "Penalty"
+    public final void mPenalty() throws RecognitionException {
         try {
-            int _type = KEYWORD_73;
+            int _type = Penalty;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:51:12: ( ( 'P' | 'p' ) ( 'E' | 'e' ) ( 'N' | 'n' ) ( 'A' | 'a' ) ( 'L' | 'l' ) ( 'T' | 't' ) ( 'Y' | 'y' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:51:14: ( 'P' | 'p' ) ( 'E' | 'e' ) ( 'N' | 'n' ) ( 'A' | 'a' ) ( 'L' | 'l' ) ( 'T' | 't' ) ( 'Y' | 'y' )
+            // InternalWreslEditorLexer.g:53:9: ( ( 'P' | 'p' ) ( 'E' | 'e' ) ( 'N' | 'n' ) ( 'A' | 'a' ) ( 'L' | 'l' ) ( 'T' | 't' ) ( 'Y' | 'y' ) )
+            // InternalWreslEditorLexer.g:53:11: ( 'P' | 'p' ) ( 'E' | 'e' ) ( 'N' | 'n' ) ( 'A' | 'a' ) ( 'L' | 'l' ) ( 'T' | 't' ) ( 'Y' | 'y' )
             {
             if ( input.LA(1)=='P'||input.LA(1)=='p' ) {
                 input.consume();
@@ -1785,89 +1867,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_73"
+    // $ANTLR end "Penalty"
 
-    // $ANTLR start "KEYWORD_74"
-    public final void mKEYWORD_74() throws RecognitionException {
+    // $ANTLR start "Prevapr"
+    public final void mPrevapr() throws RecognitionException {
         try {
-            int _type = KEYWORD_74;
+            int _type = Prevapr;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:53:12: ( ( 'C' | 'c' ) ( 'F' | 'f' ) ( 'S' | 's' ) '_' ( 'T' | 't' ) ( 'A' | 'a' ) ( 'F' | 'f' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:53:14: ( 'C' | 'c' ) ( 'F' | 'f' ) ( 'S' | 's' ) '_' ( 'T' | 't' ) ( 'A' | 'a' ) ( 'F' | 'f' )
-            {
-            if ( input.LA(1)=='C'||input.LA(1)=='c' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='F'||input.LA(1)=='f' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='S'||input.LA(1)=='s' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            match('_'); 
-            if ( input.LA(1)=='T'||input.LA(1)=='t' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='A'||input.LA(1)=='a' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='F'||input.LA(1)=='f' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-
-            }
-
-            state.type = _type;
-            state.channel = _channel;
-        }
-        finally {
-        }
-    }
-    // $ANTLR end "KEYWORD_74"
-
-    // $ANTLR start "KEYWORD_75"
-    public final void mKEYWORD_75() throws RecognitionException {
-        try {
-            int _type = KEYWORD_75;
-            int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:55:12: ( ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'A' | 'a' ) ( 'P' | 'p' ) ( 'R' | 'r' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:55:14: ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'A' | 'a' ) ( 'P' | 'p' ) ( 'R' | 'r' )
+            // InternalWreslEditorLexer.g:55:9: ( ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'A' | 'a' ) ( 'P' | 'p' ) ( 'R' | 'r' ) )
+            // InternalWreslEditorLexer.g:55:11: ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'A' | 'a' ) ( 'P' | 'p' ) ( 'R' | 'r' )
             {
             if ( input.LA(1)=='P'||input.LA(1)=='p' ) {
                 input.consume();
@@ -1941,15 +1949,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_75"
+    // $ANTLR end "Prevapr"
 
-    // $ANTLR start "KEYWORD_76"
-    public final void mKEYWORD_76() throws RecognitionException {
+    // $ANTLR start "Prevaug"
+    public final void mPrevaug() throws RecognitionException {
         try {
-            int _type = KEYWORD_76;
+            int _type = Prevaug;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:57:12: ( ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'A' | 'a' ) ( 'U' | 'u' ) ( 'G' | 'g' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:57:14: ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'A' | 'a' ) ( 'U' | 'u' ) ( 'G' | 'g' )
+            // InternalWreslEditorLexer.g:57:9: ( ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'A' | 'a' ) ( 'U' | 'u' ) ( 'G' | 'g' ) )
+            // InternalWreslEditorLexer.g:57:11: ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'A' | 'a' ) ( 'U' | 'u' ) ( 'G' | 'g' )
             {
             if ( input.LA(1)=='P'||input.LA(1)=='p' ) {
                 input.consume();
@@ -2023,15 +2031,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_76"
+    // $ANTLR end "Prevaug"
 
-    // $ANTLR start "KEYWORD_77"
-    public final void mKEYWORD_77() throws RecognitionException {
+    // $ANTLR start "Prevdec"
+    public final void mPrevdec() throws RecognitionException {
         try {
-            int _type = KEYWORD_77;
+            int _type = Prevdec;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:59:12: ( ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'D' | 'd' ) ( 'E' | 'e' ) ( 'C' | 'c' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:59:14: ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'D' | 'd' ) ( 'E' | 'e' ) ( 'C' | 'c' )
+            // InternalWreslEditorLexer.g:59:9: ( ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'D' | 'd' ) ( 'E' | 'e' ) ( 'C' | 'c' ) )
+            // InternalWreslEditorLexer.g:59:11: ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'D' | 'd' ) ( 'E' | 'e' ) ( 'C' | 'c' )
             {
             if ( input.LA(1)=='P'||input.LA(1)=='p' ) {
                 input.consume();
@@ -2105,15 +2113,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_77"
+    // $ANTLR end "Prevdec"
 
-    // $ANTLR start "KEYWORD_78"
-    public final void mKEYWORD_78() throws RecognitionException {
+    // $ANTLR start "Prevfeb"
+    public final void mPrevfeb() throws RecognitionException {
         try {
-            int _type = KEYWORD_78;
+            int _type = Prevfeb;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:61:12: ( ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'F' | 'f' ) ( 'E' | 'e' ) ( 'B' | 'b' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:61:14: ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'F' | 'f' ) ( 'E' | 'e' ) ( 'B' | 'b' )
+            // InternalWreslEditorLexer.g:61:9: ( ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'F' | 'f' ) ( 'E' | 'e' ) ( 'B' | 'b' ) )
+            // InternalWreslEditorLexer.g:61:11: ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'F' | 'f' ) ( 'E' | 'e' ) ( 'B' | 'b' )
             {
             if ( input.LA(1)=='P'||input.LA(1)=='p' ) {
                 input.consume();
@@ -2187,15 +2195,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_78"
+    // $ANTLR end "Prevfeb"
 
-    // $ANTLR start "KEYWORD_79"
-    public final void mKEYWORD_79() throws RecognitionException {
+    // $ANTLR start "Prevjan"
+    public final void mPrevjan() throws RecognitionException {
         try {
-            int _type = KEYWORD_79;
+            int _type = Prevjan;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:63:12: ( ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'J' | 'j' ) ( 'A' | 'a' ) ( 'N' | 'n' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:63:14: ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'J' | 'j' ) ( 'A' | 'a' ) ( 'N' | 'n' )
+            // InternalWreslEditorLexer.g:63:9: ( ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'J' | 'j' ) ( 'A' | 'a' ) ( 'N' | 'n' ) )
+            // InternalWreslEditorLexer.g:63:11: ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'J' | 'j' ) ( 'A' | 'a' ) ( 'N' | 'n' )
             {
             if ( input.LA(1)=='P'||input.LA(1)=='p' ) {
                 input.consume();
@@ -2269,15 +2277,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_79"
+    // $ANTLR end "Prevjan"
 
-    // $ANTLR start "KEYWORD_80"
-    public final void mKEYWORD_80() throws RecognitionException {
+    // $ANTLR start "Prevjul"
+    public final void mPrevjul() throws RecognitionException {
         try {
-            int _type = KEYWORD_80;
+            int _type = Prevjul;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:65:12: ( ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'J' | 'j' ) ( 'U' | 'u' ) ( 'L' | 'l' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:65:14: ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'J' | 'j' ) ( 'U' | 'u' ) ( 'L' | 'l' )
+            // InternalWreslEditorLexer.g:65:9: ( ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'J' | 'j' ) ( 'U' | 'u' ) ( 'L' | 'l' ) )
+            // InternalWreslEditorLexer.g:65:11: ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'J' | 'j' ) ( 'U' | 'u' ) ( 'L' | 'l' )
             {
             if ( input.LA(1)=='P'||input.LA(1)=='p' ) {
                 input.consume();
@@ -2351,15 +2359,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_80"
+    // $ANTLR end "Prevjul"
 
-    // $ANTLR start "KEYWORD_81"
-    public final void mKEYWORD_81() throws RecognitionException {
+    // $ANTLR start "Prevjun"
+    public final void mPrevjun() throws RecognitionException {
         try {
-            int _type = KEYWORD_81;
+            int _type = Prevjun;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:67:12: ( ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'J' | 'j' ) ( 'U' | 'u' ) ( 'N' | 'n' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:67:14: ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'J' | 'j' ) ( 'U' | 'u' ) ( 'N' | 'n' )
+            // InternalWreslEditorLexer.g:67:9: ( ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'J' | 'j' ) ( 'U' | 'u' ) ( 'N' | 'n' ) )
+            // InternalWreslEditorLexer.g:67:11: ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'J' | 'j' ) ( 'U' | 'u' ) ( 'N' | 'n' )
             {
             if ( input.LA(1)=='P'||input.LA(1)=='p' ) {
                 input.consume();
@@ -2433,15 +2441,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_81"
+    // $ANTLR end "Prevjun"
 
-    // $ANTLR start "KEYWORD_82"
-    public final void mKEYWORD_82() throws RecognitionException {
+    // $ANTLR start "Prevmar"
+    public final void mPrevmar() throws RecognitionException {
         try {
-            int _type = KEYWORD_82;
+            int _type = Prevmar;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:69:12: ( ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'M' | 'm' ) ( 'A' | 'a' ) ( 'R' | 'r' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:69:14: ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'M' | 'm' ) ( 'A' | 'a' ) ( 'R' | 'r' )
+            // InternalWreslEditorLexer.g:69:9: ( ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'M' | 'm' ) ( 'A' | 'a' ) ( 'R' | 'r' ) )
+            // InternalWreslEditorLexer.g:69:11: ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'M' | 'm' ) ( 'A' | 'a' ) ( 'R' | 'r' )
             {
             if ( input.LA(1)=='P'||input.LA(1)=='p' ) {
                 input.consume();
@@ -2515,15 +2523,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_82"
+    // $ANTLR end "Prevmar"
 
-    // $ANTLR start "KEYWORD_83"
-    public final void mKEYWORD_83() throws RecognitionException {
+    // $ANTLR start "Prevmay"
+    public final void mPrevmay() throws RecognitionException {
         try {
-            int _type = KEYWORD_83;
+            int _type = Prevmay;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:71:12: ( ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'M' | 'm' ) ( 'A' | 'a' ) ( 'Y' | 'y' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:71:14: ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'M' | 'm' ) ( 'A' | 'a' ) ( 'Y' | 'y' )
+            // InternalWreslEditorLexer.g:71:9: ( ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'M' | 'm' ) ( 'A' | 'a' ) ( 'Y' | 'y' ) )
+            // InternalWreslEditorLexer.g:71:11: ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'M' | 'm' ) ( 'A' | 'a' ) ( 'Y' | 'y' )
             {
             if ( input.LA(1)=='P'||input.LA(1)=='p' ) {
                 input.consume();
@@ -2597,15 +2605,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_83"
+    // $ANTLR end "Prevmay"
 
-    // $ANTLR start "KEYWORD_84"
-    public final void mKEYWORD_84() throws RecognitionException {
+    // $ANTLR start "Prevnov"
+    public final void mPrevnov() throws RecognitionException {
         try {
-            int _type = KEYWORD_84;
+            int _type = Prevnov;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:73:12: ( ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'N' | 'n' ) ( 'O' | 'o' ) ( 'V' | 'v' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:73:14: ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'N' | 'n' ) ( 'O' | 'o' ) ( 'V' | 'v' )
+            // InternalWreslEditorLexer.g:73:9: ( ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'N' | 'n' ) ( 'O' | 'o' ) ( 'V' | 'v' ) )
+            // InternalWreslEditorLexer.g:73:11: ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'N' | 'n' ) ( 'O' | 'o' ) ( 'V' | 'v' )
             {
             if ( input.LA(1)=='P'||input.LA(1)=='p' ) {
                 input.consume();
@@ -2679,15 +2687,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_84"
+    // $ANTLR end "Prevnov"
 
-    // $ANTLR start "KEYWORD_85"
-    public final void mKEYWORD_85() throws RecognitionException {
+    // $ANTLR start "Prevoct"
+    public final void mPrevoct() throws RecognitionException {
         try {
-            int _type = KEYWORD_85;
+            int _type = Prevoct;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:75:12: ( ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'O' | 'o' ) ( 'C' | 'c' ) ( 'T' | 't' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:75:14: ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'O' | 'o' ) ( 'C' | 'c' ) ( 'T' | 't' )
+            // InternalWreslEditorLexer.g:75:9: ( ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'O' | 'o' ) ( 'C' | 'c' ) ( 'T' | 't' ) )
+            // InternalWreslEditorLexer.g:75:11: ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'O' | 'o' ) ( 'C' | 'c' ) ( 'T' | 't' )
             {
             if ( input.LA(1)=='P'||input.LA(1)=='p' ) {
                 input.consume();
@@ -2761,15 +2769,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_85"
+    // $ANTLR end "Prevoct"
 
-    // $ANTLR start "KEYWORD_86"
-    public final void mKEYWORD_86() throws RecognitionException {
+    // $ANTLR start "Prevsep"
+    public final void mPrevsep() throws RecognitionException {
         try {
-            int _type = KEYWORD_86;
+            int _type = Prevsep;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:77:12: ( ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'S' | 's' ) ( 'E' | 'e' ) ( 'P' | 'p' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:77:14: ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'S' | 's' ) ( 'E' | 'e' ) ( 'P' | 'p' )
+            // InternalWreslEditorLexer.g:77:9: ( ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'S' | 's' ) ( 'E' | 'e' ) ( 'P' | 'p' ) )
+            // InternalWreslEditorLexer.g:77:11: ( 'P' | 'p' ) ( 'R' | 'r' ) ( 'E' | 'e' ) ( 'V' | 'v' ) ( 'S' | 's' ) ( 'E' | 'e' ) ( 'P' | 'p' )
             {
             if ( input.LA(1)=='P'||input.LA(1)=='p' ) {
                 input.consume();
@@ -2843,15 +2851,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_86"
+    // $ANTLR end "Prevsep"
 
-    // $ANTLR start "KEYWORD_87"
-    public final void mKEYWORD_87() throws RecognitionException {
+    // $ANTLR start "Taf_cfs"
+    public final void mTaf_cfs() throws RecognitionException {
         try {
-            int _type = KEYWORD_87;
+            int _type = Taf_cfs;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:79:12: ( ( 'T' | 't' ) ( 'A' | 'a' ) ( 'F' | 'f' ) '_' ( 'C' | 'c' ) ( 'F' | 'f' ) ( 'S' | 's' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:79:14: ( 'T' | 't' ) ( 'A' | 'a' ) ( 'F' | 'f' ) '_' ( 'C' | 'c' ) ( 'F' | 'f' ) ( 'S' | 's' )
+            // InternalWreslEditorLexer.g:79:9: ( ( 'T' | 't' ) ( 'A' | 'a' ) ( 'F' | 'f' ) '_' ( 'C' | 'c' ) ( 'F' | 'f' ) ( 'S' | 's' ) )
+            // InternalWreslEditorLexer.g:79:11: ( 'T' | 't' ) ( 'A' | 'a' ) ( 'F' | 'f' ) '_' ( 'C' | 'c' ) ( 'F' | 'f' ) ( 'S' | 's' )
             {
             if ( input.LA(1)=='T'||input.LA(1)=='t' ) {
                 input.consume();
@@ -2917,161 +2925,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_87"
+    // $ANTLR end "Taf_cfs"
 
-    // $ANTLR start "KEYWORD_63"
-    public final void mKEYWORD_63() throws RecognitionException {
+    // $ANTLR start "Af_cfs"
+    public final void mAf_cfs() throws RecognitionException {
         try {
-            int _type = KEYWORD_63;
+            int _type = Af_cfs;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:81:12: ( ( 'D' | 'd' ) ( 'E' | 'e' ) ( 'F' | 'f' ) ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'E' | 'e' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:81:14: ( 'D' | 'd' ) ( 'E' | 'e' ) ( 'F' | 'f' ) ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'E' | 'e' )
-            {
-            if ( input.LA(1)=='D'||input.LA(1)=='d' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='F'||input.LA(1)=='f' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='I'||input.LA(1)=='i' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='N'||input.LA(1)=='n' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-
-            }
-
-            state.type = _type;
-            state.channel = _channel;
-        }
-        finally {
-        }
-    }
-    // $ANTLR end "KEYWORD_63"
-
-    // $ANTLR start "KEYWORD_64"
-    public final void mKEYWORD_64() throws RecognitionException {
-        try {
-            int _type = KEYWORD_64;
-            int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:83:12: ( ( 'S' | 's' ) ( 'E' | 'e' ) ( 'L' | 'l' ) ( 'E' | 'e' ) ( 'C' | 'c' ) ( 'T' | 't' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:83:14: ( 'S' | 's' ) ( 'E' | 'e' ) ( 'L' | 'l' ) ( 'E' | 'e' ) ( 'C' | 'c' ) ( 'T' | 't' )
-            {
-            if ( input.LA(1)=='S'||input.LA(1)=='s' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='L'||input.LA(1)=='l' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='C'||input.LA(1)=='c' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='T'||input.LA(1)=='t' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-
-            }
-
-            state.type = _type;
-            state.channel = _channel;
-        }
-        finally {
-        }
-    }
-    // $ANTLR end "KEYWORD_64"
-
-    // $ANTLR start "KEYWORD_65"
-    public final void mKEYWORD_65() throws RecognitionException {
-        try {
-            int _type = KEYWORD_65;
-            int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:85:12: ( ( 'A' | 'a' ) ( 'F' | 'f' ) '_' ( 'C' | 'c' ) ( 'F' | 'f' ) ( 'S' | 's' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:85:14: ( 'A' | 'a' ) ( 'F' | 'f' ) '_' ( 'C' | 'c' ) ( 'F' | 'f' ) ( 'S' | 's' )
+            // InternalWreslEditorLexer.g:81:8: ( ( 'A' | 'a' ) ( 'F' | 'f' ) '_' ( 'C' | 'c' ) ( 'F' | 'f' ) ( 'S' | 's' ) )
+            // InternalWreslEditorLexer.g:81:10: ( 'A' | 'a' ) ( 'F' | 'f' ) '_' ( 'C' | 'c' ) ( 'F' | 'f' ) ( 'S' | 's' )
             {
             if ( input.LA(1)=='A'||input.LA(1)=='a' ) {
                 input.consume();
@@ -3128,15 +2990,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_65"
+    // $ANTLR end "Af_cfs"
 
-    // $ANTLR start "KEYWORD_66"
-    public final void mKEYWORD_66() throws RecognitionException {
+    // $ANTLR start "Cfs_af"
+    public final void mCfs_af() throws RecognitionException {
         try {
-            int _type = KEYWORD_66;
+            int _type = Cfs_af;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:87:12: ( ( 'C' | 'c' ) ( 'F' | 'f' ) ( 'S' | 's' ) '_' ( 'A' | 'a' ) ( 'F' | 'f' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:87:14: ( 'C' | 'c' ) ( 'F' | 'f' ) ( 'S' | 's' ) '_' ( 'A' | 'a' ) ( 'F' | 'f' )
+            // InternalWreslEditorLexer.g:83:8: ( ( 'C' | 'c' ) ( 'F' | 'f' ) ( 'S' | 's' ) '_' ( 'A' | 'a' ) ( 'F' | 'f' ) )
+            // InternalWreslEditorLexer.g:83:10: ( 'C' | 'c' ) ( 'F' | 'f' ) ( 'S' | 's' ) '_' ( 'A' | 'a' ) ( 'F' | 'f' )
             {
             if ( input.LA(1)=='C'||input.LA(1)=='c' ) {
                 input.consume();
@@ -3193,15 +3055,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_66"
+    // $ANTLR end "Cfs_af"
 
-    // $ANTLR start "KEYWORD_67"
-    public final void mKEYWORD_67() throws RecognitionException {
+    // $ANTLR start "Daysin"
+    public final void mDaysin() throws RecognitionException {
         try {
-            int _type = KEYWORD_67;
+            int _type = Daysin;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:89:12: ( ( 'D' | 'd' ) ( 'A' | 'a' ) ( 'Y' | 'y' ) ( 'S' | 's' ) ( 'I' | 'i' ) ( 'N' | 'n' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:89:14: ( 'D' | 'd' ) ( 'A' | 'a' ) ( 'Y' | 'y' ) ( 'S' | 's' ) ( 'I' | 'i' ) ( 'N' | 'n' )
+            // InternalWreslEditorLexer.g:85:8: ( ( 'D' | 'd' ) ( 'A' | 'a' ) ( 'Y' | 'y' ) ( 'S' | 's' ) ( 'I' | 'i' ) ( 'N' | 'n' ) )
+            // InternalWreslEditorLexer.g:85:10: ( 'D' | 'd' ) ( 'A' | 'a' ) ( 'Y' | 'y' ) ( 'S' | 's' ) ( 'I' | 'i' ) ( 'N' | 'n' )
             {
             if ( input.LA(1)=='D'||input.LA(1)=='d' ) {
                 input.consume();
@@ -3266,15 +3128,161 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_67"
+    // $ANTLR end "Daysin"
 
-    // $ANTLR start "KEYWORD_51"
-    public final void mKEYWORD_51() throws RecognitionException {
+    // $ANTLR start "Define"
+    public final void mDefine() throws RecognitionException {
         try {
-            int _type = KEYWORD_51;
+            int _type = Define;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:91:12: ( ( 'A' | 'a' ) ( 'L' | 'l' ) ( 'I' | 'i' ) ( 'A' | 'a' ) ( 'S' | 's' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:91:14: ( 'A' | 'a' ) ( 'L' | 'l' ) ( 'I' | 'i' ) ( 'A' | 'a' ) ( 'S' | 's' )
+            // InternalWreslEditorLexer.g:87:8: ( ( 'D' | 'd' ) ( 'E' | 'e' ) ( 'F' | 'f' ) ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'E' | 'e' ) )
+            // InternalWreslEditorLexer.g:87:10: ( 'D' | 'd' ) ( 'E' | 'e' ) ( 'F' | 'f' ) ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'E' | 'e' )
+            {
+            if ( input.LA(1)=='D'||input.LA(1)=='d' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='F'||input.LA(1)=='f' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='I'||input.LA(1)=='i' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='N'||input.LA(1)=='n' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "Define"
+
+    // $ANTLR start "Select"
+    public final void mSelect() throws RecognitionException {
+        try {
+            int _type = Select;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // InternalWreslEditorLexer.g:89:8: ( ( 'S' | 's' ) ( 'E' | 'e' ) ( 'L' | 'l' ) ( 'E' | 'e' ) ( 'C' | 'c' ) ( 'T' | 't' ) )
+            // InternalWreslEditorLexer.g:89:10: ( 'S' | 's' ) ( 'E' | 'e' ) ( 'L' | 'l' ) ( 'E' | 'e' ) ( 'C' | 'c' ) ( 'T' | 't' )
+            {
+            if ( input.LA(1)=='S'||input.LA(1)=='s' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='L'||input.LA(1)=='l' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='C'||input.LA(1)=='c' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='T'||input.LA(1)=='t' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "Select"
+
+    // $ANTLR start "Alias"
+    public final void mAlias() throws RecognitionException {
+        try {
+            int _type = Alias;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // InternalWreslEditorLexer.g:91:7: ( ( 'A' | 'a' ) ( 'L' | 'l' ) ( 'I' | 'i' ) ( 'A' | 'a' ) ( 'S' | 's' ) )
+            // InternalWreslEditorLexer.g:91:9: ( 'A' | 'a' ) ( 'L' | 'l' ) ( 'I' | 'i' ) ( 'A' | 'a' ) ( 'S' | 's' )
             {
             if ( input.LA(1)=='A'||input.LA(1)=='a' ) {
                 input.consume();
@@ -3330,15 +3338,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_51"
+    // $ANTLR end "Alias"
 
-    // $ANTLR start "KEYWORD_52"
-    public final void mKEYWORD_52() throws RecognitionException {
+    // $ANTLR start "Const_1"
+    public final void mConst_1() throws RecognitionException {
         try {
-            int _type = KEYWORD_52;
+            int _type = Const_1;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:93:12: ( ( 'C' | 'c' ) ( 'O' | 'o' ) ( 'N' | 'n' ) ( 'S' | 's' ) ( 'T' | 't' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:93:14: ( 'C' | 'c' ) ( 'O' | 'o' ) ( 'N' | 'n' ) ( 'S' | 's' ) ( 'T' | 't' )
+            // InternalWreslEditorLexer.g:93:9: ( ( 'C' | 'c' ) ( 'O' | 'o' ) ( 'N' | 'n' ) ( 'S' | 's' ) ( 'T' | 't' ) )
+            // InternalWreslEditorLexer.g:93:11: ( 'C' | 'c' ) ( 'O' | 'o' ) ( 'N' | 'n' ) ( 'S' | 's' ) ( 'T' | 't' )
             {
             if ( input.LA(1)=='C'||input.LA(1)=='c' ) {
                 input.consume();
@@ -3394,15 +3402,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_52"
+    // $ANTLR end "Const_1"
 
-    // $ANTLR start "KEYWORD_53"
-    public final void mKEYWORD_53() throws RecognitionException {
+    // $ANTLR start "Given"
+    public final void mGiven() throws RecognitionException {
         try {
-            int _type = KEYWORD_53;
+            int _type = Given;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:95:12: ( ( 'G' | 'g' ) ( 'I' | 'i' ) ( 'V' | 'v' ) ( 'E' | 'e' ) ( 'N' | 'n' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:95:14: ( 'G' | 'g' ) ( 'I' | 'i' ) ( 'V' | 'v' ) ( 'E' | 'e' ) ( 'N' | 'n' )
+            // InternalWreslEditorLexer.g:95:7: ( ( 'G' | 'g' ) ( 'I' | 'i' ) ( 'V' | 'v' ) ( 'E' | 'e' ) ( 'N' | 'n' ) )
+            // InternalWreslEditorLexer.g:95:9: ( 'G' | 'g' ) ( 'I' | 'i' ) ( 'V' | 'v' ) ( 'E' | 'e' ) ( 'N' | 'n' )
             {
             if ( input.LA(1)=='G'||input.LA(1)=='g' ) {
                 input.consume();
@@ -3458,15 +3466,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_53"
+    // $ANTLR end "Given"
 
-    // $ANTLR start "KEYWORD_54"
-    public final void mKEYWORD_54() throws RecognitionException {
+    // $ANTLR start "Group"
+    public final void mGroup() throws RecognitionException {
         try {
-            int _type = KEYWORD_54;
+            int _type = Group;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:97:12: ( ( 'G' | 'g' ) ( 'R' | 'r' ) ( 'O' | 'o' ) ( 'U' | 'u' ) ( 'P' | 'p' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:97:14: ( 'G' | 'g' ) ( 'R' | 'r' ) ( 'O' | 'o' ) ( 'U' | 'u' ) ( 'P' | 'p' )
+            // InternalWreslEditorLexer.g:97:7: ( ( 'G' | 'g' ) ( 'R' | 'r' ) ( 'O' | 'o' ) ( 'U' | 'u' ) ( 'P' | 'p' ) )
+            // InternalWreslEditorLexer.g:97:9: ( 'G' | 'g' ) ( 'R' | 'r' ) ( 'O' | 'o' ) ( 'U' | 'u' ) ( 'P' | 'p' )
             {
             if ( input.LA(1)=='G'||input.LA(1)=='g' ) {
                 input.consume();
@@ -3522,15 +3530,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_54"
+    // $ANTLR end "Group"
 
-    // $ANTLR start "KEYWORD_55"
-    public final void mKEYWORD_55() throws RecognitionException {
+    // $ANTLR start "Local"
+    public final void mLocal() throws RecognitionException {
         try {
-            int _type = KEYWORD_55;
+            int _type = Local;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:99:12: ( ( 'L' | 'l' ) ( 'O' | 'o' ) ( 'C' | 'c' ) ( 'A' | 'a' ) ( 'L' | 'l' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:99:14: ( 'L' | 'l' ) ( 'O' | 'o' ) ( 'C' | 'c' ) ( 'A' | 'a' ) ( 'L' | 'l' )
+            // InternalWreslEditorLexer.g:99:7: ( ( 'L' | 'l' ) ( 'O' | 'o' ) ( 'C' | 'c' ) ( 'A' | 'a' ) ( 'L' | 'l' ) )
+            // InternalWreslEditorLexer.g:99:9: ( 'L' | 'l' ) ( 'O' | 'o' ) ( 'C' | 'c' ) ( 'A' | 'a' ) ( 'L' | 'l' )
             {
             if ( input.LA(1)=='L'||input.LA(1)=='l' ) {
                 input.consume();
@@ -3586,15 +3594,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_55"
+    // $ANTLR end "Local"
 
-    // $ANTLR start "KEYWORD_56"
-    public final void mKEYWORD_56() throws RecognitionException {
+    // $ANTLR start "Lower"
+    public final void mLower() throws RecognitionException {
         try {
-            int _type = KEYWORD_56;
+            int _type = Lower;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:101:12: ( ( 'L' | 'l' ) ( 'O' | 'o' ) ( 'W' | 'w' ) ( 'E' | 'e' ) ( 'R' | 'r' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:101:14: ( 'L' | 'l' ) ( 'O' | 'o' ) ( 'W' | 'w' ) ( 'E' | 'e' ) ( 'R' | 'r' )
+            // InternalWreslEditorLexer.g:101:7: ( ( 'L' | 'l' ) ( 'O' | 'o' ) ( 'W' | 'w' ) ( 'E' | 'e' ) ( 'R' | 'r' ) )
+            // InternalWreslEditorLexer.g:101:9: ( 'L' | 'l' ) ( 'O' | 'o' ) ( 'W' | 'w' ) ( 'E' | 'e' ) ( 'R' | 'r' )
             {
             if ( input.LA(1)=='L'||input.LA(1)=='l' ) {
                 input.consume();
@@ -3650,15 +3658,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_56"
+    // $ANTLR end "Lower"
 
-    // $ANTLR start "KEYWORD_57"
-    public final void mKEYWORD_57() throws RecognitionException {
+    // $ANTLR start "Model"
+    public final void mModel() throws RecognitionException {
         try {
-            int _type = KEYWORD_57;
+            int _type = Model;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:103:12: ( ( 'M' | 'm' ) ( 'O' | 'o' ) ( 'D' | 'd' ) ( 'E' | 'e' ) ( 'L' | 'l' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:103:14: ( 'M' | 'm' ) ( 'O' | 'o' ) ( 'D' | 'd' ) ( 'E' | 'e' ) ( 'L' | 'l' )
+            // InternalWreslEditorLexer.g:103:7: ( ( 'M' | 'm' ) ( 'O' | 'o' ) ( 'D' | 'd' ) ( 'E' | 'e' ) ( 'L' | 'l' ) )
+            // InternalWreslEditorLexer.g:103:9: ( 'M' | 'm' ) ( 'O' | 'o' ) ( 'D' | 'd' ) ( 'E' | 'e' ) ( 'L' | 'l' )
             {
             if ( input.LA(1)=='M'||input.LA(1)=='m' ) {
                 input.consume();
@@ -3714,271 +3722,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_57"
+    // $ANTLR end "Model"
 
-    // $ANTLR start "KEYWORD_58"
-    public final void mKEYWORD_58() throws RecognitionException {
+    // $ANTLR start "Month"
+    public final void mMonth() throws RecognitionException {
         try {
-            int _type = KEYWORD_58;
+            int _type = Month;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:105:12: ( ( 'U' | 'u' ) ( 'N' | 'n' ) ( 'I' | 'i' ) ( 'T' | 't' ) ( 'S' | 's' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:105:14: ( 'U' | 'u' ) ( 'N' | 'n' ) ( 'I' | 'i' ) ( 'T' | 't' ) ( 'S' | 's' )
-            {
-            if ( input.LA(1)=='U'||input.LA(1)=='u' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='N'||input.LA(1)=='n' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='I'||input.LA(1)=='i' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='T'||input.LA(1)=='t' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='S'||input.LA(1)=='s' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-
-            }
-
-            state.type = _type;
-            state.channel = _channel;
-        }
-        finally {
-        }
-    }
-    // $ANTLR end "KEYWORD_58"
-
-    // $ANTLR start "KEYWORD_59"
-    public final void mKEYWORD_59() throws RecognitionException {
-        try {
-            int _type = KEYWORD_59;
-            int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:107:12: ( ( 'U' | 'u' ) ( 'P' | 'p' ) ( 'P' | 'p' ) ( 'E' | 'e' ) ( 'R' | 'r' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:107:14: ( 'U' | 'u' ) ( 'P' | 'p' ) ( 'P' | 'p' ) ( 'E' | 'e' ) ( 'R' | 'r' )
-            {
-            if ( input.LA(1)=='U'||input.LA(1)=='u' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='P'||input.LA(1)=='p' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='P'||input.LA(1)=='p' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='R'||input.LA(1)=='r' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-
-            }
-
-            state.type = _type;
-            state.channel = _channel;
-        }
-        finally {
-        }
-    }
-    // $ANTLR end "KEYWORD_59"
-
-    // $ANTLR start "KEYWORD_60"
-    public final void mKEYWORD_60() throws RecognitionException {
-        try {
-            int _type = KEYWORD_60;
-            int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:109:12: ( ( 'V' | 'v' ) ( 'A' | 'a' ) ( 'L' | 'l' ) ( 'U' | 'u' ) ( 'E' | 'e' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:109:14: ( 'V' | 'v' ) ( 'A' | 'a' ) ( 'L' | 'l' ) ( 'U' | 'u' ) ( 'E' | 'e' )
-            {
-            if ( input.LA(1)=='V'||input.LA(1)=='v' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='A'||input.LA(1)=='a' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='L'||input.LA(1)=='l' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='U'||input.LA(1)=='u' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-
-            }
-
-            state.type = _type;
-            state.channel = _channel;
-        }
-        finally {
-        }
-    }
-    // $ANTLR end "KEYWORD_60"
-
-    // $ANTLR start "KEYWORD_61"
-    public final void mKEYWORD_61() throws RecognitionException {
-        try {
-            int _type = KEYWORD_61;
-            int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:111:12: ( ( 'W' | 'w' ) ( 'H' | 'h' ) ( 'E' | 'e' ) ( 'R' | 'r' ) ( 'E' | 'e' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:111:14: ( 'W' | 'w' ) ( 'H' | 'h' ) ( 'E' | 'e' ) ( 'R' | 'r' ) ( 'E' | 'e' )
-            {
-            if ( input.LA(1)=='W'||input.LA(1)=='w' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='H'||input.LA(1)=='h' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='R'||input.LA(1)=='r' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-
-            }
-
-            state.type = _type;
-            state.channel = _channel;
-        }
-        finally {
-        }
-    }
-    // $ANTLR end "KEYWORD_61"
-
-    // $ANTLR start "KEYWORD_62"
-    public final void mKEYWORD_62() throws RecognitionException {
-        try {
-            int _type = KEYWORD_62;
-            int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:113:12: ( ( 'M' | 'm' ) ( 'O' | 'o' ) ( 'N' | 'n' ) ( 'T' | 't' ) ( 'H' | 'h' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:113:14: ( 'M' | 'm' ) ( 'O' | 'o' ) ( 'N' | 'n' ) ( 'T' | 't' ) ( 'H' | 'h' )
+            // InternalWreslEditorLexer.g:105:7: ( ( 'M' | 'm' ) ( 'O' | 'o' ) ( 'N' | 'n' ) ( 'T' | 't' ) ( 'H' | 'h' ) )
+            // InternalWreslEditorLexer.g:105:9: ( 'M' | 'm' ) ( 'O' | 'o' ) ( 'N' | 'n' ) ( 'T' | 't' ) ( 'H' | 'h' )
             {
             if ( input.LA(1)=='M'||input.LA(1)=='m' ) {
                 input.consume();
@@ -4034,15 +3786,271 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_62"
+    // $ANTLR end "Month"
 
-    // $ANTLR start "KEYWORD_42"
-    public final void mKEYWORD_42() throws RecognitionException {
+    // $ANTLR start "Units"
+    public final void mUnits() throws RecognitionException {
         try {
-            int _type = KEYWORD_42;
+            int _type = Units;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:115:12: ( '.' ( 'D' | 'd' ) ( 'L' | 'l' ) ( 'L' | 'l' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:115:14: '.' ( 'D' | 'd' ) ( 'L' | 'l' ) ( 'L' | 'l' )
+            // InternalWreslEditorLexer.g:107:7: ( ( 'U' | 'u' ) ( 'N' | 'n' ) ( 'I' | 'i' ) ( 'T' | 't' ) ( 'S' | 's' ) )
+            // InternalWreslEditorLexer.g:107:9: ( 'U' | 'u' ) ( 'N' | 'n' ) ( 'I' | 'i' ) ( 'T' | 't' ) ( 'S' | 's' )
+            {
+            if ( input.LA(1)=='U'||input.LA(1)=='u' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='N'||input.LA(1)=='n' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='I'||input.LA(1)=='i' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='T'||input.LA(1)=='t' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='S'||input.LA(1)=='s' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "Units"
+
+    // $ANTLR start "Upper"
+    public final void mUpper() throws RecognitionException {
+        try {
+            int _type = Upper;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // InternalWreslEditorLexer.g:109:7: ( ( 'U' | 'u' ) ( 'P' | 'p' ) ( 'P' | 'p' ) ( 'E' | 'e' ) ( 'R' | 'r' ) )
+            // InternalWreslEditorLexer.g:109:9: ( 'U' | 'u' ) ( 'P' | 'p' ) ( 'P' | 'p' ) ( 'E' | 'e' ) ( 'R' | 'r' )
+            {
+            if ( input.LA(1)=='U'||input.LA(1)=='u' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='P'||input.LA(1)=='p' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='P'||input.LA(1)=='p' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='R'||input.LA(1)=='r' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "Upper"
+
+    // $ANTLR start "Value"
+    public final void mValue() throws RecognitionException {
+        try {
+            int _type = Value;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // InternalWreslEditorLexer.g:111:7: ( ( 'V' | 'v' ) ( 'A' | 'a' ) ( 'L' | 'l' ) ( 'U' | 'u' ) ( 'E' | 'e' ) )
+            // InternalWreslEditorLexer.g:111:9: ( 'V' | 'v' ) ( 'A' | 'a' ) ( 'L' | 'l' ) ( 'U' | 'u' ) ( 'E' | 'e' )
+            {
+            if ( input.LA(1)=='V'||input.LA(1)=='v' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='A'||input.LA(1)=='a' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='L'||input.LA(1)=='l' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='U'||input.LA(1)=='u' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "Value"
+
+    // $ANTLR start "Where"
+    public final void mWhere() throws RecognitionException {
+        try {
+            int _type = Where;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // InternalWreslEditorLexer.g:113:7: ( ( 'W' | 'w' ) ( 'H' | 'h' ) ( 'E' | 'e' ) ( 'R' | 'r' ) ( 'E' | 'e' ) )
+            // InternalWreslEditorLexer.g:113:9: ( 'W' | 'w' ) ( 'H' | 'h' ) ( 'E' | 'e' ) ( 'R' | 'r' ) ( 'E' | 'e' )
+            {
+            if ( input.LA(1)=='W'||input.LA(1)=='w' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='H'||input.LA(1)=='h' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='R'||input.LA(1)=='r' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "Where"
+
+    // $ANTLR start "Dll"
+    public final void mDll() throws RecognitionException {
+        try {
+            int _type = Dll;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // InternalWreslEditorLexer.g:115:5: ( '.' ( 'D' | 'd' ) ( 'L' | 'l' ) ( 'L' | 'l' ) )
+            // InternalWreslEditorLexer.g:115:7: '.' ( 'D' | 'd' ) ( 'L' | 'l' ) ( 'L' | 'l' )
             {
             match('.'); 
             if ( input.LA(1)=='D'||input.LA(1)=='d' ) {
@@ -4081,15 +4089,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_42"
+    // $ANTLR end "Dll"
 
-    // $ANTLR start "KEYWORD_43"
-    public final void mKEYWORD_43() throws RecognitionException {
+    // $ANTLR start "DAY"
+    public final void mDAY() throws RecognitionException {
         try {
-            int _type = KEYWORD_43;
+            int _type = DAY;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:117:12: ( '1' ( 'D' | 'd' ) ( 'A' | 'a' ) ( 'Y' | 'y' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:117:14: '1' ( 'D' | 'd' ) ( 'A' | 'a' ) ( 'Y' | 'y' )
+            // InternalWreslEditorLexer.g:117:5: ( '1' ( 'D' | 'd' ) ( 'A' | 'a' ) ( 'Y' | 'y' ) )
+            // InternalWreslEditorLexer.g:117:7: '1' ( 'D' | 'd' ) ( 'A' | 'a' ) ( 'Y' | 'y' )
             {
             match('1'); 
             if ( input.LA(1)=='D'||input.LA(1)=='d' ) {
@@ -4128,15 +4136,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_43"
+    // $ANTLR end "DAY"
 
-    // $ANTLR start "KEYWORD_44"
-    public final void mKEYWORD_44() throws RecognitionException {
+    // $ANTLR start "MON"
+    public final void mMON() throws RecognitionException {
         try {
-            int _type = KEYWORD_44;
+            int _type = MON;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:119:12: ( '1' ( 'M' | 'm' ) ( 'O' | 'o' ) ( 'N' | 'n' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:119:14: '1' ( 'M' | 'm' ) ( 'O' | 'o' ) ( 'N' | 'n' )
+            // InternalWreslEditorLexer.g:119:5: ( '1' ( 'M' | 'm' ) ( 'O' | 'o' ) ( 'N' | 'n' ) )
+            // InternalWreslEditorLexer.g:119:7: '1' ( 'M' | 'm' ) ( 'O' | 'o' ) ( 'N' | 'n' )
             {
             match('1'); 
             if ( input.LA(1)=='M'||input.LA(1)=='m' ) {
@@ -4175,15 +4183,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_44"
+    // $ANTLR end "MON"
 
-    // $ANTLR start "KEYWORD_45"
-    public final void mKEYWORD_45() throws RecognitionException {
+    // $ANTLR start "Case"
+    public final void mCase() throws RecognitionException {
         try {
-            int _type = KEYWORD_45;
+            int _type = Case;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:121:12: ( ( 'C' | 'c' ) ( 'A' | 'a' ) ( 'S' | 's' ) ( 'E' | 'e' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:121:14: ( 'C' | 'c' ) ( 'A' | 'a' ) ( 'S' | 's' ) ( 'E' | 'e' )
+            // InternalWreslEditorLexer.g:121:6: ( ( 'C' | 'c' ) ( 'A' | 'a' ) ( 'S' | 's' ) ( 'E' | 'e' ) )
+            // InternalWreslEditorLexer.g:121:8: ( 'C' | 'c' ) ( 'A' | 'a' ) ( 'S' | 's' ) ( 'E' | 'e' )
             {
             if ( input.LA(1)=='C'||input.LA(1)=='c' ) {
                 input.consume();
@@ -4230,15 +4238,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_45"
+    // $ANTLR end "Case"
 
-    // $ANTLR start "KEYWORD_46"
-    public final void mKEYWORD_46() throws RecognitionException {
+    // $ANTLR start "Dvar_1"
+    public final void mDvar_1() throws RecognitionException {
         try {
-            int _type = KEYWORD_46;
+            int _type = Dvar_1;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:123:12: ( ( 'D' | 'd' ) ( 'V' | 'v' ) ( 'A' | 'a' ) ( 'R' | 'r' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:123:14: ( 'D' | 'd' ) ( 'V' | 'v' ) ( 'A' | 'a' ) ( 'R' | 'r' )
+            // InternalWreslEditorLexer.g:123:8: ( ( 'D' | 'd' ) ( 'V' | 'v' ) ( 'A' | 'a' ) ( 'R' | 'r' ) )
+            // InternalWreslEditorLexer.g:123:10: ( 'D' | 'd' ) ( 'V' | 'v' ) ( 'A' | 'a' ) ( 'R' | 'r' )
             {
             if ( input.LA(1)=='D'||input.LA(1)=='d' ) {
                 input.consume();
@@ -4285,15 +4293,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_46"
+    // $ANTLR end "Dvar_1"
 
-    // $ANTLR start "KEYWORD_47"
-    public final void mKEYWORD_47() throws RecognitionException {
+    // $ANTLR start "From"
+    public final void mFrom() throws RecognitionException {
         try {
-            int _type = KEYWORD_47;
+            int _type = From;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:125:12: ( ( 'F' | 'f' ) ( 'R' | 'r' ) ( 'O' | 'o' ) ( 'M' | 'm' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:125:14: ( 'F' | 'f' ) ( 'R' | 'r' ) ( 'O' | 'o' ) ( 'M' | 'm' )
+            // InternalWreslEditorLexer.g:125:6: ( ( 'F' | 'f' ) ( 'R' | 'r' ) ( 'O' | 'o' ) ( 'M' | 'm' ) )
+            // InternalWreslEditorLexer.g:125:8: ( 'F' | 'f' ) ( 'R' | 'r' ) ( 'O' | 'o' ) ( 'M' | 'm' )
             {
             if ( input.LA(1)=='F'||input.LA(1)=='f' ) {
                 input.consume();
@@ -4340,15 +4348,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_47"
+    // $ANTLR end "From"
 
-    // $ANTLR start "KEYWORD_48"
-    public final void mKEYWORD_48() throws RecognitionException {
+    // $ANTLR start "Goal"
+    public final void mGoal() throws RecognitionException {
         try {
-            int _type = KEYWORD_48;
+            int _type = Goal;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:127:12: ( ( 'G' | 'g' ) ( 'O' | 'o' ) ( 'A' | 'a' ) ( 'L' | 'l' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:127:14: ( 'G' | 'g' ) ( 'O' | 'o' ) ( 'A' | 'a' ) ( 'L' | 'l' )
+            // InternalWreslEditorLexer.g:127:6: ( ( 'G' | 'g' ) ( 'O' | 'o' ) ( 'A' | 'a' ) ( 'L' | 'l' ) )
+            // InternalWreslEditorLexer.g:127:8: ( 'G' | 'g' ) ( 'O' | 'o' ) ( 'A' | 'a' ) ( 'L' | 'l' )
             {
             if ( input.LA(1)=='G'||input.LA(1)=='g' ) {
                 input.consume();
@@ -4395,15 +4403,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_48"
+    // $ANTLR end "Goal"
 
-    // $ANTLR start "KEYWORD_49"
-    public final void mKEYWORD_49() throws RecognitionException {
+    // $ANTLR start "Kind"
+    public final void mKind() throws RecognitionException {
         try {
-            int _type = KEYWORD_49;
+            int _type = Kind;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:129:12: ( ( 'K' | 'k' ) ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'D' | 'd' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:129:14: ( 'K' | 'k' ) ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'D' | 'd' )
+            // InternalWreslEditorLexer.g:129:6: ( ( 'K' | 'k' ) ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'D' | 'd' ) )
+            // InternalWreslEditorLexer.g:129:8: ( 'K' | 'k' ) ( 'I' | 'i' ) ( 'N' | 'n' ) ( 'D' | 'd' )
             {
             if ( input.LA(1)=='K'||input.LA(1)=='k' ) {
                 input.consume();
@@ -4450,15 +4458,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_49"
+    // $ANTLR end "Kind"
 
-    // $ANTLR start "KEYWORD_50"
-    public final void mKEYWORD_50() throws RecognitionException {
+    // $ANTLR start "Svar_1"
+    public final void mSvar_1() throws RecognitionException {
         try {
-            int _type = KEYWORD_50;
+            int _type = Svar_1;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:131:12: ( ( 'S' | 's' ) ( 'V' | 'v' ) ( 'A' | 'a' ) ( 'R' | 'r' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:131:14: ( 'S' | 's' ) ( 'V' | 'v' ) ( 'A' | 'a' ) ( 'R' | 'r' )
+            // InternalWreslEditorLexer.g:131:8: ( ( 'S' | 's' ) ( 'V' | 'v' ) ( 'A' | 'a' ) ( 'R' | 'r' ) )
+            // InternalWreslEditorLexer.g:131:10: ( 'S' | 's' ) ( 'V' | 'v' ) ( 'A' | 'a' ) ( 'R' | 'r' )
             {
             if ( input.LA(1)=='S'||input.LA(1)=='s' ) {
                 input.consume();
@@ -4505,275 +4513,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_50"
+    // $ANTLR end "Svar_1"
 
-    // $ANTLR start "KEYWORD_23"
-    public final void mKEYWORD_23() throws RecognitionException {
+    // $ANTLR start "Apr"
+    public final void mApr() throws RecognitionException {
         try {
-            int _type = KEYWORD_23;
+            int _type = Apr;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:133:12: ( ( 'F' | 'f' ) '9' '0' )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:133:14: ( 'F' | 'f' ) '9' '0'
-            {
-            if ( input.LA(1)=='F'||input.LA(1)=='f' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            match('9'); 
-            match('0'); 
-
-            }
-
-            state.type = _type;
-            state.channel = _channel;
-        }
-        finally {
-        }
-    }
-    // $ANTLR end "KEYWORD_23"
-
-    // $ANTLR start "KEYWORD_24"
-    public final void mKEYWORD_24() throws RecognitionException {
-        try {
-            int _type = KEYWORD_24;
-            int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:135:12: ( ( 'L' | 'l' ) ( 'H' | 'h' ) ( 'S' | 's' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:135:14: ( 'L' | 'l' ) ( 'H' | 'h' ) ( 'S' | 's' )
-            {
-            if ( input.LA(1)=='L'||input.LA(1)=='l' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='H'||input.LA(1)=='h' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='S'||input.LA(1)=='s' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-
-            }
-
-            state.type = _type;
-            state.channel = _channel;
-        }
-        finally {
-        }
-    }
-    // $ANTLR end "KEYWORD_24"
-
-    // $ANTLR start "KEYWORD_25"
-    public final void mKEYWORD_25() throws RecognitionException {
-        try {
-            int _type = KEYWORD_25;
-            int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:137:12: ( ( 'R' | 'r' ) ( 'H' | 'h' ) ( 'S' | 's' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:137:14: ( 'R' | 'r' ) ( 'H' | 'h' ) ( 'S' | 's' )
-            {
-            if ( input.LA(1)=='R'||input.LA(1)=='r' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='H'||input.LA(1)=='h' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='S'||input.LA(1)=='s' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-
-            }
-
-            state.type = _type;
-            state.channel = _channel;
-        }
-        finally {
-        }
-    }
-    // $ANTLR end "KEYWORD_25"
-
-    // $ANTLR start "KEYWORD_26"
-    public final void mKEYWORD_26() throws RecognitionException {
-        try {
-            int _type = KEYWORD_26;
-            int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:139:12: ( ( 'S' | 's' ) ( 'T' | 't' ) ( 'D' | 'd' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:139:14: ( 'S' | 's' ) ( 'T' | 't' ) ( 'D' | 'd' )
-            {
-            if ( input.LA(1)=='S'||input.LA(1)=='s' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='T'||input.LA(1)=='t' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='D'||input.LA(1)=='d' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-
-            }
-
-            state.type = _type;
-            state.channel = _channel;
-        }
-        finally {
-        }
-    }
-    // $ANTLR end "KEYWORD_26"
-
-    // $ANTLR start "KEYWORD_27"
-    public final void mKEYWORD_27() throws RecognitionException {
-        try {
-            int _type = KEYWORD_27;
-            int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:141:12: ( ( 'S' | 's' ) ( 'U' | 'u' ) ( 'M' | 'm' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:141:14: ( 'S' | 's' ) ( 'U' | 'u' ) ( 'M' | 'm' )
-            {
-            if ( input.LA(1)=='S'||input.LA(1)=='s' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='U'||input.LA(1)=='u' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='M'||input.LA(1)=='m' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-
-            }
-
-            state.type = _type;
-            state.channel = _channel;
-        }
-        finally {
-        }
-    }
-    // $ANTLR end "KEYWORD_27"
-
-    // $ANTLR start "KEYWORD_28"
-    public final void mKEYWORD_28() throws RecognitionException {
-        try {
-            int _type = KEYWORD_28;
-            int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:143:12: ( ( 'U' | 'u' ) ( 'S' | 's' ) ( 'E' | 'e' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:143:14: ( 'U' | 'u' ) ( 'S' | 's' ) ( 'E' | 'e' )
-            {
-            if ( input.LA(1)=='U'||input.LA(1)=='u' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='S'||input.LA(1)=='s' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-
-            }
-
-            state.type = _type;
-            state.channel = _channel;
-        }
-        finally {
-        }
-    }
-    // $ANTLR end "KEYWORD_28"
-
-    // $ANTLR start "KEYWORD_29"
-    public final void mKEYWORD_29() throws RecognitionException {
-        try {
-            int _type = KEYWORD_29;
-            int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:145:12: ( ( 'A' | 'a' ) ( 'P' | 'p' ) ( 'R' | 'r' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:145:14: ( 'A' | 'a' ) ( 'P' | 'p' ) ( 'R' | 'r' )
+            // InternalWreslEditorLexer.g:133:5: ( ( 'A' | 'a' ) ( 'P' | 'p' ) ( 'R' | 'r' ) )
+            // InternalWreslEditorLexer.g:133:7: ( 'A' | 'a' ) ( 'P' | 'p' ) ( 'R' | 'r' )
             {
             if ( input.LA(1)=='A'||input.LA(1)=='a' ) {
                 input.consume();
@@ -4811,15 +4559,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_29"
+    // $ANTLR end "Apr"
 
-    // $ANTLR start "KEYWORD_30"
-    public final void mKEYWORD_30() throws RecognitionException {
+    // $ANTLR start "Aug"
+    public final void mAug() throws RecognitionException {
         try {
-            int _type = KEYWORD_30;
+            int _type = Aug;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:147:12: ( ( 'A' | 'a' ) ( 'U' | 'u' ) ( 'G' | 'g' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:147:14: ( 'A' | 'a' ) ( 'U' | 'u' ) ( 'G' | 'g' )
+            // InternalWreslEditorLexer.g:135:5: ( ( 'A' | 'a' ) ( 'U' | 'u' ) ( 'G' | 'g' ) )
+            // InternalWreslEditorLexer.g:135:7: ( 'A' | 'a' ) ( 'U' | 'u' ) ( 'G' | 'g' )
             {
             if ( input.LA(1)=='A'||input.LA(1)=='a' ) {
                 input.consume();
@@ -4857,15 +4605,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_30"
+    // $ANTLR end "Aug"
 
-    // $ANTLR start "KEYWORD_31"
-    public final void mKEYWORD_31() throws RecognitionException {
+    // $ANTLR start "Day"
+    public final void mDay() throws RecognitionException {
         try {
-            int _type = KEYWORD_31;
+            int _type = Day;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:149:12: ( ( 'D' | 'd' ) ( 'A' | 'a' ) ( 'Y' | 'y' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:149:14: ( 'D' | 'd' ) ( 'A' | 'a' ) ( 'Y' | 'y' )
+            // InternalWreslEditorLexer.g:137:5: ( ( 'D' | 'd' ) ( 'A' | 'a' ) ( 'Y' | 'y' ) )
+            // InternalWreslEditorLexer.g:137:7: ( 'D' | 'd' ) ( 'A' | 'a' ) ( 'Y' | 'y' )
             {
             if ( input.LA(1)=='D'||input.LA(1)=='d' ) {
                 input.consume();
@@ -4903,15 +4651,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_31"
+    // $ANTLR end "Day"
 
-    // $ANTLR start "KEYWORD_32"
-    public final void mKEYWORD_32() throws RecognitionException {
+    // $ANTLR start "Dec"
+    public final void mDec() throws RecognitionException {
         try {
-            int _type = KEYWORD_32;
+            int _type = Dec;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:151:12: ( ( 'D' | 'd' ) ( 'E' | 'e' ) ( 'C' | 'c' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:151:14: ( 'D' | 'd' ) ( 'E' | 'e' ) ( 'C' | 'c' )
+            // InternalWreslEditorLexer.g:139:5: ( ( 'D' | 'd' ) ( 'E' | 'e' ) ( 'C' | 'c' ) )
+            // InternalWreslEditorLexer.g:139:7: ( 'D' | 'd' ) ( 'E' | 'e' ) ( 'C' | 'c' )
             {
             if ( input.LA(1)=='D'||input.LA(1)=='d' ) {
                 input.consume();
@@ -4949,15 +4697,45 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_32"
+    // $ANTLR end "Dec"
 
-    // $ANTLR start "KEYWORD_33"
-    public final void mKEYWORD_33() throws RecognitionException {
+    // $ANTLR start "F90_1"
+    public final void mF90_1() throws RecognitionException {
         try {
-            int _type = KEYWORD_33;
+            int _type = F90_1;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:153:12: ( ( 'F' | 'f' ) ( 'E' | 'e' ) ( 'B' | 'b' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:153:14: ( 'F' | 'f' ) ( 'E' | 'e' ) ( 'B' | 'b' )
+            // InternalWreslEditorLexer.g:141:7: ( ( 'F' | 'f' ) '9' '0' )
+            // InternalWreslEditorLexer.g:141:9: ( 'F' | 'f' ) '9' '0'
+            {
+            if ( input.LA(1)=='F'||input.LA(1)=='f' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            match('9'); 
+            match('0'); 
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "F90_1"
+
+    // $ANTLR start "Feb"
+    public final void mFeb() throws RecognitionException {
+        try {
+            int _type = Feb;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // InternalWreslEditorLexer.g:143:5: ( ( 'F' | 'f' ) ( 'E' | 'e' ) ( 'B' | 'b' ) )
+            // InternalWreslEditorLexer.g:143:7: ( 'F' | 'f' ) ( 'E' | 'e' ) ( 'B' | 'b' )
             {
             if ( input.LA(1)=='F'||input.LA(1)=='f' ) {
                 input.consume();
@@ -4995,15 +4773,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_33"
+    // $ANTLR end "Feb"
 
-    // $ANTLR start "KEYWORD_34"
-    public final void mKEYWORD_34() throws RecognitionException {
+    // $ANTLR start "Jan"
+    public final void mJan() throws RecognitionException {
         try {
-            int _type = KEYWORD_34;
+            int _type = Jan;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:155:12: ( ( 'J' | 'j' ) ( 'A' | 'a' ) ( 'N' | 'n' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:155:14: ( 'J' | 'j' ) ( 'A' | 'a' ) ( 'N' | 'n' )
+            // InternalWreslEditorLexer.g:145:5: ( ( 'J' | 'j' ) ( 'A' | 'a' ) ( 'N' | 'n' ) )
+            // InternalWreslEditorLexer.g:145:7: ( 'J' | 'j' ) ( 'A' | 'a' ) ( 'N' | 'n' )
             {
             if ( input.LA(1)=='J'||input.LA(1)=='j' ) {
                 input.consume();
@@ -5041,15 +4819,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_34"
+    // $ANTLR end "Jan"
 
-    // $ANTLR start "KEYWORD_35"
-    public final void mKEYWORD_35() throws RecognitionException {
+    // $ANTLR start "Jul"
+    public final void mJul() throws RecognitionException {
         try {
-            int _type = KEYWORD_35;
+            int _type = Jul;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:157:12: ( ( 'J' | 'j' ) ( 'U' | 'u' ) ( 'L' | 'l' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:157:14: ( 'J' | 'j' ) ( 'U' | 'u' ) ( 'L' | 'l' )
+            // InternalWreslEditorLexer.g:147:5: ( ( 'J' | 'j' ) ( 'U' | 'u' ) ( 'L' | 'l' ) )
+            // InternalWreslEditorLexer.g:147:7: ( 'J' | 'j' ) ( 'U' | 'u' ) ( 'L' | 'l' )
             {
             if ( input.LA(1)=='J'||input.LA(1)=='j' ) {
                 input.consume();
@@ -5087,15 +4865,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_35"
+    // $ANTLR end "Jul"
 
-    // $ANTLR start "KEYWORD_36"
-    public final void mKEYWORD_36() throws RecognitionException {
+    // $ANTLR start "Jun"
+    public final void mJun() throws RecognitionException {
         try {
-            int _type = KEYWORD_36;
+            int _type = Jun;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:159:12: ( ( 'J' | 'j' ) ( 'U' | 'u' ) ( 'N' | 'n' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:159:14: ( 'J' | 'j' ) ( 'U' | 'u' ) ( 'N' | 'n' )
+            // InternalWreslEditorLexer.g:149:5: ( ( 'J' | 'j' ) ( 'U' | 'u' ) ( 'N' | 'n' ) )
+            // InternalWreslEditorLexer.g:149:7: ( 'J' | 'j' ) ( 'U' | 'u' ) ( 'N' | 'n' )
             {
             if ( input.LA(1)=='J'||input.LA(1)=='j' ) {
                 input.consume();
@@ -5133,15 +4911,61 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_36"
+    // $ANTLR end "Jun"
 
-    // $ANTLR start "KEYWORD_37"
-    public final void mKEYWORD_37() throws RecognitionException {
+    // $ANTLR start "Lhs"
+    public final void mLhs() throws RecognitionException {
         try {
-            int _type = KEYWORD_37;
+            int _type = Lhs;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:161:12: ( ( 'M' | 'm' ) ( 'A' | 'a' ) ( 'R' | 'r' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:161:14: ( 'M' | 'm' ) ( 'A' | 'a' ) ( 'R' | 'r' )
+            // InternalWreslEditorLexer.g:151:5: ( ( 'L' | 'l' ) ( 'H' | 'h' ) ( 'S' | 's' ) )
+            // InternalWreslEditorLexer.g:151:7: ( 'L' | 'l' ) ( 'H' | 'h' ) ( 'S' | 's' )
+            {
+            if ( input.LA(1)=='L'||input.LA(1)=='l' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='H'||input.LA(1)=='h' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='S'||input.LA(1)=='s' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "Lhs"
+
+    // $ANTLR start "Mar"
+    public final void mMar() throws RecognitionException {
+        try {
+            int _type = Mar;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // InternalWreslEditorLexer.g:153:5: ( ( 'M' | 'm' ) ( 'A' | 'a' ) ( 'R' | 'r' ) )
+            // InternalWreslEditorLexer.g:153:7: ( 'M' | 'm' ) ( 'A' | 'a' ) ( 'R' | 'r' )
             {
             if ( input.LA(1)=='M'||input.LA(1)=='m' ) {
                 input.consume();
@@ -5179,15 +5003,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_37"
+    // $ANTLR end "Mar"
 
-    // $ANTLR start "KEYWORD_38"
-    public final void mKEYWORD_38() throws RecognitionException {
+    // $ANTLR start "May"
+    public final void mMay() throws RecognitionException {
         try {
-            int _type = KEYWORD_38;
+            int _type = May;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:163:12: ( ( 'M' | 'm' ) ( 'A' | 'a' ) ( 'Y' | 'y' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:163:14: ( 'M' | 'm' ) ( 'A' | 'a' ) ( 'Y' | 'y' )
+            // InternalWreslEditorLexer.g:155:5: ( ( 'M' | 'm' ) ( 'A' | 'a' ) ( 'Y' | 'y' ) )
+            // InternalWreslEditorLexer.g:155:7: ( 'M' | 'm' ) ( 'A' | 'a' ) ( 'Y' | 'y' )
             {
             if ( input.LA(1)=='M'||input.LA(1)=='m' ) {
                 input.consume();
@@ -5225,15 +5049,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_38"
+    // $ANTLR end "May"
 
-    // $ANTLR start "KEYWORD_39"
-    public final void mKEYWORD_39() throws RecognitionException {
+    // $ANTLR start "Nov"
+    public final void mNov() throws RecognitionException {
         try {
-            int _type = KEYWORD_39;
+            int _type = Nov;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:165:12: ( ( 'N' | 'n' ) ( 'O' | 'o' ) ( 'V' | 'v' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:165:14: ( 'N' | 'n' ) ( 'O' | 'o' ) ( 'V' | 'v' )
+            // InternalWreslEditorLexer.g:157:5: ( ( 'N' | 'n' ) ( 'O' | 'o' ) ( 'V' | 'v' ) )
+            // InternalWreslEditorLexer.g:157:7: ( 'N' | 'n' ) ( 'O' | 'o' ) ( 'V' | 'v' )
             {
             if ( input.LA(1)=='N'||input.LA(1)=='n' ) {
                 input.consume();
@@ -5271,15 +5095,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_39"
+    // $ANTLR end "Nov"
 
-    // $ANTLR start "KEYWORD_40"
-    public final void mKEYWORD_40() throws RecognitionException {
+    // $ANTLR start "Oct"
+    public final void mOct() throws RecognitionException {
         try {
-            int _type = KEYWORD_40;
+            int _type = Oct;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:167:12: ( ( 'O' | 'o' ) ( 'C' | 'c' ) ( 'T' | 't' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:167:14: ( 'O' | 'o' ) ( 'C' | 'c' ) ( 'T' | 't' )
+            // InternalWreslEditorLexer.g:159:5: ( ( 'O' | 'o' ) ( 'C' | 'c' ) ( 'T' | 't' ) )
+            // InternalWreslEditorLexer.g:159:7: ( 'O' | 'o' ) ( 'C' | 'c' ) ( 'T' | 't' )
             {
             if ( input.LA(1)=='O'||input.LA(1)=='o' ) {
                 input.consume();
@@ -5317,15 +5141,61 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_40"
+    // $ANTLR end "Oct"
 
-    // $ANTLR start "KEYWORD_41"
-    public final void mKEYWORD_41() throws RecognitionException {
+    // $ANTLR start "Rhs"
+    public final void mRhs() throws RecognitionException {
         try {
-            int _type = KEYWORD_41;
+            int _type = Rhs;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:169:12: ( ( 'S' | 's' ) ( 'E' | 'e' ) ( 'P' | 'p' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:169:14: ( 'S' | 's' ) ( 'E' | 'e' ) ( 'P' | 'p' )
+            // InternalWreslEditorLexer.g:161:5: ( ( 'R' | 'r' ) ( 'H' | 'h' ) ( 'S' | 's' ) )
+            // InternalWreslEditorLexer.g:161:7: ( 'R' | 'r' ) ( 'H' | 'h' ) ( 'S' | 's' )
+            {
+            if ( input.LA(1)=='R'||input.LA(1)=='r' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='H'||input.LA(1)=='h' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='S'||input.LA(1)=='s' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "Rhs"
+
+    // $ANTLR start "Sep"
+    public final void mSep() throws RecognitionException {
+        try {
+            int _type = Sep;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // InternalWreslEditorLexer.g:163:5: ( ( 'S' | 's' ) ( 'E' | 'e' ) ( 'P' | 'p' ) )
+            // InternalWreslEditorLexer.g:163:7: ( 'S' | 's' ) ( 'E' | 'e' ) ( 'P' | 'p' )
             {
             if ( input.LA(1)=='S'||input.LA(1)=='s' ) {
                 input.consume();
@@ -5363,15 +5233,153 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_41"
+    // $ANTLR end "Sep"
 
-    // $ANTLR start "KEYWORD_17"
-    public final void mKEYWORD_17() throws RecognitionException {
+    // $ANTLR start "Std"
+    public final void mStd() throws RecognitionException {
         try {
-            int _type = KEYWORD_17;
+            int _type = Std;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:171:12: ( '$' ( 'M' | 'm' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:171:14: '$' ( 'M' | 'm' )
+            // InternalWreslEditorLexer.g:165:5: ( ( 'S' | 's' ) ( 'T' | 't' ) ( 'D' | 'd' ) )
+            // InternalWreslEditorLexer.g:165:7: ( 'S' | 's' ) ( 'T' | 't' ) ( 'D' | 'd' )
+            {
+            if ( input.LA(1)=='S'||input.LA(1)=='s' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='T'||input.LA(1)=='t' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='D'||input.LA(1)=='d' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "Std"
+
+    // $ANTLR start "Sum"
+    public final void mSum() throws RecognitionException {
+        try {
+            int _type = Sum;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // InternalWreslEditorLexer.g:167:5: ( ( 'S' | 's' ) ( 'U' | 'u' ) ( 'M' | 'm' ) )
+            // InternalWreslEditorLexer.g:167:7: ( 'S' | 's' ) ( 'U' | 'u' ) ( 'M' | 'm' )
+            {
+            if ( input.LA(1)=='S'||input.LA(1)=='s' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='U'||input.LA(1)=='u' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='M'||input.LA(1)=='m' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "Sum"
+
+    // $ANTLR start "Use"
+    public final void mUse() throws RecognitionException {
+        try {
+            int _type = Use;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // InternalWreslEditorLexer.g:169:5: ( ( 'U' | 'u' ) ( 'S' | 's' ) ( 'E' | 'e' ) )
+            // InternalWreslEditorLexer.g:169:7: ( 'U' | 'u' ) ( 'S' | 's' ) ( 'E' | 'e' )
+            {
+            if ( input.LA(1)=='U'||input.LA(1)=='u' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='S'||input.LA(1)=='s' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+            if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "Use"
+
+    // $ANTLR start "M"
+    public final void mM() throws RecognitionException {
+        try {
+            int _type = M;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // InternalWreslEditorLexer.g:171:3: ( '$' ( 'M' | 'm' ) )
+            // InternalWreslEditorLexer.g:171:5: '$' ( 'M' | 'm' )
             {
             match('$'); 
             if ( input.LA(1)=='M'||input.LA(1)=='m' ) {
@@ -5392,15 +5400,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_17"
+    // $ANTLR end "M"
 
-    // $ANTLR start "KEYWORD_18"
-    public final void mKEYWORD_18() throws RecognitionException {
+    // $ANTLR start "SolidusEqualsSign"
+    public final void mSolidusEqualsSign() throws RecognitionException {
         try {
-            int _type = KEYWORD_18;
+            int _type = SolidusEqualsSign;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:173:12: ( '/' '=' )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:173:14: '/' '='
+            // InternalWreslEditorLexer.g:173:19: ( '/' '=' )
+            // InternalWreslEditorLexer.g:173:21: '/' '='
             {
             match('/'); 
             match('='); 
@@ -5413,15 +5421,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_18"
+    // $ANTLR end "SolidusEqualsSign"
 
-    // $ANTLR start "KEYWORD_19"
-    public final void mKEYWORD_19() throws RecognitionException {
+    // $ANTLR start "LessThanSignEqualsSign"
+    public final void mLessThanSignEqualsSign() throws RecognitionException {
         try {
-            int _type = KEYWORD_19;
+            int _type = LessThanSignEqualsSign;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:175:12: ( '<' '=' )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:175:14: '<' '='
+            // InternalWreslEditorLexer.g:175:24: ( '<' '=' )
+            // InternalWreslEditorLexer.g:175:26: '<' '='
             {
             match('<'); 
             match('='); 
@@ -5434,15 +5442,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_19"
+    // $ANTLR end "LessThanSignEqualsSign"
 
-    // $ANTLR start "KEYWORD_20"
-    public final void mKEYWORD_20() throws RecognitionException {
+    // $ANTLR start "EqualsSignEqualsSign"
+    public final void mEqualsSignEqualsSign() throws RecognitionException {
         try {
-            int _type = KEYWORD_20;
+            int _type = EqualsSignEqualsSign;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:177:12: ( '=' '=' )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:177:14: '=' '='
+            // InternalWreslEditorLexer.g:177:22: ( '=' '=' )
+            // InternalWreslEditorLexer.g:177:24: '=' '='
             {
             match('='); 
             match('='); 
@@ -5455,15 +5463,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_20"
+    // $ANTLR end "EqualsSignEqualsSign"
 
-    // $ANTLR start "KEYWORD_21"
-    public final void mKEYWORD_21() throws RecognitionException {
+    // $ANTLR start "GreaterThanSignEqualsSign"
+    public final void mGreaterThanSignEqualsSign() throws RecognitionException {
         try {
-            int _type = KEYWORD_21;
+            int _type = GreaterThanSignEqualsSign;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:179:12: ( '>' '=' )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:179:14: '>' '='
+            // InternalWreslEditorLexer.g:179:27: ( '>' '=' )
+            // InternalWreslEditorLexer.g:179:29: '>' '='
             {
             match('>'); 
             match('='); 
@@ -5476,15 +5484,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_21"
+    // $ANTLR end "GreaterThanSignEqualsSign"
 
-    // $ANTLR start "KEYWORD_22"
-    public final void mKEYWORD_22() throws RecognitionException {
+    // $ANTLR start "I_1"
+    public final void mI_1() throws RecognitionException {
         try {
-            int _type = KEYWORD_22;
+            int _type = I_1;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:181:12: ( ( 'I' | 'i' ) '=' )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:181:14: ( 'I' | 'i' ) '='
+            // InternalWreslEditorLexer.g:181:5: ( ( 'I' | 'i' ) '=' )
+            // InternalWreslEditorLexer.g:181:7: ( 'I' | 'i' ) '='
             {
             if ( input.LA(1)=='I'||input.LA(1)=='i' ) {
                 input.consume();
@@ -5505,15 +5513,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_22"
+    // $ANTLR end "I_1"
 
-    // $ANTLR start "KEYWORD_1"
-    public final void mKEYWORD_1() throws RecognitionException {
+    // $ANTLR start "LeftParenthesis"
+    public final void mLeftParenthesis() throws RecognitionException {
         try {
-            int _type = KEYWORD_1;
+            int _type = LeftParenthesis;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:183:11: ( '(' )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:183:13: '('
+            // InternalWreslEditorLexer.g:183:17: ( '(' )
+            // InternalWreslEditorLexer.g:183:19: '('
             {
             match('('); 
 
@@ -5525,15 +5533,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_1"
+    // $ANTLR end "LeftParenthesis"
 
-    // $ANTLR start "KEYWORD_2"
-    public final void mKEYWORD_2() throws RecognitionException {
+    // $ANTLR start "RightParenthesis"
+    public final void mRightParenthesis() throws RecognitionException {
         try {
-            int _type = KEYWORD_2;
+            int _type = RightParenthesis;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:185:11: ( ')' )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:185:13: ')'
+            // InternalWreslEditorLexer.g:185:18: ( ')' )
+            // InternalWreslEditorLexer.g:185:20: ')'
             {
             match(')'); 
 
@@ -5545,15 +5553,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_2"
+    // $ANTLR end "RightParenthesis"
 
-    // $ANTLR start "KEYWORD_3"
-    public final void mKEYWORD_3() throws RecognitionException {
+    // $ANTLR start "Asterisk"
+    public final void mAsterisk() throws RecognitionException {
         try {
-            int _type = KEYWORD_3;
+            int _type = Asterisk;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:187:11: ( '*' )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:187:13: '*'
+            // InternalWreslEditorLexer.g:187:10: ( '*' )
+            // InternalWreslEditorLexer.g:187:12: '*'
             {
             match('*'); 
 
@@ -5565,15 +5573,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_3"
+    // $ANTLR end "Asterisk"
 
-    // $ANTLR start "KEYWORD_4"
-    public final void mKEYWORD_4() throws RecognitionException {
+    // $ANTLR start "PlusSign"
+    public final void mPlusSign() throws RecognitionException {
         try {
-            int _type = KEYWORD_4;
+            int _type = PlusSign;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:189:11: ( '+' )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:189:13: '+'
+            // InternalWreslEditorLexer.g:189:10: ( '+' )
+            // InternalWreslEditorLexer.g:189:12: '+'
             {
             match('+'); 
 
@@ -5585,15 +5593,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_4"
+    // $ANTLR end "PlusSign"
 
-    // $ANTLR start "KEYWORD_5"
-    public final void mKEYWORD_5() throws RecognitionException {
+    // $ANTLR start "Comma"
+    public final void mComma() throws RecognitionException {
         try {
-            int _type = KEYWORD_5;
+            int _type = Comma;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:191:11: ( ',' )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:191:13: ','
+            // InternalWreslEditorLexer.g:191:7: ( ',' )
+            // InternalWreslEditorLexer.g:191:9: ','
             {
             match(','); 
 
@@ -5605,15 +5613,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_5"
+    // $ANTLR end "Comma"
 
-    // $ANTLR start "KEYWORD_6"
-    public final void mKEYWORD_6() throws RecognitionException {
+    // $ANTLR start "HyphenMinus"
+    public final void mHyphenMinus() throws RecognitionException {
         try {
-            int _type = KEYWORD_6;
+            int _type = HyphenMinus;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:193:11: ( '-' )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:193:13: '-'
+            // InternalWreslEditorLexer.g:193:13: ( '-' )
+            // InternalWreslEditorLexer.g:193:15: '-'
             {
             match('-'); 
 
@@ -5625,15 +5633,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_6"
+    // $ANTLR end "HyphenMinus"
 
-    // $ANTLR start "KEYWORD_7"
-    public final void mKEYWORD_7() throws RecognitionException {
+    // $ANTLR start "Solidus"
+    public final void mSolidus() throws RecognitionException {
         try {
-            int _type = KEYWORD_7;
+            int _type = Solidus;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:195:11: ( '/' )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:195:13: '/'
+            // InternalWreslEditorLexer.g:195:9: ( '/' )
+            // InternalWreslEditorLexer.g:195:11: '/'
             {
             match('/'); 
 
@@ -5645,15 +5653,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_7"
+    // $ANTLR end "Solidus"
 
-    // $ANTLR start "KEYWORD_8"
-    public final void mKEYWORD_8() throws RecognitionException {
+    // $ANTLR start "Colon"
+    public final void mColon() throws RecognitionException {
         try {
-            int _type = KEYWORD_8;
+            int _type = Colon;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:197:11: ( ':' )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:197:13: ':'
+            // InternalWreslEditorLexer.g:197:7: ( ':' )
+            // InternalWreslEditorLexer.g:197:9: ':'
             {
             match(':'); 
 
@@ -5665,15 +5673,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_8"
+    // $ANTLR end "Colon"
 
-    // $ANTLR start "KEYWORD_9"
-    public final void mKEYWORD_9() throws RecognitionException {
+    // $ANTLR start "LessThanSign"
+    public final void mLessThanSign() throws RecognitionException {
         try {
-            int _type = KEYWORD_9;
+            int _type = LessThanSign;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:199:11: ( '<' )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:199:13: '<'
+            // InternalWreslEditorLexer.g:199:14: ( '<' )
+            // InternalWreslEditorLexer.g:199:16: '<'
             {
             match('<'); 
 
@@ -5685,15 +5693,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_9"
+    // $ANTLR end "LessThanSign"
 
-    // $ANTLR start "KEYWORD_10"
-    public final void mKEYWORD_10() throws RecognitionException {
+    // $ANTLR start "EqualsSign"
+    public final void mEqualsSign() throws RecognitionException {
         try {
-            int _type = KEYWORD_10;
+            int _type = EqualsSign;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:201:12: ( '=' )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:201:14: '='
+            // InternalWreslEditorLexer.g:201:12: ( '=' )
+            // InternalWreslEditorLexer.g:201:14: '='
             {
             match('='); 
 
@@ -5705,15 +5713,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_10"
+    // $ANTLR end "EqualsSign"
 
-    // $ANTLR start "KEYWORD_11"
-    public final void mKEYWORD_11() throws RecognitionException {
+    // $ANTLR start "GreaterThanSign"
+    public final void mGreaterThanSign() throws RecognitionException {
         try {
-            int _type = KEYWORD_11;
+            int _type = GreaterThanSign;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:203:12: ( '>' )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:203:14: '>'
+            // InternalWreslEditorLexer.g:203:17: ( '>' )
+            // InternalWreslEditorLexer.g:203:19: '>'
             {
             match('>'); 
 
@@ -5725,15 +5733,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_11"
+    // $ANTLR end "GreaterThanSign"
 
-    // $ANTLR start "KEYWORD_12"
-    public final void mKEYWORD_12() throws RecognitionException {
+    // $ANTLR start "LeftSquareBracket"
+    public final void mLeftSquareBracket() throws RecognitionException {
         try {
-            int _type = KEYWORD_12;
+            int _type = LeftSquareBracket;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:205:12: ( '[' )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:205:14: '['
+            // InternalWreslEditorLexer.g:205:19: ( '[' )
+            // InternalWreslEditorLexer.g:205:21: '['
             {
             match('['); 
 
@@ -5745,15 +5753,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_12"
+    // $ANTLR end "LeftSquareBracket"
 
-    // $ANTLR start "KEYWORD_13"
-    public final void mKEYWORD_13() throws RecognitionException {
+    // $ANTLR start "RightSquareBracket"
+    public final void mRightSquareBracket() throws RecognitionException {
         try {
-            int _type = KEYWORD_13;
+            int _type = RightSquareBracket;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:207:12: ( ']' )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:207:14: ']'
+            // InternalWreslEditorLexer.g:207:20: ( ']' )
+            // InternalWreslEditorLexer.g:207:22: ']'
             {
             match(']'); 
 
@@ -5765,15 +5773,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_13"
+    // $ANTLR end "RightSquareBracket"
 
-    // $ANTLR start "KEYWORD_14"
-    public final void mKEYWORD_14() throws RecognitionException {
+    // $ANTLR start "I"
+    public final void mI() throws RecognitionException {
         try {
-            int _type = KEYWORD_14;
+            int _type = I;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:209:12: ( ( 'I' | 'i' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:209:14: ( 'I' | 'i' )
+            // InternalWreslEditorLexer.g:209:3: ( ( 'I' | 'i' ) )
+            // InternalWreslEditorLexer.g:209:5: ( 'I' | 'i' )
             {
             if ( input.LA(1)=='I'||input.LA(1)=='i' ) {
                 input.consume();
@@ -5793,15 +5801,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_14"
+    // $ANTLR end "I"
 
-    // $ANTLR start "KEYWORD_15"
-    public final void mKEYWORD_15() throws RecognitionException {
+    // $ANTLR start "LeftCurlyBracket"
+    public final void mLeftCurlyBracket() throws RecognitionException {
         try {
-            int _type = KEYWORD_15;
+            int _type = LeftCurlyBracket;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:211:12: ( '{' )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:211:14: '{'
+            // InternalWreslEditorLexer.g:211:18: ( '{' )
+            // InternalWreslEditorLexer.g:211:20: '{'
             {
             match('{'); 
 
@@ -5813,15 +5821,15 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_15"
+    // $ANTLR end "LeftCurlyBracket"
 
-    // $ANTLR start "KEYWORD_16"
-    public final void mKEYWORD_16() throws RecognitionException {
+    // $ANTLR start "RightCurlyBracket"
+    public final void mRightCurlyBracket() throws RecognitionException {
         try {
-            int _type = KEYWORD_16;
+            int _type = RightCurlyBracket;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:213:12: ( '}' )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:213:14: '}'
+            // InternalWreslEditorLexer.g:213:19: ( '}' )
+            // InternalWreslEditorLexer.g:213:21: '}'
             {
             match('}'); 
 
@@ -5833,17 +5841,17 @@ public class InternalWreslEditorLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "KEYWORD_16"
+    // $ANTLR end "RightCurlyBracket"
 
     // $ANTLR start "RULE_IF"
     public final void mRULE_IF() throws RecognitionException {
         try {
             int _type = RULE_IF;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:217:9: ( ( 'If' | 'IF' | 'if' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:217:11: ( 'If' | 'IF' | 'if' )
+            // InternalWreslEditorLexer.g:217:9: ( ( 'If' | 'IF' | 'if' ) )
+            // InternalWreslEditorLexer.g:217:11: ( 'If' | 'IF' | 'if' )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:217:11: ( 'If' | 'IF' | 'if' )
+            // InternalWreslEditorLexer.g:217:11: ( 'If' | 'IF' | 'if' )
             int alt1=3;
             int LA1_0 = input.LA(1);
 
@@ -5874,7 +5882,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt1) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:217:12: 'If'
+                    // InternalWreslEditorLexer.g:217:12: 'If'
                     {
                     match("If"); 
 
@@ -5882,7 +5890,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:217:17: 'IF'
+                    // InternalWreslEditorLexer.g:217:17: 'IF'
                     {
                     match("IF"); 
 
@@ -5890,7 +5898,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:217:22: 'if'
+                    // InternalWreslEditorLexer.g:217:22: 'if'
                     {
                     match("if"); 
 
@@ -5916,10 +5924,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_ELSEIF;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:219:13: ( ( 'Elseif' | 'ELSEIF' | 'elseif' | 'ElseIf' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:219:15: ( 'Elseif' | 'ELSEIF' | 'elseif' | 'ElseIf' )
+            // InternalWreslEditorLexer.g:219:13: ( ( 'Elseif' | 'ELSEIF' | 'elseif' | 'ElseIf' ) )
+            // InternalWreslEditorLexer.g:219:15: ( 'Elseif' | 'ELSEIF' | 'elseif' | 'ElseIf' )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:219:15: ( 'Elseif' | 'ELSEIF' | 'elseif' | 'ElseIf' )
+            // InternalWreslEditorLexer.g:219:15: ( 'Elseif' | 'ELSEIF' | 'elseif' | 'ElseIf' )
             int alt2=4;
             int LA2_0 = input.LA(1);
 
@@ -5983,7 +5991,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt2) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:219:16: 'Elseif'
+                    // InternalWreslEditorLexer.g:219:16: 'Elseif'
                     {
                     match("Elseif"); 
 
@@ -5991,7 +5999,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:219:25: 'ELSEIF'
+                    // InternalWreslEditorLexer.g:219:25: 'ELSEIF'
                     {
                     match("ELSEIF"); 
 
@@ -5999,7 +6007,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:219:34: 'elseif'
+                    // InternalWreslEditorLexer.g:219:34: 'elseif'
                     {
                     match("elseif"); 
 
@@ -6007,7 +6015,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 4 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:219:43: 'ElseIf'
+                    // InternalWreslEditorLexer.g:219:43: 'ElseIf'
                     {
                     match("ElseIf"); 
 
@@ -6033,10 +6041,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_ELSE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:221:11: ( ( 'Else' | 'ELSE' | 'else' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:221:13: ( 'Else' | 'ELSE' | 'else' )
+            // InternalWreslEditorLexer.g:221:11: ( ( 'Else' | 'ELSE' | 'else' ) )
+            // InternalWreslEditorLexer.g:221:13: ( 'Else' | 'ELSE' | 'else' )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:221:13: ( 'Else' | 'ELSE' | 'else' )
+            // InternalWreslEditorLexer.g:221:13: ( 'Else' | 'ELSE' | 'else' )
             int alt3=3;
             int LA3_0 = input.LA(1);
 
@@ -6067,7 +6075,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt3) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:221:14: 'Else'
+                    // InternalWreslEditorLexer.g:221:14: 'Else'
                     {
                     match("Else"); 
 
@@ -6075,7 +6083,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:221:21: 'ELSE'
+                    // InternalWreslEditorLexer.g:221:21: 'ELSE'
                     {
                     match("ELSE"); 
 
@@ -6083,7 +6091,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:221:28: 'else'
+                    // InternalWreslEditorLexer.g:221:28: 'else'
                     {
                     match("else"); 
 
@@ -6109,10 +6117,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_RANGE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:223:12: ( ( 'range' | 'RANGE' | 'Range' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:223:14: ( 'range' | 'RANGE' | 'Range' )
+            // InternalWreslEditorLexer.g:223:12: ( ( 'range' | 'RANGE' | 'Range' ) )
+            // InternalWreslEditorLexer.g:223:14: ( 'range' | 'RANGE' | 'Range' )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:223:14: ( 'range' | 'RANGE' | 'Range' )
+            // InternalWreslEditorLexer.g:223:14: ( 'range' | 'RANGE' | 'Range' )
             int alt4=3;
             int LA4_0 = input.LA(1);
 
@@ -6143,7 +6151,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt4) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:223:15: 'range'
+                    // InternalWreslEditorLexer.g:223:15: 'range'
                     {
                     match("range"); 
 
@@ -6151,7 +6159,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:223:23: 'RANGE'
+                    // InternalWreslEditorLexer.g:223:23: 'RANGE'
                     {
                     match("RANGE"); 
 
@@ -6159,7 +6167,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:223:31: 'Range'
+                    // InternalWreslEditorLexer.g:223:31: 'Range'
                     {
                     match("Range"); 
 
@@ -6185,10 +6193,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_MIN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:225:10: ( ( 'min' | 'MIN' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:225:12: ( 'min' | 'MIN' )
+            // InternalWreslEditorLexer.g:225:10: ( ( 'min' | 'MIN' ) )
+            // InternalWreslEditorLexer.g:225:12: ( 'min' | 'MIN' )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:225:12: ( 'min' | 'MIN' )
+            // InternalWreslEditorLexer.g:225:12: ( 'min' | 'MIN' )
             int alt5=2;
             int LA5_0 = input.LA(1);
 
@@ -6206,7 +6214,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt5) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:225:13: 'min'
+                    // InternalWreslEditorLexer.g:225:13: 'min'
                     {
                     match("min"); 
 
@@ -6214,7 +6222,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:225:19: 'MIN'
+                    // InternalWreslEditorLexer.g:225:19: 'MIN'
                     {
                     match("MIN"); 
 
@@ -6240,10 +6248,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_MAX;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:227:10: ( ( 'max' | 'MAX' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:227:12: ( 'max' | 'MAX' )
+            // InternalWreslEditorLexer.g:227:10: ( ( 'max' | 'MAX' ) )
+            // InternalWreslEditorLexer.g:227:12: ( 'max' | 'MAX' )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:227:12: ( 'max' | 'MAX' )
+            // InternalWreslEditorLexer.g:227:12: ( 'max' | 'MAX' )
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -6261,7 +6269,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt6) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:227:13: 'max'
+                    // InternalWreslEditorLexer.g:227:13: 'max'
                     {
                     match("max"); 
 
@@ -6269,7 +6277,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:227:19: 'MAX'
+                    // InternalWreslEditorLexer.g:227:19: 'MAX'
                     {
                     match("MAX"); 
 
@@ -6295,10 +6303,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_MOD;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:229:10: ( ( 'mod' | 'MOD' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:229:12: ( 'mod' | 'MOD' )
+            // InternalWreslEditorLexer.g:229:10: ( ( 'mod' | 'MOD' ) )
+            // InternalWreslEditorLexer.g:229:12: ( 'mod' | 'MOD' )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:229:12: ( 'mod' | 'MOD' )
+            // InternalWreslEditorLexer.g:229:12: ( 'mod' | 'MOD' )
             int alt7=2;
             int LA7_0 = input.LA(1);
 
@@ -6316,7 +6324,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt7) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:229:13: 'mod'
+                    // InternalWreslEditorLexer.g:229:13: 'mod'
                     {
                     match("mod"); 
 
@@ -6324,7 +6332,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:229:19: 'MOD'
+                    // InternalWreslEditorLexer.g:229:19: 'MOD'
                     {
                     match("MOD"); 
 
@@ -6350,10 +6358,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_INTFUNC;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:231:14: ( ( 'int' | 'INT' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:231:16: ( 'int' | 'INT' )
+            // InternalWreslEditorLexer.g:231:14: ( ( 'int' | 'INT' ) )
+            // InternalWreslEditorLexer.g:231:16: ( 'int' | 'INT' )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:231:16: ( 'int' | 'INT' )
+            // InternalWreslEditorLexer.g:231:16: ( 'int' | 'INT' )
             int alt8=2;
             int LA8_0 = input.LA(1);
 
@@ -6371,7 +6379,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt8) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:231:17: 'int'
+                    // InternalWreslEditorLexer.g:231:17: 'int'
                     {
                     match("int"); 
 
@@ -6379,7 +6387,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:231:23: 'INT'
+                    // InternalWreslEditorLexer.g:231:23: 'INT'
                     {
                     match("INT"); 
 
@@ -6405,10 +6413,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_ABS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:233:10: ( ( 'abs' | 'ABS' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:233:12: ( 'abs' | 'ABS' )
+            // InternalWreslEditorLexer.g:233:10: ( ( 'abs' | 'ABS' ) )
+            // InternalWreslEditorLexer.g:233:12: ( 'abs' | 'ABS' )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:233:12: ( 'abs' | 'ABS' )
+            // InternalWreslEditorLexer.g:233:12: ( 'abs' | 'ABS' )
             int alt9=2;
             int LA9_0 = input.LA(1);
 
@@ -6426,7 +6434,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt9) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:233:13: 'abs'
+                    // InternalWreslEditorLexer.g:233:13: 'abs'
                     {
                     match("abs"); 
 
@@ -6434,7 +6442,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:233:19: 'ABS'
+                    // InternalWreslEditorLexer.g:233:19: 'ABS'
                     {
                     match("ABS"); 
 
@@ -6460,10 +6468,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_ROUND;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:235:12: ( ( 'round' | 'ROUND' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:235:14: ( 'round' | 'ROUND' )
+            // InternalWreslEditorLexer.g:235:12: ( ( 'round' | 'ROUND' ) )
+            // InternalWreslEditorLexer.g:235:14: ( 'round' | 'ROUND' )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:235:14: ( 'round' | 'ROUND' )
+            // InternalWreslEditorLexer.g:235:14: ( 'round' | 'ROUND' )
             int alt10=2;
             int LA10_0 = input.LA(1);
 
@@ -6481,7 +6489,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt10) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:235:15: 'round'
+                    // InternalWreslEditorLexer.g:235:15: 'round'
                     {
                     match("round"); 
 
@@ -6489,7 +6497,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:235:23: 'ROUND'
+                    // InternalWreslEditorLexer.g:235:23: 'ROUND'
                     {
                     match("ROUND"); 
 
@@ -6515,10 +6523,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_POW;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:237:10: ( ( 'pow' | 'POW' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:237:12: ( 'pow' | 'POW' )
+            // InternalWreslEditorLexer.g:237:10: ( ( 'pow' | 'POW' ) )
+            // InternalWreslEditorLexer.g:237:12: ( 'pow' | 'POW' )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:237:12: ( 'pow' | 'POW' )
+            // InternalWreslEditorLexer.g:237:12: ( 'pow' | 'POW' )
             int alt11=2;
             int LA11_0 = input.LA(1);
 
@@ -6536,7 +6544,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt11) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:237:13: 'pow'
+                    // InternalWreslEditorLexer.g:237:13: 'pow'
                     {
                     match("pow"); 
 
@@ -6544,7 +6552,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:237:19: 'POW'
+                    // InternalWreslEditorLexer.g:237:19: 'POW'
                     {
                     match("POW"); 
 
@@ -6570,15 +6578,15 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_LOG;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:239:10: ( ( 'log' | 'LOG' | 'log10' | 'LOG10' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:239:12: ( 'log' | 'LOG' | 'log10' | 'LOG10' )
+            // InternalWreslEditorLexer.g:239:10: ( ( 'log' | 'LOG' | 'log10' | 'LOG10' ) )
+            // InternalWreslEditorLexer.g:239:12: ( 'log' | 'LOG' | 'log10' | 'LOG10' )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:239:12: ( 'log' | 'LOG' | 'log10' | 'LOG10' )
+            // InternalWreslEditorLexer.g:239:12: ( 'log' | 'LOG' | 'log10' | 'LOG10' )
             int alt12=4;
             alt12 = dfa12.predict(input);
             switch (alt12) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:239:13: 'log'
+                    // InternalWreslEditorLexer.g:239:13: 'log'
                     {
                     match("log"); 
 
@@ -6586,7 +6594,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:239:19: 'LOG'
+                    // InternalWreslEditorLexer.g:239:19: 'LOG'
                     {
                     match("LOG"); 
 
@@ -6594,7 +6602,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:239:25: 'log10'
+                    // InternalWreslEditorLexer.g:239:25: 'log10'
                     {
                     match("log10"); 
 
@@ -6602,7 +6610,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 4 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:239:33: 'LOG10'
+                    // InternalWreslEditorLexer.g:239:33: 'LOG10'
                     {
                     match("LOG10"); 
 
@@ -6623,22 +6631,132 @@ public class InternalWreslEditorLexer extends Lexer {
     }
     // $ANTLR end "RULE_LOG"
 
-    // $ANTLR start "RULE_FLOAT"
-    public final void mRULE_FLOAT() throws RecognitionException {
+    // $ANTLR start "RULE_SIN"
+    public final void mRULE_SIN() throws RecognitionException {
         try {
-            int _type = RULE_FLOAT;
+            int _type = RULE_SIN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:241:12: ( ( RULE_INT '.' ( RULE_INT )* | '.' ( RULE_INT )+ ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:241:14: ( RULE_INT '.' ( RULE_INT )* | '.' ( RULE_INT )+ )
+            // InternalWreslEditorLexer.g:241:10: ( ( 'sin' | 'SIN' ) )
+            // InternalWreslEditorLexer.g:241:12: ( 'sin' | 'SIN' )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:241:14: ( RULE_INT '.' ( RULE_INT )* | '.' ( RULE_INT )+ )
+            // InternalWreslEditorLexer.g:241:12: ( 'sin' | 'SIN' )
+            int alt13=2;
+            int LA13_0 = input.LA(1);
+
+            if ( (LA13_0=='s') ) {
+                alt13=1;
+            }
+            else if ( (LA13_0=='S') ) {
+                alt13=2;
+            }
+            else {
+                NoViableAltException nvae =
+                    new NoViableAltException("", 13, 0, input);
+
+                throw nvae;
+            }
+            switch (alt13) {
+                case 1 :
+                    // InternalWreslEditorLexer.g:241:13: 'sin'
+                    {
+                    match("sin"); 
+
+
+                    }
+                    break;
+                case 2 :
+                    // InternalWreslEditorLexer.g:241:19: 'SIN'
+                    {
+                    match("SIN"); 
+
+
+                    }
+                    break;
+
+            }
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "RULE_SIN"
+
+    // $ANTLR start "RULE_COS"
+    public final void mRULE_COS() throws RecognitionException {
+        try {
+            int _type = RULE_COS;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // InternalWreslEditorLexer.g:243:10: ( ( 'cos' | 'COS' ) )
+            // InternalWreslEditorLexer.g:243:12: ( 'cos' | 'COS' )
+            {
+            // InternalWreslEditorLexer.g:243:12: ( 'cos' | 'COS' )
+            int alt14=2;
+            int LA14_0 = input.LA(1);
+
+            if ( (LA14_0=='c') ) {
+                alt14=1;
+            }
+            else if ( (LA14_0=='C') ) {
+                alt14=2;
+            }
+            else {
+                NoViableAltException nvae =
+                    new NoViableAltException("", 14, 0, input);
+
+                throw nvae;
+            }
+            switch (alt14) {
+                case 1 :
+                    // InternalWreslEditorLexer.g:243:13: 'cos'
+                    {
+                    match("cos"); 
+
+
+                    }
+                    break;
+                case 2 :
+                    // InternalWreslEditorLexer.g:243:19: 'COS'
+                    {
+                    match("COS"); 
+
+
+                    }
+                    break;
+
+            }
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "RULE_COS"
+
+    // $ANTLR start "RULE_TAN"
+    public final void mRULE_TAN() throws RecognitionException {
+        try {
+            int _type = RULE_TAN;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // InternalWreslEditorLexer.g:245:10: ( ( 'tan' | 'TAN' ) )
+            // InternalWreslEditorLexer.g:245:12: ( 'tan' | 'TAN' )
+            {
+            // InternalWreslEditorLexer.g:245:12: ( 'tan' | 'TAN' )
             int alt15=2;
             int LA15_0 = input.LA(1);
 
-            if ( ((LA15_0>='0' && LA15_0<='9')) ) {
+            if ( (LA15_0=='t') ) {
                 alt15=1;
             }
-            else if ( (LA15_0=='.') ) {
+            else if ( (LA15_0=='T') ) {
                 alt15=2;
             }
             else {
@@ -6649,24 +6767,354 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt15) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:241:15: RULE_INT '.' ( RULE_INT )*
+                    // InternalWreslEditorLexer.g:245:13: 'tan'
+                    {
+                    match("tan"); 
+
+
+                    }
+                    break;
+                case 2 :
+                    // InternalWreslEditorLexer.g:245:19: 'TAN'
+                    {
+                    match("TAN"); 
+
+
+                    }
+                    break;
+
+            }
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "RULE_TAN"
+
+    // $ANTLR start "RULE_COT"
+    public final void mRULE_COT() throws RecognitionException {
+        try {
+            int _type = RULE_COT;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // InternalWreslEditorLexer.g:247:10: ( ( 'cot' | 'COT' ) )
+            // InternalWreslEditorLexer.g:247:12: ( 'cot' | 'COT' )
+            {
+            // InternalWreslEditorLexer.g:247:12: ( 'cot' | 'COT' )
+            int alt16=2;
+            int LA16_0 = input.LA(1);
+
+            if ( (LA16_0=='c') ) {
+                alt16=1;
+            }
+            else if ( (LA16_0=='C') ) {
+                alt16=2;
+            }
+            else {
+                NoViableAltException nvae =
+                    new NoViableAltException("", 16, 0, input);
+
+                throw nvae;
+            }
+            switch (alt16) {
+                case 1 :
+                    // InternalWreslEditorLexer.g:247:13: 'cot'
+                    {
+                    match("cot"); 
+
+
+                    }
+                    break;
+                case 2 :
+                    // InternalWreslEditorLexer.g:247:19: 'COT'
+                    {
+                    match("COT"); 
+
+
+                    }
+                    break;
+
+            }
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "RULE_COT"
+
+    // $ANTLR start "RULE_ASIN"
+    public final void mRULE_ASIN() throws RecognitionException {
+        try {
+            int _type = RULE_ASIN;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // InternalWreslEditorLexer.g:249:11: ( ( 'asin' | 'ASIN' ) )
+            // InternalWreslEditorLexer.g:249:13: ( 'asin' | 'ASIN' )
+            {
+            // InternalWreslEditorLexer.g:249:13: ( 'asin' | 'ASIN' )
+            int alt17=2;
+            int LA17_0 = input.LA(1);
+
+            if ( (LA17_0=='a') ) {
+                alt17=1;
+            }
+            else if ( (LA17_0=='A') ) {
+                alt17=2;
+            }
+            else {
+                NoViableAltException nvae =
+                    new NoViableAltException("", 17, 0, input);
+
+                throw nvae;
+            }
+            switch (alt17) {
+                case 1 :
+                    // InternalWreslEditorLexer.g:249:14: 'asin'
+                    {
+                    match("asin"); 
+
+
+                    }
+                    break;
+                case 2 :
+                    // InternalWreslEditorLexer.g:249:21: 'ASIN'
+                    {
+                    match("ASIN"); 
+
+
+                    }
+                    break;
+
+            }
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "RULE_ASIN"
+
+    // $ANTLR start "RULE_ACOS"
+    public final void mRULE_ACOS() throws RecognitionException {
+        try {
+            int _type = RULE_ACOS;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // InternalWreslEditorLexer.g:251:11: ( ( 'acos' | 'ACOS' ) )
+            // InternalWreslEditorLexer.g:251:13: ( 'acos' | 'ACOS' )
+            {
+            // InternalWreslEditorLexer.g:251:13: ( 'acos' | 'ACOS' )
+            int alt18=2;
+            int LA18_0 = input.LA(1);
+
+            if ( (LA18_0=='a') ) {
+                alt18=1;
+            }
+            else if ( (LA18_0=='A') ) {
+                alt18=2;
+            }
+            else {
+                NoViableAltException nvae =
+                    new NoViableAltException("", 18, 0, input);
+
+                throw nvae;
+            }
+            switch (alt18) {
+                case 1 :
+                    // InternalWreslEditorLexer.g:251:14: 'acos'
+                    {
+                    match("acos"); 
+
+
+                    }
+                    break;
+                case 2 :
+                    // InternalWreslEditorLexer.g:251:21: 'ACOS'
+                    {
+                    match("ACOS"); 
+
+
+                    }
+                    break;
+
+            }
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "RULE_ACOS"
+
+    // $ANTLR start "RULE_ATAN"
+    public final void mRULE_ATAN() throws RecognitionException {
+        try {
+            int _type = RULE_ATAN;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // InternalWreslEditorLexer.g:253:11: ( ( 'atan' | 'ATAN' ) )
+            // InternalWreslEditorLexer.g:253:13: ( 'atan' | 'ATAN' )
+            {
+            // InternalWreslEditorLexer.g:253:13: ( 'atan' | 'ATAN' )
+            int alt19=2;
+            int LA19_0 = input.LA(1);
+
+            if ( (LA19_0=='a') ) {
+                alt19=1;
+            }
+            else if ( (LA19_0=='A') ) {
+                alt19=2;
+            }
+            else {
+                NoViableAltException nvae =
+                    new NoViableAltException("", 19, 0, input);
+
+                throw nvae;
+            }
+            switch (alt19) {
+                case 1 :
+                    // InternalWreslEditorLexer.g:253:14: 'atan'
+                    {
+                    match("atan"); 
+
+
+                    }
+                    break;
+                case 2 :
+                    // InternalWreslEditorLexer.g:253:21: 'ATAN'
+                    {
+                    match("ATAN"); 
+
+
+                    }
+                    break;
+
+            }
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "RULE_ATAN"
+
+    // $ANTLR start "RULE_ACOT"
+    public final void mRULE_ACOT() throws RecognitionException {
+        try {
+            int _type = RULE_ACOT;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // InternalWreslEditorLexer.g:255:11: ( ( 'acot' | 'ACOT' ) )
+            // InternalWreslEditorLexer.g:255:13: ( 'acot' | 'ACOT' )
+            {
+            // InternalWreslEditorLexer.g:255:13: ( 'acot' | 'ACOT' )
+            int alt20=2;
+            int LA20_0 = input.LA(1);
+
+            if ( (LA20_0=='a') ) {
+                alt20=1;
+            }
+            else if ( (LA20_0=='A') ) {
+                alt20=2;
+            }
+            else {
+                NoViableAltException nvae =
+                    new NoViableAltException("", 20, 0, input);
+
+                throw nvae;
+            }
+            switch (alt20) {
+                case 1 :
+                    // InternalWreslEditorLexer.g:255:14: 'acot'
+                    {
+                    match("acot"); 
+
+
+                    }
+                    break;
+                case 2 :
+                    // InternalWreslEditorLexer.g:255:21: 'ACOT'
+                    {
+                    match("ACOT"); 
+
+
+                    }
+                    break;
+
+            }
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "RULE_ACOT"
+
+    // $ANTLR start "RULE_FLOAT"
+    public final void mRULE_FLOAT() throws RecognitionException {
+        try {
+            int _type = RULE_FLOAT;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // InternalWreslEditorLexer.g:257:12: ( ( RULE_INT '.' ( RULE_INT )* | '.' ( RULE_INT )+ ) )
+            // InternalWreslEditorLexer.g:257:14: ( RULE_INT '.' ( RULE_INT )* | '.' ( RULE_INT )+ )
+            {
+            // InternalWreslEditorLexer.g:257:14: ( RULE_INT '.' ( RULE_INT )* | '.' ( RULE_INT )+ )
+            int alt23=2;
+            int LA23_0 = input.LA(1);
+
+            if ( ((LA23_0>='0' && LA23_0<='9')) ) {
+                alt23=1;
+            }
+            else if ( (LA23_0=='.') ) {
+                alt23=2;
+            }
+            else {
+                NoViableAltException nvae =
+                    new NoViableAltException("", 23, 0, input);
+
+                throw nvae;
+            }
+            switch (alt23) {
+                case 1 :
+                    // InternalWreslEditorLexer.g:257:15: RULE_INT '.' ( RULE_INT )*
                     {
                     mRULE_INT(); 
                     match('.'); 
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:241:28: ( RULE_INT )*
-                    loop13:
+                    // InternalWreslEditorLexer.g:257:28: ( RULE_INT )*
+                    loop21:
                     do {
-                        int alt13=2;
-                        int LA13_0 = input.LA(1);
+                        int alt21=2;
+                        int LA21_0 = input.LA(1);
 
-                        if ( ((LA13_0>='0' && LA13_0<='9')) ) {
-                            alt13=1;
+                        if ( ((LA21_0>='0' && LA21_0<='9')) ) {
+                            alt21=1;
                         }
 
 
-                        switch (alt13) {
+                        switch (alt21) {
                     	case 1 :
-                    	    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:241:28: RULE_INT
+                    	    // InternalWreslEditorLexer.g:257:28: RULE_INT
                     	    {
                     	    mRULE_INT(); 
 
@@ -6674,7 +7122,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     	    break;
 
                     	default :
-                    	    break loop13;
+                    	    break loop21;
                         }
                     } while (true);
 
@@ -6682,24 +7130,24 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:241:38: '.' ( RULE_INT )+
+                    // InternalWreslEditorLexer.g:257:38: '.' ( RULE_INT )+
                     {
                     match('.'); 
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:241:42: ( RULE_INT )+
-                    int cnt14=0;
-                    loop14:
+                    // InternalWreslEditorLexer.g:257:42: ( RULE_INT )+
+                    int cnt22=0;
+                    loop22:
                     do {
-                        int alt14=2;
-                        int LA14_0 = input.LA(1);
+                        int alt22=2;
+                        int LA22_0 = input.LA(1);
 
-                        if ( ((LA14_0>='0' && LA14_0<='9')) ) {
-                            alt14=1;
+                        if ( ((LA22_0>='0' && LA22_0<='9')) ) {
+                            alt22=1;
                         }
 
 
-                        switch (alt14) {
+                        switch (alt22) {
                     	case 1 :
-                    	    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:241:42: RULE_INT
+                    	    // InternalWreslEditorLexer.g:257:42: RULE_INT
                     	    {
                     	    mRULE_INT(); 
 
@@ -6707,12 +7155,12 @@ public class InternalWreslEditorLexer extends Lexer {
                     	    break;
 
                     	default :
-                    	    if ( cnt14 >= 1 ) break loop14;
+                    	    if ( cnt22 >= 1 ) break loop22;
                                 EarlyExitException eee =
-                                    new EarlyExitException(14, input);
+                                    new EarlyExitException(22, input);
                                 throw eee;
                         }
-                        cnt14++;
+                        cnt22++;
                     } while (true);
 
 
@@ -6737,38 +7185,38 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_AND;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:243:10: ( ( '.and.' | '.AND.' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:243:12: ( '.and.' | '.AND.' )
+            // InternalWreslEditorLexer.g:259:10: ( ( '.and.' | '.AND.' ) )
+            // InternalWreslEditorLexer.g:259:12: ( '.and.' | '.AND.' )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:243:12: ( '.and.' | '.AND.' )
-            int alt16=2;
-            int LA16_0 = input.LA(1);
+            // InternalWreslEditorLexer.g:259:12: ( '.and.' | '.AND.' )
+            int alt24=2;
+            int LA24_0 = input.LA(1);
 
-            if ( (LA16_0=='.') ) {
-                int LA16_1 = input.LA(2);
+            if ( (LA24_0=='.') ) {
+                int LA24_1 = input.LA(2);
 
-                if ( (LA16_1=='a') ) {
-                    alt16=1;
+                if ( (LA24_1=='a') ) {
+                    alt24=1;
                 }
-                else if ( (LA16_1=='A') ) {
-                    alt16=2;
+                else if ( (LA24_1=='A') ) {
+                    alt24=2;
                 }
                 else {
                     NoViableAltException nvae =
-                        new NoViableAltException("", 16, 1, input);
+                        new NoViableAltException("", 24, 1, input);
 
                     throw nvae;
                 }
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("", 16, 0, input);
+                    new NoViableAltException("", 24, 0, input);
 
                 throw nvae;
             }
-            switch (alt16) {
+            switch (alt24) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:243:13: '.and.'
+                    // InternalWreslEditorLexer.g:259:13: '.and.'
                     {
                     match(".and."); 
 
@@ -6776,7 +7224,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:243:21: '.AND.'
+                    // InternalWreslEditorLexer.g:259:21: '.AND.'
                     {
                     match(".AND."); 
 
@@ -6802,38 +7250,38 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_OR;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:245:9: ( ( '.or.' | '.OR.' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:245:11: ( '.or.' | '.OR.' )
+            // InternalWreslEditorLexer.g:261:9: ( ( '.or.' | '.OR.' ) )
+            // InternalWreslEditorLexer.g:261:11: ( '.or.' | '.OR.' )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:245:11: ( '.or.' | '.OR.' )
-            int alt17=2;
-            int LA17_0 = input.LA(1);
+            // InternalWreslEditorLexer.g:261:11: ( '.or.' | '.OR.' )
+            int alt25=2;
+            int LA25_0 = input.LA(1);
 
-            if ( (LA17_0=='.') ) {
-                int LA17_1 = input.LA(2);
+            if ( (LA25_0=='.') ) {
+                int LA25_1 = input.LA(2);
 
-                if ( (LA17_1=='o') ) {
-                    alt17=1;
+                if ( (LA25_1=='o') ) {
+                    alt25=1;
                 }
-                else if ( (LA17_1=='O') ) {
-                    alt17=2;
+                else if ( (LA25_1=='O') ) {
+                    alt25=2;
                 }
                 else {
                     NoViableAltException nvae =
-                        new NoViableAltException("", 17, 1, input);
+                        new NoViableAltException("", 25, 1, input);
 
                     throw nvae;
                 }
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("", 17, 0, input);
+                    new NoViableAltException("", 25, 0, input);
 
                 throw nvae;
             }
-            switch (alt17) {
+            switch (alt25) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:245:12: '.or.'
+                    // InternalWreslEditorLexer.g:261:12: '.or.'
                     {
                     match(".or."); 
 
@@ -6841,7 +7289,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:245:19: '.OR.'
+                    // InternalWreslEditorLexer.g:261:19: '.OR.'
                     {
                     match(".OR."); 
 
@@ -6867,38 +7315,38 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_NOT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:247:10: ( ( '.not.' | '.NOT.' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:247:12: ( '.not.' | '.NOT.' )
+            // InternalWreslEditorLexer.g:263:10: ( ( '.not.' | '.NOT.' ) )
+            // InternalWreslEditorLexer.g:263:12: ( '.not.' | '.NOT.' )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:247:12: ( '.not.' | '.NOT.' )
-            int alt18=2;
-            int LA18_0 = input.LA(1);
+            // InternalWreslEditorLexer.g:263:12: ( '.not.' | '.NOT.' )
+            int alt26=2;
+            int LA26_0 = input.LA(1);
 
-            if ( (LA18_0=='.') ) {
-                int LA18_1 = input.LA(2);
+            if ( (LA26_0=='.') ) {
+                int LA26_1 = input.LA(2);
 
-                if ( (LA18_1=='n') ) {
-                    alt18=1;
+                if ( (LA26_1=='n') ) {
+                    alt26=1;
                 }
-                else if ( (LA18_1=='N') ) {
-                    alt18=2;
+                else if ( (LA26_1=='N') ) {
+                    alt26=2;
                 }
                 else {
                     NoViableAltException nvae =
-                        new NoViableAltException("", 18, 1, input);
+                        new NoViableAltException("", 26, 1, input);
 
                     throw nvae;
                 }
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("", 18, 0, input);
+                    new NoViableAltException("", 26, 0, input);
 
                 throw nvae;
             }
-            switch (alt18) {
+            switch (alt26) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:247:13: '.not.'
+                    // InternalWreslEditorLexer.g:263:13: '.not.'
                     {
                     match(".not."); 
 
@@ -6906,7 +7354,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:247:21: '.NOT.'
+                    // InternalWreslEditorLexer.g:263:21: '.NOT.'
                     {
                     match(".NOT."); 
 
@@ -6932,8 +7380,8 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_ALWAYS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:249:13: ( 'always' )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:249:15: 'always'
+            // InternalWreslEditorLexer.g:265:13: ( 'always' )
+            // InternalWreslEditorLexer.g:265:15: 'always'
             {
             match("always"); 
 
@@ -6953,8 +7401,8 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_ORDER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:251:12: ( 'order' )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:251:14: 'order'
+            // InternalWreslEditorLexer.g:267:12: ( 'order' )
+            // InternalWreslEditorLexer.g:267:14: 'order'
             {
             match("order"); 
 
@@ -6974,24 +7422,24 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:253:13: ( '\\'' (~ ( ( '\\'' | '\\n' | '\\r' ) ) )* '\\'' )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:253:15: '\\'' (~ ( ( '\\'' | '\\n' | '\\r' ) ) )* '\\''
+            // InternalWreslEditorLexer.g:269:13: ( '\\'' (~ ( ( '\\'' | '\\n' | '\\r' ) ) )* '\\'' )
+            // InternalWreslEditorLexer.g:269:15: '\\'' (~ ( ( '\\'' | '\\n' | '\\r' ) ) )* '\\''
             {
             match('\''); 
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:253:20: (~ ( ( '\\'' | '\\n' | '\\r' ) ) )*
-            loop19:
+            // InternalWreslEditorLexer.g:269:20: (~ ( ( '\\'' | '\\n' | '\\r' ) ) )*
+            loop27:
             do {
-                int alt19=2;
-                int LA19_0 = input.LA(1);
+                int alt27=2;
+                int LA27_0 = input.LA(1);
 
-                if ( ((LA19_0>='\u0000' && LA19_0<='\t')||(LA19_0>='\u000B' && LA19_0<='\f')||(LA19_0>='\u000E' && LA19_0<='&')||(LA19_0>='(' && LA19_0<='\uFFFF')) ) {
-                    alt19=1;
+                if ( ((LA27_0>='\u0000' && LA27_0<='\t')||(LA27_0>='\u000B' && LA27_0<='\f')||(LA27_0>='\u000E' && LA27_0<='&')||(LA27_0>='(' && LA27_0<='\uFFFF')) ) {
+                    alt27=1;
                 }
 
 
-                switch (alt19) {
+                switch (alt27) {
             	case 1 :
-            	    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:253:20: ~ ( ( '\\'' | '\\n' | '\\r' ) )
+            	    // InternalWreslEditorLexer.g:269:20: ~ ( ( '\\'' | '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -7007,7 +7455,7 @@ public class InternalWreslEditorLexer extends Lexer {
             	    break;
 
             	default :
-            	    break loop19;
+            	    break loop27;
                 }
             } while (true);
 
@@ -7028,24 +7476,24 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:255:17: ( '!' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:255:19: '!' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // InternalWreslEditorLexer.g:271:17: ( '!' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // InternalWreslEditorLexer.g:271:19: '!' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match('!'); 
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:255:23: (~ ( ( '\\n' | '\\r' ) ) )*
-            loop20:
+            // InternalWreslEditorLexer.g:271:23: (~ ( ( '\\n' | '\\r' ) ) )*
+            loop28:
             do {
-                int alt20=2;
-                int LA20_0 = input.LA(1);
+                int alt28=2;
+                int LA28_0 = input.LA(1);
 
-                if ( ((LA20_0>='\u0000' && LA20_0<='\t')||(LA20_0>='\u000B' && LA20_0<='\f')||(LA20_0>='\u000E' && LA20_0<='\uFFFF')) ) {
-                    alt20=1;
+                if ( ((LA28_0>='\u0000' && LA28_0<='\t')||(LA28_0>='\u000B' && LA28_0<='\f')||(LA28_0>='\u000E' && LA28_0<='\uFFFF')) ) {
+                    alt28=1;
                 }
 
 
-                switch (alt20) {
+                switch (alt28) {
             	case 1 :
-            	    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:255:23: ~ ( ( '\\n' | '\\r' ) )
+            	    // InternalWreslEditorLexer.g:271:23: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -7061,31 +7509,31 @@ public class InternalWreslEditorLexer extends Lexer {
             	    break;
 
             	default :
-            	    break loop20;
+            	    break loop28;
                 }
             } while (true);
 
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:255:39: ( ( '\\r' )? '\\n' )?
-            int alt22=2;
-            int LA22_0 = input.LA(1);
+            // InternalWreslEditorLexer.g:271:39: ( ( '\\r' )? '\\n' )?
+            int alt30=2;
+            int LA30_0 = input.LA(1);
 
-            if ( (LA22_0=='\n'||LA22_0=='\r') ) {
-                alt22=1;
+            if ( (LA30_0=='\n'||LA30_0=='\r') ) {
+                alt30=1;
             }
-            switch (alt22) {
+            switch (alt30) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:255:40: ( '\\r' )? '\\n'
+                    // InternalWreslEditorLexer.g:271:40: ( '\\r' )? '\\n'
                     {
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:255:40: ( '\\r' )?
-                    int alt21=2;
-                    int LA21_0 = input.LA(1);
+                    // InternalWreslEditorLexer.g:271:40: ( '\\r' )?
+                    int alt29=2;
+                    int LA29_0 = input.LA(1);
 
-                    if ( (LA21_0=='\r') ) {
-                        alt21=1;
+                    if ( (LA29_0=='\r') ) {
+                        alt29=1;
                     }
-                    switch (alt21) {
+                    switch (alt29) {
                         case 1 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:255:40: '\\r'
+                            // InternalWreslEditorLexer.g:271:40: '\\r'
                             {
                             match('\r'); 
 
@@ -7117,8 +7565,8 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:257:9: ( ( 'a' .. 'z' | 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:257:11: ( 'a' .. 'z' | 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // InternalWreslEditorLexer.g:273:9: ( ( 'a' .. 'z' | 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // InternalWreslEditorLexer.g:273:11: ( 'a' .. 'z' | 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
@@ -7129,20 +7577,20 @@ public class InternalWreslEditorLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:257:31: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
-            loop23:
+            // InternalWreslEditorLexer.g:273:31: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            loop31:
             do {
-                int alt23=2;
-                int LA23_0 = input.LA(1);
+                int alt31=2;
+                int LA31_0 = input.LA(1);
 
-                if ( ((LA23_0>='0' && LA23_0<='9')||(LA23_0>='A' && LA23_0<='Z')||LA23_0=='_'||(LA23_0>='a' && LA23_0<='z')) ) {
-                    alt23=1;
+                if ( ((LA31_0>='0' && LA31_0<='9')||(LA31_0>='A' && LA31_0<='Z')||LA31_0=='_'||(LA31_0>='a' && LA31_0<='z')) ) {
+                    alt31=1;
                 }
 
 
-                switch (alt23) {
+                switch (alt31) {
             	case 1 :
-            	    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:
+            	    // InternalWreslEditorLexer.g:
             	    {
             	    if ( (input.LA(1)>='0' && input.LA(1)<='9')||(input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
             	        input.consume();
@@ -7158,7 +7606,7 @@ public class InternalWreslEditorLexer extends Lexer {
             	    break;
 
             	default :
-            	    break loop23;
+            	    break loop31;
                 }
             } while (true);
 
@@ -7178,24 +7626,24 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:259:10: ( ( '0' .. '9' )+ )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:259:12: ( '0' .. '9' )+
+            // InternalWreslEditorLexer.g:275:10: ( ( '0' .. '9' )+ )
+            // InternalWreslEditorLexer.g:275:12: ( '0' .. '9' )+
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:259:12: ( '0' .. '9' )+
-            int cnt24=0;
-            loop24:
+            // InternalWreslEditorLexer.g:275:12: ( '0' .. '9' )+
+            int cnt32=0;
+            loop32:
             do {
-                int alt24=2;
-                int LA24_0 = input.LA(1);
+                int alt32=2;
+                int LA32_0 = input.LA(1);
 
-                if ( ((LA24_0>='0' && LA24_0<='9')) ) {
-                    alt24=1;
+                if ( ((LA32_0>='0' && LA32_0<='9')) ) {
+                    alt32=1;
                 }
 
 
-                switch (alt24) {
+                switch (alt32) {
             	case 1 :
-            	    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:259:13: '0' .. '9'
+            	    // InternalWreslEditorLexer.g:275:13: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -7203,12 +7651,12 @@ public class InternalWreslEditorLexer extends Lexer {
             	    break;
 
             	default :
-            	    if ( cnt24 >= 1 ) break loop24;
+            	    if ( cnt32 >= 1 ) break loop32;
                         EarlyExitException eee =
-                            new EarlyExitException(24, input);
+                            new EarlyExitException(32, input);
                         throw eee;
                 }
-                cnt24++;
+                cnt32++;
             } while (true);
 
 
@@ -7227,37 +7675,37 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:261:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:261:19: '/*' ( options {greedy=false; } : . )* '*/'
+            // InternalWreslEditorLexer.g:277:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            // InternalWreslEditorLexer.g:277:19: '/*' ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:261:24: ( options {greedy=false; } : . )*
-            loop25:
+            // InternalWreslEditorLexer.g:277:24: ( options {greedy=false; } : . )*
+            loop33:
             do {
-                int alt25=2;
-                int LA25_0 = input.LA(1);
+                int alt33=2;
+                int LA33_0 = input.LA(1);
 
-                if ( (LA25_0=='*') ) {
-                    int LA25_1 = input.LA(2);
+                if ( (LA33_0=='*') ) {
+                    int LA33_1 = input.LA(2);
 
-                    if ( (LA25_1=='/') ) {
-                        alt25=2;
+                    if ( (LA33_1=='/') ) {
+                        alt33=2;
                     }
-                    else if ( ((LA25_1>='\u0000' && LA25_1<='.')||(LA25_1>='0' && LA25_1<='\uFFFF')) ) {
-                        alt25=1;
+                    else if ( ((LA33_1>='\u0000' && LA33_1<='.')||(LA33_1>='0' && LA33_1<='\uFFFF')) ) {
+                        alt33=1;
                     }
 
 
                 }
-                else if ( ((LA25_0>='\u0000' && LA25_0<=')')||(LA25_0>='+' && LA25_0<='\uFFFF')) ) {
-                    alt25=1;
+                else if ( ((LA33_0>='\u0000' && LA33_0<=')')||(LA33_0>='+' && LA33_0<='\uFFFF')) ) {
+                    alt33=1;
                 }
 
 
-                switch (alt25) {
+                switch (alt33) {
             	case 1 :
-            	    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:261:52: .
+            	    // InternalWreslEditorLexer.g:277:52: .
             	    {
             	    matchAny(); 
 
@@ -7265,7 +7713,7 @@ public class InternalWreslEditorLexer extends Lexer {
             	    break;
 
             	default :
-            	    break loop25;
+            	    break loop33;
                 }
             } while (true);
 
@@ -7287,24 +7735,24 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:263:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:263:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalWreslEditorLexer.g:279:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // InternalWreslEditorLexer.g:279:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:263:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
-            int cnt26=0;
-            loop26:
+            // InternalWreslEditorLexer.g:279:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            int cnt34=0;
+            loop34:
             do {
-                int alt26=2;
-                int LA26_0 = input.LA(1);
+                int alt34=2;
+                int LA34_0 = input.LA(1);
 
-                if ( ((LA26_0>='\t' && LA26_0<='\n')||LA26_0=='\r'||LA26_0==' ') ) {
-                    alt26=1;
+                if ( ((LA34_0>='\t' && LA34_0<='\n')||LA34_0=='\r'||LA34_0==' ') ) {
+                    alt34=1;
                 }
 
 
-                switch (alt26) {
+                switch (alt34) {
             	case 1 :
-            	    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:
+            	    // InternalWreslEditorLexer.g:
             	    {
             	    if ( (input.LA(1)>='\t' && input.LA(1)<='\n')||input.LA(1)=='\r'||input.LA(1)==' ' ) {
             	        input.consume();
@@ -7320,12 +7768,12 @@ public class InternalWreslEditorLexer extends Lexer {
             	    break;
 
             	default :
-            	    if ( cnt26 >= 1 ) break loop26;
+            	    if ( cnt34 >= 1 ) break loop34;
                         EarlyExitException eee =
-                            new EarlyExitException(26, input);
+                            new EarlyExitException(34, input);
                         throw eee;
                 }
-                cnt26++;
+                cnt34++;
             } while (true);
 
 
@@ -7344,8 +7792,8 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:265:16: ( . )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:265:18: .
+            // InternalWreslEditorLexer.g:281:16: ( . )
+            // InternalWreslEditorLexer.g:281:18: .
             {
             matchAny(); 
 
@@ -7360,866 +7808,922 @@ public class InternalWreslEditorLexer extends Lexer {
     // $ANTLR end "RULE_ANY_OTHER"
 
     public void mTokens() throws RecognitionException {
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:8: ( KEYWORD_98 | KEYWORD_97 | KEYWORD_96 | KEYWORD_91 | KEYWORD_92 | KEYWORD_93 | KEYWORD_94 | KEYWORD_95 | KEYWORD_88 | KEYWORD_89 | KEYWORD_90 | KEYWORD_68 | KEYWORD_69 | KEYWORD_70 | KEYWORD_71 | KEYWORD_72 | KEYWORD_73 | KEYWORD_74 | KEYWORD_75 | KEYWORD_76 | KEYWORD_77 | KEYWORD_78 | KEYWORD_79 | KEYWORD_80 | KEYWORD_81 | KEYWORD_82 | KEYWORD_83 | KEYWORD_84 | KEYWORD_85 | KEYWORD_86 | KEYWORD_87 | KEYWORD_63 | KEYWORD_64 | KEYWORD_65 | KEYWORD_66 | KEYWORD_67 | KEYWORD_51 | KEYWORD_52 | KEYWORD_53 | KEYWORD_54 | KEYWORD_55 | KEYWORD_56 | KEYWORD_57 | KEYWORD_58 | KEYWORD_59 | KEYWORD_60 | KEYWORD_61 | KEYWORD_62 | KEYWORD_42 | KEYWORD_43 | KEYWORD_44 | KEYWORD_45 | KEYWORD_46 | KEYWORD_47 | KEYWORD_48 | KEYWORD_49 | KEYWORD_50 | KEYWORD_23 | KEYWORD_24 | KEYWORD_25 | KEYWORD_26 | KEYWORD_27 | KEYWORD_28 | KEYWORD_29 | KEYWORD_30 | KEYWORD_31 | KEYWORD_32 | KEYWORD_33 | KEYWORD_34 | KEYWORD_35 | KEYWORD_36 | KEYWORD_37 | KEYWORD_38 | KEYWORD_39 | KEYWORD_40 | KEYWORD_41 | KEYWORD_17 | KEYWORD_18 | KEYWORD_19 | KEYWORD_20 | KEYWORD_21 | KEYWORD_22 | KEYWORD_1 | KEYWORD_2 | KEYWORD_3 | KEYWORD_4 | KEYWORD_5 | KEYWORD_6 | KEYWORD_7 | KEYWORD_8 | KEYWORD_9 | KEYWORD_10 | KEYWORD_11 | KEYWORD_12 | KEYWORD_13 | KEYWORD_14 | KEYWORD_15 | KEYWORD_16 | RULE_IF | RULE_ELSEIF | RULE_ELSE | RULE_RANGE | RULE_MIN | RULE_MAX | RULE_MOD | RULE_INTFUNC | RULE_ABS | RULE_ROUND | RULE_POW | RULE_LOG | RULE_FLOAT | RULE_AND | RULE_OR | RULE_NOT | RULE_ALWAYS | RULE_ORDER | RULE_STRING | RULE_SL_COMMENT | RULE_ID | RULE_INT | RULE_ML_COMMENT | RULE_WS | RULE_ANY_OTHER )
-        int alt27=123;
-        alt27 = dfa27.predict(input);
-        switch (alt27) {
+        // InternalWreslEditorLexer.g:1:8: ( Daysintimestep | Daysinmonth | Timeseries | Condition | Constrain | Objective | Unbounded | Wateryear | External | Sequence | Timestep | Declare | Cfs_taf | Convert | Include | Initial_1 | Integer | Penalty | Prevapr | Prevaug | Prevdec | Prevfeb | Prevjan | Prevjul | Prevjun | Prevmar | Prevmay | Prevnov | Prevoct | Prevsep | Taf_cfs | Af_cfs | Cfs_af | Daysin | Define | Select | Alias | Const_1 | Given | Group | Local | Lower | Model | Month | Units | Upper | Value | Where | Dll | DAY | MON | Case | Dvar_1 | From | Goal | Kind | Svar_1 | Apr | Aug | Day | Dec | F90_1 | Feb | Jan | Jul | Jun | Lhs | Mar | May | Nov | Oct | Rhs | Sep | Std | Sum | Use | M | SolidusEqualsSign | LessThanSignEqualsSign | EqualsSignEqualsSign | GreaterThanSignEqualsSign | I_1 | LeftParenthesis | RightParenthesis | Asterisk | PlusSign | Comma | HyphenMinus | Solidus | Colon | LessThanSign | EqualsSign | GreaterThanSign | LeftSquareBracket | RightSquareBracket | I | LeftCurlyBracket | RightCurlyBracket | RULE_IF | RULE_ELSEIF | RULE_ELSE | RULE_RANGE | RULE_MIN | RULE_MAX | RULE_MOD | RULE_INTFUNC | RULE_ABS | RULE_ROUND | RULE_POW | RULE_LOG | RULE_SIN | RULE_COS | RULE_TAN | RULE_COT | RULE_ASIN | RULE_ACOS | RULE_ATAN | RULE_ACOT | RULE_FLOAT | RULE_AND | RULE_OR | RULE_NOT | RULE_ALWAYS | RULE_ORDER | RULE_STRING | RULE_SL_COMMENT | RULE_ID | RULE_INT | RULE_ML_COMMENT | RULE_WS | RULE_ANY_OTHER )
+        int alt35=131;
+        alt35 = dfa35.predict(input);
+        switch (alt35) {
             case 1 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:10: KEYWORD_98
+                // InternalWreslEditorLexer.g:1:10: Daysintimestep
                 {
-                mKEYWORD_98(); 
+                mDaysintimestep(); 
 
                 }
                 break;
             case 2 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:21: KEYWORD_97
+                // InternalWreslEditorLexer.g:1:25: Daysinmonth
                 {
-                mKEYWORD_97(); 
+                mDaysinmonth(); 
 
                 }
                 break;
             case 3 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:32: KEYWORD_96
+                // InternalWreslEditorLexer.g:1:37: Timeseries
                 {
-                mKEYWORD_96(); 
+                mTimeseries(); 
 
                 }
                 break;
             case 4 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:43: KEYWORD_91
+                // InternalWreslEditorLexer.g:1:48: Condition
                 {
-                mKEYWORD_91(); 
+                mCondition(); 
 
                 }
                 break;
             case 5 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:54: KEYWORD_92
+                // InternalWreslEditorLexer.g:1:58: Constrain
                 {
-                mKEYWORD_92(); 
+                mConstrain(); 
 
                 }
                 break;
             case 6 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:65: KEYWORD_93
+                // InternalWreslEditorLexer.g:1:68: Objective
                 {
-                mKEYWORD_93(); 
+                mObjective(); 
 
                 }
                 break;
             case 7 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:76: KEYWORD_94
+                // InternalWreslEditorLexer.g:1:78: Unbounded
                 {
-                mKEYWORD_94(); 
+                mUnbounded(); 
 
                 }
                 break;
             case 8 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:87: KEYWORD_95
+                // InternalWreslEditorLexer.g:1:88: Wateryear
                 {
-                mKEYWORD_95(); 
+                mWateryear(); 
 
                 }
                 break;
             case 9 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:98: KEYWORD_88
+                // InternalWreslEditorLexer.g:1:98: External
                 {
-                mKEYWORD_88(); 
+                mExternal(); 
 
                 }
                 break;
             case 10 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:109: KEYWORD_89
+                // InternalWreslEditorLexer.g:1:107: Sequence
                 {
-                mKEYWORD_89(); 
+                mSequence(); 
 
                 }
                 break;
             case 11 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:120: KEYWORD_90
+                // InternalWreslEditorLexer.g:1:116: Timestep
                 {
-                mKEYWORD_90(); 
+                mTimestep(); 
 
                 }
                 break;
             case 12 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:131: KEYWORD_68
+                // InternalWreslEditorLexer.g:1:125: Declare
                 {
-                mKEYWORD_68(); 
+                mDeclare(); 
 
                 }
                 break;
             case 13 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:142: KEYWORD_69
+                // InternalWreslEditorLexer.g:1:133: Cfs_taf
                 {
-                mKEYWORD_69(); 
+                mCfs_taf(); 
 
                 }
                 break;
             case 14 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:153: KEYWORD_70
+                // InternalWreslEditorLexer.g:1:141: Convert
                 {
-                mKEYWORD_70(); 
+                mConvert(); 
 
                 }
                 break;
             case 15 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:164: KEYWORD_71
+                // InternalWreslEditorLexer.g:1:149: Include
                 {
-                mKEYWORD_71(); 
+                mInclude(); 
 
                 }
                 break;
             case 16 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:175: KEYWORD_72
+                // InternalWreslEditorLexer.g:1:157: Initial_1
                 {
-                mKEYWORD_72(); 
+                mInitial_1(); 
 
                 }
                 break;
             case 17 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:186: KEYWORD_73
+                // InternalWreslEditorLexer.g:1:167: Integer
                 {
-                mKEYWORD_73(); 
+                mInteger(); 
 
                 }
                 break;
             case 18 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:197: KEYWORD_74
+                // InternalWreslEditorLexer.g:1:175: Penalty
                 {
-                mKEYWORD_74(); 
+                mPenalty(); 
 
                 }
                 break;
             case 19 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:208: KEYWORD_75
+                // InternalWreslEditorLexer.g:1:183: Prevapr
                 {
-                mKEYWORD_75(); 
+                mPrevapr(); 
 
                 }
                 break;
             case 20 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:219: KEYWORD_76
+                // InternalWreslEditorLexer.g:1:191: Prevaug
                 {
-                mKEYWORD_76(); 
+                mPrevaug(); 
 
                 }
                 break;
             case 21 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:230: KEYWORD_77
+                // InternalWreslEditorLexer.g:1:199: Prevdec
                 {
-                mKEYWORD_77(); 
+                mPrevdec(); 
 
                 }
                 break;
             case 22 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:241: KEYWORD_78
+                // InternalWreslEditorLexer.g:1:207: Prevfeb
                 {
-                mKEYWORD_78(); 
+                mPrevfeb(); 
 
                 }
                 break;
             case 23 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:252: KEYWORD_79
+                // InternalWreslEditorLexer.g:1:215: Prevjan
                 {
-                mKEYWORD_79(); 
+                mPrevjan(); 
 
                 }
                 break;
             case 24 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:263: KEYWORD_80
+                // InternalWreslEditorLexer.g:1:223: Prevjul
                 {
-                mKEYWORD_80(); 
+                mPrevjul(); 
 
                 }
                 break;
             case 25 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:274: KEYWORD_81
+                // InternalWreslEditorLexer.g:1:231: Prevjun
                 {
-                mKEYWORD_81(); 
+                mPrevjun(); 
 
                 }
                 break;
             case 26 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:285: KEYWORD_82
+                // InternalWreslEditorLexer.g:1:239: Prevmar
                 {
-                mKEYWORD_82(); 
+                mPrevmar(); 
 
                 }
                 break;
             case 27 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:296: KEYWORD_83
+                // InternalWreslEditorLexer.g:1:247: Prevmay
                 {
-                mKEYWORD_83(); 
+                mPrevmay(); 
 
                 }
                 break;
             case 28 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:307: KEYWORD_84
+                // InternalWreslEditorLexer.g:1:255: Prevnov
                 {
-                mKEYWORD_84(); 
+                mPrevnov(); 
 
                 }
                 break;
             case 29 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:318: KEYWORD_85
+                // InternalWreslEditorLexer.g:1:263: Prevoct
                 {
-                mKEYWORD_85(); 
+                mPrevoct(); 
 
                 }
                 break;
             case 30 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:329: KEYWORD_86
+                // InternalWreslEditorLexer.g:1:271: Prevsep
                 {
-                mKEYWORD_86(); 
+                mPrevsep(); 
 
                 }
                 break;
             case 31 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:340: KEYWORD_87
+                // InternalWreslEditorLexer.g:1:279: Taf_cfs
                 {
-                mKEYWORD_87(); 
+                mTaf_cfs(); 
 
                 }
                 break;
             case 32 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:351: KEYWORD_63
+                // InternalWreslEditorLexer.g:1:287: Af_cfs
                 {
-                mKEYWORD_63(); 
+                mAf_cfs(); 
 
                 }
                 break;
             case 33 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:362: KEYWORD_64
+                // InternalWreslEditorLexer.g:1:294: Cfs_af
                 {
-                mKEYWORD_64(); 
+                mCfs_af(); 
 
                 }
                 break;
             case 34 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:373: KEYWORD_65
+                // InternalWreslEditorLexer.g:1:301: Daysin
                 {
-                mKEYWORD_65(); 
+                mDaysin(); 
 
                 }
                 break;
             case 35 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:384: KEYWORD_66
+                // InternalWreslEditorLexer.g:1:308: Define
                 {
-                mKEYWORD_66(); 
+                mDefine(); 
 
                 }
                 break;
             case 36 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:395: KEYWORD_67
+                // InternalWreslEditorLexer.g:1:315: Select
                 {
-                mKEYWORD_67(); 
+                mSelect(); 
 
                 }
                 break;
             case 37 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:406: KEYWORD_51
+                // InternalWreslEditorLexer.g:1:322: Alias
                 {
-                mKEYWORD_51(); 
+                mAlias(); 
 
                 }
                 break;
             case 38 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:417: KEYWORD_52
+                // InternalWreslEditorLexer.g:1:328: Const_1
                 {
-                mKEYWORD_52(); 
+                mConst_1(); 
 
                 }
                 break;
             case 39 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:428: KEYWORD_53
+                // InternalWreslEditorLexer.g:1:336: Given
                 {
-                mKEYWORD_53(); 
+                mGiven(); 
 
                 }
                 break;
             case 40 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:439: KEYWORD_54
+                // InternalWreslEditorLexer.g:1:342: Group
                 {
-                mKEYWORD_54(); 
+                mGroup(); 
 
                 }
                 break;
             case 41 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:450: KEYWORD_55
+                // InternalWreslEditorLexer.g:1:348: Local
                 {
-                mKEYWORD_55(); 
+                mLocal(); 
 
                 }
                 break;
             case 42 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:461: KEYWORD_56
+                // InternalWreslEditorLexer.g:1:354: Lower
                 {
-                mKEYWORD_56(); 
+                mLower(); 
 
                 }
                 break;
             case 43 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:472: KEYWORD_57
+                // InternalWreslEditorLexer.g:1:360: Model
                 {
-                mKEYWORD_57(); 
+                mModel(); 
 
                 }
                 break;
             case 44 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:483: KEYWORD_58
+                // InternalWreslEditorLexer.g:1:366: Month
                 {
-                mKEYWORD_58(); 
+                mMonth(); 
 
                 }
                 break;
             case 45 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:494: KEYWORD_59
+                // InternalWreslEditorLexer.g:1:372: Units
                 {
-                mKEYWORD_59(); 
+                mUnits(); 
 
                 }
                 break;
             case 46 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:505: KEYWORD_60
+                // InternalWreslEditorLexer.g:1:378: Upper
                 {
-                mKEYWORD_60(); 
+                mUpper(); 
 
                 }
                 break;
             case 47 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:516: KEYWORD_61
+                // InternalWreslEditorLexer.g:1:384: Value
                 {
-                mKEYWORD_61(); 
+                mValue(); 
 
                 }
                 break;
             case 48 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:527: KEYWORD_62
+                // InternalWreslEditorLexer.g:1:390: Where
                 {
-                mKEYWORD_62(); 
+                mWhere(); 
 
                 }
                 break;
             case 49 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:538: KEYWORD_42
+                // InternalWreslEditorLexer.g:1:396: Dll
                 {
-                mKEYWORD_42(); 
+                mDll(); 
 
                 }
                 break;
             case 50 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:549: KEYWORD_43
+                // InternalWreslEditorLexer.g:1:400: DAY
                 {
-                mKEYWORD_43(); 
+                mDAY(); 
 
                 }
                 break;
             case 51 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:560: KEYWORD_44
+                // InternalWreslEditorLexer.g:1:404: MON
                 {
-                mKEYWORD_44(); 
+                mMON(); 
 
                 }
                 break;
             case 52 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:571: KEYWORD_45
+                // InternalWreslEditorLexer.g:1:408: Case
                 {
-                mKEYWORD_45(); 
+                mCase(); 
 
                 }
                 break;
             case 53 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:582: KEYWORD_46
+                // InternalWreslEditorLexer.g:1:413: Dvar_1
                 {
-                mKEYWORD_46(); 
+                mDvar_1(); 
 
                 }
                 break;
             case 54 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:593: KEYWORD_47
+                // InternalWreslEditorLexer.g:1:420: From
                 {
-                mKEYWORD_47(); 
+                mFrom(); 
 
                 }
                 break;
             case 55 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:604: KEYWORD_48
+                // InternalWreslEditorLexer.g:1:425: Goal
                 {
-                mKEYWORD_48(); 
+                mGoal(); 
 
                 }
                 break;
             case 56 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:615: KEYWORD_49
+                // InternalWreslEditorLexer.g:1:430: Kind
                 {
-                mKEYWORD_49(); 
+                mKind(); 
 
                 }
                 break;
             case 57 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:626: KEYWORD_50
+                // InternalWreslEditorLexer.g:1:435: Svar_1
                 {
-                mKEYWORD_50(); 
+                mSvar_1(); 
 
                 }
                 break;
             case 58 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:637: KEYWORD_23
+                // InternalWreslEditorLexer.g:1:442: Apr
                 {
-                mKEYWORD_23(); 
+                mApr(); 
 
                 }
                 break;
             case 59 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:648: KEYWORD_24
+                // InternalWreslEditorLexer.g:1:446: Aug
                 {
-                mKEYWORD_24(); 
+                mAug(); 
 
                 }
                 break;
             case 60 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:659: KEYWORD_25
+                // InternalWreslEditorLexer.g:1:450: Day
                 {
-                mKEYWORD_25(); 
+                mDay(); 
 
                 }
                 break;
             case 61 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:670: KEYWORD_26
+                // InternalWreslEditorLexer.g:1:454: Dec
                 {
-                mKEYWORD_26(); 
+                mDec(); 
 
                 }
                 break;
             case 62 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:681: KEYWORD_27
+                // InternalWreslEditorLexer.g:1:458: F90_1
                 {
-                mKEYWORD_27(); 
+                mF90_1(); 
 
                 }
                 break;
             case 63 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:692: KEYWORD_28
+                // InternalWreslEditorLexer.g:1:464: Feb
                 {
-                mKEYWORD_28(); 
+                mFeb(); 
 
                 }
                 break;
             case 64 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:703: KEYWORD_29
+                // InternalWreslEditorLexer.g:1:468: Jan
                 {
-                mKEYWORD_29(); 
+                mJan(); 
 
                 }
                 break;
             case 65 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:714: KEYWORD_30
+                // InternalWreslEditorLexer.g:1:472: Jul
                 {
-                mKEYWORD_30(); 
+                mJul(); 
 
                 }
                 break;
             case 66 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:725: KEYWORD_31
+                // InternalWreslEditorLexer.g:1:476: Jun
                 {
-                mKEYWORD_31(); 
+                mJun(); 
 
                 }
                 break;
             case 67 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:736: KEYWORD_32
+                // InternalWreslEditorLexer.g:1:480: Lhs
                 {
-                mKEYWORD_32(); 
+                mLhs(); 
 
                 }
                 break;
             case 68 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:747: KEYWORD_33
+                // InternalWreslEditorLexer.g:1:484: Mar
                 {
-                mKEYWORD_33(); 
+                mMar(); 
 
                 }
                 break;
             case 69 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:758: KEYWORD_34
+                // InternalWreslEditorLexer.g:1:488: May
                 {
-                mKEYWORD_34(); 
+                mMay(); 
 
                 }
                 break;
             case 70 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:769: KEYWORD_35
+                // InternalWreslEditorLexer.g:1:492: Nov
                 {
-                mKEYWORD_35(); 
+                mNov(); 
 
                 }
                 break;
             case 71 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:780: KEYWORD_36
+                // InternalWreslEditorLexer.g:1:496: Oct
                 {
-                mKEYWORD_36(); 
+                mOct(); 
 
                 }
                 break;
             case 72 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:791: KEYWORD_37
+                // InternalWreslEditorLexer.g:1:500: Rhs
                 {
-                mKEYWORD_37(); 
+                mRhs(); 
 
                 }
                 break;
             case 73 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:802: KEYWORD_38
+                // InternalWreslEditorLexer.g:1:504: Sep
                 {
-                mKEYWORD_38(); 
+                mSep(); 
 
                 }
                 break;
             case 74 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:813: KEYWORD_39
+                // InternalWreslEditorLexer.g:1:508: Std
                 {
-                mKEYWORD_39(); 
+                mStd(); 
 
                 }
                 break;
             case 75 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:824: KEYWORD_40
+                // InternalWreslEditorLexer.g:1:512: Sum
                 {
-                mKEYWORD_40(); 
+                mSum(); 
 
                 }
                 break;
             case 76 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:835: KEYWORD_41
+                // InternalWreslEditorLexer.g:1:516: Use
                 {
-                mKEYWORD_41(); 
+                mUse(); 
 
                 }
                 break;
             case 77 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:846: KEYWORD_17
+                // InternalWreslEditorLexer.g:1:520: M
                 {
-                mKEYWORD_17(); 
+                mM(); 
 
                 }
                 break;
             case 78 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:857: KEYWORD_18
+                // InternalWreslEditorLexer.g:1:522: SolidusEqualsSign
                 {
-                mKEYWORD_18(); 
+                mSolidusEqualsSign(); 
 
                 }
                 break;
             case 79 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:868: KEYWORD_19
+                // InternalWreslEditorLexer.g:1:540: LessThanSignEqualsSign
                 {
-                mKEYWORD_19(); 
+                mLessThanSignEqualsSign(); 
 
                 }
                 break;
             case 80 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:879: KEYWORD_20
+                // InternalWreslEditorLexer.g:1:563: EqualsSignEqualsSign
                 {
-                mKEYWORD_20(); 
+                mEqualsSignEqualsSign(); 
 
                 }
                 break;
             case 81 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:890: KEYWORD_21
+                // InternalWreslEditorLexer.g:1:584: GreaterThanSignEqualsSign
                 {
-                mKEYWORD_21(); 
+                mGreaterThanSignEqualsSign(); 
 
                 }
                 break;
             case 82 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:901: KEYWORD_22
+                // InternalWreslEditorLexer.g:1:610: I_1
                 {
-                mKEYWORD_22(); 
+                mI_1(); 
 
                 }
                 break;
             case 83 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:912: KEYWORD_1
+                // InternalWreslEditorLexer.g:1:614: LeftParenthesis
                 {
-                mKEYWORD_1(); 
+                mLeftParenthesis(); 
 
                 }
                 break;
             case 84 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:922: KEYWORD_2
+                // InternalWreslEditorLexer.g:1:630: RightParenthesis
                 {
-                mKEYWORD_2(); 
+                mRightParenthesis(); 
 
                 }
                 break;
             case 85 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:932: KEYWORD_3
+                // InternalWreslEditorLexer.g:1:647: Asterisk
                 {
-                mKEYWORD_3(); 
+                mAsterisk(); 
 
                 }
                 break;
             case 86 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:942: KEYWORD_4
+                // InternalWreslEditorLexer.g:1:656: PlusSign
                 {
-                mKEYWORD_4(); 
+                mPlusSign(); 
 
                 }
                 break;
             case 87 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:952: KEYWORD_5
+                // InternalWreslEditorLexer.g:1:665: Comma
                 {
-                mKEYWORD_5(); 
+                mComma(); 
 
                 }
                 break;
             case 88 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:962: KEYWORD_6
+                // InternalWreslEditorLexer.g:1:671: HyphenMinus
                 {
-                mKEYWORD_6(); 
+                mHyphenMinus(); 
 
                 }
                 break;
             case 89 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:972: KEYWORD_7
+                // InternalWreslEditorLexer.g:1:683: Solidus
                 {
-                mKEYWORD_7(); 
+                mSolidus(); 
 
                 }
                 break;
             case 90 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:982: KEYWORD_8
+                // InternalWreslEditorLexer.g:1:691: Colon
                 {
-                mKEYWORD_8(); 
+                mColon(); 
 
                 }
                 break;
             case 91 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:992: KEYWORD_9
+                // InternalWreslEditorLexer.g:1:697: LessThanSign
                 {
-                mKEYWORD_9(); 
+                mLessThanSign(); 
 
                 }
                 break;
             case 92 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:1002: KEYWORD_10
+                // InternalWreslEditorLexer.g:1:710: EqualsSign
                 {
-                mKEYWORD_10(); 
+                mEqualsSign(); 
 
                 }
                 break;
             case 93 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:1013: KEYWORD_11
+                // InternalWreslEditorLexer.g:1:721: GreaterThanSign
                 {
-                mKEYWORD_11(); 
+                mGreaterThanSign(); 
 
                 }
                 break;
             case 94 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:1024: KEYWORD_12
+                // InternalWreslEditorLexer.g:1:737: LeftSquareBracket
                 {
-                mKEYWORD_12(); 
+                mLeftSquareBracket(); 
 
                 }
                 break;
             case 95 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:1035: KEYWORD_13
+                // InternalWreslEditorLexer.g:1:755: RightSquareBracket
                 {
-                mKEYWORD_13(); 
+                mRightSquareBracket(); 
 
                 }
                 break;
             case 96 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:1046: KEYWORD_14
+                // InternalWreslEditorLexer.g:1:774: I
                 {
-                mKEYWORD_14(); 
+                mI(); 
 
                 }
                 break;
             case 97 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:1057: KEYWORD_15
+                // InternalWreslEditorLexer.g:1:776: LeftCurlyBracket
                 {
-                mKEYWORD_15(); 
+                mLeftCurlyBracket(); 
 
                 }
                 break;
             case 98 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:1068: KEYWORD_16
+                // InternalWreslEditorLexer.g:1:793: RightCurlyBracket
                 {
-                mKEYWORD_16(); 
+                mRightCurlyBracket(); 
 
                 }
                 break;
             case 99 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:1079: RULE_IF
+                // InternalWreslEditorLexer.g:1:811: RULE_IF
                 {
                 mRULE_IF(); 
 
                 }
                 break;
             case 100 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:1087: RULE_ELSEIF
+                // InternalWreslEditorLexer.g:1:819: RULE_ELSEIF
                 {
                 mRULE_ELSEIF(); 
 
                 }
                 break;
             case 101 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:1099: RULE_ELSE
+                // InternalWreslEditorLexer.g:1:831: RULE_ELSE
                 {
                 mRULE_ELSE(); 
 
                 }
                 break;
             case 102 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:1109: RULE_RANGE
+                // InternalWreslEditorLexer.g:1:841: RULE_RANGE
                 {
                 mRULE_RANGE(); 
 
                 }
                 break;
             case 103 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:1120: RULE_MIN
+                // InternalWreslEditorLexer.g:1:852: RULE_MIN
                 {
                 mRULE_MIN(); 
 
                 }
                 break;
             case 104 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:1129: RULE_MAX
+                // InternalWreslEditorLexer.g:1:861: RULE_MAX
                 {
                 mRULE_MAX(); 
 
                 }
                 break;
             case 105 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:1138: RULE_MOD
+                // InternalWreslEditorLexer.g:1:870: RULE_MOD
                 {
                 mRULE_MOD(); 
 
                 }
                 break;
             case 106 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:1147: RULE_INTFUNC
+                // InternalWreslEditorLexer.g:1:879: RULE_INTFUNC
                 {
                 mRULE_INTFUNC(); 
 
                 }
                 break;
             case 107 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:1160: RULE_ABS
+                // InternalWreslEditorLexer.g:1:892: RULE_ABS
                 {
                 mRULE_ABS(); 
 
                 }
                 break;
             case 108 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:1169: RULE_ROUND
+                // InternalWreslEditorLexer.g:1:901: RULE_ROUND
                 {
                 mRULE_ROUND(); 
 
                 }
                 break;
             case 109 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:1180: RULE_POW
+                // InternalWreslEditorLexer.g:1:912: RULE_POW
                 {
                 mRULE_POW(); 
 
                 }
                 break;
             case 110 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:1189: RULE_LOG
+                // InternalWreslEditorLexer.g:1:921: RULE_LOG
                 {
                 mRULE_LOG(); 
 
                 }
                 break;
             case 111 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:1198: RULE_FLOAT
+                // InternalWreslEditorLexer.g:1:930: RULE_SIN
+                {
+                mRULE_SIN(); 
+
+                }
+                break;
+            case 112 :
+                // InternalWreslEditorLexer.g:1:939: RULE_COS
+                {
+                mRULE_COS(); 
+
+                }
+                break;
+            case 113 :
+                // InternalWreslEditorLexer.g:1:948: RULE_TAN
+                {
+                mRULE_TAN(); 
+
+                }
+                break;
+            case 114 :
+                // InternalWreslEditorLexer.g:1:957: RULE_COT
+                {
+                mRULE_COT(); 
+
+                }
+                break;
+            case 115 :
+                // InternalWreslEditorLexer.g:1:966: RULE_ASIN
+                {
+                mRULE_ASIN(); 
+
+                }
+                break;
+            case 116 :
+                // InternalWreslEditorLexer.g:1:976: RULE_ACOS
+                {
+                mRULE_ACOS(); 
+
+                }
+                break;
+            case 117 :
+                // InternalWreslEditorLexer.g:1:986: RULE_ATAN
+                {
+                mRULE_ATAN(); 
+
+                }
+                break;
+            case 118 :
+                // InternalWreslEditorLexer.g:1:996: RULE_ACOT
+                {
+                mRULE_ACOT(); 
+
+                }
+                break;
+            case 119 :
+                // InternalWreslEditorLexer.g:1:1006: RULE_FLOAT
                 {
                 mRULE_FLOAT(); 
 
                 }
                 break;
-            case 112 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:1209: RULE_AND
+            case 120 :
+                // InternalWreslEditorLexer.g:1:1017: RULE_AND
                 {
                 mRULE_AND(); 
 
                 }
                 break;
-            case 113 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:1218: RULE_OR
+            case 121 :
+                // InternalWreslEditorLexer.g:1:1026: RULE_OR
                 {
                 mRULE_OR(); 
 
                 }
                 break;
-            case 114 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:1226: RULE_NOT
+            case 122 :
+                // InternalWreslEditorLexer.g:1:1034: RULE_NOT
                 {
                 mRULE_NOT(); 
 
                 }
                 break;
-            case 115 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:1235: RULE_ALWAYS
+            case 123 :
+                // InternalWreslEditorLexer.g:1:1043: RULE_ALWAYS
                 {
                 mRULE_ALWAYS(); 
 
                 }
                 break;
-            case 116 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:1247: RULE_ORDER
+            case 124 :
+                // InternalWreslEditorLexer.g:1:1055: RULE_ORDER
                 {
                 mRULE_ORDER(); 
 
                 }
                 break;
-            case 117 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:1258: RULE_STRING
+            case 125 :
+                // InternalWreslEditorLexer.g:1:1066: RULE_STRING
                 {
                 mRULE_STRING(); 
 
                 }
                 break;
-            case 118 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:1270: RULE_SL_COMMENT
+            case 126 :
+                // InternalWreslEditorLexer.g:1:1078: RULE_SL_COMMENT
                 {
                 mRULE_SL_COMMENT(); 
 
                 }
                 break;
-            case 119 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:1286: RULE_ID
+            case 127 :
+                // InternalWreslEditorLexer.g:1:1094: RULE_ID
                 {
                 mRULE_ID(); 
 
                 }
                 break;
-            case 120 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:1294: RULE_INT
+            case 128 :
+                // InternalWreslEditorLexer.g:1:1102: RULE_INT
                 {
                 mRULE_INT(); 
 
                 }
                 break;
-            case 121 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:1303: RULE_ML_COMMENT
+            case 129 :
+                // InternalWreslEditorLexer.g:1:1111: RULE_ML_COMMENT
                 {
                 mRULE_ML_COMMENT(); 
 
                 }
                 break;
-            case 122 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:1319: RULE_WS
+            case 130 :
+                // InternalWreslEditorLexer.g:1:1127: RULE_WS
                 {
                 mRULE_WS(); 
 
                 }
                 break;
-            case 123 :
-                // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/lexer/InternalWreslEditorLexer.g:1:1327: RULE_ANY_OTHER
+            case 131 :
+                // InternalWreslEditorLexer.g:1:1135: RULE_ANY_OTHER
                 {
                 mRULE_ANY_OTHER(); 
 
@@ -8232,7 +8736,7 @@ public class InternalWreslEditorLexer extends Lexer {
 
 
     protected DFA12 dfa12 = new DFA12(this);
-    protected DFA27 dfa27 = new DFA27(this);
+    protected DFA35 dfa35 = new DFA35(this);
     static final String DFA12_eotS =
         "\5\uffff\1\10\1\12\4\uffff";
     static final String DFA12_eofS =
@@ -8292,178 +8796,47 @@ public class InternalWreslEditorLexer extends Lexer {
             return "239:12: ( 'log' | 'LOG' | 'log10' | 'LOG10' )";
         }
     }
-    static final String DFA27_eotS =
-        "\1\uffff\10\70\1\122\6\70\1\64\1\157\5\70\1\64\1\176\1\u0080\1"+
-        "\u0082\1\u0084\13\uffff\1\122\6\70\1\157\1\70\1\64\4\uffff\3\70"+
-        "\1\uffff\25\70\1\uffff\2\u00be\1\70\1\uffff\25\70\10\uffff\1\157"+
-        "\12\70\25\uffff\1\70\1\u00be\12\70\3\uffff\1\u00ee\1\u00f0\10\70"+
-        "\1\u00fb\4\70\1\u0100\7\70\1\u0108\1\70\1\u010a\1\u010b\2\70\1\u010f"+
-        "\1\70\1\uffff\2\70\1\u0112\3\70\1\u0116\1\u0117\1\u0118\5\70\1\u011f"+
-        "\1\u0120\1\u0122\2\70\1\u0124\1\u0125\1\u0126\1\u0127\2\70\1\u012a"+
-        "\1\u012b\1\70\1\u012d\2\70\1\u0130\1\u0131\1\u0132\1\u0133\1\u010f"+
-        "\4\70\1\u0122\1\u0126\1\u0127\1\u0118\1\u0112\1\u011f\1\70\1\uffff"+
-        "\1\70\1\uffff\1\70\1\u013c\6\70\1\u0144\1\70\1\uffff\4\70\1\uffff"+
-        "\3\70\2\u014f\2\70\1\uffff\1\u0153\2\uffff\3\70\1\uffff\2\70\1\uffff"+
-        "\3\70\3\uffff\2\70\1\u0165\3\70\2\uffff\1\70\1\uffff\1\70\4\uffff"+
-        "\1\70\1\u016c\2\uffff\1\u016d\1\uffff\2\70\4\uffff\1\u014f\7\70"+
-        "\1\uffff\3\70\1\u017d\3\70\1\uffff\1\70\1\u0182\1\70\1\u0184\1\u0185"+
-        "\1\70\1\u0187\3\70\1\uffff\3\70\1\uffff\15\70\1\u019d\1\70\1\u019f"+
-        "\1\u01a0\1\uffff\1\u01a1\1\u01a2\1\u011f\1\u01a3\1\u01a4\1\u01a5"+
-        "\2\uffff\1\u01a6\1\u01a7\1\70\2\u01a6\1\u01a7\1\u011f\1\u01ab\1"+
-        "\70\1\u01ad\5\70\1\uffff\2\70\1\u01b5\1\70\1\uffff\1\70\2\uffff"+
-        "\1\70\1\uffff\1\70\3\u01ba\1\70\1\u01bc\16\70\1\u01cd\1\uffff\1"+
-        "\u01ce\11\uffff\1\u01ba\2\70\1\uffff\1\u01d1\1\uffff\2\70\1\u01d4"+
-        "\2\70\1\u01d7\1\u01d8\1\uffff\4\70\1\uffff\1\70\1\uffff\1\u01de"+
-        "\1\u01df\1\u01e0\1\u01e1\1\u01e2\1\u01e3\1\u01e4\1\u01e5\1\u01e6"+
-        "\1\u01e7\1\u01e8\1\u01e9\1\u01ea\1\u01eb\1\u01ec\1\u01ed\2\uffff"+
-        "\2\70\1\uffff\1\70\1\u01f1\1\uffff\2\70\2\uffff\3\70\1\u01f7\1\u01f8"+
-        "\20\uffff\3\70\1\uffff\1\u01fc\1\u01fd\1\u01fe\1\u01ff\1\u0200\2"+
-        "\uffff\2\70\1\u0203\5\uffff\1\70\1\u0205\1\uffff\1\70\1\uffff\1"+
-        "\70\1\u0208\1\uffff";
-    static final String DFA27_eofS =
-        "\u0209\uffff";
-    static final String DFA27_minS =
-        "\1\0\3\101\1\102\1\116\1\101\1\114\1\105\1\60\1\105\1\106\1\111"+
-        "\1\110\2\101\1\60\1\56\1\71\1\111\1\110\1\101\1\117\1\115\1\52\3"+
-        "\75\13\uffff\1\60\1\130\2\101\1\102\1\105\1\110\1\56\1\102\1\0\4"+
-        "\uffff\1\131\1\103\1\101\1\uffff\1\115\1\106\1\116\2\123\1\112\1"+
-        "\124\1\144\1\102\1\120\1\105\1\124\1\105\1\124\1\163\1\123\1\114"+
-        "\1\101\1\104\1\115\1\103\1\uffff\2\60\1\103\1\uffff\1\116\1\105"+
-        "\1\167\1\137\1\111\1\122\1\107\1\163\1\111\1\126\1\117\1\101\1\103"+
-        "\1\123\1\103\1\104\1\122\1\156\1\122\1\104\1\114\10\uffff\1\56\1"+
-        "\117\1\60\1\102\1\116\1\123\1\156\1\165\1\116\1\114\1\126\25\uffff"+
-        "\1\103\1\60\1\163\1\116\1\156\1\125\1\104\1\122\1\116\1\123\1\127"+
-        "\1\103\3\uffff\2\60\1\111\1\122\1\105\1\137\1\104\1\137\2\105\1"+
-        "\60\1\145\1\117\1\124\1\105\1\60\1\105\1\122\1\105\1\145\1\105\1"+
-        "\125\1\105\1\60\1\122\2\60\1\114\1\124\1\60\1\105\1\uffff\1\101"+
-        "\1\126\1\60\1\103\1\101\1\141\3\60\1\105\1\125\1\114\1\101\1\105"+
-        "\3\60\1\124\1\105\4\60\1\125\1\115\2\60\1\104\1\60\1\147\1\156\5"+
-        "\60\1\145\1\107\1\147\1\116\6\60\1\111\1\uffff\1\101\1\uffff\1\116"+
-        "\1\60\1\123\1\103\1\111\1\124\1\105\1\101\1\60\1\103\1\uffff\1\162"+
-        "\1\125\1\123\1\122\1\uffff\1\122\1\105\1\122\2\60\1\105\1\103\1"+
-        "\uffff\1\60\2\uffff\1\125\1\111\1\107\1\uffff\1\114\1\101\1\uffff"+
-        "\1\106\1\123\1\171\3\uffff\1\116\1\120\1\60\1\114\1\122\1\60\2\uffff"+
-        "\1\114\1\uffff\1\110\4\uffff\1\105\1\60\2\uffff\1\60\1\uffff\1\145"+
-        "\1\144\4\uffff\1\60\1\105\1\145\1\104\1\60\1\116\1\122\1\105\1\uffff"+
-        "\1\105\1\106\1\124\1\60\1\122\1\101\1\106\1\uffff\1\124\1\60\1\116"+
-        "\2\60\1\131\1\60\1\116\2\146\1\uffff\1\106\1\116\1\124\1\uffff\1"+
-        "\104\1\101\1\105\1\124\1\120\2\105\2\101\1\117\1\103\1\105\1\123"+
-        "\1\60\1\163\2\60\1\uffff\6\60\2\uffff\2\60\1\146\5\60\1\105\1\60"+
-        "\1\122\1\105\1\123\1\111\1\101\1\uffff\1\124\1\106\1\60\1\111\1"+
-        "\uffff\1\104\2\uffff\1\105\1\uffff\1\101\3\60\1\103\1\60\1\105\1"+
-        "\114\1\122\1\131\1\122\1\107\1\103\1\102\1\116\1\114\1\122\1\126"+
-        "\1\124\1\120\1\60\1\uffff\1\60\11\uffff\1\60\1\111\1\117\1\uffff"+
-        "\1\60\1\uffff\1\111\1\120\1\60\1\117\1\111\2\60\1\uffff\1\126\1"+
-        "\105\1\101\1\114\1\uffff\1\105\1\uffff\20\60\2\uffff\1\115\1\116"+
-        "\1\uffff\1\105\1\60\1\uffff\2\116\2\uffff\1\105\1\104\1\122\2\60"+
-        "\20\uffff\1\105\1\124\1\123\1\uffff\5\60\2\uffff\1\123\1\110\1\60"+
-        "\5\uffff\1\124\1\60\1\uffff\1\105\1\uffff\1\120\1\60\1\uffff";
-    static final String DFA27_maxS =
-        "\1\uffff\1\166\1\151\1\157\1\162\1\163\1\150\1\170\1\166\1\172"+
-        "\1\162\1\165\1\162\2\157\1\141\1\157\1\155\1\162\1\151\1\157\1\165"+
-        "\1\157\1\155\4\75\13\uffff\1\172\1\170\1\150\1\157\1\165\1\162\1"+
-        "\157\1\71\1\143\1\uffff\4\uffff\1\171\1\146\1\141\1\uffff\1\155"+
-        "\1\146\1\156\2\163\1\152\1\164\1\144\1\151\1\160\1\145\1\164\1\145"+
-        "\1\164\1\163\1\123\1\161\1\141\1\144\1\155\1\164\1\uffff\2\172\1"+
-        "\164\1\uffff\1\156\1\145\1\167\1\137\1\167\1\162\1\147\1\163\1\151"+
-        "\1\166\1\157\1\141\1\167\1\163\1\167\1\156\1\171\1\156\1\171\1\156"+
-        "\1\154\10\uffff\1\71\1\157\1\60\1\142\1\156\1\163\1\156\1\165\2"+
-        "\156\1\166\25\uffff\1\164\1\172\1\163\1\116\1\156\1\125\1\156\1"+
-        "\171\1\116\1\123\1\127\1\167\3\uffff\2\172\1\151\1\162\1\145\1\137"+
-        "\1\166\1\137\2\145\1\172\1\145\1\157\1\164\1\145\1\172\1\145\1\162"+
-        "\2\145\1\105\1\165\1\145\1\172\1\162\2\172\1\154\1\164\1\172\1\145"+
-        "\1\uffff\1\141\1\166\1\172\1\143\2\141\3\172\1\145\1\165\1\154\1"+
-        "\141\1\145\3\172\1\164\1\145\4\172\1\165\1\155\2\172\1\144\1\172"+
-        "\1\147\1\156\5\172\1\145\1\107\1\147\1\116\6\172\1\151\1\uffff\1"+
-        "\141\1\uffff\1\156\1\172\1\163\1\143\1\151\1\164\1\145\1\164\1\172"+
-        "\1\143\1\uffff\1\162\1\165\1\163\1\162\1\uffff\1\162\1\145\1\162"+
-        "\2\172\1\145\1\143\1\uffff\1\172\2\uffff\1\165\1\151\1\147\1\uffff"+
-        "\1\154\1\163\1\uffff\1\146\1\163\1\171\3\uffff\1\156\1\160\1\172"+
-        "\1\154\1\162\1\60\2\uffff\1\154\1\uffff\1\150\4\uffff\1\145\1\172"+
-        "\2\uffff\1\172\1\uffff\1\145\1\144\4\uffff\1\172\1\105\1\145\1\104"+
-        "\1\60\1\156\1\162\1\145\1\uffff\1\164\1\146\1\164\1\172\1\162\1"+
-        "\141\1\146\1\uffff\1\164\1\172\1\156\2\172\1\171\1\172\1\156\2\146"+
-        "\1\uffff\1\106\1\156\1\164\1\uffff\1\144\1\141\1\145\1\164\1\165"+
-        "\2\145\1\165\1\141\1\157\1\143\1\145\1\163\1\172\1\163\2\172\1\uffff"+
-        "\6\172\2\uffff\2\172\1\146\5\172\1\145\1\172\1\162\1\145\1\163\1"+
-        "\151\1\141\1\uffff\1\164\1\146\1\172\1\151\1\uffff\1\144\2\uffff"+
-        "\1\145\1\uffff\1\141\3\172\1\143\1\172\1\145\1\154\1\162\1\171\1"+
-        "\162\1\147\1\143\1\142\2\156\1\171\1\166\1\164\1\160\1\172\1\uffff"+
-        "\1\172\11\uffff\1\172\1\151\1\157\1\uffff\1\172\1\uffff\1\151\1"+
-        "\160\1\172\1\157\1\151\2\172\1\uffff\1\166\1\145\1\141\1\154\1\uffff"+
-        "\1\145\1\uffff\20\172\2\uffff\1\155\1\156\1\uffff\1\145\1\172\1"+
-        "\uffff\2\156\2\uffff\1\145\1\144\1\162\2\172\20\uffff\1\145\1\164"+
-        "\1\163\1\uffff\5\172\2\uffff\1\163\1\150\1\172\5\uffff\1\164\1\172"+
-        "\1\uffff\1\145\1\uffff\1\160\1\172\1\uffff";
-    static final String DFA27_acceptS =
-        "\34\uffff\1\123\1\124\1\125\1\126\1\127\1\130\1\132\1\136\1\137"+
-        "\1\141\1\142\12\uffff\1\166\1\167\1\172\1\173\3\uffff\1\167\25\uffff"+
-        "\1\122\3\uffff\1\140\25\uffff\1\61\1\160\1\161\1\162\1\157\1\62"+
-        "\1\63\1\170\13\uffff\1\115\1\116\1\171\1\131\1\117\1\133\1\120\1"+
-        "\134\1\121\1\135\1\123\1\124\1\125\1\126\1\127\1\130\1\132\1\136"+
-        "\1\137\1\141\1\142\14\uffff\1\165\1\166\1\172\37\uffff\1\143\57"+
-        "\uffff\1\102\1\uffff\1\103\12\uffff\1\113\4\uffff\1\77\7\uffff\1"+
-        "\114\1\uffff\1\75\1\76\3\uffff\1\152\2\uffff\1\155\3\uffff\1\100"+
-        "\1\101\1\153\6\uffff\1\156\1\73\1\uffff\1\151\1\uffff\1\110\1\111"+
-        "\1\150\1\147\2\uffff\1\72\1\104\1\uffff\1\74\2\uffff\1\105\1\106"+
-        "\1\107\1\112\10\uffff\1\65\7\uffff\1\64\12\uffff\1\145\3\uffff\1"+
-        "\71\21\uffff\1\67\6\uffff\1\66\1\70\17\uffff\1\46\4\uffff\1\164"+
-        "\1\uffff\1\54\1\55\1\uffff\1\57\25\uffff\1\45\1\uffff\1\47\1\50"+
-        "\1\51\1\52\1\53\1\60\1\56\1\146\1\154\3\uffff\1\44\1\uffff\1\40"+
-        "\7\uffff\1\43\4\uffff\1\144\1\uffff\1\41\20\uffff\1\42\1\163\2\uffff"+
-        "\1\15\2\uffff\1\37\2\uffff\1\14\1\22\5\uffff\1\16\1\17\1\20\1\21"+
-        "\1\23\1\24\1\25\1\26\1\27\1\30\1\31\1\32\1\33\1\34\1\35\1\36\3\uffff"+
-        "\1\13\5\uffff\1\11\1\12\3\uffff\1\4\1\5\1\6\1\7\1\10\2\uffff\1\3"+
-        "\1\uffff\1\2\2\uffff\1\1";
-    static final String DFA27_specialS =
-        "\1\0\57\uffff\1\1\u01d8\uffff}>";
-    static final String[] DFA27_transitionS = {
-            "\11\64\2\63\2\64\1\63\22\64\1\63\1\61\2\64\1\27\2\64\1\60\1"+
-            "\34\1\35\1\36\1\37\1\40\1\41\1\20\1\30\1\56\1\21\10\56\1\42"+
-            "\1\64\1\31\1\32\1\33\2\64\1\53\1\62\1\3\1\1\1\7\1\22\1\14\1"+
-            "\62\1\11\1\25\1\23\1\55\1\52\1\26\1\57\1\54\1\62\1\51\1\10\1"+
-            "\2\1\5\1\17\1\6\3\62\1\43\1\64\1\44\3\64\1\13\1\62\1\3\1\1\1"+
-            "\50\1\22\1\14\1\62\1\47\1\25\1\23\1\15\1\16\1\26\1\4\1\12\1"+
-            "\62\1\24\1\10\1\2\1\5\1\17\1\6\3\62\1\45\1\64\1\46\uff82\64",
-            "\1\65\3\uffff\1\66\20\uffff\1\67\12\uffff\1\65\3\uffff\1\66"+
-            "\20\uffff\1\67",
-            "\1\72\7\uffff\1\71\27\uffff\1\72\7\uffff\1\71",
-            "\1\75\4\uffff\1\74\10\uffff\1\73\21\uffff\1\75\4\uffff\1\74"+
-            "\10\uffff\1\73",
-            "\1\76\1\77\36\uffff\1\76\1\77\16\uffff\1\100",
-            "\1\101\1\uffff\1\102\2\uffff\1\103\32\uffff\1\101\1\uffff"+
-            "\1\102\2\uffff\1\103",
-            "\1\104\6\uffff\1\105\30\uffff\1\104\6\uffff\1\105",
-            "\1\110\13\uffff\1\106\23\uffff\1\107\13\uffff\1\106",
-            "\1\111\16\uffff\1\113\1\114\1\112\16\uffff\1\111\16\uffff"+
-            "\1\113\1\114\1\112",
-            "\12\70\3\uffff\1\116\3\uffff\5\70\1\120\7\70\1\115\14\70\4"+
-            "\uffff\1\70\1\uffff\5\70\1\117\7\70\1\121\14\70",
-            "\1\123\14\uffff\1\124\22\uffff\1\123\11\uffff\1\125\2\uffff"+
-            "\1\124",
-            "\1\126\5\uffff\1\133\3\uffff\1\130\4\uffff\1\131\14\uffff"+
-            "\1\132\3\uffff\1\126\5\uffff\1\127\3\uffff\1\130\4\uffff\1\131",
-            "\1\134\5\uffff\1\136\2\uffff\1\135\26\uffff\1\134\5\uffff"+
-            "\1\136\2\uffff\1\135",
-            "\1\140\6\uffff\1\141\30\uffff\1\140\6\uffff\1\137",
-            "\1\145\15\uffff\1\146\21\uffff\1\143\7\uffff\1\144\5\uffff"+
-            "\1\142",
-            "\1\147\37\uffff\1\147",
-            "\12\154\7\uffff\1\151\2\uffff\1\150\11\uffff\1\153\1\152\21"+
-            "\uffff\1\151\2\uffff\1\150\11\uffff\1\153\1\152",
-            "\1\154\1\uffff\12\160\12\uffff\1\155\10\uffff\1\156\26\uffff"+
-            "\1\155\10\uffff\1\156",
-            "\1\162\13\uffff\1\163\14\uffff\1\161\22\uffff\1\163\14\uffff"+
-            "\1\161",
-            "\1\164\37\uffff\1\164",
-            "\1\165\30\uffff\1\166\6\uffff\1\165\6\uffff\1\167",
-            "\1\170\23\uffff\1\171\13\uffff\1\170\23\uffff\1\171",
-            "\1\172\37\uffff\1\172",
-            "\1\173\37\uffff\1\173",
-            "\1\175\22\uffff\1\174",
-            "\1\177",
-            "\1\u0081",
-            "\1\u0083",
+    static final String DFA35_eotS =
+        "\1\uffff\10\73\1\130\6\73\1\67\1\170\5\73\1\67\1\u0087\1\u0089\1\u008b\1\u008d\13\uffff\1\130\11\73\1\170\1\73\1\67\4\uffff\3\73\1\uffff\30\73\1\uffff\2\u00d1\1\73\1\uffff\30\73\10\uffff\1\170\12\73\25\uffff\1\73\1\u00d1\20\73\3\uffff\1\u010b\1\u010d\4\73\1\u0112\1\73\1\u0116\1\u0117\3\73\1\u011b\4\73\1\u0120\7\73\1\u0128\1\73\1\u012a\1\u012b\1\u012c\2\73\1\u0130\1\73\1\uffff\2\73\1\u0133\3\73\1\u0137\1\u0138\1\u0139\10\73\1\u0144\1\u0145\1\u0147\2\73\1\u0149\1\u014a\1\u014b\1\u014c\2\73\1\u014f\1\u0150\1\73\1\u0152\1\u0153\1\u0154\1\u0155\1\u0156\2\73\1\u0130\4\73\1\u0147\1\u014b\1\u014c\1\u0139\3\73\1\u0133\1\u0144\1\u012c\1\u0116\1\u0117\1\u0112\1\73\1\uffff\1\73\1\uffff\1\73\1\u0165\2\73\1\uffff\3\73\2\uffff\1\73\1\u016d\1\73\1\uffff\4\73\1\uffff\3\73\2\u0178\2\73\1\uffff\1\u017c\3\uffff\3\73\1\uffff\2\73\1\uffff\3\73\3\uffff\1\u018c\1\u018d\1\u018e\1\u018f\2\73\1\u0192\3\73\2\uffff\1\73\1\uffff\1\73\4\uffff\1\73\1\u0199\2\uffff\1\u019a\5\uffff\2\73\1\u0178\3\73\1\u018c\1\u018d\1\u018e\1\u018f\4\73\1\uffff\3\73\1\u01aa\3\73\1\uffff\1\73\1\u01af\1\73\1\u01b1\1\u01b2\1\73\1\u01b4\3\73\1\uffff\3\73\1\uffff\15\73\1\u01ca\1\73\4\uffff\1\u01cc\1\u01cd\1\uffff\1\u01ce\1\u01cf\1\u0144\1\u01d0\1\u01d1\1\u01d2\2\uffff\1\u01d3\1\u01d4\1\73\2\u01d3\1\u01d4\1\u0144\1\u01d8\1\73\1\u01da\5\73\1\uffff\2\73\1\u01e2\1\73\1\uffff\1\73\2\uffff\1\73\1\uffff\1\73\3\u01e7\1\73\1\u01e9\16\73\1\u01fa\1\uffff\1\u01fb\11\uffff\1\u01e7\2\73\1\uffff\1\u01fe\1\uffff\2\73\1\u0201\2\73\1\u0204\1\u0205\1\uffff\4\73\1\uffff\1\73\1\uffff\1\u020b\1\u020c\1\u020d\1\u020e\1\u020f\1\u0210\1\u0211\1\u0212\1\u0213\1\u0214\1\u0215\1\u0216\1\u0217\1\u0218\1\u0219\1\u021a\2\uffff\2\73\1\uffff\1\73\1\u021e\1\uffff\2\73\2\uffff\3\73\1\u0224\1\u0225\20\uffff\3\73\1\uffff\1\u0229\1\u022a\1\u022b\1\u022c\1\u022d\2\uffff\2\73\1\u0230\5\uffff\1\73\1\u0232\1\uffff\1\73\1\uffff\1\73\1\u0235\1\uffff";
+    static final String DFA35_eofS =
+        "\u0236\uffff";
+    static final String DFA35_minS =
+        "\1\0\3\101\1\102\1\116\1\101\1\114\1\105\1\60\1\105\1\106\1\111\1\110\2\101\1\60\1\56\1\71\1\111\1\101\1\117\1\110\1\115\1\52\3\75\13\uffff\1\60\1\130\2\101\1\102\1\105\1\110\1\105\2\101\1\56\1\102\1\0\4\uffff\1\131\1\103\1\101\1\uffff\1\115\2\106\1\116\2\123\1\116\1\112\1\124\1\144\1\102\1\120\1\105\1\124\1\105\1\124\1\163\1\123\1\114\1\101\1\104\1\115\1\156\1\103\1\uffff\2\60\1\103\1\uffff\1\116\1\105\1\167\1\137\1\111\1\122\1\107\1\163\1\151\1\157\1\141\1\111\1\126\1\117\1\101\1\103\1\123\1\103\1\104\1\122\1\156\1\122\1\104\1\114\10\uffff\1\56\1\117\1\60\1\102\2\116\1\114\1\126\1\123\1\156\1\165\25\uffff\1\103\1\60\1\163\1\116\1\156\1\125\1\104\1\122\1\116\1\123\1\111\1\117\1\101\1\127\1\103\2\116\1\106\3\uffff\2\60\1\111\1\122\1\105\1\137\1\60\1\104\2\60\1\137\2\105\1\60\1\145\1\117\1\124\1\105\1\60\1\105\1\122\1\105\1\145\1\105\1\125\1\105\1\60\1\122\3\60\1\114\1\124\1\60\1\105\1\uffff\1\101\1\126\1\60\1\103\1\101\1\141\3\60\1\156\1\163\1\156\1\105\1\125\1\114\1\101\1\105\3\60\1\124\1\105\4\60\1\125\1\115\2\60\1\104\5\60\1\147\1\156\1\60\1\145\1\107\1\147\1\116\4\60\1\116\1\123\1\116\6\60\1\111\1\uffff\1\101\1\uffff\1\116\1\60\1\123\1\103\1\uffff\1\111\1\124\1\105\2\uffff\1\101\1\60\1\103\1\uffff\1\162\1\125\1\123\1\122\1\uffff\1\122\1\105\1\122\2\60\1\105\1\103\1\uffff\1\60\3\uffff\1\125\1\111\1\107\1\uffff\1\114\1\101\1\uffff\1\106\1\123\1\171\3\uffff\4\60\1\116\1\120\1\60\1\114\1\122\1\60\2\uffff\1\114\1\uffff\1\110\4\uffff\1\105\1\60\2\uffff\1\60\5\uffff\1\145\1\144\1\60\1\105\1\145\1\104\5\60\1\116\1\122\1\105\1\uffff\1\105\1\106\1\124\1\60\1\122\1\101\1\106\1\uffff\1\124\1\60\1\116\2\60\1\131\1\60\1\116\2\146\1\uffff\1\106\1\116\1\124\1\uffff\1\104\1\101\1\105\1\124\1\120\2\105\2\101\1\117\1\103\1\105\1\123\1\60\1\163\4\uffff\2\60\1\uffff\6\60\2\uffff\2\60\1\146\5\60\1\105\1\60\1\122\1\105\1\123\1\111\1\101\1\uffff\1\124\1\106\1\60\1\111\1\uffff\1\104\2\uffff\1\105\1\uffff\1\101\3\60\1\103\1\60\1\105\1\114\1\122\1\131\1\122\1\107\1\103\1\102\1\116\1\114\1\122\1\126\1\124\1\120\1\60\1\uffff\1\60\11\uffff\1\60\1\111\1\117\1\uffff\1\60\1\uffff\1\111\1\120\1\60\1\117\1\111\2\60\1\uffff\1\126\1\105\1\101\1\114\1\uffff\1\105\1\uffff\20\60\2\uffff\1\115\1\116\1\uffff\1\105\1\60\1\uffff\2\116\2\uffff\1\105\1\104\1\122\2\60\20\uffff\1\105\1\124\1\123\1\uffff\5\60\2\uffff\1\123\1\110\1\60\5\uffff\1\124\1\60\1\uffff\1\105\1\uffff\1\120\1\60\1\uffff";
+    static final String DFA35_maxS =
+        "\1\uffff\1\166\1\151\1\157\1\162\1\163\1\150\1\170\1\166\1\172\1\162\1\165\1\162\2\157\1\141\1\157\1\155\1\162\1\151\1\165\2\157\1\155\4\75\13\uffff\1\172\1\170\1\150\1\157\1\165\1\162\1\157\1\166\1\157\1\151\1\71\1\143\1\uffff\4\uffff\1\171\1\146\1\141\1\uffff\1\155\1\156\1\146\1\164\2\163\1\156\1\152\1\164\1\144\1\151\1\160\1\145\1\164\1\145\1\164\1\163\1\123\1\161\1\141\1\144\1\155\1\156\1\164\1\uffff\2\172\1\164\1\uffff\1\156\1\145\1\167\1\137\1\167\1\162\1\147\1\163\1\151\1\157\1\141\1\151\1\166\1\157\1\141\1\167\1\163\1\167\1\156\1\171\1\156\1\171\1\156\1\154\10\uffff\1\71\1\157\1\60\1\142\3\156\1\166\1\163\1\156\1\165\25\uffff\1\164\1\172\1\163\1\116\1\156\1\125\1\156\1\171\1\116\1\123\1\111\1\117\1\101\1\127\1\167\1\116\1\156\1\146\3\uffff\2\172\1\151\1\162\1\145\1\137\1\172\1\166\2\172\1\137\2\145\1\172\1\145\1\157\1\164\1\145\1\172\1\145\1\162\2\145\1\105\1\165\1\145\1\172\1\162\3\172\1\154\1\164\1\172\1\145\1\uffff\1\141\1\166\1\172\1\143\2\141\3\172\1\156\1\164\1\156\1\145\1\165\1\154\1\141\1\145\3\172\1\164\1\145\4\172\1\165\1\155\2\172\1\144\5\172\1\147\1\156\1\172\1\145\1\107\1\147\1\116\4\172\1\116\1\124\1\116\6\172\1\151\1\uffff\1\141\1\uffff\1\156\1\172\1\163\1\143\1\uffff\1\151\1\164\1\145\2\uffff\1\164\1\172\1\143\1\uffff\1\162\1\165\1\163\1\162\1\uffff\1\162\1\145\1\162\2\172\1\145\1\143\1\uffff\1\172\3\uffff\1\165\1\151\1\147\1\uffff\1\154\1\163\1\uffff\1\146\1\163\1\171\3\uffff\4\172\1\156\1\160\1\172\1\154\1\162\1\60\2\uffff\1\154\1\uffff\1\150\4\uffff\1\145\1\172\2\uffff\1\172\5\uffff\1\145\1\144\1\172\1\105\1\145\1\104\4\172\1\60\1\156\1\162\1\145\1\uffff\1\164\1\146\1\164\1\172\1\162\1\141\1\146\1\uffff\1\164\1\172\1\156\2\172\1\171\1\172\1\156\2\146\1\uffff\1\106\1\156\1\164\1\uffff\1\144\1\141\1\145\1\164\1\165\2\145\1\165\1\141\1\157\1\143\1\145\1\163\1\172\1\163\4\uffff\2\172\1\uffff\6\172\2\uffff\2\172\1\146\5\172\1\145\1\172\1\162\1\145\1\163\1\151\1\141\1\uffff\1\164\1\146\1\172\1\151\1\uffff\1\144\2\uffff\1\145\1\uffff\1\141\3\172\1\143\1\172\1\145\1\154\1\162\1\171\1\162\1\147\1\143\1\142\2\156\1\171\1\166\1\164\1\160\1\172\1\uffff\1\172\11\uffff\1\172\1\151\1\157\1\uffff\1\172\1\uffff\1\151\1\160\1\172\1\157\1\151\2\172\1\uffff\1\166\1\145\1\141\1\154\1\uffff\1\145\1\uffff\20\172\2\uffff\1\155\1\156\1\uffff\1\145\1\172\1\uffff\2\156\2\uffff\1\145\1\144\1\162\2\172\20\uffff\1\145\1\164\1\163\1\uffff\5\172\2\uffff\1\163\1\150\1\172\5\uffff\1\164\1\172\1\uffff\1\145\1\uffff\1\160\1\172\1\uffff";
+    static final String DFA35_acceptS =
+        "\34\uffff\1\123\1\124\1\125\1\126\1\127\1\130\1\132\1\136\1\137\1\141\1\142\15\uffff\1\176\1\177\1\u0082\1\u0083\3\uffff\1\177\30\uffff\1\122\3\uffff\1\140\30\uffff\1\61\1\170\1\171\1\172\1\167\1\62\1\63\1\u0080\13\uffff\1\115\1\116\1\u0081\1\131\1\117\1\133\1\120\1\134\1\121\1\135\1\123\1\124\1\125\1\126\1\127\1\130\1\132\1\136\1\137\1\141\1\142\22\uffff\1\175\1\176\1\u0082\43\uffff\1\143\71\uffff\1\74\1\uffff\1\75\4\uffff\1\161\3\uffff\1\160\1\162\3\uffff\1\107\4\uffff\1\114\7\uffff\1\111\1\uffff\1\112\1\113\1\157\3\uffff\1\152\2\uffff\1\155\3\uffff\1\72\1\73\1\153\12\uffff\1\156\1\103\1\uffff\1\151\1\uffff\1\104\1\105\1\150\1\147\2\uffff\1\76\1\77\1\uffff\1\100\1\101\1\102\1\106\1\110\16\uffff\1\65\7\uffff\1\64\12\uffff\1\145\3\uffff\1\71\17\uffff\1\163\1\164\1\166\1\165\2\uffff\1\67\6\uffff\1\66\1\70\17\uffff\1\46\4\uffff\1\174\1\uffff\1\55\1\56\1\uffff\1\60\25\uffff\1\45\1\uffff\1\47\1\50\1\51\1\52\1\53\1\54\1\57\1\146\1\154\3\uffff\1\42\1\uffff\1\43\7\uffff\1\41\4\uffff\1\144\1\uffff\1\44\20\uffff\1\40\1\173\2\uffff\1\14\2\uffff\1\37\2\uffff\1\16\1\15\5\uffff\1\17\1\20\1\21\1\22\1\23\1\24\1\25\1\26\1\27\1\30\1\31\1\32\1\33\1\34\1\35\1\36\3\uffff\1\13\5\uffff\1\11\1\12\3\uffff\1\4\1\5\1\6\1\7\1\10\2\uffff\1\3\1\uffff\1\2\2\uffff\1\1";
+    static final String DFA35_specialS =
+        "\1\0\62\uffff\1\1\u0202\uffff}>";
+    static final String[] DFA35_transitionS = {
+            "\11\67\2\66\2\67\1\66\22\67\1\66\1\64\2\67\1\27\2\67\1\63\1\34\1\35\1\36\1\37\1\40\1\41\1\20\1\30\1\61\1\21\10\61\1\42\1\67\1\31\1\32\1\33\2\67\1\53\1\65\1\57\1\1\1\7\1\22\1\14\1\65\1\11\1\24\1\23\1\55\1\52\1\25\1\62\1\54\1\65\1\51\1\56\1\60\1\5\1\17\1\6\3\65\1\43\1\67\1\44\3\67\1\13\1\65\1\3\1\1\1\50\1\22\1\14\1\65\1\47\1\24\1\23\1\15\1\16\1\25\1\4\1\12\1\65\1\26\1\10\1\2\1\5\1\17\1\6\3\65\1\45\1\67\1\46\uff82\67",
+            "\1\70\3\uffff\1\71\20\uffff\1\72\12\uffff\1\70\3\uffff\1\71\20\uffff\1\72",
+            "\1\76\7\uffff\1\74\27\uffff\1\75\7\uffff\1\74",
+            "\1\101\4\uffff\1\100\10\uffff\1\102\21\uffff\1\101\4\uffff\1\100\10\uffff\1\77",
+            "\1\103\1\104\36\uffff\1\103\1\104\16\uffff\1\105",
+            "\1\106\1\uffff\1\107\2\uffff\1\110\32\uffff\1\106\1\uffff\1\107\2\uffff\1\110",
+            "\1\111\6\uffff\1\112\30\uffff\1\111\6\uffff\1\112",
+            "\1\115\13\uffff\1\113\23\uffff\1\114\13\uffff\1\113",
+            "\1\116\16\uffff\1\120\1\121\1\117\16\uffff\1\116\3\uffff\1\122\12\uffff\1\120\1\121\1\117",
+            "\12\73\3\uffff\1\124\3\uffff\5\73\1\126\7\73\1\123\14\73\4\uffff\1\73\1\uffff\5\73\1\125\7\73\1\127\14\73",
+            "\1\131\14\uffff\1\132\22\uffff\1\131\11\uffff\1\133\2\uffff\1\132",
+            "\1\134\5\uffff\1\144\3\uffff\1\136\4\uffff\1\137\14\uffff\1\140\1\142\2\uffff\1\134\5\uffff\1\135\3\uffff\1\136\2\uffff\1\141\1\143\1\137",
+            "\1\145\5\uffff\1\147\2\uffff\1\146\26\uffff\1\145\5\uffff\1\147\2\uffff\1\146",
+            "\1\151\6\uffff\1\152\30\uffff\1\151\6\uffff\1\150",
+            "\1\156\15\uffff\1\157\21\uffff\1\154\7\uffff\1\155\5\uffff\1\153",
+            "\1\160\37\uffff\1\160",
+            "\12\165\7\uffff\1\162\2\uffff\1\161\11\uffff\1\164\1\163\21\uffff\1\162\2\uffff\1\161\11\uffff\1\164\1\163",
+            "\1\165\1\uffff\12\171\12\uffff\1\166\10\uffff\1\167\26\uffff\1\166\10\uffff\1\167",
+            "\1\173\13\uffff\1\174\14\uffff\1\172\22\uffff\1\174\14\uffff\1\172",
+            "\1\175\37\uffff\1\175",
+            "\1\176\23\uffff\1\177\13\uffff\1\176\23\uffff\1\177",
+            "\1\u0080\37\uffff\1\u0080",
+            "\1\u0081\30\uffff\1\u0082\6\uffff\1\u0081\6\uffff\1\u0083",
+            "\1\u0084\37\uffff\1\u0084",
+            "\1\u0086\22\uffff\1\u0085",
+            "\1\u0088",
+            "\1\u008a",
+            "\1\u008c",
             "",
             "",
             "",
@@ -8475,680 +8848,700 @@ public class InternalWreslEditorLexer extends Lexer {
             "",
             "",
             "",
-            "\12\70\3\uffff\1\116\3\uffff\15\70\1\121\14\70\4\uffff\1\70"+
-            "\1\uffff\5\70\1\u0091\7\70\1\u0090\14\70",
-            "\1\106\23\uffff\1\u0092\13\uffff\1\106",
-            "\1\u0093\6\uffff\1\165\6\uffff\1\u0095\21\uffff\1\u0094\6"+
-            "\uffff\1\165",
-            "\1\u0097\7\uffff\1\u0098\5\uffff\1\u0096\21\uffff\1\145\15"+
-            "\uffff\1\146",
-            "\1\u0099\3\uffff\1\126\5\uffff\1\133\3\uffff\1\130\4\uffff"+
-            "\1\131\20\uffff\1\126\5\uffff\1\133\3\uffff\1\130\4\uffff\1"+
-            "\131",
-            "\1\123\11\uffff\1\u009a\2\uffff\1\124\22\uffff\1\123\14\uffff"+
-            "\1\124",
-            "\1\140\6\uffff\1\u009b\30\uffff\1\140\6\uffff\1\141",
-            "\1\154\1\uffff\12\160",
-            "\1\76\1\77\36\uffff\1\76\1\77",
-            "\12\u009c\1\uffff\2\u009c\1\uffff\ufff2\u009c",
+            "\12\73\3\uffff\1\124\3\uffff\15\73\1\127\14\73\4\uffff\1\73\1\uffff\5\73\1\u009a\7\73\1\u0099\14\73",
+            "\1\113\23\uffff\1\u009b\13\uffff\1\113",
+            "\1\u009c\6\uffff\1\u0081\6\uffff\1\u009e\21\uffff\1\u009d\6\uffff\1\u0081",
+            "\1\u00a0\7\uffff\1\u00a1\5\uffff\1\u009f\21\uffff\1\156\15\uffff\1\157",
+            "\1\u00a2\1\u00a4\2\uffff\1\134\5\uffff\1\144\3\uffff\1\136\2\uffff\1\u00a3\1\u00a5\1\137\20\uffff\1\134\5\uffff\1\144\3\uffff\1\136\4\uffff\1\137",
+            "\1\131\11\uffff\1\u00a6\2\uffff\1\132\22\uffff\1\131\14\uffff\1\132",
+            "\1\151\6\uffff\1\u00a7\30\uffff\1\151\6\uffff\1\152",
+            "\1\116\3\uffff\1\u00a8\12\uffff\1\120\1\121\1\117\16\uffff\1\116\16\uffff\1\120\1\121\1\117",
+            "\1\101\4\uffff\1\100\10\uffff\1\u00a9\21\uffff\1\101\4\uffff\1\100\10\uffff\1\102",
+            "\1\u00aa\7\uffff\1\74\27\uffff\1\76\7\uffff\1\74",
+            "\1\165\1\uffff\12\171",
+            "\1\103\1\104\36\uffff\1\103\1\104",
+            "\12\u00ab\1\uffff\2\u00ab\1\uffff\ufff2\u00ab",
             "",
             "",
             "",
             "",
-            "\1\u009f\37\uffff\1\u009f",
-            "\1\u00a0\2\uffff\1\u00a1\34\uffff\1\u00a0\2\uffff\1\u00a1",
-            "\1\u00a2\37\uffff\1\u00a2",
-            "",
-            "\1\u00a3\37\uffff\1\u00a3",
-            "\1\u00a4\37\uffff\1\u00a4",
-            "\1\u00a5\37\uffff\1\u00a5",
-            "\1\u00a6\37\uffff\1\u00a6",
-            "\1\u00a7\37\uffff\1\u00a7",
-            "\1\u00a8\37\uffff\1\u00a8",
-            "\1\u00a9\37\uffff\1\u00a9",
-            "\1\u00aa",
-            "\1\u00ab\6\uffff\1\u00ac\30\uffff\1\u00ab\6\uffff\1\u00ac",
-            "\1\u00ad\37\uffff\1\u00ad",
             "\1\u00ae\37\uffff\1\u00ae",
-            "\1\u00af\37\uffff\1\u00af",
-            "\1\u00b0\37\uffff\1\u00b0",
+            "\1\u00af\2\uffff\1\u00b0\34\uffff\1\u00af\2\uffff\1\u00b0",
             "\1\u00b1\37\uffff\1\u00b1",
-            "\1\u00b2",
-            "\1\u00b3",
-            "\1\u00b5\3\uffff\1\u00b6\1\u00b4\32\uffff\1\u00b5\3\uffff"+
-            "\1\u00b6\1\u00b4",
-            "\1\u00b7\37\uffff\1\u00b7",
+            "",
+            "\1\u00b2\37\uffff\1\u00b2",
+            "\1\u00b3\37\uffff\1\u00b3\7\uffff\1\u00b4",
+            "\1\u00b3\37\uffff\1\u00b3",
+            "\1\u00b5\37\uffff\1\u00b5\4\uffff\1\u00b6\1\u00b7",
             "\1\u00b8\37\uffff\1\u00b8",
             "\1\u00b9\37\uffff\1\u00b9",
-            "\1\u00ba\5\uffff\1\u00bb\12\uffff\1\u00bc\16\uffff\1\u00ba"+
-            "\5\uffff\1\u00bb\12\uffff\1\u00bd",
-            "",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\1\u00ba\5\uffff\1\u00bb\12\uffff\1\u00bd\16\uffff\1\u00ba"+
-            "\5\uffff\1\u00bb\12\uffff\1\u00bd",
-            "",
+            "\1\u00b5\37\uffff\1\u00b5",
+            "\1\u00ba\37\uffff\1\u00ba",
+            "\1\u00bb\37\uffff\1\u00bb",
+            "\1\u00bc",
+            "\1\u00bd\6\uffff\1\u00be\30\uffff\1\u00bd\6\uffff\1\u00be",
             "\1\u00bf\37\uffff\1\u00bf",
             "\1\u00c0\37\uffff\1\u00c0",
-            "\1\u00c1",
-            "\1\u00c2",
-            "\1\u00c3\37\uffff\1\u00c3\15\uffff\1\u00c4",
-            "\1\u00c5\37\uffff\1\u00c5",
-            "\1\u00c6\37\uffff\1\u00c6",
-            "\1\u00c7",
+            "\1\u00c1\37\uffff\1\u00c1",
+            "\1\u00c2\37\uffff\1\u00c2",
             "\1\u00c3\37\uffff\1\u00c3",
-            "\1\u00c8\37\uffff\1\u00c8",
+            "\1\u00c4",
+            "\1\u00c5",
+            "\1\u00c7\3\uffff\1\u00c8\1\u00c6\32\uffff\1\u00c7\3\uffff\1\u00c8\1\u00c6",
             "\1\u00c9\37\uffff\1\u00c9",
             "\1\u00ca\37\uffff\1\u00ca",
-            "\1\u00cb\23\uffff\1\u00cc\13\uffff\1\u00cb\3\uffff\1\u00cd"+
-            "\17\uffff\1\u00cc",
-            "\1\u00ce\37\uffff\1\u00ce",
-            "\1\u00cb\23\uffff\1\u00cc\13\uffff\1\u00cb\23\uffff\1\u00cc",
-            "\1\u00d1\11\uffff\1\u00d0\25\uffff\1\u00cf\11\uffff\1\u00d0",
-            "\1\u00d2\6\uffff\1\u00d3\30\uffff\1\u00d2\5\uffff\1\u00d4"+
-            "\1\u00d3",
+            "\1\u00cb\37\uffff\1\u00cb",
+            "\1\u00cc",
+            "\1\u00cd\5\uffff\1\u00ce\12\uffff\1\u00cf\16\uffff\1\u00cd\5\uffff\1\u00ce\12\uffff\1\u00d0",
+            "",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\1\u00cd\5\uffff\1\u00ce\12\uffff\1\u00d0\16\uffff\1\u00cd\5\uffff\1\u00ce\12\uffff\1\u00d0",
+            "",
+            "\1\u00d2\37\uffff\1\u00d2",
+            "\1\u00d3\37\uffff\1\u00d3",
+            "\1\u00d4",
             "\1\u00d5",
-            "\1\u00d2\6\uffff\1\u00d3\30\uffff\1\u00d2\6\uffff\1\u00d3",
-            "\1\u00d1\11\uffff\1\u00d0\25\uffff\1\u00d1\11\uffff\1\u00d0",
-            "\1\u00d6\37\uffff\1\u00d6",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "\1\154\1\uffff\12\160",
-            "\1\u00d7\37\uffff\1\u00d7",
-            "\1\u00d8",
+            "\1\u00d6\37\uffff\1\u00d6\15\uffff\1\u00d7",
+            "\1\u00d8\37\uffff\1\u00d8",
             "\1\u00d9\37\uffff\1\u00d9",
-            "\1\u00da\37\uffff\1\u00da",
-            "\1\u00db\37\uffff\1\u00db",
+            "\1\u00da",
+            "\1\u00db",
             "\1\u00dc",
             "\1\u00dd",
+            "\1\u00d6\37\uffff\1\u00d6",
             "\1\u00de\37\uffff\1\u00de",
-            "\1\u00df\1\uffff\1\u00e0\35\uffff\1\u00df\1\uffff\1\u00e0",
-            "\1\u00e1\37\uffff\1\u00e1",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "\1\u00ba\5\uffff\1\u00bb\12\uffff\1\u00bd\16\uffff\1\u00ba"+
-            "\5\uffff\1\u00bb\12\uffff\1\u00e2",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\1\u00e3",
-            "\1\u00e4",
-            "\1\u00e5",
-            "\1\u00e6",
-            "\1\u00e7\11\uffff\1\u00d0\25\uffff\1\u00d1\11\uffff\1\u00d0",
-            "\1\u00d2\5\uffff\1\u00e8\1\u00d3\30\uffff\1\u00d2\6\uffff"+
-            "\1\u00d3",
-            "\1\u00e9",
-            "\1\u00ea",
+            "\1\u00df\37\uffff\1\u00df",
+            "\1\u00e0\37\uffff\1\u00e0",
+            "\1\u00e1\23\uffff\1\u00e2\13\uffff\1\u00e1\3\uffff\1\u00e3\17\uffff\1\u00e2",
+            "\1\u00e4\37\uffff\1\u00e4",
+            "\1\u00e1\23\uffff\1\u00e2\13\uffff\1\u00e1\23\uffff\1\u00e2",
+            "\1\u00e7\11\uffff\1\u00e6\25\uffff\1\u00e5\11\uffff\1\u00e6",
+            "\1\u00e8\6\uffff\1\u00e9\30\uffff\1\u00e8\5\uffff\1\u00ea\1\u00e9",
             "\1\u00eb",
-            "\1\u00cb\3\uffff\1\u00ec\17\uffff\1\u00cc\13\uffff\1\u00cb"+
-            "\23\uffff\1\u00cc",
+            "\1\u00e8\6\uffff\1\u00e9\30\uffff\1\u00e8\6\uffff\1\u00e9",
+            "\1\u00e7\11\uffff\1\u00e6\25\uffff\1\u00e7\11\uffff\1\u00e6",
+            "\1\u00ec\37\uffff\1\u00ec",
             "",
             "",
             "",
-            "\12\70\7\uffff\22\70\1\u00ed\7\70\4\uffff\1\70\1\uffff\22"+
-            "\70\1\u00ed\7\70",
-            "\12\70\7\uffff\13\70\1\u00ef\16\70\4\uffff\1\70\1\uffff\13"+
-            "\70\1\u00ef\16\70",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "\1\165\1\uffff\12\171",
+            "\1\u00ed\37\uffff\1\u00ed",
+            "\1\u00ee",
+            "\1\u00ef\37\uffff\1\u00ef",
+            "\1\u00f0\37\uffff\1\u00f0",
             "\1\u00f1\37\uffff\1\u00f1",
-            "\1\u00f2\37\uffff\1\u00f2",
-            "\1\u00f3\37\uffff\1\u00f3",
-            "\1\u00f4",
-            "\1\u00f5\16\uffff\1\u00f6\2\uffff\1\u00f7\15\uffff\1\u00f5"+
-            "\16\uffff\1\u00f6\2\uffff\1\u00f7",
-            "\1\u00f8",
-            "\1\u00f9\37\uffff\1\u00f9",
-            "\1\u00fa\37\uffff\1\u00fa",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\1\u00fc",
-            "\1\u00fd\37\uffff\1\u00fd",
-            "\1\u00fe\37\uffff\1\u00fe",
-            "\1\u00ff\37\uffff\1\u00ff",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\1\u0101\37\uffff\1\u0101",
-            "\1\u0102\37\uffff\1\u0102",
-            "\1\u0103\37\uffff\1\u0103",
-            "\1\u0104",
-            "\1\u0105",
-            "\1\u0106\37\uffff\1\u0106",
-            "\1\u0107\37\uffff\1\u0107",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\1\u0109\37\uffff\1\u0109",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\1\u010c\37\uffff\1\u010c",
-            "\1\u010d\37\uffff\1\u010d",
-            "\12\70\7\uffff\4\70\1\u010e\25\70\4\uffff\1\70\1\uffff\4\70"+
-            "\1\u010e\25\70",
-            "\1\u010e\37\uffff\1\u010e",
+            "\1\u00f2\1\uffff\1\u00f3\35\uffff\1\u00f2\1\uffff\1\u00f3",
+            "\1\u00f4\37\uffff\1\u00f4",
+            "\1\u00f5\37\uffff\1\u00f5",
+            "\1\u00f6",
+            "\1\u00f7",
             "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "\1\u00cd\5\uffff\1\u00ce\12\uffff\1\u00d0\16\uffff\1\u00cd\5\uffff\1\u00ce\12\uffff\1\u00f8",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\1\u00f9",
+            "\1\u00fa",
+            "\1\u00fb",
+            "\1\u00fc",
+            "\1\u00fd\11\uffff\1\u00e6\25\uffff\1\u00e7\11\uffff\1\u00e6",
+            "\1\u00e8\5\uffff\1\u00fe\1\u00e9\30\uffff\1\u00e8\6\uffff\1\u00e9",
+            "\1\u00ff",
+            "\1\u0100",
+            "\1\u0101",
+            "\1\u0102",
+            "\1\u0103",
+            "\1\u0104",
+            "\1\u00e1\3\uffff\1\u0105\17\uffff\1\u00e2\13\uffff\1\u00e1\23\uffff\1\u00e2",
+            "\1\u0106",
+            "\1\u00b5\4\uffff\1\u0107\1\u0108\31\uffff\1\u00b5",
+            "\1\u00b3\7\uffff\1\u0109\27\uffff\1\u00b3",
+            "",
+            "",
+            "",
+            "\12\73\7\uffff\22\73\1\u010a\7\73\4\uffff\1\73\1\uffff\22\73\1\u010a\7\73",
+            "\12\73\7\uffff\13\73\1\u010c\16\73\4\uffff\1\73\1\uffff\13\73\1\u010c\16\73",
+            "\1\u010e\37\uffff\1\u010e",
+            "\1\u010f\37\uffff\1\u010f",
             "\1\u0110\37\uffff\1\u0110",
-            "\1\u0111\37\uffff\1\u0111",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\1\u0113\37\uffff\1\u0113",
-            "\1\u0114\37\uffff\1\u0114",
-            "\1\u0115",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
+            "\1\u0111",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\1\u0113\16\uffff\1\u0114\2\uffff\1\u0115\15\uffff\1\u0113\16\uffff\1\u0114\2\uffff\1\u0115",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\1\u0118",
             "\1\u0119\37\uffff\1\u0119",
             "\1\u011a\37\uffff\1\u011a",
-            "\1\u011b\37\uffff\1\u011b",
-            "\1\u011c\37\uffff\1\u011c",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\1\u011c",
             "\1\u011d\37\uffff\1\u011d",
-            "\1\70\1\u011e\10\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32"+
-            "\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\4\70\1\u0121\25\70\4\uffff\1\70\1\uffff\4\70"+
-            "\1\u0121\25\70",
-            "\1\u0123\37\uffff\1\u0123",
+            "\1\u011e\37\uffff\1\u011e",
+            "\1\u011f\37\uffff\1\u011f",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
             "\1\u0121\37\uffff\1\u0121",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\1\u0128\37\uffff\1\u0128",
+            "\1\u0122\37\uffff\1\u0122",
+            "\1\u0123\37\uffff\1\u0123",
+            "\1\u0124",
+            "\1\u0125",
+            "\1\u0126\37\uffff\1\u0126",
+            "\1\u0127\37\uffff\1\u0127",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
             "\1\u0129\37\uffff\1\u0129",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\1\u012c\37\uffff\1\u012c",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\1\u012e",
-            "\1\u012f",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\4\70\1\u010e\25\70\4\uffff\1\70\1\uffff\4\70"+
-            "\1\u010e\25\70",
-            "\1\u0134",
-            "\1\u0135",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\1\u012d\37\uffff\1\u012d",
+            "\1\u012e\37\uffff\1\u012e",
+            "\12\73\7\uffff\4\73\1\u012f\25\73\4\uffff\1\73\1\uffff\4\73\1\u012f\25\73",
+            "\1\u012f\37\uffff\1\u012f",
+            "",
+            "\1\u0131\37\uffff\1\u0131",
+            "\1\u0132\37\uffff\1\u0132",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\1\u0134\37\uffff\1\u0134",
+            "\1\u0135\37\uffff\1\u0135",
             "\1\u0136",
-            "\1\u0137",
-            "\12\70\7\uffff\4\70\1\u0121\25\70\4\uffff\1\70\1\uffff\4\70"+
-            "\1\u0121\25\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\1\70\1\u0138\10\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32"+
-            "\70",
-            "\1\u0139\37\uffff\1\u0139",
-            "",
-            "\1\u013a\37\uffff\1\u013a",
-            "",
-            "\1\u013b\37\uffff\1\u013b",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\1\u013d\37\uffff\1\u013d",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\1\u013a",
+            "\1\u013b\1\u013c",
+            "\1\u013d",
             "\1\u013e\37\uffff\1\u013e",
             "\1\u013f\37\uffff\1\u013f",
             "\1\u0140\37\uffff\1\u0140",
             "\1\u0141\37\uffff\1\u0141",
-            "\1\u0143\22\uffff\1\u0142\14\uffff\1\u0143\22\uffff\1\u0142",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\1\u0145\37\uffff\1\u0145",
-            "",
-            "\1\u0146",
-            "\1\u0147\37\uffff\1\u0147",
+            "\1\u0142\37\uffff\1\u0142",
+            "\1\73\1\u0143\10\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\4\73\1\u0146\25\73\4\uffff\1\73\1\uffff\4\73\1\u0146\25\73",
             "\1\u0148\37\uffff\1\u0148",
-            "\1\u0149\37\uffff\1\u0149",
-            "",
-            "\1\u014a\37\uffff\1\u014a",
-            "\1\u014b\37\uffff\1\u014b",
-            "\1\u014c\37\uffff\1\u014c",
-            "\12\70\7\uffff\10\70\1\u014e\21\70\4\uffff\1\70\1\uffff\10"+
-            "\70\1\u014d\21\70",
-            "\12\70\7\uffff\10\70\1\u0150\21\70\4\uffff\1\70\1\uffff\32"+
-            "\70",
+            "\1\u0146\37\uffff\1\u0146",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\1\u014d\37\uffff\1\u014d",
+            "\1\u014e\37\uffff\1\u014e",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
             "\1\u0151\37\uffff\1\u0151",
-            "\1\u0152\37\uffff\1\u0152",
-            "",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "",
-            "",
-            "\1\u0154\37\uffff\1\u0154",
-            "\1\u0155\37\uffff\1\u0155",
-            "\1\u0156\37\uffff\1\u0156",
-            "",
-            "\1\u0157\37\uffff\1\u0157",
-            "\1\u0158\2\uffff\1\u0159\1\uffff\1\u015a\3\uffff\1\u015b\2"+
-            "\uffff\1\u015c\1\u015d\1\u015e\3\uffff\1\u015f\15\uffff\1\u0158"+
-            "\2\uffff\1\u0159\1\uffff\1\u015a\3\uffff\1\u015b\2\uffff\1\u015c"+
-            "\1\u015d\1\u015e\3\uffff\1\u015f",
-            "",
-            "\1\u0160\37\uffff\1\u0160",
-            "\1\u0161\37\uffff\1\u0161",
-            "\1\u0162",
-            "",
-            "",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\1\u0157",
+            "\1\u0158",
+            "\12\73\7\uffff\4\73\1\u012f\25\73\4\uffff\1\73\1\uffff\4\73\1\u012f\25\73",
+            "\1\u0159",
+            "\1\u015a",
+            "\1\u015b",
+            "\1\u015c",
+            "\12\73\7\uffff\4\73\1\u0146\25\73\4\uffff\1\73\1\uffff\4\73\1\u0146\25\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\1\u015d",
+            "\1\u015e\1\u015f",
+            "\1\u0160",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\1\73\1\u0161\10\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\1\u0162\37\uffff\1\u0162",
             "",
             "\1\u0163\37\uffff\1\u0163",
+            "",
             "\1\u0164\37\uffff\1\u0164",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
             "\1\u0166\37\uffff\1\u0166",
             "\1\u0167\37\uffff\1\u0167",
-            "\1\u0168",
             "",
-            "",
+            "\1\u0168\37\uffff\1\u0168",
             "\1\u0169\37\uffff\1\u0169",
-            "",
             "\1\u016a\37\uffff\1\u016a",
             "",
             "",
+            "\1\u016c\22\uffff\1\u016b\14\uffff\1\u016c\22\uffff\1\u016b",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\1\u016e\37\uffff\1\u016e",
             "",
-            "",
-            "\1\u016b\37\uffff\1\u016b",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "",
-            "",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "",
-            "\1\u016e",
             "\1\u016f",
+            "\1\u0170\37\uffff\1\u0170",
+            "\1\u0171\37\uffff\1\u0171",
+            "\1\u0172\37\uffff\1\u0172",
             "",
-            "",
-            "",
-            "",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\10\70\1\u0170\21"+
-            "\70",
-            "\1\u0171",
-            "\1\u0172",
-            "\1\u0173",
-            "\1\u0174",
+            "\1\u0173\37\uffff\1\u0173",
+            "\1\u0174\37\uffff\1\u0174",
             "\1\u0175\37\uffff\1\u0175",
-            "\1\u0176\37\uffff\1\u0176",
-            "\1\u0177\37\uffff\1\u0177",
-            "",
-            "\1\u0178\16\uffff\1\u0179\20\uffff\1\u0178\16\uffff\1\u0179",
+            "\12\73\7\uffff\10\73\1\u0177\21\73\4\uffff\1\73\1\uffff\10\73\1\u0176\21\73",
+            "\12\73\7\uffff\10\73\1\u0179\21\73\4\uffff\1\73\1\uffff\32\73",
             "\1\u017a\37\uffff\1\u017a",
             "\1\u017b\37\uffff\1\u017b",
-            "\12\70\7\uffff\21\70\1\u017c\10\70\4\uffff\1\70\1\uffff\21"+
-            "\70\1\u017c\10\70",
+            "",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "",
+            "",
+            "",
+            "\1\u017d\37\uffff\1\u017d",
             "\1\u017e\37\uffff\1\u017e",
             "\1\u017f\37\uffff\1\u017f",
+            "",
             "\1\u0180\37\uffff\1\u0180",
+            "\1\u0181\2\uffff\1\u0182\1\uffff\1\u0183\3\uffff\1\u0184\2\uffff\1\u0185\1\u0186\1\u0187\3\uffff\1\u0188\15\uffff\1\u0181\2\uffff\1\u0182\1\uffff\1\u0183\3\uffff\1\u0184\2\uffff\1\u0185\1\u0186\1\u0187\3\uffff\1\u0188",
             "",
-            "\1\u0181\37\uffff\1\u0181",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\1\u0183\37\uffff\1\u0183",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\1\u0186\37\uffff\1\u0186",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\1\u0188\37\uffff\1\u0188",
-            "\1\u0189",
-            "\1\u018a",
-            "",
+            "\1\u0189\37\uffff\1\u0189",
+            "\1\u018a\37\uffff\1\u018a",
             "\1\u018b",
-            "\1\u018c\37\uffff\1\u018c",
-            "\1\u018d\37\uffff\1\u018d",
             "",
-            "\1\u018e\37\uffff\1\u018e",
-            "\1\u018f\37\uffff\1\u018f",
+            "",
+            "",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
             "\1\u0190\37\uffff\1\u0190",
             "\1\u0191\37\uffff\1\u0191",
-            "\1\u0192\4\uffff\1\u0193\32\uffff\1\u0192\4\uffff\1\u0193",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\1\u0193\37\uffff\1\u0193",
             "\1\u0194\37\uffff\1\u0194",
-            "\1\u0195\37\uffff\1\u0195",
-            "\1\u0196\23\uffff\1\u0197\13\uffff\1\u0196\23\uffff\1\u0197",
+            "\1\u0195",
+            "",
+            "",
+            "\1\u0196\37\uffff\1\u0196",
+            "",
+            "\1\u0197\37\uffff\1\u0197",
+            "",
+            "",
+            "",
+            "",
             "\1\u0198\37\uffff\1\u0198",
-            "\1\u0199\37\uffff\1\u0199",
-            "\1\u019a\37\uffff\1\u019a",
-            "\1\u019b\37\uffff\1\u019b",
-            "\1\u019c\37\uffff\1\u019c",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "",
+            "",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "\1\u019b",
+            "\1\u019c",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\10\73\1\u019d\21\73",
             "\1\u019e",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
+            "\1\u019f",
+            "\1\u01a0",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\1\u01a1",
+            "\1\u01a2\37\uffff\1\u01a2",
+            "\1\u01a3\37\uffff\1\u01a3",
+            "\1\u01a4\37\uffff\1\u01a4",
             "",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "",
-            "",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\1\u01a8",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\14\70\1\u01aa\6\70\1\u01a9\6\70\4\uffff\1\70"+
-            "\1\uffff\14\70\1\u01aa\6\70\1\u01a9\6\70",
+            "\1\u01a5\16\uffff\1\u01a6\20\uffff\1\u01a5\16\uffff\1\u01a6",
+            "\1\u01a7\37\uffff\1\u01a7",
+            "\1\u01a8\37\uffff\1\u01a8",
+            "\12\73\7\uffff\21\73\1\u01a9\10\73\4\uffff\1\73\1\uffff\21\73\1\u01a9\10\73",
+            "\1\u01ab\37\uffff\1\u01ab",
             "\1\u01ac\37\uffff\1\u01ac",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
+            "\1\u01ad\37\uffff\1\u01ad",
+            "",
             "\1\u01ae\37\uffff\1\u01ae",
-            "\1\u01af\37\uffff\1\u01af",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
             "\1\u01b0\37\uffff\1\u01b0",
-            "\1\u01b1\37\uffff\1\u01b1",
-            "\1\u01b2\37\uffff\1\u01b2",
-            "",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
             "\1\u01b3\37\uffff\1\u01b3",
-            "\1\u01b4\37\uffff\1\u01b4",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\1\u01b6\37\uffff\1\u01b6",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\1\u01b5\37\uffff\1\u01b5",
+            "\1\u01b6",
+            "\1\u01b7",
             "",
-            "\1\u01b7\37\uffff\1\u01b7",
-            "",
-            "",
-            "\1\u01b8\37\uffff\1\u01b8",
-            "",
+            "\1\u01b8",
             "\1\u01b9\37\uffff\1\u01b9",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
+            "\1\u01ba\37\uffff\1\u01ba",
+            "",
             "\1\u01bb\37\uffff\1\u01bb",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
+            "\1\u01bc\37\uffff\1\u01bc",
             "\1\u01bd\37\uffff\1\u01bd",
             "\1\u01be\37\uffff\1\u01be",
-            "\1\u01bf\37\uffff\1\u01bf",
-            "\1\u01c0\37\uffff\1\u01c0",
+            "\1\u01bf\4\uffff\1\u01c0\32\uffff\1\u01bf\4\uffff\1\u01c0",
             "\1\u01c1\37\uffff\1\u01c1",
             "\1\u01c2\37\uffff\1\u01c2",
-            "\1\u01c3\37\uffff\1\u01c3",
-            "\1\u01c4\37\uffff\1\u01c4",
+            "\1\u01c3\23\uffff\1\u01c4\13\uffff\1\u01c3\23\uffff\1\u01c4",
             "\1\u01c5\37\uffff\1\u01c5",
-            "\1\u01c6\1\uffff\1\u01c7\35\uffff\1\u01c6\1\uffff\1\u01c7",
-            "\1\u01c8\6\uffff\1\u01c9\30\uffff\1\u01c8\6\uffff\1\u01c9",
-            "\1\u01ca\37\uffff\1\u01ca",
-            "\1\u01cb\37\uffff\1\u01cb",
-            "\1\u01cc\37\uffff\1\u01cc",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
+            "\1\u01c6\37\uffff\1\u01c6",
+            "\1\u01c7\37\uffff\1\u01c7",
+            "\1\u01c8\37\uffff\1\u01c8",
+            "\1\u01c9\37\uffff\1\u01c9",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\1\u01cb",
             "",
             "",
             "",
             "",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
             "",
             "",
-            "",
-            "",
-            "",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\1\u01cf\37\uffff\1\u01cf",
-            "\1\u01d0\37\uffff\1\u01d0",
-            "",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "",
-            "\1\u01d2\37\uffff\1\u01d2",
-            "\1\u01d3\37\uffff\1\u01d3",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\1\u01d5\37\uffff\1\u01d5",
-            "\1\u01d6\37\uffff\1\u01d6",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\1\u01d5",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\14\73\1\u01d7\6\73\1\u01d6\6\73\4\uffff\1\73\1\uffff\14\73\1\u01d7\6\73\1\u01d6\6\73",
             "\1\u01d9\37\uffff\1\u01d9",
-            "\1\u01da\37\uffff\1\u01da",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
             "\1\u01db\37\uffff\1\u01db",
             "\1\u01dc\37\uffff\1\u01dc",
-            "",
             "\1\u01dd\37\uffff\1\u01dd",
+            "\1\u01de\37\uffff\1\u01de",
+            "\1\u01df\37\uffff\1\u01df",
             "",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
+            "\1\u01e0\37\uffff\1\u01e0",
+            "\1\u01e1\37\uffff\1\u01e1",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\1\u01e3\37\uffff\1\u01e3",
+            "",
+            "\1\u01e4\37\uffff\1\u01e4",
             "",
             "",
+            "\1\u01e5\37\uffff\1\u01e5",
+            "",
+            "\1\u01e6\37\uffff\1\u01e6",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\1\u01e8\37\uffff\1\u01e8",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\1\u01ea\37\uffff\1\u01ea",
+            "\1\u01eb\37\uffff\1\u01eb",
+            "\1\u01ec\37\uffff\1\u01ec",
+            "\1\u01ed\37\uffff\1\u01ed",
             "\1\u01ee\37\uffff\1\u01ee",
             "\1\u01ef\37\uffff\1\u01ef",
-            "",
             "\1\u01f0\37\uffff\1\u01f0",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "",
+            "\1\u01f1\37\uffff\1\u01f1",
             "\1\u01f2\37\uffff\1\u01f2",
-            "\1\u01f3\37\uffff\1\u01f3",
-            "",
-            "",
-            "\1\u01f4\37\uffff\1\u01f4",
-            "\1\u01f5\37\uffff\1\u01f5",
-            "\1\u01f6\37\uffff\1\u01f6",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
+            "\1\u01f3\1\uffff\1\u01f4\35\uffff\1\u01f3\1\uffff\1\u01f4",
+            "\1\u01f5\6\uffff\1\u01f6\30\uffff\1\u01f5\6\uffff\1\u01f6",
+            "\1\u01f7\37\uffff\1\u01f7",
+            "\1\u01f8\37\uffff\1\u01f8",
             "\1\u01f9\37\uffff\1\u01f9",
-            "\1\u01fa\37\uffff\1\u01fa",
-            "\1\u01fb\37\uffff\1\u01fb",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
             "",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
             "",
             "",
-            "\1\u0201\37\uffff\1\u0201",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\1\u01fc\37\uffff\1\u01fc",
+            "\1\u01fd\37\uffff\1\u01fd",
+            "",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "",
+            "\1\u01ff\37\uffff\1\u01ff",
+            "\1\u0200\37\uffff\1\u0200",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
             "\1\u0202\37\uffff\1\u0202",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "\1\u0204\37\uffff\1\u0204",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
+            "\1\u0203\37\uffff\1\u0203",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
             "",
             "\1\u0206\37\uffff\1\u0206",
-            "",
             "\1\u0207\37\uffff\1\u0207",
-            "\12\70\7\uffff\32\70\4\uffff\1\70\1\uffff\32\70",
+            "\1\u0208\37\uffff\1\u0208",
+            "\1\u0209\37\uffff\1\u0209",
+            "",
+            "\1\u020a\37\uffff\1\u020a",
+            "",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "",
+            "",
+            "\1\u021b\37\uffff\1\u021b",
+            "\1\u021c\37\uffff\1\u021c",
+            "",
+            "\1\u021d\37\uffff\1\u021d",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "",
+            "\1\u021f\37\uffff\1\u021f",
+            "\1\u0220\37\uffff\1\u0220",
+            "",
+            "",
+            "\1\u0221\37\uffff\1\u0221",
+            "\1\u0222\37\uffff\1\u0222",
+            "\1\u0223\37\uffff\1\u0223",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "\1\u0226\37\uffff\1\u0226",
+            "\1\u0227\37\uffff\1\u0227",
+            "\1\u0228\37\uffff\1\u0228",
+            "",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "",
+            "",
+            "\1\u022e\37\uffff\1\u022e",
+            "\1\u022f\37\uffff\1\u022f",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "\1\u0231\37\uffff\1\u0231",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
+            "",
+            "\1\u0233\37\uffff\1\u0233",
+            "",
+            "\1\u0234\37\uffff\1\u0234",
+            "\12\73\7\uffff\32\73\4\uffff\1\73\1\uffff\32\73",
             ""
     };
 
-    static final short[] DFA27_eot = DFA.unpackEncodedString(DFA27_eotS);
-    static final short[] DFA27_eof = DFA.unpackEncodedString(DFA27_eofS);
-    static final char[] DFA27_min = DFA.unpackEncodedStringToUnsignedChars(DFA27_minS);
-    static final char[] DFA27_max = DFA.unpackEncodedStringToUnsignedChars(DFA27_maxS);
-    static final short[] DFA27_accept = DFA.unpackEncodedString(DFA27_acceptS);
-    static final short[] DFA27_special = DFA.unpackEncodedString(DFA27_specialS);
-    static final short[][] DFA27_transition;
+    static final short[] DFA35_eot = DFA.unpackEncodedString(DFA35_eotS);
+    static final short[] DFA35_eof = DFA.unpackEncodedString(DFA35_eofS);
+    static final char[] DFA35_min = DFA.unpackEncodedStringToUnsignedChars(DFA35_minS);
+    static final char[] DFA35_max = DFA.unpackEncodedStringToUnsignedChars(DFA35_maxS);
+    static final short[] DFA35_accept = DFA.unpackEncodedString(DFA35_acceptS);
+    static final short[] DFA35_special = DFA.unpackEncodedString(DFA35_specialS);
+    static final short[][] DFA35_transition;
 
     static {
-        int numStates = DFA27_transitionS.length;
-        DFA27_transition = new short[numStates][];
+        int numStates = DFA35_transitionS.length;
+        DFA35_transition = new short[numStates][];
         for (int i=0; i<numStates; i++) {
-            DFA27_transition[i] = DFA.unpackEncodedString(DFA27_transitionS[i]);
+            DFA35_transition[i] = DFA.unpackEncodedString(DFA35_transitionS[i]);
         }
     }
 
-    class DFA27 extends DFA {
+    class DFA35 extends DFA {
 
-        public DFA27(BaseRecognizer recognizer) {
+        public DFA35(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 27;
-            this.eot = DFA27_eot;
-            this.eof = DFA27_eof;
-            this.min = DFA27_min;
-            this.max = DFA27_max;
-            this.accept = DFA27_accept;
-            this.special = DFA27_special;
-            this.transition = DFA27_transition;
+            this.decisionNumber = 35;
+            this.eot = DFA35_eot;
+            this.eof = DFA35_eof;
+            this.min = DFA35_min;
+            this.max = DFA35_max;
+            this.accept = DFA35_accept;
+            this.special = DFA35_special;
+            this.transition = DFA35_transition;
         }
         public String getDescription() {
-            return "1:1: Tokens : ( KEYWORD_98 | KEYWORD_97 | KEYWORD_96 | KEYWORD_91 | KEYWORD_92 | KEYWORD_93 | KEYWORD_94 | KEYWORD_95 | KEYWORD_88 | KEYWORD_89 | KEYWORD_90 | KEYWORD_68 | KEYWORD_69 | KEYWORD_70 | KEYWORD_71 | KEYWORD_72 | KEYWORD_73 | KEYWORD_74 | KEYWORD_75 | KEYWORD_76 | KEYWORD_77 | KEYWORD_78 | KEYWORD_79 | KEYWORD_80 | KEYWORD_81 | KEYWORD_82 | KEYWORD_83 | KEYWORD_84 | KEYWORD_85 | KEYWORD_86 | KEYWORD_87 | KEYWORD_63 | KEYWORD_64 | KEYWORD_65 | KEYWORD_66 | KEYWORD_67 | KEYWORD_51 | KEYWORD_52 | KEYWORD_53 | KEYWORD_54 | KEYWORD_55 | KEYWORD_56 | KEYWORD_57 | KEYWORD_58 | KEYWORD_59 | KEYWORD_60 | KEYWORD_61 | KEYWORD_62 | KEYWORD_42 | KEYWORD_43 | KEYWORD_44 | KEYWORD_45 | KEYWORD_46 | KEYWORD_47 | KEYWORD_48 | KEYWORD_49 | KEYWORD_50 | KEYWORD_23 | KEYWORD_24 | KEYWORD_25 | KEYWORD_26 | KEYWORD_27 | KEYWORD_28 | KEYWORD_29 | KEYWORD_30 | KEYWORD_31 | KEYWORD_32 | KEYWORD_33 | KEYWORD_34 | KEYWORD_35 | KEYWORD_36 | KEYWORD_37 | KEYWORD_38 | KEYWORD_39 | KEYWORD_40 | KEYWORD_41 | KEYWORD_17 | KEYWORD_18 | KEYWORD_19 | KEYWORD_20 | KEYWORD_21 | KEYWORD_22 | KEYWORD_1 | KEYWORD_2 | KEYWORD_3 | KEYWORD_4 | KEYWORD_5 | KEYWORD_6 | KEYWORD_7 | KEYWORD_8 | KEYWORD_9 | KEYWORD_10 | KEYWORD_11 | KEYWORD_12 | KEYWORD_13 | KEYWORD_14 | KEYWORD_15 | KEYWORD_16 | RULE_IF | RULE_ELSEIF | RULE_ELSE | RULE_RANGE | RULE_MIN | RULE_MAX | RULE_MOD | RULE_INTFUNC | RULE_ABS | RULE_ROUND | RULE_POW | RULE_LOG | RULE_FLOAT | RULE_AND | RULE_OR | RULE_NOT | RULE_ALWAYS | RULE_ORDER | RULE_STRING | RULE_SL_COMMENT | RULE_ID | RULE_INT | RULE_ML_COMMENT | RULE_WS | RULE_ANY_OTHER );";
+            return "1:1: Tokens : ( Daysintimestep | Daysinmonth | Timeseries | Condition | Constrain | Objective | Unbounded | Wateryear | External | Sequence | Timestep | Declare | Cfs_taf | Convert | Include | Initial_1 | Integer | Penalty | Prevapr | Prevaug | Prevdec | Prevfeb | Prevjan | Prevjul | Prevjun | Prevmar | Prevmay | Prevnov | Prevoct | Prevsep | Taf_cfs | Af_cfs | Cfs_af | Daysin | Define | Select | Alias | Const_1 | Given | Group | Local | Lower | Model | Month | Units | Upper | Value | Where | Dll | DAY | MON | Case | Dvar_1 | From | Goal | Kind | Svar_1 | Apr | Aug | Day | Dec | F90_1 | Feb | Jan | Jul | Jun | Lhs | Mar | May | Nov | Oct | Rhs | Sep | Std | Sum | Use | M | SolidusEqualsSign | LessThanSignEqualsSign | EqualsSignEqualsSign | GreaterThanSignEqualsSign | I_1 | LeftParenthesis | RightParenthesis | Asterisk | PlusSign | Comma | HyphenMinus | Solidus | Colon | LessThanSign | EqualsSign | GreaterThanSign | LeftSquareBracket | RightSquareBracket | I | LeftCurlyBracket | RightCurlyBracket | RULE_IF | RULE_ELSEIF | RULE_ELSE | RULE_RANGE | RULE_MIN | RULE_MAX | RULE_MOD | RULE_INTFUNC | RULE_ABS | RULE_ROUND | RULE_POW | RULE_LOG | RULE_SIN | RULE_COS | RULE_TAN | RULE_COT | RULE_ASIN | RULE_ACOS | RULE_ATAN | RULE_ACOT | RULE_FLOAT | RULE_AND | RULE_OR | RULE_NOT | RULE_ALWAYS | RULE_ORDER | RULE_STRING | RULE_SL_COMMENT | RULE_ID | RULE_INT | RULE_ML_COMMENT | RULE_WS | RULE_ANY_OTHER );";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             IntStream input = _input;
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA27_0 = input.LA(1);
+                        int LA35_0 = input.LA(1);
 
                         s = -1;
-                        if ( (LA27_0=='D'||LA27_0=='d') ) {s = 1;}
+                        if ( (LA35_0=='D'||LA35_0=='d') ) {s = 1;}
 
-                        else if ( (LA27_0=='T'||LA27_0=='t') ) {s = 2;}
+                        else if ( (LA35_0=='t') ) {s = 2;}
 
-                        else if ( (LA27_0=='C'||LA27_0=='c') ) {s = 3;}
+                        else if ( (LA35_0=='c') ) {s = 3;}
 
-                        else if ( (LA27_0=='o') ) {s = 4;}
+                        else if ( (LA35_0=='o') ) {s = 4;}
 
-                        else if ( (LA27_0=='U'||LA27_0=='u') ) {s = 5;}
+                        else if ( (LA35_0=='U'||LA35_0=='u') ) {s = 5;}
 
-                        else if ( (LA27_0=='W'||LA27_0=='w') ) {s = 6;}
+                        else if ( (LA35_0=='W'||LA35_0=='w') ) {s = 6;}
 
-                        else if ( (LA27_0=='E') ) {s = 7;}
+                        else if ( (LA35_0=='E') ) {s = 7;}
 
-                        else if ( (LA27_0=='S'||LA27_0=='s') ) {s = 8;}
+                        else if ( (LA35_0=='s') ) {s = 8;}
 
-                        else if ( (LA27_0=='I') ) {s = 9;}
+                        else if ( (LA35_0=='I') ) {s = 9;}
 
-                        else if ( (LA27_0=='p') ) {s = 10;}
+                        else if ( (LA35_0=='p') ) {s = 10;}
 
-                        else if ( (LA27_0=='a') ) {s = 11;}
+                        else if ( (LA35_0=='a') ) {s = 11;}
 
-                        else if ( (LA27_0=='G'||LA27_0=='g') ) {s = 12;}
+                        else if ( (LA35_0=='G'||LA35_0=='g') ) {s = 12;}
 
-                        else if ( (LA27_0=='l') ) {s = 13;}
+                        else if ( (LA35_0=='l') ) {s = 13;}
 
-                        else if ( (LA27_0=='m') ) {s = 14;}
+                        else if ( (LA35_0=='m') ) {s = 14;}
 
-                        else if ( (LA27_0=='V'||LA27_0=='v') ) {s = 15;}
+                        else if ( (LA35_0=='V'||LA35_0=='v') ) {s = 15;}
 
-                        else if ( (LA27_0=='.') ) {s = 16;}
+                        else if ( (LA35_0=='.') ) {s = 16;}
 
-                        else if ( (LA27_0=='1') ) {s = 17;}
+                        else if ( (LA35_0=='1') ) {s = 17;}
 
-                        else if ( (LA27_0=='F'||LA27_0=='f') ) {s = 18;}
+                        else if ( (LA35_0=='F'||LA35_0=='f') ) {s = 18;}
 
-                        else if ( (LA27_0=='K'||LA27_0=='k') ) {s = 19;}
+                        else if ( (LA35_0=='K'||LA35_0=='k') ) {s = 19;}
 
-                        else if ( (LA27_0=='r') ) {s = 20;}
+                        else if ( (LA35_0=='J'||LA35_0=='j') ) {s = 20;}
 
-                        else if ( (LA27_0=='J'||LA27_0=='j') ) {s = 21;}
+                        else if ( (LA35_0=='N'||LA35_0=='n') ) {s = 21;}
 
-                        else if ( (LA27_0=='N'||LA27_0=='n') ) {s = 22;}
+                        else if ( (LA35_0=='r') ) {s = 22;}
 
-                        else if ( (LA27_0=='$') ) {s = 23;}
+                        else if ( (LA35_0=='$') ) {s = 23;}
 
-                        else if ( (LA27_0=='/') ) {s = 24;}
+                        else if ( (LA35_0=='/') ) {s = 24;}
 
-                        else if ( (LA27_0=='<') ) {s = 25;}
+                        else if ( (LA35_0=='<') ) {s = 25;}
 
-                        else if ( (LA27_0=='=') ) {s = 26;}
+                        else if ( (LA35_0=='=') ) {s = 26;}
 
-                        else if ( (LA27_0=='>') ) {s = 27;}
+                        else if ( (LA35_0=='>') ) {s = 27;}
 
-                        else if ( (LA27_0=='(') ) {s = 28;}
+                        else if ( (LA35_0=='(') ) {s = 28;}
 
-                        else if ( (LA27_0==')') ) {s = 29;}
+                        else if ( (LA35_0==')') ) {s = 29;}
 
-                        else if ( (LA27_0=='*') ) {s = 30;}
+                        else if ( (LA35_0=='*') ) {s = 30;}
 
-                        else if ( (LA27_0=='+') ) {s = 31;}
+                        else if ( (LA35_0=='+') ) {s = 31;}
 
-                        else if ( (LA27_0==',') ) {s = 32;}
+                        else if ( (LA35_0==',') ) {s = 32;}
 
-                        else if ( (LA27_0=='-') ) {s = 33;}
+                        else if ( (LA35_0=='-') ) {s = 33;}
 
-                        else if ( (LA27_0==':') ) {s = 34;}
+                        else if ( (LA35_0==':') ) {s = 34;}
 
-                        else if ( (LA27_0=='[') ) {s = 35;}
+                        else if ( (LA35_0=='[') ) {s = 35;}
 
-                        else if ( (LA27_0==']') ) {s = 36;}
+                        else if ( (LA35_0==']') ) {s = 36;}
 
-                        else if ( (LA27_0=='{') ) {s = 37;}
+                        else if ( (LA35_0=='{') ) {s = 37;}
 
-                        else if ( (LA27_0=='}') ) {s = 38;}
+                        else if ( (LA35_0=='}') ) {s = 38;}
 
-                        else if ( (LA27_0=='i') ) {s = 39;}
+                        else if ( (LA35_0=='i') ) {s = 39;}
 
-                        else if ( (LA27_0=='e') ) {s = 40;}
+                        else if ( (LA35_0=='e') ) {s = 40;}
 
-                        else if ( (LA27_0=='R') ) {s = 41;}
+                        else if ( (LA35_0=='R') ) {s = 41;}
 
-                        else if ( (LA27_0=='M') ) {s = 42;}
+                        else if ( (LA35_0=='M') ) {s = 42;}
 
-                        else if ( (LA27_0=='A') ) {s = 43;}
+                        else if ( (LA35_0=='A') ) {s = 43;}
 
-                        else if ( (LA27_0=='P') ) {s = 44;}
+                        else if ( (LA35_0=='P') ) {s = 44;}
 
-                        else if ( (LA27_0=='L') ) {s = 45;}
+                        else if ( (LA35_0=='L') ) {s = 45;}
 
-                        else if ( (LA27_0=='0'||(LA27_0>='2' && LA27_0<='9')) ) {s = 46;}
+                        else if ( (LA35_0=='S') ) {s = 46;}
 
-                        else if ( (LA27_0=='O') ) {s = 47;}
+                        else if ( (LA35_0=='C') ) {s = 47;}
 
-                        else if ( (LA27_0=='\'') ) {s = 48;}
+                        else if ( (LA35_0=='T') ) {s = 48;}
 
-                        else if ( (LA27_0=='!') ) {s = 49;}
+                        else if ( (LA35_0=='0'||(LA35_0>='2' && LA35_0<='9')) ) {s = 49;}
 
-                        else if ( (LA27_0=='B'||LA27_0=='H'||LA27_0=='Q'||(LA27_0>='X' && LA27_0<='Z')||LA27_0=='b'||LA27_0=='h'||LA27_0=='q'||(LA27_0>='x' && LA27_0<='z')) ) {s = 50;}
+                        else if ( (LA35_0=='O') ) {s = 50;}
 
-                        else if ( ((LA27_0>='\t' && LA27_0<='\n')||LA27_0=='\r'||LA27_0==' ') ) {s = 51;}
+                        else if ( (LA35_0=='\'') ) {s = 51;}
 
-                        else if ( ((LA27_0>='\u0000' && LA27_0<='\b')||(LA27_0>='\u000B' && LA27_0<='\f')||(LA27_0>='\u000E' && LA27_0<='\u001F')||(LA27_0>='\"' && LA27_0<='#')||(LA27_0>='%' && LA27_0<='&')||LA27_0==';'||(LA27_0>='?' && LA27_0<='@')||LA27_0=='\\'||(LA27_0>='^' && LA27_0<='`')||LA27_0=='|'||(LA27_0>='~' && LA27_0<='\uFFFF')) ) {s = 52;}
+                        else if ( (LA35_0=='!') ) {s = 52;}
+
+                        else if ( (LA35_0=='B'||LA35_0=='H'||LA35_0=='Q'||(LA35_0>='X' && LA35_0<='Z')||LA35_0=='b'||LA35_0=='h'||LA35_0=='q'||(LA35_0>='x' && LA35_0<='z')) ) {s = 53;}
+
+                        else if ( ((LA35_0>='\t' && LA35_0<='\n')||LA35_0=='\r'||LA35_0==' ') ) {s = 54;}
+
+                        else if ( ((LA35_0>='\u0000' && LA35_0<='\b')||(LA35_0>='\u000B' && LA35_0<='\f')||(LA35_0>='\u000E' && LA35_0<='\u001F')||(LA35_0>='\"' && LA35_0<='#')||(LA35_0>='%' && LA35_0<='&')||LA35_0==';'||(LA35_0>='?' && LA35_0<='@')||LA35_0=='\\'||(LA35_0>='^' && LA35_0<='`')||LA35_0=='|'||(LA35_0>='~' && LA35_0<='\uFFFF')) ) {s = 55;}
 
                         if ( s>=0 ) return s;
                         break;
                     case 1 : 
-                        int LA27_48 = input.LA(1);
+                        int LA35_51 = input.LA(1);
 
                         s = -1;
-                        if ( ((LA27_48>='\u0000' && LA27_48<='\t')||(LA27_48>='\u000B' && LA27_48<='\f')||(LA27_48>='\u000E' && LA27_48<='\uFFFF')) ) {s = 156;}
+                        if ( ((LA35_51>='\u0000' && LA35_51<='\t')||(LA35_51>='\u000B' && LA35_51<='\f')||(LA35_51>='\u000E' && LA35_51<='\uFFFF')) ) {s = 171;}
 
-                        else s = 52;
+                        else s = 55;
 
                         if ( s>=0 ) return s;
                         break;
             }
             NoViableAltException nvae =
-                new NoViableAltException(getDescription(), 27, _s, input);
+                new NoViableAltException(getDescription(), 35, _s, input);
             error(nvae);
             throw nvae;
         }

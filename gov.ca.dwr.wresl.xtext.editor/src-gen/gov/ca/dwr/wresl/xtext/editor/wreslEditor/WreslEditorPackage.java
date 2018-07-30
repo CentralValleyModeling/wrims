@@ -3107,6 +3107,230 @@ public interface WreslEditorPackage extends EPackage
   int LOG_FUNCTION_FEATURE_COUNT = FUNCTION_FEATURE_COUNT + 1;
 
   /**
+   * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.SinFunctionImpl <em>Sin Function</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.SinFunctionImpl
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getSinFunction()
+   * @generated
+   */
+  int SIN_FUNCTION = 80;
+
+  /**
+   * The feature id for the '<em><b>E</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SIN_FUNCTION__E = FUNCTION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Sin Function</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SIN_FUNCTION_FEATURE_COUNT = FUNCTION_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.CosFunctionImpl <em>Cos Function</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.CosFunctionImpl
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getCosFunction()
+   * @generated
+   */
+  int COS_FUNCTION = 81;
+
+  /**
+   * The feature id for the '<em><b>E</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COS_FUNCTION__E = FUNCTION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Cos Function</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COS_FUNCTION_FEATURE_COUNT = FUNCTION_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.TanFunctionImpl <em>Tan Function</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.TanFunctionImpl
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getTanFunction()
+   * @generated
+   */
+  int TAN_FUNCTION = 82;
+
+  /**
+   * The feature id for the '<em><b>E</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TAN_FUNCTION__E = FUNCTION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Tan Function</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TAN_FUNCTION_FEATURE_COUNT = FUNCTION_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.CotFunctionImpl <em>Cot Function</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.CotFunctionImpl
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getCotFunction()
+   * @generated
+   */
+  int COT_FUNCTION = 83;
+
+  /**
+   * The feature id for the '<em><b>E</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COT_FUNCTION__E = FUNCTION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Cot Function</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COT_FUNCTION_FEATURE_COUNT = FUNCTION_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AsinFunctionImpl <em>Asin Function</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AsinFunctionImpl
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getAsinFunction()
+   * @generated
+   */
+  int ASIN_FUNCTION = 84;
+
+  /**
+   * The feature id for the '<em><b>E</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASIN_FUNCTION__E = FUNCTION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Asin Function</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASIN_FUNCTION_FEATURE_COUNT = FUNCTION_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AcosFunctionImpl <em>Acos Function</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AcosFunctionImpl
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getAcosFunction()
+   * @generated
+   */
+  int ACOS_FUNCTION = 85;
+
+  /**
+   * The feature id for the '<em><b>E</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ACOS_FUNCTION__E = FUNCTION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Acos Function</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ACOS_FUNCTION_FEATURE_COUNT = FUNCTION_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AtanFunctionImpl <em>Atan Function</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AtanFunctionImpl
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getAtanFunction()
+   * @generated
+   */
+  int ATAN_FUNCTION = 86;
+
+  /**
+   * The feature id for the '<em><b>E</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATAN_FUNCTION__E = FUNCTION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Atan Function</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATAN_FUNCTION_FEATURE_COUNT = FUNCTION_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AcotFunctionImpl <em>Acot Function</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AcotFunctionImpl
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getAcotFunction()
+   * @generated
+   */
+  int ACOT_FUNCTION = 87;
+
+  /**
+   * The feature id for the '<em><b>E</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ACOT_FUNCTION__E = FUNCTION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Acot Function</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ACOT_FUNCTION_FEATURE_COUNT = FUNCTION_FEATURE_COUNT + 1;
+
+  /**
    * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.VarModelImpl <em>Var Model</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3114,7 +3338,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getVarModel()
    * @generated
    */
-  int VAR_MODEL = 80;
+  int VAR_MODEL = 88;
 
   /**
    * The feature id for the '<em><b>Ref1</b></em>' reference.
@@ -3151,7 +3375,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getVarModelStep()
    * @generated
    */
-  int VAR_MODEL_STEP = 81;
+  int VAR_MODEL_STEP = 89;
 
   /**
    * The feature id for the '<em><b>Ref1</b></em>' reference.
@@ -3197,7 +3421,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getVarModelIndex()
    * @generated
    */
-  int VAR_MODEL_INDEX = 82;
+  int VAR_MODEL_INDEX = 90;
 
   /**
    * The feature id for the '<em><b>Ref1</b></em>' reference.
@@ -3225,7 +3449,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getVarModelIndexStep()
    * @generated
    */
-  int VAR_MODEL_INDEX_STEP = 83;
+  int VAR_MODEL_INDEX_STEP = 91;
 
   /**
    * The feature id for the '<em><b>Ref1</b></em>' reference.
@@ -3262,7 +3486,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getIdent()
    * @generated
    */
-  int IDENT = 84;
+  int IDENT = 92;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -3290,7 +3514,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getIncludeFile()
    * @generated
    */
-  int INCLUDE_FILE = 85;
+  int INCLUDE_FILE = 93;
 
   /**
    * The feature id for the '<em><b>Local</b></em>' attribute.
@@ -5573,6 +5797,174 @@ public interface WreslEditorPackage extends EPackage
   EReference getLogFunction_E();
 
   /**
+   * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.SinFunction <em>Sin Function</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Sin Function</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.SinFunction
+   * @generated
+   */
+  EClass getSinFunction();
+
+  /**
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.SinFunction#getE <em>E</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>E</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.SinFunction#getE()
+   * @see #getSinFunction()
+   * @generated
+   */
+  EReference getSinFunction_E();
+
+  /**
+   * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.CosFunction <em>Cos Function</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Cos Function</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.CosFunction
+   * @generated
+   */
+  EClass getCosFunction();
+
+  /**
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.CosFunction#getE <em>E</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>E</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.CosFunction#getE()
+   * @see #getCosFunction()
+   * @generated
+   */
+  EReference getCosFunction_E();
+
+  /**
+   * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.TanFunction <em>Tan Function</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Tan Function</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.TanFunction
+   * @generated
+   */
+  EClass getTanFunction();
+
+  /**
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.TanFunction#getE <em>E</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>E</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.TanFunction#getE()
+   * @see #getTanFunction()
+   * @generated
+   */
+  EReference getTanFunction_E();
+
+  /**
+   * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.CotFunction <em>Cot Function</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Cot Function</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.CotFunction
+   * @generated
+   */
+  EClass getCotFunction();
+
+  /**
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.CotFunction#getE <em>E</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>E</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.CotFunction#getE()
+   * @see #getCotFunction()
+   * @generated
+   */
+  EReference getCotFunction_E();
+
+  /**
+   * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.AsinFunction <em>Asin Function</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Asin Function</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.AsinFunction
+   * @generated
+   */
+  EClass getAsinFunction();
+
+  /**
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.AsinFunction#getE <em>E</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>E</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.AsinFunction#getE()
+   * @see #getAsinFunction()
+   * @generated
+   */
+  EReference getAsinFunction_E();
+
+  /**
+   * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.AcosFunction <em>Acos Function</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Acos Function</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.AcosFunction
+   * @generated
+   */
+  EClass getAcosFunction();
+
+  /**
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.AcosFunction#getE <em>E</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>E</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.AcosFunction#getE()
+   * @see #getAcosFunction()
+   * @generated
+   */
+  EReference getAcosFunction_E();
+
+  /**
+   * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.AtanFunction <em>Atan Function</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Atan Function</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.AtanFunction
+   * @generated
+   */
+  EClass getAtanFunction();
+
+  /**
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.AtanFunction#getE <em>E</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>E</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.AtanFunction#getE()
+   * @see #getAtanFunction()
+   * @generated
+   */
+  EReference getAtanFunction_E();
+
+  /**
+   * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.AcotFunction <em>Acot Function</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Acot Function</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.AcotFunction
+   * @generated
+   */
+  EClass getAcotFunction();
+
+  /**
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.AcotFunction#getE <em>E</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>E</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.AcotFunction#getE()
+   * @see #getAcotFunction()
+   * @generated
+   */
+  EReference getAcotFunction_E();
+
+  /**
    * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.VarModel <em>Var Model</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -7620,6 +8012,150 @@ public interface WreslEditorPackage extends EPackage
      * @generated
      */
     EReference LOG_FUNCTION__E = eINSTANCE.getLogFunction_E();
+
+    /**
+     * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.SinFunctionImpl <em>Sin Function</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.SinFunctionImpl
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getSinFunction()
+     * @generated
+     */
+    EClass SIN_FUNCTION = eINSTANCE.getSinFunction();
+
+    /**
+     * The meta object literal for the '<em><b>E</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SIN_FUNCTION__E = eINSTANCE.getSinFunction_E();
+
+    /**
+     * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.CosFunctionImpl <em>Cos Function</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.CosFunctionImpl
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getCosFunction()
+     * @generated
+     */
+    EClass COS_FUNCTION = eINSTANCE.getCosFunction();
+
+    /**
+     * The meta object literal for the '<em><b>E</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference COS_FUNCTION__E = eINSTANCE.getCosFunction_E();
+
+    /**
+     * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.TanFunctionImpl <em>Tan Function</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.TanFunctionImpl
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getTanFunction()
+     * @generated
+     */
+    EClass TAN_FUNCTION = eINSTANCE.getTanFunction();
+
+    /**
+     * The meta object literal for the '<em><b>E</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference TAN_FUNCTION__E = eINSTANCE.getTanFunction_E();
+
+    /**
+     * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.CotFunctionImpl <em>Cot Function</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.CotFunctionImpl
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getCotFunction()
+     * @generated
+     */
+    EClass COT_FUNCTION = eINSTANCE.getCotFunction();
+
+    /**
+     * The meta object literal for the '<em><b>E</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference COT_FUNCTION__E = eINSTANCE.getCotFunction_E();
+
+    /**
+     * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AsinFunctionImpl <em>Asin Function</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AsinFunctionImpl
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getAsinFunction()
+     * @generated
+     */
+    EClass ASIN_FUNCTION = eINSTANCE.getAsinFunction();
+
+    /**
+     * The meta object literal for the '<em><b>E</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ASIN_FUNCTION__E = eINSTANCE.getAsinFunction_E();
+
+    /**
+     * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AcosFunctionImpl <em>Acos Function</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AcosFunctionImpl
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getAcosFunction()
+     * @generated
+     */
+    EClass ACOS_FUNCTION = eINSTANCE.getAcosFunction();
+
+    /**
+     * The meta object literal for the '<em><b>E</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ACOS_FUNCTION__E = eINSTANCE.getAcosFunction_E();
+
+    /**
+     * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AtanFunctionImpl <em>Atan Function</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AtanFunctionImpl
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getAtanFunction()
+     * @generated
+     */
+    EClass ATAN_FUNCTION = eINSTANCE.getAtanFunction();
+
+    /**
+     * The meta object literal for the '<em><b>E</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ATAN_FUNCTION__E = eINSTANCE.getAtanFunction_E();
+
+    /**
+     * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AcotFunctionImpl <em>Acot Function</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AcotFunctionImpl
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getAcotFunction()
+     * @generated
+     */
+    EClass ACOT_FUNCTION = eINSTANCE.getAcotFunction();
+
+    /**
+     * The meta object literal for the '<em><b>E</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ACOT_FUNCTION__E = eINSTANCE.getAcotFunction_E();
 
     /**
      * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.VarModelImpl <em>Var Model</em>}' class.

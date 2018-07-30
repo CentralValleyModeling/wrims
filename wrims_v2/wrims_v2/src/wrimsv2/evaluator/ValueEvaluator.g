@@ -85,7 +85,15 @@ func returns[IntDouble id]:
   (log10_func{id=$log10_func.id;})|
   (pow_func{id=$pow_func.id;})|
   (mod_func{id=$mod_func.id;})|
-  (round_func{id=$round_func.id;});
+  (round_func{id=$round_func.id;})|
+  (sin_func{id=$sin_func.id;})|
+  (cos_func{id=$cos_func.id;})|
+  (tan_func{id=$tan_func.id;})|
+  (cot_func{id=$cot_func.id;})|
+  (asin_func{id=$asin_func.id;})|
+  (acos_func{id=$acos_func.id;})|
+  (atan_func{id=$atan_func.id;})|
+  (acot_func{id=$acot_func.id;});
 
 round_func returns[IntDouble id]
   : ROUND '(' (e1=expression) ')'{
@@ -152,6 +160,54 @@ pow_func returns[IntDouble id]
      id=ValueEvaluation.pow($e1.id, $e2.id);
   }
   ;
+
+sin_func returns[IntDouble id]
+  : SIN '(' (e=expression) ')'{
+    id=ValueEvaluation.sin($e.id);
+  }
+  ;
+
+cos_func returns[IntDouble id]
+  : COS '(' (e=expression) ')'{
+    id=ValueEvaluation.cos($e.id);
+  }
+  ;
+  
+tan_func returns[IntDouble id]
+  : TAN '(' (e=expression) ')'{
+    id=ValueEvaluation.tan($e.id);
+  }
+  ;
+  
+cot_func returns[IntDouble id]
+  : COT '(' (e=expression) ')'{
+    id=ValueEvaluation.cot($e.id);
+  }
+  ;
+
+asin_func returns[IntDouble id]
+  : ASIN '(' (e=expression) ')'{
+    id=ValueEvaluation.asin($e.id);
+  }
+  ;
+
+acos_func returns[IntDouble id]
+  : ACOS '(' (e=expression) ')'{
+    id=ValueEvaluation.acos($e.id);
+  }
+  ;
+  
+atan_func returns[IntDouble id]
+  : ATAN '(' (e=expression) ')'{
+    id=ValueEvaluation.atan($e.id);
+  }
+  ;
+  
+acot_func returns[IntDouble id]
+  : ACOT '(' (e=expression) ')'{
+    id=ValueEvaluation.acot($e.id);
+  }
+  ;
   
 range_func returns [boolean result]
   : RANGE '(' MONTH ';' m1=MONTH_CONST ';' m2=MONTH_CONST ')' {result=ValueEvaluation.range($m1.text, $m2.text);};
@@ -170,7 +226,8 @@ partC: 	(IDENT|IDENT1|usedKeywords) ('-' (IDENT|IDENT1|usedKeywords))*;
   
 usedKeywords: YEAR|MONTH|MONTH_CONST|DAY|PASTMONTH|RANGE|TAFCFS|DAYSIN|DAYSINTIMESTEP|SUM|MAX|MIN|INT|REAL|ABS|EXP|LOG|LOG10|POW|MOD|ROUND|SELECT|FROM|GIVEN|USE|WHERE
 |CONSTRAIN|ALWAYS|NAME|DVAR|CYCLE|FILE|CONDITION|INCLUDE|LOWERBOUND|UPPERBOUND|INTEGERTYPE|UNITS|CONVERTUNITS|TYPE|OUTPUT
-|CASE|ORDER|EXPRESSION|LHSGTRHS|LHSLTRHS|WEIGHT|FUNCTION|FROM_WRESL_FILE|UPPERUNBOUNDED|LOWERUNBOUNDED|AND|OR|NOT;
+|CASE|ORDER|EXPRESSION|LHSGTRHS|LHSLTRHS|WEIGHT|FUNCTION|FROM_WRESL_FILE|UPPERUNBOUNDED|LOWERUNBOUNDED|AND|OR|NOT
+|SIN|COS|TAN|COT|ASIN|ACOS|ATAN|ACOT;
 
 tableSQL returns [IntDouble id] @init{String table=null; String select=null; String use=null; HashMap<String, Number> given=null; HashMap<String, Number> where=null;}
 	: SELECT ((i1=IDENT{select=$i1.text;})|(u1=usedKeywords{select=$u1.text;})) FROM i2=IDENT{table=$i2.text;} 
@@ -408,6 +465,14 @@ LOG10: 'log10';
 POW: 'pow';
 MOD: 'mod';
 ROUND: 'round';
+SIN : 'sin';
+COS : 'cos';
+TAN : 'tan';
+COT : 'cot';
+ASIN : 'asin';
+ACOS : 'acos';
+ATAN : 'atan';
+ACOT : 'acot';
 
 SELECT: 'select';
 FROM: 'from';

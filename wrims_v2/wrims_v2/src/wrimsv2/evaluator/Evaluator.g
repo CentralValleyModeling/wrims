@@ -91,7 +91,15 @@ func returns[EvalExpression ee]:
   (log10_func{ee=$log10_func.ee;})|
   (pow_func{ee=$pow_func.ee;})|
   (mod_func{ee=$mod_func.ee;})|
-  (round_func{ee=$round_func.ee;})
+  (round_func{ee=$round_func.ee;})|
+  (sin_func{ee=$sin_func.ee;})|
+  (cos_func{ee=$cos_func.ee;})|
+  (tan_func{ee=$tan_func.ee;})|
+  (cot_func{ee=$cot_func.ee;})|
+  (asin_func{ee=$asin_func.ee;})|
+  (acos_func{ee=$acos_func.ee;})|
+  (atan_func{ee=$atan_func.ee;})|
+  (acot_func{ee=$acot_func.ee;})
   ;
 
 round_func returns[EvalExpression ee]
@@ -159,6 +167,54 @@ pow_func returns[EvalExpression ee]
      ee=Evaluation.pow($e1.ee, $e2.ee);
   }
   ;
+
+sin_func returns[EvalExpression ee]
+  : SIN '(' (e=expression) ')'{
+    ee=Evaluation.sin($e.ee);
+  }
+  ;
+
+cos_func returns[EvalExpression ee]
+  : COS '(' (e=expression) ')'{
+    ee=Evaluation.cos($e.ee);
+  }
+  ;
+  
+tan_func returns[EvalExpression ee]
+  : TAN '(' (e=expression) ')'{
+    ee=Evaluation.tan($e.ee);
+  }
+  ;
+  
+cot_func returns[EvalExpression ee]
+  : COT '(' (e=expression) ')'{
+    ee=Evaluation.cot($e.ee);
+  }
+  ;
+
+asin_func returns[EvalExpression ee]
+  : ASIN '(' (e=expression) ')'{
+    ee=Evaluation.asin($e.ee);
+  }
+  ;
+
+acos_func returns[EvalExpression ee]
+  : ACOS '(' (e=expression) ')'{
+    ee=Evaluation.acos($e.ee);
+  }
+  ;
+  
+atan_func returns[EvalExpression ee]
+  : ATAN '(' (e=expression) ')'{
+    ee=Evaluation.atan($e.ee);
+  }
+  ;
+  
+acot_func returns[EvalExpression ee]
+  : ACOT '(' (e=expression) ')'{
+    ee=Evaluation.acot($e.ee);
+  }
+  ;
   
 range_func returns [boolean result]
   : RANGE '(' MONTH ';' m1=MONTH_CONST ';' m2=MONTH_CONST ')' {Evaluation.range($m1.text, $m2.text);};
@@ -176,8 +232,9 @@ timeseries returns [EvalExpression ee]
 partC: 	(IDENT|IDENT1|usedKeywords) ('-' (IDENT|IDENT1|usedKeywords))*;
   
 usedKeywords: YEAR|MONTH|MONTH_CONST|DAY|PASTMONTH|RANGE|TAFCFS|DAYSIN|DAYSINTIMESTEP|SUM|MAX|MIN|INT|REAL|ABS|EXP|LOG|LOG10|POW|MOD|ROUND|SELECT|FROM|GIVEN|USE|WHERE
-|CONSTRAIN|ALWAYS|NAME|DVAR|CYCLE|FILE|CONDITION|INCLUDE|LOWERBOUND|UPPERBOUND|INTEGERTYPE|UNITS|CONVERTUNITS|TYPE|OUTPUT
-|CASE|ORDER|EXPRESSION|LHSGTRHS|LHSLTRHS|WEIGHT|FUNCTION|FROM_WRESL_FILE|UPPERUNBOUNDED|LOWERUNBOUNDED|AND|OR|NOT;
+|CONSTRAIN|ALWAYS|NAME|DVAR|CYCLE|FILE|  CONDITION|INCLUDE|LOWERBOUND|UPPERBOUND|INTEGERTYPE|UNITS|CONVERTUNITS|TYPE|OUTPUT
+|CASE|ORDER|EXPRESSION|LHSGTRHS|LHSLTRHS|WEIGHT|FUNCTION|FROM_WRESL_FILE|UPPERUNBOUNDED|LOWERUNBOUNDED|AND|OR|NOT
+|SIN|COS|TAN|COT|ASIN|ACOS|ATAN|ACOT;
 
 tableSQL returns [EvalExpression ee] @init{String table=null; String select=null; String use=null; HashMap<String, Number> given=null; HashMap<String, Number> where=null;}
 	: SELECT ((i1=IDENT{select=$i1.text;})|(u1=usedKeywords{select=$u1.text;})) FROM i2=IDENT{table=$i2.text;} 
@@ -416,6 +473,14 @@ LOG10: 'log10';
 POW: 'pow';
 MOD: 'mod';
 ROUND: 'round';
+SIN : 'sin';
+COS : 'cos';
+TAN : 'tan';
+COT : 'cot';
+ASIN : 'asin';
+ACOS : 'acos';
+ATAN : 'atan';
+ACOT : 'acot';
 
 SELECT: 'select';
 FROM: 'from';

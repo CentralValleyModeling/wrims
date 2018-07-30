@@ -891,6 +891,60 @@ public class ValueEvaluation {
 		return id;
 	}
 	
+	public static IntDouble sin(IntDouble id1){	
+		double degrees = id1.getData().doubleValue();
+		double radians = Math.toRadians(degrees);
+		return new IntDouble(Math.sin(radians), false);		
+	}
+	
+	public static IntDouble cos(IntDouble id1){	
+		double degrees = id1.getData().doubleValue();
+		double radians = Math.toRadians(degrees);
+		return new IntDouble(Math.cos(radians), false);		
+	}
+	
+	public static IntDouble tan(IntDouble id1){	
+		double degrees = id1.getData().doubleValue();
+		double radians = Math.toRadians(degrees);
+		return new IntDouble(Math.tan(radians), false);		
+	}
+	
+	public static IntDouble cot(IntDouble id1){	
+		double degrees = id1.getData().doubleValue();
+		if (degrees==90.0){
+			return new IntDouble(0.0, false);
+		}
+		double radians = Math.toRadians(degrees);
+		return new IntDouble(1.0/Math.tan(radians), false);		
+	}
+	
+	public static IntDouble asin(IntDouble id1){
+		double value = id1.getData().doubleValue();
+		double radians = Math.asin(value);
+		return new IntDouble(Math.toDegrees(radians), false);		
+	}
+	
+	public static IntDouble acos(IntDouble id1){
+		double value = id1.getData().doubleValue();
+		double radians = Math.acos(value);
+		return new IntDouble(Math.toDegrees(radians), false);		
+	}
+	
+	public static IntDouble atan(IntDouble id1){
+		double value = id1.getData().doubleValue();
+		double radians = Math.atan(value);
+		return new IntDouble(Math.toDegrees(radians), false);		
+	}
+	
+	public static IntDouble acot(IntDouble id1){
+		double value = id1.getData().doubleValue();
+		if (value == 0.){
+			return new IntDouble(90.0, false);
+		}
+		double radians = Math.atan(1.0/value);
+		return new IntDouble(Math.toDegrees(radians), false);		
+	}
+	
 	public static IntDouble daysIn(){
 		int days=TimeOperation.numberOfDays(ControlData.currMonth, ControlData.currYear);
 		return new IntDouble(days, true);
