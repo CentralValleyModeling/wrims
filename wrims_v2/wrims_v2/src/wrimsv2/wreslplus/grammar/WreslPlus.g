@@ -1029,6 +1029,14 @@ mathFunc
   |	 INT_word '(' expr_add ')' 
   |  ROUND '(' expr_add ')' 
   |  MOD '(' expr_add ',' expr_add ')' 
+  |  SIN '(' expr_add ')' 
+  |  COS '(' expr_add ')' 
+  |  TAN '(' expr_add ')' 
+  |  COT '(' expr_add ')' 
+  |  ASIN '(' expr_add ')' 
+  |  ACOS '(' expr_add ')' 
+  |  ATAN '(' expr_add ')' 
+  |  ACOT '(' expr_add ')' 
   ;
   
 unitFunc
