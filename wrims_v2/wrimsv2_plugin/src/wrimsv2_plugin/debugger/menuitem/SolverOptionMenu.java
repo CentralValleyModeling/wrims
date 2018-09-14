@@ -14,7 +14,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.PlatformUI;
 
-import wrimsv2_plugin.debugger.dialog.WPPSolverOptionDialog;
+import wrimsv2_plugin.debugger.dialog.WPPOptionDialog;
 
 public class SolverOptionMenu implements IWorkbenchWindowActionDelegate {
 	public SolverOptionMenu(){
@@ -27,7 +27,7 @@ public class SolverOptionMenu implements IWorkbenchWindowActionDelegate {
 		workbench.getDisplay().asyncExec(new Runnable(){
 			public void run(){
 				Shell shell=workbench.getActiveWorkbenchWindow().getShell();
-				WPPSolverOptionDialog dialog= new WPPSolverOptionDialog(shell);
+				WPPOptionDialog dialog= new WPPOptionDialog(shell);
 				dialog.openDialog();
 			}
 		});

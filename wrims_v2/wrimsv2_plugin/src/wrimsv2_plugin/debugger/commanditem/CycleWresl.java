@@ -34,7 +34,7 @@ import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.debug.Compile;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.dialog.WPPCycleWreslDialog;
-import wrimsv2_plugin.debugger.dialog.WPPSolverOptionDialog;
+import wrimsv2_plugin.debugger.dialog.WPPOptionDialog;
 import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
 import wrimsv2_plugin.debugger.view.WPPFileIncExploreView;

@@ -18,6 +18,7 @@ public class SettingPref {
 			if (!file.exists()){
 				file.createNewFile();
 				DebugCorePlugin.solver="CBC";
+				DebugCorePlugin.xmx="4096";
 				save();
 				return;
 			}
@@ -25,7 +26,10 @@ public class SettingPref {
 			BufferedReader br = new BufferedReader(new InputStreamReader(fs));
 		    LineNumberReader reader = new LineNumberReader(br);
 		    DebugCorePlugin.solver=br.readLine();
+		    DebugCorePlugin.xmx=br.readLine();
 		} catch (Exception e) {
+			DebugCorePlugin.solver="CBC";
+			DebugCorePlugin.xmx="4096";
 			e.printStackTrace();
 		}
 		return;
@@ -40,6 +44,7 @@ public class SettingPref {
 			FileWriter fw = new FileWriter(file.getAbsolutePath());
 			PrintWriter out = new PrintWriter(fw);
 			out.println(DebugCorePlugin.solver);
+			out.println(DebugCorePlugin.xmx);
 			out.close();
 		} catch (IOException e) {
 			e.printStackTrace();
