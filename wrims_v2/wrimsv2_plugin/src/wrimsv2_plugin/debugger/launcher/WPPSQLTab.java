@@ -1,12 +1,32 @@
 package wrimsv2_plugin.debugger.launcher;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Array;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Properties;
+
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.datatools.connectivity.IConnectionProfile;
+import org.eclipse.datatools.connectivity.ProfileManager;
+import org.eclipse.datatools.connectivity.drivers.jdbc.IJDBCConnectionProfileConstants;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -15,6 +35,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
@@ -27,16 +48,23 @@ import org.eclipse.ui.PlatformUI;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.dialog.WPPDssToSqlDialog;
 import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.tools.Encryption;
 
 public class WPPSQLTab extends AbstractLaunchConfigurationTab {
 
 	private Text databaseURLText;
-	private Text groupText;
+	private Combo groupText;
 	private Button dssConvert;
 	private Button buttonAV;
 	private Button buttonOV;
 	private Text ovFileText;
 	private ILaunchConfiguration launchConfig;
+	
+	private String JDBC_DRIVER_SQLServer = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+	private String JDBC_DRIVER_MySQL = "com.mysql.jdbc.Driver";
+	private Connection conn = null;
+	private Statement stmt = null;
+	private String scenarioTableName="Scenario";
 
 	@Override
 	public void createControl(Composite parent) {
@@ -78,7 +106,7 @@ public class WPPSQLTab extends AbstractLaunchConfigurationTab {
 		groupLabel.setLayoutData(gd);
 		groupLabel.setFont(font);
 		
-		groupText = new Text(comp, SWT.SINGLE | SWT.BORDER);
+		groupText = new Combo(comp, SWT.SINGLE | SWT.BORDER);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 5;
 		groupText.setLayoutData(gd);
@@ -88,6 +116,43 @@ public class WPPSQLTab extends AbstractLaunchConfigurationTab {
 			public void modifyText(ModifyEvent e) {
 				updateLaunchConfigurationDialog();
 			}
+		});
+		groupText.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseDown(MouseEvent e) {
+				groupText.removeMouseListener(this);
+				String group = groupText.getText();
+				int size = groupText.getItemCount();
+				for (int i=0; i<size; i++){
+					groupText.remove(0);
+				}
+				String[] tables= new String[0];
+				if (connectDataBase()==1){
+					tables=retrieveSQLServerTableNames();
+				}else if (connectDataBase()==2){
+					tables=retrieveMySQLTableNames();
+				}
+				for (int i=0; i<tables.length; i++){
+					groupText.add(tables[i]);
+				}
+				groupText.addMouseListener(this);
+				groupText.setText(group);
+			}
+
+			@Override
+			public void mouseUp(MouseEvent e) {
+				
+			}
+
+			
+			
 		});
 
 		Group ovGroup = new Group(comp, SWT.NONE);
@@ -214,6 +279,149 @@ public class WPPSQLTab extends AbstractLaunchConfigurationTab {
 		});
 	}
 
+	public int connectDataBase(){
+		String databaseURL = databaseURLText.getText();
+		if (databaseURL.startsWith("jdbc:sqlserver")){
+			return connectToSQLServer(databaseURL);
+		}else if (databaseURL.startsWith("jdbc:mysql")){
+			return connectToMySQL(databaseURL);
+		}else{
+			return 0;
+		}
+	}
+	
+	public int connectToSQLServer(String databaseURL){
+		try {
+			String URL="";
+			String database="";
+			String username="";
+			String password="";
+			if (databaseURL.contains(";")){
+				int index=databaseURL.lastIndexOf(";");
+				URL=databaseURL.substring(0, index);
+				database=databaseURL.substring(index+14);
+			}else{
+				URL=databaseURL;
+				database=databaseURL;
+			}
+			
+			Class.forName(JDBC_DRIVER_SQLServer);
+			System.out.println("Connecting to a selected database...");
+			IConnectionProfile[] profiles = ProfileManager.getInstance().getProfiles();
+			int i=0;
+			boolean isFound=false;
+			while (i<profiles.length && !isFound){
+				Properties baseProperties = profiles[i].getBaseProperties();
+				String urlProperty=baseProperties.getProperty(IJDBCConnectionProfileConstants.URL_PROP_ID);
+				if (urlProperty.equalsIgnoreCase(databaseURL)){
+					username=baseProperties.getProperty(IJDBCConnectionProfileConstants.USERNAME_PROP_ID);
+					password=baseProperties.getProperty(IJDBCConnectionProfileConstants.PASSWORD_PROP_ID);
+				
+					isFound=true;
+				}
+				i++;
+			}
+			conn = DriverManager.getConnection(URL, username, password);
+			stmt = conn.createStatement();
+			String sql="IF (db_id('"+database+"') IS NULL) CREATE DATABASE "+database;
+			stmt.executeUpdate(sql);
+			sql="USE "+database;
+			stmt.executeUpdate(sql);
+			System.out.println("Connected database successfully");
+		} catch (ClassNotFoundException e) {
+			System.err.println("Failed to load database. Please install the database driver.");
+			System.out.println("Model run terminated.");
+			return 0;
+		} catch (SQLException e) {
+			return 0;
+		}
+		return 1;
+	}
+	
+	public int connectToMySQL(String databaseURL){
+		try {
+			String URL="";
+			String database="";
+			String username="";
+			String password="";
+			if (databaseURL.contains("/")){
+				int index=databaseURL.lastIndexOf("/");
+				URL=databaseURL.substring(0, index);
+				database=databaseURL.substring(index+1);
+			}else{
+				URL=databaseURL;
+				database=databaseURL;
+			}
+			
+			Class.forName(JDBC_DRIVER_MySQL);
+			System.out.println("Connecting to a selected database...");
+			IConnectionProfile[] profiles = ProfileManager.getInstance().getProfiles();
+			int i=0;
+			boolean isFound=false;
+			while (i<profiles.length && !isFound){
+				Properties baseProperties = profiles[i].getBaseProperties();
+				String urlProperty=baseProperties.getProperty(IJDBCConnectionProfileConstants.URL_PROP_ID);
+				if (urlProperty.equalsIgnoreCase(databaseURL)){
+					username=baseProperties.getProperty(IJDBCConnectionProfileConstants.USERNAME_PROP_ID);
+					password=baseProperties.getProperty(IJDBCConnectionProfileConstants.PASSWORD_PROP_ID);
+				
+					isFound=true;
+				}
+				i++;
+			}
+			conn = DriverManager.getConnection(URL, username, password);
+			stmt = conn.createStatement();
+			String sql="CREATE DATABASE IF NOT EXISTS "+database;
+			stmt.executeUpdate(sql);
+			sql="USE "+database;
+			stmt.executeUpdate(sql);
+			System.out.println("Connected database successfully");
+		} catch (ClassNotFoundException e) {
+			System.err.println("Failed to load database. Please install the database driver.");
+			System.out.println("Model run terminated.");
+			return 0;
+		} catch (SQLException e) {
+			System.err.println("Failed to connect to the database. Please check your database URL and user profile.");
+			System.out.println("Model run terminated.");
+			return 0;
+		}
+		return 2;
+	}
+	
+	public String[] retrieveSQLServerTableNames(){
+		String sql="select distinct Table_Name from "+scenarioTableName;
+		ArrayList<String> tableNames=new ArrayList<String>();
+		try {
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				tableNames.add(rs.getString("Table_Name"));
+	        }
+			String[] tables=tableNames.toArray(new String[tableNames.size()]);
+			Arrays.sort(tables);
+			return tables;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return new String[0];
+		}	
+	}
+	
+	public String[] retrieveMySQLTableNames(){
+		String sql="select distinct Table_Name from "+scenarioTableName;
+		ArrayList<String> tableNames=new ArrayList<String>();
+		try {
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				tableNames.add(rs.getString("Table_Name"));
+	        }
+			String[] tables=tableNames.toArray(new String[tableNames.size()]);
+			Arrays.sort(tables);
+			return tables;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return new String[0];
+		}	
+	}
+	
 	@Override
 	public void setDefaults(ILaunchConfigurationWorkingCopy configuration) {
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_DATABASEURL, "none");
@@ -234,6 +442,19 @@ public class WPPSQLTab extends AbstractLaunchConfigurationTab {
 			
 			sqlGroup = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SQLGROUP, "calsim");
 			groupText.setText(sqlGroup);
+			int size = groupText.getItemCount();
+			for (int i=0; i<size; i++){
+				groupText.remove(0);
+			}
+			String[] tables= new String[0];
+			if (connectDataBase()==1){
+				tables=retrieveSQLServerTableNames();
+			}else if (connectDataBase()==2){
+				tables=retrieveMySQLTableNames();
+			}
+			for (int i=0; i<tables.length; i++){
+				groupText.add(tables[i]);
+			}
 			
 			ovOption = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_OVOPTION, "0");
 			if (ovOption.equals("0")){
