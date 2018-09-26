@@ -129,19 +129,7 @@ public class WPPSQLTab extends AbstractLaunchConfigurationTab {
 			public void mouseDown(MouseEvent e) {
 				groupText.removeMouseListener(this);
 				String group = groupText.getText();
-				int size = groupText.getItemCount();
-				for (int i=0; i<size; i++){
-					groupText.remove(0);
-				}
-				String[] tables= new String[0];
-				if (connectDataBase()==1){
-					tables=retrieveSQLServerTableNames();
-				}else if (connectDataBase()==2){
-					tables=retrieveMySQLTableNames();
-				}
-				for (int i=0; i<tables.length; i++){
-					groupText.add(tables[i]);
-				}
+				setGroupTextCombo();
 				groupText.addMouseListener(this);
 				groupText.setText(group);
 			}
@@ -440,21 +428,9 @@ public class WPPSQLTab extends AbstractLaunchConfigurationTab {
 			databaseURL = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_DATABASEURL, "none");
 			databaseURLText.setText(databaseURL);
 			
+			setGroupTextCombo();
 			sqlGroup = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SQLGROUP, "calsim");
 			groupText.setText(sqlGroup);
-			int size = groupText.getItemCount();
-			for (int i=0; i<size; i++){
-				groupText.remove(0);
-			}
-			String[] tables= new String[0];
-			if (connectDataBase()==1){
-				tables=retrieveSQLServerTableNames();
-			}else if (connectDataBase()==2){
-				tables=retrieveMySQLTableNames();
-			}
-			for (int i=0; i<tables.length; i++){
-				groupText.add(tables[i]);
-			}
 			
 			ovOption = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_OVOPTION, "0");
 			if (ovOption.equals("0")){
@@ -501,4 +477,20 @@ public class WPPSQLTab extends AbstractLaunchConfigurationTab {
 		return "SQL";
 	}
 
+	public void setGroupTextCombo(){
+		int size = groupText.getItemCount();
+		for (int i=0; i<size; i++){
+			groupText.remove(0);
+		}
+		String[] tables= new String[0];
+		if (connectDataBase()==1){
+			tables=retrieveSQLServerTableNames();
+		}else if (connectDataBase()==2){
+			tables=retrieveMySQLTableNames();
+		}
+		for (int i=0; i<tables.length; i++){
+			groupText.add(tables[i]);
+		}
+	}
+	
 }
