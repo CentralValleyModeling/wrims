@@ -99,7 +99,11 @@ public class GenerateCompileFiles {
 			out.println();
 			out.println("		//cast params to correct types:");
 			for (int i=variableNames.length; i>0; i--){
+				if (variableTypes[i-1].equals("String")){
+					out.println("		"+variableTypes[i-1] +" "+ variableNames[i-1]+" = param"+i+".toString();");
+				}else{
 					out.println("		"+variableTypes[i-1] +" "+ variableNames[i-1]+" = ((Number) param"+i+")."+variableTypes[i-1]+"Value();");
+				}
 			}
 			out.println();
 			String resultString="";
@@ -149,6 +153,8 @@ public class GenerateCompileFiles {
 			for (int i=0; i<variableNames.length-1; i++){
 				if (variableTypes[i].equals("int")){
 					variableType="long";
+				}else if (variableTypes[i].equals("String")){
+					variableType="char";
 				}else{
 					variableType=variableTypes[i];
 				}
@@ -156,6 +162,8 @@ public class GenerateCompileFiles {
 			}
 			if (variableTypes[variableTypes.length-1].equals("int")){
 				variableType="long";
+			}else if (variableTypes[variableTypes.length-1].equals("String")){
+				variableType="char";
 			}else{
 				variableType=variableTypes[variableTypes.length-1];
 			}
@@ -166,16 +174,37 @@ public class GenerateCompileFiles {
 			String modifiedFunctionName=functionName.replaceAll("_", "_1");
 			String exportString="JNIEXPORT j"+functionType+" JNICALL Java_wrimsv2_external_Function"+modifiedFunctionName+"_"+modifiedFunctionName+"(JNIEnv *env, jobject obj, ";
 			for (int i=0; i<variableNames.length-1; i++){
-				exportString=exportString+"j"+variableTypes[i]+" "+variableNames[i]+", ";
+				exportString=exportString+"j"+variableTypes[i].toLowerCase()+" "+variableNames[i]+", ";
 			}
-			exportString=exportString+"j"+variableTypes[variableTypes.length-1]+" "+variableNames[variableNames.length-1]+") {";
+			exportString=exportString+"j"+variableTypes[variableTypes.length-1].toLowerCase()+" "+variableNames[variableNames.length-1]+") {";
 			out.println(exportString);
 			out.println();
-			String returnString="	return "+functionName.toUpperCase()+"(";
-			for (int i=0; i<variableNames.length-1; i++){
-				returnString=returnString+"&"+variableNames[i]+", ";
+			for (int i=0; i<variableNames.length; i++){
+				if (variableTypes[i].equals("String")){
+					out.println("	char* "+variableNames[i]+"Chars = (*env)->GetStringUTFChars(env, "+variableNames[i]+", 0);");
+				}
 			}
-			returnString=returnString+"&"+variableNames[variableNames.length-1]+");";
+			String resultString="	jfloat result = "+functionName.toUpperCase()+"(";
+			for (int i=0; i<variableNames.length-1; i++){
+				if (variableTypes[i].equals("String")){
+					resultString=resultString+variableNames[i]+"Chars, ";
+				}else{
+					resultString=resultString+"&"+variableNames[i]+", ";
+				}
+			}
+			if (variableTypes[variableNames.length-1].equals("String")){
+				resultString=resultString+variableNames[variableNames.length-1]+"Chars, ";
+			}else{
+				resultString=resultString+"&"+variableNames[variableNames.length-1]+");";
+			}
+			out.println(resultString);
+			out.println();
+			for (int i=0; i<variableNames.length; i++){
+				if (variableTypes[i].equals("String")){
+					out.println("	(*env)->ReleaseStringUTFChars(env, "+variableNames[i]+", "+variableNames[i]+"Chars);");
+				}
+			}
+			String returnString ="	return result;";
 			out.println(returnString);
 			out.println("}");
 			out.close();
@@ -277,7 +306,7 @@ public class GenerateCompileFiles {
 		    		return false;
 		    	}
 		    	
-		    	String functionType=br.readLine().toLowerCase();
+		    	String functionType=br.readLine();
 		    	line=line+1;
 		    	if (functionType==null){
 		    		error.add("Line " +line+": The number of defined functions is less than the total number of functions. Please provide the function type.");
@@ -296,7 +325,7 @@ public class GenerateCompileFiles {
 		    		return false;
 		    	}
 		    	variableTypeString=removeLeadingTailingSpace(variableTypeString);
-		    	String[] variableTypes=variableTypeString.toLowerCase().split("\\s+");
+		    	String[] variableTypes=variableTypeString.split("\\s+");
 		    	for (int j=0; j<variableTypes.length; j++){
 		    		if (!isNameFormatRight(variableTypes[j])) {
 		    			error.add("Line "+line+": Variable type contains non-characters or non-numeric.");
