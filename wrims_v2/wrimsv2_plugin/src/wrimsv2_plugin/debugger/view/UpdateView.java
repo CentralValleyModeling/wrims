@@ -390,7 +390,7 @@ public class UpdateView {
 		if (editorPart != null){
 			IEditorInput input = editorPart.getEditorInput();
 			IFile file = ResourceUtil.getFile(input);
-			path = file.getRawLocation().toString();
+			if (file != null) path = file.getRawLocation().toString();
 		}
 		return path;
 	}

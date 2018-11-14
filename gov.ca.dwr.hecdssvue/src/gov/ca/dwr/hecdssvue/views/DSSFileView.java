@@ -115,7 +115,6 @@ public class DSSFileView extends ViewPart {
 		    @Override
 		    public void widgetSelected(SelectionEvent e) {
 		    	selectFiles();
-		    	DataOps.setProject();
 		    }
 		});
 		
@@ -137,7 +136,6 @@ public class DSSFileView extends ViewPart {
 						String file=dlg.open();
 						fileLabel.setText(file);
 						openProject(file);
-						DataOps.setProject();
 					}
 				});
 		    }
@@ -512,6 +510,7 @@ public class DSSFileView extends ViewPart {
 	
 	public void selectFiles(){
 		selectFileNames();
+		DataOps.setProject();
 		if (DebugCorePlugin.selectedStudies[0] || DebugCorePlugin.selectedStudies[1] || DebugCorePlugin.selectedStudies[2] || DebugCorePlugin.selectedStudies[3]){
 			if (checkFilesExist()){
 				boolean success=openDssFiles();
