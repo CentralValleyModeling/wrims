@@ -403,7 +403,7 @@ public class DSSFileView extends ViewPart {
 //					HecDss dss =HecDss.open(DebugCorePlugin.studyDvFileNames[i]);
 //					DebugCorePlugin.dvDss[i] = dss;
 					DebugCorePlugin.dvDss[i]=HecDss.open(DebugCorePlugin.studyDvFileNames[i]);
-					DebugCorePlugin.dvVector[i]=DebugCorePlugin.dvDss[i].getCatalogedPathnames();
+					DebugCorePlugin.dvVector[i]=DebugCorePlugin.dvDss[i].getCondensedCatalog();
 				} catch (Exception e) {
 					WPPException.handleException(e);
 					errorFiles=errorFiles+DebugCorePlugin.studyDvFileNames[i]+",";
@@ -411,7 +411,7 @@ public class DSSFileView extends ViewPart {
 				}
 				try {
 					DebugCorePlugin.svDss[i]=HecDss.open(DebugCorePlugin.studySvFileNames[i]);
-					DebugCorePlugin.svVector[i]=DebugCorePlugin.svDss[i].getCatalogedPathnames();
+					DebugCorePlugin.svVector[i]=DebugCorePlugin.svDss[i].getCondensedCatalog();
 				} catch (Exception e) {
 					WPPException.handleException(e);
 					errorFiles=errorFiles+DebugCorePlugin.studySvFileNames[i]+",";

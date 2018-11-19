@@ -12,12 +12,18 @@ public class DssOperations {
 		String pn=null;
 		int i=0;
 		int size=v.size();
-		String partBString="/"+partB.toUpperCase()+"/";
-		String partCString="/"+partC.toUpperCase()+"/";
-		String partEString="/"+partE+"/";
+		String partBString=partB.toUpperCase();
+		String partCString=partC.toUpperCase();
+		String partEString=partE.toUpperCase();
 		while (pn == null && i<size){
 			String pnv=v.get(i).toString();
+			String[] parts=pnv.split("/");
+			/*
 			if (pnv.contains(partBString) && pnv.contains(partCString) && pnv.contains(partEString) ){
+				pn=pnv;
+			}
+			*/
+			if (parts[2].equals(partBString) && parts[3].equals(partCString) && parts[5].equals(partEString)){
 				pn=pnv;
 			}
 			i++;

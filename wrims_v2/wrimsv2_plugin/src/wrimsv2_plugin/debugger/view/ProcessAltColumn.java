@@ -89,8 +89,6 @@ public class ProcessAltColumn {
 		String svFPart = DebugCorePlugin.svFPart;
 		HecDss[] dvDss = DebugCorePlugin.dvDss;
 		HecDss[] svDss = DebugCorePlugin.svDss;
-		Vector[] dvVector=DebugCorePlugin.dvVector;
-		Vector[] svVector=DebugCorePlugin.svVector;
 		
 		int i=altColIndex.get(index);
 		if (i<4){

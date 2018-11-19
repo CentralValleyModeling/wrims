@@ -5,6 +5,12 @@ import hec.heclib.dss.HecDss;
 import java.io.File;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DropTarget;
+import org.eclipse.swt.dnd.DropTargetAdapter;
+import org.eclipse.swt.dnd.DropTargetEvent;
+import org.eclipse.swt.dnd.FileTransfer;
+import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
@@ -41,6 +47,9 @@ public class WPPLoadStudyDssDialog extends Dialog {
 	private String unavailableFiles="";
 	private String unavailableFolders="";
 	private String errorFiles="";
+	private DropTarget[] dvFileDt = new DropTarget[4];
+	private DropTarget[] svFileDt = new DropTarget[4];
+	private DropTarget[] studyFolderDt = new DropTarget[4];
 	
 	public WPPLoadStudyDssDialog(Shell parentShell) {
 		super(parentShell, SWT.MIN);
@@ -98,6 +107,19 @@ public class WPPLoadStudyDssDialog extends Dialog {
 			gd1.horizontalSpan = 13;
 			dvFileText[i].setLayoutData(gd1);
 			dvFileText[i].setText(DebugCorePlugin.studyDvFileNames[i]);
+			
+			dvFileDt[i] = new DropTarget(dvFileText[i], DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK);
+			dvFileDt[i].setTransfer(new Transfer[] { FileTransfer.getInstance()});
+			dvFileDt[i].addDropListener(new DropTargetAdapter() {
+	            public void drop(DropTargetEvent event) {
+	                String fileList[] = null;
+	                FileTransfer ft = FileTransfer.getInstance();
+	                if (ft.isSupportedType(event.currentDataType)) {
+	                    fileList = (String[]) event.data;
+	                    dvFileText[j].setText(fileList[0]);
+	                }
+	            }
+	        });
 		
 			dvBrowserButton[i] = new Button(fileSelection[i], SWT.PUSH);
 			dvBrowserButton[i].setText("Browser DV");
@@ -129,6 +151,19 @@ public class WPPLoadStudyDssDialog extends Dialog {
 			gd1.horizontalSpan = 13;
 			svFileText[i].setLayoutData(gd1);
 			svFileText[i].setText(DebugCorePlugin.studySvFileNames[i]);
+			
+			svFileDt[i] = new DropTarget(svFileText[i], DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK);
+			svFileDt[i].setTransfer(new Transfer[] { FileTransfer.getInstance()});
+			svFileDt[i].addDropListener(new DropTargetAdapter() {
+	            public void drop(DropTargetEvent event) {
+	                String fileList[] = null;
+	                FileTransfer ft = FileTransfer.getInstance();
+	                if (ft.isSupportedType(event.currentDataType)) {
+	                    fileList = (String[]) event.data;
+	                    svFileText[j].setText(fileList[0]);
+	                }
+	            }
+	        });
 		
 			svBrowserButton[i] = new Button(fileSelection[i], SWT.PUSH);
 			svBrowserButton[i].setText("Browser SV");
@@ -184,6 +219,19 @@ public class WPPLoadStudyDssDialog extends Dialog {
 			gd1.horizontalSpan = 27;
 			studyFolderText[j].setLayoutData(gd1);
 			studyFolderText[j].setText(DebugCorePlugin.studyFolderNames[j]);
+			
+			studyFolderDt[j] = new DropTarget(studyFolderText[j], DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK);
+			studyFolderDt[j].setTransfer(new Transfer[] { FileTransfer.getInstance()});
+			studyFolderDt[j].addDropListener(new DropTargetAdapter() {
+	            public void drop(DropTargetEvent event) {
+	                String fileList[] = null;
+	                FileTransfer ft = FileTransfer.getInstance();
+	                if (ft.isSupportedType(event.currentDataType)) {
+	                    fileList = (String[]) event.data;
+	                    studyFolderText[j].setText(fileList[0]);
+	                }
+	            }
+	        });
 		
 			studyBrowserButton[j] = new Button(fileSelection[i], SWT.PUSH);
 			studyBrowserButton[j].setText("Browser Study");
@@ -351,7 +399,8 @@ public class WPPLoadStudyDssDialog extends Dialog {
 			if (DebugCorePlugin.selectedStudies[i]){
 				try {
 					DebugCorePlugin.dvDss[i]=HecDss.open(DebugCorePlugin.studyDvFileNames[i]);
-					DebugCorePlugin.dvVector[i]=DebugCorePlugin.dvDss[i].getCatalogedPathnames();
+					DebugCorePlugin.dvVector[i]=DebugCorePlugin.dvDss[i].getCondensedCatalog();
+					DebugCorePlugin.dvDss[i].close();
 				} catch (Exception e) {
 					WPPException.handleException(e);
 					errorFiles=errorFiles+DebugCorePlugin.studyDvFileNames[i]+",";
@@ -359,7 +408,8 @@ public class WPPLoadStudyDssDialog extends Dialog {
 				}
 				try {
 					DebugCorePlugin.svDss[i]=HecDss.open(DebugCorePlugin.studySvFileNames[i]);
-					DebugCorePlugin.svVector[i]=DebugCorePlugin.svDss[i].getCatalogedPathnames();
+					DebugCorePlugin.svVector[i]=DebugCorePlugin.svDss[i].getCondensedCatalog();
+					DebugCorePlugin.svDss[i].close();
 				} catch (Exception e) {
 					WPPException.handleException(e);
 					errorFiles=errorFiles+DebugCorePlugin.studySvFileNames[i]+",";
