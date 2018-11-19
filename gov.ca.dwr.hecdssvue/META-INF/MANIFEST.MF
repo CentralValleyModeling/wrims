@@ -168,6 +168,7 @@ Bundle-ClassPath: gridUtil.jar,
  COM.jar,
  collections.jar,
  jpython.jar,
+ parser.jar,
  jar/help/dssvueHelp.jar,
  jar/sys/jh.jar,
  .
