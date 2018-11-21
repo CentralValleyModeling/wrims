@@ -26,7 +26,7 @@ public class BuildProps {
 	
 	public String getVN() {
 		
-		return buildProps.getProperty("vn");
+		return buildProps.getProperty("version");
 		
 	}	
 
