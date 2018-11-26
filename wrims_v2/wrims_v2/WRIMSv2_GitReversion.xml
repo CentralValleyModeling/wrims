@@ -19,23 +19,12 @@
 	
 	<target name="generate-version">
 
-	    <exec executable="git" outputproperty="version.revisions">
-	        <arg value="log"/>
-	        <arg value="--oneline"/>
+	    <exec executable="git" outputproperty="version.revision">
+	        <arg value="rev-list"/>
+	        <arg value="--count"/>
+	    	<arg value="--first-parent"/>
+	    	<arg value="HEAD"/>
 	    </exec>
-
-	    <resourcecount property="version.revision" count="0" when="eq">
-	        <tokens>
-	            <concat>
-	                <filterchain>
-	                    <tokenfilter>
-	                        <stringtokenizer delims="\r" />
-	                    </tokenfilter>
-	                </filterchain>
-	            <propertyresource name="version.revisions" />
-	            </concat>
-	        </tokens>
-	    </resourcecount>
 	    <echo>Revision : ${version.revision}</echo>
 
 	    <exec executable="git" outputproperty="version.hash">
