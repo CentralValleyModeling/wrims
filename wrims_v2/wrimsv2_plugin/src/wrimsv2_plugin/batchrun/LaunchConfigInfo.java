@@ -22,8 +22,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import wrimsv2_plugin.debugger.exception.WPPException;
-
 public class LaunchConfigInfo {
 	
 	private HashMap fAttributes=new HashMap();
@@ -40,11 +38,11 @@ public class LaunchConfigInfo {
 			root = parser.parse(new InputSource(stream)).getDocumentElement();
 			initializeFromXML(root);
 		} catch (SAXException e) {
-			WPPException.handleException(e);
+			e.printStackTrace();
 		} catch (IOException e) {
-			WPPException.handleException(e);
+			e.printStackTrace();
 		} catch (ParserConfigurationException e) {
-			WPPException.handleException(e);
+			e.printStackTrace();
 		}
 		
 	}

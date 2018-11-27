@@ -14,8 +14,6 @@ import java.util.Map;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.swt.widgets.List;
 
-import wrimsv2_plugin.debugger.exception.WPPException;
-
 public class BatchRunCmd {
 
 	private ArrayList<String> launchPathList=new ArrayList<String>();
@@ -55,9 +53,9 @@ public class BatchRunCmd {
 		    	}
 		    }
 		} catch (FileNotFoundException e) {
-			WPPException.handleException(e);
+			e.printStackTrace();
 		} catch (IOException e) {
-			WPPException.handleException(e);
+			e.printStackTrace();
 		}		
 	}
 	
@@ -84,7 +82,7 @@ public class BatchRunCmd {
 						}
 					}
 				} catch (CoreException e) {
-					WPPException.handleException(e);
+					e.printStackTrace();
 				}
 			}
 		};
@@ -105,7 +103,7 @@ public class BatchRunCmd {
 						try {
 							brp.launch(config, lfp);
 						} catch (CoreException e) {
-							WPPException.handleException(e);
+							e.printStackTrace();
 						}
 					}
 				};

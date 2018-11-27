@@ -20,7 +20,6 @@ import org.eclipse.debug.core.ILaunchConfiguration;
 import wrimsv2_plugin.batchrun.BatchRunProcess;
 import wrimsv2_plugin.batchrun.LaunchConfigInfo;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
-import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.goal.FilterGoal;
 import wrimsv2_plugin.tools.DssOperations;
 import wrimsv2_plugin.tools.FileProcess;
@@ -162,7 +161,7 @@ public class MSRDataTransferBR {
 				}
 				fr.close();
 			} catch (Exception e) {
-				WPPException.handleException(e);
+				e.printStackTrace();
 			}
 		}
 	}
@@ -177,7 +176,7 @@ public class MSRDataTransferBR {
 			svDss=HecDss.open(svFNs[i]);
 			initDss=HecDss.open(initFNs[i]);
 		} catch (Exception e) {
-			WPPException.handleException(e);
+			e.printStackTrace();
 			DebugCorePlugin.isDssInOp=false;
 			return;
 		}
@@ -202,7 +201,7 @@ public class MSRDataTransferBR {
 					tsm.setPathname(initPNFull);
 					initDss.write(tsm);
 				} catch (Exception e) {
-					WPPException.handleException(e);
+					e.printStackTrace();
 				}
 			}
 		}
@@ -225,7 +224,7 @@ public class MSRDataTransferBR {
 					tsm.setPathname(svPNFull);
 					svDss.write(tsm);
 				} catch (Exception e) {
-					WPPException.handleException(e);
+					e.printStackTrace();
 				}
 			}
 		}

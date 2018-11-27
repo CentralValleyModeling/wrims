@@ -16,7 +16,6 @@ import org.eclipse.debug.core.ILaunchConfiguration;
 import wrimsv2_plugin.batchrun.BatchRunProcess;
 import wrimsv2_plugin.batchrun.LaunchConfigInfo;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
-import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.tools.DssOperations;
 import wrimsv2_plugin.tools.FileProcess;
 import wrimsv2_plugin.tools.TimeOperation;
@@ -42,7 +41,7 @@ public class PAProcDVBR {
 				}
 			}
 		} catch (Exception e) {
-			WPPException.handleException(e);
+			e.printStackTrace();
 		}
 	}
 	
@@ -56,7 +55,7 @@ public class PAProcDVBR {
 		try {
 			dvDss=HecDss.open(dvFile);
 		} catch (Exception e) {
-			WPPException.handleException(e);
+			e.printStackTrace();
 			DebugCorePlugin.isDssInOp=false;
 			return;
 		}

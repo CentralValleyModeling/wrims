@@ -16,7 +16,6 @@ import org.apache.commons.io.FileUtils;
 import wrimsv2_plugin.batchrun.BatchRunProcess;
 import wrimsv2_plugin.batchrun.LaunchConfigInfo;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
-import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.tools.DssOperations;
 import wrimsv2_plugin.tools.FileProcess;
 
@@ -43,7 +42,7 @@ public class PAProcInitBR {
 				try {
 					FileUtils.copyFile(initDSSFile, newInitDSSFile);
 				} catch (IOException e) {
-					WPPException.handleException(e);
+					e.printStackTrace();
 				}
 			}
 		}
@@ -75,7 +74,7 @@ public class PAProcInitBR {
 		try {
 			paInitDss=HecDss.open(brp.paInitFile);
 		} catch (Exception e) {
-			WPPException.handleException(e);
+			e.printStackTrace();
 			DebugCorePlugin.isDssInOp=false;
 			return;
 		}
@@ -89,7 +88,7 @@ public class PAProcInitBR {
 				HecMath newTm = tm.shiftInTime(brp.paStartInterval+"MON");
 				paInitDss.write(newTm);
 			} catch (Exception e) {
-				WPPException.handleException(e);
+				e.printStackTrace();
 			}
 		}
 		paInitDss.close();

@@ -4,7 +4,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
-import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.tools.TimeOperation;
 
 public class PAProcRun {
