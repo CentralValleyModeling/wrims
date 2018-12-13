@@ -14,6 +14,8 @@ import java.util.Map;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.swt.widgets.List;
 
+import wrimsv2_plugin.debugger.core.SettingPref;
+
 public class BatchRunCmd {
 
 	private ArrayList<String> launchPathList=new ArrayList<String>();
@@ -26,6 +28,7 @@ public class BatchRunCmd {
 	
 	public BatchRunCmd(String[] args){
 		processArgs(args);
+		SettingPref.load();
 		procBatchRunFileNames();
 		startAllBatchRun();
 	}

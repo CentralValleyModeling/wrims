@@ -26,8 +26,6 @@ import org.eclipse.debug.core.model.IDebugTarget;
 import org.eclipse.debug.core.model.IProcess;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
-import wrimsv2_plugin.debugger.exception.WPPException;
-import wrimsv2_plugin.debugger.model.WPPDebugTarget;
 import wrimsv2_plugin.debugger.msr.MSRDataTransferBR;
 import wrimsv2_plugin.debugger.msr.MSRProcRunBR;
 import wrimsv2_plugin.debugger.msr.MSRUtil;
@@ -148,7 +146,7 @@ public class BatchRunProcess {
 			process.waitFor();
 			terminateCode=process.exitValue();
 		} catch (Exception e) {
-			WPPException.handleException(e);
+			e.printStackTrace();
 		}
 		
 	}
@@ -177,7 +175,7 @@ public class BatchRunProcess {
 				terminateCode=process.exitValue();
 				process.destroy();
 			} catch (Exception e) {
-				WPPException.handleException(e);
+				e.printStackTrace();
 			}
 			
 			procDV.resetDVStartDate(this);
@@ -392,7 +390,7 @@ public class BatchRunProcess {
 			PrintWriter out = new PrintWriter(debugFile);
 			generateBatch(out, configFilePath);
 		}catch (IOException e) {
-			WPPException.handleException(e);
+			e.printStackTrace();
 		}
 		
 		if (dvarFile.toLowerCase().endsWith(".mysqlr") || dvarFile.toLowerCase().endsWith(".mysqlc") || dvarFile.toLowerCase().endsWith(".sqlsvr")){
@@ -629,7 +627,7 @@ public class BatchRunProcess {
 				process.destroy();
 				Runtime.getRuntime().exec("taskkill /t /f /fi \"WINDOWTITLE eq C:\\Windows\\System32\\cmd.exe - "+engineFilePath.toLowerCase()+"\"");
 			} catch (IOException e) {
-				WPPException.handleException(e);
+				e.printStackTrace();
 			}
 		}
 		terminateCode=1;

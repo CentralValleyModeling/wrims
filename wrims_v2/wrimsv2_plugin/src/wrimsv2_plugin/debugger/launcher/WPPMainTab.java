@@ -740,13 +740,15 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 			out.println("Solver             "+DebugCorePlugin.solver.toLowerCase());
 			String dvarFile = fDvarFileText.getText();
 			if (new File(dvarFile).isAbsolute()){
-				String wsidiDvarPath=getWsiDiDvarFilePath(dvarFile);
+				//String wsidiDvarPath=getWsiDiDvarFilePath(dvarFile);
+				String wsidiDvarPath=dvarFile;
 				String lookupPath=getLookupFolderPath(mainFileAbsPath);
 				out.println("DvarFile           "+wsidiDvarPath.toLowerCase());
 				createWsiDiMain(wsidiDvarPath, lookupPath);
 			}else{
 				String procDvarFile=procRelativePath(dvarFile);
-				String wsidiDvarFile=getWsiDiDvarFilePath(procDvarFile);
+				//String wsidiDvarFile=getWsiDiDvarFilePath(procDvarFile);
+				String wsidiDvarFile=procDvarFile;
 				String lookupFolder=getLookupFolderPath(mainFileAbsPath);
 				out.println("DvarFile           " + wsidiDvarFile.toLowerCase());
 				createWsiDiMain(wsidiDvarFile, lookupFolder);
