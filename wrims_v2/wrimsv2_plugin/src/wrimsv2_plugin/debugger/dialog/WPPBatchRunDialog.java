@@ -2,41 +2,28 @@ package wrimsv2_plugin.debugger.dialog;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.debug.core.DebugException;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowData;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Dialog;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
@@ -45,8 +32,7 @@ import wrimsv2_plugin.batchrun.BatchRunProcess;
 import wrimsv2_plugin.batchrun.LaunchConfigInfo;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
-import wrimsv2_plugin.debugger.menuitem.EnableMenus;
-import wrimsv2_plugin.debugger.view.WPPVarDetailView;
+
 
 public class WPPBatchRunDialog extends Dialog {
 	private Text fileText;
@@ -57,15 +43,20 @@ public class WPPBatchRunDialog extends Dialog {
 	private Button stopAllButton;
 	private Button stopButton;
 	private Button seqButton;
+	private Button wsidiButton;
 	private List brl;
 	
 	private boolean isSequential=false;
+	private boolean isWsidi=false;
 	
 	private ArrayList<String> launchPathList=new ArrayList<String>();
 	private ArrayList<String> launchNameList=new ArrayList<String>();
 	private Map<String, LaunchConfigInfo> configMap = new HashMap<String, LaunchConfigInfo>();
 	private Map<String, BatchRunProcess> brpMap = new HashMap<String, BatchRunProcess>();
 	private Map<String, Boolean> brpIsToRunMap = new HashMap<String, Boolean>();
+	private String dvNamesLine;
+	private String lookupNamesLine;
+	private String engineNamesLine;
 	
 	public WPPBatchRunDialog(Shell parentShell) {
 		super(parentShell, SWT.MIN);
@@ -102,12 +93,12 @@ public class WPPBatchRunDialog extends Dialog {
 		fileText.setLayoutData(gd1);
 		fileText.setText(fileName);
 		
-		Button browserButton = new Button(shell, SWT.PUSH);
-		browserButton.setText("Browser");
-		GridData gd2 = new GridData();
+		Button browseButton = new Button(shell, SWT.PUSH);
+		browseButton.setText("Browse");
+		GridData gd2 = new GridData(GridData.HORIZONTAL_ALIGN_CENTER);
 		gd2.horizontalSpan = 1;
-		browserButton.setLayoutData(gd2);
-		browserButton.addSelectionListener(new SelectionAdapter() {
+		browseButton.setLayoutData(gd2);
+		browseButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				final IWorkbench workbench=PlatformUI.getWorkbench();
@@ -129,7 +120,7 @@ public class WPPBatchRunDialog extends Dialog {
 		
 		addButton = new Button(shell, SWT.PUSH);
 		addButton.setText("Add");
-		GridData gd3 = new GridData();
+		GridData gd3 = new GridData(GridData.HORIZONTAL_ALIGN_CENTER);
 		gd3.horizontalSpan = 1;
 		addButton.setLayoutData(gd3);
 		addButton.addSelectionListener(new SelectionAdapter() {
@@ -158,7 +149,7 @@ public class WPPBatchRunDialog extends Dialog {
 		
 		deleteButton = new Button(shell, SWT.PUSH);
 		deleteButton.setText("Delete");
-		GridData gd4 = new GridData();
+		GridData gd4 = new GridData(GridData.HORIZONTAL_ALIGN_CENTER);
 		gd4.horizontalSpan = 1;
 		deleteButton.setLayoutData(gd4);
 		deleteButton.addSelectionListener(new SelectionAdapter() {
@@ -184,7 +175,7 @@ public class WPPBatchRunDialog extends Dialog {
 		startAllButton = new Button(shell, SWT.PUSH);
 		startAllButton.setText("Start All");
 		GridData gd5 = new GridData(GridData.HORIZONTAL_ALIGN_CENTER);
-		gd5.horizontalSpan = 2;
+		gd5.horizontalSpan = 1;
 		startAllButton.setLayoutData(gd5);
 		startAllButton.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -192,12 +183,14 @@ public class WPPBatchRunDialog extends Dialog {
 				final IWorkbench workbench=PlatformUI.getWorkbench();
 				workbench.getDisplay().asyncExec(new Runnable(){
 					public void run(){
-						stopAllButton.setEnabled(true);
-						stopButton.setEnabled(true);
-						startAllButton.setEnabled(false);
-						addButton.setEnabled(false);
-						deleteButton.setEnabled(false);
-						seqButton.setEnabled(false);
+						if (!isWsidi){
+							stopAllButton.setEnabled(true);
+							stopButton.setEnabled(true);
+							startAllButton.setEnabled(false);
+							addButton.setEnabled(false);
+							deleteButton.setEnabled(false);
+							seqButton.setEnabled(false);
+						}
 						startAllBatchRun();
 					}
 				});
@@ -215,12 +208,14 @@ public class WPPBatchRunDialog extends Dialog {
 				final IWorkbench workbench=PlatformUI.getWorkbench();
 				workbench.getDisplay().asyncExec(new Runnable(){
 					public void run(){
-						stopAllButton.setEnabled(false);
-						stopButton.setEnabled(false);
-						startAllButton.setEnabled(true);
-						addButton.setEnabled(true);
-						deleteButton.setEnabled(true);
-						seqButton.setEnabled(true);
+						if (!isWsidi){
+							stopAllButton.setEnabled(false);
+							stopButton.setEnabled(false);
+							startAllButton.setEnabled(true);
+							addButton.setEnabled(true);
+							deleteButton.setEnabled(true);
+							seqButton.setEnabled(true);
+						}
 						stopAllBatchRun();
 					}
 				});
@@ -249,7 +244,7 @@ public class WPPBatchRunDialog extends Dialog {
 		seqButton = new Button(shell, SWT.CHECK);
 		seqButton.setText("Sequential");
 		GridData gd8 = new GridData(GridData.HORIZONTAL_ALIGN_CENTER);
-		gd8.horizontalSpan = 4;
+		gd8.horizontalSpan = 1;
 		seqButton.setLayoutData(gd8);
 		seqButton.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -263,25 +258,59 @@ public class WPPBatchRunDialog extends Dialog {
 			}
 		});
 
+		wsidiButton = new Button(shell,SWT.CHECK);
+		wsidiButton.setText("WsiDi");
+		GridData gd9 = new GridData(GridData.HORIZONTAL_ALIGN_CENTER);
+		gd9.horizontalSpan = 1;
+		wsidiButton.setLayoutData(gd9);
+		wsidiButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				final IWorkbench workbench=PlatformUI.getWorkbench();
+				workbench.getDisplay().asyncExec(new Runnable(){
+					public void run(){
+						isWsidi=!isWsidi;
+					}
+				});
+			}
+		});
 	}
 	
 	
 	protected void startAllBatchRun(){
 		
-		emptyProgressFiles();
-		clearBatchRunList();
-		
-		for (int i=0; i<launchPathList.size(); i++){
-			String lfp=launchPathList.get(i);
-			brpIsToRunMap.put(lfp,  true);							
-		}
-		
-		checkProgress();
-		
-		if (isSequential){
-			sequentialRun();
+		if (isWsidi){
+			if (isSequential){
+				prepareWsiDiSequential();
+				try {
+					Runtime.getRuntime().exec("cmd /c start " + "WSIDIGenerator\\sequential_wsidi_generator.bat");
+				} catch (IOException e) {
+					WPPException.handleException(e);
+				}
+			}else{
+				prepareWsiDiParallel();
+				try {
+					Runtime.getRuntime().exec("cmd /c start " + "WSIDIGenerator\\parallel_wsidi_generator.bat");
+				} catch (IOException e) {
+					WPPException.handleException(e);
+				}
+			}
 		}else{
-			parallelRun();
+			emptyProgressFiles();
+			clearBatchRunList();
+		
+			for (int i=0; i<launchPathList.size(); i++){
+				String lfp=launchPathList.get(i);
+				brpIsToRunMap.put(lfp,  true);							
+			}
+		
+			checkProgress();
+		
+			if (isSequential){
+				sequentialRun();
+			}else{
+				parallelRun();
+			}
 		}
 	}
 	
@@ -463,5 +492,101 @@ public class WPPBatchRunDialog extends Dialog {
 				}
 			}
 		});
+	}
+	
+	public void prepareWsiDiParallel(){
+		setupWsidiBrp();
+		
+		String wsidiMainTemplate = ".\\WSIDIGenerator\\ParallelMain_template.py";
+		String wsidiMainFile = ".\\WSIDIGenerator\\ParallelMain.py";
+		try {
+	         FileInputStream fs= new FileInputStream(wsidiMainTemplate);
+	         BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+	         FileWriter writer = new FileWriter(wsidiMainFile);
+	         String line;
+	         int count =0;
+	         while((line = br.readLine())!=null){
+	              count++;
+	              if(count==29){
+	            	  writer.write(dvNamesLine);
+	              }else if (count==30){
+	            	  writer.write(lookupNamesLine);
+	              }else if (count==31){
+	            	  writer.write(engineNamesLine);
+	              }else{
+	                  writer.append(line+"\n");
+	              }
+	         }
+	         writer.close();
+	    }
+	    catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	public void prepareWsiDiSequential(){
+		setupWsidiBrp();
+		
+		String wsidiMainTemplate = ".\\WSIDIGenerator\\SequentialMain_template.py";
+		String wsidiMainFile = ".\\WSIDIGenerator\\SequentialMain.py";
+		try {
+	         FileInputStream fs= new FileInputStream(wsidiMainTemplate);
+	         BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+	         FileWriter writer = new FileWriter(wsidiMainFile);
+	         String line;
+	         int count =0;
+	         while((line = br.readLine())!=null){
+	              count++;
+	              if(count==29){
+	            	  writer.write(dvNamesLine);
+	              }else if (count==30){
+	            	  writer.write(lookupNamesLine);
+	              }else if (count==31){
+	            	  writer.write(engineNamesLine);
+	              }else{
+	                  writer.append(line+"\n");
+	              }
+	         }
+	         writer.close();
+	    }
+	    catch (IOException e) {
+	        e.printStackTrace();
+	    }
+		
+		for (int i=0; i<launchPathList.size(); i++){
+			String lfp=launchPathList.get(i);
+			if (configMap.containsKey(lfp) && brpMap.containsKey(lfp)){
+				LaunchConfigInfo config = configMap.get(lfp);
+				BatchRunProcess brp = brpMap.get(lfp);
+				brp.createBatch(config, lfp);
+			}
+		}
+	}
+	
+	public void setupWsidiBrp(){
+		dvNamesLine =   "        studyDvNames=[";
+		lookupNamesLine="        lookupNames=[";
+		engineNamesLine="        engineNames=[";
+		
+		for (int i=0; i<launchPathList.size(); i++){
+			String lfp=launchPathList.get(i);
+			if (configMap.containsKey(lfp) && brpMap.containsKey(lfp)){
+				LaunchConfigInfo config = configMap.get(lfp);
+				BatchRunProcess brp = brpMap.get(lfp);
+				brp.createBatch(config, lfp);
+				if (i==0){
+					dvNamesLine=dvNamesLine+"r\""+brp.dvFileFullPath+"\"";
+					lookupNamesLine=lookupNamesLine+"r\""+brp.lookupFullPath+"\"";
+					engineNamesLine=engineNamesLine+"r\""+brp.engineFileFullPath+"\"";
+				}else{
+					dvNamesLine=dvNamesLine+",r\""+brp.dvFileFullPath+"\"";
+					lookupNamesLine=lookupNamesLine+",r\""+brp.lookupFullPath+"\"";
+					engineNamesLine=engineNamesLine+",r\""+brp.engineFileFullPath+"\"";
+				}
+			}
+		}
+		dvNamesLine=dvNamesLine+"]\n";
+		lookupNamesLine=lookupNamesLine+"]\n";
+		engineNamesLine=engineNamesLine+"]\n";
 	}
 }

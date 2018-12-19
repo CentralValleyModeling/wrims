@@ -104,6 +104,10 @@ public class BatchRunProcess {
 	private Process process;
 	
 	public boolean isRunning=false;
+	
+	public String engineFileFullPath;
+	public String dvFileFullPath;
+	public String lookupFullPath;
 		
 	public void launch(LaunchConfigInfo configuration, String launchFilePath) throws CoreException {		
 		
@@ -140,7 +144,7 @@ public class BatchRunProcess {
 		createBatch(configuration, launchFilePath);
 		
 		try {
-			String engineFileFullPath = launchFilePath+".bat";
+			engineFileFullPath = launchFilePath+".bat";
 			process = Runtime.getRuntime().exec(new String[] {"cmd.exe", "/c", "start", "/min", "/w", engineFileFullPath}, 
 					null, null); 
 			process.waitFor();
@@ -168,7 +172,7 @@ public class BatchRunProcess {
 			createBatch(configuration, launchFilePath);
 		
 			try {
-				String engineFileFullPath = launchFilePath+".bat";
+				engineFileFullPath = launchFilePath+".bat";
 				process = Runtime.getRuntime().exec(new String[] {"cmd", "/C", "start", "/min", "/w", engineFileFullPath}, 
 						null, null); 		
 				process.waitFor();
@@ -383,7 +387,9 @@ public class BatchRunProcess {
 		String mainDirectory = mainFileAbsPath.substring(0, index + 1);
 		externalPath = mainDirectory + "External";
 		
-		String engineFileFullPath = launchFilePath+".bat";
+		lookupFullPath=mainDirectory + "Lookup";
+		
+		engineFileFullPath = launchFilePath+".bat";
 		try {
 			String configFilePath = generateConfigFile(configuration, mainFileAbsPath, launchFilePath);
 			FileWriter debugFile = new FileWriter(engineFileFullPath);
@@ -510,9 +516,11 @@ public class BatchRunProcess {
 			out.println("Solver             "+configMap.get("solver".toLowerCase()));
 			if (new File(dvarFile).isAbsolute()){
 				out.println("DvarFile           "+dvarFile);
+				dvFileFullPath=dvarFile;
 			}else{
 				String procDvarFile=FileProcess.procRelativePath(dvarFile, launchFilePath);
 				out.println("DvarFile           " + procDvarFile);
+				dvFileFullPath=procDvarFile;
 			}
 			if (new File(svarFile).isAbsolute()){
 				out.println("SvarFile           "+svarFile);
