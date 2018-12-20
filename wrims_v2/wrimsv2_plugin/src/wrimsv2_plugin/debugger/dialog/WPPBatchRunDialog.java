@@ -54,9 +54,9 @@ public class WPPBatchRunDialog extends Dialog {
 	private Map<String, LaunchConfigInfo> configMap = new HashMap<String, LaunchConfigInfo>();
 	private Map<String, BatchRunProcess> brpMap = new HashMap<String, BatchRunProcess>();
 	private Map<String, Boolean> brpIsToRunMap = new HashMap<String, Boolean>();
-	private String dvNamesLine;
-	private String lookupNamesLine;
-	private String engineNamesLine;
+	private String dvNamesLine="";
+	private String lookupNamesLine="";
+	private String engineNamesLine="";
 	
 	public WPPBatchRunDialog(Shell parentShell) {
 		super(parentShell, SWT.MIN);
@@ -522,6 +522,16 @@ public class WPPBatchRunDialog extends Dialog {
 	    catch (IOException e) {
 	        e.printStackTrace();
 	    }
+		
+		for (int i=0; i<launchPathList.size(); i++){
+			String lfp=launchPathList.get(i);
+			if (configMap.containsKey(lfp) && brpMap.containsKey(lfp)){
+				LaunchConfigInfo config = configMap.get(lfp);
+				BatchRunProcess brp = brpMap.get(lfp);
+				brp.getStartEndDate(config);
+				brp.createBatch(config, lfp);
+			}
+		}
 	}
 	
 	public void prepareWsiDiSequential(){
@@ -558,6 +568,7 @@ public class WPPBatchRunDialog extends Dialog {
 			if (configMap.containsKey(lfp) && brpMap.containsKey(lfp)){
 				LaunchConfigInfo config = configMap.get(lfp);
 				BatchRunProcess brp = brpMap.get(lfp);
+				brp.getStartEndDate(config);
 				brp.createBatch(config, lfp);
 			}
 		}
