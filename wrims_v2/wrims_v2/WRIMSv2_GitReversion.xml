@@ -51,7 +51,7 @@
 	    </condition>
 
 	    <tstamp>
-	        <format property="version.date" pattern="yyyy-mm-dd.HH:mm:ss" locale="en,US"/>
+	        <format property="version.date" pattern="yyyy-MM-dd.HH:mm:ss" locale="en,US"/>
 	    </tstamp>
 	    <echo>Date : ${version.date}</echo>
 
