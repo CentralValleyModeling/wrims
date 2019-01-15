@@ -735,6 +735,7 @@ public class ConfigUtils {
 		ControlData.ovOption = Integer.parseInt(configMap.get("ovoption"));
 		ControlData.ovFile = configMap.get("ovfile");
 
+		System.out.println("ovOption:    " + ControlData.ovOption);
 		//if (Error.getTotalError()<1) readParameter(configFile);
 		
 //		if (Error.getTotalError()<1 && paramMap.size()>0) { 
@@ -995,6 +996,7 @@ public class ConfigUtils {
 		configMap.put("AllowSvTsInit".toLowerCase(), "no");
 		configMap.put("DatabaseURL".toLowerCase(), "none");
 		configMap.put("SQLGroup".toLowerCase(), "calsim");
+		configMap.put("ovOption".toLowerCase(), "0");
 
 		return configMap;
 
