@@ -143,6 +143,8 @@ public class ControlData {
 	public static String ovFile="";
 	public static boolean isSimOutput = true;
 	
+	public static boolean enableProgressLog = false;
+	
 	public ControlData(){
 	}
 	
