@@ -114,6 +114,9 @@ public class ControllerBatch {
 			if (args[0].toLowerCase().endsWith(".launch.config")){
 				enableConfigProgress=true;
 			}
+			if (ControlData.enableProgressLog){
+				enableProgressLog=true;
+			}
 		} else {		
 			setControlData(args);
 		}	

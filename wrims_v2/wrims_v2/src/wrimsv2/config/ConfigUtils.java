@@ -722,6 +722,13 @@ public class ConfigUtils {
 		}
 		System.out.println("WreslPlus:         " + StudyUtils.useWreslPlus);
 		
+		String enableProgressLog = configMap.get("enableprogresslog");
+		
+		if (enableProgressLog.equalsIgnoreCase("yes") || enableProgressLog.equalsIgnoreCase("true")){
+			ControlData.enableProgressLog = true;
+		} 		
+		System.out.println("enableProgressLog:         " + ControlData.enableProgressLog);
+		
 		String allowSvTsInit = configMap.get("allowsvtsinit");
 		if (allowSvTsInit.equalsIgnoreCase("yes") || allowSvTsInit.equalsIgnoreCase("true")){
 			ControlData.allowSvTsInit = true;	
@@ -735,6 +742,7 @@ public class ConfigUtils {
 		ControlData.ovOption = Integer.parseInt(configMap.get("ovoption"));
 		ControlData.ovFile = configMap.get("ovfile");
 
+		System.out.println("ovOption:    " + ControlData.ovOption);
 		//if (Error.getTotalError()<1) readParameter(configFile);
 		
 //		if (Error.getTotalError()<1 && paramMap.size()>0) { 
@@ -995,7 +1003,8 @@ public class ConfigUtils {
 		configMap.put("AllowSvTsInit".toLowerCase(), "no");
 		configMap.put("DatabaseURL".toLowerCase(), "none");
 		configMap.put("SQLGroup".toLowerCase(), "calsim");
-
+		configMap.put("ovOption".toLowerCase(), "0");
+		configMap.put("enableProgressLog".toLowerCase(), "No");
 		return configMap;
 
 	}
