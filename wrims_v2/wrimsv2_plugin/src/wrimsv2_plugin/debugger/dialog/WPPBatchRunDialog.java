@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.LineNumberReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,6 +38,7 @@ import wrimsv2_plugin.debugger.exception.WPPException;
 public class WPPBatchRunDialog extends Dialog {
 	private Text fileText;
 	private	String fileName="";
+	private	String lfgName="";
 	private Button addButton;
 	private Button deleteButton;
 	private Button startAllButton;
@@ -44,6 +46,8 @@ public class WPPBatchRunDialog extends Dialog {
 	private Button stopButton;
 	private Button seqButton;
 	private Button wsidiButton;
+	private Button openButton;
+	private Button saveButton;
 	private List brl;
 	
 	private boolean isSequential=false;
@@ -190,6 +194,7 @@ public class WPPBatchRunDialog extends Dialog {
 							addButton.setEnabled(false);
 							deleteButton.setEnabled(false);
 							seqButton.setEnabled(false);
+							openButton.setEnabled(false);
 						}
 						startAllBatchRun();
 					}
@@ -208,15 +213,14 @@ public class WPPBatchRunDialog extends Dialog {
 				final IWorkbench workbench=PlatformUI.getWorkbench();
 				workbench.getDisplay().asyncExec(new Runnable(){
 					public void run(){
-						if (!isWsidi){
-							stopAllButton.setEnabled(false);
-							stopButton.setEnabled(false);
-							startAllButton.setEnabled(true);
-							addButton.setEnabled(true);
-							deleteButton.setEnabled(true);
-							seqButton.setEnabled(true);
-						}
 						stopAllBatchRun();
+						stopAllButton.setEnabled(false);
+						stopButton.setEnabled(false);
+						startAllButton.setEnabled(true);
+						addButton.setEnabled(true);
+						deleteButton.setEnabled(true);
+						seqButton.setEnabled(true);
+						openButton.setEnabled(true);
 					}
 				});
 			}
@@ -270,6 +274,72 @@ public class WPPBatchRunDialog extends Dialog {
 				workbench.getDisplay().asyncExec(new Runnable(){
 					public void run(){
 						isWsidi=!isWsidi;
+					}
+				});
+			}
+		});
+		
+		openButton = new Button(shell, SWT.PUSH);
+		openButton.setText("Open");
+		GridData gd10 = new GridData(GridData.HORIZONTAL_ALIGN_CENTER);
+		gd10.horizontalSpan = 1;
+		openButton.setLayoutData(gd10);
+		openButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				final IWorkbench workbench=PlatformUI.getWorkbench();
+				workbench.getDisplay().asyncExec(new Runnable(){
+					public void run(){
+						Shell shell=workbench.getActiveWorkbenchWindow().getShell();
+						FileDialog dlg=new FileDialog(shell, SWT.OPEN);
+						dlg.setFilterNames(new String[]{"Launch File Group (*.lfg)", "All Files (*.*)"});
+						dlg.setFilterExtensions(new String[]{"*.lfg", "*.*"});
+						dlg.setFileName(lfgName);
+						String file=dlg.open();
+						if (file !=null){
+							stopAllBatchRun();
+							stopAllButton.setEnabled(false);
+							stopButton.setEnabled(false);
+							startAllButton.setEnabled(true);
+							addButton.setEnabled(true);
+							deleteButton.setEnabled(true);
+							seqButton.setEnabled(true);
+							openButton.setEnabled(true);
+														
+							lfgName=file;
+							brl.removeAll();
+							launchPathList=new ArrayList<String>();
+				    		launchNameList=new ArrayList<String>();
+				    		configMap=new HashMap<String, LaunchConfigInfo>();
+				    		brpMap=new HashMap<String, BatchRunProcess>();
+							procBatchRunFileNames(lfgName);
+						}
+					}
+				});
+			}
+		});
+		
+		saveButton = new Button(shell, SWT.PUSH);
+		saveButton.setText("Save");
+		GridData gd11 = new GridData(GridData.HORIZONTAL_ALIGN_CENTER);
+		gd11.horizontalSpan = 1;
+		saveButton.setLayoutData(gd11);
+		saveButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				final IWorkbench workbench=PlatformUI.getWorkbench();
+				workbench.getDisplay().asyncExec(new Runnable(){
+					public void run(){
+						Shell shell=workbench.getActiveWorkbenchWindow().getShell();
+						FileDialog dlg=new FileDialog(shell, SWT.SAVE);
+						dlg.setFilterNames(new String[]{"Launch File Group (*.lfg)", "All Files (*.*)"});
+						dlg.setFilterExtensions(new String[]{"*.lfg", "*.*"});
+						dlg.setFileName(lfgName);
+						String file=dlg.open();
+						if (file !=null){
+							lfgName=file;
+							saveLfgFile(lfgName);
+						}
 					}
 				});
 			}
@@ -599,5 +669,52 @@ public class WPPBatchRunDialog extends Dialog {
 		dvNamesLine=dvNamesLine+"]\n";
 		lookupNamesLine=lookupNamesLine+"]\n";
 		engineNamesLine=engineNamesLine+"]\n";
+	}
+	
+	public void procBatchRunFileNames(String fn){
+		
+		File file = new File(fn);
+		FileInputStream fs;
+		try {
+			fs = new FileInputStream(file.getAbsolutePath());
+			BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+		    LineNumberReader reader = new LineNumberReader(br);
+		    String lfp;
+		    while((lfp = br.readLine())!=null){
+		    	if (!lfp.equals("") && !launchPathList.contains(lfp)){
+		    		LaunchConfigInfo config = new LaunchConfigInfo(lfp);
+		    		BatchRunProcess brp=new BatchRunProcess();
+		    		int index1=lfp.lastIndexOf("\\");
+		    		int index2=lfp.lastIndexOf(".");
+		    		String lfn=lfp.substring(index1+1, index2);
+		    		launchPathList.add(lfp);
+		    		launchNameList.add(lfn);
+		    		configMap.put(lfp, config);
+		    		brpMap.put(lfp, brp);
+		    		brl.add(lfn);
+		    	}
+		    }
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
+	}
+	
+	public void saveLfgFile(String fn){
+		try {
+			File file = new File(fn);
+			if (!file.exists()){
+				file.createNewFile();
+			}
+			FileWriter fw = new FileWriter(file.getAbsolutePath());
+			PrintWriter out = new PrintWriter(fw);
+			for (int i=0; i<launchPathList.size(); i++){
+				out.println(launchPathList.get(i));
+			}
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
