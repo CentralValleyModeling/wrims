@@ -174,8 +174,8 @@ sequence returns[String id, SequenceTemp seqObj]
        
 	: SEQUENCE i=ID {$id=$i.text; $seqObj.id=$i.text;} 
 		'{' MODEL m=ID 
-		   ( CONDITION cc=logical_main {$seqObj.condition=$cc.text;} )? 
-		    ORDER o=INT 
+		   (( CONDITION cc=logical_main {$seqObj.condition=$cc.text;} ORDER o=INT    )| 
+		    ( ORDER o=INT (CONDITION cc=logical_main {$seqObj.condition=$cc.text;})? ) )
 		   ( TIMESTEP t=TIMESTEPVALUE {$seqObj.timeStep=$t.text.toUpperCase();} )? 
 		    '}' 
 	;
