@@ -84,9 +84,7 @@ public class PreRunModel {
 		if (ControlData.outputType==1){
 			System.out.println("Create HDF5 output data structure.");
 			HDF5Writer.createDataStructure();
-			if (ControlData.outputCycle){
-				HDF5Writer.listCycleStaticVariables(sds);
-			}
+			HDF5Writer.listCycleStaticVariables(sds);
 			System.out.println("HDF5 output data structure is created.");
 		}
 	}
@@ -115,6 +113,14 @@ public class PreRunModel {
 
 	public void	initialDvarAliasTS(){
 		DataTimeSeries.dvAliasTS=new HashMap<String, DssDataSetFixLength>();
+		if (ControlData.outputCycleToDss) {
+			int totalCycleNumber=ControlData.currStudyDataSet.getModelList().size();
+			DataTimeSeries.dvAliasTSCycles=new ArrayList<HashMap<String, DssDataSetFixLength>>(totalCycleNumber);
+			for (int i=0; i<totalCycleNumber; i++){
+				HashMap<String, DssDataSetFixLength> dvAliasTSCycle = new HashMap<String, DssDataSetFixLength>();
+				DataTimeSeries.dvAliasTSCycles.add(dvAliasTSCycle);
+			}
+		}
 	}
 
 	public void processExternal(){

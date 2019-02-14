@@ -6,7 +6,6 @@ import vista.time.TimeFactory;
 import vista.time.TimeInterval;
 import vista.time.TimeWindow;
 import vista.set.*;
-
 import wrimsv2.commondata.wresldata.Alias;
 import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.Svar;
@@ -18,6 +17,7 @@ import wrimsv2.hdf5.HDF5Reader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -283,6 +283,37 @@ public class DssOperation {
 			ControlData.writer.storeTimeSeriesData(pathName, startJulmin, dd,
 						storeFlags);
 		}
+		
+		if (ControlData.outputCycleToDss) writeDVAliasCycleDataToDSS();
+	}
+	
+	public static void writeDVAliasCycleDataToDSS() {
+		int totalCycleNumber=ControlData.currStudyDataSet.getModelList().size();
+		
+		for (int i=0; i<totalCycleNumber; i++){
+			int cycleI=i+1;
+			HashMap<String, DssDataSetFixLength> dvAliasTSCycle = DataTimeSeries.dvAliasTSCycles.get(i);
+			Set dvAliasSet=dvAliasTSCycle.keySet();
+			Iterator iterator = dvAliasSet.iterator();
+			while(iterator.hasNext()){
+				String dvAliasName=(String)iterator.next();
+				DssDataSetFixLength ddsfl=dvAliasTSCycle.get(dvAliasName);
+				double[] values=ddsfl.getData();
+				DSSData dd = new DSSData();
+				dd._dataType=DSSUtil.REGULAR_TIME_SERIES;
+				dd._yType="PER-AVER";
+				dd._numberRead=values.length;
+				dd._yUnits=ddsfl.getUnits().toUpperCase();
+				dd._yValues = values;
+				boolean storeFlags = false;
+				String pathName="/"+ControlData.partA+"_Cycle"+cycleI+"/"+DssOperation.getTSName(dvAliasName)+"/"+ddsfl.getKind()+"//"+ddsfl.getTimeStep()+"/"+ControlData.svDvPartF+"/";
+				Date startDate=ddsfl.getStartTime();
+				String startDateStr=TimeOperation.dssTimeEndDay(startDate.getYear()+1900, startDate.getMonth()+1, startDate.getDate());
+				long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
+				ControlData.writer.storeTimeSeriesData(pathName, startJulmin, dd,
+							storeFlags);
+			}
+		}
 	}
 	
 	public static String entryNameTS(String name, String timeStep){
@@ -449,7 +480,40 @@ public class DssOperation {
 			writer.storeTimeSeriesData(pathName, startJulmin, dd,
 						storeFlags);
 		}
+		
+		if (ControlData.outputCycleToDss) saveDvarCycleData(writer, fileName);
+		
 		System.out.println("Dvar file saved.");
+	}
+	
+	public static void saveDvarCycleData(DSSDataWriter writer, String fileName){
+		
+		int totalCycleNumber=ControlData.currStudyDataSet.getModelList().size();
+		
+		for (int i=0; i<totalCycleNumber; i++){
+			int cycleI=i+1;
+			HashMap<String, DssDataSetFixLength> dvAliasTSCycle = DataTimeSeries.dvAliasTSCycles.get(i);
+			Set dvAliasSet=dvAliasTSCycle.keySet();
+			Iterator iterator = dvAliasSet.iterator();
+			while(iterator.hasNext()){
+				String dvAliasName=(String)iterator.next();
+				DssDataSetFixLength ddsfl=dvAliasTSCycle.get(dvAliasName);
+				double[] values=ddsfl.getData();
+				DSSData dd = new DSSData();
+				dd._dataType=DSSUtil.REGULAR_TIME_SERIES;
+				dd._yType="PER-AVER";
+				dd._numberRead=values.length;
+				dd._yUnits=ddsfl.getUnits().toUpperCase();
+				dd._yValues = values;
+				boolean storeFlags = false;
+				String pathName="/"+ControlData.partA+"_Cycle"+cycleI+"/"+DssOperation.getTSName(dvAliasName)+"/"+ddsfl.getKind()+"//"+ddsfl.getTimeStep()+"/"+ControlData.svDvPartF+"/";
+				Date startDate=ddsfl.getStartTime();
+				String startDateStr=TimeOperation.dssTimeEndDay(startDate.getYear()+1900, startDate.getMonth()+1, startDate.getDate());
+				long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
+				writer.storeTimeSeriesData(pathName, startJulmin, dd,
+							storeFlags);
+			}
+		}
 	}
 	
 	public static void saveSvarTSData(DSSDataWriter writer, String fileName){

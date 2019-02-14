@@ -9,6 +9,7 @@ import wrimsv2.components.ControlData;
 public class DataTimeSeries {
 	public static HashMap<String, DssDataSet> svTS = new HashMap<String, DssDataSet> ();
 	public static HashMap<String, DssDataSetFixLength> dvAliasTS = new HashMap<String, DssDataSetFixLength> ();
+	public static ArrayList<HashMap<String, DssDataSetFixLength>> dvAliasTSCycles = new ArrayList<HashMap<String, DssDataSetFixLength>> ();
 	public static HashMap<String, DssDataSet> svInit = new HashMap<String, DssDataSet> ();
 	public static HashMap<String, DssDataSet> dvAliasInit = new HashMap<String, DssDataSet> ();
 	public static ArrayList<String> lookSvDss=new ArrayList<String>();
@@ -47,5 +48,27 @@ public class DataTimeSeries {
 		double[] dataList=dvAliasTS.get(entryNameTS).getData();
 		int index=ControlData.currTimeStep.get(ControlData.currCycleIndex)+offset;
 		if (index<dataList.length)	dataList[index]=value;
+		
+		if (ControlData.outputCycleToDss){
+			int cycleIndex=ControlData.currCycleIndex;
+			HashMap<String, DssDataSetFixLength> dvAliasTSCycle = dvAliasTSCycles.get(cycleIndex);
+			if (!dvAliasTSCycle.containsKey(entryNameTS)){
+				DssDataSetFixLength dds1=new DssDataSetFixLength();
+				double[] data1=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
+				dds1.setData(data1);
+				dds1.setTimeStep(ControlData.partE);
+				if (dds1.getTimeStep().equals("1MON")){
+					dds1.setStartTime(ControlData.monthlyStartTime);
+				}else{
+					dds1.setStartTime(ControlData.dailyStartTime);
+				}
+				dds1.setUnits(dvar.units);
+				dds1.setKind(dvar.kind);
+				dvAliasTSCycle.put(entryNameTS,dds1);
+			}
+			double[] dataList1=dvAliasTSCycle.get(entryNameTS).getData();
+			int index1=ControlData.currTimeStep.get(ControlData.currCycleIndex)+offset;
+			if (index1<dataList1.length) dataList1[index1]=value;
+		}
 	}
 }

@@ -741,8 +741,15 @@ public class ConfigUtils {
 		ControlData.sqlGroup = configMap.get("sqlgroup");
 		ControlData.ovOption = Integer.parseInt(configMap.get("ovoption"));
 		ControlData.ovFile = configMap.get("ovfile");
+		String outputCycleDataToDss = configMap.get("outputcycledatatodss");
+		if (outputCycleDataToDss.equalsIgnoreCase("yes") || outputCycleDataToDss.equalsIgnoreCase("true")){
+			ControlData.outputCycleToDss=true;
+		}else{
+			ControlData.outputCycleToDss=false;
+		}
 
 		System.out.println("ovOption:    " + ControlData.ovOption);
+		System.out.println("OutputCycleDataToDSS:    " + ControlData.outputCycleToDss);
 		//if (Error.getTotalError()<1) readParameter(configFile);
 		
 //		if (Error.getTotalError()<1 && paramMap.size()>0) { 
@@ -1005,6 +1012,7 @@ public class ConfigUtils {
 		configMap.put("SQLGroup".toLowerCase(), "calsim");
 		configMap.put("ovOption".toLowerCase(), "0");
 		configMap.put("enableProgressLog".toLowerCase(), "No");
+		configMap.put("OutputCycleDataToDss".toLowerCase(), "No");
 		return configMap;
 
 	}

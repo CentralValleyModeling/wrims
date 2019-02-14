@@ -369,7 +369,7 @@ public class ControllerDebug extends Thread {
 							noError=false;
 						}
 						int cycleI=modelIndex+1;
-						if (ControlData.outputType==1 && ControlData.outputCycle) HDF5Writer.writeOneCycle(mds, cycleI);
+						if (ControlData.outputType==1) HDF5Writer.writeOneCycle(mds, cycleI);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (ControlData.solverName.equalsIgnoreCase("CBC")){CbcSolver.resetModel();}
 						pauseForDebug(modelIndex);
@@ -384,7 +384,7 @@ public class ControllerDebug extends Thread {
 						}
 					}else{
 						int cycleI=modelIndex+1;
-						if (ControlData.outputType==1 && ControlData.outputCycle) HDF5Writer.skipOneCycle(mds, cycleI);
+						if (ControlData.outputType==1) HDF5Writer.skipOneCycle(mds, cycleI);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" skipped. ("+model+")");
 						new AssignPastCycleVariable();
 						deferPause(modelIndex);

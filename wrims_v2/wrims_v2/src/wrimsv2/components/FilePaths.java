@@ -43,34 +43,29 @@ public class FilePaths {
 	public static void setDvarFilePaths(String fullPath){
 		if (fullPath.toLowerCase().endsWith(".h5")){
 			ControlData.outputType=1;
-			ControlData.outputCycle=true;
 			fullDvarHDF5Path=fullPath;
 			int index=fullPath.lastIndexOf(".");
 			fullDvarDssPath=fullPath.substring(0, index+1)+"dss";
 		}else if (fullPath.toLowerCase().endsWith(".mysqlc")){
 			ControlData.outputType=2;
-			ControlData.outputCycle=false;
 			int index1=fullPath.lastIndexOf(File.separator);
 			int index2=fullPath.lastIndexOf(".");
 			sqlScenarioName=fullPath.substring(index1+1,index2);
 			fullDvarDssPath=fullPath.substring(0, index2+1)+"dss";
 		}else if (fullPath.toLowerCase().endsWith(".mysqlr")){
 			ControlData.outputType=3;
-			ControlData.outputCycle=false;
 			int index1=fullPath.lastIndexOf(File.separator);
 			int index2=fullPath.lastIndexOf(".");
 			sqlScenarioName=fullPath.substring(index1+1,index2);
 			fullDvarDssPath=fullPath.substring(0, index2+1)+"dss";
 		}else if (fullPath.toLowerCase().endsWith(".sqlsvr")){
 			ControlData.outputType=4;
-			ControlData.outputCycle=false;
 			int index1=fullPath.lastIndexOf(File.separator);
 			int index2=fullPath.lastIndexOf(".");
 			sqlScenarioName=fullPath.substring(index1+1,index2);
 			fullDvarDssPath=fullPath.substring(0, index2+1)+"dss";
 		}else if (fullPath.toLowerCase().endsWith(".csv")){
 			ControlData.outputType=5;
-			ControlData.outputCycle=false;
 			int index1=fullPath.lastIndexOf(File.separator);
 			int index2=fullPath.lastIndexOf(".");
 			sqlScenarioName=fullPath.substring(index1+1,index2);
@@ -78,7 +73,6 @@ public class FilePaths {
 			fullCsvPath=fullPath;
 		}else{
 			ControlData.outputType=0;
-			ControlData.outputCycle=false;
 			fullDvarDssPath=fullPath;
 		}
 		int index=fullPath.lastIndexOf(File.separator);
