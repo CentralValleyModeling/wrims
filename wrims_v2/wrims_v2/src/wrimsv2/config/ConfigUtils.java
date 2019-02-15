@@ -741,14 +741,14 @@ public class ConfigUtils {
 		ControlData.sqlGroup = configMap.get("sqlgroup");
 		ControlData.ovOption = Integer.parseInt(configMap.get("ovoption"));
 		ControlData.ovFile = configMap.get("ovfile");
+		System.out.println("ovOption:    " + ControlData.ovOption);
+		
 		String outputCycleDataToDss = configMap.get("outputcycledatatodss");
 		if (outputCycleDataToDss.equalsIgnoreCase("yes") || outputCycleDataToDss.equalsIgnoreCase("true")){
 			ControlData.outputCycleToDss=true;
 		}else{
 			ControlData.outputCycleToDss=false;
 		}
-
-		System.out.println("ovOption:    " + ControlData.ovOption);
 		System.out.println("OutputCycleDataToDSS:    " + ControlData.outputCycleToDss);
 		//if (Error.getTotalError()<1) readParameter(configFile);
 		

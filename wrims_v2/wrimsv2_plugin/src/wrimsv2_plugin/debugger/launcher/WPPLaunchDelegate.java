@@ -583,6 +583,12 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 				configMap.put("prefixinittodvarfile", "no");
 			}
 			
+			if (DebugCorePlugin.outputCycleToDss){
+				configMap.put("outputcycledatatodss", "yes");
+			}else{
+				configMap.put("outputcycledatatodss", "no");
+			}
+			
 			String studyDir = new File(mainFileAbsPath).getParentFile().getParentFile().getAbsolutePath();
 			String configName = "__study.config";
 			File f = new File(studyDir, configName);
@@ -659,6 +665,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			out.println("SQLGroup           "+configMap.get("SQLGroup".toLowerCase()));
 			out.println("OVOption           "+configMap.get("OVOption".toLowerCase()));
 			out.println("OVFile             "+configMap.get("OVFile".toLowerCase()));
+			out.println("OutputCycleDatatoDss "+configMap.get("OutputCycleDatatoDss".toLowerCase()));
 			
 			if (DebugCorePlugin.solver.equalsIgnoreCase("LpSolve")) {
 				

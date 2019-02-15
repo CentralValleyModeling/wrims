@@ -481,6 +481,24 @@ public class DebugInterface {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}else if(request.equals("OutputCycleDataToDssOn")){
+			if (!ControlData.outputCycleToDss) initOutputCycleDataToDss();
+			try {
+				sendRequest("OutputCycleDataToDssOn");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println("Output cycle data to Dss file is turned on");
+		}else if(request.equals("OutputCycleDataToDssOff")){
+			ControlData.outputCycleToDss=false;
+			try {
+				sendRequest("OutputCycleDataToDssOff");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println("Output cycle data to Dss file is turned off");
 		}else if (request.startsWith("savesvdss:")){
 			int index=request.indexOf(":");
 			String fileName=request.substring(index+1);
@@ -2309,6 +2327,16 @@ public class DebugInterface {
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		controllerDebug.conditionalBreakpointParser=new ValueEvaluatorParser(tokenStream);
 	}	
+	
+	private void initOutputCycleDataToDss(){
+		ControlData.outputCycleToDss=true;
+		int totalCycleNumber=ControlData.currStudyDataSet.getModelList().size();
+		DataTimeSeries.dvAliasTSCycles=new ArrayList<HashMap<String, DssDataSetFixLength>>(totalCycleNumber);
+		for (int i=0; i<totalCycleNumber; i++){
+			HashMap<String, DssDataSetFixLength> dvAliasTSCycle = new HashMap<String, DssDataSetFixLength>();
+			DataTimeSeries.dvAliasTSCycles.add(dvAliasTSCycle);
+		}
+	}
 	
 	public static void main(String[] args){
 		int argsSize=args.length;

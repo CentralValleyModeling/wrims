@@ -19,6 +19,7 @@ public class SettingPref {
 				file.createNewFile();
 				DebugCorePlugin.solver="CBC";
 				DebugCorePlugin.xmx="4096";
+				DebugCorePlugin.outputCycleToDss=false;
 				save();
 				return;
 			}
@@ -27,6 +28,12 @@ public class SettingPref {
 		    LineNumberReader reader = new LineNumberReader(br);
 		    DebugCorePlugin.solver=br.readLine();
 		    DebugCorePlugin.xmx=br.readLine();
+		    String strOutputCycleToDss = br.readLine();
+		    if (strOutputCycleToDss.toLowerCase().equals("true")){
+		    	DebugCorePlugin.outputCycleToDss=true;
+		    }else{
+		    	DebugCorePlugin.outputCycleToDss=false;
+		    }
 		} catch (Exception e) {
 			DebugCorePlugin.solver="CBC";
 			DebugCorePlugin.xmx="4096";
@@ -45,6 +52,7 @@ public class SettingPref {
 			PrintWriter out = new PrintWriter(fw);
 			out.println(DebugCorePlugin.solver);
 			out.println(DebugCorePlugin.xmx);
+			out.println(DebugCorePlugin.outputCycleToDss);
 			out.close();
 		} catch (IOException e) {
 			e.printStackTrace();

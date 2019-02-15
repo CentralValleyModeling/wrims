@@ -492,6 +492,12 @@ public class BatchRunProcess {
 				configMap.put("prefixinittodvarfile", "no");
 			}
 			
+			if (DebugCorePlugin.outputCycleToDss){
+				configMap.put("outputcycledatatodss", "yes");
+			}else{
+				configMap.put("outputcycledatatodss", "no");
+			}
+			
 			String configName = launchFilePath +".config";
 			File f = new File(configName);
 			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(f)));
@@ -559,6 +565,7 @@ public class BatchRunProcess {
 			out.println("SQLGroup           "+configMap.get("SQLGroup".toLowerCase()));
 			out.println("OVOption           "+configMap.get("OVOption".toLowerCase()));
 			out.println("OVFile             "+configMap.get("OVFile".toLowerCase()));
+			out.println("OutputCycleDatatoDss "+configMap.get("OutputCycleDatatoDss".toLowerCase()));
 			
 			if (DebugCorePlugin.solver.equalsIgnoreCase("LpSolve")) {
 				

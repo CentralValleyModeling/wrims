@@ -98,21 +98,34 @@ public class WPPOptionDialog extends Dialog {
 		Label label3 =  new Label(shell, SWT.NONE);
 		label3.setText("Allocated Memory (mb):");
 		
-		final Text text1 =  new Text(shell, SWT.BORDER);
-		text1.setText(DebugCorePlugin.xmx);
-		text1.setLayoutData(gridData);
+		final Text textMemory =  new Text(shell, SWT.BORDER);
+		textMemory.setText(DebugCorePlugin.xmx);
+		textMemory.setLayoutData(gridData);
+		
+		Label label4 =  new Label(shell, SWT.NONE);
+		label4.setText("Output Cycle Data to DSS");
+		
+		final Button buttonCycleDss =  new Button(shell, SWT.CHECK);
+		buttonCycleDss.setSelection(DebugCorePlugin.outputCycleToDss);
+		buttonCycleDss.setLayoutData(gridData);
 		
 		Button ok = new Button(shell, SWT.PUSH);
 		ok.setText("OK");
 		ok.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent event){
-				DebugCorePlugin.xmx=text1.getText();
+				DebugCorePlugin.xmx=textMemory.getText();
 				DebugCorePlugin.solver=solverCombo.getText();
 				DebugCorePlugin.log=logCombo.getText();
+				DebugCorePlugin.outputCycleToDss=buttonCycleDss.getSelection();
 				SettingPref.save();
 				if (DebugCorePlugin.isDebugging){
 					try {
 						DebugCorePlugin.target.sendRequest("solveroption:"+DebugCorePlugin.solver+":"+DebugCorePlugin.log);
+						if (DebugCorePlugin.outputCycleToDss) {
+							DebugCorePlugin.target.sendRequest("OutputCycleDataToDssOn");
+						}else{
+							DebugCorePlugin.target.sendRequest("OutputCycleDataToDssOff");
+						}
 					} catch (DebugException e) {
 						WPPException.handleException(e);
 					}

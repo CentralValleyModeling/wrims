@@ -801,11 +801,17 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 				out.println("OVOption           "+ovOption);
 				out.println("OVFile             "+FileProcess.procRelativePath(ovFile, launchConfig));
 			}
-					
-			if (DebugCorePlugin.solver.equalsIgnoreCase("LpSolve")) {
-				out.println("LpSolveConfigFile         callite.lpsolve");
-				out.println("LpSolveNumberOfRetries    2");				
-			}	
+			
+			if (DebugCorePlugin.outputCycleToDss){
+				out.println("OutputCycleDatatoDss yes");
+			}else{
+				out.println("OutputCycleDatatoDss no");
+			}
+			
+			//if (DebugCorePlugin.solver.equalsIgnoreCase("LpSolve")) {
+			//	out.println("LpSolveConfigFile         callite.lpsolve");
+			//	out.println("LpSolveNumberOfRetries    2");				
+			//}	
 			out.close();
 			configFilePath= new File(studyDir, configName).getAbsolutePath();
 		} catch (Exception e) {

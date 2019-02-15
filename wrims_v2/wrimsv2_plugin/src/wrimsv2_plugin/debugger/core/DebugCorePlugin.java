@@ -281,6 +281,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static String reportFileName="";
 	
 	public static String xmx="4096";
+	public static boolean outputCycleToDss=false;
 	
 	/**
 	 * The constructor.
