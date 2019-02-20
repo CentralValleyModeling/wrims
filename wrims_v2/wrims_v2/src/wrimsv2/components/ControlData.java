@@ -134,6 +134,9 @@ public class ControlData {
 	public static int resimYear;
 	public static int resimMonth;
 	public static int resimDay;
+	public static int cycleDataStartYear;
+	public static int cycleDataStartMonth;
+	public static int cycleDataStartDay;
 	    
 	public static String USER;       
 	public static String PASS;  

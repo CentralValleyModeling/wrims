@@ -8,6 +8,7 @@ import vista.time.TimeWindow;
 import vista.set.*;
 import wrimsv2.commondata.wresldata.Alias;
 import wrimsv2.commondata.wresldata.Dvar;
+import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.Timeseries;
 import wrimsv2.components.ControlData;
@@ -25,6 +26,14 @@ import java.util.Set;
 import com.google.common.primitives.Doubles;
 
 public class DssOperation {
+	
+	private static int savedStartMonthlyTimestep;
+	private static int savedEndMonthlyTimestep;
+	private static int totalSavedMonthlyTimestep;
+	private static int savedStartDailyTimestep;
+	private static int savedEndDailyTimestep;
+	private static int totalSavedDailyTimestep;
+	
 	public static boolean getSVTimeseries(String name, String file, String timeStep){
 		ControlData.timeStep=timeStep;
 		ControlData.partE=timeStep;
@@ -460,20 +469,37 @@ public class DssOperation {
 	
 	public static void saveDvarData(DSSDataWriter writer, String fileName){
 		System.out.println("write dvar and alias to "+fileName);
+		
+		savedEndMonthlyTimestep=savedTimeStep("1MON", ControlData.currYear, ControlData.currMonth, ControlData.currDay);
+		savedEndDailyTimestep=savedTimeStep("1DAY", ControlData.currYear, ControlData.currMonth, ControlData.currDay);
+		
 		Set dvAliasSet=DataTimeSeries.dvAliasTS.keySet();
 		Iterator iterator = dvAliasSet.iterator();
 		while(iterator.hasNext()){
 			String dvAliasName=(String)iterator.next();
 			DssDataSetFixLength ddsfl=DataTimeSeries.dvAliasTS.get(dvAliasName);
+			String timestep = ddsfl.getTimeStep();
 			double[] values=ddsfl.getData();
+			double[] modValues;
+			if (timestep.equals("1MON")){
+				modValues=new double[savedEndMonthlyTimestep+1];
+				for (int i=0; i<=savedEndMonthlyTimestep; i++){
+					modValues[i]=values[i];
+				}
+			}else{
+				modValues=new double[savedEndDailyTimestep+1];
+				for (int i=0; i<=savedEndDailyTimestep; i++){
+					modValues[i]=values[i];
+				}
+			}
 			DSSData dd = new DSSData();
 			dd._dataType=DSSUtil.REGULAR_TIME_SERIES;
 			dd._yType="PER-AVER";
-			dd._numberRead=values.length;
+			dd._numberRead=modValues.length;
 			dd._yUnits=ddsfl.getUnits().toUpperCase();
-			dd._yValues = values;
+			dd._yValues = modValues;
 			boolean storeFlags = false;
-			String pathName="/"+ControlData.partA+"/"+DssOperation.getTSName(dvAliasName)+"/"+ddsfl.getKind()+"//"+ddsfl.getTimeStep()+"/"+ControlData.svDvPartF+"/";
+			String pathName="/"+ControlData.partA+"/"+DssOperation.getTSName(dvAliasName)+"/"+ddsfl.getKind()+"//"+timestep+"/"+ControlData.svDvPartF+"/";
 			Date startDate=ddsfl.getStartTime();
 			String startDateStr=TimeOperation.dssTimeEndDay(startDate.getYear()+1900, startDate.getMonth()+1, startDate.getDate());
 			long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
@@ -488,6 +514,11 @@ public class DssOperation {
 	
 	public static void saveDvarCycleData(DSSDataWriter writer, String fileName){
 		
+		savedStartMonthlyTimestep=savedTimeStep("1MON", ControlData.cycleDataStartYear, ControlData.cycleDataStartMonth, ControlData.cycleDataStartDay);
+		savedStartDailyTimestep=savedTimeStep("1DAY", ControlData.cycleDataStartYear, ControlData.cycleDataStartMonth, ControlData.cycleDataStartDay);
+		totalSavedMonthlyTimestep=savedEndMonthlyTimestep-savedStartMonthlyTimestep+1;
+		totalSavedDailyTimestep=savedEndDailyTimestep-savedStartDailyTimestep+1;
+		
 		int totalCycleNumber=ControlData.currStudyDataSet.getModelList().size();
 		
 		for (int i=0; i<totalCycleNumber; i++){
@@ -498,17 +529,30 @@ public class DssOperation {
 			while(iterator.hasNext()){
 				String dvAliasName=(String)iterator.next();
 				DssDataSetFixLength ddsfl=dvAliasTSCycle.get(dvAliasName);
+				String timestep=ddsfl.getTimeStep();
 				double[] values=ddsfl.getData();
+				double[] modValues;
+				if (timestep.equals("1MON")){
+					modValues=new double[totalSavedMonthlyTimestep];
+					for (int j=savedStartMonthlyTimestep; j<=savedEndMonthlyTimestep; j++){
+						modValues[j-savedStartMonthlyTimestep]=values[j];
+					}
+				}else{
+					modValues=new double[totalSavedDailyTimestep];
+					for (int j=savedStartDailyTimestep; j<=savedEndDailyTimestep; j++){
+						modValues[j-savedStartDailyTimestep]=values[j];
+					}
+				}
 				DSSData dd = new DSSData();
 				dd._dataType=DSSUtil.REGULAR_TIME_SERIES;
 				dd._yType="PER-AVER";
-				dd._numberRead=values.length;
+				dd._numberRead=modValues.length;
 				dd._yUnits=ddsfl.getUnits().toUpperCase();
-				dd._yValues = values;
+				dd._yValues = modValues;
 				boolean storeFlags = false;
-				String pathName="/"+ControlData.partA+"_Cycle"+cycleI+"/"+DssOperation.getTSName(dvAliasName)+"/"+ddsfl.getKind()+"//"+ddsfl.getTimeStep()+"/"+ControlData.svDvPartF+"/";
-				Date startDate=ddsfl.getStartTime();
-				String startDateStr=TimeOperation.dssTimeEndDay(startDate.getYear()+1900, startDate.getMonth()+1, startDate.getDate());
+				String pathName="/"+ControlData.partA+"_Cycle"+cycleI+"/"+DssOperation.getTSName(dvAliasName)+"/"+ddsfl.getKind()+"//"+timestep+"/"+ControlData.svDvPartF+"/";
+				//Date startDate=ddsfl.getStartTime();
+				String startDateStr=TimeOperation.dssTimeEndDay(ControlData.cycleDataStartYear, ControlData.cycleDataStartMonth, ControlData.cycleDataStartDay);
 				long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
 				writer.storeTimeSeriesData(pathName, startJulmin, dd,
 							storeFlags);
@@ -586,5 +630,18 @@ public class DssOperation {
 			writer.storeTimeSeriesData(pathName, startJulmin, dd, storeFlags);
 		}
 		System.out.println("Svar file saved.");
+	}
+	
+	public static int savedTimeStep(String timeStep, int year, int month, int day){
+		if (timeStep.equals("1MON")){
+			return (year-ControlData.startYear)*12+(month-ControlData.startMonth);
+		}else{
+			Date startDate = new Date (ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
+			Date endDate=new Date (year-1900, month-1, day);
+			long startTime=startDate.getTime();
+			long endTime=endDate.getTime();
+			double timestep=(endTime-startTime)/(24*60*60*1000l);
+			return (int)timestep;
+		}
 	}
 }

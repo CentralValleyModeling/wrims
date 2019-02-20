@@ -352,8 +352,8 @@ public class DebugInterface {
 				}else if (ControlData.solverName.equalsIgnoreCase("Cbc")){
 					CbcSolver.close();
 				}
-				DssOperation.writeInitDvarAliasToDSS();
-				DssOperation.writeDVAliasToDSS();
+				DssOperation.saveInitialData(ControlData.writer, FilePaths.fullDvarDssPath);
+				DssOperation.saveDvarData(ControlData.writer, FilePaths.fullDvarDssPath);
 				ControlData.writer.closeDSSFile();
 				terminateCode=1;
 			}
@@ -465,6 +465,16 @@ public class DebugInterface {
 			ControlData.currYear=ControlData.cycleEndYear;
 			ControlData.currMonth=ControlData.cycleEndMonth;
 			ControlData.currDay=ControlData.cycleEndDay;
+			if (ControlData.outputCycleToDss){
+				Date resimDate=new Date(ControlData.resimYear-1900, ControlData.resimMonth-1, ControlData.resimDay);
+				Date cycleDataDate = new Date(ControlData.cycleDataStartYear-1900, ControlData.cycleDataStartMonth-1, ControlData.cycleDataStartDay);
+				if (resimDate.before(cycleDataDate)){
+					ControlData.cycleDataStartYear=ControlData.resimYear;
+					ControlData.cycleDataStartMonth=ControlData.resimMonth;
+					ControlData.cycleDataStartDay=ControlData.resimDay;
+				}
+			}
+			
 			controllerDebug.resume();
 			try {
 				sendRequest("resumed");
@@ -2294,8 +2304,8 @@ public class DebugInterface {
 		
 	public boolean saveDvDss(String fileName){
 		if (fileName.equalsIgnoreCase(FilePaths.fullDvarDssPath)){
-			DssOperation.writeInitDvarAliasToDSS();
-			DssOperation.writeDVAliasToDSS();
+			DssOperation.saveInitialData(ControlData.writer, fileName);
+			DssOperation.saveDvarData(ControlData.writer, fileName);
 			return true;
 		}else{
 			DSSDataWriter writer = new DSSDataWriter(fileName);
@@ -2330,6 +2340,9 @@ public class DebugInterface {
 	
 	private void initOutputCycleDataToDss(){
 		ControlData.outputCycleToDss=true;
+		ControlData.cycleDataStartYear=ControlData.currYear;
+		ControlData.cycleDataStartMonth=ControlData.currMonth;
+		ControlData.cycleDataStartDay=ControlData.currDay;
 		int totalCycleNumber=ControlData.currStudyDataSet.getModelList().size();
 		DataTimeSeries.dvAliasTSCycles=new ArrayList<HashMap<String, DssDataSetFixLength>>(totalCycleNumber);
 		for (int i=0; i<totalCycleNumber; i++){
