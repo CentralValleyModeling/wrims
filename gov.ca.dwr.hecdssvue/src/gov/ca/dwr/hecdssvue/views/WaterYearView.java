@@ -199,30 +199,47 @@ public class WaterYearView extends ViewPart {
 	}
 	
 	public void wateryearFilter(){
+		boolean isFirstSet=true;
 		DssPluginCore.isAllWaterYear=true;
 		ArrayList<Integer> selectedWaterYear=new ArrayList<Integer>();
 		for (int i=0; i<5; i++){
 			if (index[0][i].getSelection()){
 				DssPluginCore.isAllWaterYear=false;
 				selectedWaterYear.addAll(sacIndex.get(i+1));
+				isFirstSet=false;
 			}
 		}
 		for (int i=0; i<5; i++){
 			if (index[1][i].getSelection()){
 				DssPluginCore.isAllWaterYear=false;
-				selectedWaterYear.addAll(sjrIndex.get(i+1));
+				if (isFirstSet){
+					selectedWaterYear.addAll(sjrIndex.get(i+1));
+					isFirstSet=false;
+				}else{
+					selectedWaterYear.retainAll(sjrIndex.get(i+1));
+				}
 			}
 		}
 		for (int i=0; i<4; i++){
 			if (index[2][i].getSelection()){
 				DssPluginCore.isAllWaterYear=false;
-				selectedWaterYear.addAll(shastaIndex.get(i+1));
+				if (isFirstSet){
+					selectedWaterYear.addAll(shastaIndex.get(i+1));
+					isFirstSet=false;
+				}else{
+					selectedWaterYear.retainAll(shastaIndex.get(i+1));
+				}
 			}
 		}
 		for (int i=0; i<2; i++){
 			if (index[3][i].getSelection()){
 				DssPluginCore.isAllWaterYear=false;
-				selectedWaterYear.addAll(featherIndex.get(i));
+				if (isFirstSet){
+					selectedWaterYear.addAll(featherIndex.get(i));
+					isFirstSet=false;
+				}else{
+					selectedWaterYear.retainAll(featherIndex.get(i+1));
+				}
 			}
 		}
 		
