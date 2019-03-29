@@ -238,7 +238,7 @@ public class WaterYearView extends ViewPart {
 					selectedWaterYear.addAll(featherIndex.get(i));
 					isFirstSet=false;
 				}else{
-					selectedWaterYear.retainAll(featherIndex.get(i+1));
+					selectedWaterYear.retainAll(featherIndex.get(i));
 				}
 			}
 		}
