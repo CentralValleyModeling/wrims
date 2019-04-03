@@ -209,38 +209,47 @@ public class WaterYearView extends ViewPart {
 				isFirstSet=false;
 			}
 		}
+		ArrayList<Integer> selectedSJRWaterYear=new ArrayList<Integer>();
 		for (int i=0; i<5; i++){
 			if (index[1][i].getSelection()){
 				DssPluginCore.isAllWaterYear=false;
-				if (isFirstSet){
-					selectedWaterYear.addAll(sjrIndex.get(i+1));
-					isFirstSet=false;
-				}else{
-					selectedWaterYear.retainAll(sjrIndex.get(i+1));
-				}
+				selectedSJRWaterYear.addAll(sjrIndex.get(i+1));
 			}
 		}
+		if (selectedSJRWaterYear.size()==0){
+		}else if (isFirstSet){
+			selectedWaterYear.addAll(selectedSJRWaterYear);
+			isFirstSet=false;
+		}else{
+			selectedWaterYear.retainAll(selectedSJRWaterYear);
+		}
+		ArrayList<Integer> selectedShastaWaterYear=new ArrayList<Integer>();
 		for (int i=0; i<4; i++){
 			if (index[2][i].getSelection()){
 				DssPluginCore.isAllWaterYear=false;
-				if (isFirstSet){
-					selectedWaterYear.addAll(shastaIndex.get(i+1));
-					isFirstSet=false;
-				}else{
-					selectedWaterYear.retainAll(shastaIndex.get(i+1));
-				}
+				selectedShastaWaterYear.addAll(shastaIndex.get(i+1));
 			}
 		}
+		if (selectedShastaWaterYear.size()==0){
+		}else if (isFirstSet){
+			selectedWaterYear.addAll(selectedShastaWaterYear);
+			isFirstSet=false;
+		}else{
+			selectedWaterYear.retainAll(selectedShastaWaterYear);
+		}
+		ArrayList<Integer> selectedFeatherWaterYear=new ArrayList<Integer>();
 		for (int i=0; i<2; i++){
 			if (index[3][i].getSelection()){
 				DssPluginCore.isAllWaterYear=false;
-				if (isFirstSet){
-					selectedWaterYear.addAll(featherIndex.get(i));
-					isFirstSet=false;
-				}else{
-					selectedWaterYear.retainAll(featherIndex.get(i));
-				}
+				selectedFeatherWaterYear.addAll(featherIndex.get(i));
 			}
+		}
+		if (selectedFeatherWaterYear.size()==0){
+		}else if (isFirstSet){
+			selectedWaterYear.addAll(selectedFeatherWaterYear);
+			isFirstSet=false;
+		}else{
+			selectedWaterYear.retainAll(selectedFeatherWaterYear);
 		}
 		
 		DssPluginCore.filterWaterYear=new HashSet<Integer>(selectedWaterYear);
