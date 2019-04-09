@@ -856,6 +856,46 @@ public class Evaluation {
 		return 1.0;
 	}
 	
+	public static double dvarAliasCycleTimeSeries(String ident, int indexValue, int ci){
+		String entryNameTS=DssOperation.entryNameTS(ident, ControlData.timeStep);
+		if (indexValue>0){
+			Error.addEvaluationError("Can't access decision variable after the current time step.");
+		}
+		
+		int index=indexValue+ControlData.currTimeStep.get(ControlData.currCycleIndex);
+		if (index>=0){
+			DssDataSetFixLength dds=DataTimeSeries.dvAliasTSCycles.get(ci).get(entryNameTS);
+			if (dds==null){
+				Error.addEvaluationError(ident + " at timestep " +indexValue+" for the No. "+ci+ " cycle doesn't have value");
+				return 1.0;
+			}
+			double[] data=dds.getData();
+			return data[index];
+		}
+		
+		if (!DataTimeSeries.dvAliasInit.containsKey(entryNameTS)){
+			if (!getDVAliasInitTimeseries(ident)){
+				Error.addEvaluationError("Initial file doesn't have data for decision vairiable/alias " +ident);
+				return 1.0;
+			}
+		}
+
+		DssDataSet dds=DataTimeSeries.dvAliasInit.get(entryNameTS);
+		index=timeSeriesIndex(dds);
+		ArrayList<Double> data=dds.getData();
+		if (index>=0 && index<data.size()){
+			double result=data.get(index);
+			if (result==-901.0 || result==-902.0){
+				Error.addEvaluationError("Initial file doesn't have data for decision vairiable/alias " +ident);
+				return 1.0;
+			}
+			return result;
+		}
+		
+		Error.addEvaluationError("The data requested for timeseries "+ident+" is outside of the time frame provided in dss file.");
+		return 1.0;
+	}
+	
 	public static boolean getDVAliasInitTimeseries(String ident){	
 		if (ControlData.initHDF5){
 			return HDF5Reader.getDVAliasInitTimeseries(ident);
@@ -969,7 +1009,22 @@ public class Evaluation {
 			EvalExpression ee1;
 			if (mds.dvMap.containsKey(ident) || mds.asMap.containsKey(ident)){
 				TimeOperation.findTime(index);
-				return new IntDouble(dvarAliasTimeSeries(ident, index), false);
+				if (ControlData.outputCycleToDss){
+					ArrayList<String> ml = ControlData.currStudyDataSet.getModelList();
+					int ci=-1;
+					for (int k=0; k<ml.size(); k++){
+						if (cycle.equalsIgnoreCase(ml.get(k))){
+							ci=k;
+						}
+					}
+					if (ci==-1) {
+						Error.addEvaluationError("The cycle of "+cycle+" of the variable "+ident+ "  is not in the model.");
+						return data;
+					}
+					return new IntDouble(dvarAliasCycleTimeSeries(ident, index, ci), false);
+				}else{
+					return new IntDouble(dvarAliasTimeSeries(ident, index), false);
+				}
 			}else{
 				Error.addEvaluationError(ident+" is not a dvar/alias in the cycle of "+cycle+". Only dvar/alias in the past time step of "+index+" and past cycle of "+cycle+" can be used from previous cycles");
 				return new IntDouble(1.0, false);
@@ -1024,7 +1079,11 @@ public class Evaluation {
 			EvalExpression ee1;
 			if (mds.dvMap.containsKey(ident) || mds.asMap.containsKey(ident)){
 				TimeOperation.findTime(index);
-				return new IntDouble(dvarAliasTimeSeries(ident, index), false);
+				if (ControlData.outputCycleToDss){
+					return new IntDouble(dvarAliasCycleTimeSeries(ident, index, ci), false);
+				}else{
+					return new IntDouble(dvarAliasTimeSeries(ident, index), false);
+				}
 			}else{
 				Error.addEvaluationError(ident+" is not a dvar/alias in the cycle of "+cycle+". Only dvar/alias in the past time step of "+index+" and past cycle of "+cycle+" can be used from previous cycles");
 				return new IntDouble(1.0, false);
