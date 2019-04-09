@@ -49,26 +49,26 @@ public class DataTimeSeries {
 		int index=ControlData.currTimeStep.get(ControlData.currCycleIndex)+offset;
 		if (index<dataList.length)	dataList[index]=value;
 		
-		if (ControlData.outputCycleToDss){
-			int cycleIndex=ControlData.currCycleIndex;
-			HashMap<String, DssDataSetFixLength> dvAliasTSCycle = dvAliasTSCycles.get(cycleIndex);
-			if (!dvAliasTSCycle.containsKey(entryNameTS)){
-				DssDataSetFixLength dds1=new DssDataSetFixLength();
-				double[] data1=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
-				dds1.setData(data1);
-				dds1.setTimeStep(ControlData.partE);
-				if (dds1.getTimeStep().equals("1MON")){
-					dds1.setStartTime(ControlData.monthlyStartTime);
-				}else{
-					dds1.setStartTime(ControlData.dailyStartTime);
-				}
-				dds1.setUnits(dvar.units);
-				dds1.setKind(dvar.kind);
-				dvAliasTSCycle.put(entryNameTS,dds1);
+		//if (ControlData.outputCycleToDss){
+		int cycleIndex=ControlData.currCycleIndex;
+		HashMap<String, DssDataSetFixLength> dvAliasTSCycle = dvAliasTSCycles.get(cycleIndex);
+		if (!dvAliasTSCycle.containsKey(entryNameTS)){
+			DssDataSetFixLength dds1=new DssDataSetFixLength();
+			double[] data1=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
+			dds1.setData(data1);
+			dds1.setTimeStep(ControlData.partE);
+			if (dds1.getTimeStep().equals("1MON")){
+				dds1.setStartTime(ControlData.monthlyStartTime);
+			}else{
+				dds1.setStartTime(ControlData.dailyStartTime);
 			}
-			double[] dataList1=dvAliasTSCycle.get(entryNameTS).getData();
-			int index1=ControlData.currTimeStep.get(ControlData.currCycleIndex)+offset;
-			if (index1<dataList1.length) dataList1[index1]=value;
+			dds1.setUnits(dvar.units);
+			dds1.setKind(dvar.kind);
+			dvAliasTSCycle.put(entryNameTS,dds1);
 		}
+		double[] dataList1=dvAliasTSCycle.get(entryNameTS).getData();
+		int index1=ControlData.currTimeStep.get(ControlData.currCycleIndex)+offset;
+		if (index1<dataList1.length) dataList1[index1]=value;
+		//}
 	}
 }

@@ -1009,22 +1009,22 @@ public class Evaluation {
 			EvalExpression ee1;
 			if (mds.dvMap.containsKey(ident) || mds.asMap.containsKey(ident)){
 				TimeOperation.findTime(index);
-				if (ControlData.outputCycleToDss){
-					ArrayList<String> ml = ControlData.currStudyDataSet.getModelList();
-					int ci=-1;
-					for (int k=0; k<ml.size(); k++){
-						if (cycle.equalsIgnoreCase(ml.get(k))){
-							ci=k;
-						}
+				//if (ControlData.outputCycleToDss){
+				ArrayList<String> ml = ControlData.currStudyDataSet.getModelList();
+				int ci=-1;
+				for (int k=0; k<ml.size(); k++){
+					if (cycle.equalsIgnoreCase(ml.get(k))){
+						ci=k;
 					}
-					if (ci==-1) {
-						Error.addEvaluationError("The cycle of "+cycle+" of the variable "+ident+ "  is not in the model.");
-						return data;
-					}
-					return new IntDouble(dvarAliasCycleTimeSeries(ident, index, ci), false);
-				}else{
-					return new IntDouble(dvarAliasTimeSeries(ident, index), false);
 				}
+				if (ci==-1) {
+					Error.addEvaluationError("The cycle of "+cycle+" of the variable "+ident+ "  is not in the model.");
+					return data;
+				}
+				return new IntDouble(dvarAliasCycleTimeSeries(ident, index, ci), false);
+				//}else{
+				//	return new IntDouble(dvarAliasTimeSeries(ident, index), false);
+				//}
 			}else{
 				Error.addEvaluationError(ident+" is not a dvar/alias in the cycle of "+cycle+". Only dvar/alias in the past time step of "+index+" and past cycle of "+cycle+" can be used from previous cycles");
 				return new IntDouble(1.0, false);
@@ -1079,11 +1079,11 @@ public class Evaluation {
 			EvalExpression ee1;
 			if (mds.dvMap.containsKey(ident) || mds.asMap.containsKey(ident)){
 				TimeOperation.findTime(index);
-				if (ControlData.outputCycleToDss){
-					return new IntDouble(dvarAliasCycleTimeSeries(ident, index, ci), false);
-				}else{
-					return new IntDouble(dvarAliasTimeSeries(ident, index), false);
-				}
+				//if (ControlData.outputCycleToDss){
+				return new IntDouble(dvarAliasCycleTimeSeries(ident, index, ci), false);
+				//}else{
+				//	return new IntDouble(dvarAliasTimeSeries(ident, index), false);
+				//}
 			}else{
 				Error.addEvaluationError(ident+" is not a dvar/alias in the cycle of "+cycle+". Only dvar/alias in the past time step of "+index+" and past cycle of "+cycle+" can be used from previous cycles");
 				return new IntDouble(1.0, false);

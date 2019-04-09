@@ -113,17 +113,17 @@ public class PreRunModel {
 
 	public void	initialDvarAliasTS(){
 		DataTimeSeries.dvAliasTS=new HashMap<String, DssDataSetFixLength>();
-		if (ControlData.outputCycleToDss) {
-			ControlData.cycleDataStartYear=ControlData.startYear;
-			ControlData.cycleDataStartMonth=ControlData.startMonth;
-			ControlData.cycleDataStartDay=ControlData.startDay;
-			int totalCycleNumber=ControlData.currStudyDataSet.getModelList().size();
-			DataTimeSeries.dvAliasTSCycles=new ArrayList<HashMap<String, DssDataSetFixLength>>(totalCycleNumber);
-			for (int i=0; i<totalCycleNumber; i++){
-				HashMap<String, DssDataSetFixLength> dvAliasTSCycle = new HashMap<String, DssDataSetFixLength>();
-				DataTimeSeries.dvAliasTSCycles.add(dvAliasTSCycle);
-			}
+		//if (ControlData.outputCycleToDss) {
+		ControlData.cycleDataStartYear=ControlData.startYear;
+		ControlData.cycleDataStartMonth=ControlData.startMonth;
+		ControlData.cycleDataStartDay=ControlData.startDay;
+		int totalCycleNumber=ControlData.currStudyDataSet.getModelList().size();
+		DataTimeSeries.dvAliasTSCycles=new ArrayList<HashMap<String, DssDataSetFixLength>>(totalCycleNumber);
+		for (int i=0; i<totalCycleNumber; i++){
+			HashMap<String, DssDataSetFixLength> dvAliasTSCycle = new HashMap<String, DssDataSetFixLength>();
+			DataTimeSeries.dvAliasTSCycles.add(dvAliasTSCycle);
 		}
+		//}
 	}
 
 	public void processExternal(){
