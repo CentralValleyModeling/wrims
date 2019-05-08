@@ -166,6 +166,17 @@ public class ConfigUtils {
 			}
 			System.out.println("SvarFile:       "+FilePaths.fullSvarFilePath);
 			
+			if (configMap.get("svarfile2").equals("")){
+				FilePaths.setSvarFile2Paths("");
+			}else{
+				if (configMap.get("svarfile2").contains(":")){
+					FilePaths.setSvarFile2Paths(new File(configMap.get("svarfile2")).getCanonicalPath());
+				} else {
+					FilePaths.setSvarFile2Paths(new File(StudyUtils.configDir, configMap.get("svarfile2")).getCanonicalPath());
+				}
+				System.out.println("SvarFile2:       "+FilePaths.fullSvarFile2Path);
+			}
+			
 			if (configMap.get("initfile").contains(":")){
 				FilePaths.setInitFilePaths(new File(configMap.get("initfile")).getCanonicalPath());
 			} else {
@@ -1013,6 +1024,7 @@ public class ConfigUtils {
 		configMap.put("ovOption".toLowerCase(), "0");
 		configMap.put("enableProgressLog".toLowerCase(), "No");
 		configMap.put("OutputCycleDataToDss".toLowerCase(), "No");
+		configMap.put("svarfile2", "");
 		return configMap;
 
 	}

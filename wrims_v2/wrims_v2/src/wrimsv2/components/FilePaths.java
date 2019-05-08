@@ -8,6 +8,7 @@ public class FilePaths {
 	public static String mainFile="";
 	public static String mainDirectory="";
 	public static String fullSvarFilePath="";
+	public static String fullSvarFile2Path="";
 	public static String svarFile="";
 	public static String svarFileDirectory="";
 	public static String fullDvarDssPath="";
@@ -38,6 +39,10 @@ public class FilePaths {
 		int index=fullPath.lastIndexOf(File.separator);
 		svarFileDirectory=fullPath.substring(0,index+1);
 		svarFile=fullPath.substring(index+1);
+	}
+	
+	public static void setSvarFile2Paths(String fullPath){
+		fullSvarFile2Path=fullPath;
 	}
 	
 	public static void setDvarFilePaths(String fullPath){

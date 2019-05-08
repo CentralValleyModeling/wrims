@@ -103,6 +103,9 @@ public class PreRunModel {
 				ArrayList<String> timeStepList=tsTimeStepMap.get(tsName);
 				for (String timeStep:timeStepList){
 					DssOperation.getSVTimeseries(tsName, FilePaths.fullSvarFilePath, timeStep);
+					if (!FilePaths.fullSvarFile2Path.equals("")){
+						DssOperation.getSVTimeseries(tsName, FilePaths.fullSvarFile2Path, timeStep);
+					}
 					String entryNameTS=DssOperation.entryNameTS(tsName, timeStep);
 					DataTimeSeries.lookSvDss.add(entryNameTS);
 				}
