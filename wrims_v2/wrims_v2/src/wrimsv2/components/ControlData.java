@@ -82,6 +82,7 @@ public class ControlData {
 	public static int timeArrayIndex;
 	public static Group groupInit;
 	public static Group groupSvar;
+	public static Group groupSvar2;
 	public static DSSDataWriter writer;
 	public static String solverName="Cbc'";
 	public static Optimizer xasolver;

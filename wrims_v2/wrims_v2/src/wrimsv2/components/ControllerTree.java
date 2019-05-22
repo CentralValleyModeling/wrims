@@ -416,7 +416,7 @@ public class ControllerTree {
 			//System.out.println("Reading svar timeseries "+tsName);
 			//To Do: in the svar class, add flag to see if svTS has been loaded
 			if (!DataTimeSeries.lookSvDss.contains(tsName)){ 
-				DssOperation.getSVTimeseries(tsName, FilePaths.fullSvarFilePath, ControlData.partE);
+				DssOperation.getSVTimeseries(tsName, FilePaths.fullSvarFilePath, ControlData.partE, 1);
 				DataTimeSeries.lookSvDss.add(tsName);
 			}
 		}

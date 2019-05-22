@@ -49,7 +49,10 @@ public class ReLoadSVDss {
 			if (!DataTimeSeries.lookSvDss.contains(tsName)){ 
 				ArrayList<String> timeStepList=tsTimeStepMap.get(tsName);
 				for (String timeStep:timeStepList){
-					DssOperation.getSVTimeseries(tsName, FilePaths.fullSvarFilePath, timeStep);
+					DssOperation.getSVTimeseries(tsName, FilePaths.fullSvarFilePath, timeStep, 1);
+					if (!FilePaths.fullSvarFile2Path.equals("")){
+						DssOperation.getSVTimeseries(tsName, FilePaths.fullSvarFile2Path, timeStep, 2);
+					}
 					String entryNameTS=DssOperation.entryNameTS(tsName, timeStep);
 					DataTimeSeries.lookSvDss.add(entryNameTS);
 				}

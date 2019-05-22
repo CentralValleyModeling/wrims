@@ -34,12 +34,12 @@ public class DssOperation {
 	private static int savedEndDailyTimestep;
 	private static int totalSavedDailyTimestep;
 	
-	public static boolean getSVTimeseries(String name, String file, String timeStep){
+	public static boolean getSVTimeseries(String name, String file, String timeStep, int svFileIndex){
 		ControlData.timeStep=timeStep;
 		ControlData.partE=timeStep;
 		Timeseries ts=ControlData.allTsMap.get(name);
 		String partC=ts.kind;
-		DataSet ds=getDataForSvar(regularExp(ControlData.partA),regularExp(ts.dssBPart),regularExp(partC),"",regularExp(timeStep), regularExp(ControlData.svDvPartF));
+		DataSet ds=getDataForSvar(regularExp(ControlData.partA),regularExp(ts.dssBPart),regularExp(partC),"",regularExp(timeStep), regularExp(ControlData.svDvPartF), svFileIndex);
 		
 		if (ds==null){
 			return false;
@@ -222,8 +222,14 @@ public class DssOperation {
         return ref.getData();
     }
     
-    public static DataSet getDataForSvar(String apart, String bpart, String cpart, String dpart, String epart, String fpart){
-    	DataReference[] refs = ControlData.groupSvar.find(new String[]{apart, bpart, cpart, dpart, epart, fpart});
+    public static DataSet getDataForSvar(String apart, String bpart, String cpart, String dpart, String epart, String fpart, int svFileIndex){
+    	DataReference[] refs;
+    	
+    	if (svFileIndex==1){
+    		refs = ControlData.groupSvar.find(new String[]{apart, bpart, cpart, dpart, epart, fpart});
+    	}else{
+    		refs = ControlData.groupSvar2.find(new String[]{apart, bpart, cpart, dpart, epart, fpart});
+    	}
         if (refs.length==0){
               return null;
         } else {
