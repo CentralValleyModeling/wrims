@@ -498,6 +498,14 @@ public class BatchRunProcess {
 				configMap.put("outputcycledatatodss", "no");
 			}
 			
+			if (DebugCorePlugin.outputAllCycles){
+				configMap.put("outputallcycledata", "yes");
+			}else{
+				configMap.put("outputallcycledata", "no");
+			}
+			
+			configMap.put("selectedcycleoutput", DebugCorePlugin.outputCycles.replace(" ", ""));
+			
 			String configName = launchFilePath +".config";
 			File f = new File(configName);
 			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(f)));
@@ -566,6 +574,8 @@ public class BatchRunProcess {
 			out.println("OVOption           "+configMap.get("OVOption".toLowerCase()));
 			out.println("OVFile             "+configMap.get("OVFile".toLowerCase()));
 			out.println("OutputCycleDatatoDss "+configMap.get("OutputCycleDatatoDss".toLowerCase()));
+			out.println("OutputAllCycleData "+configMap.get("OutputAllCycleData".toLowerCase()));
+			out.println("SelectedCycleOutput "+configMap.get("SelectedCycleOutput".toLowerCase()));
 			
 			if (DebugCorePlugin.solver.equalsIgnoreCase("LpSolve")) {
 				

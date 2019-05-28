@@ -282,6 +282,8 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	
 	public static String xmx="4096";
 	public static boolean outputCycleToDss=false;
+	public static boolean outputAllCycles=true;
+	public static String outputCycles="\'\'";
 	
 	/**
 	 * The constructor.

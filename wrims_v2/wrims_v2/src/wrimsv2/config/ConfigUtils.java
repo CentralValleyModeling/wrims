@@ -761,6 +761,18 @@ public class ConfigUtils {
 			ControlData.outputCycleToDss=false;
 		}
 		System.out.println("OutputCycleDataToDSS:    " + ControlData.outputCycleToDss);
+		
+		String outputAllCycleData = configMap.get("outputallcycledata");
+		if (outputAllCycleData.equalsIgnoreCase("yes") || outputAllCycleData.equalsIgnoreCase("true")){
+			ControlData.outputAllCycles=true;
+		}else{
+			ControlData.outputAllCycles=false;
+		}
+		System.out.println("OutputAllCycleData:    " + ControlData.outputAllCycles);
+		
+		ControlData.selectedCycleOutput = configMap.get("selectedcycleoutput");
+		System.out.println("SelectedOutputCycles:    " + ControlData.selectedCycleOutput);
+		
 		//if (Error.getTotalError()<1) readParameter(configFile);
 		
 //		if (Error.getTotalError()<1 && paramMap.size()>0) { 
@@ -1024,7 +1036,9 @@ public class ConfigUtils {
 		configMap.put("ovOption".toLowerCase(), "0");
 		configMap.put("enableProgressLog".toLowerCase(), "No");
 		configMap.put("OutputCycleDataToDss".toLowerCase(), "No");
-		configMap.put("svarfile2", "");
+		configMap.put("outputAllCycleData".toLowerCase(), "yes");
+		configMap.put("SelectedCycleOutput".toLowerCase(), "\'\'");
+		configMap.put("svarfile2".toLowerCase(), "");
 		return configMap;
 
 	}

@@ -104,6 +104,9 @@ public class ControlData {
 	public static boolean allowSvTsInit=false;
 	public static int outputType=0;
 	public static boolean outputCycleToDss=false;
+	public static boolean outputAllCycles=true;
+	public static String selectedCycleOutput="\'\'";
+	public static String[] selectedCycles=new String[0];
 	public static boolean initHDF5=false;
 	public static double solverTime_xa=0;
 	public static double solverTime_xa_this=0;

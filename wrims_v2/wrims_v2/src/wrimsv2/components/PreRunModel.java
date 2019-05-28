@@ -90,6 +90,8 @@ public class PreRunModel {
 			HDF5Writer.listCycleStaticVariables(sds);
 			System.out.println("HDF5 output data structure is created.");
 		}
+		
+		setSelectedOutputCycles();
 	}
 
 	public void readTimeseries(){
@@ -150,5 +152,10 @@ public class PreRunModel {
 		}
 		new LoadAllDll(ControlData.allDll);
 		System.out.println("Load dlls for Cycle "+(ControlData.currCycleIndex+1)+" done");
+	}
+	
+	public void setSelectedOutputCycles(){
+		String strSelectedCycleOutput = ControlData.selectedCycleOutput.replace("\'", "");
+		ControlData.selectedCycles = strSelectedCycleOutput.split(",");
 	}
 }

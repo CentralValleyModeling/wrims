@@ -808,6 +808,14 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 				out.println("OutputCycleDatatoDss no");
 			}
 			
+			if (DebugCorePlugin.outputAllCycles){
+				out.println("outputallcycledata yes");
+			}else{
+				out.println("outputallcycledata no");
+			}
+			
+			out.println("selectedcycleoutput "+DebugCorePlugin.outputCycles.replace(" ", ""));
+			
 			//if (DebugCorePlugin.solver.equalsIgnoreCase("LpSolve")) {
 			//	out.println("LpSolveConfigFile         callite.lpsolve");
 			//	out.println("LpSolveNumberOfRetries    2");				

@@ -20,6 +20,8 @@ public class SettingPref {
 				DebugCorePlugin.solver="CBC";
 				DebugCorePlugin.xmx="4096";
 				DebugCorePlugin.outputCycleToDss=false;
+				DebugCorePlugin.outputAllCycles=true;
+				DebugCorePlugin.outputCycles="\'\'";
 				save();
 				return;
 			}
@@ -34,9 +36,19 @@ public class SettingPref {
 		    }else{
 		    	DebugCorePlugin.outputCycleToDss=false;
 		    }
+		    String strOutputAllCycles = br.readLine();
+		    if (strOutputAllCycles.toLowerCase().equals("true")){
+		    	DebugCorePlugin.outputAllCycles=true;
+		    }else{
+		    	DebugCorePlugin.outputAllCycles=false;
+		    }
+		    DebugCorePlugin.outputCycles=br.readLine();
 		} catch (Exception e) {
 			DebugCorePlugin.solver="CBC";
 			DebugCorePlugin.xmx="4096";
+			DebugCorePlugin.outputCycleToDss=false;
+			DebugCorePlugin.outputAllCycles=true;
+			DebugCorePlugin.outputCycles="\'\'";
 			e.printStackTrace();
 		}
 		return;
@@ -53,6 +65,8 @@ public class SettingPref {
 			out.println(DebugCorePlugin.solver);
 			out.println(DebugCorePlugin.xmx);
 			out.println(DebugCorePlugin.outputCycleToDss);
+			out.println(DebugCorePlugin.outputAllCycles);
+			out.println(DebugCorePlugin.outputCycles);
 			out.close();
 		} catch (IOException e) {
 			e.printStackTrace();
