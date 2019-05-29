@@ -14,6 +14,7 @@ import wrimsv2.commondata.wresldata.Timeseries;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
 import wrimsv2.hdf5.HDF5Reader;
+import wrimsv2.tools.General;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -308,13 +309,7 @@ public class DssOperation {
 		for (int i=0; i<totalCycleNumber; i++){
 			int cycleI=i+1;
 			String strCycleI=cycleI+"";
-			boolean foundTheCycle=false;
-			for (int n=0; n<ControlData.selectedCycles.length; n++){
-				if (ControlData.selectedCycles[n].equals(strCycleI)){
-					foundTheCycle=true;
-				}
-			}
-			if (ControlData.outputAllCycles || foundTheCycle){
+			if (General.isSelectedCycleOutput(strCycleI)){
 				HashMap<String, DssDataSetFixLength> dvAliasTSCycle = DataTimeSeries.dvAliasTSCycles.get(i);
 				Set dvAliasSet=dvAliasTSCycle.keySet();
 				Iterator iterator = dvAliasSet.iterator();
@@ -539,13 +534,7 @@ public class DssOperation {
 		for (int i=0; i<totalCycleNumber; i++){
 			int cycleI=i+1;
 			String strCycleI=cycleI+"";
-			boolean foundTheCycle=false;
-			for (int n=0; n<ControlData.selectedCycles.length; n++){
-				if (ControlData.selectedCycles[n].equals(strCycleI)){
-					foundTheCycle=true;
-				}
-			}
-			if (ControlData.outputAllCycles || foundTheCycle){
+			if (General.isSelectedCycleOutput(strCycleI)){
 				HashMap<String, DssDataSetFixLength> dvAliasTSCycle = DataTimeSeries.dvAliasTSCycles.get(i);
 				Set dvAliasSet=dvAliasTSCycle.keySet();
 				Iterator iterator = dvAliasSet.iterator();

@@ -66,6 +66,7 @@ import wrimsv2.sql.DataBaseProfile;
 import wrimsv2.sql.MySQLCWriter;
 import wrimsv2.sql.MySQLRWriter;
 import wrimsv2.sql.SQLServerRWriter;
+import wrimsv2.tools.General;
 import wrimsv2.tools.RCCComparison;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.StudyConfig;
@@ -260,6 +261,9 @@ public class ControllerDebug extends Thread {
 			modelIndex=0;
 			prepareInitialTimeStep();
 			while (modelIndex<modelList.size()  && noError){  
+				int cycleI=modelIndex+1;
+				String strCycleI=cycleI+"";
+				boolean isSelectedCycleOutput=General.isSelectedCycleOutput(strCycleI);
 				
 				String model=modelList.get(modelIndex);
 				ModelDataSet mds=modelDataSetMap.get(model);
@@ -303,23 +307,29 @@ public class ControllerDebug extends Thread {
 						if (ControlData.solverName.equalsIgnoreCase("XA")) {
 							new XASolver(); 						
 				        }else if (ControlData.solverName.equalsIgnoreCase("XALOG")){
-				        	ILP.setIlpFile();
-							ILP.writeIlp();
-							ILP.setVarFile();
-							ILP.writeSvarValue();
-							new XASolver(); 
-							ILP.writeObjValue_XA();
-							ILP.writeDvarValue_XA();
-				        }else if (ControlData.solverName.equalsIgnoreCase("CBC")){
-				        	ILP.setIlpFile();
-							ILP.writeIlp();
-							if (ILP.loggingVariableValue){
-								ILP.setVarFile();
-								ILP.writeSvarValue();
+				        	if (isSelectedCycleOutput){
+				        		ILP.setIlpFile();
+				        		ILP.writeIlp();
+				        		ILP.setVarFile();
+				        		ILP.writeSvarValue();
+				        	}
+							new XASolver();
+							if (isSelectedCycleOutput){
+								ILP.writeObjValue_XA();
+								ILP.writeDvarValue_XA();
 							}
+				        }else if (ControlData.solverName.equalsIgnoreCase("CBC")){
+				        	if (ILP.logging && isSelectedCycleOutput) {
+				        		ILP.setIlpFile();
+				        		ILP.writeIlp();
+				        		if (ILP.loggingVariableValue){
+				        			ILP.setVarFile();
+				        			ILP.writeSvarValue();
+				        		}
+				        	}
 							CbcSolver.newProblem();
 							if (Error.error_solving.size()<1) {
-				            	if (ILP.logging) {
+				            	if (ILP.logging && isSelectedCycleOutput) {
 				            		ILP.writeObjValue_Clp0_Cbc0();
 				            		if (ILP.loggingVariableValue) ILP.writeDvarValue_Clp0_Cbc0(CbcSolver.varDoubleMap);
 				            	}
@@ -327,14 +337,14 @@ public class ControllerDebug extends Thread {
 				        }else if (ControlData.solverName.equalsIgnoreCase("LPSolve")) {
 							ILP.setIlpFile();
 							ILP.writeIlp();
-							if (ILP.loggingVariableValue) {
+							if (ILP.loggingVariableValue && isSelectedCycleOutput) {
 								ILP.setVarFile();
 								ILP.writeSvarValue();
 							}
 				        	LPSolveSolver.setLP(ILP.lpSolveFilePath);
 				            LPSolveSolver.solve();
 				            if (Error.error_solving.size()<1) {
-				            	if (ILP.logging) {
+				            	if (ILP.logging && isSelectedCycleOutput) {
 				            		ILP.writeObjValue_LPSOLVE();
 				            		if (ILP.loggingVariableValue) ILP.writeDvarValue_LPSOLVE();
 				            	}
@@ -342,14 +352,14 @@ public class ControllerDebug extends Thread {
 				        }else if (ControlData.solverName.equalsIgnoreCase("Gurobi")){
 				        	ILP.setIlpFile();
 							ILP.writeIlp();
-							if (ILP.loggingVariableValue) {
+							if (ILP.loggingVariableValue && isSelectedCycleOutput) {
 								ILP.setVarFile();
 								ILP.writeSvarValue();
 							}
 							GurobiSolver.setLp(ILP.cplexLpFilePath);
 							GurobiSolver.solve();
 							if (Error.error_solving.size()<1) {
-				            	if (ILP.logging) {
+				            	if (ILP.logging && isSelectedCycleOutput) {
 				            		ILP.writeObjValue_LPSOLVE();
 				            		if (ILP.loggingVariableValue) ILP.writeDvarValue_Gurobi();
 				            	}
@@ -368,7 +378,6 @@ public class ControllerDebug extends Thread {
 							Error.writeErrorLog();
 							noError=false;
 						}
-						int cycleI=modelIndex+1;
 						if (ControlData.outputType==1) HDF5Writer.writeOneCycle(mds, cycleI);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (ControlData.solverName.equalsIgnoreCase("CBC")){CbcSolver.resetModel();}
@@ -383,7 +392,6 @@ public class ControllerDebug extends Thread {
 							VariableTimeStep.currTimeAddOneDay();
 						}
 					}else{
-						int cycleI=modelIndex+1;
 						if (ControlData.outputType==1) HDF5Writer.skipOneCycle(mds, cycleI);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" skipped. ("+model+")");
 						new AssignPastCycleVariable();

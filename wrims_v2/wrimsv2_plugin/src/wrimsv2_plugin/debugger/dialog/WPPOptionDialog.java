@@ -96,6 +96,12 @@ public class WPPOptionDialog extends Dialog {
 						}else{
 							DebugCorePlugin.target.sendRequest("OutputCycleDataToDssOff");
 						}
+						if (DebugCorePlugin.outputAllCycles) {
+							DebugCorePlugin.target.sendRequest("OutputAllCyclesOn");
+						}else{
+							DebugCorePlugin.target.sendRequest("OutputAllCyclesOff");
+						}
+						DebugCorePlugin.target.sendRequest("SelectedCycleOutput:"+DebugCorePlugin.outputCycles.replace(" ", ""));
 					} catch (DebugException e) {
 						WPPException.handleException(e);
 					}

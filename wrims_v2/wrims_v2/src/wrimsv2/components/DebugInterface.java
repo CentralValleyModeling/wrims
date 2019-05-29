@@ -509,6 +509,34 @@ public class DebugInterface {
 				e.printStackTrace();
 			}
 			System.out.println("Output cycle data to Dss file is turned off");
+		}else if(request.equals("OutputAllCyclesOn")){
+			ControlData.outputAllCycles=true;
+			try {
+				sendRequest("OutputAllCyclesOn");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println("All cycles are selected");
+		}else if(request.equals("OutputAllCyclesOff")){
+			ControlData.outputAllCycles=false;
+			try {
+				sendRequest("OutputAllCyclesOff");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if(request.startsWith("SelectedCycleOutput:")){
+			int index=request.indexOf(":");
+			ControlData.selectedCycleOutput=request.substring(index+1);
+			try {
+				sendRequest("Selected output cycles are set");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (!ControlData.outputAllCycles) System.out.println("Cycles "+ControlData.selectedCycleOutput.replace("\'", "")+" are selected");
+			setSelectedOutputCycles();
 		}else if (request.startsWith("savesvdss:")){
 			int index=request.indexOf(":");
 			String fileName=request.substring(index+1);
@@ -2349,6 +2377,11 @@ public class DebugInterface {
 		//	HashMap<String, DssDataSetFixLength> dvAliasTSCycle = new HashMap<String, DssDataSetFixLength>();
 		//	DataTimeSeries.dvAliasTSCycles.add(dvAliasTSCycle);
 		//}
+	}
+	
+	public void setSelectedOutputCycles(){
+		String strSelectedCycleOutput = ControlData.selectedCycleOutput.replace("\'", "");
+		ControlData.selectedCycles = strSelectedCycleOutput.split(",");
 	}
 	
 	public static void main(String[] args){

@@ -11,6 +11,7 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
+
 import org.antlr.runtime.RecognitionException;
 
 import wrimsv2.commondata.solverdata.SolverData;
@@ -41,6 +42,7 @@ import wrimsv2.sql.DataBaseProfile;
 import wrimsv2.sql.MySQLCWriter;
 import wrimsv2.sql.MySQLRWriter;
 import wrimsv2.sql.SQLServerRWriter;
+import wrimsv2.tools.General;
 import wrimsv2.wreslparser.elements.StudyUtils;
 import wrimsv2.wreslparser.elements.Tools;
 import wrimsv2.wreslplus.elements.procedures.ErrorCheck;
@@ -489,6 +491,9 @@ public class ControllerBatch {
 			sds.clearVarCycleIndexByTimeStep();
 			int i=0;
 			while (i<modelList.size()  && noError){  
+				int cycleI=i+1;
+				String strCycleI=cycleI+"";
+				boolean isSelectedCycleOutput=General.isSelectedCycleOutput(strCycleI);
 				
 				String model=modelList.get(i);
 				ModelDataSet mds=modelDataSetMap.get(model);
@@ -524,7 +529,7 @@ public class ControllerBatch {
 					
 						boolean isLastCycle = (i == modelList.size() - 1);
 						
-						if (ILP.logging && (ILP.loggingAllCycles || isLastCycle ) ) {
+						if (ILP.logging && isSelectedCycleOutput) {
 
 							long beginT = System.currentTimeMillis();
 							ILP.setIlpFile();
@@ -551,7 +556,7 @@ public class ControllerBatch {
 				            LPSolveSolver.setLP(ILP.lpSolveFilePath);
 				            LPSolveSolver.solve();
 				            if (Error.error_solving.size()<1) {
-				            	if (ILP.logging && (ILP.loggingAllCycles || isLastCycle ) )  {
+				            	if (ILP.logging && isSelectedCycleOutput)  {
 				            		ILP.writeObjValue_LPSOLVE();
 				            		if (ILP.loggingVariableValue) ILP.writeDvarValue_LPSOLVE();
 				            	}
@@ -571,7 +576,7 @@ public class ControllerBatch {
 					        	
 					        	// check solving errors and put them in Error.error_solving
 					            if (Error.error_solving.size()<1) {
-					            	if (ILP.logging && (ILP.loggingAllCycles || isLastCycle ) )  { 
+					            	if (ILP.logging && isSelectedCycleOutput) { 
 					            		
 					            		ILP.reOpenCplexLpFile(true);
 					            		// write objValue in lp file
@@ -597,7 +602,7 @@ public class ControllerBatch {
 				        	
 				        	// check solving errors and put them in Error.error_solving
 				            if (Error.error_solving.size()<1) {
-				            	if (ILP.logging && (ILP.loggingAllCycles || isLastCycle ) )  { 
+				            	if (ILP.logging && isSelectedCycleOutput)  { 
 				            		
 				            		ILP.reOpenCplexLpFile(true);
 				            		// write objValue in lp file
@@ -617,7 +622,7 @@ public class ControllerBatch {
 				        	
 				        	// check solving errors and put them in Error.error_solving
 				            if (Error.error_solving.size()<1) {
-				            	if (ILP.logging && (ILP.loggingAllCycles || isLastCycle ) )  { 
+				            	if (ILP.logging && isSelectedCycleOutput)  { 
 				            		
 				            		if(!ControlData.useCplexLpString) ILP.reOpenCplexLpFile(true);
 				            		// write objValue in lp file
@@ -639,7 +644,7 @@ public class ControllerBatch {
 				        	
 				        	// check solving errors and put them in Error.error_solving
 				            if (Error.error_solving.size()<1) {
-				            	if (ILP.logging && (ILP.loggingAllCycles || isLastCycle ) )  { 
+				            	if (ILP.logging && isSelectedCycleOutput)  { 
 				            		
 				            		ILP.reOpenCplexLpFile(true);
 				            		// write objValue in lp file
@@ -655,7 +660,7 @@ public class ControllerBatch {
 
 							new XASolver(); 
 							
-							if (ILP.logging && (ILP.loggingAllCycles || isLastCycle ) ) {
+							if (ILP.logging && isSelectedCycleOutput) {
 								ILP.writeObjValue_XA();
 								if (ILP.loggingVariableValue) ILP.writeDvarValue_XA();
 							}
@@ -681,7 +686,6 @@ public class ControllerBatch {
 							Error.writeErrorLog();
 							noError=false;
 						}
-						int cycleI=i+1;
 						if (ControlData.outputType==1) HDF5Writer.writeOneCycle(mds, cycleI);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
@@ -695,7 +699,6 @@ public class ControllerBatch {
 							VariableTimeStep.currTimeAddOneDay();
 						}
 					}else{
-						int cycleI=i+1;
 						if (ControlData.outputType==1) HDF5Writer.skipOneCycle(mds, cycleI);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Skipped. ("+model+")");
 						new AssignPastCycleVariable();
