@@ -2086,34 +2086,38 @@ public class DebugInterface {
 	public String getCycleValueDetail(String variableName){
 		String dataString="";
 		StudyDataSet sds = ControlData.currStudyDataSet;
+		ArrayList<String> modelTimeStepList = sds.getModelTimeStepList();
 		ArrayList<String> ml = sds.getModelList();
-		Map<String, Map<String, IntDouble>> varCycleValue = sds.getVarCycleValueMap();
-		Map<String, Map<String, IntDouble>> varCycleIndexValue = sds.getVarCycleIndexValueMap();
-		if (varCycleValue.containsKey(variableName)){
-			Map<String, IntDouble> cycleValue = varCycleValue.get(variableName);
-			int cycleIndex=1;
-			for (String cycle: ml){
-				if (cycleIndex<ControlData.currCycleIndex+1){
-					if (cycleValue.containsKey(cycle)){
-						IntDouble id=cycleValue.get(cycle);
-						if (id!=null) dataString=dataString+cycleIndex+":"+cycle+":"+df.format(id.getData())+"#";
-					}else if (varCycleIndexValue.containsKey(variableName)){
-						Map<String, IntDouble> cycleIndexValue = varCycleIndexValue.get(variableName);
-						if (cycleIndexValue.containsKey(cycle)){
-							IntDouble id=cycleIndexValue.get(cycle);
-							if (id!=null) dataString=dataString+cycleIndex+":"+cycle+":"+df.format(id.getData())+"#";
+		ArrayList<HashMap<String, DssDataSetFixLength>> dvAliasTSCycles = DataTimeSeries.dvAliasTSCycles;
+		boolean variableFound=false;
+		for (int cycleIndex=1; cycleIndex<=ControlData.currCycleIndex+1; cycleIndex++){
+			String entryNameTS=DssOperation.entryNameTS(variableName, modelTimeStepList.get(cycleIndex-1));
+			HashMap<String, DssDataSetFixLength> dvAliasTSCycle = dvAliasTSCycles.get(cycleIndex-1);
+			if (dvAliasTSCycle.containsKey(entryNameTS)){
+				variableFound=true;
+				DssDataSetFixLength dds = dvAliasTSCycle.get(entryNameTS);
+				int index=ControlData.currTimeStep.get(cycleIndex-1);
+				if (dds!=null){
+					double[] data=dds.getData();
+					String cycle=ml.get(cycleIndex-1);
+					if (cycleIndex==ControlData.currCycleIndex+1){
+						dataString=dataString+cycleIndex+":"+cycle+":"+df.format(data[index])+"#";;
+					}else{
+						if (index>=1){
+							dataString=dataString+cycleIndex+":"+cycle+":"+df.format(data[index-1])+"#";;
 						}
 					}
 				}
-				cycleIndex=cycleIndex+1;
 			}
-		}else{
-			Map<String, Map<String, IntDouble>> varTimeArrayCycleValue = sds.getVarTimeArrayCycleValueMap();
-			if (varTimeArrayCycleValue.containsKey(variableName)){
-				Map<String, IntDouble> cycleValue = varTimeArrayCycleValue.get(variableName);
+		}
+		if (!variableFound){
+			Map<String, Map<String, IntDouble>> varCycleValue = sds.getVarCycleValueMap();
+			Map<String, Map<String, IntDouble>> varCycleIndexValue = sds.getVarCycleIndexValueMap();
+			if (varCycleValue.containsKey(variableName)){
+				Map<String, IntDouble> cycleValue = varCycleValue.get(variableName);
 				int cycleIndex=1;
 				for (String cycle: ml){
-					if (cycleIndex<ControlData.currCycleIndex+1){
+					if (cycleIndex<=ControlData.currCycleIndex+1){
 						if (cycleValue.containsKey(cycle)){
 							IntDouble id=cycleValue.get(cycle);
 							if (id!=null) dataString=dataString+cycleIndex+":"+cycle+":"+df.format(id.getData())+"#";
@@ -2128,15 +2132,36 @@ public class DebugInterface {
 					cycleIndex=cycleIndex+1;
 				}
 			}else{
-				if (varCycleIndexValue.containsKey(variableName)){
-					Map<String, IntDouble> cycleValue = varCycleIndexValue.get(variableName);
+				Map<String, Map<String, IntDouble>> varTimeArrayCycleValue = sds.getVarTimeArrayCycleValueMap();
+				if (varTimeArrayCycleValue.containsKey(variableName)){
+					Map<String, IntDouble> cycleValue = varTimeArrayCycleValue.get(variableName);
 					int cycleIndex=1;
 					for (String cycle: ml){
-						if (cycleValue.containsKey(cycle) && cycleIndex<ControlData.currCycleIndex+1){
-							IntDouble id=cycleValue.get(cycle);
-							if (id!=null) dataString=dataString+cycleIndex+":"+cycle+":"+df.format(id.getData())+"#";
+						if (cycleIndex<=ControlData.currCycleIndex+1){
+							if (cycleValue.containsKey(cycle)){
+								IntDouble id=cycleValue.get(cycle);
+								if (id!=null) dataString=dataString+cycleIndex+":"+cycle+":"+df.format(id.getData())+"#";
+							}else if (varCycleIndexValue.containsKey(variableName)){
+								Map<String, IntDouble> cycleIndexValue = varCycleIndexValue.get(variableName);
+								if (cycleIndexValue.containsKey(cycle)){
+									IntDouble id=cycleIndexValue.get(cycle);
+									if (id!=null) dataString=dataString+cycleIndex+":"+cycle+":"+df.format(id.getData())+"#";
+								}
+							}
 						}
 						cycleIndex=cycleIndex+1;
+					}
+				}else{
+					if (varCycleIndexValue.containsKey(variableName)){
+						Map<String, IntDouble> cycleValue = varCycleIndexValue.get(variableName);
+						int cycleIndex=1;
+						for (String cycle: ml){
+							if (cycleValue.containsKey(cycle) && cycleIndex<=ControlData.currCycleIndex+1){
+								IntDouble id=cycleValue.get(cycle);
+								if (id!=null) dataString=dataString+cycleIndex+":"+cycle+":"+df.format(id.getData())+"#";
+							}
+							cycleIndex=cycleIndex+1;
+						}
 					}
 				}
 			}
