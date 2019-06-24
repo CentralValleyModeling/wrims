@@ -78,9 +78,9 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	protected AbstractElementAlias match_SVarDSS_TIMESERIESKeyword_0_1_or_TimeseriesKeyword_0_0;
 	protected AbstractElementAlias match_SVarDSS_UNITSKeyword_4_1_or_UnitsKeyword_4_0;
 	protected AbstractElementAlias match_SVarExpression_VALUEKeyword_0_1_or_ValueKeyword_0_0;
-	protected AbstractElementAlias match_Sequence_MODELKeyword_3_1_or_ModelKeyword_3_0;
-	protected AbstractElementAlias match_Sequence_SEQUENCEKeyword_0_1_or_SequenceKeyword_0_0;
-	protected AbstractElementAlias match_Sequence___TimeStepParserRuleCall_7_0_TimeStepValueParserRuleCall_7_1__q;
+	protected AbstractElementAlias match_Sequence_MODELKeyword_0_3_1_or_ModelKeyword_0_3_0;
+	protected AbstractElementAlias match_Sequence_SEQUENCEKeyword_0_0_1_or_SequenceKeyword_0_0_0;
+	protected AbstractElementAlias match_Sequence___TimeStepParserRuleCall_1_1_0_TimeStepValueParserRuleCall_1_1_1__q;
 	protected AbstractElementAlias match_SumContent_SUMKeyword_0_1_or_SumKeyword_0_0;
 	protected AbstractElementAlias match_SumHeader___CommaKeyword_5_0_HyphenMinusKeyword_5_1_q_INTTerminalRuleCall_5_2__q;
 	protected AbstractElementAlias match_SvarDef_DEFINEKeyword_0_0_1_or_DefineKeyword_0_0_0;
@@ -157,9 +157,9 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 		match_SVarDSS_TIMESERIESKeyword_0_1_or_TimeseriesKeyword_0_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getSVarDSSAccess().getTIMESERIESKeyword_0_1()), new TokenAlias(false, false, grammarAccess.getSVarDSSAccess().getTimeseriesKeyword_0_0()));
 		match_SVarDSS_UNITSKeyword_4_1_or_UnitsKeyword_4_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getSVarDSSAccess().getUNITSKeyword_4_1()), new TokenAlias(false, false, grammarAccess.getSVarDSSAccess().getUnitsKeyword_4_0()));
 		match_SVarExpression_VALUEKeyword_0_1_or_ValueKeyword_0_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getSVarExpressionAccess().getVALUEKeyword_0_1()), new TokenAlias(false, false, grammarAccess.getSVarExpressionAccess().getValueKeyword_0_0()));
-		match_Sequence_MODELKeyword_3_1_or_ModelKeyword_3_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getSequenceAccess().getMODELKeyword_3_1()), new TokenAlias(false, false, grammarAccess.getSequenceAccess().getModelKeyword_3_0()));
-		match_Sequence_SEQUENCEKeyword_0_1_or_SequenceKeyword_0_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getSequenceAccess().getSEQUENCEKeyword_0_1()), new TokenAlias(false, false, grammarAccess.getSequenceAccess().getSequenceKeyword_0_0()));
-		match_Sequence___TimeStepParserRuleCall_7_0_TimeStepValueParserRuleCall_7_1__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getSequenceAccess().getTimeStepParserRuleCall_7_0()), new TokenAlias(false, false, grammarAccess.getSequenceAccess().getTimeStepValueParserRuleCall_7_1()));
+		match_Sequence_MODELKeyword_0_3_1_or_ModelKeyword_0_3_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getSequenceAccess().getMODELKeyword_0_3_1()), new TokenAlias(false, false, grammarAccess.getSequenceAccess().getModelKeyword_0_3_0()));
+		match_Sequence_SEQUENCEKeyword_0_0_1_or_SequenceKeyword_0_0_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getSequenceAccess().getSEQUENCEKeyword_0_0_1()), new TokenAlias(false, false, grammarAccess.getSequenceAccess().getSequenceKeyword_0_0_0()));
+		match_Sequence___TimeStepParserRuleCall_1_1_0_TimeStepValueParserRuleCall_1_1_1__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getSequenceAccess().getTimeStepParserRuleCall_1_1_0()), new TokenAlias(false, false, grammarAccess.getSequenceAccess().getTimeStepValueParserRuleCall_1_1_1()));
 		match_SumContent_SUMKeyword_0_1_or_SumKeyword_0_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getSumContentAccess().getSUMKeyword_0_1()), new TokenAlias(false, false, grammarAccess.getSumContentAccess().getSumKeyword_0_0()));
 		match_SumHeader___CommaKeyword_5_0_HyphenMinusKeyword_5_1_q_INTTerminalRuleCall_5_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getSumHeaderAccess().getCommaKeyword_5_0()), new TokenAlias(false, true, grammarAccess.getSumHeaderAccess().getHyphenMinusKeyword_5_1()), new TokenAlias(false, false, grammarAccess.getSumHeaderAccess().getINTTerminalRuleCall_5_2()));
 		match_SvarDef_DEFINEKeyword_0_0_1_or_DefineKeyword_0_0_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getSvarDefAccess().getDEFINEKeyword_0_0_1()), new TokenAlias(false, false, grammarAccess.getSvarDefAccess().getDefineKeyword_0_0_0()));
@@ -734,12 +734,12 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 				emit_SVarDSS_UNITSKeyword_4_1_or_UnitsKeyword_4_0(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_SVarExpression_VALUEKeyword_0_1_or_ValueKeyword_0_0.equals(syntax))
 				emit_SVarExpression_VALUEKeyword_0_1_or_ValueKeyword_0_0(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_Sequence_MODELKeyword_3_1_or_ModelKeyword_3_0.equals(syntax))
-				emit_Sequence_MODELKeyword_3_1_or_ModelKeyword_3_0(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_Sequence_SEQUENCEKeyword_0_1_or_SequenceKeyword_0_0.equals(syntax))
-				emit_Sequence_SEQUENCEKeyword_0_1_or_SequenceKeyword_0_0(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_Sequence___TimeStepParserRuleCall_7_0_TimeStepValueParserRuleCall_7_1__q.equals(syntax))
-				emit_Sequence___TimeStepParserRuleCall_7_0_TimeStepValueParserRuleCall_7_1__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Sequence_MODELKeyword_0_3_1_or_ModelKeyword_0_3_0.equals(syntax))
+				emit_Sequence_MODELKeyword_0_3_1_or_ModelKeyword_0_3_0(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Sequence_SEQUENCEKeyword_0_0_1_or_SequenceKeyword_0_0_0.equals(syntax))
+				emit_Sequence_SEQUENCEKeyword_0_0_1_or_SequenceKeyword_0_0_0(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Sequence___TimeStepParserRuleCall_1_1_0_TimeStepValueParserRuleCall_1_1_1__q.equals(syntax))
+				emit_Sequence___TimeStepParserRuleCall_1_1_0_TimeStepValueParserRuleCall_1_1_1__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_SumContent_SUMKeyword_0_1_or_SumKeyword_0_0.equals(syntax))
 				emit_SumContent_SUMKeyword_0_1_or_SumKeyword_0_0(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_SumHeader___CommaKeyword_5_0_HyphenMinusKeyword_5_1_q_INTTerminalRuleCall_5_2__q.equals(syntax))
@@ -1438,7 +1438,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	 * This ambiguous syntax occurs at:
 	 *     name=ID '{' (ambiguity) model=[Model|ID]
 	 */
-	protected void emit_Sequence_MODELKeyword_3_1_or_ModelKeyword_3_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Sequence_MODELKeyword_0_3_1_or_ModelKeyword_0_3_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -1449,7 +1449,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) name=ID
 	 */
-	protected void emit_Sequence_SEQUENCEKeyword_0_1_or_SequenceKeyword_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Sequence_SEQUENCEKeyword_0_0_1_or_SequenceKeyword_0_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -1458,11 +1458,11 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	 *     (TimeStep TimeStepValue)?
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) '}' (rule start)
 	 *     condition=Condition (ambiguity) '}' (rule end)
-	 *     model=[Model|ID] (ambiguity) '}' (rule end)
 	 *     order=INT (ambiguity) '}' (rule end)
 	 */
-	protected void emit_Sequence___TimeStepParserRuleCall_7_0_TimeStepValueParserRuleCall_7_1__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Sequence___TimeStepParserRuleCall_1_1_0_TimeStepValueParserRuleCall_1_1_1__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

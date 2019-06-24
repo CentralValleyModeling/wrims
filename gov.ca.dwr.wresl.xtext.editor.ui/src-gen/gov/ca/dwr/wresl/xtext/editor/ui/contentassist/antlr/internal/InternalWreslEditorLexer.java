@@ -3129,10 +3129,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_IF;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalWreslEditor.g:24218:9: ( ( 'If' | 'IF' | 'if' ) )
-            // InternalWreslEditor.g:24218:11: ( 'If' | 'IF' | 'if' )
+            // InternalWreslEditor.g:24452:9: ( ( 'If' | 'IF' | 'if' ) )
+            // InternalWreslEditor.g:24452:11: ( 'If' | 'IF' | 'if' )
             {
-            // InternalWreslEditor.g:24218:11: ( 'If' | 'IF' | 'if' )
+            // InternalWreslEditor.g:24452:11: ( 'If' | 'IF' | 'if' )
             int alt1=3;
             int LA1_0 = input.LA(1);
 
@@ -3163,7 +3163,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt1) {
                 case 1 :
-                    // InternalWreslEditor.g:24218:12: 'If'
+                    // InternalWreslEditor.g:24452:12: 'If'
                     {
                     match("If"); 
 
@@ -3171,7 +3171,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditor.g:24218:17: 'IF'
+                    // InternalWreslEditor.g:24452:17: 'IF'
                     {
                     match("IF"); 
 
@@ -3179,7 +3179,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // InternalWreslEditor.g:24218:22: 'if'
+                    // InternalWreslEditor.g:24452:22: 'if'
                     {
                     match("if"); 
 
@@ -3205,10 +3205,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_ELSEIF;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalWreslEditor.g:24220:13: ( ( 'Elseif' | 'ELSEIF' | 'elseif' | 'ElseIf' ) )
-            // InternalWreslEditor.g:24220:15: ( 'Elseif' | 'ELSEIF' | 'elseif' | 'ElseIf' )
+            // InternalWreslEditor.g:24454:13: ( ( 'Elseif' | 'ELSEIF' | 'elseif' | 'ElseIf' ) )
+            // InternalWreslEditor.g:24454:15: ( 'Elseif' | 'ELSEIF' | 'elseif' | 'ElseIf' )
             {
-            // InternalWreslEditor.g:24220:15: ( 'Elseif' | 'ELSEIF' | 'elseif' | 'ElseIf' )
+            // InternalWreslEditor.g:24454:15: ( 'Elseif' | 'ELSEIF' | 'elseif' | 'ElseIf' )
             int alt2=4;
             int LA2_0 = input.LA(1);
 
@@ -3272,7 +3272,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt2) {
                 case 1 :
-                    // InternalWreslEditor.g:24220:16: 'Elseif'
+                    // InternalWreslEditor.g:24454:16: 'Elseif'
                     {
                     match("Elseif"); 
 
@@ -3280,7 +3280,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditor.g:24220:25: 'ELSEIF'
+                    // InternalWreslEditor.g:24454:25: 'ELSEIF'
                     {
                     match("ELSEIF"); 
 
@@ -3288,7 +3288,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // InternalWreslEditor.g:24220:34: 'elseif'
+                    // InternalWreslEditor.g:24454:34: 'elseif'
                     {
                     match("elseif"); 
 
@@ -3296,7 +3296,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 4 :
-                    // InternalWreslEditor.g:24220:43: 'ElseIf'
+                    // InternalWreslEditor.g:24454:43: 'ElseIf'
                     {
                     match("ElseIf"); 
 
@@ -3322,10 +3322,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_ELSE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalWreslEditor.g:24222:11: ( ( 'Else' | 'ELSE' | 'else' ) )
-            // InternalWreslEditor.g:24222:13: ( 'Else' | 'ELSE' | 'else' )
+            // InternalWreslEditor.g:24456:11: ( ( 'Else' | 'ELSE' | 'else' ) )
+            // InternalWreslEditor.g:24456:13: ( 'Else' | 'ELSE' | 'else' )
             {
-            // InternalWreslEditor.g:24222:13: ( 'Else' | 'ELSE' | 'else' )
+            // InternalWreslEditor.g:24456:13: ( 'Else' | 'ELSE' | 'else' )
             int alt3=3;
             int LA3_0 = input.LA(1);
 
@@ -3356,7 +3356,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt3) {
                 case 1 :
-                    // InternalWreslEditor.g:24222:14: 'Else'
+                    // InternalWreslEditor.g:24456:14: 'Else'
                     {
                     match("Else"); 
 
@@ -3364,7 +3364,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditor.g:24222:21: 'ELSE'
+                    // InternalWreslEditor.g:24456:21: 'ELSE'
                     {
                     match("ELSE"); 
 
@@ -3372,7 +3372,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // InternalWreslEditor.g:24222:28: 'else'
+                    // InternalWreslEditor.g:24456:28: 'else'
                     {
                     match("else"); 
 
@@ -3398,10 +3398,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_RANGE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalWreslEditor.g:24224:12: ( ( 'range' | 'RANGE' | 'Range' ) )
-            // InternalWreslEditor.g:24224:14: ( 'range' | 'RANGE' | 'Range' )
+            // InternalWreslEditor.g:24458:12: ( ( 'range' | 'RANGE' | 'Range' ) )
+            // InternalWreslEditor.g:24458:14: ( 'range' | 'RANGE' | 'Range' )
             {
-            // InternalWreslEditor.g:24224:14: ( 'range' | 'RANGE' | 'Range' )
+            // InternalWreslEditor.g:24458:14: ( 'range' | 'RANGE' | 'Range' )
             int alt4=3;
             int LA4_0 = input.LA(1);
 
@@ -3432,7 +3432,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt4) {
                 case 1 :
-                    // InternalWreslEditor.g:24224:15: 'range'
+                    // InternalWreslEditor.g:24458:15: 'range'
                     {
                     match("range"); 
 
@@ -3440,7 +3440,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditor.g:24224:23: 'RANGE'
+                    // InternalWreslEditor.g:24458:23: 'RANGE'
                     {
                     match("RANGE"); 
 
@@ -3448,7 +3448,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // InternalWreslEditor.g:24224:31: 'Range'
+                    // InternalWreslEditor.g:24458:31: 'Range'
                     {
                     match("Range"); 
 
@@ -3474,10 +3474,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_MIN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalWreslEditor.g:24226:10: ( ( 'min' | 'MIN' ) )
-            // InternalWreslEditor.g:24226:12: ( 'min' | 'MIN' )
+            // InternalWreslEditor.g:24460:10: ( ( 'min' | 'MIN' ) )
+            // InternalWreslEditor.g:24460:12: ( 'min' | 'MIN' )
             {
-            // InternalWreslEditor.g:24226:12: ( 'min' | 'MIN' )
+            // InternalWreslEditor.g:24460:12: ( 'min' | 'MIN' )
             int alt5=2;
             int LA5_0 = input.LA(1);
 
@@ -3495,7 +3495,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt5) {
                 case 1 :
-                    // InternalWreslEditor.g:24226:13: 'min'
+                    // InternalWreslEditor.g:24460:13: 'min'
                     {
                     match("min"); 
 
@@ -3503,7 +3503,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditor.g:24226:19: 'MIN'
+                    // InternalWreslEditor.g:24460:19: 'MIN'
                     {
                     match("MIN"); 
 
@@ -3529,10 +3529,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_MAX;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalWreslEditor.g:24228:10: ( ( 'max' | 'MAX' ) )
-            // InternalWreslEditor.g:24228:12: ( 'max' | 'MAX' )
+            // InternalWreslEditor.g:24462:10: ( ( 'max' | 'MAX' ) )
+            // InternalWreslEditor.g:24462:12: ( 'max' | 'MAX' )
             {
-            // InternalWreslEditor.g:24228:12: ( 'max' | 'MAX' )
+            // InternalWreslEditor.g:24462:12: ( 'max' | 'MAX' )
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -3550,7 +3550,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt6) {
                 case 1 :
-                    // InternalWreslEditor.g:24228:13: 'max'
+                    // InternalWreslEditor.g:24462:13: 'max'
                     {
                     match("max"); 
 
@@ -3558,7 +3558,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditor.g:24228:19: 'MAX'
+                    // InternalWreslEditor.g:24462:19: 'MAX'
                     {
                     match("MAX"); 
 
@@ -3584,10 +3584,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_MOD;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalWreslEditor.g:24230:10: ( ( 'mod' | 'MOD' ) )
-            // InternalWreslEditor.g:24230:12: ( 'mod' | 'MOD' )
+            // InternalWreslEditor.g:24464:10: ( ( 'mod' | 'MOD' ) )
+            // InternalWreslEditor.g:24464:12: ( 'mod' | 'MOD' )
             {
-            // InternalWreslEditor.g:24230:12: ( 'mod' | 'MOD' )
+            // InternalWreslEditor.g:24464:12: ( 'mod' | 'MOD' )
             int alt7=2;
             int LA7_0 = input.LA(1);
 
@@ -3605,7 +3605,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt7) {
                 case 1 :
-                    // InternalWreslEditor.g:24230:13: 'mod'
+                    // InternalWreslEditor.g:24464:13: 'mod'
                     {
                     match("mod"); 
 
@@ -3613,7 +3613,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditor.g:24230:19: 'MOD'
+                    // InternalWreslEditor.g:24464:19: 'MOD'
                     {
                     match("MOD"); 
 
@@ -3639,10 +3639,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_INTFUNC;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalWreslEditor.g:24232:14: ( ( 'int' | 'INT' ) )
-            // InternalWreslEditor.g:24232:16: ( 'int' | 'INT' )
+            // InternalWreslEditor.g:24466:14: ( ( 'int' | 'INT' ) )
+            // InternalWreslEditor.g:24466:16: ( 'int' | 'INT' )
             {
-            // InternalWreslEditor.g:24232:16: ( 'int' | 'INT' )
+            // InternalWreslEditor.g:24466:16: ( 'int' | 'INT' )
             int alt8=2;
             int LA8_0 = input.LA(1);
 
@@ -3660,7 +3660,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt8) {
                 case 1 :
-                    // InternalWreslEditor.g:24232:17: 'int'
+                    // InternalWreslEditor.g:24466:17: 'int'
                     {
                     match("int"); 
 
@@ -3668,7 +3668,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditor.g:24232:23: 'INT'
+                    // InternalWreslEditor.g:24466:23: 'INT'
                     {
                     match("INT"); 
 
@@ -3694,10 +3694,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_ABS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalWreslEditor.g:24234:10: ( ( 'abs' | 'ABS' ) )
-            // InternalWreslEditor.g:24234:12: ( 'abs' | 'ABS' )
+            // InternalWreslEditor.g:24468:10: ( ( 'abs' | 'ABS' ) )
+            // InternalWreslEditor.g:24468:12: ( 'abs' | 'ABS' )
             {
-            // InternalWreslEditor.g:24234:12: ( 'abs' | 'ABS' )
+            // InternalWreslEditor.g:24468:12: ( 'abs' | 'ABS' )
             int alt9=2;
             int LA9_0 = input.LA(1);
 
@@ -3715,7 +3715,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt9) {
                 case 1 :
-                    // InternalWreslEditor.g:24234:13: 'abs'
+                    // InternalWreslEditor.g:24468:13: 'abs'
                     {
                     match("abs"); 
 
@@ -3723,7 +3723,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditor.g:24234:19: 'ABS'
+                    // InternalWreslEditor.g:24468:19: 'ABS'
                     {
                     match("ABS"); 
 
@@ -3749,10 +3749,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_ROUND;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalWreslEditor.g:24236:12: ( ( 'round' | 'ROUND' ) )
-            // InternalWreslEditor.g:24236:14: ( 'round' | 'ROUND' )
+            // InternalWreslEditor.g:24470:12: ( ( 'round' | 'ROUND' ) )
+            // InternalWreslEditor.g:24470:14: ( 'round' | 'ROUND' )
             {
-            // InternalWreslEditor.g:24236:14: ( 'round' | 'ROUND' )
+            // InternalWreslEditor.g:24470:14: ( 'round' | 'ROUND' )
             int alt10=2;
             int LA10_0 = input.LA(1);
 
@@ -3770,7 +3770,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt10) {
                 case 1 :
-                    // InternalWreslEditor.g:24236:15: 'round'
+                    // InternalWreslEditor.g:24470:15: 'round'
                     {
                     match("round"); 
 
@@ -3778,7 +3778,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditor.g:24236:23: 'ROUND'
+                    // InternalWreslEditor.g:24470:23: 'ROUND'
                     {
                     match("ROUND"); 
 
@@ -3804,10 +3804,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_POW;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalWreslEditor.g:24238:10: ( ( 'pow' | 'POW' ) )
-            // InternalWreslEditor.g:24238:12: ( 'pow' | 'POW' )
+            // InternalWreslEditor.g:24472:10: ( ( 'pow' | 'POW' ) )
+            // InternalWreslEditor.g:24472:12: ( 'pow' | 'POW' )
             {
-            // InternalWreslEditor.g:24238:12: ( 'pow' | 'POW' )
+            // InternalWreslEditor.g:24472:12: ( 'pow' | 'POW' )
             int alt11=2;
             int LA11_0 = input.LA(1);
 
@@ -3825,7 +3825,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt11) {
                 case 1 :
-                    // InternalWreslEditor.g:24238:13: 'pow'
+                    // InternalWreslEditor.g:24472:13: 'pow'
                     {
                     match("pow"); 
 
@@ -3833,7 +3833,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditor.g:24238:19: 'POW'
+                    // InternalWreslEditor.g:24472:19: 'POW'
                     {
                     match("POW"); 
 
@@ -3859,15 +3859,15 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_LOG;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalWreslEditor.g:24240:10: ( ( 'log' | 'LOG' | 'log10' | 'LOG10' ) )
-            // InternalWreslEditor.g:24240:12: ( 'log' | 'LOG' | 'log10' | 'LOG10' )
+            // InternalWreslEditor.g:24474:10: ( ( 'log' | 'LOG' | 'log10' | 'LOG10' ) )
+            // InternalWreslEditor.g:24474:12: ( 'log' | 'LOG' | 'log10' | 'LOG10' )
             {
-            // InternalWreslEditor.g:24240:12: ( 'log' | 'LOG' | 'log10' | 'LOG10' )
+            // InternalWreslEditor.g:24474:12: ( 'log' | 'LOG' | 'log10' | 'LOG10' )
             int alt12=4;
             alt12 = dfa12.predict(input);
             switch (alt12) {
                 case 1 :
-                    // InternalWreslEditor.g:24240:13: 'log'
+                    // InternalWreslEditor.g:24474:13: 'log'
                     {
                     match("log"); 
 
@@ -3875,7 +3875,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditor.g:24240:19: 'LOG'
+                    // InternalWreslEditor.g:24474:19: 'LOG'
                     {
                     match("LOG"); 
 
@@ -3883,7 +3883,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // InternalWreslEditor.g:24240:25: 'log10'
+                    // InternalWreslEditor.g:24474:25: 'log10'
                     {
                     match("log10"); 
 
@@ -3891,7 +3891,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 4 :
-                    // InternalWreslEditor.g:24240:33: 'LOG10'
+                    // InternalWreslEditor.g:24474:33: 'LOG10'
                     {
                     match("LOG10"); 
 
@@ -3917,10 +3917,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_SIN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalWreslEditor.g:24242:10: ( ( 'sin' | 'SIN' ) )
-            // InternalWreslEditor.g:24242:12: ( 'sin' | 'SIN' )
+            // InternalWreslEditor.g:24476:10: ( ( 'sin' | 'SIN' ) )
+            // InternalWreslEditor.g:24476:12: ( 'sin' | 'SIN' )
             {
-            // InternalWreslEditor.g:24242:12: ( 'sin' | 'SIN' )
+            // InternalWreslEditor.g:24476:12: ( 'sin' | 'SIN' )
             int alt13=2;
             int LA13_0 = input.LA(1);
 
@@ -3938,7 +3938,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt13) {
                 case 1 :
-                    // InternalWreslEditor.g:24242:13: 'sin'
+                    // InternalWreslEditor.g:24476:13: 'sin'
                     {
                     match("sin"); 
 
@@ -3946,7 +3946,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditor.g:24242:19: 'SIN'
+                    // InternalWreslEditor.g:24476:19: 'SIN'
                     {
                     match("SIN"); 
 
@@ -3972,10 +3972,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_COS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalWreslEditor.g:24244:10: ( ( 'cos' | 'COS' ) )
-            // InternalWreslEditor.g:24244:12: ( 'cos' | 'COS' )
+            // InternalWreslEditor.g:24478:10: ( ( 'cos' | 'COS' ) )
+            // InternalWreslEditor.g:24478:12: ( 'cos' | 'COS' )
             {
-            // InternalWreslEditor.g:24244:12: ( 'cos' | 'COS' )
+            // InternalWreslEditor.g:24478:12: ( 'cos' | 'COS' )
             int alt14=2;
             int LA14_0 = input.LA(1);
 
@@ -3993,7 +3993,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt14) {
                 case 1 :
-                    // InternalWreslEditor.g:24244:13: 'cos'
+                    // InternalWreslEditor.g:24478:13: 'cos'
                     {
                     match("cos"); 
 
@@ -4001,7 +4001,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditor.g:24244:19: 'COS'
+                    // InternalWreslEditor.g:24478:19: 'COS'
                     {
                     match("COS"); 
 
@@ -4027,10 +4027,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_TAN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalWreslEditor.g:24246:10: ( ( 'tan' | 'TAN' ) )
-            // InternalWreslEditor.g:24246:12: ( 'tan' | 'TAN' )
+            // InternalWreslEditor.g:24480:10: ( ( 'tan' | 'TAN' ) )
+            // InternalWreslEditor.g:24480:12: ( 'tan' | 'TAN' )
             {
-            // InternalWreslEditor.g:24246:12: ( 'tan' | 'TAN' )
+            // InternalWreslEditor.g:24480:12: ( 'tan' | 'TAN' )
             int alt15=2;
             int LA15_0 = input.LA(1);
 
@@ -4048,7 +4048,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt15) {
                 case 1 :
-                    // InternalWreslEditor.g:24246:13: 'tan'
+                    // InternalWreslEditor.g:24480:13: 'tan'
                     {
                     match("tan"); 
 
@@ -4056,7 +4056,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditor.g:24246:19: 'TAN'
+                    // InternalWreslEditor.g:24480:19: 'TAN'
                     {
                     match("TAN"); 
 
@@ -4082,10 +4082,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_COT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalWreslEditor.g:24248:10: ( ( 'cot' | 'COT' ) )
-            // InternalWreslEditor.g:24248:12: ( 'cot' | 'COT' )
+            // InternalWreslEditor.g:24482:10: ( ( 'cot' | 'COT' ) )
+            // InternalWreslEditor.g:24482:12: ( 'cot' | 'COT' )
             {
-            // InternalWreslEditor.g:24248:12: ( 'cot' | 'COT' )
+            // InternalWreslEditor.g:24482:12: ( 'cot' | 'COT' )
             int alt16=2;
             int LA16_0 = input.LA(1);
 
@@ -4103,7 +4103,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt16) {
                 case 1 :
-                    // InternalWreslEditor.g:24248:13: 'cot'
+                    // InternalWreslEditor.g:24482:13: 'cot'
                     {
                     match("cot"); 
 
@@ -4111,7 +4111,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditor.g:24248:19: 'COT'
+                    // InternalWreslEditor.g:24482:19: 'COT'
                     {
                     match("COT"); 
 
@@ -4137,10 +4137,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_ASIN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalWreslEditor.g:24250:11: ( ( 'asin' | 'ASIN' ) )
-            // InternalWreslEditor.g:24250:13: ( 'asin' | 'ASIN' )
+            // InternalWreslEditor.g:24484:11: ( ( 'asin' | 'ASIN' ) )
+            // InternalWreslEditor.g:24484:13: ( 'asin' | 'ASIN' )
             {
-            // InternalWreslEditor.g:24250:13: ( 'asin' | 'ASIN' )
+            // InternalWreslEditor.g:24484:13: ( 'asin' | 'ASIN' )
             int alt17=2;
             int LA17_0 = input.LA(1);
 
@@ -4158,7 +4158,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt17) {
                 case 1 :
-                    // InternalWreslEditor.g:24250:14: 'asin'
+                    // InternalWreslEditor.g:24484:14: 'asin'
                     {
                     match("asin"); 
 
@@ -4166,7 +4166,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditor.g:24250:21: 'ASIN'
+                    // InternalWreslEditor.g:24484:21: 'ASIN'
                     {
                     match("ASIN"); 
 
@@ -4192,10 +4192,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_ACOS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalWreslEditor.g:24252:11: ( ( 'acos' | 'ACOS' ) )
-            // InternalWreslEditor.g:24252:13: ( 'acos' | 'ACOS' )
+            // InternalWreslEditor.g:24486:11: ( ( 'acos' | 'ACOS' ) )
+            // InternalWreslEditor.g:24486:13: ( 'acos' | 'ACOS' )
             {
-            // InternalWreslEditor.g:24252:13: ( 'acos' | 'ACOS' )
+            // InternalWreslEditor.g:24486:13: ( 'acos' | 'ACOS' )
             int alt18=2;
             int LA18_0 = input.LA(1);
 
@@ -4213,7 +4213,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt18) {
                 case 1 :
-                    // InternalWreslEditor.g:24252:14: 'acos'
+                    // InternalWreslEditor.g:24486:14: 'acos'
                     {
                     match("acos"); 
 
@@ -4221,7 +4221,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditor.g:24252:21: 'ACOS'
+                    // InternalWreslEditor.g:24486:21: 'ACOS'
                     {
                     match("ACOS"); 
 
@@ -4247,10 +4247,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_ATAN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalWreslEditor.g:24254:11: ( ( 'atan' | 'ATAN' ) )
-            // InternalWreslEditor.g:24254:13: ( 'atan' | 'ATAN' )
+            // InternalWreslEditor.g:24488:11: ( ( 'atan' | 'ATAN' ) )
+            // InternalWreslEditor.g:24488:13: ( 'atan' | 'ATAN' )
             {
-            // InternalWreslEditor.g:24254:13: ( 'atan' | 'ATAN' )
+            // InternalWreslEditor.g:24488:13: ( 'atan' | 'ATAN' )
             int alt19=2;
             int LA19_0 = input.LA(1);
 
@@ -4268,7 +4268,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt19) {
                 case 1 :
-                    // InternalWreslEditor.g:24254:14: 'atan'
+                    // InternalWreslEditor.g:24488:14: 'atan'
                     {
                     match("atan"); 
 
@@ -4276,7 +4276,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditor.g:24254:21: 'ATAN'
+                    // InternalWreslEditor.g:24488:21: 'ATAN'
                     {
                     match("ATAN"); 
 
@@ -4302,10 +4302,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_ACOT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalWreslEditor.g:24256:11: ( ( 'acot' | 'ACOT' ) )
-            // InternalWreslEditor.g:24256:13: ( 'acot' | 'ACOT' )
+            // InternalWreslEditor.g:24490:11: ( ( 'acot' | 'ACOT' ) )
+            // InternalWreslEditor.g:24490:13: ( 'acot' | 'ACOT' )
             {
-            // InternalWreslEditor.g:24256:13: ( 'acot' | 'ACOT' )
+            // InternalWreslEditor.g:24490:13: ( 'acot' | 'ACOT' )
             int alt20=2;
             int LA20_0 = input.LA(1);
 
@@ -4323,7 +4323,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt20) {
                 case 1 :
-                    // InternalWreslEditor.g:24256:14: 'acot'
+                    // InternalWreslEditor.g:24490:14: 'acot'
                     {
                     match("acot"); 
 
@@ -4331,7 +4331,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditor.g:24256:21: 'ACOT'
+                    // InternalWreslEditor.g:24490:21: 'ACOT'
                     {
                     match("ACOT"); 
 
@@ -4357,10 +4357,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_FLOAT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalWreslEditor.g:24258:12: ( ( RULE_INT '.' ( RULE_INT )* | '.' ( RULE_INT )+ ) )
-            // InternalWreslEditor.g:24258:14: ( RULE_INT '.' ( RULE_INT )* | '.' ( RULE_INT )+ )
+            // InternalWreslEditor.g:24492:12: ( ( RULE_INT '.' ( RULE_INT )* | '.' ( RULE_INT )+ ) )
+            // InternalWreslEditor.g:24492:14: ( RULE_INT '.' ( RULE_INT )* | '.' ( RULE_INT )+ )
             {
-            // InternalWreslEditor.g:24258:14: ( RULE_INT '.' ( RULE_INT )* | '.' ( RULE_INT )+ )
+            // InternalWreslEditor.g:24492:14: ( RULE_INT '.' ( RULE_INT )* | '.' ( RULE_INT )+ )
             int alt23=2;
             int LA23_0 = input.LA(1);
 
@@ -4378,11 +4378,11 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt23) {
                 case 1 :
-                    // InternalWreslEditor.g:24258:15: RULE_INT '.' ( RULE_INT )*
+                    // InternalWreslEditor.g:24492:15: RULE_INT '.' ( RULE_INT )*
                     {
                     mRULE_INT(); 
                     match('.'); 
-                    // InternalWreslEditor.g:24258:28: ( RULE_INT )*
+                    // InternalWreslEditor.g:24492:28: ( RULE_INT )*
                     loop21:
                     do {
                         int alt21=2;
@@ -4395,7 +4395,7 @@ public class InternalWreslEditorLexer extends Lexer {
 
                         switch (alt21) {
                     	case 1 :
-                    	    // InternalWreslEditor.g:24258:28: RULE_INT
+                    	    // InternalWreslEditor.g:24492:28: RULE_INT
                     	    {
                     	    mRULE_INT(); 
 
@@ -4411,10 +4411,10 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditor.g:24258:38: '.' ( RULE_INT )+
+                    // InternalWreslEditor.g:24492:38: '.' ( RULE_INT )+
                     {
                     match('.'); 
-                    // InternalWreslEditor.g:24258:42: ( RULE_INT )+
+                    // InternalWreslEditor.g:24492:42: ( RULE_INT )+
                     int cnt22=0;
                     loop22:
                     do {
@@ -4428,7 +4428,7 @@ public class InternalWreslEditorLexer extends Lexer {
 
                         switch (alt22) {
                     	case 1 :
-                    	    // InternalWreslEditor.g:24258:42: RULE_INT
+                    	    // InternalWreslEditor.g:24492:42: RULE_INT
                     	    {
                     	    mRULE_INT(); 
 
@@ -4466,10 +4466,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_AND;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalWreslEditor.g:24260:10: ( ( '.and.' | '.AND.' ) )
-            // InternalWreslEditor.g:24260:12: ( '.and.' | '.AND.' )
+            // InternalWreslEditor.g:24494:10: ( ( '.and.' | '.AND.' ) )
+            // InternalWreslEditor.g:24494:12: ( '.and.' | '.AND.' )
             {
-            // InternalWreslEditor.g:24260:12: ( '.and.' | '.AND.' )
+            // InternalWreslEditor.g:24494:12: ( '.and.' | '.AND.' )
             int alt24=2;
             int LA24_0 = input.LA(1);
 
@@ -4497,7 +4497,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt24) {
                 case 1 :
-                    // InternalWreslEditor.g:24260:13: '.and.'
+                    // InternalWreslEditor.g:24494:13: '.and.'
                     {
                     match(".and."); 
 
@@ -4505,7 +4505,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditor.g:24260:21: '.AND.'
+                    // InternalWreslEditor.g:24494:21: '.AND.'
                     {
                     match(".AND."); 
 
@@ -4531,10 +4531,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_OR;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalWreslEditor.g:24262:9: ( ( '.or.' | '.OR.' ) )
-            // InternalWreslEditor.g:24262:11: ( '.or.' | '.OR.' )
+            // InternalWreslEditor.g:24496:9: ( ( '.or.' | '.OR.' ) )
+            // InternalWreslEditor.g:24496:11: ( '.or.' | '.OR.' )
             {
-            // InternalWreslEditor.g:24262:11: ( '.or.' | '.OR.' )
+            // InternalWreslEditor.g:24496:11: ( '.or.' | '.OR.' )
             int alt25=2;
             int LA25_0 = input.LA(1);
 
@@ -4562,7 +4562,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt25) {
                 case 1 :
-                    // InternalWreslEditor.g:24262:12: '.or.'
+                    // InternalWreslEditor.g:24496:12: '.or.'
                     {
                     match(".or."); 
 
@@ -4570,7 +4570,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditor.g:24262:19: '.OR.'
+                    // InternalWreslEditor.g:24496:19: '.OR.'
                     {
                     match(".OR."); 
 
@@ -4596,10 +4596,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_NOT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalWreslEditor.g:24264:10: ( ( '.not.' | '.NOT.' ) )
-            // InternalWreslEditor.g:24264:12: ( '.not.' | '.NOT.' )
+            // InternalWreslEditor.g:24498:10: ( ( '.not.' | '.NOT.' ) )
+            // InternalWreslEditor.g:24498:12: ( '.not.' | '.NOT.' )
             {
-            // InternalWreslEditor.g:24264:12: ( '.not.' | '.NOT.' )
+            // InternalWreslEditor.g:24498:12: ( '.not.' | '.NOT.' )
             int alt26=2;
             int LA26_0 = input.LA(1);
 
@@ -4627,7 +4627,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt26) {
                 case 1 :
-                    // InternalWreslEditor.g:24264:13: '.not.'
+                    // InternalWreslEditor.g:24498:13: '.not.'
                     {
                     match(".not."); 
 
@@ -4635,7 +4635,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditor.g:24264:21: '.NOT.'
+                    // InternalWreslEditor.g:24498:21: '.NOT.'
                     {
                     match(".NOT."); 
 
@@ -4661,8 +4661,8 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_ALWAYS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalWreslEditor.g:24266:13: ( 'always' )
-            // InternalWreslEditor.g:24266:15: 'always'
+            // InternalWreslEditor.g:24500:13: ( 'always' )
+            // InternalWreslEditor.g:24500:15: 'always'
             {
             match("always"); 
 
@@ -4682,8 +4682,8 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_ORDER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalWreslEditor.g:24268:12: ( 'order' )
-            // InternalWreslEditor.g:24268:14: 'order'
+            // InternalWreslEditor.g:24502:12: ( 'order' )
+            // InternalWreslEditor.g:24502:14: 'order'
             {
             match("order"); 
 
@@ -4703,11 +4703,11 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalWreslEditor.g:24270:13: ( '\\'' (~ ( ( '\\'' | '\\n' | '\\r' ) ) )* '\\'' )
-            // InternalWreslEditor.g:24270:15: '\\'' (~ ( ( '\\'' | '\\n' | '\\r' ) ) )* '\\''
+            // InternalWreslEditor.g:24504:13: ( '\\'' (~ ( ( '\\'' | '\\n' | '\\r' ) ) )* '\\'' )
+            // InternalWreslEditor.g:24504:15: '\\'' (~ ( ( '\\'' | '\\n' | '\\r' ) ) )* '\\''
             {
             match('\''); 
-            // InternalWreslEditor.g:24270:20: (~ ( ( '\\'' | '\\n' | '\\r' ) ) )*
+            // InternalWreslEditor.g:24504:20: (~ ( ( '\\'' | '\\n' | '\\r' ) ) )*
             loop27:
             do {
                 int alt27=2;
@@ -4720,7 +4720,7 @@ public class InternalWreslEditorLexer extends Lexer {
 
                 switch (alt27) {
             	case 1 :
-            	    // InternalWreslEditor.g:24270:20: ~ ( ( '\\'' | '\\n' | '\\r' ) )
+            	    // InternalWreslEditor.g:24504:20: ~ ( ( '\\'' | '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -4757,11 +4757,11 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalWreslEditor.g:24272:17: ( '!' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // InternalWreslEditor.g:24272:19: '!' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // InternalWreslEditor.g:24506:17: ( '!' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // InternalWreslEditor.g:24506:19: '!' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match('!'); 
-            // InternalWreslEditor.g:24272:23: (~ ( ( '\\n' | '\\r' ) ) )*
+            // InternalWreslEditor.g:24506:23: (~ ( ( '\\n' | '\\r' ) ) )*
             loop28:
             do {
                 int alt28=2;
@@ -4774,7 +4774,7 @@ public class InternalWreslEditorLexer extends Lexer {
 
                 switch (alt28) {
             	case 1 :
-            	    // InternalWreslEditor.g:24272:23: ~ ( ( '\\n' | '\\r' ) )
+            	    // InternalWreslEditor.g:24506:23: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -4794,7 +4794,7 @@ public class InternalWreslEditorLexer extends Lexer {
                 }
             } while (true);
 
-            // InternalWreslEditor.g:24272:39: ( ( '\\r' )? '\\n' )?
+            // InternalWreslEditor.g:24506:39: ( ( '\\r' )? '\\n' )?
             int alt30=2;
             int LA30_0 = input.LA(1);
 
@@ -4803,9 +4803,9 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt30) {
                 case 1 :
-                    // InternalWreslEditor.g:24272:40: ( '\\r' )? '\\n'
+                    // InternalWreslEditor.g:24506:40: ( '\\r' )? '\\n'
                     {
-                    // InternalWreslEditor.g:24272:40: ( '\\r' )?
+                    // InternalWreslEditor.g:24506:40: ( '\\r' )?
                     int alt29=2;
                     int LA29_0 = input.LA(1);
 
@@ -4814,7 +4814,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     switch (alt29) {
                         case 1 :
-                            // InternalWreslEditor.g:24272:40: '\\r'
+                            // InternalWreslEditor.g:24506:40: '\\r'
                             {
                             match('\r'); 
 
@@ -4846,8 +4846,8 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalWreslEditor.g:24274:9: ( ( 'a' .. 'z' | 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // InternalWreslEditor.g:24274:11: ( 'a' .. 'z' | 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // InternalWreslEditor.g:24508:9: ( ( 'a' .. 'z' | 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // InternalWreslEditor.g:24508:11: ( 'a' .. 'z' | 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
@@ -4858,7 +4858,7 @@ public class InternalWreslEditorLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // InternalWreslEditor.g:24274:31: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // InternalWreslEditor.g:24508:31: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             loop31:
             do {
                 int alt31=2;
@@ -4907,10 +4907,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalWreslEditor.g:24276:10: ( ( '0' .. '9' )+ )
-            // InternalWreslEditor.g:24276:12: ( '0' .. '9' )+
+            // InternalWreslEditor.g:24510:10: ( ( '0' .. '9' )+ )
+            // InternalWreslEditor.g:24510:12: ( '0' .. '9' )+
             {
-            // InternalWreslEditor.g:24276:12: ( '0' .. '9' )+
+            // InternalWreslEditor.g:24510:12: ( '0' .. '9' )+
             int cnt32=0;
             loop32:
             do {
@@ -4924,7 +4924,7 @@ public class InternalWreslEditorLexer extends Lexer {
 
                 switch (alt32) {
             	case 1 :
-            	    // InternalWreslEditor.g:24276:13: '0' .. '9'
+            	    // InternalWreslEditor.g:24510:13: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -4956,12 +4956,12 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalWreslEditor.g:24278:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            // InternalWreslEditor.g:24278:19: '/*' ( options {greedy=false; } : . )* '*/'
+            // InternalWreslEditor.g:24512:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            // InternalWreslEditor.g:24512:19: '/*' ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
-            // InternalWreslEditor.g:24278:24: ( options {greedy=false; } : . )*
+            // InternalWreslEditor.g:24512:24: ( options {greedy=false; } : . )*
             loop33:
             do {
                 int alt33=2;
@@ -4986,7 +4986,7 @@ public class InternalWreslEditorLexer extends Lexer {
 
                 switch (alt33) {
             	case 1 :
-            	    // InternalWreslEditor.g:24278:52: .
+            	    // InternalWreslEditor.g:24512:52: .
             	    {
             	    matchAny(); 
 
@@ -5016,10 +5016,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalWreslEditor.g:24280:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // InternalWreslEditor.g:24280:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalWreslEditor.g:24514:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // InternalWreslEditor.g:24514:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // InternalWreslEditor.g:24280:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalWreslEditor.g:24514:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt34=0;
             loop34:
             do {
@@ -5073,8 +5073,8 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalWreslEditor.g:24282:16: ( . )
-            // InternalWreslEditor.g:24282:18: .
+            // InternalWreslEditor.g:24516:16: ( . )
+            // InternalWreslEditor.g:24516:18: .
             {
             matchAny(); 
 
@@ -6368,7 +6368,7 @@ public class InternalWreslEditorLexer extends Lexer {
             this.transition = DFA12_transition;
         }
         public String getDescription() {
-            return "24240:12: ( 'log' | 'LOG' | 'log10' | 'LOG10' )";
+            return "24474:12: ( 'log' | 'LOG' | 'log10' | 'LOG10' )";
         }
     }
     static final String DFA35_eotS =

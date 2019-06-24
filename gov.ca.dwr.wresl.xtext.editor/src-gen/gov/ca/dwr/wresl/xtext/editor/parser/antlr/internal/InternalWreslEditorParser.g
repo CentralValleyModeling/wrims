@@ -5227,22 +5227,22 @@ ruleSequence returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-((
+(((
 	otherlv_0=Sequence
     {
-    	newLeafNode(otherlv_0, grammarAccess.getSequenceAccess().getSequenceKeyword_0_0());
+    	newLeafNode(otherlv_0, grammarAccess.getSequenceAccess().getSequenceKeyword_0_0_0());
     }
 
     |
 	otherlv_1=Sequence
     {
-    	newLeafNode(otherlv_1, grammarAccess.getSequenceAccess().getSEQUENCEKeyword_0_1());
+    	newLeafNode(otherlv_1, grammarAccess.getSequenceAccess().getSEQUENCEKeyword_0_0_1());
     }
 )(
 (
 		lv_name_2_0=RULE_ID
 		{
-			newLeafNode(lv_name_2_0, grammarAccess.getSequenceAccess().getNameIDTerminalRuleCall_1_0()); 
+			newLeafNode(lv_name_2_0, grammarAccess.getSequenceAccess().getNameIDTerminalRuleCall_0_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -5259,18 +5259,18 @@ ruleSequence returns [EObject current=null]
 )
 	otherlv_3=LeftCurlyBracket
     {
-    	newLeafNode(otherlv_3, grammarAccess.getSequenceAccess().getLeftCurlyBracketKeyword_2());
+    	newLeafNode(otherlv_3, grammarAccess.getSequenceAccess().getLeftCurlyBracketKeyword_0_2());
     }
 (
 	otherlv_4=Model
     {
-    	newLeafNode(otherlv_4, grammarAccess.getSequenceAccess().getModelKeyword_3_0());
+    	newLeafNode(otherlv_4, grammarAccess.getSequenceAccess().getModelKeyword_0_3_0());
     }
 
     |
 	otherlv_5=Model
     {
-    	newLeafNode(otherlv_5, grammarAccess.getSequenceAccess().getMODELKeyword_3_1());
+    	newLeafNode(otherlv_5, grammarAccess.getSequenceAccess().getMODELKeyword_0_3_1());
     }
 )(
 (
@@ -5284,14 +5284,14 @@ ruleSequence returns [EObject current=null]
         }
 	otherlv_6=RULE_ID
 	{
-		newLeafNode(otherlv_6, grammarAccess.getSequenceAccess().getModelModelCrossReference_4_0()); 
+		newLeafNode(otherlv_6, grammarAccess.getSequenceAccess().getModelModelCrossReference_0_4_0()); 
 	}
 
 )
-)(
+)((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSequenceAccess().getConditionConditionParserRuleCall_5_0()); 
+	        newCompositeNode(grammarAccess.getSequenceAccess().getConditionConditionParserRuleCall_0_5_0_0()); 
 	    }
 		lv_condition_7_0=ruleCondition		{
 	        if ($current==null) {
@@ -5308,13 +5308,13 @@ ruleSequence returns [EObject current=null]
 )
 )?(this_ORDER_8=RULE_ORDER
     { 
-    newLeafNode(this_ORDER_8, grammarAccess.getSequenceAccess().getORDERTerminalRuleCall_6_0()); 
+    newLeafNode(this_ORDER_8, grammarAccess.getSequenceAccess().getORDERTerminalRuleCall_0_5_1_0()); 
     }
 (
 (
 		lv_order_9_0=RULE_INT
 		{
-			newLeafNode(lv_order_9_0, grammarAccess.getSequenceAccess().getOrderINTTerminalRuleCall_6_1_0()); 
+			newLeafNode(lv_order_9_0, grammarAccess.getSequenceAccess().getOrderINTTerminalRuleCall_0_5_1_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -5328,12 +5328,53 @@ ruleSequence returns [EObject current=null]
 	    }
 
 )
+))?))
+    |(((this_ORDER_10=RULE_ORDER
+    { 
+    newLeafNode(this_ORDER_10, grammarAccess.getSequenceAccess().getORDERTerminalRuleCall_1_0_0_0()); 
+    }
+(
+(
+		lv_order_11_0=RULE_INT
+		{
+			newLeafNode(lv_order_11_0, grammarAccess.getSequenceAccess().getOrderINTTerminalRuleCall_1_0_0_1_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getSequenceRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"order",
+        		lv_order_11_0, 
+        		"org.eclipse.xtext.common.Terminals.INT");
+	    }
+
+)
 ))?(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getSequenceAccess().getConditionConditionParserRuleCall_1_0_1_0()); 
+	    }
+		lv_condition_12_0=ruleCondition		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getSequenceRule());
+	        }
+       		set(
+       			$current, 
+       			"condition",
+        		lv_condition_12_0, 
+        		"gov.ca.dwr.wresl.xtext.editor.WreslEditor.Condition");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)?)(
 	{ 
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getSequenceAccess().getTimeStepParserRuleCall_7_0()); 
+        newCompositeNode(grammarAccess.getSequenceAccess().getTimeStepParserRuleCall_1_1_0()); 
     }
 ruleTimeStep
     {
@@ -5344,18 +5385,18 @@ ruleTimeStep
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getSequenceAccess().getTimeStepValueParserRuleCall_7_1()); 
+        newCompositeNode(grammarAccess.getSequenceAccess().getTimeStepValueParserRuleCall_1_1_1()); 
     }
 ruleTimeStepValue
     {
         afterParserOrEnumRuleCall();
     }
 )?
-	otherlv_12=RightCurlyBracket
+	otherlv_15=RightCurlyBracket
     {
-    	newLeafNode(otherlv_12, grammarAccess.getSequenceAccess().getRightCurlyBracketKeyword_8());
+    	newLeafNode(otherlv_15, grammarAccess.getSequenceAccess().getRightCurlyBracketKeyword_1_2());
     }
-)
+))
 ;
 
 

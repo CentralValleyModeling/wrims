@@ -1335,7 +1335,7 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 	 *     Sequence returns Sequence
 	 *
 	 * Constraint:
-	 *     (name=ID model=[Model|ID] condition=Condition? order=INT?)
+	 *     ((name=ID model=[Model|ID] condition=Condition? order=INT?) | (order=INT condition=Condition) | condition=Condition)?
 	 */
 	protected void sequence_Sequence(ISerializationContext context, Sequence semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
