@@ -37,6 +37,7 @@ public class CopyTo implements IWorkbenchWindowActionDelegate{
 	@Override
 	public void run(IAction action) {
 		final CatalogListSelection ls = new CatalogListSelection();
+		ls.setDirectory(DssPluginCore.lastCopiedDssFolder);
 		ls.copyRecords(true);
 	}
 

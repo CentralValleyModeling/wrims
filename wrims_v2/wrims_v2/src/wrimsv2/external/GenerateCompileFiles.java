@@ -37,7 +37,6 @@ public class GenerateCompileFiles {
 		try{
 			FileWriter batchFile = new FileWriter(batchFileFullPath, false);
 			PrintWriter out = new PrintWriter(batchFile);
-
 			if (setPath){
 				out.println("set path="+currentDirectory+"/../jdk/bin;"+currentDirectory+"/../mingw/bin;");
 			}
@@ -85,6 +84,15 @@ public class GenerateCompileFiles {
 			out.println("public class Function"+functionName+" extends ExternalFunction{");
 			out.println("	private final boolean DEBUG = false;");
 			out.println();
+			for (int i=0; i<variableNames.length; i++){
+				if (variableTypes[i].equals("int*")){
+					out.println("	public int "+variableNames[i]+";");
+				}else if (variableTypes[i].equals("float*")){
+					out.println("	public float "+variableNames[i]+";");
+				}else if (variableTypes[i].equals("double*")){
+					out.println("	public double "+variableNames[i]+";");
+				}
+			}
 			out.println();	
 			out.println("	public Function"+functionName+"(){");
 			out.println();		
@@ -124,9 +132,7 @@ public class GenerateCompileFiles {
 					out.println("			}");
 					out.println("		}");
 				}else if (variableTypes[i-1].equals("int*")){
-					out.println("		int "+variableNames[i-1]+" = ((Number) param"+i+").intValue();");
-					out.println("		int[] "+variableNames[i-1]+"_arr =new int[1];");
-					out.println("		"+variableNames[i-1]+"_arr[0]="+variableNames[i-1]+";");
+					out.println("		"+variableNames[i-1]+" = ((Number) param"+i+").intValue();");
 				}else if (variableTypes[i-1].equals("float[]")){
 					String size="size_"+variableNames[i-1];
 					String variableArrName=variableNames[i-1]+"_Arr";
@@ -150,9 +156,7 @@ public class GenerateCompileFiles {
 					out.println("			}");
 					out.println("		}");
 				}else if (variableTypes[i-1].equals("float*")){
-					out.println("		float "+variableNames[i-1]+" = ((Number) param"+i+").floatValue();");
-					out.println("		float[] "+variableNames[i-1]+"_arr =new float[1];");
-					out.println("		"+variableNames[i-1]+"_arr[0]="+variableNames[i-1]+";");
+					out.println("		"+variableNames[i-1]+" = ((Number) param"+i+").floatValue();");
 				}else if (variableTypes[i-1].equals("double[]")){
 					String size="size_"+variableNames[i-1];
 					String variableArrName=variableNames[i-1]+"_Arr";
@@ -176,9 +180,7 @@ public class GenerateCompileFiles {
 					out.println("			}");
 					out.println("		}");
 				}else if (variableTypes[i-1].equals("double*")){
-					out.println("		double "+variableNames[i-1]+" = ((Number) param"+i+").doubleValue();");
-					out.println("		double[] "+variableNames[i-1]+"_arr =new double[1];");
-					out.println("		"+variableNames[i-1]+"_arr[0]="+variableNames[i-1]+";");
+					out.println("		"+variableNames[i-1]+" = ((Number) param"+i+").doubleValue();");
 				}else{
 					out.println("		"+variableTypes[i-1] +" "+ variableNames[i-1]+" = ((Number) param"+i+")."+variableTypes[i-1]+"Value();");
 				}
@@ -191,17 +193,9 @@ public class GenerateCompileFiles {
 				resultString="		"+functionType+" result = "+functionName+"(";
 			}
 			for (int i=0; i<variableNames.length-1; i++){
-				if (variableTypes[i].equals("int*")|variableTypes[i].equals("float*")|variableTypes[i].equals("double*")){
-					resultString=resultString+variableNames[i]+"_arr, ";
-				}else{
-					resultString=resultString+variableNames[i]+", ";
-				}
+				resultString=resultString+variableNames[i]+", ";
 			}
-			if (variableTypes[variableNames.length-1].equals("int*")|variableTypes[variableNames.length-1].equals("float*")|variableTypes[variableNames.length-1].equals("double*")){
-				resultString=resultString+variableNames[variableNames.length-1]+"_arr);";
-			}else{
-				resultString=resultString+variableNames[variableNames.length-1]+");";
-			}
+			resultString=resultString+variableNames[variableNames.length-1]+");";
 			out.println(resultString);
 			out.println();
 			out.println("		// push the result on the Stack");
@@ -216,31 +210,26 @@ public class GenerateCompileFiles {
 				out.println("		stack.push(result);");
 			}
 			out.println();
-			for (int i=variableNames.length; i>0; i--){
-				if (variableTypes[i-1].equals("int*")|variableTypes[i-1].equals("float*")|variableTypes[i-1].equals("double*")){
-					out.println("		"+variableNames[i-1]+"="+variableNames[i-1]+"_arr[0];");
-				}
-			}
 			out.println("	}");
 			out.println();
 			String nativeString="	public native "+functionType+" "+functionName+"(";
 			for (int i=0; i<variableNames.length-1; i++){
 				if (variableTypes[i].equals("int*")){
-					nativeString=nativeString+"int[] "+variableNames[i]+", ";
+					nativeString=nativeString+"int "+variableNames[i]+", ";
 				}else if (variableTypes[i].equals("float*")){
-					nativeString=nativeString+"float[] "+variableNames[i]+", ";
-				}else if (variableTypes[i].equals("double*")){
-					nativeString=nativeString+"double[] "+variableNames[i]+", ";
+					nativeString=nativeString+"float "+variableNames[i]+", ";
+				}else if(variableTypes[i].equals("double*")){
+					nativeString=nativeString+"double "+variableNames[i]+", ";
 				}else{
 					nativeString=nativeString+variableTypes[i]+" "+variableNames[i]+", ";
 				}
 			}
-			if (variableTypes[variableTypes.length-1].equals("int*")){
-				nativeString=nativeString+"int[] "+variableNames[variableTypes.length-1]+");";
-			}else if (variableTypes[variableTypes.length-1].equals("float*")){
-				nativeString=nativeString+"float[] "+variableNames[variableTypes.length-1]+");";
-			}else if (variableTypes[variableTypes.length-1].equals("double*")){
-				nativeString=nativeString+"double[] "+variableNames[variableTypes.length-1]+");";
+			if (variableTypes[variableNames.length-1].equals("int*")){
+				nativeString=nativeString+"int "+variableNames[variableNames.length-1]+");";
+			}else if (variableTypes[variableNames.length-1].equals("float*")){
+				nativeString=nativeString+"float "+variableNames[variableNames.length-1]+");";
+			}else if(variableTypes[variableNames.length-1].equals("double*")){
+				nativeString=nativeString+"double "+variableNames[variableNames.length-1]+");";
 			}else{
 				nativeString=nativeString+variableTypes[variableTypes.length-1]+" "+variableNames[variableNames.length-1]+");";
 			}
@@ -331,11 +320,11 @@ public class GenerateCompileFiles {
 				}else if (variableTypes[i].startsWith("double[]")){
 					exportString=exportString+"jdoubleArray "+variableNames[i]+", ";	
 				}else if (variableTypes[i].equals("int*")){
-					exportString=exportString+"jintArray "+variableNames[i]+", ";	
-				}else if (variableTypes[i].startsWith("float*")){
-					exportString=exportString+"jfloatArray "+variableNames[i]+", ";	
-				}else if (variableTypes[i].startsWith("double*")){
-					exportString=exportString+"jdoubleArray "+variableNames[i]+", ";	
+					exportString=exportString+"jint "+variableNames[i]+", ";	
+				}else if (variableTypes[i].equals("float*")){
+					exportString=exportString+"jfloat "+variableNames[i]+", ";	
+				}else if (variableTypes[i].equals("double*")){
+					exportString=exportString+"jdouble "+variableNames[i]+", ";	
 				}else{
 					exportString=exportString+"j"+variableTypes[i].toLowerCase()+" "+variableNames[i]+", ";
 				}
@@ -347,11 +336,11 @@ public class GenerateCompileFiles {
 			}else if (variableTypes[variableTypes.length-1].startsWith("double[]")){
 				exportString=exportString+"jdoubleArray "+variableNames[variableTypes.length-1]+") {";	
 			}else if (variableTypes[variableTypes.length-1].equals("int*")){
-				exportString=exportString+"jintArray "+variableNames[variableTypes.length-1]+") {";	
-			}else if (variableTypes[variableTypes.length-1].startsWith("float*")){
-				exportString=exportString+"jfloatArray "+variableNames[variableTypes.length-1]+") {";	
-			}else if (variableTypes[variableTypes.length-1].startsWith("double*")){
-				exportString=exportString+"jdoubleArray "+variableNames[variableTypes.length-1]+") {";	
+				exportString=exportString+"jint "+variableNames[variableTypes.length-1]+") {";	
+			}else if (variableTypes[variableTypes.length-1].equals("float*")){
+				exportString=exportString+"jfloat "+variableNames[variableTypes.length-1]+") {";	
+			}else if (variableTypes[variableTypes.length-1].equals("double*")){
+				exportString=exportString+"jdouble "+variableNames[variableTypes.length-1]+") {";	
 			}else{
 				exportString=exportString+"j"+variableTypes[variableTypes.length-1].toLowerCase()+" "+variableNames[variableNames.length-1]+") {";
 			}
@@ -372,12 +361,6 @@ public class GenerateCompileFiles {
 					preCall_2DArray(out, "float", variableNames[i]);
 				}else if (variableTypes[i].equals("double[][]")){
 					preCall_2DArray(out, "double", variableNames[i]);
-				}else if (variableTypes[i].equals("int*")){
-					preCallScalar(out, "int", variableNames[i]);
-				}else if (variableTypes[i].equals("float*")){
-					preCallScalar(out, "float", variableNames[i]);
-				}else if (variableTypes[i].equals("double*")){
-					preCallScalar(out, "double", variableNames[i]);
 				}else if (variableTypes[i].equals("double[]")){
 					out.println("	jdouble* "+variableNames[i]+"_arr = (*env)->GetDoubleArrayElements(env, "+variableNames[i]+", 0);");
 				}
@@ -406,8 +389,6 @@ public class GenerateCompileFiles {
 					resultString=resultString+variableNames[i]+"_arr, ";
 				}else if (variableTypes[i].equals("int[][]")|variableTypes[i].equals("float[][]")|variableTypes[i].equals("double[][]")){
 					resultString=resultString+"&"+variableNames[i]+"_arr[0][0], ";
-				}else if (variableTypes[i].equals("int*")|variableTypes[i].equals("float*")|variableTypes[i].equals("double*")){
-					resultString=resultString+"&"+variableNames[i]+"_0, ";
 				}else{
 					resultString=resultString+"&"+variableNames[i]+", ";
 				}
@@ -422,13 +403,15 @@ public class GenerateCompileFiles {
 				resultString=resultString+variableNames[variableNames.length-1]+"_arr);";
 			}else if (variableTypes[variableNames.length-1].equals("int[][]")|variableTypes[variableNames.length-1].equals("float[][]")|variableTypes[variableNames.length-1].equals("double[][]")){
 				resultString=resultString+"&"+variableNames[variableNames.length-1]+"_arr[0][0]);";
-			}else if (variableTypes[variableNames.length-1].equals("int*")|variableTypes[variableNames.length-1].equals("float*")|variableTypes[variableNames.length-1].equals("double*")){
-				resultString=resultString+"&"+variableNames[variableNames.length-1]+"_0);";
 			}else{
 				resultString=resultString+"&"+variableNames[variableNames.length-1]+");";
 			}
 			out.println(resultString);
 			out.println();
+			
+			out.println("jclass clazz = (*env)->GetObjectClass(env, obj);");
+			out.println();
+			
 			for (int i=0; i<variableNames.length; i++){
 				if (variableTypes[i].equals("String")){
 					out.println("	(*env)->ReleaseStringUTFChars(env, "+variableNames[i]+", "+variableNames[i]+"Chars);");
@@ -738,6 +721,7 @@ public class GenerateCompileFiles {
 		out.println("}");
 	}
 	
+	/*
 	public static void preCallScalar(PrintWriter out, String vt, String vn){
 		String jvt="j"+vt;
 		String vn0=vn+"_0";
@@ -756,20 +740,24 @@ public class GenerateCompileFiles {
 		out.println("	"+jvt+"* "+vn+"_arr = (*env)->"+getVtArrayElements+"(env, "+vn+", 0);");
 		out.println("	"+pvt+" "+vn0+"="+vnArr+"[0];");
 	}
+	*/
 	
 	public static void afterCallScalar(PrintWriter out, String vt, String vn){
-		String vn0=vn+"_0";
-		String vnArr=vn+"_arr";
-		String releaseVtArrayElements;
+		String vnField=vn+"Field";
+		String type="I";
+		String setVtField="SetIntField";
 		if (vt.equals("int")){
-			releaseVtArrayElements="ReleaseIntArrayElements";
+			type="I";
+			setVtField="SetIntField";
 		}else if (vt.equals("float")){
-			releaseVtArrayElements="ReleaseFloatArrayElements";
-		}else{
-			releaseVtArrayElements="ReleaseDoubleArrayElements";
+			type="F";
+			setVtField="SetFloatField";
+		}else if (vt.equals("double")){
+			type="D";
+			setVtField="SetDoubleField";
 		}
-		out.println("	"+vnArr+"[0]="+vn0+";");
-		out.println("	(*env)->"+releaseVtArrayElements+"(env, "+vn+", "+vnArr+", 0);");
+		out.println("	jfieldID "+vnField+" = (*env)->GetFieldID(env, clazz, \""+vn+"\", \""+type+"\");");
+		out.println("	(*env)->"+setVtField+"(env, obj, "+vnField+", "+vn+");");
 	}
 	
 	public static void setWorkingDirectory(String fileFullPath){
