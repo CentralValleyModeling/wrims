@@ -37,9 +37,8 @@ public class GenerateCompileFiles {
 		try{
 			FileWriter batchFile = new FileWriter(batchFileFullPath, false);
 			PrintWriter out = new PrintWriter(batchFile);
-
 			if (setPath){
-				out.println("set path="+currentDirectory+"/../jdk6/bin;"+currentDirectory+"/../mingw/bin;");
+				out.println("set path="+currentDirectory+"/../jdk/bin;"+currentDirectory+"/../mingw/bin;");
 			}
 			
 			while (fvni.hasNext()){
@@ -50,7 +49,7 @@ public class GenerateCompileFiles {
 					out.println("javac -cp . wrimsv2\\external\\Function"+functionName+".java");
 				}
 				out.println("javah -jni wrimsv2.external.Function"+functionName);
-				out.println("gcc -c -Wall -D_JNI_IMPLEMENTATION_ -Wl,--kill-at -I\""+currentDirectory+"/../jdk6/include\"  -I\""+currentDirectory+"/../jdk6/include/win32\" wrimsv2_external_Function"+functionName+".c");
+				out.println("gcc -c -Wall -D_JNI_IMPLEMENTATION_ -Wl,--kill-at -I\""+currentDirectory+"/../jdk/include\"  -I\""+currentDirectory+"/../jdk/include/win32\" wrimsv2_external_Function"+functionName+".c");
 			}
 			String compileString="gcc -Wall -D_JNI_IMPLEMENTATION_ -Wl,--kill-at -shared "; 
 			while (dfi.hasNext()){
@@ -63,14 +62,14 @@ public class GenerateCompileFiles {
 				compileString=compileString+"-o "+dllName+".dll -L./ "+fortranDllName+".dll";
 				out.println(compileString);
 			}
-			out.println("Exit");
+			//out.println("Exit");
 			out.close();
 		} catch (IOException e){
 			error.add(e.getMessage());
 		}	
 	}
 	
-	public static void generateJavaFile(String functionName){
+	public static void generateJavaFile(String functionName){	
 		String javaFileFullPath=workingDir+"wrimsv2\\external\\Function"+functionName+".java";
 		String functionType=functionTypes.get(functionName);
 		String[] variableNames=functionVariableNames.get(functionName);
@@ -85,6 +84,15 @@ public class GenerateCompileFiles {
 			out.println("public class Function"+functionName+" extends ExternalFunction{");
 			out.println("	private final boolean DEBUG = false;");
 			out.println();
+			for (int i=0; i<variableNames.length; i++){
+				if (variableTypes[i].equals("int*")){
+					out.println("	public int "+variableNames[i]+";");
+				}else if (variableTypes[i].equals("float*")){
+					out.println("	public float "+variableNames[i]+";");
+				}else if (variableTypes[i].equals("double*")){
+					out.println("	public double "+variableNames[i]+";");
+				}
+			}
 			out.println();	
 			out.println("	public Function"+functionName+"(){");
 			out.println();		
@@ -110,6 +118,21 @@ public class GenerateCompileFiles {
 					out.println("		for (int i=0; i<"+size+"; i++){");
 					out.println("			"+variableNames[i-1]+"[i]="+variableArrName+"[i].intValue();");
 					out.println("		}");
+				}else if (variableTypes[i-1].equals("int[][]")){
+					String size1="size1_"+variableNames[i-1];
+					String size2="size2_"+variableNames[i-1];
+					String variableArrName=variableNames[i-1]+"_Arr";
+					out.println("		Number[][] "+variableArrName+" = (Number[][])param"+i+";");
+					out.println("		int "+size1+"="+variableArrName+".length;");
+					out.println("		int "+size2+"="+variableArrName+"[0].length;");
+					out.println("		int[][] "+variableNames[i-1]+"=new int["+size1+"]["+size2+"];");
+					out.println("		for (int i=0; i<"+size1+"; i++){");
+					out.println("			for (int j=0; j<"+size2+"; j++){");
+					out.println("				"+variableNames[i-1]+"[i][j]="+variableArrName+"[i][j].intValue();");
+					out.println("			}");
+					out.println("		}");
+				}else if (variableTypes[i-1].equals("int*")){
+					out.println("		"+variableNames[i-1]+" = ((Number) param"+i+").intValue();");
 				}else if (variableTypes[i-1].equals("float[]")){
 					String size="size_"+variableNames[i-1];
 					String variableArrName=variableNames[i-1]+"_Arr";
@@ -119,13 +142,56 @@ public class GenerateCompileFiles {
 					out.println("		for (int i=0; i<"+size+"; i++){");
 					out.println("			"+variableNames[i-1]+"[i]="+variableArrName+"[i].floatValue();");
 					out.println("		}");
+				}else if (variableTypes[i-1].equals("float[][]")){
+					String size1="size1_"+variableNames[i-1];
+					String size2="size2_"+variableNames[i-1];
+					String variableArrName=variableNames[i-1]+"_Arr";
+					out.println("		Number[][] "+variableArrName+" = (Number[][])param"+i+";");
+					out.println("		int "+size1+"="+variableArrName+".length;");
+					out.println("		int "+size2+"="+variableArrName+"[0].length;");
+					out.println("		float[][] "+variableNames[i-1]+"=new float["+size1+"]["+size2+"];");
+					out.println("		for (int i=0; i<"+size1+"; i++){");
+					out.println("			for (int j=0; j<"+size2+"; j++){");
+					out.println("				"+variableNames[i-1]+"[i][j]="+variableArrName+"[i][j].floatValue();");
+					out.println("			}");
+					out.println("		}");
+				}else if (variableTypes[i-1].equals("float*")){
+					out.println("		"+variableNames[i-1]+" = ((Number) param"+i+").floatValue();");
+				}else if (variableTypes[i-1].equals("double[]")){
+					String size="size_"+variableNames[i-1];
+					String variableArrName=variableNames[i-1]+"_Arr";
+					out.println("		Number[] "+variableArrName+" = (Number[])param"+i+";");
+					out.println("		int "+size+"="+variableArrName+".length;");
+					out.println("		double[] "+variableNames[i-1]+"=new double["+size+"];");
+					out.println("		for (int i=0; i<"+size+"; i++){");
+					out.println("			"+variableNames[i-1]+"[i]="+variableArrName+"[i].doubleValue();");
+					out.println("		}");
+				}else if (variableTypes[i-1].equals("double[][]")){
+					String size1="size1_"+variableNames[i-1];
+					String size2="size2_"+variableNames[i-1];
+					String variableArrName=variableNames[i-1]+"_Arr";
+					out.println("		Number[][] "+variableArrName+" = (Number[][])param"+i+";");
+					out.println("		int "+size1+"="+variableArrName+".length;");
+					out.println("		int "+size2+"="+variableArrName+"[0].length;");
+					out.println("		double[][] "+variableNames[i-1]+"=new double["+size1+"]["+size2+"];");
+					out.println("		for (int i=0; i<"+size1+"; i++){");
+					out.println("			for (int j=0; j<"+size2+"; j++){");
+					out.println("				"+variableNames[i-1]+"[i][j]="+variableArrName+"[i][j].doubleValue();");
+					out.println("			}");
+					out.println("		}");
+				}else if (variableTypes[i-1].equals("double*")){
+					out.println("		"+variableNames[i-1]+" = ((Number) param"+i+").doubleValue();");
 				}else{
 					out.println("		"+variableTypes[i-1] +" "+ variableNames[i-1]+" = ((Number) param"+i+")."+variableTypes[i-1]+"Value();");
 				}
 			}
 			out.println();
 			String resultString="";
-			resultString="		"+functionType+" result = "+functionName+"("; 	
+			if (functionType.equals("void")){
+				resultString="		"+functionName+"(";
+			}else{
+				resultString="		"+functionType+" result = "+functionName+"(";
+			}
 			for (int i=0; i<variableNames.length-1; i++){
 				resultString=resultString+variableNames[i]+", ";
 			}
@@ -137,16 +203,36 @@ public class GenerateCompileFiles {
 				out.println("		stack.push(new Integer(result));");
 			}else if (functionType.equals("float")){
 				out.println("		stack.push(new Float(result));");
-			}if (functionType.equals("double")){
+			}else if (functionType.equals("double")){
 				out.println("		stack.push(new Double(result));");
-			}	
+			}else if (functionType.equals("void")){
+			}else{
+				out.println("		stack.push(result);");
+			}
+			out.println();
 			out.println("	}");
 			out.println();
 			String nativeString="	public native "+functionType+" "+functionName+"(";
 			for (int i=0; i<variableNames.length-1; i++){
-				nativeString=nativeString+variableTypes[i]+" "+variableNames[i]+", ";
+				if (variableTypes[i].equals("int*")){
+					nativeString=nativeString+"int "+variableNames[i]+", ";
+				}else if (variableTypes[i].equals("float*")){
+					nativeString=nativeString+"float "+variableNames[i]+", ";
+				}else if(variableTypes[i].equals("double*")){
+					nativeString=nativeString+"double "+variableNames[i]+", ";
+				}else{
+					nativeString=nativeString+variableTypes[i]+" "+variableNames[i]+", ";
+				}
 			}
-			nativeString=nativeString+variableTypes[variableTypes.length-1]+" "+variableNames[variableNames.length-1]+");";
+			if (variableTypes[variableNames.length-1].equals("int*")){
+				nativeString=nativeString+"int "+variableNames[variableNames.length-1]+");";
+			}else if (variableTypes[variableNames.length-1].equals("float*")){
+				nativeString=nativeString+"float "+variableNames[variableNames.length-1]+");";
+			}else if(variableTypes[variableNames.length-1].equals("double*")){
+				nativeString=nativeString+"double "+variableNames[variableNames.length-1]+");";
+			}else{
+				nativeString=nativeString+variableTypes[variableTypes.length-1]+" "+variableNames[variableNames.length-1]+");";
+			}
 			out.println(nativeString);
 			out.println("}");
 			out.close();
@@ -173,10 +259,18 @@ public class GenerateCompileFiles {
 					variableType="long";
 				}else if (variableTypes[i].equals("String")){
 					variableType="char";
-				}else if (variableTypes[i].endsWith("int[]")){
-					variableType="int";
-				}else if (variableTypes[i].endsWith("float[]")){
+				}else if (variableTypes[i].startsWith("int[]")){
+					variableType="long";
+				}else if (variableTypes[i].startsWith("float[]")){
 					variableType="float";
+				}else if (variableTypes[i].startsWith("double[]")){
+					variableType="double";
+				}else if (variableTypes[i].equals("int*")){
+					variableType="long";
+				}else if (variableTypes[i].equals("float*")){
+					variableType="float";
+				}else if (variableTypes[i].equals("double*")){
+					variableType="double";
 				}else{
 					variableType=variableTypes[i];
 				}
@@ -186,10 +280,18 @@ public class GenerateCompileFiles {
 				variableType="long";
 			}else if (variableTypes[variableTypes.length-1].equals("String")){
 				variableType="char";
-			}else if (variableTypes[variableTypes.length-1].endsWith("int[]")){
-				variableType="int";
-			}else if (variableTypes[variableTypes.length-1].endsWith("float[]")){
+			}else if (variableTypes[variableTypes.length-1].startsWith("int[]")){
+				variableType="long";
+			}else if (variableTypes[variableTypes.length-1].startsWith("float[]")){
 				variableType="float";
+			}else if (variableTypes[variableTypes.length-1].startsWith("double[]")){
+				variableType="double";
+			}else if (variableTypes[variableTypes.length-1].equals("int*")){
+				variableType="long";
+			}else if (variableTypes[variableTypes.length-1].equals("float*")){
+				variableType="float";
+			}else if (variableTypes[variableTypes.length-1].equals("double*")){
+				variableType="double";
 			}else{
 				variableType=variableTypes[variableTypes.length-1];
 			}
@@ -198,20 +300,47 @@ public class GenerateCompileFiles {
 			out.println();
 			out.println();
 			String modifiedFunctionName=functionName.replaceAll("_", "_1");
-			String exportString="JNIEXPORT j"+functionType+" JNICALL Java_wrimsv2_external_Function"+modifiedFunctionName+"_"+modifiedFunctionName+"(JNIEnv *env, jobject obj, ";
+			String exportString="";
+			if (functionType.startsWith("int[]")){
+				exportString="JNIEXPORT jintArray JNICALL Java_wrimsv2_external_Function"+modifiedFunctionName+"_"+modifiedFunctionName+"(JNIEnv *env, jobject obj, ";
+			}else if (functionType.startsWith("float[]")){
+				exportString="JNIEXPORT jfloatArray JNICALL Java_wrimsv2_external_Function"+modifiedFunctionName+"_"+modifiedFunctionName+"(JNIEnv *env, jobject obj, ";
+			}else if (functionType.startsWith("double[]")){
+				exportString="JNIEXPORT jdoubleArray JNICALL Java_wrimsv2_external_Function"+modifiedFunctionName+"_"+modifiedFunctionName+"(JNIEnv *env, jobject obj, ";
+			}else if (functionType.equals("void")){
+				exportString="JNIEXPORT void JNICALL Java_wrimsv2_external_Function"+modifiedFunctionName+"_"+modifiedFunctionName+"(JNIEnv *env, jobject obj, ";
+			}else{
+				exportString="JNIEXPORT j"+functionType+" JNICALL Java_wrimsv2_external_Function"+modifiedFunctionName+"_"+modifiedFunctionName+"(JNIEnv *env, jobject obj, ";
+			}
 			for (int i=0; i<variableNames.length-1; i++){
-				if (variableTypes[i].equals("int[]")){
+				if (variableTypes[i].startsWith("int[]")){
 					exportString=exportString+"jintArray "+variableNames[i]+", ";	
-				}else if (variableTypes[i].equals("float[]")){
+				}else if (variableTypes[i].startsWith("float[]")){
 					exportString=exportString+"jfloatArray "+variableNames[i]+", ";	
+				}else if (variableTypes[i].startsWith("double[]")){
+					exportString=exportString+"jdoubleArray "+variableNames[i]+", ";	
+				}else if (variableTypes[i].equals("int*")){
+					exportString=exportString+"jint "+variableNames[i]+", ";	
+				}else if (variableTypes[i].equals("float*")){
+					exportString=exportString+"jfloat "+variableNames[i]+", ";	
+				}else if (variableTypes[i].equals("double*")){
+					exportString=exportString+"jdouble "+variableNames[i]+", ";	
 				}else{
 					exportString=exportString+"j"+variableTypes[i].toLowerCase()+" "+variableNames[i]+", ";
 				}
 			}
-			if (variableTypes[variableTypes.length-1].equals("int[]")){
-				exportString=exportString+"jintArray "+variableNames[variableTypes.length-1]+", ";	
-			}else if (variableTypes[variableTypes.length-1].equals("float[]")){
-				exportString=exportString+"jfloatArray "+variableNames[variableTypes.length-1]+", ";	
+			if (variableTypes[variableTypes.length-1].startsWith("int[]")){
+				exportString=exportString+"jintArray "+variableNames[variableTypes.length-1]+") {";	
+			}else if (variableTypes[variableTypes.length-1].startsWith("float[]")){
+				exportString=exportString+"jfloatArray "+variableNames[variableTypes.length-1]+") {";	
+			}else if (variableTypes[variableTypes.length-1].startsWith("double[]")){
+				exportString=exportString+"jdoubleArray "+variableNames[variableTypes.length-1]+") {";	
+			}else if (variableTypes[variableTypes.length-1].equals("int*")){
+				exportString=exportString+"jint "+variableNames[variableTypes.length-1]+") {";	
+			}else if (variableTypes[variableTypes.length-1].equals("float*")){
+				exportString=exportString+"jfloat "+variableNames[variableTypes.length-1]+") {";	
+			}else if (variableTypes[variableTypes.length-1].equals("double*")){
+				exportString=exportString+"jdouble "+variableNames[variableTypes.length-1]+") {";	
 			}else{
 				exportString=exportString+"j"+variableTypes[variableTypes.length-1].toLowerCase()+" "+variableNames[variableNames.length-1]+") {";
 			}
@@ -224,9 +353,31 @@ public class GenerateCompileFiles {
 					out.println("	jint* "+variableNames[i]+"_arr = (*env)->GetIntArrayElements(env, "+variableNames[i]+", 0);");
 				}else if (variableTypes[i].equals("float[]")){
 					out.println("	jfloat* "+variableNames[i]+"_arr = (*env)->GetFloatArrayElements(env, "+variableNames[i]+", 0);");
+				}else if (variableTypes[i].equals("double[]")){
+					out.println("	jdouble* "+variableNames[i]+"_arr = (*env)->GetDoubleArrayElements(env, "+variableNames[i]+", 0);");
+				}else if (variableTypes[i].equals("int[][]")){
+					preCall_2DArray(out, "int", variableNames[i]);
+				}else if (variableTypes[i].equals("float[][]")){
+					preCall_2DArray(out, "float", variableNames[i]);
+				}else if (variableTypes[i].equals("double[][]")){
+					preCall_2DArray(out, "double", variableNames[i]);
+				}else if (variableTypes[i].equals("double[]")){
+					out.println("	jdouble* "+variableNames[i]+"_arr = (*env)->GetDoubleArrayElements(env, "+variableNames[i]+", 0);");
 				}
 			}
-			String resultString="	jfloat result = "+functionName.toUpperCase()+"(";
+			String resultString="";
+			if (functionType.startsWith("int[]")){
+				resultString="	jint* result = "+functionName.toUpperCase()+"(";
+			}else if (functionType.startsWith("float[]")){
+				resultString="	jfloat* result = "+functionName.toUpperCase()+"(";
+			}else if (functionType.startsWith("double[]")){
+				resultString="	jdouble* result = "+functionName.toUpperCase()+"(";
+			}else if (functionType.equals("void")){
+				resultString="	"+functionName.toUpperCase()+"(";
+			}else{
+				resultString="	j"+functionType.toLowerCase()+" result = "+functionName.toUpperCase()+"(";
+			}
+			
 			for (int i=0; i<variableNames.length-1; i++){
 				if (variableTypes[i].equals("String")){
 					resultString=resultString+variableNames[i]+"Chars, ";
@@ -234,21 +385,33 @@ public class GenerateCompileFiles {
 					resultString=resultString+variableNames[i]+"_arr, ";
 				}else if (variableTypes[i].equals("float[]")){
 					resultString=resultString+variableNames[i]+"_arr, ";
+				}else if (variableTypes[i].equals("double[]")){
+					resultString=resultString+variableNames[i]+"_arr, ";
+				}else if (variableTypes[i].equals("int[][]")|variableTypes[i].equals("float[][]")|variableTypes[i].equals("double[][]")){
+					resultString=resultString+"&"+variableNames[i]+"_arr[0][0], ";
 				}else{
 					resultString=resultString+"&"+variableNames[i]+", ";
 				}
 			}
 			if (variableTypes[variableNames.length-1].equals("String")){
-				resultString=resultString+variableNames[variableNames.length-1]+"Chars, ";
+				resultString=resultString+variableNames[variableNames.length-1]+"Chars);";
 			}else if (variableTypes[variableNames.length-1].equals("int[]")){
-				resultString=resultString+variableNames[variableNames.length-1]+"_arr, ";
+				resultString=resultString+variableNames[variableNames.length-1]+"_arr);";
 			}else if (variableTypes[variableNames.length-1].equals("float[]")){
-				resultString=resultString+variableNames[variableNames.length-1]+"_arr, ";
+				resultString=resultString+variableNames[variableNames.length-1]+"_arr);";
+			}else if (variableTypes[variableNames.length-1].equals("double[]")){
+				resultString=resultString+variableNames[variableNames.length-1]+"_arr);";
+			}else if (variableTypes[variableNames.length-1].equals("int[][]")|variableTypes[variableNames.length-1].equals("float[][]")|variableTypes[variableNames.length-1].equals("double[][]")){
+				resultString=resultString+"&"+variableNames[variableNames.length-1]+"_arr[0][0]);";
 			}else{
 				resultString=resultString+"&"+variableNames[variableNames.length-1]+");";
 			}
 			out.println(resultString);
 			out.println();
+			
+			out.println("jclass clazz = (*env)->GetObjectClass(env, obj);");
+			out.println();
+			
 			for (int i=0; i<variableNames.length; i++){
 				if (variableTypes[i].equals("String")){
 					out.println("	(*env)->ReleaseStringUTFChars(env, "+variableNames[i]+", "+variableNames[i]+"Chars);");
@@ -256,9 +419,28 @@ public class GenerateCompileFiles {
 					out.println("	(*env)->ReleaseIntArrayElements(env, "+variableNames[i]+", "+variableNames[i]+"_arr, 0);");
 				}else if (variableTypes[i].equals("float[]")){
 					out.println("	(*env)->ReleaseFloatArrayElements(env, "+variableNames[i]+", "+variableNames[i]+"_arr, 0);");
+				}else if (variableTypes[i].equals("double[]")){
+					out.println("	(*env)->ReleaseDoubleArrayElements(env, "+variableNames[i]+", "+variableNames[i]+"_arr, 0);");
+				}else if (variableTypes[i].equals("int[][]")){
+					afterCall_2DArray(out, "int", variableNames[i]);
+				}else if (variableTypes[i].equals("float[][]")){
+					afterCall_2DArray(out, "float", variableNames[i]);
+				}else if (variableTypes[i].equals("double[][]")){
+					afterCall_2DArray(out, "double", variableNames[i]);
+				}else if (variableTypes[i].equals("int*")){
+					afterCallScalar(out, "int", variableNames[i]);
+				}else if (variableTypes[i].equals("float*")){
+					afterCallScalar(out, "float", variableNames[i]);
+				}else if (variableTypes[i].equals("double*")){
+					afterCallScalar(out, "double", variableNames[i]);
 				}
 			}
-			String returnString ="	return result;";
+			String returnString;
+			if (functionType.equals("void")){
+				returnString ="	return;";
+			}else{
+				returnString ="	return result;";
+			}
 			out.println(returnString);
 			out.println("}");
 			out.close();
@@ -380,12 +562,14 @@ public class GenerateCompileFiles {
 		    	}
 		    	variableTypeString=removeLeadingTailingSpace(variableTypeString);
 		    	String[] variableTypes=variableTypeString.split("\\s+");
+		    	/*
 		    	for (int j=0; j<variableTypes.length; j++){
 		    		if (!isNameFormatRight(variableTypes[j])) {
 		    			error.add("Line "+line+": Variable type contains non-characters or non-numeric.");
 		    			return false;
 		    		}
 		    	}
+		    	*/
 		    	
 		    	String variableNameString=br.readLine();
 		    	line=line+1;
@@ -460,6 +644,120 @@ public class GenerateCompileFiles {
 		} catch (IOException e){
 			e.printStackTrace();
 		}
+	}
+	
+	public static void preCall_2DArray(PrintWriter out, String vt, String vn){
+		String r1="r_"+vn;
+		String ir1="ir_"+vn;
+		String c1="c_"+vn;
+		String oneDim1="oneDim_"+vn;
+		String oneDim1_0=oneDim1+"_0";
+		String elements1="elements_"+vn;
+		String jvtArray="j"+vt+"Array";
+		String jvt="j"+vt; 
+		String arrt=vt;
+		if (vt.equals("int")) arrt="long";
+		String vn_arr=vn+"_arr";
+		String getVtArrayElements;
+		if (vt.equals("int")){
+			getVtArrayElements="GetIntArrayElements";
+		}else if (vt.equals("float")){
+			getVtArrayElements="GetFloatArrayElements";
+		}else{
+			getVtArrayElements="GetDoubleArrayElements";
+		}
+		
+		out.println("	int "+r1+"=(*env)->GetArrayLength(env, "+vn+");");
+		out.println("	int "+ir1+";");
+		out.println();
+		out.println("	"+jvtArray+" "+oneDim1+"["+r1+"];");
+		out.println("	"+jvt+" *"+elements1+"["+r1+"];");
+		out.println();
+		out.println("	"+jvtArray+" "+oneDim1_0+" = ("+jvtArray+") (*env)->GetObjectArrayElement(env, "+vn+", 0);");
+		out.println();
+		out.println("	int "+c1+"=(*env)->GetArrayLength(env, "+oneDim1_0+");");
+		out.println();
+		out.println("	"+arrt+" "+vn_arr+"["+c1+"]["+r1+"];");
+		out.println();
+		out.println("	for ("+ir1+"=0; "+ir1+"<"+r1+"; "+ir1+"++){");
+		out.println("		"+oneDim1+"["+ir1+"] = ("+jvtArray+") (*env)->GetObjectArrayElement(env, "+vn+", "+ir1+");");
+		out.println("		"+elements1+"["+ir1+"] = (*env)->"+getVtArrayElements+"(env, "+oneDim1+"["+ir1+"], 0);");
+		out.println();
+		out.println("		int j;");
+		out.println("		for (j=0; j<"+c1+"; j++){");
+		out.println("			"+vn_arr+"[j]["+ir1+"]="+elements1+"["+ir1+"][j];");
+		out.println("		}");
+		out.println("	}");
+	}
+	
+	public static void afterCall_2DArray(PrintWriter out, String vt, String vn){
+		String r1="r_"+vn;
+		String ir1="ir_"+vn;
+		String c1="c_"+vn;
+		String oneDim1="oneDim_"+vn;
+		String oneDim1_0=oneDim1+"_0";
+		String elements1="elements_"+vn;
+		String jvtArray="j"+vt+"Array";
+		String jvt="j"+vt; 
+		String arrt=vt;
+		String vn_arr=vn+"_arr";
+		String releaseVtArrayElements;
+		if (vt.equals("int")){
+			releaseVtArrayElements="ReleaseIntArrayElements";
+		}else if (vt.equals("float")){
+			releaseVtArrayElements="ReleaseFloatArrayElements";
+		}else{
+			releaseVtArrayElements="ReleaseDoubleArrayElements";
+		}
+		
+		out.println("for ("+ir1+"=0; "+ir1+"<"+r1+"; "+ir1+"++){");
+		out.println("	int j;");
+		out.println("	for (j=0; j<+"+c1+"; j++){");
+		out.println("		"+elements1+"["+ir1+"][j]="+vn_arr+"[j]["+ir1+"];");
+		out.println("	}");
+		out.println();
+		out.println("	(*env)->"+releaseVtArrayElements+"(env, "+oneDim1+"["+ir1+"], "+elements1+"["+ir1+"], 0);");
+		out.println("	(*env)->DeleteLocalRef(env, "+oneDim1+"["+ir1+"]);");
+		out.println("}");
+	}
+	
+	/*
+	public static void preCallScalar(PrintWriter out, String vt, String vn){
+		String jvt="j"+vt;
+		String vn0=vn+"_0";
+		String vnArr=vn+"_arr";
+		String pvt=vt;
+		if (vt.equals("int")) pvt="long";
+		String getVtArrayElements;
+		if (vt.equals("int")){
+			getVtArrayElements="GetIntArrayElements";
+		}else if (vt.equals("float")){
+			getVtArrayElements="GetFloatArrayElements";
+		}else{
+			getVtArrayElements="GetDoubleArrayElements";
+		}
+		
+		out.println("	"+jvt+"* "+vn+"_arr = (*env)->"+getVtArrayElements+"(env, "+vn+", 0);");
+		out.println("	"+pvt+" "+vn0+"="+vnArr+"[0];");
+	}
+	*/
+	
+	public static void afterCallScalar(PrintWriter out, String vt, String vn){
+		String vnField=vn+"Field";
+		String type="I";
+		String setVtField="SetIntField";
+		if (vt.equals("int")){
+			type="I";
+			setVtField="SetIntField";
+		}else if (vt.equals("float")){
+			type="F";
+			setVtField="SetFloatField";
+		}else if (vt.equals("double")){
+			type="D";
+			setVtField="SetDoubleField";
+		}
+		out.println("	jfieldID "+vnField+" = (*env)->GetFieldID(env, clazz, \""+vn+"\", \""+type+"\");");
+		out.println("	(*env)->"+setVtField+"(env, obj, "+vnField+", "+vn+");");
 	}
 	
 	public static void setWorkingDirectory(String fileFullPath){

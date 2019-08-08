@@ -38,8 +38,8 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cDeclarationParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
 		//WreslEvaluator:
-		//	(pattern+=Pattern | ifincitem+=IfIncItems)+ | initial=Initial? sequence+=Sequence+ model+=(Model | Group)+ |
-		//	Declaration;
+		//	(pattern+=Pattern | ifincitem+=IfIncItems)+
+		//	| initial=Initial? sequence+=Sequence+ model+=(Model | Group)+ | Declaration;
 		public ParserRule getRule() { return rule; }
 
 		//(pattern+=Pattern | ifincitem+=IfIncItems)+ | initial=Initial? sequence+=Sequence+ model+=(Model | Group)+ | Declaration
@@ -138,7 +138,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Declaration:
 		//	'Declare' '{' name=ID '}';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//'Declare' '{' name=ID '}'
 		public Group getGroup() { return cGroup; }
@@ -168,7 +168,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Variable:
 		//	StateVariable | DecisionVariable | ExternalDef;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//StateVariable | DecisionVariable | ExternalDef
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -191,7 +191,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//StateVariable:
 		//	SvarDef | ConstDef;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//SvarDef | ConstDef
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -211,7 +211,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//DecisionVariable:
 		//	DvarDef | Alias;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//DvarDef | Alias
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -234,7 +234,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//IfIncItems:
 		//	IfTerm elseifterm=ElseIfTerm? elseterm=ElseTerm?;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//IfTerm elseifterm=ElseIfTerm? elseterm=ElseTerm?
 		public Group getGroup() { return cGroup; }
@@ -268,7 +268,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//IfTerm:
 		//	If logical=LogicalExpression '{' pattern+=Pattern+ '}';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//If logical=LogicalExpression '{' pattern+=Pattern+ '}'
 		public Group getGroup() { return cGroup; }
@@ -308,7 +308,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ElseIfTerm:
 		//	(ElseIf logical+=LogicalExpression '{' pattern+=Pattern+ '}')+;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//(ElseIf logical+=LogicalExpression '{' pattern+=Pattern+ '}')+
 		public Group getGroup() { return cGroup; }
@@ -346,7 +346,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ElseTerm:
 		//	Else '{' pattern+=Pattern+ '}';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//Else '{' pattern+=Pattern+ '}'
 		public Group getGroup() { return cGroup; }
@@ -378,7 +378,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//TimeArraySize:
 		//	'(' name=[Declaration] ')';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//'(' name=[Declaration] ')'
 		public Group getGroup() { return cGroup; }
@@ -422,7 +422,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Objective:
 		//	('objective' | 'OBJECTIVE') ('[' local?=('local' | 'LOCAL') ']')? name=ID '='? '{' weights+=WeightItem+ '}';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//('objective' | 'OBJECTIVE') ('[' local?=('local' | 'LOCAL') ']')? name=ID '='? '{' weights+=WeightItem+ '}'
 		public Group getGroup() { return cGroup; }
@@ -496,7 +496,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//WeightItem:
 		//	'[' ref=[Declaration] ta=TimeArraySize? ',' expression=Expression ']' ','?;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//'[' ref=[Declaration] ta=TimeArraySize? ',' expression=Expression ']' ','?
 		public Group getGroup() { return cGroup; }
@@ -558,7 +558,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ExternalDef:
 		//	('define' | 'DEFINE') ('[' local?=('local' | 'LOCAL') ']')? ref=[Declaration] '{' definition=External '}';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//('define' | 'DEFINE') ('[' local?=('local' | 'LOCAL') ']')? ref=[Declaration] '{' definition=External '}'
 		public Group getGroup() { return cGroup; }
@@ -662,9 +662,10 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//SvarDef:
 		//	('define' | 'DEFINE') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? ref=[Declaration] '{' definition=SVar
-		//	'}' | ('svar' | 'SVAR' | 'Svar') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? ref=[Declaration] '{'
+		//	'}'
+		//	| ('svar' | 'SVAR' | 'Svar') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? ref=[Declaration] '{'
 		//	definition=SVar '}';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//('define' | 'DEFINE') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? ref=[Declaration] '{' definition=SVar '}'
 		//| ('svar' | 'SVAR' | 'Svar') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? ref=[Declaration] '{'
@@ -849,7 +850,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//	('define' | 'DEFINE') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? ref=[Declaration] '{' definition=(DVar
 		//	| DVarInteger) '}' | ('dvar' | 'DVAR' | 'Dvar') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')?
 		//	ref=[Declaration] '{' definition=(DVar | DVarInteger) '}';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//('define' | 'DEFINE') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? ref=[Declaration] '{' definition=(DVar |
 		//DVarInteger) '}' | ('dvar' | 'DVAR' | 'Dvar') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')?
@@ -1018,7 +1019,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ConstDef:
 		//	('const' | 'CONST' | 'Const') ('[' local?=('local' | 'LOCAL') ']')? ref=[Declaration] '{' definition=Number '}';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//('const' | 'CONST' | 'Const') ('[' local?=('local' | 'LOCAL') ']')? ref=[Declaration] '{' definition=Number '}'
 		public Group getGroup() { return cGroup; }
@@ -1118,8 +1119,9 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Alias:
 		//	('define' | 'DEFINE') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? ref=[Declaration] '{' ('alias' |
-		//	'ALIAS') expression=Expression (('kind' | 'KIND') kind=STRING)? (('units' | 'UNITS') units=STRING)? '}';
-		 public ParserRule getRule() { return rule; }
+		//	'ALIAS') expression=Expression (('kind' |
+		//	'KIND') kind=STRING)? (('units' | 'UNITS') units=STRING)? '}';
+		public ParserRule getRule() { return rule; }
 
 		//('define' | 'DEFINE') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? ref=[Declaration] '{' ('alias' | 'ALIAS')
 		//expression=Expression (('kind' | 'KIND') kind=STRING)? (('units' | 'UNITS') units=STRING)? '}'
@@ -1249,7 +1251,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//External:
 		//	('external' | 'EXTERNAL') (name=ID ('.dll' | '.DLL') | {External} ('f90' | 'F90'));
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//('external' | 'EXTERNAL') (name=ID ('.dll' | '.DLL') | {External} ('f90' | 'F90'))
 		public Group getGroup() { return cGroup; }
@@ -1308,7 +1310,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//DVar:
 		//	DVarStd | DVarNonStd;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//DVarStd | DVarNonStd
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -1338,7 +1340,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//DVarNonStd:
 		//	lowerUpper=LowerAndOrUpper ("kind" | "KIND") kind=STRING ("units" | "UNITS") units=STRING;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//lowerUpper=LowerAndOrUpper ("kind" | "KIND") kind=STRING ("units" | "UNITS") units=STRING
 		public Group getGroup() { return cGroup; }
@@ -1399,7 +1401,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//DVarStd:
 		//	("std" | "STD") ("kind" | "KIND") kind=STRING ("units" | "UNITS") units=STRING;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//("std" | "STD") ("kind" | "KIND") kind=STRING ("units" | "UNITS") units=STRING
 		public Group getGroup() { return cGroup; }
@@ -1452,7 +1454,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//DVarInteger:
 		//	DVarIntegerStd | DVarIntegerNonStd;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//DVarIntegerStd | DVarIntegerNonStd
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -1486,7 +1488,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//DVarIntegerStd:
 		//	("integer" | "INTEGER") ("std" | "STD") ("kind" | "KIND") kind=STRING ("units" | "UNITS") units=STRING;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//("integer" | "INTEGER") ("std" | "STD") ("kind" | "KIND") kind=STRING ("units" | "UNITS") units=STRING
 		public Group getGroup() { return cGroup; }
@@ -1560,7 +1562,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//DVarIntegerNonStd:
 		//	("integer" | "INTEGER") LowerAndOrUpper ("kind" | "KIND") kind=STRING ("units" | "UNITS") units=STRING;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//("integer" | "INTEGER") LowerAndOrUpper ("kind" | "KIND") kind=STRING ("units" | "UNITS") units=STRING
 		public Group getGroup() { return cGroup; }
@@ -1619,7 +1621,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//SVar:
 		//	SVarDSS | SVarExpression | SVarSum | SVarTable | SVarCase;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//SVarDSS | SVarExpression | SVarSum | SVarTable | SVarCase
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -1668,7 +1670,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//SVarDSS:
 		//	("timeseries" | "TIMESERIES") bPart=STRING? ("kind" | "KIND") kind=STRING ("units" | "UNITS") units=STRING
 		//	(("convert" | "CONVERT") convert=STRING)?;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//("timeseries" | "TIMESERIES") bPart=STRING? ("kind" | "KIND") kind=STRING ("units" | "UNITS") units=STRING (("convert" |
 		//"CONVERT") convert=STRING)?
@@ -1749,7 +1751,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//SVarExpression:
 		//	("value" | "VALUE") expression=Expression;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//("value" | "VALUE") expression=Expression
 		public Group getGroup() { return cGroup; }
@@ -1777,7 +1779,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//SVarSum:
 		//	sumContent=SumContent;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//sumContent=SumContent
 		public Assignment getSumContentAssignment() { return cSumContentAssignment; }
@@ -1793,7 +1795,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//SVarTable:
 		//	tableContent=TableContent;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//tableContent=TableContent
 		public Assignment getTableContentAssignment() { return cTableContentAssignment; }
@@ -1809,7 +1811,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//SVarCase:
 		//	caseContent+=CaseContent+;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//caseContent+=CaseContent+
 		public Assignment getCaseContentAssignment() { return cCaseContentAssignment; }
@@ -1842,8 +1844,9 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//CaseContent:
 		//	("case" | "CASE") caseName=(ID | SpecialIdent) '{' condition=Condition (content=TableContent | content=ValueContent |
-		//	content=SumContent) '}';
-		 public ParserRule getRule() { return rule; }
+		//	content=SumContent)
+		//	'}';
+		public ParserRule getRule() { return rule; }
 
 		//("case" | "CASE") caseName=(ID | SpecialIdent) '{' condition=Condition (content=TableContent | content=ValueContent |
 		//content=SumContent) '}'
@@ -1917,7 +1920,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//SumContent:
 		//	("sum" | "SUM") header=SumHeader expression=Expression;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//("sum" | "SUM") header=SumHeader expression=Expression
 		public Group getGroup() { return cGroup; }
@@ -1962,7 +1965,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//SumHeader:
 		//	'(' 'i=' expression1=Expression ',' expression2=Expression (',' '-'? INT)? ')';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//'(' 'i=' expression1=Expression ',' expression2=Expression (',' '-'? INT)? ')'
 		public Group getGroup() { return cGroup; }
@@ -2015,7 +2018,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ValueContent:
 		//	("value" | "VALUE") expression=Expression;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//("value" | "VALUE") expression=Expression
 		public Group getGroup() { return cGroup; }
@@ -2074,7 +2077,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//TableContent:
 		//	("select" | "SELECT") tableName=(ID | SpecialIdent) ("from" | "FROM") from=(ID | SpecialIdent) (("given" | "GIVEN")
 		//	given=Assignment ("use" | "USE") use=ID)? (("where" | "WHERE") where=WhereItems)?;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//("select" | "SELECT") tableName=(ID | SpecialIdent) ("from" | "FROM") from=(ID | SpecialIdent) (("given" | "GIVEN")
 		//given=Assignment ("use" | "USE") use=ID)? (("where" | "WHERE") where=WhereItems)?
@@ -2186,7 +2189,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//WhereItems:
 		//	assignment+=Assignment (',' assignment+=Assignment)*;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//assignment+=Assignment (',' assignment+=Assignment)*
 		public Group getGroup() { return cGroup; }
@@ -2221,7 +2224,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Assignment:
 		//	term=TermSimple '=' expression=Expression;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//term=TermSimple '=' expression=Expression
 		public Group getGroup() { return cGroup; }
@@ -2252,7 +2255,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//TermSimple:
 		//	ID | Number | Function | SpecialIdent;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//ID | Number | Function | SpecialIdent
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -2278,7 +2281,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//LowerAndOrUpper:
 		//	lowerUpper | upperLower;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//lowerUpper | upperLower
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -2300,7 +2303,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//upperLower:
 		//	upper=Upper lower=Lower?;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//upper=Upper lower=Lower?
 		public Group getGroup() { return cGroup; }
@@ -2328,7 +2331,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//lowerUpper:
 		//	lower=Lower upper=Upper?;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//lower=Lower upper=Upper?
 		public Group getGroup() { return cGroup; }
@@ -2363,7 +2366,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Upper:
 		//	("upper" | "UPPER") ({Upper} ("unbounded" | "UNBOUNDED") | expression=Expression);
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//("upper" | "UPPER") ({Upper} ("unbounded" | "UNBOUNDED") | expression=Expression)
 		public Group getGroup() { return cGroup; }
@@ -2419,7 +2422,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Lower:
 		//	("lower" | "LOWER") ({Lower} ("unbounded" | "UNBOUNDED") | expression=Expression);
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//("lower" | "LOWER") ({Lower} ("unbounded" | "UNBOUNDED") | expression=Expression)
 		public Group getGroup() { return cGroup; }
@@ -2485,7 +2488,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//Goal:
 		//	("goal" | "GOAL") ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? name=ID '{' definition=(GoalSimple |
 		//	GoalCase) '}';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//("goal" | "GOAL") ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? name=ID '{' definition=(GoalSimple | GoalCase)
 		//'}'
@@ -2568,7 +2571,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//GoalCase:
 		//	('lhs' | 'LHS') lhs=Expression (content=GoalNoCaseContent | caseContent+=GoalCaseContent+);
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//('lhs' | 'LHS') lhs=Expression (content=GoalNoCaseContent | caseContent+=GoalCaseContent+)
 		public Group getGroup() { return cGroup; }
@@ -2629,7 +2632,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//GoalCaseContent:
 		//	("case" | "CASE") caseName=(ID | SpecialIdent) '{' condition=Condition ("rhs" | "RHS") rhs=Expression
 		//	subContent=SubContent? '}';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//("case" | "CASE") caseName=(ID | SpecialIdent) '{' condition=Condition ("rhs" | "RHS") rhs=Expression
 		//subContent=SubContent? '}'
@@ -2703,7 +2706,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//GoalNoCaseContent:
 		//	("rhs" | "RHS") rhs=Expression subContent=SubContent?;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//("rhs" | "RHS") rhs=Expression subContent=SubContent?
 		public Group getGroup() { return cGroup; }
@@ -2746,7 +2749,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//SubContent:
 		//	gt=LhsGtRhs lt=LhsLtRhs? | lt=LhsLtRhs gt=LhsGtRhs?;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//gt=LhsGtRhs lt=LhsLtRhs? | lt=LhsLtRhs gt=LhsGtRhs?
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -2802,9 +2805,9 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cPenaltyPenaltyParserRuleCall_3_1_0 = (RuleCall)cPenaltyAssignment_3_1.eContents().get(0);
 		
 		////FIXME: replace with unordered groups
-		// LhsGtRhs:
+		//LhsGtRhs:
 		//	("lhs" | "LHS") '>' ("rhs" | "RHS") ({LhsGtRhs} ("constrain" | "CONSTRAIN") | penalty=Penalty);
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//("lhs" | "LHS") '>' ("rhs" | "RHS") ({LhsGtRhs} ("constrain" | "CONSTRAIN") | penalty=Penalty)
 		public Group getGroup() { return cGroup; }
@@ -2876,7 +2879,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//LhsLtRhs:
 		//	("lhs" | "LHS") '<' ("rhs" | "RHS") ({LhsLtRhs} ("constrain" | "CONSTRAIN") | penalty=Penalty);
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//("lhs" | "LHS") '<' ("rhs" | "RHS") ({LhsLtRhs} ("constrain" | "CONSTRAIN") | penalty=Penalty)
 		public Group getGroup() { return cGroup; }
@@ -2938,7 +2941,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Penalty:
 		//	('penalty' | 'PENALTY') expression=Expression;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//('penalty' | 'PENALTY') expression=Expression
 		public Group getGroup() { return cGroup; }
@@ -2966,7 +2969,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//GoalSimple:
 		//	constraint=Constraint;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//constraint=Constraint
 		public Assignment getConstraintAssignment() { return cConstraintAssignment; }
@@ -2990,7 +2993,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Constraint:
 		//	lhs=Expression operator=('<' | '>' | '=') rhs=Expression;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//lhs=Expression operator=('<' | '>' | '=') rhs=Expression
 		public Group getGroup() { return cGroup; }
@@ -3041,7 +3044,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Group:
 		//	("group" | "GROUP") name=ID '{' (pattern+=Pattern | ifincitems+=IfIncItems)+ '}';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//("group" | "GROUP") name=ID '{' (pattern+=Pattern | ifincitems+=IfIncItems)+ '}'
 		public Group getGroup() { return cGroup; }
@@ -3101,7 +3104,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Model:
 		//	("model" | "MODEL") name=ID '{' (pattern+=Pattern | ifincitems+=IfIncItems)+ '}';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//("model" | "MODEL") name=ID '{' (pattern+=Pattern | ifincitems+=IfIncItems)+ '}'
 		public Group getGroup() { return cGroup; }
@@ -3157,7 +3160,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Initial:
 		//	("initial" | 'Initial' | "INITIAL") '{' pattern+=Pattern+ '}';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//("initial" | 'Initial' | "INITIAL") '{' pattern+=Pattern+ '}'
 		public Group getGroup() { return cGroup; }
@@ -3189,104 +3192,145 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	public class SequenceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "gov.ca.dwr.wresl.xtext.editor.WreslEditor.Sequence");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
-		private final Keyword cSequenceKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
-		private final Keyword cSEQUENCEKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
-		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Alternatives cAlternatives_3 = (Alternatives)cGroup.eContents().get(3);
-		private final Keyword cModelKeyword_3_0 = (Keyword)cAlternatives_3.eContents().get(0);
-		private final Keyword cMODELKeyword_3_1 = (Keyword)cAlternatives_3.eContents().get(1);
-		private final Assignment cModelAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final CrossReference cModelModelCrossReference_4_0 = (CrossReference)cModelAssignment_4.eContents().get(0);
-		private final RuleCall cModelModelIDTerminalRuleCall_4_0_1 = (RuleCall)cModelModelCrossReference_4_0.eContents().get(1);
-		private final Assignment cConditionAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cConditionConditionParserRuleCall_5_0 = (RuleCall)cConditionAssignment_5.eContents().get(0);
-		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
-		private final RuleCall cORDERTerminalRuleCall_6_0 = (RuleCall)cGroup_6.eContents().get(0);
-		private final Assignment cOrderAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
-		private final RuleCall cOrderINTTerminalRuleCall_6_1_0 = (RuleCall)cOrderAssignment_6_1.eContents().get(0);
-		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
-		private final RuleCall cTimeStepParserRuleCall_7_0 = (RuleCall)cGroup_7.eContents().get(0);
-		private final RuleCall cTimeStepValueParserRuleCall_7_1 = (RuleCall)cGroup_7.eContents().get(1);
-		private final Keyword cRightCurlyBracketKeyword_8 = (Keyword)cGroup.eContents().get(8);
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final Alternatives cAlternatives_0_0 = (Alternatives)cGroup_0.eContents().get(0);
+		private final Keyword cSequenceKeyword_0_0_0 = (Keyword)cAlternatives_0_0.eContents().get(0);
+		private final Keyword cSEQUENCEKeyword_0_0_1 = (Keyword)cAlternatives_0_0.eContents().get(1);
+		private final Assignment cNameAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_0_1_0 = (RuleCall)cNameAssignment_0_1.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_0_2 = (Keyword)cGroup_0.eContents().get(2);
+		private final Alternatives cAlternatives_0_3 = (Alternatives)cGroup_0.eContents().get(3);
+		private final Keyword cModelKeyword_0_3_0 = (Keyword)cAlternatives_0_3.eContents().get(0);
+		private final Keyword cMODELKeyword_0_3_1 = (Keyword)cAlternatives_0_3.eContents().get(1);
+		private final Assignment cModelAssignment_0_4 = (Assignment)cGroup_0.eContents().get(4);
+		private final CrossReference cModelModelCrossReference_0_4_0 = (CrossReference)cModelAssignment_0_4.eContents().get(0);
+		private final RuleCall cModelModelIDTerminalRuleCall_0_4_0_1 = (RuleCall)cModelModelCrossReference_0_4_0.eContents().get(1);
+		private final Group cGroup_0_5 = (Group)cGroup_0.eContents().get(5);
+		private final Assignment cConditionAssignment_0_5_0 = (Assignment)cGroup_0_5.eContents().get(0);
+		private final RuleCall cConditionConditionParserRuleCall_0_5_0_0 = (RuleCall)cConditionAssignment_0_5_0.eContents().get(0);
+		private final Group cGroup_0_5_1 = (Group)cGroup_0_5.eContents().get(1);
+		private final RuleCall cORDERTerminalRuleCall_0_5_1_0 = (RuleCall)cGroup_0_5_1.eContents().get(0);
+		private final Assignment cOrderAssignment_0_5_1_1 = (Assignment)cGroup_0_5_1.eContents().get(1);
+		private final RuleCall cOrderINTTerminalRuleCall_0_5_1_1_0 = (RuleCall)cOrderAssignment_0_5_1_1.eContents().get(0);
+		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
+		private final Group cGroup_1_0 = (Group)cGroup_1.eContents().get(0);
+		private final Group cGroup_1_0_0 = (Group)cGroup_1_0.eContents().get(0);
+		private final RuleCall cORDERTerminalRuleCall_1_0_0_0 = (RuleCall)cGroup_1_0_0.eContents().get(0);
+		private final Assignment cOrderAssignment_1_0_0_1 = (Assignment)cGroup_1_0_0.eContents().get(1);
+		private final RuleCall cOrderINTTerminalRuleCall_1_0_0_1_0 = (RuleCall)cOrderAssignment_1_0_0_1.eContents().get(0);
+		private final Assignment cConditionAssignment_1_0_1 = (Assignment)cGroup_1_0.eContents().get(1);
+		private final RuleCall cConditionConditionParserRuleCall_1_0_1_0 = (RuleCall)cConditionAssignment_1_0_1.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
+		private final RuleCall cTimeStepParserRuleCall_1_1_0 = (RuleCall)cGroup_1_1.eContents().get(0);
+		private final RuleCall cTimeStepValueParserRuleCall_1_1_1 = (RuleCall)cGroup_1_1.eContents().get(1);
+		private final Keyword cRightCurlyBracketKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
 		
 		//Sequence:
-		//	("sequence" | "SEQUENCE") name=ID '{' ("model" | "MODEL") model=[Model] condition=Condition? (ORDER order=INT)?
-		//	(TimeStep TimeStepValue)? '}';
-		 public ParserRule getRule() { return rule; }
+		//	("sequence" | "SEQUENCE") name=ID '{' ("model" | "MODEL") model=[Model] (condition=Condition? (ORDER order=INT)?) |
+		//	((ORDER order=INT)? condition=Condition?) (TimeStep TimeStepValue)?
+		//	'}';
+		public ParserRule getRule() { return rule; }
 
-		//("sequence" | "SEQUENCE") name=ID '{' ("model" | "MODEL") model=[Model] condition=Condition? (ORDER order=INT)?
-		//(TimeStep TimeStepValue)? '}'
-		public Group getGroup() { return cGroup; }
+		//("sequence" | "SEQUENCE") name=ID '{' ("model" | "MODEL") model=[Model] (condition=Condition? (ORDER order=INT)?) |
+		//((ORDER order=INT)? condition=Condition?) (TimeStep TimeStepValue)? '}'
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//("sequence" | "SEQUENCE") name=ID '{' ("model" | "MODEL") model=[Model] (condition=Condition? (ORDER order=INT)?)
+		public Group getGroup_0() { return cGroup_0; }
 
 		//("sequence" | "SEQUENCE")
-		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+		public Alternatives getAlternatives_0_0() { return cAlternatives_0_0; }
 
 		//"sequence"
-		public Keyword getSequenceKeyword_0_0() { return cSequenceKeyword_0_0; }
+		public Keyword getSequenceKeyword_0_0_0() { return cSequenceKeyword_0_0_0; }
 
 		//"SEQUENCE"
-		public Keyword getSEQUENCEKeyword_0_1() { return cSEQUENCEKeyword_0_1; }
+		public Keyword getSEQUENCEKeyword_0_0_1() { return cSEQUENCEKeyword_0_0_1; }
 
 		//name=ID
-		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		public Assignment getNameAssignment_0_1() { return cNameAssignment_0_1; }
 
 		//ID
-		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
+		public RuleCall getNameIDTerminalRuleCall_0_1_0() { return cNameIDTerminalRuleCall_0_1_0; }
 
 		//'{'
-		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
+		public Keyword getLeftCurlyBracketKeyword_0_2() { return cLeftCurlyBracketKeyword_0_2; }
 
 		//("model" | "MODEL")
-		public Alternatives getAlternatives_3() { return cAlternatives_3; }
+		public Alternatives getAlternatives_0_3() { return cAlternatives_0_3; }
 
 		//"model"
-		public Keyword getModelKeyword_3_0() { return cModelKeyword_3_0; }
+		public Keyword getModelKeyword_0_3_0() { return cModelKeyword_0_3_0; }
 
 		//"MODEL"
-		public Keyword getMODELKeyword_3_1() { return cMODELKeyword_3_1; }
+		public Keyword getMODELKeyword_0_3_1() { return cMODELKeyword_0_3_1; }
 
 		//model=[Model]
-		public Assignment getModelAssignment_4() { return cModelAssignment_4; }
+		public Assignment getModelAssignment_0_4() { return cModelAssignment_0_4; }
 
 		//[Model]
-		public CrossReference getModelModelCrossReference_4_0() { return cModelModelCrossReference_4_0; }
+		public CrossReference getModelModelCrossReference_0_4_0() { return cModelModelCrossReference_0_4_0; }
 
 		//ID
-		public RuleCall getModelModelIDTerminalRuleCall_4_0_1() { return cModelModelIDTerminalRuleCall_4_0_1; }
+		public RuleCall getModelModelIDTerminalRuleCall_0_4_0_1() { return cModelModelIDTerminalRuleCall_0_4_0_1; }
+
+		//(condition=Condition? (ORDER order=INT)?)
+		public Group getGroup_0_5() { return cGroup_0_5; }
 
 		//condition=Condition?
-		public Assignment getConditionAssignment_5() { return cConditionAssignment_5; }
+		public Assignment getConditionAssignment_0_5_0() { return cConditionAssignment_0_5_0; }
 
 		//Condition
-		public RuleCall getConditionConditionParserRuleCall_5_0() { return cConditionConditionParserRuleCall_5_0; }
+		public RuleCall getConditionConditionParserRuleCall_0_5_0_0() { return cConditionConditionParserRuleCall_0_5_0_0; }
 
 		//(ORDER order=INT)?
-		public Group getGroup_6() { return cGroup_6; }
+		public Group getGroup_0_5_1() { return cGroup_0_5_1; }
 
 		//ORDER
-		public RuleCall getORDERTerminalRuleCall_6_0() { return cORDERTerminalRuleCall_6_0; }
+		public RuleCall getORDERTerminalRuleCall_0_5_1_0() { return cORDERTerminalRuleCall_0_5_1_0; }
 
 		//order=INT
-		public Assignment getOrderAssignment_6_1() { return cOrderAssignment_6_1; }
+		public Assignment getOrderAssignment_0_5_1_1() { return cOrderAssignment_0_5_1_1; }
 
 		//INT
-		public RuleCall getOrderINTTerminalRuleCall_6_1_0() { return cOrderINTTerminalRuleCall_6_1_0; }
+		public RuleCall getOrderINTTerminalRuleCall_0_5_1_1_0() { return cOrderINTTerminalRuleCall_0_5_1_1_0; }
+
+		//((ORDER order=INT)? condition=Condition?) (TimeStep TimeStepValue)? '}'
+		public Group getGroup_1() { return cGroup_1; }
+
+		//((ORDER order=INT)? condition=Condition?)
+		public Group getGroup_1_0() { return cGroup_1_0; }
+
+		//(ORDER order=INT)?
+		public Group getGroup_1_0_0() { return cGroup_1_0_0; }
+
+		//ORDER
+		public RuleCall getORDERTerminalRuleCall_1_0_0_0() { return cORDERTerminalRuleCall_1_0_0_0; }
+
+		//order=INT
+		public Assignment getOrderAssignment_1_0_0_1() { return cOrderAssignment_1_0_0_1; }
+
+		//INT
+		public RuleCall getOrderINTTerminalRuleCall_1_0_0_1_0() { return cOrderINTTerminalRuleCall_1_0_0_1_0; }
+
+		//condition=Condition?
+		public Assignment getConditionAssignment_1_0_1() { return cConditionAssignment_1_0_1; }
+
+		//Condition
+		public RuleCall getConditionConditionParserRuleCall_1_0_1_0() { return cConditionConditionParserRuleCall_1_0_1_0; }
 
 		//(TimeStep TimeStepValue)?
-		public Group getGroup_7() { return cGroup_7; }
+		public Group getGroup_1_1() { return cGroup_1_1; }
 
 		//TimeStep
-		public RuleCall getTimeStepParserRuleCall_7_0() { return cTimeStepParserRuleCall_7_0; }
+		public RuleCall getTimeStepParserRuleCall_1_1_0() { return cTimeStepParserRuleCall_1_1_0; }
 
 		//TimeStepValue
-		public RuleCall getTimeStepValueParserRuleCall_7_1() { return cTimeStepValueParserRuleCall_7_1; }
+		public RuleCall getTimeStepValueParserRuleCall_1_1_1() { return cTimeStepValueParserRuleCall_1_1_1; }
 
 		//'}'
-		public Keyword getRightCurlyBracketKeyword_8() { return cRightCurlyBracketKeyword_8; }
+		public Keyword getRightCurlyBracketKeyword_1_2() { return cRightCurlyBracketKeyword_1_2; }
 	}
 
 	public class ConditionElements extends AbstractParserRuleElementFinder {
@@ -3304,7 +3348,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Condition:
 		//	("condition" | "CONDITION") (logical=LogicalExpression | {Condition} ALWAYS);
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//("condition" | "CONDITION") (logical=LogicalExpression | {Condition} ALWAYS)
 		public Group getGroup() { return cGroup; }
@@ -3349,7 +3393,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//LogicalExpression:
 		//	c1=ConditionalUnary (BinaryOp c2+=ConditionalUnary)*;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//c1=ConditionalUnary (BinaryOp c2+=ConditionalUnary)*
 		public Group getGroup() { return cGroup; }
@@ -3381,7 +3425,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//BinaryOp:
 		//	OR | AND;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//OR | AND
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -3401,7 +3445,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ConditionalUnary:
 		//	ConditionalNegation? ConditionalTerm;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//ConditionalNegation? ConditionalTerm
 		public Group getGroup() { return cGroup; }
@@ -3419,7 +3463,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ConditionalNegation:
 		//	NOT;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//NOT
 		public RuleCall getNOTTerminalRuleCall() { return cNOTTerminalRuleCall; }
@@ -3443,7 +3487,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ConditionalTerm:
 		//	e1=Expression Relation e2=Expression | LogicalFunction | => ('(' LogicalExpression ')');
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//e1=Expression Relation e2=Expression | LogicalFunction | => ('(' LogicalExpression ')')
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -3497,7 +3541,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Relation:
 		//	'>' | '<' | '>=' | '<=' | '==' | '/=';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//'>' | '<' | '>=' | '<=' | '==' | '/='
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -3527,7 +3571,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Expression:
 		//	Add;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//Add
 		public RuleCall getAddParserRuleCall() { return cAddParserRuleCall; }
@@ -3547,7 +3591,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Add:
 		//	m1=Multiply (('+' | '-') m2+=Multiply)*;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//m1=Multiply (('+' | '-') m2+=Multiply)*
 		public Group getGroup() { return cGroup; }
@@ -3591,7 +3635,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Multiply:
 		//	u1=Unary (('*' | '/') u2+=Unary)*;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//u1=Unary (('*' | '/') u2+=Unary)*
 		public Group getGroup() { return cGroup; }
@@ -3631,7 +3675,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Unary:
 		//	('+' | Negation)? Term;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//('+' | Negation)? Term
 		public Group getGroup() { return cGroup; }
@@ -3655,7 +3699,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Negation:
 		//	'-';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//'-'
 		public Keyword getHyphenMinusKeyword() { return cHyphenMinusKeyword; }
@@ -3682,7 +3726,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Term:
 		//	ref=[Declaration] | n=Number | f=Function | '(' e=Expression ')' | s=SpecialIdent | MultiStep;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//ref=[Declaration] | n=Number | f=Function | '(' e=Expression ')' | s=SpecialIdent | MultiStep
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -3768,7 +3812,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//	AbsFunction | RoundFunction | PowFunction | LogFunction | SinFunction | CosFunction | TanFunction | CotFunction |
 		//	AsinFunction | AcosFunction | AtanFunction | AcotFunction | VarModel | VarModelStep | VarModelIndex |
 		//	VarModelIndexStep;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//ExternalFunction1 | ExternalFunction2 | MaxFunction | MinFunction | '(' SumContent ')' | ModFunction | IntFunction |
 		//AbsFunction | RoundFunction | PowFunction | LogFunction | SinFunction | CosFunction | TanFunction | CotFunction |
@@ -3880,7 +3924,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//ExternalFunction1:
 		//	(ref=[Declaration] | TafCfs | Month) '(' e1=(Expression | TrunkTimeArray) (',' e2+=(Expression | TrunkTimeArray))*
 		//	')';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//(ref=[Declaration] | TafCfs | Month) '(' e1=(Expression | TrunkTimeArray) (',' e2+=(Expression | TrunkTimeArray))* ')'
 		public Group getGroup() { return cGroup; }
@@ -3954,7 +3998,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ExternalFunction2:
 		//	(ref=[Declaration] | TafCfs | Month) '(' ')';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//(ref=[Declaration] | TafCfs | Month) '(' ')'
 		public Group getGroup() { return cGroup; }
@@ -4000,7 +4044,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//TrunkTimeArray:
 		//	ref=[Declaration] '(' t1=TrunkTimeArrayIndex ':' t2=TrunkTimeArrayIndex ')';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//ref=[Declaration] '(' t1=TrunkTimeArrayIndex ':' t2=TrunkTimeArrayIndex ')'
 		public Group getGroup() { return cGroup; }
@@ -4049,7 +4093,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//TrunkTimeArrayIndex:
 		//	INT | '-' INT | ref=[Declaration];
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//INT | '-' INT | ref=[Declaration]
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -4091,7 +4135,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//MaxFunction:
 		//	MAX '(' e1=Expression (',' e2+=Expression)* ')';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//MAX '(' e1=Expression (',' e2+=Expression)* ')'
 		public Group getGroup() { return cGroup; }
@@ -4139,7 +4183,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//MinFunction:
 		//	MIN '(' e1=Expression (',' e2+=Expression)* ')';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//MIN '(' e1=Expression (',' e2+=Expression)* ')'
 		public Group getGroup() { return cGroup; }
@@ -4186,7 +4230,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ModFunction:
 		//	MOD '(' e1=Expression ',' e2=Expression ')';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//MOD '(' e1=Expression ',' e2=Expression ')'
 		public Group getGroup() { return cGroup; }
@@ -4227,7 +4271,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//IntFunction:
 		//	INTFUNC '(' e=Expression ')';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//INTFUNC '(' e=Expression ')'
 		public Group getGroup() { return cGroup; }
@@ -4259,7 +4303,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//AbsFunction:
 		//	ABS '(' e=Expression ')';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//ABS '(' e=Expression ')'
 		public Group getGroup() { return cGroup; }
@@ -4291,7 +4335,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//RoundFunction:
 		//	ROUND '(' e=Expression ')';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//ROUND '(' e=Expression ')'
 		public Group getGroup() { return cGroup; }
@@ -4326,7 +4370,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//PowFunction:
 		//	POW '(' e1=Expression ',' e2=Expression ')';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//POW '(' e1=Expression ',' e2=Expression ')'
 		public Group getGroup() { return cGroup; }
@@ -4367,7 +4411,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//LogFunction:
 		//	LOG '(' e=Expression ')';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//LOG '(' e=Expression ')'
 		public Group getGroup() { return cGroup; }
@@ -4399,7 +4443,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//SinFunction:
 		//	SIN '(' e=Expression ')';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//SIN '(' e=Expression ')'
 		public Group getGroup() { return cGroup; }
@@ -4431,7 +4475,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//CosFunction:
 		//	COS '(' e=Expression ')';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//COS '(' e=Expression ')'
 		public Group getGroup() { return cGroup; }
@@ -4463,7 +4507,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//TanFunction:
 		//	TAN '(' e=Expression ')';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//TAN '(' e=Expression ')'
 		public Group getGroup() { return cGroup; }
@@ -4495,7 +4539,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//CotFunction:
 		//	COT '(' e=Expression ')';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//COT '(' e=Expression ')'
 		public Group getGroup() { return cGroup; }
@@ -4527,7 +4571,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//AsinFunction:
 		//	ASIN '(' e=Expression ')';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//ASIN '(' e=Expression ')'
 		public Group getGroup() { return cGroup; }
@@ -4559,7 +4603,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//AcosFunction:
 		//	ACOS '(' e=Expression ')';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//ACOS '(' e=Expression ')'
 		public Group getGroup() { return cGroup; }
@@ -4591,7 +4635,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//AtanFunction:
 		//	ATAN '(' e=Expression ')';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//ATAN '(' e=Expression ')'
 		public Group getGroup() { return cGroup; }
@@ -4623,7 +4667,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//AcotFunction:
 		//	ACOT '(' e=Expression ')';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//ACOT '(' e=Expression ')'
 		public Group getGroup() { return cGroup; }
@@ -4650,7 +4694,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//LogicalFunction:
 		//	RangeFunction;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//RangeFunction
 		public RuleCall getRangeFunctionParserRuleCall() { return cRangeFunctionParserRuleCall; }
@@ -4670,7 +4714,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//VarModel:
 		//	ref1=[Declaration] '[' ref2=[Model] ']';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//ref1=[Declaration] '[' ref2=[Model] ']'
 		public Group getGroup() { return cGroup; }
@@ -4718,7 +4762,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//VarModelStep:
 		//	ref1=[Declaration] '[' ref2=[Model] ']' '(' e=Expression ')';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//ref1=[Declaration] '[' ref2=[Model] ']' '(' e=Expression ')'
 		public Group getGroup() { return cGroup; }
@@ -4773,7 +4817,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//VarModelIndex:
 		//	ref1=[Declaration] '[' '-' INT ']';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//ref1=[Declaration] '[' '-' INT ']'
 		public Group getGroup() { return cGroup; }
@@ -4817,7 +4861,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//VarModelIndexStep:
 		//	ref1=[Declaration] '[' '-' INT ']' '(' e=Expression ')';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//ref1=[Declaration] '[' '-' INT ']' '(' e=Expression ')'
 		public Group getGroup() { return cGroup; }
@@ -4879,7 +4923,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//RangeFunction:
 		//	RANGE '(' (ID | Month | WaterYear) ',' (ID | CalendarMonth | PrevMonth) ',' (ID | CalendarMonth | PrevMonth) ')';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//RANGE '(' (ID | Month | WaterYear) ',' (ID | CalendarMonth | PrevMonth) ',' (ID | CalendarMonth | PrevMonth) ')'
 		public Group getGroup() { return cGroup; }
@@ -4943,7 +4987,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Ident:
 		//	name=ID;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//name=ID
 		public Assignment getNameAssignment() { return cNameAssignment; }
@@ -4960,7 +5004,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Number:
 		//	INT | FLOAT;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//INT | FLOAT
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -4990,7 +5034,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//IncludeFile:
 		//	("include" | "INCLUDE") ('[' local?=("local" | "LOCAL") ']')? file=STRING;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//("include" | "INCLUDE") ('[' local?=("local" | "LOCAL") ']')? file=STRING
 		public Group getGroup() { return cGroup; }
@@ -5045,7 +5089,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//IncludeModel:
 		//	("include" | "INCLUDE") ('model' | 'MODEL') ID;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//("include" | "INCLUDE") ('model' | 'MODEL') ID
 		public Group getGroup() { return cGroup; }
@@ -5085,7 +5129,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//IncludeGroup:
 		//	("include" | "INCLUDE") ('group' | 'GROUP') ID;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//("include" | "INCLUDE") ('group' | 'GROUP') ID
 		public Group getGroup() { return cGroup; }
@@ -5126,7 +5170,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//SpecialIdent:
 		//	TafCfs | DaysIn | WaterYear | Month | Day | CalendarMonth | PrevMonth | I;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//TafCfs | DaysIn | WaterYear | Month | Day | CalendarMonth | PrevMonth | I
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -5166,7 +5210,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//TafCfs:
 		//	AF_CFS | CF_SAF | CFS_TAF | TAF_CFS;
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//AF_CFS | CF_SAF | CFS_TAF | TAF_CFS
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -5190,7 +5234,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//I:
 		//	'i';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//'i'
 		public Keyword getIKeyword() { return cIKeyword; }
@@ -5202,7 +5246,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//AF_CFS:
 		//	'af_cfs';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//'af_cfs'
 		public Keyword getAf_cfsKeyword() { return cAf_cfsKeyword; }
@@ -5214,7 +5258,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//CF_SAF:
 		//	'cfs_af';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//'cfs_af'
 		public Keyword getCfs_afKeyword() { return cCfs_afKeyword; }
@@ -5226,7 +5270,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//CFS_TAF:
 		//	'cfs_taf';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//'cfs_taf'
 		public Keyword getCfs_tafKeyword() { return cCfs_tafKeyword; }
@@ -5238,7 +5282,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//TAF_CFS:
 		//	'taf_cfs';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//'taf_cfs'
 		public Keyword getTaf_cfsKeyword() { return cTaf_cfsKeyword; }
@@ -5253,7 +5297,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//DaysIn:
 		//	'daysin' | 'daysinmonth' | 'daysintimestep';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//'daysin' | 'daysinmonth' | 'daysintimestep'
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -5274,7 +5318,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//WaterYear:
 		//	'wateryear';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//'wateryear'
 		public Keyword getWateryearKeyword() { return cWateryearKeyword; }
@@ -5286,7 +5330,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Month:
 		//	'month';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//'month'
 		public Keyword getMonthKeyword() { return cMonthKeyword; }
@@ -5298,7 +5342,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Day:
 		//	'day';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//'day'
 		public Keyword getDayKeyword() { return cDayKeyword; }
@@ -5322,7 +5366,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//CalendarMonth:
 		//	'jan' | 'feb' | 'mar' | 'apr' | 'may' | 'jun' | 'jul' | 'aug' | 'sep' | 'oct' | 'nov' | 'dec';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//'jan' | 'feb' | 'mar' | 'apr' | 'may' | 'jun' | 'jul' | 'aug' | 'sep' | 'oct' | 'nov' | 'dec'
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -5383,7 +5427,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//PrevMonth:
 		//	'prevjan' | 'prevfeb' | 'prevmar' | 'prevapr' | 'prevmay' | 'prevjun' | 'prevjul' | 'prevaug' | 'prevsep' | 'prevoct'
 		//	| 'prevnov' | 'prevdec';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//'prevjan' | 'prevfeb' | 'prevmar' | 'prevapr' | 'prevmay' | 'prevjun' | 'prevjul' | 'prevaug' | 'prevsep' | 'prevoct' |
 		//'prevnov' | 'prevdec'
@@ -5432,7 +5476,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//MultiStep:
 		//	'$m';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//'$m'
 		public Keyword getMKeyword() { return cMKeyword; }
@@ -5444,7 +5488,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//TimeStep:
 		//	'timestep';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//'timestep'
 		public Keyword getTimestepKeyword() { return cTimestepKeyword; }
@@ -5458,7 +5502,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//TimeStepValue:
 		//	'1MON' | '1DAY';
-		 public ParserRule getRule() { return rule; }
+		public ParserRule getRule() { return rule; }
 
 		//'1MON' | '1DAY'
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -5795,7 +5839,6 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		return grammar;
 	}
 	
-	
 	public Grammar getGrammar() {
 		return grammar;
 	}
@@ -5807,8 +5850,8 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//WreslEvaluator:
-	//	(pattern+=Pattern | ifincitem+=IfIncItems)+ | initial=Initial? sequence+=Sequence+ model+=(Model | Group)+ |
-	//	Declaration;
+	//	(pattern+=Pattern | ifincitem+=IfIncItems)+
+	//	| initial=Initial? sequence+=Sequence+ model+=(Model | Group)+ | Declaration;
 	public WreslEvaluatorElements getWreslEvaluatorAccess() {
 		return pWreslEvaluator;
 	}
@@ -5949,7 +5992,8 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//SvarDef:
 	//	('define' | 'DEFINE') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? ref=[Declaration] '{' definition=SVar
-	//	'}' | ('svar' | 'SVAR' | 'Svar') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? ref=[Declaration] '{'
+	//	'}'
+	//	| ('svar' | 'SVAR' | 'Svar') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? ref=[Declaration] '{'
 	//	definition=SVar '}';
 	public SvarDefElements getSvarDefAccess() {
 		return pSvarDef;
@@ -5983,7 +6027,8 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Alias:
 	//	('define' | 'DEFINE') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? ref=[Declaration] '{' ('alias' |
-	//	'ALIAS') expression=Expression (('kind' | 'KIND') kind=STRING)? (('units' | 'UNITS') units=STRING)? '}';
+	//	'ALIAS') expression=Expression (('kind' |
+	//	'KIND') kind=STRING)? (('units' | 'UNITS') units=STRING)? '}';
 	public AliasElements getAliasAccess() {
 		return pAlias;
 	}
@@ -6125,7 +6170,8 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//CaseContent:
 	//	("case" | "CASE") caseName=(ID | SpecialIdent) '{' condition=Condition (content=TableContent | content=ValueContent |
-	//	content=SumContent) '}';
+	//	content=SumContent)
+	//	'}';
 	public CaseContentElements getCaseContentAccess() {
 		return pCaseContent;
 	}
@@ -6308,7 +6354,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	////FIXME: replace with unordered groups
-	// LhsGtRhs:
+	//LhsGtRhs:
 	//	("lhs" | "LHS") '>' ("rhs" | "RHS") ({LhsGtRhs} ("constrain" | "CONSTRAIN") | penalty=Penalty);
 	public LhsGtRhsElements getLhsGtRhsAccess() {
 		return pLhsGtRhs;
@@ -6389,8 +6435,9 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Sequence:
-	//	("sequence" | "SEQUENCE") name=ID '{' ("model" | "MODEL") model=[Model] condition=Condition? (ORDER order=INT)?
-	//	(TimeStep TimeStepValue)? '}';
+	//	("sequence" | "SEQUENCE") name=ID '{' ("model" | "MODEL") model=[Model] (condition=Condition? (ORDER order=INT)?) |
+	//	((ORDER order=INT)? condition=Condition?) (TimeStep TimeStepValue)?
+	//	'}';
 	public SequenceElements getSequenceAccess() {
 		return pSequence;
 	}

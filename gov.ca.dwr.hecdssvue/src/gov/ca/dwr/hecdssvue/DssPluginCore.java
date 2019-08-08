@@ -105,4 +105,6 @@ public class DssPluginCore {
 	public static ArrayList<String> selectedCheckBox=new ArrayList<String>();
 	
 	public static DtsTreePanel dtp;
+	
+	public static String lastCopiedDssFolder="c:\\";
 }

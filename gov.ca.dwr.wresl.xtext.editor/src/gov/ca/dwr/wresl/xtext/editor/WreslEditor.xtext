@@ -176,7 +176,7 @@ Model:
 Initial: ("initial"|'Initial'|"INITIAL") '{' pattern+=Pattern+ '}';
 
 Sequence:
-	("sequence" | "SEQUENCE") name=ID '{' ("model" | "MODEL") model=[Model|ID] (condition=Condition)? (ORDER order=INT)? (TimeStep TimeStepValue)?
+	("sequence" | "SEQUENCE") name=ID '{' ("model" | "MODEL") model=[Model|ID] ((condition=Condition)? (ORDER order=INT)?)|((ORDER order=INT)? (condition=Condition)?) (TimeStep TimeStepValue)?
 	'}';
 
 Condition:

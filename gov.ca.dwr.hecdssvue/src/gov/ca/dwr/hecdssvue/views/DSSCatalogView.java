@@ -714,7 +714,11 @@ public class DSSCatalogView extends AbstractDSSView {
 						  String pathname_new=getPathNameIgnorePartAF(i/2, parts, pathname);
 						  if (!pathname.equals(pathname_new)) tsc = (TimeSeriesContainer)hecDss.get(pathname_new, true);
 					  }
-					  dataVector_file = DataOps.getMonthlyData(tsc, DssPluginCore.months);
+					  if (tsc.numberValues==0){
+						  dataVector_file = null;
+					  }else{
+						  dataVector_file = DataOps.getMonthlyData(tsc, DssPluginCore.months);
+					  }
 				  }else{
 					  String startTime=DssPluginCore.tw.substring(0, 13);
 					  String endTime=DssPluginCore.tw.substring(15, 28);
@@ -724,7 +728,11 @@ public class DSSCatalogView extends AbstractDSSView {
 						  String pathname_new=getPathNameIgnorePartAF(i/2, parts, pathname);
 						  if (!pathname.equals(pathname_new)) tsc = (TimeSeriesContainer)hecDss.get(pathname_new, startTime, endTime);
 					  }
-					  dataVector_file = DataOps.getMonthlyData(tsc, DssPluginCore.months);
+					  if (tsc.numberValues==0){
+						  dataVector_file = null;
+					  }else{
+						  dataVector_file = DataOps.getMonthlyData(tsc, DssPluginCore.months);
+					  }
 				  }
 				} catch (Exception ex) {
 				  dataVector_file = null;
@@ -751,7 +759,11 @@ public class DSSCatalogView extends AbstractDSSView {
 							  String pathname_new=getPathNameIgnorePartAF(i/2, parts, pathname);
 							  if (!pathname.equals(pathname_new)) tsc = (TimeSeriesContainer)hecDss.get(pathname_new, true);
 						  }
-						  dataVector_file = DataOps.getMonthlyData(tsc, DssPluginCore.months);
+						  if (tsc.numberValues==0){
+							  dataVector_file = null;
+						  }else{
+							  dataVector_file = DataOps.getMonthlyData(tsc, DssPluginCore.months);
+						  }
 					}else{ 
 						String startTime=DssPluginCore.tw.substring(0, 13);
 						String endTime=DssPluginCore.tw.substring(15, 28);
@@ -761,7 +773,11 @@ public class DSSCatalogView extends AbstractDSSView {
 							String pathname_new=getPathNameIgnorePartAF(i/2, parts, pathname);
 							if (!pathname.equals(pathname_new)) tsc = (TimeSeriesContainer)hecDss.get(pathname_new, startTime, endTime);
 						}
-						dataVector_file = DataOps.getMonthlyData(tsc, DssPluginCore.months);
+						if (tsc.numberValues==0){
+							dataVector_file = null;
+						}else{
+							dataVector_file = DataOps.getMonthlyData(tsc, DssPluginCore.months);
+						}
 					}
 				  } catch (Exception ex) {
 				    dataVector_file = null;

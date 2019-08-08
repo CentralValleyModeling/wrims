@@ -2,6 +2,7 @@ package gov.ca.dwr.hecdssvue.components;
 
 import java.awt.Cursor;
 import java.awt.GridBagLayout;
+import java.io.File;
 import java.util.Vector;
 
 import javax.swing.JOptionPane;
@@ -128,6 +129,7 @@ public class CatalogListSelection extends ListSelection {
 						if (openFileName == null) {
 							return;
 						}
+						DssPluginCore.lastCopiedDssFolder=openFileName.substring(0, openFileName.lastIndexOf(File.separator));
 						_secondDataManagerName = openFileName;
 						boolean opened = false;
 						if (_secondDataManager != null) {

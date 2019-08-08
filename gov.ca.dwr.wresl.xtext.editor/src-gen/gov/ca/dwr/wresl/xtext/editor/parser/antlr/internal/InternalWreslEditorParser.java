@@ -282,8 +282,12 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                 alt6=1;
                 }
                 break;
+            case Condition:
             case Sequence:
+            case Timestep:
             case Initial_1:
+            case RightCurlyBracket:
+            case RULE_ORDER:
                 {
                 alt6=2;
                 }
@@ -476,7 +480,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                         int alt3=2;
                         int LA3_0 = input.LA(1);
 
-                        if ( (LA3_0==Sequence) ) {
+                        if ( (LA3_0==Condition||(LA3_0>=Sequence && LA3_0<=Timestep)||LA3_0==RightCurlyBracket||LA3_0==RULE_ORDER) ) {
                             alt3=1;
                         }
 
@@ -777,15 +781,15 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     alt7=4;
                     }
                     break;
-                case Model:
-                    {
-                    alt7=3;
-                    }
-                    break;
                 case LeftSquareBracket:
                 case RULE_STRING:
                     {
                     alt7=2;
+                    }
+                    break;
+                case Model:
+                    {
+                    alt7=3;
                     }
                     break;
                 default:
@@ -16297,7 +16301,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSequence"
-    // InternalWreslEditorParser.g:5226:1: ruleSequence returns [EObject current=null] : ( (otherlv_0= Sequence | otherlv_1= Sequence ) ( (lv_name_2_0= RULE_ID ) ) otherlv_3= LeftCurlyBracket (otherlv_4= Model | otherlv_5= Model ) ( (otherlv_6= RULE_ID ) ) ( (lv_condition_7_0= ruleCondition ) )? (this_ORDER_8= RULE_ORDER ( (lv_order_9_0= RULE_INT ) ) )? ( ruleTimeStep ruleTimeStepValue )? otherlv_12= RightCurlyBracket ) ;
+    // InternalWreslEditorParser.g:5226:1: ruleSequence returns [EObject current=null] : ( ( (otherlv_0= Sequence | otherlv_1= Sequence ) ( (lv_name_2_0= RULE_ID ) ) otherlv_3= LeftCurlyBracket (otherlv_4= Model | otherlv_5= Model ) ( (otherlv_6= RULE_ID ) ) ( ( (lv_condition_7_0= ruleCondition ) )? (this_ORDER_8= RULE_ORDER ( (lv_order_9_0= RULE_INT ) ) )? ) ) | ( ( (this_ORDER_10= RULE_ORDER ( (lv_order_11_0= RULE_INT ) ) )? ( (lv_condition_12_0= ruleCondition ) )? ) ( ruleTimeStep ruleTimeStepValue )? otherlv_15= RightCurlyBracket ) ) ;
     public final EObject ruleSequence() throws RecognitionException {
         EObject current = null;
 
@@ -16310,270 +16314,110 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
         Token otherlv_6=null;
         Token this_ORDER_8=null;
         Token lv_order_9_0=null;
-        Token otherlv_12=null;
+        Token this_ORDER_10=null;
+        Token lv_order_11_0=null;
+        Token otherlv_15=null;
         EObject lv_condition_7_0 = null;
+
+        EObject lv_condition_12_0 = null;
 
 
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:5229:28: ( ( (otherlv_0= Sequence | otherlv_1= Sequence ) ( (lv_name_2_0= RULE_ID ) ) otherlv_3= LeftCurlyBracket (otherlv_4= Model | otherlv_5= Model ) ( (otherlv_6= RULE_ID ) ) ( (lv_condition_7_0= ruleCondition ) )? (this_ORDER_8= RULE_ORDER ( (lv_order_9_0= RULE_INT ) ) )? ( ruleTimeStep ruleTimeStepValue )? otherlv_12= RightCurlyBracket ) )
-            // InternalWreslEditorParser.g:5230:1: ( (otherlv_0= Sequence | otherlv_1= Sequence ) ( (lv_name_2_0= RULE_ID ) ) otherlv_3= LeftCurlyBracket (otherlv_4= Model | otherlv_5= Model ) ( (otherlv_6= RULE_ID ) ) ( (lv_condition_7_0= ruleCondition ) )? (this_ORDER_8= RULE_ORDER ( (lv_order_9_0= RULE_INT ) ) )? ( ruleTimeStep ruleTimeStepValue )? otherlv_12= RightCurlyBracket )
+            // InternalWreslEditorParser.g:5229:28: ( ( ( (otherlv_0= Sequence | otherlv_1= Sequence ) ( (lv_name_2_0= RULE_ID ) ) otherlv_3= LeftCurlyBracket (otherlv_4= Model | otherlv_5= Model ) ( (otherlv_6= RULE_ID ) ) ( ( (lv_condition_7_0= ruleCondition ) )? (this_ORDER_8= RULE_ORDER ( (lv_order_9_0= RULE_INT ) ) )? ) ) | ( ( (this_ORDER_10= RULE_ORDER ( (lv_order_11_0= RULE_INT ) ) )? ( (lv_condition_12_0= ruleCondition ) )? ) ( ruleTimeStep ruleTimeStepValue )? otherlv_15= RightCurlyBracket ) ) )
+            // InternalWreslEditorParser.g:5230:1: ( ( (otherlv_0= Sequence | otherlv_1= Sequence ) ( (lv_name_2_0= RULE_ID ) ) otherlv_3= LeftCurlyBracket (otherlv_4= Model | otherlv_5= Model ) ( (otherlv_6= RULE_ID ) ) ( ( (lv_condition_7_0= ruleCondition ) )? (this_ORDER_8= RULE_ORDER ( (lv_order_9_0= RULE_INT ) ) )? ) ) | ( ( (this_ORDER_10= RULE_ORDER ( (lv_order_11_0= RULE_INT ) ) )? ( (lv_condition_12_0= ruleCondition ) )? ) ( ruleTimeStep ruleTimeStepValue )? otherlv_15= RightCurlyBracket ) )
             {
-            // InternalWreslEditorParser.g:5230:1: ( (otherlv_0= Sequence | otherlv_1= Sequence ) ( (lv_name_2_0= RULE_ID ) ) otherlv_3= LeftCurlyBracket (otherlv_4= Model | otherlv_5= Model ) ( (otherlv_6= RULE_ID ) ) ( (lv_condition_7_0= ruleCondition ) )? (this_ORDER_8= RULE_ORDER ( (lv_order_9_0= RULE_INT ) ) )? ( ruleTimeStep ruleTimeStepValue )? otherlv_12= RightCurlyBracket )
-            // InternalWreslEditorParser.g:5230:2: (otherlv_0= Sequence | otherlv_1= Sequence ) ( (lv_name_2_0= RULE_ID ) ) otherlv_3= LeftCurlyBracket (otherlv_4= Model | otherlv_5= Model ) ( (otherlv_6= RULE_ID ) ) ( (lv_condition_7_0= ruleCondition ) )? (this_ORDER_8= RULE_ORDER ( (lv_order_9_0= RULE_INT ) ) )? ( ruleTimeStep ruleTimeStepValue )? otherlv_12= RightCurlyBracket
-            {
-            // InternalWreslEditorParser.g:5230:2: (otherlv_0= Sequence | otherlv_1= Sequence )
-            int alt146=2;
-            int LA146_0 = input.LA(1);
+            // InternalWreslEditorParser.g:5230:1: ( ( (otherlv_0= Sequence | otherlv_1= Sequence ) ( (lv_name_2_0= RULE_ID ) ) otherlv_3= LeftCurlyBracket (otherlv_4= Model | otherlv_5= Model ) ( (otherlv_6= RULE_ID ) ) ( ( (lv_condition_7_0= ruleCondition ) )? (this_ORDER_8= RULE_ORDER ( (lv_order_9_0= RULE_INT ) ) )? ) ) | ( ( (this_ORDER_10= RULE_ORDER ( (lv_order_11_0= RULE_INT ) ) )? ( (lv_condition_12_0= ruleCondition ) )? ) ( ruleTimeStep ruleTimeStepValue )? otherlv_15= RightCurlyBracket ) )
+            int alt153=2;
+            int LA153_0 = input.LA(1);
 
-            if ( (LA146_0==Sequence) ) {
-                int LA146_1 = input.LA(2);
-
-                if ( (synpred166_InternalWreslEditorParser()) ) {
-                    alt146=1;
-                }
-                else if ( (true) ) {
-                    alt146=2;
-                }
-                else {
-                    if (state.backtracking>0) {state.failed=true; return current;}
-                    NoViableAltException nvae =
-                        new NoViableAltException("", 146, 1, input);
-
-                    throw nvae;
-                }
+            if ( (LA153_0==Sequence) ) {
+                alt153=1;
+            }
+            else if ( (LA153_0==Condition||LA153_0==Timestep||LA153_0==RightCurlyBracket||LA153_0==RULE_ORDER) ) {
+                alt153=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 146, 0, input);
+                    new NoViableAltException("", 153, 0, input);
 
                 throw nvae;
             }
-            switch (alt146) {
+            switch (alt153) {
                 case 1 :
-                    // InternalWreslEditorParser.g:5231:2: otherlv_0= Sequence
+                    // InternalWreslEditorParser.g:5230:2: ( (otherlv_0= Sequence | otherlv_1= Sequence ) ( (lv_name_2_0= RULE_ID ) ) otherlv_3= LeftCurlyBracket (otherlv_4= Model | otherlv_5= Model ) ( (otherlv_6= RULE_ID ) ) ( ( (lv_condition_7_0= ruleCondition ) )? (this_ORDER_8= RULE_ORDER ( (lv_order_9_0= RULE_INT ) ) )? ) )
                     {
-                    otherlv_0=(Token)match(input,Sequence,FOLLOW_8); if (state.failed) return current;
+                    // InternalWreslEditorParser.g:5230:2: ( (otherlv_0= Sequence | otherlv_1= Sequence ) ( (lv_name_2_0= RULE_ID ) ) otherlv_3= LeftCurlyBracket (otherlv_4= Model | otherlv_5= Model ) ( (otherlv_6= RULE_ID ) ) ( ( (lv_condition_7_0= ruleCondition ) )? (this_ORDER_8= RULE_ORDER ( (lv_order_9_0= RULE_INT ) ) )? ) )
+                    // InternalWreslEditorParser.g:5230:3: (otherlv_0= Sequence | otherlv_1= Sequence ) ( (lv_name_2_0= RULE_ID ) ) otherlv_3= LeftCurlyBracket (otherlv_4= Model | otherlv_5= Model ) ( (otherlv_6= RULE_ID ) ) ( ( (lv_condition_7_0= ruleCondition ) )? (this_ORDER_8= RULE_ORDER ( (lv_order_9_0= RULE_INT ) ) )? )
+                    {
+                    // InternalWreslEditorParser.g:5230:3: (otherlv_0= Sequence | otherlv_1= Sequence )
+                    int alt146=2;
+                    int LA146_0 = input.LA(1);
+
+                    if ( (LA146_0==Sequence) ) {
+                        int LA146_1 = input.LA(2);
+
+                        if ( (synpred166_InternalWreslEditorParser()) ) {
+                            alt146=1;
+                        }
+                        else if ( (true) ) {
+                            alt146=2;
+                        }
+                        else {
+                            if (state.backtracking>0) {state.failed=true; return current;}
+                            NoViableAltException nvae =
+                                new NoViableAltException("", 146, 1, input);
+
+                            throw nvae;
+                        }
+                    }
+                    else {
+                        if (state.backtracking>0) {state.failed=true; return current;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 146, 0, input);
+
+                        throw nvae;
+                    }
+                    switch (alt146) {
+                        case 1 :
+                            // InternalWreslEditorParser.g:5231:2: otherlv_0= Sequence
+                            {
+                            otherlv_0=(Token)match(input,Sequence,FOLLOW_8); if (state.failed) return current;
+                            if ( state.backtracking==0 ) {
+
+                                  	newLeafNode(otherlv_0, grammarAccess.getSequenceAccess().getSequenceKeyword_0_0_0());
+                                  
+                            }
+
+                            }
+                            break;
+                        case 2 :
+                            // InternalWreslEditorParser.g:5237:2: otherlv_1= Sequence
+                            {
+                            otherlv_1=(Token)match(input,Sequence,FOLLOW_8); if (state.failed) return current;
+                            if ( state.backtracking==0 ) {
+
+                                  	newLeafNode(otherlv_1, grammarAccess.getSequenceAccess().getSEQUENCEKeyword_0_0_1());
+                                  
+                            }
+
+                            }
+                            break;
+
+                    }
+
+                    // InternalWreslEditorParser.g:5241:2: ( (lv_name_2_0= RULE_ID ) )
+                    // InternalWreslEditorParser.g:5242:1: (lv_name_2_0= RULE_ID )
+                    {
+                    // InternalWreslEditorParser.g:5242:1: (lv_name_2_0= RULE_ID )
+                    // InternalWreslEditorParser.g:5243:3: lv_name_2_0= RULE_ID
+                    {
+                    lv_name_2_0=(Token)match(input,RULE_ID,FOLLOW_7); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                          	newLeafNode(otherlv_0, grammarAccess.getSequenceAccess().getSequenceKeyword_0_0());
-                          
-                    }
-
-                    }
-                    break;
-                case 2 :
-                    // InternalWreslEditorParser.g:5237:2: otherlv_1= Sequence
-                    {
-                    otherlv_1=(Token)match(input,Sequence,FOLLOW_8); if (state.failed) return current;
-                    if ( state.backtracking==0 ) {
-
-                          	newLeafNode(otherlv_1, grammarAccess.getSequenceAccess().getSEQUENCEKeyword_0_1());
-                          
-                    }
-
-                    }
-                    break;
-
-            }
-
-            // InternalWreslEditorParser.g:5241:2: ( (lv_name_2_0= RULE_ID ) )
-            // InternalWreslEditorParser.g:5242:1: (lv_name_2_0= RULE_ID )
-            {
-            // InternalWreslEditorParser.g:5242:1: (lv_name_2_0= RULE_ID )
-            // InternalWreslEditorParser.g:5243:3: lv_name_2_0= RULE_ID
-            {
-            lv_name_2_0=(Token)match(input,RULE_ID,FOLLOW_7); if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-
-              			newLeafNode(lv_name_2_0, grammarAccess.getSequenceAccess().getNameIDTerminalRuleCall_1_0()); 
-              		
-            }
-            if ( state.backtracking==0 ) {
-
-              	        if (current==null) {
-              	            current = createModelElement(grammarAccess.getSequenceRule());
-              	        }
-                     		setWithLastConsumed(
-                     			current, 
-                     			"name",
-                      		lv_name_2_0, 
-                      		"gov.ca.dwr.wresl.xtext.editor.WreslEditor.ID");
-              	    
-            }
-
-            }
-
-
-            }
-
-            otherlv_3=(Token)match(input,LeftCurlyBracket,FOLLOW_73); if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-
-                  	newLeafNode(otherlv_3, grammarAccess.getSequenceAccess().getLeftCurlyBracketKeyword_2());
-                  
-            }
-            // InternalWreslEditorParser.g:5264:1: (otherlv_4= Model | otherlv_5= Model )
-            int alt147=2;
-            int LA147_0 = input.LA(1);
-
-            if ( (LA147_0==Model) ) {
-                int LA147_1 = input.LA(2);
-
-                if ( (synpred167_InternalWreslEditorParser()) ) {
-                    alt147=1;
-                }
-                else if ( (true) ) {
-                    alt147=2;
-                }
-                else {
-                    if (state.backtracking>0) {state.failed=true; return current;}
-                    NoViableAltException nvae =
-                        new NoViableAltException("", 147, 1, input);
-
-                    throw nvae;
-                }
-            }
-            else {
-                if (state.backtracking>0) {state.failed=true; return current;}
-                NoViableAltException nvae =
-                    new NoViableAltException("", 147, 0, input);
-
-                throw nvae;
-            }
-            switch (alt147) {
-                case 1 :
-                    // InternalWreslEditorParser.g:5265:2: otherlv_4= Model
-                    {
-                    otherlv_4=(Token)match(input,Model,FOLLOW_8); if (state.failed) return current;
-                    if ( state.backtracking==0 ) {
-
-                          	newLeafNode(otherlv_4, grammarAccess.getSequenceAccess().getModelKeyword_3_0());
-                          
-                    }
-
-                    }
-                    break;
-                case 2 :
-                    // InternalWreslEditorParser.g:5271:2: otherlv_5= Model
-                    {
-                    otherlv_5=(Token)match(input,Model,FOLLOW_8); if (state.failed) return current;
-                    if ( state.backtracking==0 ) {
-
-                          	newLeafNode(otherlv_5, grammarAccess.getSequenceAccess().getMODELKeyword_3_1());
-                          
-                    }
-
-                    }
-                    break;
-
-            }
-
-            // InternalWreslEditorParser.g:5275:2: ( (otherlv_6= RULE_ID ) )
-            // InternalWreslEditorParser.g:5276:1: (otherlv_6= RULE_ID )
-            {
-            // InternalWreslEditorParser.g:5276:1: (otherlv_6= RULE_ID )
-            // InternalWreslEditorParser.g:5277:3: otherlv_6= RULE_ID
-            {
-            if ( state.backtracking==0 ) {
-               
-              		  /* */ 
-              		
-            }
-            if ( state.backtracking==0 ) {
-
-              			if (current==null) {
-              	            current = createModelElement(grammarAccess.getSequenceRule());
-              	        }
-                      
-            }
-            otherlv_6=(Token)match(input,RULE_ID,FOLLOW_74); if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-
-              		newLeafNode(otherlv_6, grammarAccess.getSequenceAccess().getModelModelCrossReference_4_0()); 
-              	
-            }
-
-            }
-
-
-            }
-
-            // InternalWreslEditorParser.g:5291:2: ( (lv_condition_7_0= ruleCondition ) )?
-            int alt148=2;
-            int LA148_0 = input.LA(1);
-
-            if ( (LA148_0==Condition) ) {
-                alt148=1;
-            }
-            switch (alt148) {
-                case 1 :
-                    // InternalWreslEditorParser.g:5292:1: (lv_condition_7_0= ruleCondition )
-                    {
-                    // InternalWreslEditorParser.g:5292:1: (lv_condition_7_0= ruleCondition )
-                    // InternalWreslEditorParser.g:5293:3: lv_condition_7_0= ruleCondition
-                    {
-                    if ( state.backtracking==0 ) {
-                       
-                      	        newCompositeNode(grammarAccess.getSequenceAccess().getConditionConditionParserRuleCall_5_0()); 
-                      	    
-                    }
-                    pushFollow(FOLLOW_75);
-                    lv_condition_7_0=ruleCondition();
-
-                    state._fsp--;
-                    if (state.failed) return current;
-                    if ( state.backtracking==0 ) {
-
-                      	        if (current==null) {
-                      	            current = createModelElementForParent(grammarAccess.getSequenceRule());
-                      	        }
-                             		set(
-                             			current, 
-                             			"condition",
-                              		lv_condition_7_0, 
-                              		"gov.ca.dwr.wresl.xtext.editor.WreslEditor.Condition");
-                      	        afterParserOrEnumRuleCall();
-                      	    
-                    }
-
-                    }
-
-
-                    }
-                    break;
-
-            }
-
-            // InternalWreslEditorParser.g:5309:3: (this_ORDER_8= RULE_ORDER ( (lv_order_9_0= RULE_INT ) ) )?
-            int alt149=2;
-            int LA149_0 = input.LA(1);
-
-            if ( (LA149_0==RULE_ORDER) ) {
-                alt149=1;
-            }
-            switch (alt149) {
-                case 1 :
-                    // InternalWreslEditorParser.g:5309:4: this_ORDER_8= RULE_ORDER ( (lv_order_9_0= RULE_INT ) )
-                    {
-                    this_ORDER_8=(Token)match(input,RULE_ORDER,FOLLOW_52); if (state.failed) return current;
-                    if ( state.backtracking==0 ) {
-                       
-                          newLeafNode(this_ORDER_8, grammarAccess.getSequenceAccess().getORDERTerminalRuleCall_6_0()); 
-                          
-                    }
-                    // InternalWreslEditorParser.g:5313:1: ( (lv_order_9_0= RULE_INT ) )
-                    // InternalWreslEditorParser.g:5314:1: (lv_order_9_0= RULE_INT )
-                    {
-                    // InternalWreslEditorParser.g:5314:1: (lv_order_9_0= RULE_INT )
-                    // InternalWreslEditorParser.g:5315:3: lv_order_9_0= RULE_INT
-                    {
-                    lv_order_9_0=(Token)match(input,RULE_INT,FOLLOW_76); if (state.failed) return current;
-                    if ( state.backtracking==0 ) {
-
-                      			newLeafNode(lv_order_9_0, grammarAccess.getSequenceAccess().getOrderINTTerminalRuleCall_6_1_0()); 
+                      			newLeafNode(lv_name_2_0, grammarAccess.getSequenceAccess().getNameIDTerminalRuleCall_0_1_0()); 
                       		
                     }
                     if ( state.backtracking==0 ) {
@@ -16583,9 +16427,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                       	        }
                              		setWithLastConsumed(
                              			current, 
-                             			"order",
-                              		lv_order_9_0, 
-                              		"org.eclipse.xtext.common.Terminals.INT");
+                             			"name",
+                              		lv_name_2_0, 
+                              		"gov.ca.dwr.wresl.xtext.editor.WreslEditor.ID");
                       	    
                     }
 
@@ -16594,75 +16438,393 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
                     }
 
+                    otherlv_3=(Token)match(input,LeftCurlyBracket,FOLLOW_73); if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                          	newLeafNode(otherlv_3, grammarAccess.getSequenceAccess().getLeftCurlyBracketKeyword_0_2());
+                          
+                    }
+                    // InternalWreslEditorParser.g:5264:1: (otherlv_4= Model | otherlv_5= Model )
+                    int alt147=2;
+                    int LA147_0 = input.LA(1);
+
+                    if ( (LA147_0==Model) ) {
+                        int LA147_1 = input.LA(2);
+
+                        if ( (synpred167_InternalWreslEditorParser()) ) {
+                            alt147=1;
+                        }
+                        else if ( (true) ) {
+                            alt147=2;
+                        }
+                        else {
+                            if (state.backtracking>0) {state.failed=true; return current;}
+                            NoViableAltException nvae =
+                                new NoViableAltException("", 147, 1, input);
+
+                            throw nvae;
+                        }
+                    }
+                    else {
+                        if (state.backtracking>0) {state.failed=true; return current;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 147, 0, input);
+
+                        throw nvae;
+                    }
+                    switch (alt147) {
+                        case 1 :
+                            // InternalWreslEditorParser.g:5265:2: otherlv_4= Model
+                            {
+                            otherlv_4=(Token)match(input,Model,FOLLOW_8); if (state.failed) return current;
+                            if ( state.backtracking==0 ) {
+
+                                  	newLeafNode(otherlv_4, grammarAccess.getSequenceAccess().getModelKeyword_0_3_0());
+                                  
+                            }
+
+                            }
+                            break;
+                        case 2 :
+                            // InternalWreslEditorParser.g:5271:2: otherlv_5= Model
+                            {
+                            otherlv_5=(Token)match(input,Model,FOLLOW_8); if (state.failed) return current;
+                            if ( state.backtracking==0 ) {
+
+                                  	newLeafNode(otherlv_5, grammarAccess.getSequenceAccess().getMODELKeyword_0_3_1());
+                                  
+                            }
+
+                            }
+                            break;
 
                     }
-                    break;
 
-            }
-
-            // InternalWreslEditorParser.g:5331:4: ( ruleTimeStep ruleTimeStepValue )?
-            int alt150=2;
-            int LA150_0 = input.LA(1);
-
-            if ( (LA150_0==Timestep) ) {
-                alt150=1;
-            }
-            switch (alt150) {
-                case 1 :
-                    // InternalWreslEditorParser.g:5332:2: ruleTimeStep ruleTimeStepValue
+                    // InternalWreslEditorParser.g:5275:2: ( (otherlv_6= RULE_ID ) )
+                    // InternalWreslEditorParser.g:5276:1: (otherlv_6= RULE_ID )
+                    {
+                    // InternalWreslEditorParser.g:5276:1: (otherlv_6= RULE_ID )
+                    // InternalWreslEditorParser.g:5277:3: otherlv_6= RULE_ID
                     {
                     if ( state.backtracking==0 ) {
                        
-                      	  /* */ 
+                      		  /* */ 
+                      		
+                    }
+                    if ( state.backtracking==0 ) {
+
+                      			if (current==null) {
+                      	            current = createModelElement(grammarAccess.getSequenceRule());
+                      	        }
+                              
+                    }
+                    otherlv_6=(Token)match(input,RULE_ID,FOLLOW_74); if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      		newLeafNode(otherlv_6, grammarAccess.getSequenceAccess().getModelModelCrossReference_0_4_0()); 
                       	
                     }
-                    if ( state.backtracking==0 ) {
-                       
-                              newCompositeNode(grammarAccess.getSequenceAccess().getTimeStepParserRuleCall_7_0()); 
-                          
-                    }
-                    pushFollow(FOLLOW_77);
-                    ruleTimeStep();
 
-                    state._fsp--;
-                    if (state.failed) return current;
-                    if ( state.backtracking==0 ) {
+                    }
 
-                              afterParserOrEnumRuleCall();
-                          
-                    }
-                    if ( state.backtracking==0 ) {
-                       
-                      	  /* */ 
-                      	
-                    }
-                    if ( state.backtracking==0 ) {
-                       
-                              newCompositeNode(grammarAccess.getSequenceAccess().getTimeStepValueParserRuleCall_7_1()); 
-                          
-                    }
-                    pushFollow(FOLLOW_9);
-                    ruleTimeStepValue();
 
-                    state._fsp--;
-                    if (state.failed) return current;
-                    if ( state.backtracking==0 ) {
-
-                              afterParserOrEnumRuleCall();
-                          
                     }
+
+                    // InternalWreslEditorParser.g:5291:2: ( ( (lv_condition_7_0= ruleCondition ) )? (this_ORDER_8= RULE_ORDER ( (lv_order_9_0= RULE_INT ) ) )? )
+                    // InternalWreslEditorParser.g:5291:3: ( (lv_condition_7_0= ruleCondition ) )? (this_ORDER_8= RULE_ORDER ( (lv_order_9_0= RULE_INT ) ) )?
+                    {
+                    // InternalWreslEditorParser.g:5291:3: ( (lv_condition_7_0= ruleCondition ) )?
+                    int alt148=2;
+                    alt148 = dfa148.predict(input);
+                    switch (alt148) {
+                        case 1 :
+                            // InternalWreslEditorParser.g:5292:1: (lv_condition_7_0= ruleCondition )
+                            {
+                            // InternalWreslEditorParser.g:5292:1: (lv_condition_7_0= ruleCondition )
+                            // InternalWreslEditorParser.g:5293:3: lv_condition_7_0= ruleCondition
+                            {
+                            if ( state.backtracking==0 ) {
+                               
+                              	        newCompositeNode(grammarAccess.getSequenceAccess().getConditionConditionParserRuleCall_0_5_0_0()); 
+                              	    
+                            }
+                            pushFollow(FOLLOW_75);
+                            lv_condition_7_0=ruleCondition();
+
+                            state._fsp--;
+                            if (state.failed) return current;
+                            if ( state.backtracking==0 ) {
+
+                              	        if (current==null) {
+                              	            current = createModelElementForParent(grammarAccess.getSequenceRule());
+                              	        }
+                                     		set(
+                                     			current, 
+                                     			"condition",
+                                      		lv_condition_7_0, 
+                                      		"gov.ca.dwr.wresl.xtext.editor.WreslEditor.Condition");
+                              	        afterParserOrEnumRuleCall();
+                              	    
+                            }
+
+                            }
+
+
+                            }
+                            break;
+
+                    }
+
+                    // InternalWreslEditorParser.g:5309:3: (this_ORDER_8= RULE_ORDER ( (lv_order_9_0= RULE_INT ) ) )?
+                    int alt149=2;
+                    int LA149_0 = input.LA(1);
+
+                    if ( (LA149_0==RULE_ORDER) ) {
+                        int LA149_1 = input.LA(2);
+
+                        if ( (LA149_1==RULE_INT) ) {
+                            int LA149_3 = input.LA(3);
+
+                            if ( (synpred169_InternalWreslEditorParser()) ) {
+                                alt149=1;
+                            }
+                        }
+                    }
+                    switch (alt149) {
+                        case 1 :
+                            // InternalWreslEditorParser.g:5309:4: this_ORDER_8= RULE_ORDER ( (lv_order_9_0= RULE_INT ) )
+                            {
+                            this_ORDER_8=(Token)match(input,RULE_ORDER,FOLLOW_52); if (state.failed) return current;
+                            if ( state.backtracking==0 ) {
+                               
+                                  newLeafNode(this_ORDER_8, grammarAccess.getSequenceAccess().getORDERTerminalRuleCall_0_5_1_0()); 
+                                  
+                            }
+                            // InternalWreslEditorParser.g:5313:1: ( (lv_order_9_0= RULE_INT ) )
+                            // InternalWreslEditorParser.g:5314:1: (lv_order_9_0= RULE_INT )
+                            {
+                            // InternalWreslEditorParser.g:5314:1: (lv_order_9_0= RULE_INT )
+                            // InternalWreslEditorParser.g:5315:3: lv_order_9_0= RULE_INT
+                            {
+                            lv_order_9_0=(Token)match(input,RULE_INT,FOLLOW_2); if (state.failed) return current;
+                            if ( state.backtracking==0 ) {
+
+                              			newLeafNode(lv_order_9_0, grammarAccess.getSequenceAccess().getOrderINTTerminalRuleCall_0_5_1_1_0()); 
+                              		
+                            }
+                            if ( state.backtracking==0 ) {
+
+                              	        if (current==null) {
+                              	            current = createModelElement(grammarAccess.getSequenceRule());
+                              	        }
+                                     		setWithLastConsumed(
+                                     			current, 
+                                     			"order",
+                                      		lv_order_9_0, 
+                                      		"org.eclipse.xtext.common.Terminals.INT");
+                              	    
+                            }
+
+                            }
+
+
+                            }
+
+
+                            }
+                            break;
+
+                    }
+
+
+                    }
+
+
+                    }
+
 
                     }
                     break;
+                case 2 :
+                    // InternalWreslEditorParser.g:5332:6: ( ( (this_ORDER_10= RULE_ORDER ( (lv_order_11_0= RULE_INT ) ) )? ( (lv_condition_12_0= ruleCondition ) )? ) ( ruleTimeStep ruleTimeStepValue )? otherlv_15= RightCurlyBracket )
+                    {
+                    // InternalWreslEditorParser.g:5332:6: ( ( (this_ORDER_10= RULE_ORDER ( (lv_order_11_0= RULE_INT ) ) )? ( (lv_condition_12_0= ruleCondition ) )? ) ( ruleTimeStep ruleTimeStepValue )? otherlv_15= RightCurlyBracket )
+                    // InternalWreslEditorParser.g:5332:7: ( (this_ORDER_10= RULE_ORDER ( (lv_order_11_0= RULE_INT ) ) )? ( (lv_condition_12_0= ruleCondition ) )? ) ( ruleTimeStep ruleTimeStepValue )? otherlv_15= RightCurlyBracket
+                    {
+                    // InternalWreslEditorParser.g:5332:7: ( (this_ORDER_10= RULE_ORDER ( (lv_order_11_0= RULE_INT ) ) )? ( (lv_condition_12_0= ruleCondition ) )? )
+                    // InternalWreslEditorParser.g:5332:8: (this_ORDER_10= RULE_ORDER ( (lv_order_11_0= RULE_INT ) ) )? ( (lv_condition_12_0= ruleCondition ) )?
+                    {
+                    // InternalWreslEditorParser.g:5332:8: (this_ORDER_10= RULE_ORDER ( (lv_order_11_0= RULE_INT ) ) )?
+                    int alt150=2;
+                    int LA150_0 = input.LA(1);
 
-            }
+                    if ( (LA150_0==RULE_ORDER) ) {
+                        alt150=1;
+                    }
+                    switch (alt150) {
+                        case 1 :
+                            // InternalWreslEditorParser.g:5332:9: this_ORDER_10= RULE_ORDER ( (lv_order_11_0= RULE_INT ) )
+                            {
+                            this_ORDER_10=(Token)match(input,RULE_ORDER,FOLLOW_52); if (state.failed) return current;
+                            if ( state.backtracking==0 ) {
+                               
+                                  newLeafNode(this_ORDER_10, grammarAccess.getSequenceAccess().getORDERTerminalRuleCall_1_0_0_0()); 
+                                  
+                            }
+                            // InternalWreslEditorParser.g:5336:1: ( (lv_order_11_0= RULE_INT ) )
+                            // InternalWreslEditorParser.g:5337:1: (lv_order_11_0= RULE_INT )
+                            {
+                            // InternalWreslEditorParser.g:5337:1: (lv_order_11_0= RULE_INT )
+                            // InternalWreslEditorParser.g:5338:3: lv_order_11_0= RULE_INT
+                            {
+                            lv_order_11_0=(Token)match(input,RULE_INT,FOLLOW_76); if (state.failed) return current;
+                            if ( state.backtracking==0 ) {
 
-            otherlv_12=(Token)match(input,RightCurlyBracket,FOLLOW_2); if (state.failed) return current;
-            if ( state.backtracking==0 ) {
+                              			newLeafNode(lv_order_11_0, grammarAccess.getSequenceAccess().getOrderINTTerminalRuleCall_1_0_0_1_0()); 
+                              		
+                            }
+                            if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_12, grammarAccess.getSequenceAccess().getRightCurlyBracketKeyword_8());
-                  
-            }
+                              	        if (current==null) {
+                              	            current = createModelElement(grammarAccess.getSequenceRule());
+                              	        }
+                                     		setWithLastConsumed(
+                                     			current, 
+                                     			"order",
+                                      		lv_order_11_0, 
+                                      		"org.eclipse.xtext.common.Terminals.INT");
+                              	    
+                            }
+
+                            }
+
+
+                            }
+
+
+                            }
+                            break;
+
+                    }
+
+                    // InternalWreslEditorParser.g:5354:4: ( (lv_condition_12_0= ruleCondition ) )?
+                    int alt151=2;
+                    int LA151_0 = input.LA(1);
+
+                    if ( (LA151_0==Condition) ) {
+                        alt151=1;
+                    }
+                    switch (alt151) {
+                        case 1 :
+                            // InternalWreslEditorParser.g:5355:1: (lv_condition_12_0= ruleCondition )
+                            {
+                            // InternalWreslEditorParser.g:5355:1: (lv_condition_12_0= ruleCondition )
+                            // InternalWreslEditorParser.g:5356:3: lv_condition_12_0= ruleCondition
+                            {
+                            if ( state.backtracking==0 ) {
+                               
+                              	        newCompositeNode(grammarAccess.getSequenceAccess().getConditionConditionParserRuleCall_1_0_1_0()); 
+                              	    
+                            }
+                            pushFollow(FOLLOW_77);
+                            lv_condition_12_0=ruleCondition();
+
+                            state._fsp--;
+                            if (state.failed) return current;
+                            if ( state.backtracking==0 ) {
+
+                              	        if (current==null) {
+                              	            current = createModelElementForParent(grammarAccess.getSequenceRule());
+                              	        }
+                                     		set(
+                                     			current, 
+                                     			"condition",
+                                      		lv_condition_12_0, 
+                                      		"gov.ca.dwr.wresl.xtext.editor.WreslEditor.Condition");
+                              	        afterParserOrEnumRuleCall();
+                              	    
+                            }
+
+                            }
+
+
+                            }
+                            break;
+
+                    }
+
+
+                    }
+
+                    // InternalWreslEditorParser.g:5372:4: ( ruleTimeStep ruleTimeStepValue )?
+                    int alt152=2;
+                    int LA152_0 = input.LA(1);
+
+                    if ( (LA152_0==Timestep) ) {
+                        alt152=1;
+                    }
+                    switch (alt152) {
+                        case 1 :
+                            // InternalWreslEditorParser.g:5373:2: ruleTimeStep ruleTimeStepValue
+                            {
+                            if ( state.backtracking==0 ) {
+                               
+                              	  /* */ 
+                              	
+                            }
+                            if ( state.backtracking==0 ) {
+                               
+                                      newCompositeNode(grammarAccess.getSequenceAccess().getTimeStepParserRuleCall_1_1_0()); 
+                                  
+                            }
+                            pushFollow(FOLLOW_78);
+                            ruleTimeStep();
+
+                            state._fsp--;
+                            if (state.failed) return current;
+                            if ( state.backtracking==0 ) {
+
+                                      afterParserOrEnumRuleCall();
+                                  
+                            }
+                            if ( state.backtracking==0 ) {
+                               
+                              	  /* */ 
+                              	
+                            }
+                            if ( state.backtracking==0 ) {
+                               
+                                      newCompositeNode(grammarAccess.getSequenceAccess().getTimeStepValueParserRuleCall_1_1_1()); 
+                                  
+                            }
+                            pushFollow(FOLLOW_9);
+                            ruleTimeStepValue();
+
+                            state._fsp--;
+                            if (state.failed) return current;
+                            if ( state.backtracking==0 ) {
+
+                                      afterParserOrEnumRuleCall();
+                                  
+                            }
+
+                            }
+                            break;
+
+                    }
+
+                    otherlv_15=(Token)match(input,RightCurlyBracket,FOLLOW_2); if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                          	newLeafNode(otherlv_15, grammarAccess.getSequenceAccess().getRightCurlyBracketKeyword_1_2());
+                          
+                    }
+
+                    }
+
+
+                    }
+                    break;
 
             }
 
@@ -16686,7 +16848,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleCondition"
-    // InternalWreslEditorParser.g:5366:1: entryRuleCondition returns [EObject current=null] : iv_ruleCondition= ruleCondition EOF ;
+    // InternalWreslEditorParser.g:5407:1: entryRuleCondition returns [EObject current=null] : iv_ruleCondition= ruleCondition EOF ;
     public final EObject entryRuleCondition() throws RecognitionException {
         EObject current = null;
 
@@ -16694,8 +16856,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:5367:2: (iv_ruleCondition= ruleCondition EOF )
-            // InternalWreslEditorParser.g:5368:2: iv_ruleCondition= ruleCondition EOF
+            // InternalWreslEditorParser.g:5408:2: (iv_ruleCondition= ruleCondition EOF )
+            // InternalWreslEditorParser.g:5409:2: iv_ruleCondition= ruleCondition EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getConditionRule()); 
@@ -16726,7 +16888,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCondition"
-    // InternalWreslEditorParser.g:5375:1: ruleCondition returns [EObject current=null] : ( (otherlv_0= Condition | otherlv_1= Condition ) ( ( (lv_logical_2_0= ruleLogicalExpression ) ) | ( () this_ALWAYS_4= RULE_ALWAYS ) ) ) ;
+    // InternalWreslEditorParser.g:5416:1: ruleCondition returns [EObject current=null] : ( (otherlv_0= Condition | otherlv_1= Condition ) ( ( (lv_logical_2_0= ruleLogicalExpression ) ) | ( () this_ALWAYS_4= RULE_ALWAYS ) ) ) ;
     public final EObject ruleCondition() throws RecognitionException {
         EObject current = null;
 
@@ -16739,29 +16901,29 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:5378:28: ( ( (otherlv_0= Condition | otherlv_1= Condition ) ( ( (lv_logical_2_0= ruleLogicalExpression ) ) | ( () this_ALWAYS_4= RULE_ALWAYS ) ) ) )
-            // InternalWreslEditorParser.g:5379:1: ( (otherlv_0= Condition | otherlv_1= Condition ) ( ( (lv_logical_2_0= ruleLogicalExpression ) ) | ( () this_ALWAYS_4= RULE_ALWAYS ) ) )
+            // InternalWreslEditorParser.g:5419:28: ( ( (otherlv_0= Condition | otherlv_1= Condition ) ( ( (lv_logical_2_0= ruleLogicalExpression ) ) | ( () this_ALWAYS_4= RULE_ALWAYS ) ) ) )
+            // InternalWreslEditorParser.g:5420:1: ( (otherlv_0= Condition | otherlv_1= Condition ) ( ( (lv_logical_2_0= ruleLogicalExpression ) ) | ( () this_ALWAYS_4= RULE_ALWAYS ) ) )
             {
-            // InternalWreslEditorParser.g:5379:1: ( (otherlv_0= Condition | otherlv_1= Condition ) ( ( (lv_logical_2_0= ruleLogicalExpression ) ) | ( () this_ALWAYS_4= RULE_ALWAYS ) ) )
-            // InternalWreslEditorParser.g:5379:2: (otherlv_0= Condition | otherlv_1= Condition ) ( ( (lv_logical_2_0= ruleLogicalExpression ) ) | ( () this_ALWAYS_4= RULE_ALWAYS ) )
+            // InternalWreslEditorParser.g:5420:1: ( (otherlv_0= Condition | otherlv_1= Condition ) ( ( (lv_logical_2_0= ruleLogicalExpression ) ) | ( () this_ALWAYS_4= RULE_ALWAYS ) ) )
+            // InternalWreslEditorParser.g:5420:2: (otherlv_0= Condition | otherlv_1= Condition ) ( ( (lv_logical_2_0= ruleLogicalExpression ) ) | ( () this_ALWAYS_4= RULE_ALWAYS ) )
             {
-            // InternalWreslEditorParser.g:5379:2: (otherlv_0= Condition | otherlv_1= Condition )
-            int alt151=2;
-            int LA151_0 = input.LA(1);
+            // InternalWreslEditorParser.g:5420:2: (otherlv_0= Condition | otherlv_1= Condition )
+            int alt154=2;
+            int LA154_0 = input.LA(1);
 
-            if ( (LA151_0==Condition) ) {
-                int LA151_1 = input.LA(2);
+            if ( (LA154_0==Condition) ) {
+                int LA154_1 = input.LA(2);
 
-                if ( (synpred171_InternalWreslEditorParser()) ) {
-                    alt151=1;
+                if ( (synpred174_InternalWreslEditorParser()) ) {
+                    alt154=1;
                 }
                 else if ( (true) ) {
-                    alt151=2;
+                    alt154=2;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return current;}
                     NoViableAltException nvae =
-                        new NoViableAltException("", 151, 1, input);
+                        new NoViableAltException("", 154, 1, input);
 
                     throw nvae;
                 }
@@ -16769,15 +16931,15 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 151, 0, input);
+                    new NoViableAltException("", 154, 0, input);
 
                 throw nvae;
             }
-            switch (alt151) {
+            switch (alt154) {
                 case 1 :
-                    // InternalWreslEditorParser.g:5380:2: otherlv_0= Condition
+                    // InternalWreslEditorParser.g:5421:2: otherlv_0= Condition
                     {
-                    otherlv_0=(Token)match(input,Condition,FOLLOW_78); if (state.failed) return current;
+                    otherlv_0=(Token)match(input,Condition,FOLLOW_79); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_0, grammarAccess.getConditionAccess().getConditionKeyword_0_0());
@@ -16787,9 +16949,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditorParser.g:5386:2: otherlv_1= Condition
+                    // InternalWreslEditorParser.g:5427:2: otherlv_1= Condition
                     {
-                    otherlv_1=(Token)match(input,Condition,FOLLOW_78); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,Condition,FOLLOW_79); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getConditionAccess().getCONDITIONKeyword_0_1());
@@ -16801,32 +16963,32 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalWreslEditorParser.g:5390:2: ( ( (lv_logical_2_0= ruleLogicalExpression ) ) | ( () this_ALWAYS_4= RULE_ALWAYS ) )
-            int alt152=2;
-            int LA152_0 = input.LA(1);
+            // InternalWreslEditorParser.g:5431:2: ( ( (lv_logical_2_0= ruleLogicalExpression ) ) | ( () this_ALWAYS_4= RULE_ALWAYS ) )
+            int alt155=2;
+            int LA155_0 = input.LA(1);
 
-            if ( ((LA152_0>=Daysintimestep && LA152_0<=Daysinmonth)||LA152_0==Wateryear||LA152_0==Cfs_taf||(LA152_0>=Prevapr && LA152_0<=Daysin)||LA152_0==Month||(LA152_0>=Apr && LA152_0<=Dec)||(LA152_0>=Feb && LA152_0<=Jun)||(LA152_0>=Mar && LA152_0<=Oct)||LA152_0==Sep||LA152_0==M||LA152_0==LeftParenthesis||LA152_0==PlusSign||LA152_0==HyphenMinus||LA152_0==I||(LA152_0>=RULE_RANGE && LA152_0<=RULE_FLOAT)||LA152_0==RULE_NOT||LA152_0==RULE_ID) ) {
-                alt152=1;
+            if ( ((LA155_0>=Daysintimestep && LA155_0<=Daysinmonth)||LA155_0==Wateryear||LA155_0==Cfs_taf||(LA155_0>=Prevapr && LA155_0<=Daysin)||LA155_0==Month||(LA155_0>=Apr && LA155_0<=Dec)||(LA155_0>=Feb && LA155_0<=Jun)||(LA155_0>=Mar && LA155_0<=Oct)||LA155_0==Sep||LA155_0==M||LA155_0==LeftParenthesis||LA155_0==PlusSign||LA155_0==HyphenMinus||LA155_0==I||(LA155_0>=RULE_RANGE && LA155_0<=RULE_FLOAT)||LA155_0==RULE_NOT||LA155_0==RULE_ID) ) {
+                alt155=1;
             }
-            else if ( (LA152_0==RULE_ALWAYS) ) {
-                alt152=2;
+            else if ( (LA155_0==RULE_ALWAYS) ) {
+                alt155=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 152, 0, input);
+                    new NoViableAltException("", 155, 0, input);
 
                 throw nvae;
             }
-            switch (alt152) {
+            switch (alt155) {
                 case 1 :
-                    // InternalWreslEditorParser.g:5390:3: ( (lv_logical_2_0= ruleLogicalExpression ) )
+                    // InternalWreslEditorParser.g:5431:3: ( (lv_logical_2_0= ruleLogicalExpression ) )
                     {
-                    // InternalWreslEditorParser.g:5390:3: ( (lv_logical_2_0= ruleLogicalExpression ) )
-                    // InternalWreslEditorParser.g:5391:1: (lv_logical_2_0= ruleLogicalExpression )
+                    // InternalWreslEditorParser.g:5431:3: ( (lv_logical_2_0= ruleLogicalExpression ) )
+                    // InternalWreslEditorParser.g:5432:1: (lv_logical_2_0= ruleLogicalExpression )
                     {
-                    // InternalWreslEditorParser.g:5391:1: (lv_logical_2_0= ruleLogicalExpression )
-                    // InternalWreslEditorParser.g:5392:3: lv_logical_2_0= ruleLogicalExpression
+                    // InternalWreslEditorParser.g:5432:1: (lv_logical_2_0= ruleLogicalExpression )
+                    // InternalWreslEditorParser.g:5433:3: lv_logical_2_0= ruleLogicalExpression
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -16861,13 +17023,13 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditorParser.g:5409:6: ( () this_ALWAYS_4= RULE_ALWAYS )
+                    // InternalWreslEditorParser.g:5450:6: ( () this_ALWAYS_4= RULE_ALWAYS )
                     {
-                    // InternalWreslEditorParser.g:5409:6: ( () this_ALWAYS_4= RULE_ALWAYS )
-                    // InternalWreslEditorParser.g:5409:7: () this_ALWAYS_4= RULE_ALWAYS
+                    // InternalWreslEditorParser.g:5450:6: ( () this_ALWAYS_4= RULE_ALWAYS )
+                    // InternalWreslEditorParser.g:5450:7: () this_ALWAYS_4= RULE_ALWAYS
                     {
-                    // InternalWreslEditorParser.g:5409:7: ()
-                    // InternalWreslEditorParser.g:5410:2: 
+                    // InternalWreslEditorParser.g:5450:7: ()
+                    // InternalWreslEditorParser.g:5451:2: 
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -16922,7 +17084,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleLogicalExpression"
-    // InternalWreslEditorParser.g:5430:1: entryRuleLogicalExpression returns [EObject current=null] : iv_ruleLogicalExpression= ruleLogicalExpression EOF ;
+    // InternalWreslEditorParser.g:5471:1: entryRuleLogicalExpression returns [EObject current=null] : iv_ruleLogicalExpression= ruleLogicalExpression EOF ;
     public final EObject entryRuleLogicalExpression() throws RecognitionException {
         EObject current = null;
 
@@ -16930,8 +17092,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:5431:2: (iv_ruleLogicalExpression= ruleLogicalExpression EOF )
-            // InternalWreslEditorParser.g:5432:2: iv_ruleLogicalExpression= ruleLogicalExpression EOF
+            // InternalWreslEditorParser.g:5472:2: (iv_ruleLogicalExpression= ruleLogicalExpression EOF )
+            // InternalWreslEditorParser.g:5473:2: iv_ruleLogicalExpression= ruleLogicalExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getLogicalExpressionRule()); 
@@ -16962,7 +17124,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLogicalExpression"
-    // InternalWreslEditorParser.g:5439:1: ruleLogicalExpression returns [EObject current=null] : ( ( (lv_c1_0_0= ruleConditionalUnary ) ) ( ruleBinaryOp ( (lv_c2_2_0= ruleConditionalUnary ) ) )* ) ;
+    // InternalWreslEditorParser.g:5480:1: ruleLogicalExpression returns [EObject current=null] : ( ( (lv_c1_0_0= ruleConditionalUnary ) ) ( ruleBinaryOp ( (lv_c2_2_0= ruleConditionalUnary ) ) )* ) ;
     public final EObject ruleLogicalExpression() throws RecognitionException {
         EObject current = null;
 
@@ -16974,24 +17136,24 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:5442:28: ( ( ( (lv_c1_0_0= ruleConditionalUnary ) ) ( ruleBinaryOp ( (lv_c2_2_0= ruleConditionalUnary ) ) )* ) )
-            // InternalWreslEditorParser.g:5443:1: ( ( (lv_c1_0_0= ruleConditionalUnary ) ) ( ruleBinaryOp ( (lv_c2_2_0= ruleConditionalUnary ) ) )* )
+            // InternalWreslEditorParser.g:5483:28: ( ( ( (lv_c1_0_0= ruleConditionalUnary ) ) ( ruleBinaryOp ( (lv_c2_2_0= ruleConditionalUnary ) ) )* ) )
+            // InternalWreslEditorParser.g:5484:1: ( ( (lv_c1_0_0= ruleConditionalUnary ) ) ( ruleBinaryOp ( (lv_c2_2_0= ruleConditionalUnary ) ) )* )
             {
-            // InternalWreslEditorParser.g:5443:1: ( ( (lv_c1_0_0= ruleConditionalUnary ) ) ( ruleBinaryOp ( (lv_c2_2_0= ruleConditionalUnary ) ) )* )
-            // InternalWreslEditorParser.g:5443:2: ( (lv_c1_0_0= ruleConditionalUnary ) ) ( ruleBinaryOp ( (lv_c2_2_0= ruleConditionalUnary ) ) )*
+            // InternalWreslEditorParser.g:5484:1: ( ( (lv_c1_0_0= ruleConditionalUnary ) ) ( ruleBinaryOp ( (lv_c2_2_0= ruleConditionalUnary ) ) )* )
+            // InternalWreslEditorParser.g:5484:2: ( (lv_c1_0_0= ruleConditionalUnary ) ) ( ruleBinaryOp ( (lv_c2_2_0= ruleConditionalUnary ) ) )*
             {
-            // InternalWreslEditorParser.g:5443:2: ( (lv_c1_0_0= ruleConditionalUnary ) )
-            // InternalWreslEditorParser.g:5444:1: (lv_c1_0_0= ruleConditionalUnary )
+            // InternalWreslEditorParser.g:5484:2: ( (lv_c1_0_0= ruleConditionalUnary ) )
+            // InternalWreslEditorParser.g:5485:1: (lv_c1_0_0= ruleConditionalUnary )
             {
-            // InternalWreslEditorParser.g:5444:1: (lv_c1_0_0= ruleConditionalUnary )
-            // InternalWreslEditorParser.g:5445:3: lv_c1_0_0= ruleConditionalUnary
+            // InternalWreslEditorParser.g:5485:1: (lv_c1_0_0= ruleConditionalUnary )
+            // InternalWreslEditorParser.g:5486:3: lv_c1_0_0= ruleConditionalUnary
             {
             if ( state.backtracking==0 ) {
                
               	        newCompositeNode(grammarAccess.getLogicalExpressionAccess().getC1ConditionalUnaryParserRuleCall_0_0()); 
               	    
             }
-            pushFollow(FOLLOW_79);
+            pushFollow(FOLLOW_80);
             lv_c1_0_0=ruleConditionalUnary();
 
             state._fsp--;
@@ -17015,20 +17177,20 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalWreslEditorParser.g:5461:2: ( ruleBinaryOp ( (lv_c2_2_0= ruleConditionalUnary ) ) )*
-            loop153:
+            // InternalWreslEditorParser.g:5502:2: ( ruleBinaryOp ( (lv_c2_2_0= ruleConditionalUnary ) ) )*
+            loop156:
             do {
-                int alt153=2;
-                int LA153_0 = input.LA(1);
+                int alt156=2;
+                int LA156_0 = input.LA(1);
 
-                if ( ((LA153_0>=RULE_AND && LA153_0<=RULE_OR)) ) {
-                    alt153=1;
+                if ( ((LA156_0>=RULE_AND && LA156_0<=RULE_OR)) ) {
+                    alt156=1;
                 }
 
 
-                switch (alt153) {
+                switch (alt156) {
             	case 1 :
-            	    // InternalWreslEditorParser.g:5462:2: ruleBinaryOp ( (lv_c2_2_0= ruleConditionalUnary ) )
+            	    // InternalWreslEditorParser.g:5503:2: ruleBinaryOp ( (lv_c2_2_0= ruleConditionalUnary ) )
             	    {
             	    if ( state.backtracking==0 ) {
             	       
@@ -17050,18 +17212,18 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             	              afterParserOrEnumRuleCall();
             	          
             	    }
-            	    // InternalWreslEditorParser.g:5472:1: ( (lv_c2_2_0= ruleConditionalUnary ) )
-            	    // InternalWreslEditorParser.g:5473:1: (lv_c2_2_0= ruleConditionalUnary )
+            	    // InternalWreslEditorParser.g:5513:1: ( (lv_c2_2_0= ruleConditionalUnary ) )
+            	    // InternalWreslEditorParser.g:5514:1: (lv_c2_2_0= ruleConditionalUnary )
             	    {
-            	    // InternalWreslEditorParser.g:5473:1: (lv_c2_2_0= ruleConditionalUnary )
-            	    // InternalWreslEditorParser.g:5474:3: lv_c2_2_0= ruleConditionalUnary
+            	    // InternalWreslEditorParser.g:5514:1: (lv_c2_2_0= ruleConditionalUnary )
+            	    // InternalWreslEditorParser.g:5515:3: lv_c2_2_0= ruleConditionalUnary
             	    {
             	    if ( state.backtracking==0 ) {
             	       
             	      	        newCompositeNode(grammarAccess.getLogicalExpressionAccess().getC2ConditionalUnaryParserRuleCall_1_1_0()); 
             	      	    
             	    }
-            	    pushFollow(FOLLOW_79);
+            	    pushFollow(FOLLOW_80);
             	    lv_c2_2_0=ruleConditionalUnary();
 
             	    state._fsp--;
@@ -17090,7 +17252,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop153;
+            	    break loop156;
                 }
             } while (true);
 
@@ -17117,7 +17279,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleBinaryOp"
-    // InternalWreslEditorParser.g:5498:1: entryRuleBinaryOp returns [String current=null] : iv_ruleBinaryOp= ruleBinaryOp EOF ;
+    // InternalWreslEditorParser.g:5539:1: entryRuleBinaryOp returns [String current=null] : iv_ruleBinaryOp= ruleBinaryOp EOF ;
     public final String entryRuleBinaryOp() throws RecognitionException {
         String current = null;
 
@@ -17125,8 +17287,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:5499:1: (iv_ruleBinaryOp= ruleBinaryOp EOF )
-            // InternalWreslEditorParser.g:5500:2: iv_ruleBinaryOp= ruleBinaryOp EOF
+            // InternalWreslEditorParser.g:5540:1: (iv_ruleBinaryOp= ruleBinaryOp EOF )
+            // InternalWreslEditorParser.g:5541:2: iv_ruleBinaryOp= ruleBinaryOp EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getBinaryOpRule()); 
@@ -17157,7 +17319,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBinaryOp"
-    // InternalWreslEditorParser.g:5507:1: ruleBinaryOp returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_OR_0= RULE_OR | this_AND_1= RULE_AND ) ;
+    // InternalWreslEditorParser.g:5548:1: ruleBinaryOp returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_OR_0= RULE_OR | this_AND_1= RULE_AND ) ;
     public final AntlrDatatypeRuleToken ruleBinaryOp() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -17167,29 +17329,29 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:5511:6: ( (this_OR_0= RULE_OR | this_AND_1= RULE_AND ) )
-            // InternalWreslEditorParser.g:5512:1: (this_OR_0= RULE_OR | this_AND_1= RULE_AND )
+            // InternalWreslEditorParser.g:5552:6: ( (this_OR_0= RULE_OR | this_AND_1= RULE_AND ) )
+            // InternalWreslEditorParser.g:5553:1: (this_OR_0= RULE_OR | this_AND_1= RULE_AND )
             {
-            // InternalWreslEditorParser.g:5512:1: (this_OR_0= RULE_OR | this_AND_1= RULE_AND )
-            int alt154=2;
-            int LA154_0 = input.LA(1);
+            // InternalWreslEditorParser.g:5553:1: (this_OR_0= RULE_OR | this_AND_1= RULE_AND )
+            int alt157=2;
+            int LA157_0 = input.LA(1);
 
-            if ( (LA154_0==RULE_OR) ) {
-                alt154=1;
+            if ( (LA157_0==RULE_OR) ) {
+                alt157=1;
             }
-            else if ( (LA154_0==RULE_AND) ) {
-                alt154=2;
+            else if ( (LA157_0==RULE_AND) ) {
+                alt157=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 154, 0, input);
+                    new NoViableAltException("", 157, 0, input);
 
                 throw nvae;
             }
-            switch (alt154) {
+            switch (alt157) {
                 case 1 :
-                    // InternalWreslEditorParser.g:5512:6: this_OR_0= RULE_OR
+                    // InternalWreslEditorParser.g:5553:6: this_OR_0= RULE_OR
                     {
                     this_OR_0=(Token)match(input,RULE_OR,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -17206,7 +17368,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditorParser.g:5520:10: this_AND_1= RULE_AND
+                    // InternalWreslEditorParser.g:5561:10: this_AND_1= RULE_AND
                     {
                     this_AND_1=(Token)match(input,RULE_AND,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -17246,7 +17408,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleConditionalUnary"
-    // InternalWreslEditorParser.g:5535:1: entryRuleConditionalUnary returns [EObject current=null] : iv_ruleConditionalUnary= ruleConditionalUnary EOF ;
+    // InternalWreslEditorParser.g:5576:1: entryRuleConditionalUnary returns [EObject current=null] : iv_ruleConditionalUnary= ruleConditionalUnary EOF ;
     public final EObject entryRuleConditionalUnary() throws RecognitionException {
         EObject current = null;
 
@@ -17254,8 +17416,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:5536:2: (iv_ruleConditionalUnary= ruleConditionalUnary EOF )
-            // InternalWreslEditorParser.g:5537:2: iv_ruleConditionalUnary= ruleConditionalUnary EOF
+            // InternalWreslEditorParser.g:5577:2: (iv_ruleConditionalUnary= ruleConditionalUnary EOF )
+            // InternalWreslEditorParser.g:5578:2: iv_ruleConditionalUnary= ruleConditionalUnary EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getConditionalUnaryRule()); 
@@ -17286,7 +17448,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleConditionalUnary"
-    // InternalWreslEditorParser.g:5544:1: ruleConditionalUnary returns [EObject current=null] : ( ( ruleConditionalNegation )? this_ConditionalTerm_1= ruleConditionalTerm ) ;
+    // InternalWreslEditorParser.g:5585:1: ruleConditionalUnary returns [EObject current=null] : ( ( ruleConditionalNegation )? this_ConditionalTerm_1= ruleConditionalTerm ) ;
     public final EObject ruleConditionalUnary() throws RecognitionException {
         EObject current = null;
 
@@ -17296,22 +17458,22 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:5547:28: ( ( ( ruleConditionalNegation )? this_ConditionalTerm_1= ruleConditionalTerm ) )
-            // InternalWreslEditorParser.g:5548:1: ( ( ruleConditionalNegation )? this_ConditionalTerm_1= ruleConditionalTerm )
+            // InternalWreslEditorParser.g:5588:28: ( ( ( ruleConditionalNegation )? this_ConditionalTerm_1= ruleConditionalTerm ) )
+            // InternalWreslEditorParser.g:5589:1: ( ( ruleConditionalNegation )? this_ConditionalTerm_1= ruleConditionalTerm )
             {
-            // InternalWreslEditorParser.g:5548:1: ( ( ruleConditionalNegation )? this_ConditionalTerm_1= ruleConditionalTerm )
-            // InternalWreslEditorParser.g:5548:2: ( ruleConditionalNegation )? this_ConditionalTerm_1= ruleConditionalTerm
+            // InternalWreslEditorParser.g:5589:1: ( ( ruleConditionalNegation )? this_ConditionalTerm_1= ruleConditionalTerm )
+            // InternalWreslEditorParser.g:5589:2: ( ruleConditionalNegation )? this_ConditionalTerm_1= ruleConditionalTerm
             {
-            // InternalWreslEditorParser.g:5548:2: ( ruleConditionalNegation )?
-            int alt155=2;
-            int LA155_0 = input.LA(1);
+            // InternalWreslEditorParser.g:5589:2: ( ruleConditionalNegation )?
+            int alt158=2;
+            int LA158_0 = input.LA(1);
 
-            if ( (LA155_0==RULE_NOT) ) {
-                alt155=1;
+            if ( (LA158_0==RULE_NOT) ) {
+                alt158=1;
             }
-            switch (alt155) {
+            switch (alt158) {
                 case 1 :
-                    // InternalWreslEditorParser.g:5549:2: ruleConditionalNegation
+                    // InternalWreslEditorParser.g:5590:2: ruleConditionalNegation
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -17383,7 +17545,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleConditionalNegation"
-    // InternalWreslEditorParser.g:5579:1: entryRuleConditionalNegation returns [String current=null] : iv_ruleConditionalNegation= ruleConditionalNegation EOF ;
+    // InternalWreslEditorParser.g:5620:1: entryRuleConditionalNegation returns [String current=null] : iv_ruleConditionalNegation= ruleConditionalNegation EOF ;
     public final String entryRuleConditionalNegation() throws RecognitionException {
         String current = null;
 
@@ -17391,8 +17553,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:5580:1: (iv_ruleConditionalNegation= ruleConditionalNegation EOF )
-            // InternalWreslEditorParser.g:5581:2: iv_ruleConditionalNegation= ruleConditionalNegation EOF
+            // InternalWreslEditorParser.g:5621:1: (iv_ruleConditionalNegation= ruleConditionalNegation EOF )
+            // InternalWreslEditorParser.g:5622:2: iv_ruleConditionalNegation= ruleConditionalNegation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getConditionalNegationRule()); 
@@ -17423,7 +17585,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleConditionalNegation"
-    // InternalWreslEditorParser.g:5588:1: ruleConditionalNegation returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : this_NOT_0= RULE_NOT ;
+    // InternalWreslEditorParser.g:5629:1: ruleConditionalNegation returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : this_NOT_0= RULE_NOT ;
     public final AntlrDatatypeRuleToken ruleConditionalNegation() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -17432,8 +17594,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:5592:6: (this_NOT_0= RULE_NOT )
-            // InternalWreslEditorParser.g:5593:5: this_NOT_0= RULE_NOT
+            // InternalWreslEditorParser.g:5633:6: (this_NOT_0= RULE_NOT )
+            // InternalWreslEditorParser.g:5634:5: this_NOT_0= RULE_NOT
             {
             this_NOT_0=(Token)match(input,RULE_NOT,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -17467,7 +17629,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleConditionalTerm"
-    // InternalWreslEditorParser.g:5608:1: entryRuleConditionalTerm returns [EObject current=null] : iv_ruleConditionalTerm= ruleConditionalTerm EOF ;
+    // InternalWreslEditorParser.g:5649:1: entryRuleConditionalTerm returns [EObject current=null] : iv_ruleConditionalTerm= ruleConditionalTerm EOF ;
     public final EObject entryRuleConditionalTerm() throws RecognitionException {
         EObject current = null;
 
@@ -17475,8 +17637,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:5609:2: (iv_ruleConditionalTerm= ruleConditionalTerm EOF )
-            // InternalWreslEditorParser.g:5610:2: iv_ruleConditionalTerm= ruleConditionalTerm EOF
+            // InternalWreslEditorParser.g:5650:2: (iv_ruleConditionalTerm= ruleConditionalTerm EOF )
+            // InternalWreslEditorParser.g:5651:2: iv_ruleConditionalTerm= ruleConditionalTerm EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getConditionalTermRule()); 
@@ -17507,7 +17669,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleConditionalTerm"
-    // InternalWreslEditorParser.g:5617:1: ruleConditionalTerm returns [EObject current=null] : ( ( ( (lv_e1_0_0= ruleExpression ) ) ruleRelation ( (lv_e2_2_0= ruleExpression ) ) ) | ruleLogicalFunction | ( ( ( LeftParenthesis ruleLogicalExpression RightParenthesis ) )=> (otherlv_4= LeftParenthesis this_LogicalExpression_5= ruleLogicalExpression otherlv_6= RightParenthesis ) ) ) ;
+    // InternalWreslEditorParser.g:5658:1: ruleConditionalTerm returns [EObject current=null] : ( ( ( (lv_e1_0_0= ruleExpression ) ) ruleRelation ( (lv_e2_2_0= ruleExpression ) ) ) | ruleLogicalFunction | ( ( ( LeftParenthesis ruleLogicalExpression RightParenthesis ) )=> (otherlv_4= LeftParenthesis this_LogicalExpression_5= ruleLogicalExpression otherlv_6= RightParenthesis ) ) ) ;
     public final EObject ruleConditionalTerm() throws RecognitionException {
         EObject current = null;
 
@@ -17523,31 +17685,31 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:5620:28: ( ( ( ( (lv_e1_0_0= ruleExpression ) ) ruleRelation ( (lv_e2_2_0= ruleExpression ) ) ) | ruleLogicalFunction | ( ( ( LeftParenthesis ruleLogicalExpression RightParenthesis ) )=> (otherlv_4= LeftParenthesis this_LogicalExpression_5= ruleLogicalExpression otherlv_6= RightParenthesis ) ) ) )
-            // InternalWreslEditorParser.g:5621:1: ( ( ( (lv_e1_0_0= ruleExpression ) ) ruleRelation ( (lv_e2_2_0= ruleExpression ) ) ) | ruleLogicalFunction | ( ( ( LeftParenthesis ruleLogicalExpression RightParenthesis ) )=> (otherlv_4= LeftParenthesis this_LogicalExpression_5= ruleLogicalExpression otherlv_6= RightParenthesis ) ) )
+            // InternalWreslEditorParser.g:5661:28: ( ( ( ( (lv_e1_0_0= ruleExpression ) ) ruleRelation ( (lv_e2_2_0= ruleExpression ) ) ) | ruleLogicalFunction | ( ( ( LeftParenthesis ruleLogicalExpression RightParenthesis ) )=> (otherlv_4= LeftParenthesis this_LogicalExpression_5= ruleLogicalExpression otherlv_6= RightParenthesis ) ) ) )
+            // InternalWreslEditorParser.g:5662:1: ( ( ( (lv_e1_0_0= ruleExpression ) ) ruleRelation ( (lv_e2_2_0= ruleExpression ) ) ) | ruleLogicalFunction | ( ( ( LeftParenthesis ruleLogicalExpression RightParenthesis ) )=> (otherlv_4= LeftParenthesis this_LogicalExpression_5= ruleLogicalExpression otherlv_6= RightParenthesis ) ) )
             {
-            // InternalWreslEditorParser.g:5621:1: ( ( ( (lv_e1_0_0= ruleExpression ) ) ruleRelation ( (lv_e2_2_0= ruleExpression ) ) ) | ruleLogicalFunction | ( ( ( LeftParenthesis ruleLogicalExpression RightParenthesis ) )=> (otherlv_4= LeftParenthesis this_LogicalExpression_5= ruleLogicalExpression otherlv_6= RightParenthesis ) ) )
-            int alt156=3;
-            alt156 = dfa156.predict(input);
-            switch (alt156) {
+            // InternalWreslEditorParser.g:5662:1: ( ( ( (lv_e1_0_0= ruleExpression ) ) ruleRelation ( (lv_e2_2_0= ruleExpression ) ) ) | ruleLogicalFunction | ( ( ( LeftParenthesis ruleLogicalExpression RightParenthesis ) )=> (otherlv_4= LeftParenthesis this_LogicalExpression_5= ruleLogicalExpression otherlv_6= RightParenthesis ) ) )
+            int alt159=3;
+            alt159 = dfa159.predict(input);
+            switch (alt159) {
                 case 1 :
-                    // InternalWreslEditorParser.g:5621:2: ( ( (lv_e1_0_0= ruleExpression ) ) ruleRelation ( (lv_e2_2_0= ruleExpression ) ) )
+                    // InternalWreslEditorParser.g:5662:2: ( ( (lv_e1_0_0= ruleExpression ) ) ruleRelation ( (lv_e2_2_0= ruleExpression ) ) )
                     {
-                    // InternalWreslEditorParser.g:5621:2: ( ( (lv_e1_0_0= ruleExpression ) ) ruleRelation ( (lv_e2_2_0= ruleExpression ) ) )
-                    // InternalWreslEditorParser.g:5621:3: ( (lv_e1_0_0= ruleExpression ) ) ruleRelation ( (lv_e2_2_0= ruleExpression ) )
+                    // InternalWreslEditorParser.g:5662:2: ( ( (lv_e1_0_0= ruleExpression ) ) ruleRelation ( (lv_e2_2_0= ruleExpression ) ) )
+                    // InternalWreslEditorParser.g:5662:3: ( (lv_e1_0_0= ruleExpression ) ) ruleRelation ( (lv_e2_2_0= ruleExpression ) )
                     {
-                    // InternalWreslEditorParser.g:5621:3: ( (lv_e1_0_0= ruleExpression ) )
-                    // InternalWreslEditorParser.g:5622:1: (lv_e1_0_0= ruleExpression )
+                    // InternalWreslEditorParser.g:5662:3: ( (lv_e1_0_0= ruleExpression ) )
+                    // InternalWreslEditorParser.g:5663:1: (lv_e1_0_0= ruleExpression )
                     {
-                    // InternalWreslEditorParser.g:5622:1: (lv_e1_0_0= ruleExpression )
-                    // InternalWreslEditorParser.g:5623:3: lv_e1_0_0= ruleExpression
+                    // InternalWreslEditorParser.g:5663:1: (lv_e1_0_0= ruleExpression )
+                    // InternalWreslEditorParser.g:5664:3: lv_e1_0_0= ruleExpression
                     {
                     if ( state.backtracking==0 ) {
                        
                       	        newCompositeNode(grammarAccess.getConditionalTermAccess().getE1ExpressionParserRuleCall_0_0_0()); 
                       	    
                     }
-                    pushFollow(FOLLOW_80);
+                    pushFollow(FOLLOW_81);
                     lv_e1_0_0=ruleExpression();
 
                     state._fsp--;
@@ -17591,11 +17753,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                               afterParserOrEnumRuleCall();
                           
                     }
-                    // InternalWreslEditorParser.g:5650:1: ( (lv_e2_2_0= ruleExpression ) )
-                    // InternalWreslEditorParser.g:5651:1: (lv_e2_2_0= ruleExpression )
+                    // InternalWreslEditorParser.g:5691:1: ( (lv_e2_2_0= ruleExpression ) )
+                    // InternalWreslEditorParser.g:5692:1: (lv_e2_2_0= ruleExpression )
                     {
-                    // InternalWreslEditorParser.g:5651:1: (lv_e2_2_0= ruleExpression )
-                    // InternalWreslEditorParser.g:5652:3: lv_e2_2_0= ruleExpression
+                    // InternalWreslEditorParser.g:5692:1: (lv_e2_2_0= ruleExpression )
+                    // InternalWreslEditorParser.g:5693:3: lv_e2_2_0= ruleExpression
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -17633,7 +17795,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditorParser.g:5670:2: ruleLogicalFunction
+                    // InternalWreslEditorParser.g:5711:2: ruleLogicalFunction
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -17659,13 +17821,13 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalWreslEditorParser.g:5681:6: ( ( ( LeftParenthesis ruleLogicalExpression RightParenthesis ) )=> (otherlv_4= LeftParenthesis this_LogicalExpression_5= ruleLogicalExpression otherlv_6= RightParenthesis ) )
+                    // InternalWreslEditorParser.g:5722:6: ( ( ( LeftParenthesis ruleLogicalExpression RightParenthesis ) )=> (otherlv_4= LeftParenthesis this_LogicalExpression_5= ruleLogicalExpression otherlv_6= RightParenthesis ) )
                     {
-                    // InternalWreslEditorParser.g:5681:6: ( ( ( LeftParenthesis ruleLogicalExpression RightParenthesis ) )=> (otherlv_4= LeftParenthesis this_LogicalExpression_5= ruleLogicalExpression otherlv_6= RightParenthesis ) )
-                    // InternalWreslEditorParser.g:5681:7: ( ( LeftParenthesis ruleLogicalExpression RightParenthesis ) )=> (otherlv_4= LeftParenthesis this_LogicalExpression_5= ruleLogicalExpression otherlv_6= RightParenthesis )
+                    // InternalWreslEditorParser.g:5722:6: ( ( ( LeftParenthesis ruleLogicalExpression RightParenthesis ) )=> (otherlv_4= LeftParenthesis this_LogicalExpression_5= ruleLogicalExpression otherlv_6= RightParenthesis ) )
+                    // InternalWreslEditorParser.g:5722:7: ( ( LeftParenthesis ruleLogicalExpression RightParenthesis ) )=> (otherlv_4= LeftParenthesis this_LogicalExpression_5= ruleLogicalExpression otherlv_6= RightParenthesis )
                     {
-                    // InternalWreslEditorParser.g:5685:5: (otherlv_4= LeftParenthesis this_LogicalExpression_5= ruleLogicalExpression otherlv_6= RightParenthesis )
-                    // InternalWreslEditorParser.g:5686:2: otherlv_4= LeftParenthesis this_LogicalExpression_5= ruleLogicalExpression otherlv_6= RightParenthesis
+                    // InternalWreslEditorParser.g:5726:5: (otherlv_4= LeftParenthesis this_LogicalExpression_5= ruleLogicalExpression otherlv_6= RightParenthesis )
+                    // InternalWreslEditorParser.g:5727:2: otherlv_4= LeftParenthesis this_LogicalExpression_5= ruleLogicalExpression otherlv_6= RightParenthesis
                     {
                     otherlv_4=(Token)match(input,LeftParenthesis,FOLLOW_12); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -17732,7 +17894,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleRelation"
-    // InternalWreslEditorParser.g:5715:1: entryRuleRelation returns [String current=null] : iv_ruleRelation= ruleRelation EOF ;
+    // InternalWreslEditorParser.g:5756:1: entryRuleRelation returns [String current=null] : iv_ruleRelation= ruleRelation EOF ;
     public final String entryRuleRelation() throws RecognitionException {
         String current = null;
 
@@ -17740,8 +17902,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:5716:1: (iv_ruleRelation= ruleRelation EOF )
-            // InternalWreslEditorParser.g:5717:2: iv_ruleRelation= ruleRelation EOF
+            // InternalWreslEditorParser.g:5757:1: (iv_ruleRelation= ruleRelation EOF )
+            // InternalWreslEditorParser.g:5758:2: iv_ruleRelation= ruleRelation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getRelationRule()); 
@@ -17772,7 +17934,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleRelation"
-    // InternalWreslEditorParser.g:5724:1: ruleRelation returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= GreaterThanSign | kw= LessThanSign | kw= GreaterThanSignEqualsSign | kw= LessThanSignEqualsSign | kw= EqualsSignEqualsSign | kw= SolidusEqualsSign ) ;
+    // InternalWreslEditorParser.g:5765:1: ruleRelation returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= GreaterThanSign | kw= LessThanSign | kw= GreaterThanSignEqualsSign | kw= LessThanSignEqualsSign | kw= EqualsSignEqualsSign | kw= SolidusEqualsSign ) ;
     public final AntlrDatatypeRuleToken ruleRelation() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -17781,53 +17943,53 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:5728:6: ( (kw= GreaterThanSign | kw= LessThanSign | kw= GreaterThanSignEqualsSign | kw= LessThanSignEqualsSign | kw= EqualsSignEqualsSign | kw= SolidusEqualsSign ) )
-            // InternalWreslEditorParser.g:5729:1: (kw= GreaterThanSign | kw= LessThanSign | kw= GreaterThanSignEqualsSign | kw= LessThanSignEqualsSign | kw= EqualsSignEqualsSign | kw= SolidusEqualsSign )
+            // InternalWreslEditorParser.g:5769:6: ( (kw= GreaterThanSign | kw= LessThanSign | kw= GreaterThanSignEqualsSign | kw= LessThanSignEqualsSign | kw= EqualsSignEqualsSign | kw= SolidusEqualsSign ) )
+            // InternalWreslEditorParser.g:5770:1: (kw= GreaterThanSign | kw= LessThanSign | kw= GreaterThanSignEqualsSign | kw= LessThanSignEqualsSign | kw= EqualsSignEqualsSign | kw= SolidusEqualsSign )
             {
-            // InternalWreslEditorParser.g:5729:1: (kw= GreaterThanSign | kw= LessThanSign | kw= GreaterThanSignEqualsSign | kw= LessThanSignEqualsSign | kw= EqualsSignEqualsSign | kw= SolidusEqualsSign )
-            int alt157=6;
+            // InternalWreslEditorParser.g:5770:1: (kw= GreaterThanSign | kw= LessThanSign | kw= GreaterThanSignEqualsSign | kw= LessThanSignEqualsSign | kw= EqualsSignEqualsSign | kw= SolidusEqualsSign )
+            int alt160=6;
             switch ( input.LA(1) ) {
             case GreaterThanSign:
                 {
-                alt157=1;
+                alt160=1;
                 }
                 break;
             case LessThanSign:
                 {
-                alt157=2;
+                alt160=2;
                 }
                 break;
             case GreaterThanSignEqualsSign:
                 {
-                alt157=3;
+                alt160=3;
                 }
                 break;
             case LessThanSignEqualsSign:
                 {
-                alt157=4;
+                alt160=4;
                 }
                 break;
             case EqualsSignEqualsSign:
                 {
-                alt157=5;
+                alt160=5;
                 }
                 break;
             case SolidusEqualsSign:
                 {
-                alt157=6;
+                alt160=6;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 157, 0, input);
+                    new NoViableAltException("", 160, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt157) {
+            switch (alt160) {
                 case 1 :
-                    // InternalWreslEditorParser.g:5730:2: kw= GreaterThanSign
+                    // InternalWreslEditorParser.g:5771:2: kw= GreaterThanSign
                     {
                     kw=(Token)match(input,GreaterThanSign,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -17840,7 +18002,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditorParser.g:5737:2: kw= LessThanSign
+                    // InternalWreslEditorParser.g:5778:2: kw= LessThanSign
                     {
                     kw=(Token)match(input,LessThanSign,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -17853,7 +18015,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalWreslEditorParser.g:5744:2: kw= GreaterThanSignEqualsSign
+                    // InternalWreslEditorParser.g:5785:2: kw= GreaterThanSignEqualsSign
                     {
                     kw=(Token)match(input,GreaterThanSignEqualsSign,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -17866,7 +18028,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalWreslEditorParser.g:5751:2: kw= LessThanSignEqualsSign
+                    // InternalWreslEditorParser.g:5792:2: kw= LessThanSignEqualsSign
                     {
                     kw=(Token)match(input,LessThanSignEqualsSign,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -17879,7 +18041,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalWreslEditorParser.g:5758:2: kw= EqualsSignEqualsSign
+                    // InternalWreslEditorParser.g:5799:2: kw= EqualsSignEqualsSign
                     {
                     kw=(Token)match(input,EqualsSignEqualsSign,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -17892,7 +18054,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalWreslEditorParser.g:5765:2: kw= SolidusEqualsSign
+                    // InternalWreslEditorParser.g:5806:2: kw= SolidusEqualsSign
                     {
                     kw=(Token)match(input,SolidusEqualsSign,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -17928,7 +18090,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleExpression"
-    // InternalWreslEditorParser.g:5778:1: entryRuleExpression returns [EObject current=null] : iv_ruleExpression= ruleExpression EOF ;
+    // InternalWreslEditorParser.g:5819:1: entryRuleExpression returns [EObject current=null] : iv_ruleExpression= ruleExpression EOF ;
     public final EObject entryRuleExpression() throws RecognitionException {
         EObject current = null;
 
@@ -17936,8 +18098,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:5779:2: (iv_ruleExpression= ruleExpression EOF )
-            // InternalWreslEditorParser.g:5780:2: iv_ruleExpression= ruleExpression EOF
+            // InternalWreslEditorParser.g:5820:2: (iv_ruleExpression= ruleExpression EOF )
+            // InternalWreslEditorParser.g:5821:2: iv_ruleExpression= ruleExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getExpressionRule()); 
@@ -17968,7 +18130,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleExpression"
-    // InternalWreslEditorParser.g:5787:1: ruleExpression returns [EObject current=null] : this_Add_0= ruleAdd ;
+    // InternalWreslEditorParser.g:5828:1: ruleExpression returns [EObject current=null] : this_Add_0= ruleAdd ;
     public final EObject ruleExpression() throws RecognitionException {
         EObject current = null;
 
@@ -17978,8 +18140,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:5790:28: (this_Add_0= ruleAdd )
-            // InternalWreslEditorParser.g:5792:2: this_Add_0= ruleAdd
+            // InternalWreslEditorParser.g:5831:28: (this_Add_0= ruleAdd )
+            // InternalWreslEditorParser.g:5833:2: this_Add_0= ruleAdd
             {
             if ( state.backtracking==0 ) {
                
@@ -18022,7 +18184,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAdd"
-    // InternalWreslEditorParser.g:5811:1: entryRuleAdd returns [EObject current=null] : iv_ruleAdd= ruleAdd EOF ;
+    // InternalWreslEditorParser.g:5852:1: entryRuleAdd returns [EObject current=null] : iv_ruleAdd= ruleAdd EOF ;
     public final EObject entryRuleAdd() throws RecognitionException {
         EObject current = null;
 
@@ -18030,8 +18192,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:5812:2: (iv_ruleAdd= ruleAdd EOF )
-            // InternalWreslEditorParser.g:5813:2: iv_ruleAdd= ruleAdd EOF
+            // InternalWreslEditorParser.g:5853:2: (iv_ruleAdd= ruleAdd EOF )
+            // InternalWreslEditorParser.g:5854:2: iv_ruleAdd= ruleAdd EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getAddRule()); 
@@ -18062,7 +18224,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAdd"
-    // InternalWreslEditorParser.g:5820:1: ruleAdd returns [EObject current=null] : ( ( (lv_m1_0_0= ruleMultiply ) ) ( (otherlv_1= PlusSign | otherlv_2= HyphenMinus ) ( (lv_m2_3_0= ruleMultiply ) ) )* ) ;
+    // InternalWreslEditorParser.g:5861:1: ruleAdd returns [EObject current=null] : ( ( (lv_m1_0_0= ruleMultiply ) ) ( (otherlv_1= PlusSign | otherlv_2= HyphenMinus ) ( (lv_m2_3_0= ruleMultiply ) ) )* ) ;
     public final EObject ruleAdd() throws RecognitionException {
         EObject current = null;
 
@@ -18076,24 +18238,24 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:5823:28: ( ( ( (lv_m1_0_0= ruleMultiply ) ) ( (otherlv_1= PlusSign | otherlv_2= HyphenMinus ) ( (lv_m2_3_0= ruleMultiply ) ) )* ) )
-            // InternalWreslEditorParser.g:5824:1: ( ( (lv_m1_0_0= ruleMultiply ) ) ( (otherlv_1= PlusSign | otherlv_2= HyphenMinus ) ( (lv_m2_3_0= ruleMultiply ) ) )* )
+            // InternalWreslEditorParser.g:5864:28: ( ( ( (lv_m1_0_0= ruleMultiply ) ) ( (otherlv_1= PlusSign | otherlv_2= HyphenMinus ) ( (lv_m2_3_0= ruleMultiply ) ) )* ) )
+            // InternalWreslEditorParser.g:5865:1: ( ( (lv_m1_0_0= ruleMultiply ) ) ( (otherlv_1= PlusSign | otherlv_2= HyphenMinus ) ( (lv_m2_3_0= ruleMultiply ) ) )* )
             {
-            // InternalWreslEditorParser.g:5824:1: ( ( (lv_m1_0_0= ruleMultiply ) ) ( (otherlv_1= PlusSign | otherlv_2= HyphenMinus ) ( (lv_m2_3_0= ruleMultiply ) ) )* )
-            // InternalWreslEditorParser.g:5824:2: ( (lv_m1_0_0= ruleMultiply ) ) ( (otherlv_1= PlusSign | otherlv_2= HyphenMinus ) ( (lv_m2_3_0= ruleMultiply ) ) )*
+            // InternalWreslEditorParser.g:5865:1: ( ( (lv_m1_0_0= ruleMultiply ) ) ( (otherlv_1= PlusSign | otherlv_2= HyphenMinus ) ( (lv_m2_3_0= ruleMultiply ) ) )* )
+            // InternalWreslEditorParser.g:5865:2: ( (lv_m1_0_0= ruleMultiply ) ) ( (otherlv_1= PlusSign | otherlv_2= HyphenMinus ) ( (lv_m2_3_0= ruleMultiply ) ) )*
             {
-            // InternalWreslEditorParser.g:5824:2: ( (lv_m1_0_0= ruleMultiply ) )
-            // InternalWreslEditorParser.g:5825:1: (lv_m1_0_0= ruleMultiply )
+            // InternalWreslEditorParser.g:5865:2: ( (lv_m1_0_0= ruleMultiply ) )
+            // InternalWreslEditorParser.g:5866:1: (lv_m1_0_0= ruleMultiply )
             {
-            // InternalWreslEditorParser.g:5825:1: (lv_m1_0_0= ruleMultiply )
-            // InternalWreslEditorParser.g:5826:3: lv_m1_0_0= ruleMultiply
+            // InternalWreslEditorParser.g:5866:1: (lv_m1_0_0= ruleMultiply )
+            // InternalWreslEditorParser.g:5867:3: lv_m1_0_0= ruleMultiply
             {
             if ( state.backtracking==0 ) {
                
               	        newCompositeNode(grammarAccess.getAddAccess().getM1MultiplyParserRuleCall_0_0()); 
               	    
             }
-            pushFollow(FOLLOW_81);
+            pushFollow(FOLLOW_82);
             lv_m1_0_0=ruleMultiply();
 
             state._fsp--;
@@ -18117,41 +18279,41 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalWreslEditorParser.g:5842:2: ( (otherlv_1= PlusSign | otherlv_2= HyphenMinus ) ( (lv_m2_3_0= ruleMultiply ) ) )*
-            loop159:
+            // InternalWreslEditorParser.g:5883:2: ( (otherlv_1= PlusSign | otherlv_2= HyphenMinus ) ( (lv_m2_3_0= ruleMultiply ) ) )*
+            loop162:
             do {
-                int alt159=2;
-                int LA159_0 = input.LA(1);
+                int alt162=2;
+                int LA162_0 = input.LA(1);
 
-                if ( (LA159_0==PlusSign||LA159_0==HyphenMinus) ) {
-                    alt159=1;
+                if ( (LA162_0==PlusSign||LA162_0==HyphenMinus) ) {
+                    alt162=1;
                 }
 
 
-                switch (alt159) {
+                switch (alt162) {
             	case 1 :
-            	    // InternalWreslEditorParser.g:5842:3: (otherlv_1= PlusSign | otherlv_2= HyphenMinus ) ( (lv_m2_3_0= ruleMultiply ) )
+            	    // InternalWreslEditorParser.g:5883:3: (otherlv_1= PlusSign | otherlv_2= HyphenMinus ) ( (lv_m2_3_0= ruleMultiply ) )
             	    {
-            	    // InternalWreslEditorParser.g:5842:3: (otherlv_1= PlusSign | otherlv_2= HyphenMinus )
-            	    int alt158=2;
-            	    int LA158_0 = input.LA(1);
+            	    // InternalWreslEditorParser.g:5883:3: (otherlv_1= PlusSign | otherlv_2= HyphenMinus )
+            	    int alt161=2;
+            	    int LA161_0 = input.LA(1);
 
-            	    if ( (LA158_0==PlusSign) ) {
-            	        alt158=1;
+            	    if ( (LA161_0==PlusSign) ) {
+            	        alt161=1;
             	    }
-            	    else if ( (LA158_0==HyphenMinus) ) {
-            	        alt158=2;
+            	    else if ( (LA161_0==HyphenMinus) ) {
+            	        alt161=2;
             	    }
             	    else {
             	        if (state.backtracking>0) {state.failed=true; return current;}
             	        NoViableAltException nvae =
-            	            new NoViableAltException("", 158, 0, input);
+            	            new NoViableAltException("", 161, 0, input);
 
             	        throw nvae;
             	    }
-            	    switch (alt158) {
+            	    switch (alt161) {
             	        case 1 :
-            	            // InternalWreslEditorParser.g:5843:2: otherlv_1= PlusSign
+            	            // InternalWreslEditorParser.g:5884:2: otherlv_1= PlusSign
             	            {
             	            otherlv_1=(Token)match(input,PlusSign,FOLLOW_25); if (state.failed) return current;
             	            if ( state.backtracking==0 ) {
@@ -18163,7 +18325,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             	            }
             	            break;
             	        case 2 :
-            	            // InternalWreslEditorParser.g:5849:2: otherlv_2= HyphenMinus
+            	            // InternalWreslEditorParser.g:5890:2: otherlv_2= HyphenMinus
             	            {
             	            otherlv_2=(Token)match(input,HyphenMinus,FOLLOW_25); if (state.failed) return current;
             	            if ( state.backtracking==0 ) {
@@ -18177,18 +18339,18 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    // InternalWreslEditorParser.g:5853:2: ( (lv_m2_3_0= ruleMultiply ) )
-            	    // InternalWreslEditorParser.g:5854:1: (lv_m2_3_0= ruleMultiply )
+            	    // InternalWreslEditorParser.g:5894:2: ( (lv_m2_3_0= ruleMultiply ) )
+            	    // InternalWreslEditorParser.g:5895:1: (lv_m2_3_0= ruleMultiply )
             	    {
-            	    // InternalWreslEditorParser.g:5854:1: (lv_m2_3_0= ruleMultiply )
-            	    // InternalWreslEditorParser.g:5855:3: lv_m2_3_0= ruleMultiply
+            	    // InternalWreslEditorParser.g:5895:1: (lv_m2_3_0= ruleMultiply )
+            	    // InternalWreslEditorParser.g:5896:3: lv_m2_3_0= ruleMultiply
             	    {
             	    if ( state.backtracking==0 ) {
             	       
             	      	        newCompositeNode(grammarAccess.getAddAccess().getM2MultiplyParserRuleCall_1_1_0()); 
             	      	    
             	    }
-            	    pushFollow(FOLLOW_81);
+            	    pushFollow(FOLLOW_82);
             	    lv_m2_3_0=ruleMultiply();
 
             	    state._fsp--;
@@ -18217,7 +18379,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop159;
+            	    break loop162;
                 }
             } while (true);
 
@@ -18244,7 +18406,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleMultiply"
-    // InternalWreslEditorParser.g:5879:1: entryRuleMultiply returns [EObject current=null] : iv_ruleMultiply= ruleMultiply EOF ;
+    // InternalWreslEditorParser.g:5920:1: entryRuleMultiply returns [EObject current=null] : iv_ruleMultiply= ruleMultiply EOF ;
     public final EObject entryRuleMultiply() throws RecognitionException {
         EObject current = null;
 
@@ -18252,8 +18414,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:5880:2: (iv_ruleMultiply= ruleMultiply EOF )
-            // InternalWreslEditorParser.g:5881:2: iv_ruleMultiply= ruleMultiply EOF
+            // InternalWreslEditorParser.g:5921:2: (iv_ruleMultiply= ruleMultiply EOF )
+            // InternalWreslEditorParser.g:5922:2: iv_ruleMultiply= ruleMultiply EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getMultiplyRule()); 
@@ -18284,7 +18446,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleMultiply"
-    // InternalWreslEditorParser.g:5888:1: ruleMultiply returns [EObject current=null] : ( ( (lv_u1_0_0= ruleUnary ) ) ( (otherlv_1= Asterisk | otherlv_2= Solidus ) ( (lv_u2_3_0= ruleUnary ) ) )* ) ;
+    // InternalWreslEditorParser.g:5929:1: ruleMultiply returns [EObject current=null] : ( ( (lv_u1_0_0= ruleUnary ) ) ( (otherlv_1= Asterisk | otherlv_2= Solidus ) ( (lv_u2_3_0= ruleUnary ) ) )* ) ;
     public final EObject ruleMultiply() throws RecognitionException {
         EObject current = null;
 
@@ -18298,24 +18460,24 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:5891:28: ( ( ( (lv_u1_0_0= ruleUnary ) ) ( (otherlv_1= Asterisk | otherlv_2= Solidus ) ( (lv_u2_3_0= ruleUnary ) ) )* ) )
-            // InternalWreslEditorParser.g:5892:1: ( ( (lv_u1_0_0= ruleUnary ) ) ( (otherlv_1= Asterisk | otherlv_2= Solidus ) ( (lv_u2_3_0= ruleUnary ) ) )* )
+            // InternalWreslEditorParser.g:5932:28: ( ( ( (lv_u1_0_0= ruleUnary ) ) ( (otherlv_1= Asterisk | otherlv_2= Solidus ) ( (lv_u2_3_0= ruleUnary ) ) )* ) )
+            // InternalWreslEditorParser.g:5933:1: ( ( (lv_u1_0_0= ruleUnary ) ) ( (otherlv_1= Asterisk | otherlv_2= Solidus ) ( (lv_u2_3_0= ruleUnary ) ) )* )
             {
-            // InternalWreslEditorParser.g:5892:1: ( ( (lv_u1_0_0= ruleUnary ) ) ( (otherlv_1= Asterisk | otherlv_2= Solidus ) ( (lv_u2_3_0= ruleUnary ) ) )* )
-            // InternalWreslEditorParser.g:5892:2: ( (lv_u1_0_0= ruleUnary ) ) ( (otherlv_1= Asterisk | otherlv_2= Solidus ) ( (lv_u2_3_0= ruleUnary ) ) )*
+            // InternalWreslEditorParser.g:5933:1: ( ( (lv_u1_0_0= ruleUnary ) ) ( (otherlv_1= Asterisk | otherlv_2= Solidus ) ( (lv_u2_3_0= ruleUnary ) ) )* )
+            // InternalWreslEditorParser.g:5933:2: ( (lv_u1_0_0= ruleUnary ) ) ( (otherlv_1= Asterisk | otherlv_2= Solidus ) ( (lv_u2_3_0= ruleUnary ) ) )*
             {
-            // InternalWreslEditorParser.g:5892:2: ( (lv_u1_0_0= ruleUnary ) )
-            // InternalWreslEditorParser.g:5893:1: (lv_u1_0_0= ruleUnary )
+            // InternalWreslEditorParser.g:5933:2: ( (lv_u1_0_0= ruleUnary ) )
+            // InternalWreslEditorParser.g:5934:1: (lv_u1_0_0= ruleUnary )
             {
-            // InternalWreslEditorParser.g:5893:1: (lv_u1_0_0= ruleUnary )
-            // InternalWreslEditorParser.g:5894:3: lv_u1_0_0= ruleUnary
+            // InternalWreslEditorParser.g:5934:1: (lv_u1_0_0= ruleUnary )
+            // InternalWreslEditorParser.g:5935:3: lv_u1_0_0= ruleUnary
             {
             if ( state.backtracking==0 ) {
                
               	        newCompositeNode(grammarAccess.getMultiplyAccess().getU1UnaryParserRuleCall_0_0()); 
               	    
             }
-            pushFollow(FOLLOW_82);
+            pushFollow(FOLLOW_83);
             lv_u1_0_0=ruleUnary();
 
             state._fsp--;
@@ -18339,41 +18501,41 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalWreslEditorParser.g:5910:2: ( (otherlv_1= Asterisk | otherlv_2= Solidus ) ( (lv_u2_3_0= ruleUnary ) ) )*
-            loop161:
+            // InternalWreslEditorParser.g:5951:2: ( (otherlv_1= Asterisk | otherlv_2= Solidus ) ( (lv_u2_3_0= ruleUnary ) ) )*
+            loop164:
             do {
-                int alt161=2;
-                int LA161_0 = input.LA(1);
+                int alt164=2;
+                int LA164_0 = input.LA(1);
 
-                if ( (LA161_0==Asterisk||LA161_0==Solidus) ) {
-                    alt161=1;
+                if ( (LA164_0==Asterisk||LA164_0==Solidus) ) {
+                    alt164=1;
                 }
 
 
-                switch (alt161) {
+                switch (alt164) {
             	case 1 :
-            	    // InternalWreslEditorParser.g:5910:3: (otherlv_1= Asterisk | otherlv_2= Solidus ) ( (lv_u2_3_0= ruleUnary ) )
+            	    // InternalWreslEditorParser.g:5951:3: (otherlv_1= Asterisk | otherlv_2= Solidus ) ( (lv_u2_3_0= ruleUnary ) )
             	    {
-            	    // InternalWreslEditorParser.g:5910:3: (otherlv_1= Asterisk | otherlv_2= Solidus )
-            	    int alt160=2;
-            	    int LA160_0 = input.LA(1);
+            	    // InternalWreslEditorParser.g:5951:3: (otherlv_1= Asterisk | otherlv_2= Solidus )
+            	    int alt163=2;
+            	    int LA163_0 = input.LA(1);
 
-            	    if ( (LA160_0==Asterisk) ) {
-            	        alt160=1;
+            	    if ( (LA163_0==Asterisk) ) {
+            	        alt163=1;
             	    }
-            	    else if ( (LA160_0==Solidus) ) {
-            	        alt160=2;
+            	    else if ( (LA163_0==Solidus) ) {
+            	        alt163=2;
             	    }
             	    else {
             	        if (state.backtracking>0) {state.failed=true; return current;}
             	        NoViableAltException nvae =
-            	            new NoViableAltException("", 160, 0, input);
+            	            new NoViableAltException("", 163, 0, input);
 
             	        throw nvae;
             	    }
-            	    switch (alt160) {
+            	    switch (alt163) {
             	        case 1 :
-            	            // InternalWreslEditorParser.g:5911:2: otherlv_1= Asterisk
+            	            // InternalWreslEditorParser.g:5952:2: otherlv_1= Asterisk
             	            {
             	            otherlv_1=(Token)match(input,Asterisk,FOLLOW_25); if (state.failed) return current;
             	            if ( state.backtracking==0 ) {
@@ -18385,7 +18547,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             	            }
             	            break;
             	        case 2 :
-            	            // InternalWreslEditorParser.g:5917:2: otherlv_2= Solidus
+            	            // InternalWreslEditorParser.g:5958:2: otherlv_2= Solidus
             	            {
             	            otherlv_2=(Token)match(input,Solidus,FOLLOW_25); if (state.failed) return current;
             	            if ( state.backtracking==0 ) {
@@ -18399,18 +18561,18 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    // InternalWreslEditorParser.g:5921:2: ( (lv_u2_3_0= ruleUnary ) )
-            	    // InternalWreslEditorParser.g:5922:1: (lv_u2_3_0= ruleUnary )
+            	    // InternalWreslEditorParser.g:5962:2: ( (lv_u2_3_0= ruleUnary ) )
+            	    // InternalWreslEditorParser.g:5963:1: (lv_u2_3_0= ruleUnary )
             	    {
-            	    // InternalWreslEditorParser.g:5922:1: (lv_u2_3_0= ruleUnary )
-            	    // InternalWreslEditorParser.g:5923:3: lv_u2_3_0= ruleUnary
+            	    // InternalWreslEditorParser.g:5963:1: (lv_u2_3_0= ruleUnary )
+            	    // InternalWreslEditorParser.g:5964:3: lv_u2_3_0= ruleUnary
             	    {
             	    if ( state.backtracking==0 ) {
             	       
             	      	        newCompositeNode(grammarAccess.getMultiplyAccess().getU2UnaryParserRuleCall_1_1_0()); 
             	      	    
             	    }
-            	    pushFollow(FOLLOW_82);
+            	    pushFollow(FOLLOW_83);
             	    lv_u2_3_0=ruleUnary();
 
             	    state._fsp--;
@@ -18439,7 +18601,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop161;
+            	    break loop164;
                 }
             } while (true);
 
@@ -18466,7 +18628,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleUnary"
-    // InternalWreslEditorParser.g:5947:1: entryRuleUnary returns [EObject current=null] : iv_ruleUnary= ruleUnary EOF ;
+    // InternalWreslEditorParser.g:5988:1: entryRuleUnary returns [EObject current=null] : iv_ruleUnary= ruleUnary EOF ;
     public final EObject entryRuleUnary() throws RecognitionException {
         EObject current = null;
 
@@ -18474,8 +18636,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:5948:2: (iv_ruleUnary= ruleUnary EOF )
-            // InternalWreslEditorParser.g:5949:2: iv_ruleUnary= ruleUnary EOF
+            // InternalWreslEditorParser.g:5989:2: (iv_ruleUnary= ruleUnary EOF )
+            // InternalWreslEditorParser.g:5990:2: iv_ruleUnary= ruleUnary EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getUnaryRule()); 
@@ -18506,7 +18668,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleUnary"
-    // InternalWreslEditorParser.g:5956:1: ruleUnary returns [EObject current=null] : ( (otherlv_0= PlusSign | ruleNegation )? this_Term_2= ruleTerm ) ;
+    // InternalWreslEditorParser.g:5997:1: ruleUnary returns [EObject current=null] : ( (otherlv_0= PlusSign | ruleNegation )? this_Term_2= ruleTerm ) ;
     public final EObject ruleUnary() throws RecognitionException {
         EObject current = null;
 
@@ -18517,25 +18679,25 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:5959:28: ( ( (otherlv_0= PlusSign | ruleNegation )? this_Term_2= ruleTerm ) )
-            // InternalWreslEditorParser.g:5960:1: ( (otherlv_0= PlusSign | ruleNegation )? this_Term_2= ruleTerm )
+            // InternalWreslEditorParser.g:6000:28: ( ( (otherlv_0= PlusSign | ruleNegation )? this_Term_2= ruleTerm ) )
+            // InternalWreslEditorParser.g:6001:1: ( (otherlv_0= PlusSign | ruleNegation )? this_Term_2= ruleTerm )
             {
-            // InternalWreslEditorParser.g:5960:1: ( (otherlv_0= PlusSign | ruleNegation )? this_Term_2= ruleTerm )
-            // InternalWreslEditorParser.g:5960:2: (otherlv_0= PlusSign | ruleNegation )? this_Term_2= ruleTerm
+            // InternalWreslEditorParser.g:6001:1: ( (otherlv_0= PlusSign | ruleNegation )? this_Term_2= ruleTerm )
+            // InternalWreslEditorParser.g:6001:2: (otherlv_0= PlusSign | ruleNegation )? this_Term_2= ruleTerm
             {
-            // InternalWreslEditorParser.g:5960:2: (otherlv_0= PlusSign | ruleNegation )?
-            int alt162=3;
-            int LA162_0 = input.LA(1);
+            // InternalWreslEditorParser.g:6001:2: (otherlv_0= PlusSign | ruleNegation )?
+            int alt165=3;
+            int LA165_0 = input.LA(1);
 
-            if ( (LA162_0==PlusSign) ) {
-                alt162=1;
+            if ( (LA165_0==PlusSign) ) {
+                alt165=1;
             }
-            else if ( (LA162_0==HyphenMinus) ) {
-                alt162=2;
+            else if ( (LA165_0==HyphenMinus) ) {
+                alt165=2;
             }
-            switch (alt162) {
+            switch (alt165) {
                 case 1 :
-                    // InternalWreslEditorParser.g:5961:2: otherlv_0= PlusSign
+                    // InternalWreslEditorParser.g:6002:2: otherlv_0= PlusSign
                     {
                     otherlv_0=(Token)match(input,PlusSign,FOLLOW_25); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -18547,7 +18709,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditorParser.g:5967:2: ruleNegation
+                    // InternalWreslEditorParser.g:6008:2: ruleNegation
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -18619,7 +18781,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleNegation"
-    // InternalWreslEditorParser.g:5997:1: entryRuleNegation returns [String current=null] : iv_ruleNegation= ruleNegation EOF ;
+    // InternalWreslEditorParser.g:6038:1: entryRuleNegation returns [String current=null] : iv_ruleNegation= ruleNegation EOF ;
     public final String entryRuleNegation() throws RecognitionException {
         String current = null;
 
@@ -18627,8 +18789,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:5998:1: (iv_ruleNegation= ruleNegation EOF )
-            // InternalWreslEditorParser.g:5999:2: iv_ruleNegation= ruleNegation EOF
+            // InternalWreslEditorParser.g:6039:1: (iv_ruleNegation= ruleNegation EOF )
+            // InternalWreslEditorParser.g:6040:2: iv_ruleNegation= ruleNegation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getNegationRule()); 
@@ -18659,7 +18821,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleNegation"
-    // InternalWreslEditorParser.g:6006:1: ruleNegation returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= HyphenMinus ;
+    // InternalWreslEditorParser.g:6047:1: ruleNegation returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= HyphenMinus ;
     public final AntlrDatatypeRuleToken ruleNegation() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -18668,8 +18830,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:6010:6: (kw= HyphenMinus )
-            // InternalWreslEditorParser.g:6012:2: kw= HyphenMinus
+            // InternalWreslEditorParser.g:6051:6: (kw= HyphenMinus )
+            // InternalWreslEditorParser.g:6053:2: kw= HyphenMinus
             {
             kw=(Token)match(input,HyphenMinus,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -18699,7 +18861,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTerm"
-    // InternalWreslEditorParser.g:6025:1: entryRuleTerm returns [EObject current=null] : iv_ruleTerm= ruleTerm EOF ;
+    // InternalWreslEditorParser.g:6066:1: entryRuleTerm returns [EObject current=null] : iv_ruleTerm= ruleTerm EOF ;
     public final EObject entryRuleTerm() throws RecognitionException {
         EObject current = null;
 
@@ -18707,8 +18869,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:6026:2: (iv_ruleTerm= ruleTerm EOF )
-            // InternalWreslEditorParser.g:6027:2: iv_ruleTerm= ruleTerm EOF
+            // InternalWreslEditorParser.g:6067:2: (iv_ruleTerm= ruleTerm EOF )
+            // InternalWreslEditorParser.g:6068:2: iv_ruleTerm= ruleTerm EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getTermRule()); 
@@ -18739,7 +18901,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTerm"
-    // InternalWreslEditorParser.g:6034:1: ruleTerm returns [EObject current=null] : ( ( (otherlv_0= RULE_ID ) ) | ( (lv_n_1_0= ruleNumber ) ) | ( (lv_f_2_0= ruleFunction ) ) | (otherlv_3= LeftParenthesis ( (lv_e_4_0= ruleExpression ) ) otherlv_5= RightParenthesis ) | ( (lv_s_6_0= ruleSpecialIdent ) ) | ruleMultiStep ) ;
+    // InternalWreslEditorParser.g:6075:1: ruleTerm returns [EObject current=null] : ( ( (otherlv_0= RULE_ID ) ) | ( (lv_n_1_0= ruleNumber ) ) | ( (lv_f_2_0= ruleFunction ) ) | (otherlv_3= LeftParenthesis ( (lv_e_4_0= ruleExpression ) ) otherlv_5= RightParenthesis ) | ( (lv_s_6_0= ruleSpecialIdent ) ) | ruleMultiStep ) ;
     public final EObject ruleTerm() throws RecognitionException {
         EObject current = null;
 
@@ -18758,21 +18920,21 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:6037:28: ( ( ( (otherlv_0= RULE_ID ) ) | ( (lv_n_1_0= ruleNumber ) ) | ( (lv_f_2_0= ruleFunction ) ) | (otherlv_3= LeftParenthesis ( (lv_e_4_0= ruleExpression ) ) otherlv_5= RightParenthesis ) | ( (lv_s_6_0= ruleSpecialIdent ) ) | ruleMultiStep ) )
-            // InternalWreslEditorParser.g:6038:1: ( ( (otherlv_0= RULE_ID ) ) | ( (lv_n_1_0= ruleNumber ) ) | ( (lv_f_2_0= ruleFunction ) ) | (otherlv_3= LeftParenthesis ( (lv_e_4_0= ruleExpression ) ) otherlv_5= RightParenthesis ) | ( (lv_s_6_0= ruleSpecialIdent ) ) | ruleMultiStep )
+            // InternalWreslEditorParser.g:6078:28: ( ( ( (otherlv_0= RULE_ID ) ) | ( (lv_n_1_0= ruleNumber ) ) | ( (lv_f_2_0= ruleFunction ) ) | (otherlv_3= LeftParenthesis ( (lv_e_4_0= ruleExpression ) ) otherlv_5= RightParenthesis ) | ( (lv_s_6_0= ruleSpecialIdent ) ) | ruleMultiStep ) )
+            // InternalWreslEditorParser.g:6079:1: ( ( (otherlv_0= RULE_ID ) ) | ( (lv_n_1_0= ruleNumber ) ) | ( (lv_f_2_0= ruleFunction ) ) | (otherlv_3= LeftParenthesis ( (lv_e_4_0= ruleExpression ) ) otherlv_5= RightParenthesis ) | ( (lv_s_6_0= ruleSpecialIdent ) ) | ruleMultiStep )
             {
-            // InternalWreslEditorParser.g:6038:1: ( ( (otherlv_0= RULE_ID ) ) | ( (lv_n_1_0= ruleNumber ) ) | ( (lv_f_2_0= ruleFunction ) ) | (otherlv_3= LeftParenthesis ( (lv_e_4_0= ruleExpression ) ) otherlv_5= RightParenthesis ) | ( (lv_s_6_0= ruleSpecialIdent ) ) | ruleMultiStep )
-            int alt163=6;
-            alt163 = dfa163.predict(input);
-            switch (alt163) {
+            // InternalWreslEditorParser.g:6079:1: ( ( (otherlv_0= RULE_ID ) ) | ( (lv_n_1_0= ruleNumber ) ) | ( (lv_f_2_0= ruleFunction ) ) | (otherlv_3= LeftParenthesis ( (lv_e_4_0= ruleExpression ) ) otherlv_5= RightParenthesis ) | ( (lv_s_6_0= ruleSpecialIdent ) ) | ruleMultiStep )
+            int alt166=6;
+            alt166 = dfa166.predict(input);
+            switch (alt166) {
                 case 1 :
-                    // InternalWreslEditorParser.g:6038:2: ( (otherlv_0= RULE_ID ) )
+                    // InternalWreslEditorParser.g:6079:2: ( (otherlv_0= RULE_ID ) )
                     {
-                    // InternalWreslEditorParser.g:6038:2: ( (otherlv_0= RULE_ID ) )
-                    // InternalWreslEditorParser.g:6039:1: (otherlv_0= RULE_ID )
+                    // InternalWreslEditorParser.g:6079:2: ( (otherlv_0= RULE_ID ) )
+                    // InternalWreslEditorParser.g:6080:1: (otherlv_0= RULE_ID )
                     {
-                    // InternalWreslEditorParser.g:6039:1: (otherlv_0= RULE_ID )
-                    // InternalWreslEditorParser.g:6040:3: otherlv_0= RULE_ID
+                    // InternalWreslEditorParser.g:6080:1: (otherlv_0= RULE_ID )
+                    // InternalWreslEditorParser.g:6081:3: otherlv_0= RULE_ID
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -18802,13 +18964,13 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditorParser.g:6055:6: ( (lv_n_1_0= ruleNumber ) )
+                    // InternalWreslEditorParser.g:6096:6: ( (lv_n_1_0= ruleNumber ) )
                     {
-                    // InternalWreslEditorParser.g:6055:6: ( (lv_n_1_0= ruleNumber ) )
-                    // InternalWreslEditorParser.g:6056:1: (lv_n_1_0= ruleNumber )
+                    // InternalWreslEditorParser.g:6096:6: ( (lv_n_1_0= ruleNumber ) )
+                    // InternalWreslEditorParser.g:6097:1: (lv_n_1_0= ruleNumber )
                     {
-                    // InternalWreslEditorParser.g:6056:1: (lv_n_1_0= ruleNumber )
-                    // InternalWreslEditorParser.g:6057:3: lv_n_1_0= ruleNumber
+                    // InternalWreslEditorParser.g:6097:1: (lv_n_1_0= ruleNumber )
+                    // InternalWreslEditorParser.g:6098:3: lv_n_1_0= ruleNumber
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -18843,13 +19005,13 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalWreslEditorParser.g:6074:6: ( (lv_f_2_0= ruleFunction ) )
+                    // InternalWreslEditorParser.g:6115:6: ( (lv_f_2_0= ruleFunction ) )
                     {
-                    // InternalWreslEditorParser.g:6074:6: ( (lv_f_2_0= ruleFunction ) )
-                    // InternalWreslEditorParser.g:6075:1: (lv_f_2_0= ruleFunction )
+                    // InternalWreslEditorParser.g:6115:6: ( (lv_f_2_0= ruleFunction ) )
+                    // InternalWreslEditorParser.g:6116:1: (lv_f_2_0= ruleFunction )
                     {
-                    // InternalWreslEditorParser.g:6075:1: (lv_f_2_0= ruleFunction )
-                    // InternalWreslEditorParser.g:6076:3: lv_f_2_0= ruleFunction
+                    // InternalWreslEditorParser.g:6116:1: (lv_f_2_0= ruleFunction )
+                    // InternalWreslEditorParser.g:6117:3: lv_f_2_0= ruleFunction
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -18884,10 +19046,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalWreslEditorParser.g:6093:6: (otherlv_3= LeftParenthesis ( (lv_e_4_0= ruleExpression ) ) otherlv_5= RightParenthesis )
+                    // InternalWreslEditorParser.g:6134:6: (otherlv_3= LeftParenthesis ( (lv_e_4_0= ruleExpression ) ) otherlv_5= RightParenthesis )
                     {
-                    // InternalWreslEditorParser.g:6093:6: (otherlv_3= LeftParenthesis ( (lv_e_4_0= ruleExpression ) ) otherlv_5= RightParenthesis )
-                    // InternalWreslEditorParser.g:6094:2: otherlv_3= LeftParenthesis ( (lv_e_4_0= ruleExpression ) ) otherlv_5= RightParenthesis
+                    // InternalWreslEditorParser.g:6134:6: (otherlv_3= LeftParenthesis ( (lv_e_4_0= ruleExpression ) ) otherlv_5= RightParenthesis )
+                    // InternalWreslEditorParser.g:6135:2: otherlv_3= LeftParenthesis ( (lv_e_4_0= ruleExpression ) ) otherlv_5= RightParenthesis
                     {
                     otherlv_3=(Token)match(input,LeftParenthesis,FOLLOW_25); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -18895,11 +19057,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                           	newLeafNode(otherlv_3, grammarAccess.getTermAccess().getLeftParenthesisKeyword_3_0());
                           
                     }
-                    // InternalWreslEditorParser.g:6098:1: ( (lv_e_4_0= ruleExpression ) )
-                    // InternalWreslEditorParser.g:6099:1: (lv_e_4_0= ruleExpression )
+                    // InternalWreslEditorParser.g:6139:1: ( (lv_e_4_0= ruleExpression ) )
+                    // InternalWreslEditorParser.g:6140:1: (lv_e_4_0= ruleExpression )
                     {
-                    // InternalWreslEditorParser.g:6099:1: (lv_e_4_0= ruleExpression )
-                    // InternalWreslEditorParser.g:6100:3: lv_e_4_0= ruleExpression
+                    // InternalWreslEditorParser.g:6140:1: (lv_e_4_0= ruleExpression )
+                    // InternalWreslEditorParser.g:6141:3: lv_e_4_0= ruleExpression
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -18943,13 +19105,13 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalWreslEditorParser.g:6122:6: ( (lv_s_6_0= ruleSpecialIdent ) )
+                    // InternalWreslEditorParser.g:6163:6: ( (lv_s_6_0= ruleSpecialIdent ) )
                     {
-                    // InternalWreslEditorParser.g:6122:6: ( (lv_s_6_0= ruleSpecialIdent ) )
-                    // InternalWreslEditorParser.g:6123:1: (lv_s_6_0= ruleSpecialIdent )
+                    // InternalWreslEditorParser.g:6163:6: ( (lv_s_6_0= ruleSpecialIdent ) )
+                    // InternalWreslEditorParser.g:6164:1: (lv_s_6_0= ruleSpecialIdent )
                     {
-                    // InternalWreslEditorParser.g:6123:1: (lv_s_6_0= ruleSpecialIdent )
-                    // InternalWreslEditorParser.g:6124:3: lv_s_6_0= ruleSpecialIdent
+                    // InternalWreslEditorParser.g:6164:1: (lv_s_6_0= ruleSpecialIdent )
+                    // InternalWreslEditorParser.g:6165:3: lv_s_6_0= ruleSpecialIdent
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -18984,7 +19146,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalWreslEditorParser.g:6142:2: ruleMultiStep
+                    // InternalWreslEditorParser.g:6183:2: ruleMultiStep
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -19032,7 +19194,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleFunction"
-    // InternalWreslEditorParser.g:6160:1: entryRuleFunction returns [EObject current=null] : iv_ruleFunction= ruleFunction EOF ;
+    // InternalWreslEditorParser.g:6201:1: entryRuleFunction returns [EObject current=null] : iv_ruleFunction= ruleFunction EOF ;
     public final EObject entryRuleFunction() throws RecognitionException {
         EObject current = null;
 
@@ -19040,8 +19202,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:6161:2: (iv_ruleFunction= ruleFunction EOF )
-            // InternalWreslEditorParser.g:6162:2: iv_ruleFunction= ruleFunction EOF
+            // InternalWreslEditorParser.g:6202:2: (iv_ruleFunction= ruleFunction EOF )
+            // InternalWreslEditorParser.g:6203:2: iv_ruleFunction= ruleFunction EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getFunctionRule()); 
@@ -19072,7 +19234,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleFunction"
-    // InternalWreslEditorParser.g:6169:1: ruleFunction returns [EObject current=null] : (this_ExternalFunction1_0= ruleExternalFunction1 | this_ExternalFunction2_1= ruleExternalFunction2 | this_MaxFunction_2= ruleMaxFunction | this_MinFunction_3= ruleMinFunction | (otherlv_4= LeftParenthesis this_SumContent_5= ruleSumContent otherlv_6= RightParenthesis ) | this_ModFunction_7= ruleModFunction | this_IntFunction_8= ruleIntFunction | this_AbsFunction_9= ruleAbsFunction | this_RoundFunction_10= ruleRoundFunction | this_PowFunction_11= rulePowFunction | this_LogFunction_12= ruleLogFunction | this_SinFunction_13= ruleSinFunction | this_CosFunction_14= ruleCosFunction | this_TanFunction_15= ruleTanFunction | this_CotFunction_16= ruleCotFunction | this_AsinFunction_17= ruleAsinFunction | this_AcosFunction_18= ruleAcosFunction | this_AtanFunction_19= ruleAtanFunction | this_AcotFunction_20= ruleAcotFunction | this_VarModel_21= ruleVarModel | this_VarModelStep_22= ruleVarModelStep | this_VarModelIndex_23= ruleVarModelIndex | this_VarModelIndexStep_24= ruleVarModelIndexStep ) ;
+    // InternalWreslEditorParser.g:6210:1: ruleFunction returns [EObject current=null] : (this_ExternalFunction1_0= ruleExternalFunction1 | this_ExternalFunction2_1= ruleExternalFunction2 | this_MaxFunction_2= ruleMaxFunction | this_MinFunction_3= ruleMinFunction | (otherlv_4= LeftParenthesis this_SumContent_5= ruleSumContent otherlv_6= RightParenthesis ) | this_ModFunction_7= ruleModFunction | this_IntFunction_8= ruleIntFunction | this_AbsFunction_9= ruleAbsFunction | this_RoundFunction_10= ruleRoundFunction | this_PowFunction_11= rulePowFunction | this_LogFunction_12= ruleLogFunction | this_SinFunction_13= ruleSinFunction | this_CosFunction_14= ruleCosFunction | this_TanFunction_15= ruleTanFunction | this_CotFunction_16= ruleCotFunction | this_AsinFunction_17= ruleAsinFunction | this_AcosFunction_18= ruleAcosFunction | this_AtanFunction_19= ruleAtanFunction | this_AcotFunction_20= ruleAcotFunction | this_VarModel_21= ruleVarModel | this_VarModelStep_22= ruleVarModelStep | this_VarModelIndex_23= ruleVarModelIndex | this_VarModelIndexStep_24= ruleVarModelIndexStep ) ;
     public final EObject ruleFunction() throws RecognitionException {
         EObject current = null;
 
@@ -19128,15 +19290,15 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:6172:28: ( (this_ExternalFunction1_0= ruleExternalFunction1 | this_ExternalFunction2_1= ruleExternalFunction2 | this_MaxFunction_2= ruleMaxFunction | this_MinFunction_3= ruleMinFunction | (otherlv_4= LeftParenthesis this_SumContent_5= ruleSumContent otherlv_6= RightParenthesis ) | this_ModFunction_7= ruleModFunction | this_IntFunction_8= ruleIntFunction | this_AbsFunction_9= ruleAbsFunction | this_RoundFunction_10= ruleRoundFunction | this_PowFunction_11= rulePowFunction | this_LogFunction_12= ruleLogFunction | this_SinFunction_13= ruleSinFunction | this_CosFunction_14= ruleCosFunction | this_TanFunction_15= ruleTanFunction | this_CotFunction_16= ruleCotFunction | this_AsinFunction_17= ruleAsinFunction | this_AcosFunction_18= ruleAcosFunction | this_AtanFunction_19= ruleAtanFunction | this_AcotFunction_20= ruleAcotFunction | this_VarModel_21= ruleVarModel | this_VarModelStep_22= ruleVarModelStep | this_VarModelIndex_23= ruleVarModelIndex | this_VarModelIndexStep_24= ruleVarModelIndexStep ) )
-            // InternalWreslEditorParser.g:6173:1: (this_ExternalFunction1_0= ruleExternalFunction1 | this_ExternalFunction2_1= ruleExternalFunction2 | this_MaxFunction_2= ruleMaxFunction | this_MinFunction_3= ruleMinFunction | (otherlv_4= LeftParenthesis this_SumContent_5= ruleSumContent otherlv_6= RightParenthesis ) | this_ModFunction_7= ruleModFunction | this_IntFunction_8= ruleIntFunction | this_AbsFunction_9= ruleAbsFunction | this_RoundFunction_10= ruleRoundFunction | this_PowFunction_11= rulePowFunction | this_LogFunction_12= ruleLogFunction | this_SinFunction_13= ruleSinFunction | this_CosFunction_14= ruleCosFunction | this_TanFunction_15= ruleTanFunction | this_CotFunction_16= ruleCotFunction | this_AsinFunction_17= ruleAsinFunction | this_AcosFunction_18= ruleAcosFunction | this_AtanFunction_19= ruleAtanFunction | this_AcotFunction_20= ruleAcotFunction | this_VarModel_21= ruleVarModel | this_VarModelStep_22= ruleVarModelStep | this_VarModelIndex_23= ruleVarModelIndex | this_VarModelIndexStep_24= ruleVarModelIndexStep )
+            // InternalWreslEditorParser.g:6213:28: ( (this_ExternalFunction1_0= ruleExternalFunction1 | this_ExternalFunction2_1= ruleExternalFunction2 | this_MaxFunction_2= ruleMaxFunction | this_MinFunction_3= ruleMinFunction | (otherlv_4= LeftParenthesis this_SumContent_5= ruleSumContent otherlv_6= RightParenthesis ) | this_ModFunction_7= ruleModFunction | this_IntFunction_8= ruleIntFunction | this_AbsFunction_9= ruleAbsFunction | this_RoundFunction_10= ruleRoundFunction | this_PowFunction_11= rulePowFunction | this_LogFunction_12= ruleLogFunction | this_SinFunction_13= ruleSinFunction | this_CosFunction_14= ruleCosFunction | this_TanFunction_15= ruleTanFunction | this_CotFunction_16= ruleCotFunction | this_AsinFunction_17= ruleAsinFunction | this_AcosFunction_18= ruleAcosFunction | this_AtanFunction_19= ruleAtanFunction | this_AcotFunction_20= ruleAcotFunction | this_VarModel_21= ruleVarModel | this_VarModelStep_22= ruleVarModelStep | this_VarModelIndex_23= ruleVarModelIndex | this_VarModelIndexStep_24= ruleVarModelIndexStep ) )
+            // InternalWreslEditorParser.g:6214:1: (this_ExternalFunction1_0= ruleExternalFunction1 | this_ExternalFunction2_1= ruleExternalFunction2 | this_MaxFunction_2= ruleMaxFunction | this_MinFunction_3= ruleMinFunction | (otherlv_4= LeftParenthesis this_SumContent_5= ruleSumContent otherlv_6= RightParenthesis ) | this_ModFunction_7= ruleModFunction | this_IntFunction_8= ruleIntFunction | this_AbsFunction_9= ruleAbsFunction | this_RoundFunction_10= ruleRoundFunction | this_PowFunction_11= rulePowFunction | this_LogFunction_12= ruleLogFunction | this_SinFunction_13= ruleSinFunction | this_CosFunction_14= ruleCosFunction | this_TanFunction_15= ruleTanFunction | this_CotFunction_16= ruleCotFunction | this_AsinFunction_17= ruleAsinFunction | this_AcosFunction_18= ruleAcosFunction | this_AtanFunction_19= ruleAtanFunction | this_AcotFunction_20= ruleAcotFunction | this_VarModel_21= ruleVarModel | this_VarModelStep_22= ruleVarModelStep | this_VarModelIndex_23= ruleVarModelIndex | this_VarModelIndexStep_24= ruleVarModelIndexStep )
             {
-            // InternalWreslEditorParser.g:6173:1: (this_ExternalFunction1_0= ruleExternalFunction1 | this_ExternalFunction2_1= ruleExternalFunction2 | this_MaxFunction_2= ruleMaxFunction | this_MinFunction_3= ruleMinFunction | (otherlv_4= LeftParenthesis this_SumContent_5= ruleSumContent otherlv_6= RightParenthesis ) | this_ModFunction_7= ruleModFunction | this_IntFunction_8= ruleIntFunction | this_AbsFunction_9= ruleAbsFunction | this_RoundFunction_10= ruleRoundFunction | this_PowFunction_11= rulePowFunction | this_LogFunction_12= ruleLogFunction | this_SinFunction_13= ruleSinFunction | this_CosFunction_14= ruleCosFunction | this_TanFunction_15= ruleTanFunction | this_CotFunction_16= ruleCotFunction | this_AsinFunction_17= ruleAsinFunction | this_AcosFunction_18= ruleAcosFunction | this_AtanFunction_19= ruleAtanFunction | this_AcotFunction_20= ruleAcotFunction | this_VarModel_21= ruleVarModel | this_VarModelStep_22= ruleVarModelStep | this_VarModelIndex_23= ruleVarModelIndex | this_VarModelIndexStep_24= ruleVarModelIndexStep )
-            int alt164=23;
-            alt164 = dfa164.predict(input);
-            switch (alt164) {
+            // InternalWreslEditorParser.g:6214:1: (this_ExternalFunction1_0= ruleExternalFunction1 | this_ExternalFunction2_1= ruleExternalFunction2 | this_MaxFunction_2= ruleMaxFunction | this_MinFunction_3= ruleMinFunction | (otherlv_4= LeftParenthesis this_SumContent_5= ruleSumContent otherlv_6= RightParenthesis ) | this_ModFunction_7= ruleModFunction | this_IntFunction_8= ruleIntFunction | this_AbsFunction_9= ruleAbsFunction | this_RoundFunction_10= ruleRoundFunction | this_PowFunction_11= rulePowFunction | this_LogFunction_12= ruleLogFunction | this_SinFunction_13= ruleSinFunction | this_CosFunction_14= ruleCosFunction | this_TanFunction_15= ruleTanFunction | this_CotFunction_16= ruleCotFunction | this_AsinFunction_17= ruleAsinFunction | this_AcosFunction_18= ruleAcosFunction | this_AtanFunction_19= ruleAtanFunction | this_AcotFunction_20= ruleAcotFunction | this_VarModel_21= ruleVarModel | this_VarModelStep_22= ruleVarModelStep | this_VarModelIndex_23= ruleVarModelIndex | this_VarModelIndexStep_24= ruleVarModelIndexStep )
+            int alt167=23;
+            alt167 = dfa167.predict(input);
+            switch (alt167) {
                 case 1 :
-                    // InternalWreslEditorParser.g:6174:2: this_ExternalFunction1_0= ruleExternalFunction1
+                    // InternalWreslEditorParser.g:6215:2: this_ExternalFunction1_0= ruleExternalFunction1
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -19163,7 +19325,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditorParser.g:6187:2: this_ExternalFunction2_1= ruleExternalFunction2
+                    // InternalWreslEditorParser.g:6228:2: this_ExternalFunction2_1= ruleExternalFunction2
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -19190,7 +19352,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalWreslEditorParser.g:6200:2: this_MaxFunction_2= ruleMaxFunction
+                    // InternalWreslEditorParser.g:6241:2: this_MaxFunction_2= ruleMaxFunction
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -19217,7 +19379,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalWreslEditorParser.g:6213:2: this_MinFunction_3= ruleMinFunction
+                    // InternalWreslEditorParser.g:6254:2: this_MinFunction_3= ruleMinFunction
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -19244,12 +19406,12 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalWreslEditorParser.g:6225:6: (otherlv_4= LeftParenthesis this_SumContent_5= ruleSumContent otherlv_6= RightParenthesis )
+                    // InternalWreslEditorParser.g:6266:6: (otherlv_4= LeftParenthesis this_SumContent_5= ruleSumContent otherlv_6= RightParenthesis )
                     {
-                    // InternalWreslEditorParser.g:6225:6: (otherlv_4= LeftParenthesis this_SumContent_5= ruleSumContent otherlv_6= RightParenthesis )
-                    // InternalWreslEditorParser.g:6226:2: otherlv_4= LeftParenthesis this_SumContent_5= ruleSumContent otherlv_6= RightParenthesis
+                    // InternalWreslEditorParser.g:6266:6: (otherlv_4= LeftParenthesis this_SumContent_5= ruleSumContent otherlv_6= RightParenthesis )
+                    // InternalWreslEditorParser.g:6267:2: otherlv_4= LeftParenthesis this_SumContent_5= ruleSumContent otherlv_6= RightParenthesis
                     {
-                    otherlv_4=(Token)match(input,LeftParenthesis,FOLLOW_83); if (state.failed) return current;
+                    otherlv_4=(Token)match(input,LeftParenthesis,FOLLOW_84); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_4, grammarAccess.getFunctionAccess().getLeftParenthesisKeyword_4_0());
@@ -19289,7 +19451,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalWreslEditorParser.g:6249:2: this_ModFunction_7= ruleModFunction
+                    // InternalWreslEditorParser.g:6290:2: this_ModFunction_7= ruleModFunction
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -19316,7 +19478,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalWreslEditorParser.g:6262:2: this_IntFunction_8= ruleIntFunction
+                    // InternalWreslEditorParser.g:6303:2: this_IntFunction_8= ruleIntFunction
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -19343,7 +19505,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // InternalWreslEditorParser.g:6275:2: this_AbsFunction_9= ruleAbsFunction
+                    // InternalWreslEditorParser.g:6316:2: this_AbsFunction_9= ruleAbsFunction
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -19370,7 +19532,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 9 :
-                    // InternalWreslEditorParser.g:6288:2: this_RoundFunction_10= ruleRoundFunction
+                    // InternalWreslEditorParser.g:6329:2: this_RoundFunction_10= ruleRoundFunction
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -19397,7 +19559,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 10 :
-                    // InternalWreslEditorParser.g:6301:2: this_PowFunction_11= rulePowFunction
+                    // InternalWreslEditorParser.g:6342:2: this_PowFunction_11= rulePowFunction
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -19424,7 +19586,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 11 :
-                    // InternalWreslEditorParser.g:6314:2: this_LogFunction_12= ruleLogFunction
+                    // InternalWreslEditorParser.g:6355:2: this_LogFunction_12= ruleLogFunction
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -19451,7 +19613,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 12 :
-                    // InternalWreslEditorParser.g:6327:2: this_SinFunction_13= ruleSinFunction
+                    // InternalWreslEditorParser.g:6368:2: this_SinFunction_13= ruleSinFunction
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -19478,7 +19640,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 13 :
-                    // InternalWreslEditorParser.g:6340:2: this_CosFunction_14= ruleCosFunction
+                    // InternalWreslEditorParser.g:6381:2: this_CosFunction_14= ruleCosFunction
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -19505,7 +19667,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 14 :
-                    // InternalWreslEditorParser.g:6353:2: this_TanFunction_15= ruleTanFunction
+                    // InternalWreslEditorParser.g:6394:2: this_TanFunction_15= ruleTanFunction
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -19532,7 +19694,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 15 :
-                    // InternalWreslEditorParser.g:6366:2: this_CotFunction_16= ruleCotFunction
+                    // InternalWreslEditorParser.g:6407:2: this_CotFunction_16= ruleCotFunction
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -19559,7 +19721,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 16 :
-                    // InternalWreslEditorParser.g:6379:2: this_AsinFunction_17= ruleAsinFunction
+                    // InternalWreslEditorParser.g:6420:2: this_AsinFunction_17= ruleAsinFunction
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -19586,7 +19748,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 17 :
-                    // InternalWreslEditorParser.g:6392:2: this_AcosFunction_18= ruleAcosFunction
+                    // InternalWreslEditorParser.g:6433:2: this_AcosFunction_18= ruleAcosFunction
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -19613,7 +19775,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 18 :
-                    // InternalWreslEditorParser.g:6405:2: this_AtanFunction_19= ruleAtanFunction
+                    // InternalWreslEditorParser.g:6446:2: this_AtanFunction_19= ruleAtanFunction
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -19640,7 +19802,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 19 :
-                    // InternalWreslEditorParser.g:6418:2: this_AcotFunction_20= ruleAcotFunction
+                    // InternalWreslEditorParser.g:6459:2: this_AcotFunction_20= ruleAcotFunction
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -19667,7 +19829,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 20 :
-                    // InternalWreslEditorParser.g:6431:2: this_VarModel_21= ruleVarModel
+                    // InternalWreslEditorParser.g:6472:2: this_VarModel_21= ruleVarModel
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -19694,7 +19856,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 21 :
-                    // InternalWreslEditorParser.g:6444:2: this_VarModelStep_22= ruleVarModelStep
+                    // InternalWreslEditorParser.g:6485:2: this_VarModelStep_22= ruleVarModelStep
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -19721,7 +19883,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 22 :
-                    // InternalWreslEditorParser.g:6457:2: this_VarModelIndex_23= ruleVarModelIndex
+                    // InternalWreslEditorParser.g:6498:2: this_VarModelIndex_23= ruleVarModelIndex
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -19748,7 +19910,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 23 :
-                    // InternalWreslEditorParser.g:6470:2: this_VarModelIndexStep_24= ruleVarModelIndexStep
+                    // InternalWreslEditorParser.g:6511:2: this_VarModelIndexStep_24= ruleVarModelIndexStep
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -19797,7 +19959,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleExternalFunction1"
-    // InternalWreslEditorParser.g:6489:1: entryRuleExternalFunction1 returns [EObject current=null] : iv_ruleExternalFunction1= ruleExternalFunction1 EOF ;
+    // InternalWreslEditorParser.g:6530:1: entryRuleExternalFunction1 returns [EObject current=null] : iv_ruleExternalFunction1= ruleExternalFunction1 EOF ;
     public final EObject entryRuleExternalFunction1() throws RecognitionException {
         EObject current = null;
 
@@ -19805,8 +19967,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:6490:2: (iv_ruleExternalFunction1= ruleExternalFunction1 EOF )
-            // InternalWreslEditorParser.g:6491:2: iv_ruleExternalFunction1= ruleExternalFunction1 EOF
+            // InternalWreslEditorParser.g:6531:2: (iv_ruleExternalFunction1= ruleExternalFunction1 EOF )
+            // InternalWreslEditorParser.g:6532:2: iv_ruleExternalFunction1= ruleExternalFunction1 EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getExternalFunction1Rule()); 
@@ -19837,7 +19999,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleExternalFunction1"
-    // InternalWreslEditorParser.g:6498:1: ruleExternalFunction1 returns [EObject current=null] : ( ( ( (otherlv_0= RULE_ID ) ) | ruleTafCfs | ruleMonth ) otherlv_3= LeftParenthesis ( ( (lv_e1_4_1= ruleExpression | lv_e1_4_2= ruleTrunkTimeArray ) ) ) (otherlv_5= Comma ( ( (lv_e2_6_1= ruleExpression | lv_e2_6_2= ruleTrunkTimeArray ) ) ) )* otherlv_7= RightParenthesis ) ;
+    // InternalWreslEditorParser.g:6539:1: ruleExternalFunction1 returns [EObject current=null] : ( ( ( (otherlv_0= RULE_ID ) ) | ruleTafCfs | ruleMonth ) otherlv_3= LeftParenthesis ( ( (lv_e1_4_1= ruleExpression | lv_e1_4_2= ruleTrunkTimeArray ) ) ) (otherlv_5= Comma ( ( (lv_e2_6_1= ruleExpression | lv_e2_6_2= ruleTrunkTimeArray ) ) ) )* otherlv_7= RightParenthesis ) ;
     public final EObject ruleExternalFunction1() throws RecognitionException {
         EObject current = null;
 
@@ -19857,18 +20019,18 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:6501:28: ( ( ( ( (otherlv_0= RULE_ID ) ) | ruleTafCfs | ruleMonth ) otherlv_3= LeftParenthesis ( ( (lv_e1_4_1= ruleExpression | lv_e1_4_2= ruleTrunkTimeArray ) ) ) (otherlv_5= Comma ( ( (lv_e2_6_1= ruleExpression | lv_e2_6_2= ruleTrunkTimeArray ) ) ) )* otherlv_7= RightParenthesis ) )
-            // InternalWreslEditorParser.g:6502:1: ( ( ( (otherlv_0= RULE_ID ) ) | ruleTafCfs | ruleMonth ) otherlv_3= LeftParenthesis ( ( (lv_e1_4_1= ruleExpression | lv_e1_4_2= ruleTrunkTimeArray ) ) ) (otherlv_5= Comma ( ( (lv_e2_6_1= ruleExpression | lv_e2_6_2= ruleTrunkTimeArray ) ) ) )* otherlv_7= RightParenthesis )
+            // InternalWreslEditorParser.g:6542:28: ( ( ( ( (otherlv_0= RULE_ID ) ) | ruleTafCfs | ruleMonth ) otherlv_3= LeftParenthesis ( ( (lv_e1_4_1= ruleExpression | lv_e1_4_2= ruleTrunkTimeArray ) ) ) (otherlv_5= Comma ( ( (lv_e2_6_1= ruleExpression | lv_e2_6_2= ruleTrunkTimeArray ) ) ) )* otherlv_7= RightParenthesis ) )
+            // InternalWreslEditorParser.g:6543:1: ( ( ( (otherlv_0= RULE_ID ) ) | ruleTafCfs | ruleMonth ) otherlv_3= LeftParenthesis ( ( (lv_e1_4_1= ruleExpression | lv_e1_4_2= ruleTrunkTimeArray ) ) ) (otherlv_5= Comma ( ( (lv_e2_6_1= ruleExpression | lv_e2_6_2= ruleTrunkTimeArray ) ) ) )* otherlv_7= RightParenthesis )
             {
-            // InternalWreslEditorParser.g:6502:1: ( ( ( (otherlv_0= RULE_ID ) ) | ruleTafCfs | ruleMonth ) otherlv_3= LeftParenthesis ( ( (lv_e1_4_1= ruleExpression | lv_e1_4_2= ruleTrunkTimeArray ) ) ) (otherlv_5= Comma ( ( (lv_e2_6_1= ruleExpression | lv_e2_6_2= ruleTrunkTimeArray ) ) ) )* otherlv_7= RightParenthesis )
-            // InternalWreslEditorParser.g:6502:2: ( ( (otherlv_0= RULE_ID ) ) | ruleTafCfs | ruleMonth ) otherlv_3= LeftParenthesis ( ( (lv_e1_4_1= ruleExpression | lv_e1_4_2= ruleTrunkTimeArray ) ) ) (otherlv_5= Comma ( ( (lv_e2_6_1= ruleExpression | lv_e2_6_2= ruleTrunkTimeArray ) ) ) )* otherlv_7= RightParenthesis
+            // InternalWreslEditorParser.g:6543:1: ( ( ( (otherlv_0= RULE_ID ) ) | ruleTafCfs | ruleMonth ) otherlv_3= LeftParenthesis ( ( (lv_e1_4_1= ruleExpression | lv_e1_4_2= ruleTrunkTimeArray ) ) ) (otherlv_5= Comma ( ( (lv_e2_6_1= ruleExpression | lv_e2_6_2= ruleTrunkTimeArray ) ) ) )* otherlv_7= RightParenthesis )
+            // InternalWreslEditorParser.g:6543:2: ( ( (otherlv_0= RULE_ID ) ) | ruleTafCfs | ruleMonth ) otherlv_3= LeftParenthesis ( ( (lv_e1_4_1= ruleExpression | lv_e1_4_2= ruleTrunkTimeArray ) ) ) (otherlv_5= Comma ( ( (lv_e2_6_1= ruleExpression | lv_e2_6_2= ruleTrunkTimeArray ) ) ) )* otherlv_7= RightParenthesis
             {
-            // InternalWreslEditorParser.g:6502:2: ( ( (otherlv_0= RULE_ID ) ) | ruleTafCfs | ruleMonth )
-            int alt165=3;
+            // InternalWreslEditorParser.g:6543:2: ( ( (otherlv_0= RULE_ID ) ) | ruleTafCfs | ruleMonth )
+            int alt168=3;
             switch ( input.LA(1) ) {
             case RULE_ID:
                 {
-                alt165=1;
+                alt168=1;
                 }
                 break;
             case Cfs_taf:
@@ -19876,31 +20038,31 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             case Af_cfs:
             case Cfs_af:
                 {
-                alt165=2;
+                alt168=2;
                 }
                 break;
             case Month:
                 {
-                alt165=3;
+                alt168=3;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 165, 0, input);
+                    new NoViableAltException("", 168, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt165) {
+            switch (alt168) {
                 case 1 :
-                    // InternalWreslEditorParser.g:6502:3: ( (otherlv_0= RULE_ID ) )
+                    // InternalWreslEditorParser.g:6543:3: ( (otherlv_0= RULE_ID ) )
                     {
-                    // InternalWreslEditorParser.g:6502:3: ( (otherlv_0= RULE_ID ) )
-                    // InternalWreslEditorParser.g:6503:1: (otherlv_0= RULE_ID )
+                    // InternalWreslEditorParser.g:6543:3: ( (otherlv_0= RULE_ID ) )
+                    // InternalWreslEditorParser.g:6544:1: (otherlv_0= RULE_ID )
                     {
-                    // InternalWreslEditorParser.g:6503:1: (otherlv_0= RULE_ID )
-                    // InternalWreslEditorParser.g:6504:3: otherlv_0= RULE_ID
+                    // InternalWreslEditorParser.g:6544:1: (otherlv_0= RULE_ID )
+                    // InternalWreslEditorParser.g:6545:3: otherlv_0= RULE_ID
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -19930,7 +20092,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditorParser.g:6520:2: ruleTafCfs
+                    // InternalWreslEditorParser.g:6561:2: ruleTafCfs
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -19956,7 +20118,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalWreslEditorParser.g:6532:2: ruleMonth
+                    // InternalWreslEditorParser.g:6573:2: ruleMonth
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -19990,23 +20152,23 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_3, grammarAccess.getExternalFunction1Access().getLeftParenthesisKeyword_1());
                   
             }
-            // InternalWreslEditorParser.g:6547:1: ( ( (lv_e1_4_1= ruleExpression | lv_e1_4_2= ruleTrunkTimeArray ) ) )
-            // InternalWreslEditorParser.g:6548:1: ( (lv_e1_4_1= ruleExpression | lv_e1_4_2= ruleTrunkTimeArray ) )
+            // InternalWreslEditorParser.g:6588:1: ( ( (lv_e1_4_1= ruleExpression | lv_e1_4_2= ruleTrunkTimeArray ) ) )
+            // InternalWreslEditorParser.g:6589:1: ( (lv_e1_4_1= ruleExpression | lv_e1_4_2= ruleTrunkTimeArray ) )
             {
-            // InternalWreslEditorParser.g:6548:1: ( (lv_e1_4_1= ruleExpression | lv_e1_4_2= ruleTrunkTimeArray ) )
-            // InternalWreslEditorParser.g:6549:1: (lv_e1_4_1= ruleExpression | lv_e1_4_2= ruleTrunkTimeArray )
+            // InternalWreslEditorParser.g:6589:1: ( (lv_e1_4_1= ruleExpression | lv_e1_4_2= ruleTrunkTimeArray ) )
+            // InternalWreslEditorParser.g:6590:1: (lv_e1_4_1= ruleExpression | lv_e1_4_2= ruleTrunkTimeArray )
             {
-            // InternalWreslEditorParser.g:6549:1: (lv_e1_4_1= ruleExpression | lv_e1_4_2= ruleTrunkTimeArray )
-            int alt166=2;
-            int LA166_0 = input.LA(1);
+            // InternalWreslEditorParser.g:6590:1: (lv_e1_4_1= ruleExpression | lv_e1_4_2= ruleTrunkTimeArray )
+            int alt169=2;
+            int LA169_0 = input.LA(1);
 
-            if ( ((LA166_0>=Daysintimestep && LA166_0<=Daysinmonth)||LA166_0==Wateryear||LA166_0==Cfs_taf||(LA166_0>=Prevapr && LA166_0<=Daysin)||LA166_0==Month||(LA166_0>=Apr && LA166_0<=Dec)||(LA166_0>=Feb && LA166_0<=Jun)||(LA166_0>=Mar && LA166_0<=Oct)||LA166_0==Sep||LA166_0==M||LA166_0==LeftParenthesis||LA166_0==PlusSign||LA166_0==HyphenMinus||LA166_0==I||(LA166_0>=RULE_MIN && LA166_0<=RULE_FLOAT)) ) {
-                alt166=1;
+            if ( ((LA169_0>=Daysintimestep && LA169_0<=Daysinmonth)||LA169_0==Wateryear||LA169_0==Cfs_taf||(LA169_0>=Prevapr && LA169_0<=Daysin)||LA169_0==Month||(LA169_0>=Apr && LA169_0<=Dec)||(LA169_0>=Feb && LA169_0<=Jun)||(LA169_0>=Mar && LA169_0<=Oct)||LA169_0==Sep||LA169_0==M||LA169_0==LeftParenthesis||LA169_0==PlusSign||LA169_0==HyphenMinus||LA169_0==I||(LA169_0>=RULE_MIN && LA169_0<=RULE_FLOAT)) ) {
+                alt169=1;
             }
-            else if ( (LA166_0==RULE_ID) ) {
-                int LA166_2 = input.LA(2);
+            else if ( (LA169_0==RULE_ID) ) {
+                int LA169_2 = input.LA(2);
 
-                if ( (LA166_2==LeftParenthesis) ) {
+                if ( (LA169_2==LeftParenthesis) ) {
                     switch ( input.LA(3) ) {
                     case Daysintimestep:
                     case Daysinmonth:
@@ -20065,37 +20227,56 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     case RULE_ACOT:
                     case RULE_FLOAT:
                         {
-                        alt166=1;
+                        alt169=1;
                         }
                         break;
-                    case HyphenMinus:
+                    case RULE_INT:
                         {
-                        int LA166_4 = input.LA(4);
+                        int LA169_4 = input.LA(4);
 
-                        if ( ((LA166_4>=Daysintimestep && LA166_4<=Daysinmonth)||LA166_4==Wateryear||LA166_4==Cfs_taf||(LA166_4>=Prevapr && LA166_4<=Daysin)||LA166_4==Month||(LA166_4>=Apr && LA166_4<=Dec)||(LA166_4>=Feb && LA166_4<=Jun)||(LA166_4>=Mar && LA166_4<=Oct)||LA166_4==Sep||LA166_4==M||LA166_4==LeftParenthesis||LA166_4==I||(LA166_4>=RULE_MIN && LA166_4<=RULE_ACOT)||LA166_4==RULE_FLOAT||LA166_4==RULE_ID) ) {
-                            alt166=1;
+                        if ( ((LA169_4>=RightParenthesis && LA169_4<=Solidus)) ) {
+                            alt169=1;
                         }
-                        else if ( (LA166_4==RULE_INT) ) {
-                            int LA166_7 = input.LA(5);
-
-                            if ( ((LA166_7>=RightParenthesis && LA166_7<=Solidus)) ) {
-                                alt166=1;
-                            }
-                            else if ( (LA166_7==Colon) ) {
-                                alt166=2;
-                            }
-                            else {
-                                if (state.backtracking>0) {state.failed=true; return current;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("", 166, 7, input);
-
-                                throw nvae;
-                            }
+                        else if ( (LA169_4==Colon) ) {
+                            alt169=2;
                         }
                         else {
                             if (state.backtracking>0) {state.failed=true; return current;}
                             NoViableAltException nvae =
-                                new NoViableAltException("", 166, 4, input);
+                                new NoViableAltException("", 169, 4, input);
+
+                            throw nvae;
+                        }
+                        }
+                        break;
+                    case HyphenMinus:
+                        {
+                        int LA169_5 = input.LA(4);
+
+                        if ( (LA169_5==RULE_INT) ) {
+                            int LA169_8 = input.LA(5);
+
+                            if ( (LA169_8==Colon) ) {
+                                alt169=2;
+                            }
+                            else if ( ((LA169_8>=RightParenthesis && LA169_8<=Solidus)) ) {
+                                alt169=1;
+                            }
+                            else {
+                                if (state.backtracking>0) {state.failed=true; return current;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("", 169, 8, input);
+
+                                throw nvae;
+                            }
+                        }
+                        else if ( ((LA169_5>=Daysintimestep && LA169_5<=Daysinmonth)||LA169_5==Wateryear||LA169_5==Cfs_taf||(LA169_5>=Prevapr && LA169_5<=Daysin)||LA169_5==Month||(LA169_5>=Apr && LA169_5<=Dec)||(LA169_5>=Feb && LA169_5<=Jun)||(LA169_5>=Mar && LA169_5<=Oct)||LA169_5==Sep||LA169_5==M||LA169_5==LeftParenthesis||LA169_5==I||(LA169_5>=RULE_MIN && LA169_5<=RULE_ACOT)||LA169_5==RULE_FLOAT||LA169_5==RULE_ID) ) {
+                            alt169=1;
+                        }
+                        else {
+                            if (state.backtracking>0) {state.failed=true; return current;}
+                            NoViableAltException nvae =
+                                new NoViableAltException("", 169, 5, input);
 
                             throw nvae;
                         }
@@ -20103,37 +20284,18 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                         break;
                     case RULE_ID:
                         {
-                        int LA166_5 = input.LA(4);
+                        int LA169_6 = input.LA(4);
 
-                        if ( ((LA166_5>=LeftParenthesis && LA166_5<=Solidus)||LA166_5==LeftSquareBracket) ) {
-                            alt166=1;
+                        if ( (LA169_6==Colon) ) {
+                            alt169=2;
                         }
-                        else if ( (LA166_5==Colon) ) {
-                            alt166=2;
+                        else if ( ((LA169_6>=LeftParenthesis && LA169_6<=Solidus)||LA169_6==LeftSquareBracket) ) {
+                            alt169=1;
                         }
                         else {
                             if (state.backtracking>0) {state.failed=true; return current;}
                             NoViableAltException nvae =
-                                new NoViableAltException("", 166, 5, input);
-
-                            throw nvae;
-                        }
-                        }
-                        break;
-                    case RULE_INT:
-                        {
-                        int LA166_6 = input.LA(4);
-
-                        if ( ((LA166_6>=RightParenthesis && LA166_6<=Solidus)) ) {
-                            alt166=1;
-                        }
-                        else if ( (LA166_6==Colon) ) {
-                            alt166=2;
-                        }
-                        else {
-                            if (state.backtracking>0) {state.failed=true; return current;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("", 166, 6, input);
+                                new NoViableAltException("", 169, 6, input);
 
                             throw nvae;
                         }
@@ -20142,19 +20304,19 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     default:
                         if (state.backtracking>0) {state.failed=true; return current;}
                         NoViableAltException nvae =
-                            new NoViableAltException("", 166, 3, input);
+                            new NoViableAltException("", 169, 3, input);
 
                         throw nvae;
                     }
 
                 }
-                else if ( ((LA166_2>=RightParenthesis && LA166_2<=Solidus)||LA166_2==LeftSquareBracket) ) {
-                    alt166=1;
+                else if ( ((LA169_2>=RightParenthesis && LA169_2<=Solidus)||LA169_2==LeftSquareBracket) ) {
+                    alt169=1;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return current;}
                     NoViableAltException nvae =
-                        new NoViableAltException("", 166, 2, input);
+                        new NoViableAltException("", 169, 2, input);
 
                     throw nvae;
                 }
@@ -20162,13 +20324,13 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 166, 0, input);
+                    new NoViableAltException("", 169, 0, input);
 
                 throw nvae;
             }
-            switch (alt166) {
+            switch (alt169) {
                 case 1 :
-                    // InternalWreslEditorParser.g:6550:3: lv_e1_4_1= ruleExpression
+                    // InternalWreslEditorParser.g:6591:3: lv_e1_4_1= ruleExpression
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -20197,7 +20359,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditorParser.g:6565:8: lv_e1_4_2= ruleTrunkTimeArray
+                    // InternalWreslEditorParser.g:6606:8: lv_e1_4_2= ruleTrunkTimeArray
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -20234,20 +20396,20 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalWreslEditorParser.g:6583:2: (otherlv_5= Comma ( ( (lv_e2_6_1= ruleExpression | lv_e2_6_2= ruleTrunkTimeArray ) ) ) )*
-            loop168:
+            // InternalWreslEditorParser.g:6624:2: (otherlv_5= Comma ( ( (lv_e2_6_1= ruleExpression | lv_e2_6_2= ruleTrunkTimeArray ) ) ) )*
+            loop171:
             do {
-                int alt168=2;
-                int LA168_0 = input.LA(1);
+                int alt171=2;
+                int LA171_0 = input.LA(1);
 
-                if ( (LA168_0==Comma) ) {
-                    alt168=1;
+                if ( (LA171_0==Comma) ) {
+                    alt171=1;
                 }
 
 
-                switch (alt168) {
+                switch (alt171) {
             	case 1 :
-            	    // InternalWreslEditorParser.g:6584:2: otherlv_5= Comma ( ( (lv_e2_6_1= ruleExpression | lv_e2_6_2= ruleTrunkTimeArray ) ) )
+            	    // InternalWreslEditorParser.g:6625:2: otherlv_5= Comma ( ( (lv_e2_6_1= ruleExpression | lv_e2_6_2= ruleTrunkTimeArray ) ) )
             	    {
             	    otherlv_5=(Token)match(input,Comma,FOLLOW_25); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -20255,27 +20417,98 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             	          	newLeafNode(otherlv_5, grammarAccess.getExternalFunction1Access().getCommaKeyword_3_0());
             	          
             	    }
-            	    // InternalWreslEditorParser.g:6588:1: ( ( (lv_e2_6_1= ruleExpression | lv_e2_6_2= ruleTrunkTimeArray ) ) )
-            	    // InternalWreslEditorParser.g:6589:1: ( (lv_e2_6_1= ruleExpression | lv_e2_6_2= ruleTrunkTimeArray ) )
+            	    // InternalWreslEditorParser.g:6629:1: ( ( (lv_e2_6_1= ruleExpression | lv_e2_6_2= ruleTrunkTimeArray ) ) )
+            	    // InternalWreslEditorParser.g:6630:1: ( (lv_e2_6_1= ruleExpression | lv_e2_6_2= ruleTrunkTimeArray ) )
             	    {
-            	    // InternalWreslEditorParser.g:6589:1: ( (lv_e2_6_1= ruleExpression | lv_e2_6_2= ruleTrunkTimeArray ) )
-            	    // InternalWreslEditorParser.g:6590:1: (lv_e2_6_1= ruleExpression | lv_e2_6_2= ruleTrunkTimeArray )
+            	    // InternalWreslEditorParser.g:6630:1: ( (lv_e2_6_1= ruleExpression | lv_e2_6_2= ruleTrunkTimeArray ) )
+            	    // InternalWreslEditorParser.g:6631:1: (lv_e2_6_1= ruleExpression | lv_e2_6_2= ruleTrunkTimeArray )
             	    {
-            	    // InternalWreslEditorParser.g:6590:1: (lv_e2_6_1= ruleExpression | lv_e2_6_2= ruleTrunkTimeArray )
-            	    int alt167=2;
-            	    int LA167_0 = input.LA(1);
+            	    // InternalWreslEditorParser.g:6631:1: (lv_e2_6_1= ruleExpression | lv_e2_6_2= ruleTrunkTimeArray )
+            	    int alt170=2;
+            	    int LA170_0 = input.LA(1);
 
-            	    if ( ((LA167_0>=Daysintimestep && LA167_0<=Daysinmonth)||LA167_0==Wateryear||LA167_0==Cfs_taf||(LA167_0>=Prevapr && LA167_0<=Daysin)||LA167_0==Month||(LA167_0>=Apr && LA167_0<=Dec)||(LA167_0>=Feb && LA167_0<=Jun)||(LA167_0>=Mar && LA167_0<=Oct)||LA167_0==Sep||LA167_0==M||LA167_0==LeftParenthesis||LA167_0==PlusSign||LA167_0==HyphenMinus||LA167_0==I||(LA167_0>=RULE_MIN && LA167_0<=RULE_FLOAT)) ) {
-            	        alt167=1;
+            	    if ( ((LA170_0>=Daysintimestep && LA170_0<=Daysinmonth)||LA170_0==Wateryear||LA170_0==Cfs_taf||(LA170_0>=Prevapr && LA170_0<=Daysin)||LA170_0==Month||(LA170_0>=Apr && LA170_0<=Dec)||(LA170_0>=Feb && LA170_0<=Jun)||(LA170_0>=Mar && LA170_0<=Oct)||LA170_0==Sep||LA170_0==M||LA170_0==LeftParenthesis||LA170_0==PlusSign||LA170_0==HyphenMinus||LA170_0==I||(LA170_0>=RULE_MIN && LA170_0<=RULE_FLOAT)) ) {
+            	        alt170=1;
             	    }
-            	    else if ( (LA167_0==RULE_ID) ) {
-            	        int LA167_2 = input.LA(2);
+            	    else if ( (LA170_0==RULE_ID) ) {
+            	        int LA170_2 = input.LA(2);
 
-            	        if ( ((LA167_2>=RightParenthesis && LA167_2<=Solidus)||LA167_2==LeftSquareBracket) ) {
-            	            alt167=1;
+            	        if ( ((LA170_2>=RightParenthesis && LA170_2<=Solidus)||LA170_2==LeftSquareBracket) ) {
+            	            alt170=1;
             	        }
-            	        else if ( (LA167_2==LeftParenthesis) ) {
+            	        else if ( (LA170_2==LeftParenthesis) ) {
             	            switch ( input.LA(3) ) {
+            	            case RULE_INT:
+            	                {
+            	                int LA170_4 = input.LA(4);
+
+            	                if ( ((LA170_4>=RightParenthesis && LA170_4<=Solidus)) ) {
+            	                    alt170=1;
+            	                }
+            	                else if ( (LA170_4==Colon) ) {
+            	                    alt170=2;
+            	                }
+            	                else {
+            	                    if (state.backtracking>0) {state.failed=true; return current;}
+            	                    NoViableAltException nvae =
+            	                        new NoViableAltException("", 170, 4, input);
+
+            	                    throw nvae;
+            	                }
+            	                }
+            	                break;
+            	            case HyphenMinus:
+            	                {
+            	                int LA170_5 = input.LA(4);
+
+            	                if ( (LA170_5==RULE_INT) ) {
+            	                    int LA170_8 = input.LA(5);
+
+            	                    if ( (LA170_8==Colon) ) {
+            	                        alt170=2;
+            	                    }
+            	                    else if ( ((LA170_8>=RightParenthesis && LA170_8<=Solidus)) ) {
+            	                        alt170=1;
+            	                    }
+            	                    else {
+            	                        if (state.backtracking>0) {state.failed=true; return current;}
+            	                        NoViableAltException nvae =
+            	                            new NoViableAltException("", 170, 8, input);
+
+            	                        throw nvae;
+            	                    }
+            	                }
+            	                else if ( ((LA170_5>=Daysintimestep && LA170_5<=Daysinmonth)||LA170_5==Wateryear||LA170_5==Cfs_taf||(LA170_5>=Prevapr && LA170_5<=Daysin)||LA170_5==Month||(LA170_5>=Apr && LA170_5<=Dec)||(LA170_5>=Feb && LA170_5<=Jun)||(LA170_5>=Mar && LA170_5<=Oct)||LA170_5==Sep||LA170_5==M||LA170_5==LeftParenthesis||LA170_5==I||(LA170_5>=RULE_MIN && LA170_5<=RULE_ACOT)||LA170_5==RULE_FLOAT||LA170_5==RULE_ID) ) {
+            	                    alt170=1;
+            	                }
+            	                else {
+            	                    if (state.backtracking>0) {state.failed=true; return current;}
+            	                    NoViableAltException nvae =
+            	                        new NoViableAltException("", 170, 5, input);
+
+            	                    throw nvae;
+            	                }
+            	                }
+            	                break;
+            	            case RULE_ID:
+            	                {
+            	                int LA170_6 = input.LA(4);
+
+            	                if ( ((LA170_6>=LeftParenthesis && LA170_6<=Solidus)||LA170_6==LeftSquareBracket) ) {
+            	                    alt170=1;
+            	                }
+            	                else if ( (LA170_6==Colon) ) {
+            	                    alt170=2;
+            	                }
+            	                else {
+            	                    if (state.backtracking>0) {state.failed=true; return current;}
+            	                    NoViableAltException nvae =
+            	                        new NoViableAltException("", 170, 6, input);
+
+            	                    throw nvae;
+            	                }
+            	                }
+            	                break;
             	            case Daysintimestep:
             	            case Daysinmonth:
             	            case Wateryear:
@@ -20333,84 +20566,13 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             	            case RULE_ACOT:
             	            case RULE_FLOAT:
             	                {
-            	                alt167=1;
-            	                }
-            	                break;
-            	            case HyphenMinus:
-            	                {
-            	                int LA167_4 = input.LA(4);
-
-            	                if ( ((LA167_4>=Daysintimestep && LA167_4<=Daysinmonth)||LA167_4==Wateryear||LA167_4==Cfs_taf||(LA167_4>=Prevapr && LA167_4<=Daysin)||LA167_4==Month||(LA167_4>=Apr && LA167_4<=Dec)||(LA167_4>=Feb && LA167_4<=Jun)||(LA167_4>=Mar && LA167_4<=Oct)||LA167_4==Sep||LA167_4==M||LA167_4==LeftParenthesis||LA167_4==I||(LA167_4>=RULE_MIN && LA167_4<=RULE_ACOT)||LA167_4==RULE_FLOAT||LA167_4==RULE_ID) ) {
-            	                    alt167=1;
-            	                }
-            	                else if ( (LA167_4==RULE_INT) ) {
-            	                    int LA167_7 = input.LA(5);
-
-            	                    if ( ((LA167_7>=RightParenthesis && LA167_7<=Solidus)) ) {
-            	                        alt167=1;
-            	                    }
-            	                    else if ( (LA167_7==Colon) ) {
-            	                        alt167=2;
-            	                    }
-            	                    else {
-            	                        if (state.backtracking>0) {state.failed=true; return current;}
-            	                        NoViableAltException nvae =
-            	                            new NoViableAltException("", 167, 7, input);
-
-            	                        throw nvae;
-            	                    }
-            	                }
-            	                else {
-            	                    if (state.backtracking>0) {state.failed=true; return current;}
-            	                    NoViableAltException nvae =
-            	                        new NoViableAltException("", 167, 4, input);
-
-            	                    throw nvae;
-            	                }
-            	                }
-            	                break;
-            	            case RULE_ID:
-            	                {
-            	                int LA167_5 = input.LA(4);
-
-            	                if ( ((LA167_5>=LeftParenthesis && LA167_5<=Solidus)||LA167_5==LeftSquareBracket) ) {
-            	                    alt167=1;
-            	                }
-            	                else if ( (LA167_5==Colon) ) {
-            	                    alt167=2;
-            	                }
-            	                else {
-            	                    if (state.backtracking>0) {state.failed=true; return current;}
-            	                    NoViableAltException nvae =
-            	                        new NoViableAltException("", 167, 5, input);
-
-            	                    throw nvae;
-            	                }
-            	                }
-            	                break;
-            	            case RULE_INT:
-            	                {
-            	                int LA167_6 = input.LA(4);
-
-            	                if ( (LA167_6==Colon) ) {
-            	                    alt167=2;
-            	                }
-            	                else if ( ((LA167_6>=RightParenthesis && LA167_6<=Solidus)) ) {
-            	                    alt167=1;
-            	                }
-            	                else {
-            	                    if (state.backtracking>0) {state.failed=true; return current;}
-            	                    NoViableAltException nvae =
-            	                        new NoViableAltException("", 167, 6, input);
-
-            	                    throw nvae;
-            	                }
+            	                alt170=1;
             	                }
             	                break;
             	            default:
             	                if (state.backtracking>0) {state.failed=true; return current;}
             	                NoViableAltException nvae =
-            	                    new NoViableAltException("", 167, 3, input);
+            	                    new NoViableAltException("", 170, 3, input);
 
             	                throw nvae;
             	            }
@@ -20419,7 +20581,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             	        else {
             	            if (state.backtracking>0) {state.failed=true; return current;}
             	            NoViableAltException nvae =
-            	                new NoViableAltException("", 167, 2, input);
+            	                new NoViableAltException("", 170, 2, input);
 
             	            throw nvae;
             	        }
@@ -20427,13 +20589,13 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             	    else {
             	        if (state.backtracking>0) {state.failed=true; return current;}
             	        NoViableAltException nvae =
-            	            new NoViableAltException("", 167, 0, input);
+            	            new NoViableAltException("", 170, 0, input);
 
             	        throw nvae;
             	    }
-            	    switch (alt167) {
+            	    switch (alt170) {
             	        case 1 :
-            	            // InternalWreslEditorParser.g:6591:3: lv_e2_6_1= ruleExpression
+            	            // InternalWreslEditorParser.g:6632:3: lv_e2_6_1= ruleExpression
             	            {
             	            if ( state.backtracking==0 ) {
             	               
@@ -20462,7 +20624,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             	            }
             	            break;
             	        case 2 :
-            	            // InternalWreslEditorParser.g:6606:8: lv_e2_6_2= ruleTrunkTimeArray
+            	            // InternalWreslEditorParser.g:6647:8: lv_e2_6_2= ruleTrunkTimeArray
             	            {
             	            if ( state.backtracking==0 ) {
             	               
@@ -20504,7 +20666,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop168;
+            	    break loop171;
                 }
             } while (true);
 
@@ -20537,7 +20699,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleExternalFunction2"
-    // InternalWreslEditorParser.g:6637:1: entryRuleExternalFunction2 returns [EObject current=null] : iv_ruleExternalFunction2= ruleExternalFunction2 EOF ;
+    // InternalWreslEditorParser.g:6678:1: entryRuleExternalFunction2 returns [EObject current=null] : iv_ruleExternalFunction2= ruleExternalFunction2 EOF ;
     public final EObject entryRuleExternalFunction2() throws RecognitionException {
         EObject current = null;
 
@@ -20545,8 +20707,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:6638:2: (iv_ruleExternalFunction2= ruleExternalFunction2 EOF )
-            // InternalWreslEditorParser.g:6639:2: iv_ruleExternalFunction2= ruleExternalFunction2 EOF
+            // InternalWreslEditorParser.g:6679:2: (iv_ruleExternalFunction2= ruleExternalFunction2 EOF )
+            // InternalWreslEditorParser.g:6680:2: iv_ruleExternalFunction2= ruleExternalFunction2 EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getExternalFunction2Rule()); 
@@ -20577,7 +20739,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleExternalFunction2"
-    // InternalWreslEditorParser.g:6646:1: ruleExternalFunction2 returns [EObject current=null] : ( ( ( (otherlv_0= RULE_ID ) ) | ruleTafCfs | ruleMonth ) otherlv_3= LeftParenthesis otherlv_4= RightParenthesis ) ;
+    // InternalWreslEditorParser.g:6687:1: ruleExternalFunction2 returns [EObject current=null] : ( ( ( (otherlv_0= RULE_ID ) ) | ruleTafCfs | ruleMonth ) otherlv_3= LeftParenthesis otherlv_4= RightParenthesis ) ;
     public final EObject ruleExternalFunction2() throws RecognitionException {
         EObject current = null;
 
@@ -20588,18 +20750,18 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:6649:28: ( ( ( ( (otherlv_0= RULE_ID ) ) | ruleTafCfs | ruleMonth ) otherlv_3= LeftParenthesis otherlv_4= RightParenthesis ) )
-            // InternalWreslEditorParser.g:6650:1: ( ( ( (otherlv_0= RULE_ID ) ) | ruleTafCfs | ruleMonth ) otherlv_3= LeftParenthesis otherlv_4= RightParenthesis )
+            // InternalWreslEditorParser.g:6690:28: ( ( ( ( (otherlv_0= RULE_ID ) ) | ruleTafCfs | ruleMonth ) otherlv_3= LeftParenthesis otherlv_4= RightParenthesis ) )
+            // InternalWreslEditorParser.g:6691:1: ( ( ( (otherlv_0= RULE_ID ) ) | ruleTafCfs | ruleMonth ) otherlv_3= LeftParenthesis otherlv_4= RightParenthesis )
             {
-            // InternalWreslEditorParser.g:6650:1: ( ( ( (otherlv_0= RULE_ID ) ) | ruleTafCfs | ruleMonth ) otherlv_3= LeftParenthesis otherlv_4= RightParenthesis )
-            // InternalWreslEditorParser.g:6650:2: ( ( (otherlv_0= RULE_ID ) ) | ruleTafCfs | ruleMonth ) otherlv_3= LeftParenthesis otherlv_4= RightParenthesis
+            // InternalWreslEditorParser.g:6691:1: ( ( ( (otherlv_0= RULE_ID ) ) | ruleTafCfs | ruleMonth ) otherlv_3= LeftParenthesis otherlv_4= RightParenthesis )
+            // InternalWreslEditorParser.g:6691:2: ( ( (otherlv_0= RULE_ID ) ) | ruleTafCfs | ruleMonth ) otherlv_3= LeftParenthesis otherlv_4= RightParenthesis
             {
-            // InternalWreslEditorParser.g:6650:2: ( ( (otherlv_0= RULE_ID ) ) | ruleTafCfs | ruleMonth )
-            int alt169=3;
+            // InternalWreslEditorParser.g:6691:2: ( ( (otherlv_0= RULE_ID ) ) | ruleTafCfs | ruleMonth )
+            int alt172=3;
             switch ( input.LA(1) ) {
             case RULE_ID:
                 {
-                alt169=1;
+                alt172=1;
                 }
                 break;
             case Cfs_taf:
@@ -20607,31 +20769,31 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             case Af_cfs:
             case Cfs_af:
                 {
-                alt169=2;
+                alt172=2;
                 }
                 break;
             case Month:
                 {
-                alt169=3;
+                alt172=3;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 169, 0, input);
+                    new NoViableAltException("", 172, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt169) {
+            switch (alt172) {
                 case 1 :
-                    // InternalWreslEditorParser.g:6650:3: ( (otherlv_0= RULE_ID ) )
+                    // InternalWreslEditorParser.g:6691:3: ( (otherlv_0= RULE_ID ) )
                     {
-                    // InternalWreslEditorParser.g:6650:3: ( (otherlv_0= RULE_ID ) )
-                    // InternalWreslEditorParser.g:6651:1: (otherlv_0= RULE_ID )
+                    // InternalWreslEditorParser.g:6691:3: ( (otherlv_0= RULE_ID ) )
+                    // InternalWreslEditorParser.g:6692:1: (otherlv_0= RULE_ID )
                     {
-                    // InternalWreslEditorParser.g:6651:1: (otherlv_0= RULE_ID )
-                    // InternalWreslEditorParser.g:6652:3: otherlv_0= RULE_ID
+                    // InternalWreslEditorParser.g:6692:1: (otherlv_0= RULE_ID )
+                    // InternalWreslEditorParser.g:6693:3: otherlv_0= RULE_ID
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -20661,7 +20823,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditorParser.g:6668:2: ruleTafCfs
+                    // InternalWreslEditorParser.g:6709:2: ruleTafCfs
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -20687,7 +20849,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalWreslEditorParser.g:6680:2: ruleMonth
+                    // InternalWreslEditorParser.g:6721:2: ruleMonth
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -20750,7 +20912,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTrunkTimeArray"
-    // InternalWreslEditorParser.g:6708:1: entryRuleTrunkTimeArray returns [EObject current=null] : iv_ruleTrunkTimeArray= ruleTrunkTimeArray EOF ;
+    // InternalWreslEditorParser.g:6749:1: entryRuleTrunkTimeArray returns [EObject current=null] : iv_ruleTrunkTimeArray= ruleTrunkTimeArray EOF ;
     public final EObject entryRuleTrunkTimeArray() throws RecognitionException {
         EObject current = null;
 
@@ -20758,8 +20920,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:6709:2: (iv_ruleTrunkTimeArray= ruleTrunkTimeArray EOF )
-            // InternalWreslEditorParser.g:6710:2: iv_ruleTrunkTimeArray= ruleTrunkTimeArray EOF
+            // InternalWreslEditorParser.g:6750:2: (iv_ruleTrunkTimeArray= ruleTrunkTimeArray EOF )
+            // InternalWreslEditorParser.g:6751:2: iv_ruleTrunkTimeArray= ruleTrunkTimeArray EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getTrunkTimeArrayRule()); 
@@ -20790,7 +20952,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTrunkTimeArray"
-    // InternalWreslEditorParser.g:6717:1: ruleTrunkTimeArray returns [EObject current=null] : ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftParenthesis ( (lv_t1_2_0= ruleTrunkTimeArrayIndex ) ) otherlv_3= Colon ( (lv_t2_4_0= ruleTrunkTimeArrayIndex ) ) otherlv_5= RightParenthesis ) ;
+    // InternalWreslEditorParser.g:6758:1: ruleTrunkTimeArray returns [EObject current=null] : ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftParenthesis ( (lv_t1_2_0= ruleTrunkTimeArrayIndex ) ) otherlv_3= Colon ( (lv_t2_4_0= ruleTrunkTimeArrayIndex ) ) otherlv_5= RightParenthesis ) ;
     public final EObject ruleTrunkTimeArray() throws RecognitionException {
         EObject current = null;
 
@@ -20806,17 +20968,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:6720:28: ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftParenthesis ( (lv_t1_2_0= ruleTrunkTimeArrayIndex ) ) otherlv_3= Colon ( (lv_t2_4_0= ruleTrunkTimeArrayIndex ) ) otherlv_5= RightParenthesis ) )
-            // InternalWreslEditorParser.g:6721:1: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftParenthesis ( (lv_t1_2_0= ruleTrunkTimeArrayIndex ) ) otherlv_3= Colon ( (lv_t2_4_0= ruleTrunkTimeArrayIndex ) ) otherlv_5= RightParenthesis )
+            // InternalWreslEditorParser.g:6761:28: ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftParenthesis ( (lv_t1_2_0= ruleTrunkTimeArrayIndex ) ) otherlv_3= Colon ( (lv_t2_4_0= ruleTrunkTimeArrayIndex ) ) otherlv_5= RightParenthesis ) )
+            // InternalWreslEditorParser.g:6762:1: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftParenthesis ( (lv_t1_2_0= ruleTrunkTimeArrayIndex ) ) otherlv_3= Colon ( (lv_t2_4_0= ruleTrunkTimeArrayIndex ) ) otherlv_5= RightParenthesis )
             {
-            // InternalWreslEditorParser.g:6721:1: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftParenthesis ( (lv_t1_2_0= ruleTrunkTimeArrayIndex ) ) otherlv_3= Colon ( (lv_t2_4_0= ruleTrunkTimeArrayIndex ) ) otherlv_5= RightParenthesis )
-            // InternalWreslEditorParser.g:6721:2: ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftParenthesis ( (lv_t1_2_0= ruleTrunkTimeArrayIndex ) ) otherlv_3= Colon ( (lv_t2_4_0= ruleTrunkTimeArrayIndex ) ) otherlv_5= RightParenthesis
+            // InternalWreslEditorParser.g:6762:1: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftParenthesis ( (lv_t1_2_0= ruleTrunkTimeArrayIndex ) ) otherlv_3= Colon ( (lv_t2_4_0= ruleTrunkTimeArrayIndex ) ) otherlv_5= RightParenthesis )
+            // InternalWreslEditorParser.g:6762:2: ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftParenthesis ( (lv_t1_2_0= ruleTrunkTimeArrayIndex ) ) otherlv_3= Colon ( (lv_t2_4_0= ruleTrunkTimeArrayIndex ) ) otherlv_5= RightParenthesis
             {
-            // InternalWreslEditorParser.g:6721:2: ( (otherlv_0= RULE_ID ) )
-            // InternalWreslEditorParser.g:6722:1: (otherlv_0= RULE_ID )
+            // InternalWreslEditorParser.g:6762:2: ( (otherlv_0= RULE_ID ) )
+            // InternalWreslEditorParser.g:6763:1: (otherlv_0= RULE_ID )
             {
-            // InternalWreslEditorParser.g:6722:1: (otherlv_0= RULE_ID )
-            // InternalWreslEditorParser.g:6723:3: otherlv_0= RULE_ID
+            // InternalWreslEditorParser.g:6763:1: (otherlv_0= RULE_ID )
+            // InternalWreslEditorParser.g:6764:3: otherlv_0= RULE_ID
             {
             if ( state.backtracking==0 ) {
                
@@ -20842,24 +21004,24 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,LeftParenthesis,FOLLOW_84); if (state.failed) return current;
+            otherlv_1=(Token)match(input,LeftParenthesis,FOLLOW_85); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getTrunkTimeArrayAccess().getLeftParenthesisKeyword_1());
                   
             }
-            // InternalWreslEditorParser.g:6742:1: ( (lv_t1_2_0= ruleTrunkTimeArrayIndex ) )
-            // InternalWreslEditorParser.g:6743:1: (lv_t1_2_0= ruleTrunkTimeArrayIndex )
+            // InternalWreslEditorParser.g:6783:1: ( (lv_t1_2_0= ruleTrunkTimeArrayIndex ) )
+            // InternalWreslEditorParser.g:6784:1: (lv_t1_2_0= ruleTrunkTimeArrayIndex )
             {
-            // InternalWreslEditorParser.g:6743:1: (lv_t1_2_0= ruleTrunkTimeArrayIndex )
-            // InternalWreslEditorParser.g:6744:3: lv_t1_2_0= ruleTrunkTimeArrayIndex
+            // InternalWreslEditorParser.g:6784:1: (lv_t1_2_0= ruleTrunkTimeArrayIndex )
+            // InternalWreslEditorParser.g:6785:3: lv_t1_2_0= ruleTrunkTimeArrayIndex
             {
             if ( state.backtracking==0 ) {
                
               	        newCompositeNode(grammarAccess.getTrunkTimeArrayAccess().getT1TrunkTimeArrayIndexParserRuleCall_2_0()); 
               	    
             }
-            pushFollow(FOLLOW_85);
+            pushFollow(FOLLOW_86);
             lv_t1_2_0=ruleTrunkTimeArrayIndex();
 
             state._fsp--;
@@ -20883,17 +21045,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_3=(Token)match(input,Colon,FOLLOW_84); if (state.failed) return current;
+            otherlv_3=(Token)match(input,Colon,FOLLOW_85); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_3, grammarAccess.getTrunkTimeArrayAccess().getColonKeyword_3());
                   
             }
-            // InternalWreslEditorParser.g:6765:1: ( (lv_t2_4_0= ruleTrunkTimeArrayIndex ) )
-            // InternalWreslEditorParser.g:6766:1: (lv_t2_4_0= ruleTrunkTimeArrayIndex )
+            // InternalWreslEditorParser.g:6806:1: ( (lv_t2_4_0= ruleTrunkTimeArrayIndex ) )
+            // InternalWreslEditorParser.g:6807:1: (lv_t2_4_0= ruleTrunkTimeArrayIndex )
             {
-            // InternalWreslEditorParser.g:6766:1: (lv_t2_4_0= ruleTrunkTimeArrayIndex )
-            // InternalWreslEditorParser.g:6767:3: lv_t2_4_0= ruleTrunkTimeArrayIndex
+            // InternalWreslEditorParser.g:6807:1: (lv_t2_4_0= ruleTrunkTimeArrayIndex )
+            // InternalWreslEditorParser.g:6808:3: lv_t2_4_0= ruleTrunkTimeArrayIndex
             {
             if ( state.backtracking==0 ) {
                
@@ -20953,7 +21115,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTrunkTimeArrayIndex"
-    // InternalWreslEditorParser.g:6796:1: entryRuleTrunkTimeArrayIndex returns [EObject current=null] : iv_ruleTrunkTimeArrayIndex= ruleTrunkTimeArrayIndex EOF ;
+    // InternalWreslEditorParser.g:6837:1: entryRuleTrunkTimeArrayIndex returns [EObject current=null] : iv_ruleTrunkTimeArrayIndex= ruleTrunkTimeArrayIndex EOF ;
     public final EObject entryRuleTrunkTimeArrayIndex() throws RecognitionException {
         EObject current = null;
 
@@ -20961,8 +21123,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:6797:2: (iv_ruleTrunkTimeArrayIndex= ruleTrunkTimeArrayIndex EOF )
-            // InternalWreslEditorParser.g:6798:2: iv_ruleTrunkTimeArrayIndex= ruleTrunkTimeArrayIndex EOF
+            // InternalWreslEditorParser.g:6838:2: (iv_ruleTrunkTimeArrayIndex= ruleTrunkTimeArrayIndex EOF )
+            // InternalWreslEditorParser.g:6839:2: iv_ruleTrunkTimeArrayIndex= ruleTrunkTimeArrayIndex EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getTrunkTimeArrayIndexRule()); 
@@ -20993,7 +21155,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTrunkTimeArrayIndex"
-    // InternalWreslEditorParser.g:6805:1: ruleTrunkTimeArrayIndex returns [EObject current=null] : (this_INT_0= RULE_INT | (otherlv_1= HyphenMinus this_INT_2= RULE_INT ) | ( (otherlv_3= RULE_ID ) ) ) ;
+    // InternalWreslEditorParser.g:6846:1: ruleTrunkTimeArrayIndex returns [EObject current=null] : (this_INT_0= RULE_INT | (otherlv_1= HyphenMinus this_INT_2= RULE_INT ) | ( (otherlv_3= RULE_ID ) ) ) ;
     public final EObject ruleTrunkTimeArrayIndex() throws RecognitionException {
         EObject current = null;
 
@@ -21005,38 +21167,38 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:6808:28: ( (this_INT_0= RULE_INT | (otherlv_1= HyphenMinus this_INT_2= RULE_INT ) | ( (otherlv_3= RULE_ID ) ) ) )
-            // InternalWreslEditorParser.g:6809:1: (this_INT_0= RULE_INT | (otherlv_1= HyphenMinus this_INT_2= RULE_INT ) | ( (otherlv_3= RULE_ID ) ) )
+            // InternalWreslEditorParser.g:6849:28: ( (this_INT_0= RULE_INT | (otherlv_1= HyphenMinus this_INT_2= RULE_INT ) | ( (otherlv_3= RULE_ID ) ) ) )
+            // InternalWreslEditorParser.g:6850:1: (this_INT_0= RULE_INT | (otherlv_1= HyphenMinus this_INT_2= RULE_INT ) | ( (otherlv_3= RULE_ID ) ) )
             {
-            // InternalWreslEditorParser.g:6809:1: (this_INT_0= RULE_INT | (otherlv_1= HyphenMinus this_INT_2= RULE_INT ) | ( (otherlv_3= RULE_ID ) ) )
-            int alt170=3;
+            // InternalWreslEditorParser.g:6850:1: (this_INT_0= RULE_INT | (otherlv_1= HyphenMinus this_INT_2= RULE_INT ) | ( (otherlv_3= RULE_ID ) ) )
+            int alt173=3;
             switch ( input.LA(1) ) {
             case RULE_INT:
                 {
-                alt170=1;
+                alt173=1;
                 }
                 break;
             case HyphenMinus:
                 {
-                alt170=2;
+                alt173=2;
                 }
                 break;
             case RULE_ID:
                 {
-                alt170=3;
+                alt173=3;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 170, 0, input);
+                    new NoViableAltException("", 173, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt170) {
+            switch (alt173) {
                 case 1 :
-                    // InternalWreslEditorParser.g:6809:2: this_INT_0= RULE_INT
+                    // InternalWreslEditorParser.g:6850:2: this_INT_0= RULE_INT
                     {
                     this_INT_0=(Token)match(input,RULE_INT,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -21048,10 +21210,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditorParser.g:6814:6: (otherlv_1= HyphenMinus this_INT_2= RULE_INT )
+                    // InternalWreslEditorParser.g:6855:6: (otherlv_1= HyphenMinus this_INT_2= RULE_INT )
                     {
-                    // InternalWreslEditorParser.g:6814:6: (otherlv_1= HyphenMinus this_INT_2= RULE_INT )
-                    // InternalWreslEditorParser.g:6815:2: otherlv_1= HyphenMinus this_INT_2= RULE_INT
+                    // InternalWreslEditorParser.g:6855:6: (otherlv_1= HyphenMinus this_INT_2= RULE_INT )
+                    // InternalWreslEditorParser.g:6856:2: otherlv_1= HyphenMinus this_INT_2= RULE_INT
                     {
                     otherlv_1=(Token)match(input,HyphenMinus,FOLLOW_52); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -21072,13 +21234,13 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalWreslEditorParser.g:6824:6: ( (otherlv_3= RULE_ID ) )
+                    // InternalWreslEditorParser.g:6865:6: ( (otherlv_3= RULE_ID ) )
                     {
-                    // InternalWreslEditorParser.g:6824:6: ( (otherlv_3= RULE_ID ) )
-                    // InternalWreslEditorParser.g:6825:1: (otherlv_3= RULE_ID )
+                    // InternalWreslEditorParser.g:6865:6: ( (otherlv_3= RULE_ID ) )
+                    // InternalWreslEditorParser.g:6866:1: (otherlv_3= RULE_ID )
                     {
-                    // InternalWreslEditorParser.g:6825:1: (otherlv_3= RULE_ID )
-                    // InternalWreslEditorParser.g:6826:3: otherlv_3= RULE_ID
+                    // InternalWreslEditorParser.g:6866:1: (otherlv_3= RULE_ID )
+                    // InternalWreslEditorParser.g:6867:3: otherlv_3= RULE_ID
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -21130,7 +21292,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleMaxFunction"
-    // InternalWreslEditorParser.g:6848:1: entryRuleMaxFunction returns [EObject current=null] : iv_ruleMaxFunction= ruleMaxFunction EOF ;
+    // InternalWreslEditorParser.g:6889:1: entryRuleMaxFunction returns [EObject current=null] : iv_ruleMaxFunction= ruleMaxFunction EOF ;
     public final EObject entryRuleMaxFunction() throws RecognitionException {
         EObject current = null;
 
@@ -21138,8 +21300,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:6849:2: (iv_ruleMaxFunction= ruleMaxFunction EOF )
-            // InternalWreslEditorParser.g:6850:2: iv_ruleMaxFunction= ruleMaxFunction EOF
+            // InternalWreslEditorParser.g:6890:2: (iv_ruleMaxFunction= ruleMaxFunction EOF )
+            // InternalWreslEditorParser.g:6891:2: iv_ruleMaxFunction= ruleMaxFunction EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getMaxFunctionRule()); 
@@ -21170,7 +21332,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleMaxFunction"
-    // InternalWreslEditorParser.g:6857:1: ruleMaxFunction returns [EObject current=null] : (this_MAX_0= RULE_MAX otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) (otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) )* otherlv_5= RightParenthesis ) ;
+    // InternalWreslEditorParser.g:6898:1: ruleMaxFunction returns [EObject current=null] : (this_MAX_0= RULE_MAX otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) (otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) )* otherlv_5= RightParenthesis ) ;
     public final EObject ruleMaxFunction() throws RecognitionException {
         EObject current = null;
 
@@ -21186,11 +21348,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:6860:28: ( (this_MAX_0= RULE_MAX otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) (otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) )* otherlv_5= RightParenthesis ) )
-            // InternalWreslEditorParser.g:6861:1: (this_MAX_0= RULE_MAX otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) (otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) )* otherlv_5= RightParenthesis )
+            // InternalWreslEditorParser.g:6901:28: ( (this_MAX_0= RULE_MAX otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) (otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) )* otherlv_5= RightParenthesis ) )
+            // InternalWreslEditorParser.g:6902:1: (this_MAX_0= RULE_MAX otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) (otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) )* otherlv_5= RightParenthesis )
             {
-            // InternalWreslEditorParser.g:6861:1: (this_MAX_0= RULE_MAX otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) (otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) )* otherlv_5= RightParenthesis )
-            // InternalWreslEditorParser.g:6861:2: this_MAX_0= RULE_MAX otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) (otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) )* otherlv_5= RightParenthesis
+            // InternalWreslEditorParser.g:6902:1: (this_MAX_0= RULE_MAX otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) (otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) )* otherlv_5= RightParenthesis )
+            // InternalWreslEditorParser.g:6902:2: this_MAX_0= RULE_MAX otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) (otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) )* otherlv_5= RightParenthesis
             {
             this_MAX_0=(Token)match(input,RULE_MAX,FOLLOW_48); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -21204,11 +21366,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_1, grammarAccess.getMaxFunctionAccess().getLeftParenthesisKeyword_1());
                   
             }
-            // InternalWreslEditorParser.g:6870:1: ( (lv_e1_2_0= ruleExpression ) )
-            // InternalWreslEditorParser.g:6871:1: (lv_e1_2_0= ruleExpression )
+            // InternalWreslEditorParser.g:6911:1: ( (lv_e1_2_0= ruleExpression ) )
+            // InternalWreslEditorParser.g:6912:1: (lv_e1_2_0= ruleExpression )
             {
-            // InternalWreslEditorParser.g:6871:1: (lv_e1_2_0= ruleExpression )
-            // InternalWreslEditorParser.g:6872:3: lv_e1_2_0= ruleExpression
+            // InternalWreslEditorParser.g:6912:1: (lv_e1_2_0= ruleExpression )
+            // InternalWreslEditorParser.g:6913:3: lv_e1_2_0= ruleExpression
             {
             if ( state.backtracking==0 ) {
                
@@ -21239,20 +21401,20 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalWreslEditorParser.g:6888:2: (otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) )*
-            loop171:
+            // InternalWreslEditorParser.g:6929:2: (otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) )*
+            loop174:
             do {
-                int alt171=2;
-                int LA171_0 = input.LA(1);
+                int alt174=2;
+                int LA174_0 = input.LA(1);
 
-                if ( (LA171_0==Comma) ) {
-                    alt171=1;
+                if ( (LA174_0==Comma) ) {
+                    alt174=1;
                 }
 
 
-                switch (alt171) {
+                switch (alt174) {
             	case 1 :
-            	    // InternalWreslEditorParser.g:6889:2: otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) )
+            	    // InternalWreslEditorParser.g:6930:2: otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) )
             	    {
             	    otherlv_3=(Token)match(input,Comma,FOLLOW_25); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -21260,11 +21422,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             	          	newLeafNode(otherlv_3, grammarAccess.getMaxFunctionAccess().getCommaKeyword_3_0());
             	          
             	    }
-            	    // InternalWreslEditorParser.g:6893:1: ( (lv_e2_4_0= ruleExpression ) )
-            	    // InternalWreslEditorParser.g:6894:1: (lv_e2_4_0= ruleExpression )
+            	    // InternalWreslEditorParser.g:6934:1: ( (lv_e2_4_0= ruleExpression ) )
+            	    // InternalWreslEditorParser.g:6935:1: (lv_e2_4_0= ruleExpression )
             	    {
-            	    // InternalWreslEditorParser.g:6894:1: (lv_e2_4_0= ruleExpression )
-            	    // InternalWreslEditorParser.g:6895:3: lv_e2_4_0= ruleExpression
+            	    // InternalWreslEditorParser.g:6935:1: (lv_e2_4_0= ruleExpression )
+            	    // InternalWreslEditorParser.g:6936:3: lv_e2_4_0= ruleExpression
             	    {
             	    if ( state.backtracking==0 ) {
             	       
@@ -21300,7 +21462,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop171;
+            	    break loop174;
                 }
             } while (true);
 
@@ -21333,7 +21495,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleMinFunction"
-    // InternalWreslEditorParser.g:6924:1: entryRuleMinFunction returns [EObject current=null] : iv_ruleMinFunction= ruleMinFunction EOF ;
+    // InternalWreslEditorParser.g:6965:1: entryRuleMinFunction returns [EObject current=null] : iv_ruleMinFunction= ruleMinFunction EOF ;
     public final EObject entryRuleMinFunction() throws RecognitionException {
         EObject current = null;
 
@@ -21341,8 +21503,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:6925:2: (iv_ruleMinFunction= ruleMinFunction EOF )
-            // InternalWreslEditorParser.g:6926:2: iv_ruleMinFunction= ruleMinFunction EOF
+            // InternalWreslEditorParser.g:6966:2: (iv_ruleMinFunction= ruleMinFunction EOF )
+            // InternalWreslEditorParser.g:6967:2: iv_ruleMinFunction= ruleMinFunction EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getMinFunctionRule()); 
@@ -21373,7 +21535,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleMinFunction"
-    // InternalWreslEditorParser.g:6933:1: ruleMinFunction returns [EObject current=null] : (this_MIN_0= RULE_MIN otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) (otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) )* otherlv_5= RightParenthesis ) ;
+    // InternalWreslEditorParser.g:6974:1: ruleMinFunction returns [EObject current=null] : (this_MIN_0= RULE_MIN otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) (otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) )* otherlv_5= RightParenthesis ) ;
     public final EObject ruleMinFunction() throws RecognitionException {
         EObject current = null;
 
@@ -21389,11 +21551,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:6936:28: ( (this_MIN_0= RULE_MIN otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) (otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) )* otherlv_5= RightParenthesis ) )
-            // InternalWreslEditorParser.g:6937:1: (this_MIN_0= RULE_MIN otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) (otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) )* otherlv_5= RightParenthesis )
+            // InternalWreslEditorParser.g:6977:28: ( (this_MIN_0= RULE_MIN otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) (otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) )* otherlv_5= RightParenthesis ) )
+            // InternalWreslEditorParser.g:6978:1: (this_MIN_0= RULE_MIN otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) (otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) )* otherlv_5= RightParenthesis )
             {
-            // InternalWreslEditorParser.g:6937:1: (this_MIN_0= RULE_MIN otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) (otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) )* otherlv_5= RightParenthesis )
-            // InternalWreslEditorParser.g:6937:2: this_MIN_0= RULE_MIN otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) (otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) )* otherlv_5= RightParenthesis
+            // InternalWreslEditorParser.g:6978:1: (this_MIN_0= RULE_MIN otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) (otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) )* otherlv_5= RightParenthesis )
+            // InternalWreslEditorParser.g:6978:2: this_MIN_0= RULE_MIN otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) (otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) )* otherlv_5= RightParenthesis
             {
             this_MIN_0=(Token)match(input,RULE_MIN,FOLLOW_48); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -21407,11 +21569,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_1, grammarAccess.getMinFunctionAccess().getLeftParenthesisKeyword_1());
                   
             }
-            // InternalWreslEditorParser.g:6946:1: ( (lv_e1_2_0= ruleExpression ) )
-            // InternalWreslEditorParser.g:6947:1: (lv_e1_2_0= ruleExpression )
+            // InternalWreslEditorParser.g:6987:1: ( (lv_e1_2_0= ruleExpression ) )
+            // InternalWreslEditorParser.g:6988:1: (lv_e1_2_0= ruleExpression )
             {
-            // InternalWreslEditorParser.g:6947:1: (lv_e1_2_0= ruleExpression )
-            // InternalWreslEditorParser.g:6948:3: lv_e1_2_0= ruleExpression
+            // InternalWreslEditorParser.g:6988:1: (lv_e1_2_0= ruleExpression )
+            // InternalWreslEditorParser.g:6989:3: lv_e1_2_0= ruleExpression
             {
             if ( state.backtracking==0 ) {
                
@@ -21442,20 +21604,20 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalWreslEditorParser.g:6964:2: (otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) )*
-            loop172:
+            // InternalWreslEditorParser.g:7005:2: (otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) )*
+            loop175:
             do {
-                int alt172=2;
-                int LA172_0 = input.LA(1);
+                int alt175=2;
+                int LA175_0 = input.LA(1);
 
-                if ( (LA172_0==Comma) ) {
-                    alt172=1;
+                if ( (LA175_0==Comma) ) {
+                    alt175=1;
                 }
 
 
-                switch (alt172) {
+                switch (alt175) {
             	case 1 :
-            	    // InternalWreslEditorParser.g:6965:2: otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) )
+            	    // InternalWreslEditorParser.g:7006:2: otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) )
             	    {
             	    otherlv_3=(Token)match(input,Comma,FOLLOW_25); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -21463,11 +21625,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             	          	newLeafNode(otherlv_3, grammarAccess.getMinFunctionAccess().getCommaKeyword_3_0());
             	          
             	    }
-            	    // InternalWreslEditorParser.g:6969:1: ( (lv_e2_4_0= ruleExpression ) )
-            	    // InternalWreslEditorParser.g:6970:1: (lv_e2_4_0= ruleExpression )
+            	    // InternalWreslEditorParser.g:7010:1: ( (lv_e2_4_0= ruleExpression ) )
+            	    // InternalWreslEditorParser.g:7011:1: (lv_e2_4_0= ruleExpression )
             	    {
-            	    // InternalWreslEditorParser.g:6970:1: (lv_e2_4_0= ruleExpression )
-            	    // InternalWreslEditorParser.g:6971:3: lv_e2_4_0= ruleExpression
+            	    // InternalWreslEditorParser.g:7011:1: (lv_e2_4_0= ruleExpression )
+            	    // InternalWreslEditorParser.g:7012:3: lv_e2_4_0= ruleExpression
             	    {
             	    if ( state.backtracking==0 ) {
             	       
@@ -21503,7 +21665,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop172;
+            	    break loop175;
                 }
             } while (true);
 
@@ -21536,7 +21698,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleModFunction"
-    // InternalWreslEditorParser.g:7000:1: entryRuleModFunction returns [EObject current=null] : iv_ruleModFunction= ruleModFunction EOF ;
+    // InternalWreslEditorParser.g:7041:1: entryRuleModFunction returns [EObject current=null] : iv_ruleModFunction= ruleModFunction EOF ;
     public final EObject entryRuleModFunction() throws RecognitionException {
         EObject current = null;
 
@@ -21544,8 +21706,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:7001:2: (iv_ruleModFunction= ruleModFunction EOF )
-            // InternalWreslEditorParser.g:7002:2: iv_ruleModFunction= ruleModFunction EOF
+            // InternalWreslEditorParser.g:7042:2: (iv_ruleModFunction= ruleModFunction EOF )
+            // InternalWreslEditorParser.g:7043:2: iv_ruleModFunction= ruleModFunction EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getModFunctionRule()); 
@@ -21576,7 +21738,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleModFunction"
-    // InternalWreslEditorParser.g:7009:1: ruleModFunction returns [EObject current=null] : (this_MOD_0= RULE_MOD otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) otherlv_5= RightParenthesis ) ;
+    // InternalWreslEditorParser.g:7050:1: ruleModFunction returns [EObject current=null] : (this_MOD_0= RULE_MOD otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) otherlv_5= RightParenthesis ) ;
     public final EObject ruleModFunction() throws RecognitionException {
         EObject current = null;
 
@@ -21592,11 +21754,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:7012:28: ( (this_MOD_0= RULE_MOD otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) otherlv_5= RightParenthesis ) )
-            // InternalWreslEditorParser.g:7013:1: (this_MOD_0= RULE_MOD otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) otherlv_5= RightParenthesis )
+            // InternalWreslEditorParser.g:7053:28: ( (this_MOD_0= RULE_MOD otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) otherlv_5= RightParenthesis ) )
+            // InternalWreslEditorParser.g:7054:1: (this_MOD_0= RULE_MOD otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) otherlv_5= RightParenthesis )
             {
-            // InternalWreslEditorParser.g:7013:1: (this_MOD_0= RULE_MOD otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) otherlv_5= RightParenthesis )
-            // InternalWreslEditorParser.g:7013:2: this_MOD_0= RULE_MOD otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) otherlv_5= RightParenthesis
+            // InternalWreslEditorParser.g:7054:1: (this_MOD_0= RULE_MOD otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) otherlv_5= RightParenthesis )
+            // InternalWreslEditorParser.g:7054:2: this_MOD_0= RULE_MOD otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) otherlv_5= RightParenthesis
             {
             this_MOD_0=(Token)match(input,RULE_MOD,FOLLOW_48); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -21610,11 +21772,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_1, grammarAccess.getModFunctionAccess().getLeftParenthesisKeyword_1());
                   
             }
-            // InternalWreslEditorParser.g:7022:1: ( (lv_e1_2_0= ruleExpression ) )
-            // InternalWreslEditorParser.g:7023:1: (lv_e1_2_0= ruleExpression )
+            // InternalWreslEditorParser.g:7063:1: ( (lv_e1_2_0= ruleExpression ) )
+            // InternalWreslEditorParser.g:7064:1: (lv_e1_2_0= ruleExpression )
             {
-            // InternalWreslEditorParser.g:7023:1: (lv_e1_2_0= ruleExpression )
-            // InternalWreslEditorParser.g:7024:3: lv_e1_2_0= ruleExpression
+            // InternalWreslEditorParser.g:7064:1: (lv_e1_2_0= ruleExpression )
+            // InternalWreslEditorParser.g:7065:3: lv_e1_2_0= ruleExpression
             {
             if ( state.backtracking==0 ) {
                
@@ -21651,11 +21813,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_3, grammarAccess.getModFunctionAccess().getCommaKeyword_3());
                   
             }
-            // InternalWreslEditorParser.g:7045:1: ( (lv_e2_4_0= ruleExpression ) )
-            // InternalWreslEditorParser.g:7046:1: (lv_e2_4_0= ruleExpression )
+            // InternalWreslEditorParser.g:7086:1: ( (lv_e2_4_0= ruleExpression ) )
+            // InternalWreslEditorParser.g:7087:1: (lv_e2_4_0= ruleExpression )
             {
-            // InternalWreslEditorParser.g:7046:1: (lv_e2_4_0= ruleExpression )
-            // InternalWreslEditorParser.g:7047:3: lv_e2_4_0= ruleExpression
+            // InternalWreslEditorParser.g:7087:1: (lv_e2_4_0= ruleExpression )
+            // InternalWreslEditorParser.g:7088:3: lv_e2_4_0= ruleExpression
             {
             if ( state.backtracking==0 ) {
                
@@ -21715,7 +21877,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleIntFunction"
-    // InternalWreslEditorParser.g:7076:1: entryRuleIntFunction returns [EObject current=null] : iv_ruleIntFunction= ruleIntFunction EOF ;
+    // InternalWreslEditorParser.g:7117:1: entryRuleIntFunction returns [EObject current=null] : iv_ruleIntFunction= ruleIntFunction EOF ;
     public final EObject entryRuleIntFunction() throws RecognitionException {
         EObject current = null;
 
@@ -21723,8 +21885,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:7077:2: (iv_ruleIntFunction= ruleIntFunction EOF )
-            // InternalWreslEditorParser.g:7078:2: iv_ruleIntFunction= ruleIntFunction EOF
+            // InternalWreslEditorParser.g:7118:2: (iv_ruleIntFunction= ruleIntFunction EOF )
+            // InternalWreslEditorParser.g:7119:2: iv_ruleIntFunction= ruleIntFunction EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getIntFunctionRule()); 
@@ -21755,7 +21917,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleIntFunction"
-    // InternalWreslEditorParser.g:7085:1: ruleIntFunction returns [EObject current=null] : (this_INTFUNC_0= RULE_INTFUNC otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) ;
+    // InternalWreslEditorParser.g:7126:1: ruleIntFunction returns [EObject current=null] : (this_INTFUNC_0= RULE_INTFUNC otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) ;
     public final EObject ruleIntFunction() throws RecognitionException {
         EObject current = null;
 
@@ -21768,11 +21930,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:7088:28: ( (this_INTFUNC_0= RULE_INTFUNC otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) )
-            // InternalWreslEditorParser.g:7089:1: (this_INTFUNC_0= RULE_INTFUNC otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
+            // InternalWreslEditorParser.g:7129:28: ( (this_INTFUNC_0= RULE_INTFUNC otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) )
+            // InternalWreslEditorParser.g:7130:1: (this_INTFUNC_0= RULE_INTFUNC otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
             {
-            // InternalWreslEditorParser.g:7089:1: (this_INTFUNC_0= RULE_INTFUNC otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
-            // InternalWreslEditorParser.g:7089:2: this_INTFUNC_0= RULE_INTFUNC otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis
+            // InternalWreslEditorParser.g:7130:1: (this_INTFUNC_0= RULE_INTFUNC otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
+            // InternalWreslEditorParser.g:7130:2: this_INTFUNC_0= RULE_INTFUNC otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis
             {
             this_INTFUNC_0=(Token)match(input,RULE_INTFUNC,FOLLOW_48); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -21786,11 +21948,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_1, grammarAccess.getIntFunctionAccess().getLeftParenthesisKeyword_1());
                   
             }
-            // InternalWreslEditorParser.g:7098:1: ( (lv_e_2_0= ruleExpression ) )
-            // InternalWreslEditorParser.g:7099:1: (lv_e_2_0= ruleExpression )
+            // InternalWreslEditorParser.g:7139:1: ( (lv_e_2_0= ruleExpression ) )
+            // InternalWreslEditorParser.g:7140:1: (lv_e_2_0= ruleExpression )
             {
-            // InternalWreslEditorParser.g:7099:1: (lv_e_2_0= ruleExpression )
-            // InternalWreslEditorParser.g:7100:3: lv_e_2_0= ruleExpression
+            // InternalWreslEditorParser.g:7140:1: (lv_e_2_0= ruleExpression )
+            // InternalWreslEditorParser.g:7141:3: lv_e_2_0= ruleExpression
             {
             if ( state.backtracking==0 ) {
                
@@ -21850,7 +22012,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAbsFunction"
-    // InternalWreslEditorParser.g:7129:1: entryRuleAbsFunction returns [EObject current=null] : iv_ruleAbsFunction= ruleAbsFunction EOF ;
+    // InternalWreslEditorParser.g:7170:1: entryRuleAbsFunction returns [EObject current=null] : iv_ruleAbsFunction= ruleAbsFunction EOF ;
     public final EObject entryRuleAbsFunction() throws RecognitionException {
         EObject current = null;
 
@@ -21858,8 +22020,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:7130:2: (iv_ruleAbsFunction= ruleAbsFunction EOF )
-            // InternalWreslEditorParser.g:7131:2: iv_ruleAbsFunction= ruleAbsFunction EOF
+            // InternalWreslEditorParser.g:7171:2: (iv_ruleAbsFunction= ruleAbsFunction EOF )
+            // InternalWreslEditorParser.g:7172:2: iv_ruleAbsFunction= ruleAbsFunction EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getAbsFunctionRule()); 
@@ -21890,7 +22052,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAbsFunction"
-    // InternalWreslEditorParser.g:7138:1: ruleAbsFunction returns [EObject current=null] : (this_ABS_0= RULE_ABS otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) ;
+    // InternalWreslEditorParser.g:7179:1: ruleAbsFunction returns [EObject current=null] : (this_ABS_0= RULE_ABS otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) ;
     public final EObject ruleAbsFunction() throws RecognitionException {
         EObject current = null;
 
@@ -21903,11 +22065,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:7141:28: ( (this_ABS_0= RULE_ABS otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) )
-            // InternalWreslEditorParser.g:7142:1: (this_ABS_0= RULE_ABS otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
+            // InternalWreslEditorParser.g:7182:28: ( (this_ABS_0= RULE_ABS otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) )
+            // InternalWreslEditorParser.g:7183:1: (this_ABS_0= RULE_ABS otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
             {
-            // InternalWreslEditorParser.g:7142:1: (this_ABS_0= RULE_ABS otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
-            // InternalWreslEditorParser.g:7142:2: this_ABS_0= RULE_ABS otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis
+            // InternalWreslEditorParser.g:7183:1: (this_ABS_0= RULE_ABS otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
+            // InternalWreslEditorParser.g:7183:2: this_ABS_0= RULE_ABS otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis
             {
             this_ABS_0=(Token)match(input,RULE_ABS,FOLLOW_48); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -21921,11 +22083,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_1, grammarAccess.getAbsFunctionAccess().getLeftParenthesisKeyword_1());
                   
             }
-            // InternalWreslEditorParser.g:7151:1: ( (lv_e_2_0= ruleExpression ) )
-            // InternalWreslEditorParser.g:7152:1: (lv_e_2_0= ruleExpression )
+            // InternalWreslEditorParser.g:7192:1: ( (lv_e_2_0= ruleExpression ) )
+            // InternalWreslEditorParser.g:7193:1: (lv_e_2_0= ruleExpression )
             {
-            // InternalWreslEditorParser.g:7152:1: (lv_e_2_0= ruleExpression )
-            // InternalWreslEditorParser.g:7153:3: lv_e_2_0= ruleExpression
+            // InternalWreslEditorParser.g:7193:1: (lv_e_2_0= ruleExpression )
+            // InternalWreslEditorParser.g:7194:3: lv_e_2_0= ruleExpression
             {
             if ( state.backtracking==0 ) {
                
@@ -21985,7 +22147,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleRoundFunction"
-    // InternalWreslEditorParser.g:7182:1: entryRuleRoundFunction returns [EObject current=null] : iv_ruleRoundFunction= ruleRoundFunction EOF ;
+    // InternalWreslEditorParser.g:7223:1: entryRuleRoundFunction returns [EObject current=null] : iv_ruleRoundFunction= ruleRoundFunction EOF ;
     public final EObject entryRuleRoundFunction() throws RecognitionException {
         EObject current = null;
 
@@ -21993,8 +22155,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:7183:2: (iv_ruleRoundFunction= ruleRoundFunction EOF )
-            // InternalWreslEditorParser.g:7184:2: iv_ruleRoundFunction= ruleRoundFunction EOF
+            // InternalWreslEditorParser.g:7224:2: (iv_ruleRoundFunction= ruleRoundFunction EOF )
+            // InternalWreslEditorParser.g:7225:2: iv_ruleRoundFunction= ruleRoundFunction EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getRoundFunctionRule()); 
@@ -22025,7 +22187,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleRoundFunction"
-    // InternalWreslEditorParser.g:7191:1: ruleRoundFunction returns [EObject current=null] : (this_ROUND_0= RULE_ROUND otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) ;
+    // InternalWreslEditorParser.g:7232:1: ruleRoundFunction returns [EObject current=null] : (this_ROUND_0= RULE_ROUND otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) ;
     public final EObject ruleRoundFunction() throws RecognitionException {
         EObject current = null;
 
@@ -22038,11 +22200,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:7194:28: ( (this_ROUND_0= RULE_ROUND otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) )
-            // InternalWreslEditorParser.g:7195:1: (this_ROUND_0= RULE_ROUND otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
+            // InternalWreslEditorParser.g:7235:28: ( (this_ROUND_0= RULE_ROUND otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) )
+            // InternalWreslEditorParser.g:7236:1: (this_ROUND_0= RULE_ROUND otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
             {
-            // InternalWreslEditorParser.g:7195:1: (this_ROUND_0= RULE_ROUND otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
-            // InternalWreslEditorParser.g:7195:2: this_ROUND_0= RULE_ROUND otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis
+            // InternalWreslEditorParser.g:7236:1: (this_ROUND_0= RULE_ROUND otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
+            // InternalWreslEditorParser.g:7236:2: this_ROUND_0= RULE_ROUND otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis
             {
             this_ROUND_0=(Token)match(input,RULE_ROUND,FOLLOW_48); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -22056,11 +22218,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_1, grammarAccess.getRoundFunctionAccess().getLeftParenthesisKeyword_1());
                   
             }
-            // InternalWreslEditorParser.g:7204:1: ( (lv_e_2_0= ruleExpression ) )
-            // InternalWreslEditorParser.g:7205:1: (lv_e_2_0= ruleExpression )
+            // InternalWreslEditorParser.g:7245:1: ( (lv_e_2_0= ruleExpression ) )
+            // InternalWreslEditorParser.g:7246:1: (lv_e_2_0= ruleExpression )
             {
-            // InternalWreslEditorParser.g:7205:1: (lv_e_2_0= ruleExpression )
-            // InternalWreslEditorParser.g:7206:3: lv_e_2_0= ruleExpression
+            // InternalWreslEditorParser.g:7246:1: (lv_e_2_0= ruleExpression )
+            // InternalWreslEditorParser.g:7247:3: lv_e_2_0= ruleExpression
             {
             if ( state.backtracking==0 ) {
                
@@ -22120,7 +22282,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRulePowFunction"
-    // InternalWreslEditorParser.g:7235:1: entryRulePowFunction returns [EObject current=null] : iv_rulePowFunction= rulePowFunction EOF ;
+    // InternalWreslEditorParser.g:7276:1: entryRulePowFunction returns [EObject current=null] : iv_rulePowFunction= rulePowFunction EOF ;
     public final EObject entryRulePowFunction() throws RecognitionException {
         EObject current = null;
 
@@ -22128,8 +22290,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:7236:2: (iv_rulePowFunction= rulePowFunction EOF )
-            // InternalWreslEditorParser.g:7237:2: iv_rulePowFunction= rulePowFunction EOF
+            // InternalWreslEditorParser.g:7277:2: (iv_rulePowFunction= rulePowFunction EOF )
+            // InternalWreslEditorParser.g:7278:2: iv_rulePowFunction= rulePowFunction EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getPowFunctionRule()); 
@@ -22160,7 +22322,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePowFunction"
-    // InternalWreslEditorParser.g:7244:1: rulePowFunction returns [EObject current=null] : (this_POW_0= RULE_POW otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) otherlv_5= RightParenthesis ) ;
+    // InternalWreslEditorParser.g:7285:1: rulePowFunction returns [EObject current=null] : (this_POW_0= RULE_POW otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) otherlv_5= RightParenthesis ) ;
     public final EObject rulePowFunction() throws RecognitionException {
         EObject current = null;
 
@@ -22176,11 +22338,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:7247:28: ( (this_POW_0= RULE_POW otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) otherlv_5= RightParenthesis ) )
-            // InternalWreslEditorParser.g:7248:1: (this_POW_0= RULE_POW otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) otherlv_5= RightParenthesis )
+            // InternalWreslEditorParser.g:7288:28: ( (this_POW_0= RULE_POW otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) otherlv_5= RightParenthesis ) )
+            // InternalWreslEditorParser.g:7289:1: (this_POW_0= RULE_POW otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) otherlv_5= RightParenthesis )
             {
-            // InternalWreslEditorParser.g:7248:1: (this_POW_0= RULE_POW otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) otherlv_5= RightParenthesis )
-            // InternalWreslEditorParser.g:7248:2: this_POW_0= RULE_POW otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) otherlv_5= RightParenthesis
+            // InternalWreslEditorParser.g:7289:1: (this_POW_0= RULE_POW otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) otherlv_5= RightParenthesis )
+            // InternalWreslEditorParser.g:7289:2: this_POW_0= RULE_POW otherlv_1= LeftParenthesis ( (lv_e1_2_0= ruleExpression ) ) otherlv_3= Comma ( (lv_e2_4_0= ruleExpression ) ) otherlv_5= RightParenthesis
             {
             this_POW_0=(Token)match(input,RULE_POW,FOLLOW_48); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -22194,11 +22356,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_1, grammarAccess.getPowFunctionAccess().getLeftParenthesisKeyword_1());
                   
             }
-            // InternalWreslEditorParser.g:7257:1: ( (lv_e1_2_0= ruleExpression ) )
-            // InternalWreslEditorParser.g:7258:1: (lv_e1_2_0= ruleExpression )
+            // InternalWreslEditorParser.g:7298:1: ( (lv_e1_2_0= ruleExpression ) )
+            // InternalWreslEditorParser.g:7299:1: (lv_e1_2_0= ruleExpression )
             {
-            // InternalWreslEditorParser.g:7258:1: (lv_e1_2_0= ruleExpression )
-            // InternalWreslEditorParser.g:7259:3: lv_e1_2_0= ruleExpression
+            // InternalWreslEditorParser.g:7299:1: (lv_e1_2_0= ruleExpression )
+            // InternalWreslEditorParser.g:7300:3: lv_e1_2_0= ruleExpression
             {
             if ( state.backtracking==0 ) {
                
@@ -22235,11 +22397,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_3, grammarAccess.getPowFunctionAccess().getCommaKeyword_3());
                   
             }
-            // InternalWreslEditorParser.g:7280:1: ( (lv_e2_4_0= ruleExpression ) )
-            // InternalWreslEditorParser.g:7281:1: (lv_e2_4_0= ruleExpression )
+            // InternalWreslEditorParser.g:7321:1: ( (lv_e2_4_0= ruleExpression ) )
+            // InternalWreslEditorParser.g:7322:1: (lv_e2_4_0= ruleExpression )
             {
-            // InternalWreslEditorParser.g:7281:1: (lv_e2_4_0= ruleExpression )
-            // InternalWreslEditorParser.g:7282:3: lv_e2_4_0= ruleExpression
+            // InternalWreslEditorParser.g:7322:1: (lv_e2_4_0= ruleExpression )
+            // InternalWreslEditorParser.g:7323:3: lv_e2_4_0= ruleExpression
             {
             if ( state.backtracking==0 ) {
                
@@ -22299,7 +22461,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleLogFunction"
-    // InternalWreslEditorParser.g:7311:1: entryRuleLogFunction returns [EObject current=null] : iv_ruleLogFunction= ruleLogFunction EOF ;
+    // InternalWreslEditorParser.g:7352:1: entryRuleLogFunction returns [EObject current=null] : iv_ruleLogFunction= ruleLogFunction EOF ;
     public final EObject entryRuleLogFunction() throws RecognitionException {
         EObject current = null;
 
@@ -22307,8 +22469,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:7312:2: (iv_ruleLogFunction= ruleLogFunction EOF )
-            // InternalWreslEditorParser.g:7313:2: iv_ruleLogFunction= ruleLogFunction EOF
+            // InternalWreslEditorParser.g:7353:2: (iv_ruleLogFunction= ruleLogFunction EOF )
+            // InternalWreslEditorParser.g:7354:2: iv_ruleLogFunction= ruleLogFunction EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getLogFunctionRule()); 
@@ -22339,7 +22501,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLogFunction"
-    // InternalWreslEditorParser.g:7320:1: ruleLogFunction returns [EObject current=null] : (this_LOG_0= RULE_LOG otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) ;
+    // InternalWreslEditorParser.g:7361:1: ruleLogFunction returns [EObject current=null] : (this_LOG_0= RULE_LOG otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) ;
     public final EObject ruleLogFunction() throws RecognitionException {
         EObject current = null;
 
@@ -22352,11 +22514,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:7323:28: ( (this_LOG_0= RULE_LOG otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) )
-            // InternalWreslEditorParser.g:7324:1: (this_LOG_0= RULE_LOG otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
+            // InternalWreslEditorParser.g:7364:28: ( (this_LOG_0= RULE_LOG otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) )
+            // InternalWreslEditorParser.g:7365:1: (this_LOG_0= RULE_LOG otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
             {
-            // InternalWreslEditorParser.g:7324:1: (this_LOG_0= RULE_LOG otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
-            // InternalWreslEditorParser.g:7324:2: this_LOG_0= RULE_LOG otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis
+            // InternalWreslEditorParser.g:7365:1: (this_LOG_0= RULE_LOG otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
+            // InternalWreslEditorParser.g:7365:2: this_LOG_0= RULE_LOG otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis
             {
             this_LOG_0=(Token)match(input,RULE_LOG,FOLLOW_48); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -22370,11 +22532,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_1, grammarAccess.getLogFunctionAccess().getLeftParenthesisKeyword_1());
                   
             }
-            // InternalWreslEditorParser.g:7333:1: ( (lv_e_2_0= ruleExpression ) )
-            // InternalWreslEditorParser.g:7334:1: (lv_e_2_0= ruleExpression )
+            // InternalWreslEditorParser.g:7374:1: ( (lv_e_2_0= ruleExpression ) )
+            // InternalWreslEditorParser.g:7375:1: (lv_e_2_0= ruleExpression )
             {
-            // InternalWreslEditorParser.g:7334:1: (lv_e_2_0= ruleExpression )
-            // InternalWreslEditorParser.g:7335:3: lv_e_2_0= ruleExpression
+            // InternalWreslEditorParser.g:7375:1: (lv_e_2_0= ruleExpression )
+            // InternalWreslEditorParser.g:7376:3: lv_e_2_0= ruleExpression
             {
             if ( state.backtracking==0 ) {
                
@@ -22434,7 +22596,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleSinFunction"
-    // InternalWreslEditorParser.g:7364:1: entryRuleSinFunction returns [EObject current=null] : iv_ruleSinFunction= ruleSinFunction EOF ;
+    // InternalWreslEditorParser.g:7405:1: entryRuleSinFunction returns [EObject current=null] : iv_ruleSinFunction= ruleSinFunction EOF ;
     public final EObject entryRuleSinFunction() throws RecognitionException {
         EObject current = null;
 
@@ -22442,8 +22604,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:7365:2: (iv_ruleSinFunction= ruleSinFunction EOF )
-            // InternalWreslEditorParser.g:7366:2: iv_ruleSinFunction= ruleSinFunction EOF
+            // InternalWreslEditorParser.g:7406:2: (iv_ruleSinFunction= ruleSinFunction EOF )
+            // InternalWreslEditorParser.g:7407:2: iv_ruleSinFunction= ruleSinFunction EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getSinFunctionRule()); 
@@ -22474,7 +22636,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSinFunction"
-    // InternalWreslEditorParser.g:7373:1: ruleSinFunction returns [EObject current=null] : (this_SIN_0= RULE_SIN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) ;
+    // InternalWreslEditorParser.g:7414:1: ruleSinFunction returns [EObject current=null] : (this_SIN_0= RULE_SIN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) ;
     public final EObject ruleSinFunction() throws RecognitionException {
         EObject current = null;
 
@@ -22487,11 +22649,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:7376:28: ( (this_SIN_0= RULE_SIN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) )
-            // InternalWreslEditorParser.g:7377:1: (this_SIN_0= RULE_SIN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
+            // InternalWreslEditorParser.g:7417:28: ( (this_SIN_0= RULE_SIN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) )
+            // InternalWreslEditorParser.g:7418:1: (this_SIN_0= RULE_SIN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
             {
-            // InternalWreslEditorParser.g:7377:1: (this_SIN_0= RULE_SIN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
-            // InternalWreslEditorParser.g:7377:2: this_SIN_0= RULE_SIN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis
+            // InternalWreslEditorParser.g:7418:1: (this_SIN_0= RULE_SIN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
+            // InternalWreslEditorParser.g:7418:2: this_SIN_0= RULE_SIN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis
             {
             this_SIN_0=(Token)match(input,RULE_SIN,FOLLOW_48); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -22505,11 +22667,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_1, grammarAccess.getSinFunctionAccess().getLeftParenthesisKeyword_1());
                   
             }
-            // InternalWreslEditorParser.g:7386:1: ( (lv_e_2_0= ruleExpression ) )
-            // InternalWreslEditorParser.g:7387:1: (lv_e_2_0= ruleExpression )
+            // InternalWreslEditorParser.g:7427:1: ( (lv_e_2_0= ruleExpression ) )
+            // InternalWreslEditorParser.g:7428:1: (lv_e_2_0= ruleExpression )
             {
-            // InternalWreslEditorParser.g:7387:1: (lv_e_2_0= ruleExpression )
-            // InternalWreslEditorParser.g:7388:3: lv_e_2_0= ruleExpression
+            // InternalWreslEditorParser.g:7428:1: (lv_e_2_0= ruleExpression )
+            // InternalWreslEditorParser.g:7429:3: lv_e_2_0= ruleExpression
             {
             if ( state.backtracking==0 ) {
                
@@ -22569,7 +22731,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleCosFunction"
-    // InternalWreslEditorParser.g:7417:1: entryRuleCosFunction returns [EObject current=null] : iv_ruleCosFunction= ruleCosFunction EOF ;
+    // InternalWreslEditorParser.g:7458:1: entryRuleCosFunction returns [EObject current=null] : iv_ruleCosFunction= ruleCosFunction EOF ;
     public final EObject entryRuleCosFunction() throws RecognitionException {
         EObject current = null;
 
@@ -22577,8 +22739,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:7418:2: (iv_ruleCosFunction= ruleCosFunction EOF )
-            // InternalWreslEditorParser.g:7419:2: iv_ruleCosFunction= ruleCosFunction EOF
+            // InternalWreslEditorParser.g:7459:2: (iv_ruleCosFunction= ruleCosFunction EOF )
+            // InternalWreslEditorParser.g:7460:2: iv_ruleCosFunction= ruleCosFunction EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getCosFunctionRule()); 
@@ -22609,7 +22771,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCosFunction"
-    // InternalWreslEditorParser.g:7426:1: ruleCosFunction returns [EObject current=null] : (this_COS_0= RULE_COS otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) ;
+    // InternalWreslEditorParser.g:7467:1: ruleCosFunction returns [EObject current=null] : (this_COS_0= RULE_COS otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) ;
     public final EObject ruleCosFunction() throws RecognitionException {
         EObject current = null;
 
@@ -22622,11 +22784,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:7429:28: ( (this_COS_0= RULE_COS otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) )
-            // InternalWreslEditorParser.g:7430:1: (this_COS_0= RULE_COS otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
+            // InternalWreslEditorParser.g:7470:28: ( (this_COS_0= RULE_COS otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) )
+            // InternalWreslEditorParser.g:7471:1: (this_COS_0= RULE_COS otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
             {
-            // InternalWreslEditorParser.g:7430:1: (this_COS_0= RULE_COS otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
-            // InternalWreslEditorParser.g:7430:2: this_COS_0= RULE_COS otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis
+            // InternalWreslEditorParser.g:7471:1: (this_COS_0= RULE_COS otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
+            // InternalWreslEditorParser.g:7471:2: this_COS_0= RULE_COS otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis
             {
             this_COS_0=(Token)match(input,RULE_COS,FOLLOW_48); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -22640,11 +22802,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_1, grammarAccess.getCosFunctionAccess().getLeftParenthesisKeyword_1());
                   
             }
-            // InternalWreslEditorParser.g:7439:1: ( (lv_e_2_0= ruleExpression ) )
-            // InternalWreslEditorParser.g:7440:1: (lv_e_2_0= ruleExpression )
+            // InternalWreslEditorParser.g:7480:1: ( (lv_e_2_0= ruleExpression ) )
+            // InternalWreslEditorParser.g:7481:1: (lv_e_2_0= ruleExpression )
             {
-            // InternalWreslEditorParser.g:7440:1: (lv_e_2_0= ruleExpression )
-            // InternalWreslEditorParser.g:7441:3: lv_e_2_0= ruleExpression
+            // InternalWreslEditorParser.g:7481:1: (lv_e_2_0= ruleExpression )
+            // InternalWreslEditorParser.g:7482:3: lv_e_2_0= ruleExpression
             {
             if ( state.backtracking==0 ) {
                
@@ -22704,7 +22866,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTanFunction"
-    // InternalWreslEditorParser.g:7470:1: entryRuleTanFunction returns [EObject current=null] : iv_ruleTanFunction= ruleTanFunction EOF ;
+    // InternalWreslEditorParser.g:7511:1: entryRuleTanFunction returns [EObject current=null] : iv_ruleTanFunction= ruleTanFunction EOF ;
     public final EObject entryRuleTanFunction() throws RecognitionException {
         EObject current = null;
 
@@ -22712,8 +22874,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:7471:2: (iv_ruleTanFunction= ruleTanFunction EOF )
-            // InternalWreslEditorParser.g:7472:2: iv_ruleTanFunction= ruleTanFunction EOF
+            // InternalWreslEditorParser.g:7512:2: (iv_ruleTanFunction= ruleTanFunction EOF )
+            // InternalWreslEditorParser.g:7513:2: iv_ruleTanFunction= ruleTanFunction EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getTanFunctionRule()); 
@@ -22744,7 +22906,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTanFunction"
-    // InternalWreslEditorParser.g:7479:1: ruleTanFunction returns [EObject current=null] : (this_TAN_0= RULE_TAN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) ;
+    // InternalWreslEditorParser.g:7520:1: ruleTanFunction returns [EObject current=null] : (this_TAN_0= RULE_TAN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) ;
     public final EObject ruleTanFunction() throws RecognitionException {
         EObject current = null;
 
@@ -22757,11 +22919,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:7482:28: ( (this_TAN_0= RULE_TAN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) )
-            // InternalWreslEditorParser.g:7483:1: (this_TAN_0= RULE_TAN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
+            // InternalWreslEditorParser.g:7523:28: ( (this_TAN_0= RULE_TAN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) )
+            // InternalWreslEditorParser.g:7524:1: (this_TAN_0= RULE_TAN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
             {
-            // InternalWreslEditorParser.g:7483:1: (this_TAN_0= RULE_TAN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
-            // InternalWreslEditorParser.g:7483:2: this_TAN_0= RULE_TAN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis
+            // InternalWreslEditorParser.g:7524:1: (this_TAN_0= RULE_TAN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
+            // InternalWreslEditorParser.g:7524:2: this_TAN_0= RULE_TAN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis
             {
             this_TAN_0=(Token)match(input,RULE_TAN,FOLLOW_48); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -22775,11 +22937,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_1, grammarAccess.getTanFunctionAccess().getLeftParenthesisKeyword_1());
                   
             }
-            // InternalWreslEditorParser.g:7492:1: ( (lv_e_2_0= ruleExpression ) )
-            // InternalWreslEditorParser.g:7493:1: (lv_e_2_0= ruleExpression )
+            // InternalWreslEditorParser.g:7533:1: ( (lv_e_2_0= ruleExpression ) )
+            // InternalWreslEditorParser.g:7534:1: (lv_e_2_0= ruleExpression )
             {
-            // InternalWreslEditorParser.g:7493:1: (lv_e_2_0= ruleExpression )
-            // InternalWreslEditorParser.g:7494:3: lv_e_2_0= ruleExpression
+            // InternalWreslEditorParser.g:7534:1: (lv_e_2_0= ruleExpression )
+            // InternalWreslEditorParser.g:7535:3: lv_e_2_0= ruleExpression
             {
             if ( state.backtracking==0 ) {
                
@@ -22839,7 +23001,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleCotFunction"
-    // InternalWreslEditorParser.g:7523:1: entryRuleCotFunction returns [EObject current=null] : iv_ruleCotFunction= ruleCotFunction EOF ;
+    // InternalWreslEditorParser.g:7564:1: entryRuleCotFunction returns [EObject current=null] : iv_ruleCotFunction= ruleCotFunction EOF ;
     public final EObject entryRuleCotFunction() throws RecognitionException {
         EObject current = null;
 
@@ -22847,8 +23009,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:7524:2: (iv_ruleCotFunction= ruleCotFunction EOF )
-            // InternalWreslEditorParser.g:7525:2: iv_ruleCotFunction= ruleCotFunction EOF
+            // InternalWreslEditorParser.g:7565:2: (iv_ruleCotFunction= ruleCotFunction EOF )
+            // InternalWreslEditorParser.g:7566:2: iv_ruleCotFunction= ruleCotFunction EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getCotFunctionRule()); 
@@ -22879,7 +23041,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCotFunction"
-    // InternalWreslEditorParser.g:7532:1: ruleCotFunction returns [EObject current=null] : (this_COT_0= RULE_COT otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) ;
+    // InternalWreslEditorParser.g:7573:1: ruleCotFunction returns [EObject current=null] : (this_COT_0= RULE_COT otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) ;
     public final EObject ruleCotFunction() throws RecognitionException {
         EObject current = null;
 
@@ -22892,11 +23054,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:7535:28: ( (this_COT_0= RULE_COT otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) )
-            // InternalWreslEditorParser.g:7536:1: (this_COT_0= RULE_COT otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
+            // InternalWreslEditorParser.g:7576:28: ( (this_COT_0= RULE_COT otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) )
+            // InternalWreslEditorParser.g:7577:1: (this_COT_0= RULE_COT otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
             {
-            // InternalWreslEditorParser.g:7536:1: (this_COT_0= RULE_COT otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
-            // InternalWreslEditorParser.g:7536:2: this_COT_0= RULE_COT otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis
+            // InternalWreslEditorParser.g:7577:1: (this_COT_0= RULE_COT otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
+            // InternalWreslEditorParser.g:7577:2: this_COT_0= RULE_COT otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis
             {
             this_COT_0=(Token)match(input,RULE_COT,FOLLOW_48); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -22910,11 +23072,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_1, grammarAccess.getCotFunctionAccess().getLeftParenthesisKeyword_1());
                   
             }
-            // InternalWreslEditorParser.g:7545:1: ( (lv_e_2_0= ruleExpression ) )
-            // InternalWreslEditorParser.g:7546:1: (lv_e_2_0= ruleExpression )
+            // InternalWreslEditorParser.g:7586:1: ( (lv_e_2_0= ruleExpression ) )
+            // InternalWreslEditorParser.g:7587:1: (lv_e_2_0= ruleExpression )
             {
-            // InternalWreslEditorParser.g:7546:1: (lv_e_2_0= ruleExpression )
-            // InternalWreslEditorParser.g:7547:3: lv_e_2_0= ruleExpression
+            // InternalWreslEditorParser.g:7587:1: (lv_e_2_0= ruleExpression )
+            // InternalWreslEditorParser.g:7588:3: lv_e_2_0= ruleExpression
             {
             if ( state.backtracking==0 ) {
                
@@ -22974,7 +23136,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAsinFunction"
-    // InternalWreslEditorParser.g:7576:1: entryRuleAsinFunction returns [EObject current=null] : iv_ruleAsinFunction= ruleAsinFunction EOF ;
+    // InternalWreslEditorParser.g:7617:1: entryRuleAsinFunction returns [EObject current=null] : iv_ruleAsinFunction= ruleAsinFunction EOF ;
     public final EObject entryRuleAsinFunction() throws RecognitionException {
         EObject current = null;
 
@@ -22982,8 +23144,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:7577:2: (iv_ruleAsinFunction= ruleAsinFunction EOF )
-            // InternalWreslEditorParser.g:7578:2: iv_ruleAsinFunction= ruleAsinFunction EOF
+            // InternalWreslEditorParser.g:7618:2: (iv_ruleAsinFunction= ruleAsinFunction EOF )
+            // InternalWreslEditorParser.g:7619:2: iv_ruleAsinFunction= ruleAsinFunction EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getAsinFunctionRule()); 
@@ -23014,7 +23176,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAsinFunction"
-    // InternalWreslEditorParser.g:7585:1: ruleAsinFunction returns [EObject current=null] : (this_ASIN_0= RULE_ASIN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) ;
+    // InternalWreslEditorParser.g:7626:1: ruleAsinFunction returns [EObject current=null] : (this_ASIN_0= RULE_ASIN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) ;
     public final EObject ruleAsinFunction() throws RecognitionException {
         EObject current = null;
 
@@ -23027,11 +23189,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:7588:28: ( (this_ASIN_0= RULE_ASIN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) )
-            // InternalWreslEditorParser.g:7589:1: (this_ASIN_0= RULE_ASIN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
+            // InternalWreslEditorParser.g:7629:28: ( (this_ASIN_0= RULE_ASIN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) )
+            // InternalWreslEditorParser.g:7630:1: (this_ASIN_0= RULE_ASIN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
             {
-            // InternalWreslEditorParser.g:7589:1: (this_ASIN_0= RULE_ASIN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
-            // InternalWreslEditorParser.g:7589:2: this_ASIN_0= RULE_ASIN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis
+            // InternalWreslEditorParser.g:7630:1: (this_ASIN_0= RULE_ASIN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
+            // InternalWreslEditorParser.g:7630:2: this_ASIN_0= RULE_ASIN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis
             {
             this_ASIN_0=(Token)match(input,RULE_ASIN,FOLLOW_48); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -23045,11 +23207,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_1, grammarAccess.getAsinFunctionAccess().getLeftParenthesisKeyword_1());
                   
             }
-            // InternalWreslEditorParser.g:7598:1: ( (lv_e_2_0= ruleExpression ) )
-            // InternalWreslEditorParser.g:7599:1: (lv_e_2_0= ruleExpression )
+            // InternalWreslEditorParser.g:7639:1: ( (lv_e_2_0= ruleExpression ) )
+            // InternalWreslEditorParser.g:7640:1: (lv_e_2_0= ruleExpression )
             {
-            // InternalWreslEditorParser.g:7599:1: (lv_e_2_0= ruleExpression )
-            // InternalWreslEditorParser.g:7600:3: lv_e_2_0= ruleExpression
+            // InternalWreslEditorParser.g:7640:1: (lv_e_2_0= ruleExpression )
+            // InternalWreslEditorParser.g:7641:3: lv_e_2_0= ruleExpression
             {
             if ( state.backtracking==0 ) {
                
@@ -23109,7 +23271,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAcosFunction"
-    // InternalWreslEditorParser.g:7629:1: entryRuleAcosFunction returns [EObject current=null] : iv_ruleAcosFunction= ruleAcosFunction EOF ;
+    // InternalWreslEditorParser.g:7670:1: entryRuleAcosFunction returns [EObject current=null] : iv_ruleAcosFunction= ruleAcosFunction EOF ;
     public final EObject entryRuleAcosFunction() throws RecognitionException {
         EObject current = null;
 
@@ -23117,8 +23279,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:7630:2: (iv_ruleAcosFunction= ruleAcosFunction EOF )
-            // InternalWreslEditorParser.g:7631:2: iv_ruleAcosFunction= ruleAcosFunction EOF
+            // InternalWreslEditorParser.g:7671:2: (iv_ruleAcosFunction= ruleAcosFunction EOF )
+            // InternalWreslEditorParser.g:7672:2: iv_ruleAcosFunction= ruleAcosFunction EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getAcosFunctionRule()); 
@@ -23149,7 +23311,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAcosFunction"
-    // InternalWreslEditorParser.g:7638:1: ruleAcosFunction returns [EObject current=null] : (this_ACOS_0= RULE_ACOS otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) ;
+    // InternalWreslEditorParser.g:7679:1: ruleAcosFunction returns [EObject current=null] : (this_ACOS_0= RULE_ACOS otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) ;
     public final EObject ruleAcosFunction() throws RecognitionException {
         EObject current = null;
 
@@ -23162,11 +23324,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:7641:28: ( (this_ACOS_0= RULE_ACOS otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) )
-            // InternalWreslEditorParser.g:7642:1: (this_ACOS_0= RULE_ACOS otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
+            // InternalWreslEditorParser.g:7682:28: ( (this_ACOS_0= RULE_ACOS otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) )
+            // InternalWreslEditorParser.g:7683:1: (this_ACOS_0= RULE_ACOS otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
             {
-            // InternalWreslEditorParser.g:7642:1: (this_ACOS_0= RULE_ACOS otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
-            // InternalWreslEditorParser.g:7642:2: this_ACOS_0= RULE_ACOS otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis
+            // InternalWreslEditorParser.g:7683:1: (this_ACOS_0= RULE_ACOS otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
+            // InternalWreslEditorParser.g:7683:2: this_ACOS_0= RULE_ACOS otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis
             {
             this_ACOS_0=(Token)match(input,RULE_ACOS,FOLLOW_48); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -23180,11 +23342,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_1, grammarAccess.getAcosFunctionAccess().getLeftParenthesisKeyword_1());
                   
             }
-            // InternalWreslEditorParser.g:7651:1: ( (lv_e_2_0= ruleExpression ) )
-            // InternalWreslEditorParser.g:7652:1: (lv_e_2_0= ruleExpression )
+            // InternalWreslEditorParser.g:7692:1: ( (lv_e_2_0= ruleExpression ) )
+            // InternalWreslEditorParser.g:7693:1: (lv_e_2_0= ruleExpression )
             {
-            // InternalWreslEditorParser.g:7652:1: (lv_e_2_0= ruleExpression )
-            // InternalWreslEditorParser.g:7653:3: lv_e_2_0= ruleExpression
+            // InternalWreslEditorParser.g:7693:1: (lv_e_2_0= ruleExpression )
+            // InternalWreslEditorParser.g:7694:3: lv_e_2_0= ruleExpression
             {
             if ( state.backtracking==0 ) {
                
@@ -23244,7 +23406,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAtanFunction"
-    // InternalWreslEditorParser.g:7682:1: entryRuleAtanFunction returns [EObject current=null] : iv_ruleAtanFunction= ruleAtanFunction EOF ;
+    // InternalWreslEditorParser.g:7723:1: entryRuleAtanFunction returns [EObject current=null] : iv_ruleAtanFunction= ruleAtanFunction EOF ;
     public final EObject entryRuleAtanFunction() throws RecognitionException {
         EObject current = null;
 
@@ -23252,8 +23414,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:7683:2: (iv_ruleAtanFunction= ruleAtanFunction EOF )
-            // InternalWreslEditorParser.g:7684:2: iv_ruleAtanFunction= ruleAtanFunction EOF
+            // InternalWreslEditorParser.g:7724:2: (iv_ruleAtanFunction= ruleAtanFunction EOF )
+            // InternalWreslEditorParser.g:7725:2: iv_ruleAtanFunction= ruleAtanFunction EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getAtanFunctionRule()); 
@@ -23284,7 +23446,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAtanFunction"
-    // InternalWreslEditorParser.g:7691:1: ruleAtanFunction returns [EObject current=null] : (this_ATAN_0= RULE_ATAN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) ;
+    // InternalWreslEditorParser.g:7732:1: ruleAtanFunction returns [EObject current=null] : (this_ATAN_0= RULE_ATAN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) ;
     public final EObject ruleAtanFunction() throws RecognitionException {
         EObject current = null;
 
@@ -23297,11 +23459,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:7694:28: ( (this_ATAN_0= RULE_ATAN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) )
-            // InternalWreslEditorParser.g:7695:1: (this_ATAN_0= RULE_ATAN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
+            // InternalWreslEditorParser.g:7735:28: ( (this_ATAN_0= RULE_ATAN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) )
+            // InternalWreslEditorParser.g:7736:1: (this_ATAN_0= RULE_ATAN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
             {
-            // InternalWreslEditorParser.g:7695:1: (this_ATAN_0= RULE_ATAN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
-            // InternalWreslEditorParser.g:7695:2: this_ATAN_0= RULE_ATAN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis
+            // InternalWreslEditorParser.g:7736:1: (this_ATAN_0= RULE_ATAN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
+            // InternalWreslEditorParser.g:7736:2: this_ATAN_0= RULE_ATAN otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis
             {
             this_ATAN_0=(Token)match(input,RULE_ATAN,FOLLOW_48); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -23315,11 +23477,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_1, grammarAccess.getAtanFunctionAccess().getLeftParenthesisKeyword_1());
                   
             }
-            // InternalWreslEditorParser.g:7704:1: ( (lv_e_2_0= ruleExpression ) )
-            // InternalWreslEditorParser.g:7705:1: (lv_e_2_0= ruleExpression )
+            // InternalWreslEditorParser.g:7745:1: ( (lv_e_2_0= ruleExpression ) )
+            // InternalWreslEditorParser.g:7746:1: (lv_e_2_0= ruleExpression )
             {
-            // InternalWreslEditorParser.g:7705:1: (lv_e_2_0= ruleExpression )
-            // InternalWreslEditorParser.g:7706:3: lv_e_2_0= ruleExpression
+            // InternalWreslEditorParser.g:7746:1: (lv_e_2_0= ruleExpression )
+            // InternalWreslEditorParser.g:7747:3: lv_e_2_0= ruleExpression
             {
             if ( state.backtracking==0 ) {
                
@@ -23379,7 +23541,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAcotFunction"
-    // InternalWreslEditorParser.g:7735:1: entryRuleAcotFunction returns [EObject current=null] : iv_ruleAcotFunction= ruleAcotFunction EOF ;
+    // InternalWreslEditorParser.g:7776:1: entryRuleAcotFunction returns [EObject current=null] : iv_ruleAcotFunction= ruleAcotFunction EOF ;
     public final EObject entryRuleAcotFunction() throws RecognitionException {
         EObject current = null;
 
@@ -23387,8 +23549,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:7736:2: (iv_ruleAcotFunction= ruleAcotFunction EOF )
-            // InternalWreslEditorParser.g:7737:2: iv_ruleAcotFunction= ruleAcotFunction EOF
+            // InternalWreslEditorParser.g:7777:2: (iv_ruleAcotFunction= ruleAcotFunction EOF )
+            // InternalWreslEditorParser.g:7778:2: iv_ruleAcotFunction= ruleAcotFunction EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getAcotFunctionRule()); 
@@ -23419,7 +23581,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAcotFunction"
-    // InternalWreslEditorParser.g:7744:1: ruleAcotFunction returns [EObject current=null] : (this_ACOT_0= RULE_ACOT otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) ;
+    // InternalWreslEditorParser.g:7785:1: ruleAcotFunction returns [EObject current=null] : (this_ACOT_0= RULE_ACOT otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) ;
     public final EObject ruleAcotFunction() throws RecognitionException {
         EObject current = null;
 
@@ -23432,11 +23594,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:7747:28: ( (this_ACOT_0= RULE_ACOT otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) )
-            // InternalWreslEditorParser.g:7748:1: (this_ACOT_0= RULE_ACOT otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
+            // InternalWreslEditorParser.g:7788:28: ( (this_ACOT_0= RULE_ACOT otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis ) )
+            // InternalWreslEditorParser.g:7789:1: (this_ACOT_0= RULE_ACOT otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
             {
-            // InternalWreslEditorParser.g:7748:1: (this_ACOT_0= RULE_ACOT otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
-            // InternalWreslEditorParser.g:7748:2: this_ACOT_0= RULE_ACOT otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis
+            // InternalWreslEditorParser.g:7789:1: (this_ACOT_0= RULE_ACOT otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis )
+            // InternalWreslEditorParser.g:7789:2: this_ACOT_0= RULE_ACOT otherlv_1= LeftParenthesis ( (lv_e_2_0= ruleExpression ) ) otherlv_3= RightParenthesis
             {
             this_ACOT_0=(Token)match(input,RULE_ACOT,FOLLOW_48); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -23450,11 +23612,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_1, grammarAccess.getAcotFunctionAccess().getLeftParenthesisKeyword_1());
                   
             }
-            // InternalWreslEditorParser.g:7757:1: ( (lv_e_2_0= ruleExpression ) )
-            // InternalWreslEditorParser.g:7758:1: (lv_e_2_0= ruleExpression )
+            // InternalWreslEditorParser.g:7798:1: ( (lv_e_2_0= ruleExpression ) )
+            // InternalWreslEditorParser.g:7799:1: (lv_e_2_0= ruleExpression )
             {
-            // InternalWreslEditorParser.g:7758:1: (lv_e_2_0= ruleExpression )
-            // InternalWreslEditorParser.g:7759:3: lv_e_2_0= ruleExpression
+            // InternalWreslEditorParser.g:7799:1: (lv_e_2_0= ruleExpression )
+            // InternalWreslEditorParser.g:7800:3: lv_e_2_0= ruleExpression
             {
             if ( state.backtracking==0 ) {
                
@@ -23514,7 +23676,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleLogicalFunction"
-    // InternalWreslEditorParser.g:7788:1: entryRuleLogicalFunction returns [String current=null] : iv_ruleLogicalFunction= ruleLogicalFunction EOF ;
+    // InternalWreslEditorParser.g:7829:1: entryRuleLogicalFunction returns [String current=null] : iv_ruleLogicalFunction= ruleLogicalFunction EOF ;
     public final String entryRuleLogicalFunction() throws RecognitionException {
         String current = null;
 
@@ -23522,8 +23684,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:7789:1: (iv_ruleLogicalFunction= ruleLogicalFunction EOF )
-            // InternalWreslEditorParser.g:7790:2: iv_ruleLogicalFunction= ruleLogicalFunction EOF
+            // InternalWreslEditorParser.g:7830:1: (iv_ruleLogicalFunction= ruleLogicalFunction EOF )
+            // InternalWreslEditorParser.g:7831:2: iv_ruleLogicalFunction= ruleLogicalFunction EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getLogicalFunctionRule()); 
@@ -23554,7 +23716,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLogicalFunction"
-    // InternalWreslEditorParser.g:7797:1: ruleLogicalFunction returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : this_RangeFunction_0= ruleRangeFunction ;
+    // InternalWreslEditorParser.g:7838:1: ruleLogicalFunction returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : this_RangeFunction_0= ruleRangeFunction ;
     public final AntlrDatatypeRuleToken ruleLogicalFunction() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -23564,8 +23726,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:7801:6: (this_RangeFunction_0= ruleRangeFunction )
-            // InternalWreslEditorParser.g:7803:5: this_RangeFunction_0= ruleRangeFunction
+            // InternalWreslEditorParser.g:7842:6: (this_RangeFunction_0= ruleRangeFunction )
+            // InternalWreslEditorParser.g:7844:5: this_RangeFunction_0= ruleRangeFunction
             {
             if ( state.backtracking==0 ) {
                
@@ -23608,7 +23770,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleVarModel"
-    // InternalWreslEditorParser.g:7821:1: entryRuleVarModel returns [EObject current=null] : iv_ruleVarModel= ruleVarModel EOF ;
+    // InternalWreslEditorParser.g:7862:1: entryRuleVarModel returns [EObject current=null] : iv_ruleVarModel= ruleVarModel EOF ;
     public final EObject entryRuleVarModel() throws RecognitionException {
         EObject current = null;
 
@@ -23616,8 +23778,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:7822:2: (iv_ruleVarModel= ruleVarModel EOF )
-            // InternalWreslEditorParser.g:7823:2: iv_ruleVarModel= ruleVarModel EOF
+            // InternalWreslEditorParser.g:7863:2: (iv_ruleVarModel= ruleVarModel EOF )
+            // InternalWreslEditorParser.g:7864:2: iv_ruleVarModel= ruleVarModel EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getVarModelRule()); 
@@ -23648,7 +23810,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleVarModel"
-    // InternalWreslEditorParser.g:7830:1: ruleVarModel returns [EObject current=null] : ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket ( (otherlv_2= RULE_ID ) ) otherlv_3= RightSquareBracket ) ;
+    // InternalWreslEditorParser.g:7871:1: ruleVarModel returns [EObject current=null] : ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket ( (otherlv_2= RULE_ID ) ) otherlv_3= RightSquareBracket ) ;
     public final EObject ruleVarModel() throws RecognitionException {
         EObject current = null;
 
@@ -23660,17 +23822,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:7833:28: ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket ( (otherlv_2= RULE_ID ) ) otherlv_3= RightSquareBracket ) )
-            // InternalWreslEditorParser.g:7834:1: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket ( (otherlv_2= RULE_ID ) ) otherlv_3= RightSquareBracket )
+            // InternalWreslEditorParser.g:7874:28: ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket ( (otherlv_2= RULE_ID ) ) otherlv_3= RightSquareBracket ) )
+            // InternalWreslEditorParser.g:7875:1: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket ( (otherlv_2= RULE_ID ) ) otherlv_3= RightSquareBracket )
             {
-            // InternalWreslEditorParser.g:7834:1: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket ( (otherlv_2= RULE_ID ) ) otherlv_3= RightSquareBracket )
-            // InternalWreslEditorParser.g:7834:2: ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket ( (otherlv_2= RULE_ID ) ) otherlv_3= RightSquareBracket
+            // InternalWreslEditorParser.g:7875:1: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket ( (otherlv_2= RULE_ID ) ) otherlv_3= RightSquareBracket )
+            // InternalWreslEditorParser.g:7875:2: ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket ( (otherlv_2= RULE_ID ) ) otherlv_3= RightSquareBracket
             {
-            // InternalWreslEditorParser.g:7834:2: ( (otherlv_0= RULE_ID ) )
-            // InternalWreslEditorParser.g:7835:1: (otherlv_0= RULE_ID )
+            // InternalWreslEditorParser.g:7875:2: ( (otherlv_0= RULE_ID ) )
+            // InternalWreslEditorParser.g:7876:1: (otherlv_0= RULE_ID )
             {
-            // InternalWreslEditorParser.g:7835:1: (otherlv_0= RULE_ID )
-            // InternalWreslEditorParser.g:7836:3: otherlv_0= RULE_ID
+            // InternalWreslEditorParser.g:7876:1: (otherlv_0= RULE_ID )
+            // InternalWreslEditorParser.g:7877:3: otherlv_0= RULE_ID
             {
             if ( state.backtracking==0 ) {
                
@@ -23702,11 +23864,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_1, grammarAccess.getVarModelAccess().getLeftSquareBracketKeyword_1());
                   
             }
-            // InternalWreslEditorParser.g:7855:1: ( (otherlv_2= RULE_ID ) )
-            // InternalWreslEditorParser.g:7856:1: (otherlv_2= RULE_ID )
+            // InternalWreslEditorParser.g:7896:1: ( (otherlv_2= RULE_ID ) )
+            // InternalWreslEditorParser.g:7897:1: (otherlv_2= RULE_ID )
             {
-            // InternalWreslEditorParser.g:7856:1: (otherlv_2= RULE_ID )
-            // InternalWreslEditorParser.g:7857:3: otherlv_2= RULE_ID
+            // InternalWreslEditorParser.g:7897:1: (otherlv_2= RULE_ID )
+            // InternalWreslEditorParser.g:7898:3: otherlv_2= RULE_ID
             {
             if ( state.backtracking==0 ) {
                
@@ -23761,7 +23923,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleVarModelStep"
-    // InternalWreslEditorParser.g:7884:1: entryRuleVarModelStep returns [EObject current=null] : iv_ruleVarModelStep= ruleVarModelStep EOF ;
+    // InternalWreslEditorParser.g:7925:1: entryRuleVarModelStep returns [EObject current=null] : iv_ruleVarModelStep= ruleVarModelStep EOF ;
     public final EObject entryRuleVarModelStep() throws RecognitionException {
         EObject current = null;
 
@@ -23769,8 +23931,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:7885:2: (iv_ruleVarModelStep= ruleVarModelStep EOF )
-            // InternalWreslEditorParser.g:7886:2: iv_ruleVarModelStep= ruleVarModelStep EOF
+            // InternalWreslEditorParser.g:7926:2: (iv_ruleVarModelStep= ruleVarModelStep EOF )
+            // InternalWreslEditorParser.g:7927:2: iv_ruleVarModelStep= ruleVarModelStep EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getVarModelStepRule()); 
@@ -23801,7 +23963,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleVarModelStep"
-    // InternalWreslEditorParser.g:7893:1: ruleVarModelStep returns [EObject current=null] : ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket ( (otherlv_2= RULE_ID ) ) otherlv_3= RightSquareBracket otherlv_4= LeftParenthesis ( (lv_e_5_0= ruleExpression ) ) otherlv_6= RightParenthesis ) ;
+    // InternalWreslEditorParser.g:7934:1: ruleVarModelStep returns [EObject current=null] : ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket ( (otherlv_2= RULE_ID ) ) otherlv_3= RightSquareBracket otherlv_4= LeftParenthesis ( (lv_e_5_0= ruleExpression ) ) otherlv_6= RightParenthesis ) ;
     public final EObject ruleVarModelStep() throws RecognitionException {
         EObject current = null;
 
@@ -23817,17 +23979,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:7896:28: ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket ( (otherlv_2= RULE_ID ) ) otherlv_3= RightSquareBracket otherlv_4= LeftParenthesis ( (lv_e_5_0= ruleExpression ) ) otherlv_6= RightParenthesis ) )
-            // InternalWreslEditorParser.g:7897:1: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket ( (otherlv_2= RULE_ID ) ) otherlv_3= RightSquareBracket otherlv_4= LeftParenthesis ( (lv_e_5_0= ruleExpression ) ) otherlv_6= RightParenthesis )
+            // InternalWreslEditorParser.g:7937:28: ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket ( (otherlv_2= RULE_ID ) ) otherlv_3= RightSquareBracket otherlv_4= LeftParenthesis ( (lv_e_5_0= ruleExpression ) ) otherlv_6= RightParenthesis ) )
+            // InternalWreslEditorParser.g:7938:1: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket ( (otherlv_2= RULE_ID ) ) otherlv_3= RightSquareBracket otherlv_4= LeftParenthesis ( (lv_e_5_0= ruleExpression ) ) otherlv_6= RightParenthesis )
             {
-            // InternalWreslEditorParser.g:7897:1: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket ( (otherlv_2= RULE_ID ) ) otherlv_3= RightSquareBracket otherlv_4= LeftParenthesis ( (lv_e_5_0= ruleExpression ) ) otherlv_6= RightParenthesis )
-            // InternalWreslEditorParser.g:7897:2: ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket ( (otherlv_2= RULE_ID ) ) otherlv_3= RightSquareBracket otherlv_4= LeftParenthesis ( (lv_e_5_0= ruleExpression ) ) otherlv_6= RightParenthesis
+            // InternalWreslEditorParser.g:7938:1: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket ( (otherlv_2= RULE_ID ) ) otherlv_3= RightSquareBracket otherlv_4= LeftParenthesis ( (lv_e_5_0= ruleExpression ) ) otherlv_6= RightParenthesis )
+            // InternalWreslEditorParser.g:7938:2: ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket ( (otherlv_2= RULE_ID ) ) otherlv_3= RightSquareBracket otherlv_4= LeftParenthesis ( (lv_e_5_0= ruleExpression ) ) otherlv_6= RightParenthesis
             {
-            // InternalWreslEditorParser.g:7897:2: ( (otherlv_0= RULE_ID ) )
-            // InternalWreslEditorParser.g:7898:1: (otherlv_0= RULE_ID )
+            // InternalWreslEditorParser.g:7938:2: ( (otherlv_0= RULE_ID ) )
+            // InternalWreslEditorParser.g:7939:1: (otherlv_0= RULE_ID )
             {
-            // InternalWreslEditorParser.g:7898:1: (otherlv_0= RULE_ID )
-            // InternalWreslEditorParser.g:7899:3: otherlv_0= RULE_ID
+            // InternalWreslEditorParser.g:7939:1: (otherlv_0= RULE_ID )
+            // InternalWreslEditorParser.g:7940:3: otherlv_0= RULE_ID
             {
             if ( state.backtracking==0 ) {
                
@@ -23859,11 +24021,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_1, grammarAccess.getVarModelStepAccess().getLeftSquareBracketKeyword_1());
                   
             }
-            // InternalWreslEditorParser.g:7918:1: ( (otherlv_2= RULE_ID ) )
-            // InternalWreslEditorParser.g:7919:1: (otherlv_2= RULE_ID )
+            // InternalWreslEditorParser.g:7959:1: ( (otherlv_2= RULE_ID ) )
+            // InternalWreslEditorParser.g:7960:1: (otherlv_2= RULE_ID )
             {
-            // InternalWreslEditorParser.g:7919:1: (otherlv_2= RULE_ID )
-            // InternalWreslEditorParser.g:7920:3: otherlv_2= RULE_ID
+            // InternalWreslEditorParser.g:7960:1: (otherlv_2= RULE_ID )
+            // InternalWreslEditorParser.g:7961:3: otherlv_2= RULE_ID
             {
             if ( state.backtracking==0 ) {
                
@@ -23901,11 +24063,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_4, grammarAccess.getVarModelStepAccess().getLeftParenthesisKeyword_4());
                   
             }
-            // InternalWreslEditorParser.g:7944:1: ( (lv_e_5_0= ruleExpression ) )
-            // InternalWreslEditorParser.g:7945:1: (lv_e_5_0= ruleExpression )
+            // InternalWreslEditorParser.g:7985:1: ( (lv_e_5_0= ruleExpression ) )
+            // InternalWreslEditorParser.g:7986:1: (lv_e_5_0= ruleExpression )
             {
-            // InternalWreslEditorParser.g:7945:1: (lv_e_5_0= ruleExpression )
-            // InternalWreslEditorParser.g:7946:3: lv_e_5_0= ruleExpression
+            // InternalWreslEditorParser.g:7986:1: (lv_e_5_0= ruleExpression )
+            // InternalWreslEditorParser.g:7987:3: lv_e_5_0= ruleExpression
             {
             if ( state.backtracking==0 ) {
                
@@ -23965,7 +24127,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleVarModelIndex"
-    // InternalWreslEditorParser.g:7975:1: entryRuleVarModelIndex returns [EObject current=null] : iv_ruleVarModelIndex= ruleVarModelIndex EOF ;
+    // InternalWreslEditorParser.g:8016:1: entryRuleVarModelIndex returns [EObject current=null] : iv_ruleVarModelIndex= ruleVarModelIndex EOF ;
     public final EObject entryRuleVarModelIndex() throws RecognitionException {
         EObject current = null;
 
@@ -23973,8 +24135,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:7976:2: (iv_ruleVarModelIndex= ruleVarModelIndex EOF )
-            // InternalWreslEditorParser.g:7977:2: iv_ruleVarModelIndex= ruleVarModelIndex EOF
+            // InternalWreslEditorParser.g:8017:2: (iv_ruleVarModelIndex= ruleVarModelIndex EOF )
+            // InternalWreslEditorParser.g:8018:2: iv_ruleVarModelIndex= ruleVarModelIndex EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getVarModelIndexRule()); 
@@ -24005,7 +24167,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleVarModelIndex"
-    // InternalWreslEditorParser.g:7984:1: ruleVarModelIndex returns [EObject current=null] : ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket otherlv_2= HyphenMinus this_INT_3= RULE_INT otherlv_4= RightSquareBracket ) ;
+    // InternalWreslEditorParser.g:8025:1: ruleVarModelIndex returns [EObject current=null] : ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket otherlv_2= HyphenMinus this_INT_3= RULE_INT otherlv_4= RightSquareBracket ) ;
     public final EObject ruleVarModelIndex() throws RecognitionException {
         EObject current = null;
 
@@ -24018,17 +24180,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:7987:28: ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket otherlv_2= HyphenMinus this_INT_3= RULE_INT otherlv_4= RightSquareBracket ) )
-            // InternalWreslEditorParser.g:7988:1: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket otherlv_2= HyphenMinus this_INT_3= RULE_INT otherlv_4= RightSquareBracket )
+            // InternalWreslEditorParser.g:8028:28: ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket otherlv_2= HyphenMinus this_INT_3= RULE_INT otherlv_4= RightSquareBracket ) )
+            // InternalWreslEditorParser.g:8029:1: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket otherlv_2= HyphenMinus this_INT_3= RULE_INT otherlv_4= RightSquareBracket )
             {
-            // InternalWreslEditorParser.g:7988:1: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket otherlv_2= HyphenMinus this_INT_3= RULE_INT otherlv_4= RightSquareBracket )
-            // InternalWreslEditorParser.g:7988:2: ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket otherlv_2= HyphenMinus this_INT_3= RULE_INT otherlv_4= RightSquareBracket
+            // InternalWreslEditorParser.g:8029:1: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket otherlv_2= HyphenMinus this_INT_3= RULE_INT otherlv_4= RightSquareBracket )
+            // InternalWreslEditorParser.g:8029:2: ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket otherlv_2= HyphenMinus this_INT_3= RULE_INT otherlv_4= RightSquareBracket
             {
-            // InternalWreslEditorParser.g:7988:2: ( (otherlv_0= RULE_ID ) )
-            // InternalWreslEditorParser.g:7989:1: (otherlv_0= RULE_ID )
+            // InternalWreslEditorParser.g:8029:2: ( (otherlv_0= RULE_ID ) )
+            // InternalWreslEditorParser.g:8030:1: (otherlv_0= RULE_ID )
             {
-            // InternalWreslEditorParser.g:7989:1: (otherlv_0= RULE_ID )
-            // InternalWreslEditorParser.g:7990:3: otherlv_0= RULE_ID
+            // InternalWreslEditorParser.g:8030:1: (otherlv_0= RULE_ID )
+            // InternalWreslEditorParser.g:8031:3: otherlv_0= RULE_ID
             {
             if ( state.backtracking==0 ) {
                
@@ -24054,7 +24216,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,LeftSquareBracket,FOLLOW_86); if (state.failed) return current;
+            otherlv_1=(Token)match(input,LeftSquareBracket,FOLLOW_87); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getVarModelIndexAccess().getLeftSquareBracketKeyword_1());
@@ -24101,7 +24263,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleVarModelIndexStep"
-    // InternalWreslEditorParser.g:8031:1: entryRuleVarModelIndexStep returns [EObject current=null] : iv_ruleVarModelIndexStep= ruleVarModelIndexStep EOF ;
+    // InternalWreslEditorParser.g:8072:1: entryRuleVarModelIndexStep returns [EObject current=null] : iv_ruleVarModelIndexStep= ruleVarModelIndexStep EOF ;
     public final EObject entryRuleVarModelIndexStep() throws RecognitionException {
         EObject current = null;
 
@@ -24109,8 +24271,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:8032:2: (iv_ruleVarModelIndexStep= ruleVarModelIndexStep EOF )
-            // InternalWreslEditorParser.g:8033:2: iv_ruleVarModelIndexStep= ruleVarModelIndexStep EOF
+            // InternalWreslEditorParser.g:8073:2: (iv_ruleVarModelIndexStep= ruleVarModelIndexStep EOF )
+            // InternalWreslEditorParser.g:8074:2: iv_ruleVarModelIndexStep= ruleVarModelIndexStep EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getVarModelIndexStepRule()); 
@@ -24141,7 +24303,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleVarModelIndexStep"
-    // InternalWreslEditorParser.g:8040:1: ruleVarModelIndexStep returns [EObject current=null] : ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket otherlv_2= HyphenMinus this_INT_3= RULE_INT otherlv_4= RightSquareBracket otherlv_5= LeftParenthesis ( (lv_e_6_0= ruleExpression ) ) otherlv_7= RightParenthesis ) ;
+    // InternalWreslEditorParser.g:8081:1: ruleVarModelIndexStep returns [EObject current=null] : ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket otherlv_2= HyphenMinus this_INT_3= RULE_INT otherlv_4= RightSquareBracket otherlv_5= LeftParenthesis ( (lv_e_6_0= ruleExpression ) ) otherlv_7= RightParenthesis ) ;
     public final EObject ruleVarModelIndexStep() throws RecognitionException {
         EObject current = null;
 
@@ -24158,17 +24320,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:8043:28: ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket otherlv_2= HyphenMinus this_INT_3= RULE_INT otherlv_4= RightSquareBracket otherlv_5= LeftParenthesis ( (lv_e_6_0= ruleExpression ) ) otherlv_7= RightParenthesis ) )
-            // InternalWreslEditorParser.g:8044:1: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket otherlv_2= HyphenMinus this_INT_3= RULE_INT otherlv_4= RightSquareBracket otherlv_5= LeftParenthesis ( (lv_e_6_0= ruleExpression ) ) otherlv_7= RightParenthesis )
+            // InternalWreslEditorParser.g:8084:28: ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket otherlv_2= HyphenMinus this_INT_3= RULE_INT otherlv_4= RightSquareBracket otherlv_5= LeftParenthesis ( (lv_e_6_0= ruleExpression ) ) otherlv_7= RightParenthesis ) )
+            // InternalWreslEditorParser.g:8085:1: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket otherlv_2= HyphenMinus this_INT_3= RULE_INT otherlv_4= RightSquareBracket otherlv_5= LeftParenthesis ( (lv_e_6_0= ruleExpression ) ) otherlv_7= RightParenthesis )
             {
-            // InternalWreslEditorParser.g:8044:1: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket otherlv_2= HyphenMinus this_INT_3= RULE_INT otherlv_4= RightSquareBracket otherlv_5= LeftParenthesis ( (lv_e_6_0= ruleExpression ) ) otherlv_7= RightParenthesis )
-            // InternalWreslEditorParser.g:8044:2: ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket otherlv_2= HyphenMinus this_INT_3= RULE_INT otherlv_4= RightSquareBracket otherlv_5= LeftParenthesis ( (lv_e_6_0= ruleExpression ) ) otherlv_7= RightParenthesis
+            // InternalWreslEditorParser.g:8085:1: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket otherlv_2= HyphenMinus this_INT_3= RULE_INT otherlv_4= RightSquareBracket otherlv_5= LeftParenthesis ( (lv_e_6_0= ruleExpression ) ) otherlv_7= RightParenthesis )
+            // InternalWreslEditorParser.g:8085:2: ( (otherlv_0= RULE_ID ) ) otherlv_1= LeftSquareBracket otherlv_2= HyphenMinus this_INT_3= RULE_INT otherlv_4= RightSquareBracket otherlv_5= LeftParenthesis ( (lv_e_6_0= ruleExpression ) ) otherlv_7= RightParenthesis
             {
-            // InternalWreslEditorParser.g:8044:2: ( (otherlv_0= RULE_ID ) )
-            // InternalWreslEditorParser.g:8045:1: (otherlv_0= RULE_ID )
+            // InternalWreslEditorParser.g:8085:2: ( (otherlv_0= RULE_ID ) )
+            // InternalWreslEditorParser.g:8086:1: (otherlv_0= RULE_ID )
             {
-            // InternalWreslEditorParser.g:8045:1: (otherlv_0= RULE_ID )
-            // InternalWreslEditorParser.g:8046:3: otherlv_0= RULE_ID
+            // InternalWreslEditorParser.g:8086:1: (otherlv_0= RULE_ID )
+            // InternalWreslEditorParser.g:8087:3: otherlv_0= RULE_ID
             {
             if ( state.backtracking==0 ) {
                
@@ -24194,7 +24356,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,LeftSquareBracket,FOLLOW_86); if (state.failed) return current;
+            otherlv_1=(Token)match(input,LeftSquareBracket,FOLLOW_87); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getVarModelIndexStepAccess().getLeftSquareBracketKeyword_1());
@@ -24224,11 +24386,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_5, grammarAccess.getVarModelIndexStepAccess().getLeftParenthesisKeyword_5());
                   
             }
-            // InternalWreslEditorParser.g:8084:1: ( (lv_e_6_0= ruleExpression ) )
-            // InternalWreslEditorParser.g:8085:1: (lv_e_6_0= ruleExpression )
+            // InternalWreslEditorParser.g:8125:1: ( (lv_e_6_0= ruleExpression ) )
+            // InternalWreslEditorParser.g:8126:1: (lv_e_6_0= ruleExpression )
             {
-            // InternalWreslEditorParser.g:8085:1: (lv_e_6_0= ruleExpression )
-            // InternalWreslEditorParser.g:8086:3: lv_e_6_0= ruleExpression
+            // InternalWreslEditorParser.g:8126:1: (lv_e_6_0= ruleExpression )
+            // InternalWreslEditorParser.g:8127:3: lv_e_6_0= ruleExpression
             {
             if ( state.backtracking==0 ) {
                
@@ -24288,7 +24450,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleRangeFunction"
-    // InternalWreslEditorParser.g:8115:1: entryRuleRangeFunction returns [String current=null] : iv_ruleRangeFunction= ruleRangeFunction EOF ;
+    // InternalWreslEditorParser.g:8156:1: entryRuleRangeFunction returns [String current=null] : iv_ruleRangeFunction= ruleRangeFunction EOF ;
     public final String entryRuleRangeFunction() throws RecognitionException {
         String current = null;
 
@@ -24296,8 +24458,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:8116:1: (iv_ruleRangeFunction= ruleRangeFunction EOF )
-            // InternalWreslEditorParser.g:8117:2: iv_ruleRangeFunction= ruleRangeFunction EOF
+            // InternalWreslEditorParser.g:8157:1: (iv_ruleRangeFunction= ruleRangeFunction EOF )
+            // InternalWreslEditorParser.g:8158:2: iv_ruleRangeFunction= ruleRangeFunction EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getRangeFunctionRule()); 
@@ -24328,7 +24490,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleRangeFunction"
-    // InternalWreslEditorParser.g:8124:1: ruleRangeFunction returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_RANGE_0= RULE_RANGE kw= LeftParenthesis (this_ID_2= RULE_ID | this_Month_3= ruleMonth | this_WaterYear_4= ruleWaterYear ) kw= Comma (this_ID_6= RULE_ID | this_CalendarMonth_7= ruleCalendarMonth | this_PrevMonth_8= rulePrevMonth ) kw= Comma (this_ID_10= RULE_ID | this_CalendarMonth_11= ruleCalendarMonth | this_PrevMonth_12= rulePrevMonth ) kw= RightParenthesis ) ;
+    // InternalWreslEditorParser.g:8165:1: ruleRangeFunction returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_RANGE_0= RULE_RANGE kw= LeftParenthesis (this_ID_2= RULE_ID | this_Month_3= ruleMonth | this_WaterYear_4= ruleWaterYear ) kw= Comma (this_ID_6= RULE_ID | this_CalendarMonth_7= ruleCalendarMonth | this_PrevMonth_8= rulePrevMonth ) kw= Comma (this_ID_10= RULE_ID | this_CalendarMonth_11= ruleCalendarMonth | this_PrevMonth_12= rulePrevMonth ) kw= RightParenthesis ) ;
     public final AntlrDatatypeRuleToken ruleRangeFunction() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -24353,11 +24515,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:8128:6: ( (this_RANGE_0= RULE_RANGE kw= LeftParenthesis (this_ID_2= RULE_ID | this_Month_3= ruleMonth | this_WaterYear_4= ruleWaterYear ) kw= Comma (this_ID_6= RULE_ID | this_CalendarMonth_7= ruleCalendarMonth | this_PrevMonth_8= rulePrevMonth ) kw= Comma (this_ID_10= RULE_ID | this_CalendarMonth_11= ruleCalendarMonth | this_PrevMonth_12= rulePrevMonth ) kw= RightParenthesis ) )
-            // InternalWreslEditorParser.g:8129:1: (this_RANGE_0= RULE_RANGE kw= LeftParenthesis (this_ID_2= RULE_ID | this_Month_3= ruleMonth | this_WaterYear_4= ruleWaterYear ) kw= Comma (this_ID_6= RULE_ID | this_CalendarMonth_7= ruleCalendarMonth | this_PrevMonth_8= rulePrevMonth ) kw= Comma (this_ID_10= RULE_ID | this_CalendarMonth_11= ruleCalendarMonth | this_PrevMonth_12= rulePrevMonth ) kw= RightParenthesis )
+            // InternalWreslEditorParser.g:8169:6: ( (this_RANGE_0= RULE_RANGE kw= LeftParenthesis (this_ID_2= RULE_ID | this_Month_3= ruleMonth | this_WaterYear_4= ruleWaterYear ) kw= Comma (this_ID_6= RULE_ID | this_CalendarMonth_7= ruleCalendarMonth | this_PrevMonth_8= rulePrevMonth ) kw= Comma (this_ID_10= RULE_ID | this_CalendarMonth_11= ruleCalendarMonth | this_PrevMonth_12= rulePrevMonth ) kw= RightParenthesis ) )
+            // InternalWreslEditorParser.g:8170:1: (this_RANGE_0= RULE_RANGE kw= LeftParenthesis (this_ID_2= RULE_ID | this_Month_3= ruleMonth | this_WaterYear_4= ruleWaterYear ) kw= Comma (this_ID_6= RULE_ID | this_CalendarMonth_7= ruleCalendarMonth | this_PrevMonth_8= rulePrevMonth ) kw= Comma (this_ID_10= RULE_ID | this_CalendarMonth_11= ruleCalendarMonth | this_PrevMonth_12= rulePrevMonth ) kw= RightParenthesis )
             {
-            // InternalWreslEditorParser.g:8129:1: (this_RANGE_0= RULE_RANGE kw= LeftParenthesis (this_ID_2= RULE_ID | this_Month_3= ruleMonth | this_WaterYear_4= ruleWaterYear ) kw= Comma (this_ID_6= RULE_ID | this_CalendarMonth_7= ruleCalendarMonth | this_PrevMonth_8= rulePrevMonth ) kw= Comma (this_ID_10= RULE_ID | this_CalendarMonth_11= ruleCalendarMonth | this_PrevMonth_12= rulePrevMonth ) kw= RightParenthesis )
-            // InternalWreslEditorParser.g:8129:6: this_RANGE_0= RULE_RANGE kw= LeftParenthesis (this_ID_2= RULE_ID | this_Month_3= ruleMonth | this_WaterYear_4= ruleWaterYear ) kw= Comma (this_ID_6= RULE_ID | this_CalendarMonth_7= ruleCalendarMonth | this_PrevMonth_8= rulePrevMonth ) kw= Comma (this_ID_10= RULE_ID | this_CalendarMonth_11= ruleCalendarMonth | this_PrevMonth_12= rulePrevMonth ) kw= RightParenthesis
+            // InternalWreslEditorParser.g:8170:1: (this_RANGE_0= RULE_RANGE kw= LeftParenthesis (this_ID_2= RULE_ID | this_Month_3= ruleMonth | this_WaterYear_4= ruleWaterYear ) kw= Comma (this_ID_6= RULE_ID | this_CalendarMonth_7= ruleCalendarMonth | this_PrevMonth_8= rulePrevMonth ) kw= Comma (this_ID_10= RULE_ID | this_CalendarMonth_11= ruleCalendarMonth | this_PrevMonth_12= rulePrevMonth ) kw= RightParenthesis )
+            // InternalWreslEditorParser.g:8170:6: this_RANGE_0= RULE_RANGE kw= LeftParenthesis (this_ID_2= RULE_ID | this_Month_3= ruleMonth | this_WaterYear_4= ruleWaterYear ) kw= Comma (this_ID_6= RULE_ID | this_CalendarMonth_7= ruleCalendarMonth | this_PrevMonth_8= rulePrevMonth ) kw= Comma (this_ID_10= RULE_ID | this_CalendarMonth_11= ruleCalendarMonth | this_PrevMonth_12= rulePrevMonth ) kw= RightParenthesis
             {
             this_RANGE_0=(Token)match(input,RULE_RANGE,FOLLOW_48); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -24370,42 +24532,42 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                   newLeafNode(this_RANGE_0, grammarAccess.getRangeFunctionAccess().getRANGETerminalRuleCall_0()); 
                   
             }
-            kw=(Token)match(input,LeftParenthesis,FOLLOW_87); if (state.failed) return current;
+            kw=(Token)match(input,LeftParenthesis,FOLLOW_88); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       current.merge(kw);
                       newLeafNode(kw, grammarAccess.getRangeFunctionAccess().getLeftParenthesisKeyword_1()); 
                   
             }
-            // InternalWreslEditorParser.g:8142:1: (this_ID_2= RULE_ID | this_Month_3= ruleMonth | this_WaterYear_4= ruleWaterYear )
-            int alt173=3;
+            // InternalWreslEditorParser.g:8183:1: (this_ID_2= RULE_ID | this_Month_3= ruleMonth | this_WaterYear_4= ruleWaterYear )
+            int alt176=3;
             switch ( input.LA(1) ) {
             case RULE_ID:
                 {
-                alt173=1;
+                alt176=1;
                 }
                 break;
             case Month:
                 {
-                alt173=2;
+                alt176=2;
                 }
                 break;
             case Wateryear:
                 {
-                alt173=3;
+                alt176=3;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 173, 0, input);
+                    new NoViableAltException("", 176, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt173) {
+            switch (alt176) {
                 case 1 :
-                    // InternalWreslEditorParser.g:8142:6: this_ID_2= RULE_ID
+                    // InternalWreslEditorParser.g:8183:6: this_ID_2= RULE_ID
                     {
                     this_ID_2=(Token)match(input,RULE_ID,FOLLOW_24); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -24422,7 +24584,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditorParser.g:8151:5: this_Month_3= ruleMonth
+                    // InternalWreslEditorParser.g:8192:5: this_Month_3= ruleMonth
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -24448,7 +24610,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalWreslEditorParser.g:8163:5: this_WaterYear_4= ruleWaterYear
+                    // InternalWreslEditorParser.g:8204:5: this_WaterYear_4= ruleWaterYear
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -24476,19 +24638,19 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            kw=(Token)match(input,Comma,FOLLOW_88); if (state.failed) return current;
+            kw=(Token)match(input,Comma,FOLLOW_89); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       current.merge(kw);
                       newLeafNode(kw, grammarAccess.getRangeFunctionAccess().getCommaKeyword_3()); 
                   
             }
-            // InternalWreslEditorParser.g:8179:1: (this_ID_6= RULE_ID | this_CalendarMonth_7= ruleCalendarMonth | this_PrevMonth_8= rulePrevMonth )
-            int alt174=3;
+            // InternalWreslEditorParser.g:8220:1: (this_ID_6= RULE_ID | this_CalendarMonth_7= ruleCalendarMonth | this_PrevMonth_8= rulePrevMonth )
+            int alt177=3;
             switch ( input.LA(1) ) {
             case RULE_ID:
                 {
-                alt174=1;
+                alt177=1;
                 }
                 break;
             case Apr:
@@ -24504,7 +24666,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             case Oct:
             case Sep:
                 {
-                alt174=2;
+                alt177=2;
                 }
                 break;
             case Prevapr:
@@ -24520,20 +24682,20 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             case Prevoct:
             case Prevsep:
                 {
-                alt174=3;
+                alt177=3;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 174, 0, input);
+                    new NoViableAltException("", 177, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt174) {
+            switch (alt177) {
                 case 1 :
-                    // InternalWreslEditorParser.g:8179:6: this_ID_6= RULE_ID
+                    // InternalWreslEditorParser.g:8220:6: this_ID_6= RULE_ID
                     {
                     this_ID_6=(Token)match(input,RULE_ID,FOLLOW_24); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -24550,7 +24712,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditorParser.g:8188:5: this_CalendarMonth_7= ruleCalendarMonth
+                    // InternalWreslEditorParser.g:8229:5: this_CalendarMonth_7= ruleCalendarMonth
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -24576,7 +24738,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalWreslEditorParser.g:8200:5: this_PrevMonth_8= rulePrevMonth
+                    // InternalWreslEditorParser.g:8241:5: this_PrevMonth_8= rulePrevMonth
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -24604,19 +24766,19 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            kw=(Token)match(input,Comma,FOLLOW_88); if (state.failed) return current;
+            kw=(Token)match(input,Comma,FOLLOW_89); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       current.merge(kw);
                       newLeafNode(kw, grammarAccess.getRangeFunctionAccess().getCommaKeyword_5()); 
                   
             }
-            // InternalWreslEditorParser.g:8216:1: (this_ID_10= RULE_ID | this_CalendarMonth_11= ruleCalendarMonth | this_PrevMonth_12= rulePrevMonth )
-            int alt175=3;
+            // InternalWreslEditorParser.g:8257:1: (this_ID_10= RULE_ID | this_CalendarMonth_11= ruleCalendarMonth | this_PrevMonth_12= rulePrevMonth )
+            int alt178=3;
             switch ( input.LA(1) ) {
             case RULE_ID:
                 {
-                alt175=1;
+                alt178=1;
                 }
                 break;
             case Apr:
@@ -24632,7 +24794,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             case Oct:
             case Sep:
                 {
-                alt175=2;
+                alt178=2;
                 }
                 break;
             case Prevapr:
@@ -24648,20 +24810,20 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             case Prevoct:
             case Prevsep:
                 {
-                alt175=3;
+                alt178=3;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 175, 0, input);
+                    new NoViableAltException("", 178, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt175) {
+            switch (alt178) {
                 case 1 :
-                    // InternalWreslEditorParser.g:8216:6: this_ID_10= RULE_ID
+                    // InternalWreslEditorParser.g:8257:6: this_ID_10= RULE_ID
                     {
                     this_ID_10=(Token)match(input,RULE_ID,FOLLOW_16); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -24678,7 +24840,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditorParser.g:8225:5: this_CalendarMonth_11= ruleCalendarMonth
+                    // InternalWreslEditorParser.g:8266:5: this_CalendarMonth_11= ruleCalendarMonth
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -24704,7 +24866,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalWreslEditorParser.g:8237:5: this_PrevMonth_12= rulePrevMonth
+                    // InternalWreslEditorParser.g:8278:5: this_PrevMonth_12= rulePrevMonth
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -24763,7 +24925,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleNumber"
-    // InternalWreslEditorParser.g:8263:1: entryRuleNumber returns [String current=null] : iv_ruleNumber= ruleNumber EOF ;
+    // InternalWreslEditorParser.g:8304:1: entryRuleNumber returns [String current=null] : iv_ruleNumber= ruleNumber EOF ;
     public final String entryRuleNumber() throws RecognitionException {
         String current = null;
 
@@ -24771,8 +24933,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:8264:1: (iv_ruleNumber= ruleNumber EOF )
-            // InternalWreslEditorParser.g:8265:2: iv_ruleNumber= ruleNumber EOF
+            // InternalWreslEditorParser.g:8305:1: (iv_ruleNumber= ruleNumber EOF )
+            // InternalWreslEditorParser.g:8306:2: iv_ruleNumber= ruleNumber EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getNumberRule()); 
@@ -24803,7 +24965,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleNumber"
-    // InternalWreslEditorParser.g:8272:1: ruleNumber returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_INT_0= RULE_INT | this_FLOAT_1= RULE_FLOAT ) ;
+    // InternalWreslEditorParser.g:8313:1: ruleNumber returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_INT_0= RULE_INT | this_FLOAT_1= RULE_FLOAT ) ;
     public final AntlrDatatypeRuleToken ruleNumber() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -24813,29 +24975,29 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:8276:6: ( (this_INT_0= RULE_INT | this_FLOAT_1= RULE_FLOAT ) )
-            // InternalWreslEditorParser.g:8277:1: (this_INT_0= RULE_INT | this_FLOAT_1= RULE_FLOAT )
+            // InternalWreslEditorParser.g:8317:6: ( (this_INT_0= RULE_INT | this_FLOAT_1= RULE_FLOAT ) )
+            // InternalWreslEditorParser.g:8318:1: (this_INT_0= RULE_INT | this_FLOAT_1= RULE_FLOAT )
             {
-            // InternalWreslEditorParser.g:8277:1: (this_INT_0= RULE_INT | this_FLOAT_1= RULE_FLOAT )
-            int alt176=2;
-            int LA176_0 = input.LA(1);
+            // InternalWreslEditorParser.g:8318:1: (this_INT_0= RULE_INT | this_FLOAT_1= RULE_FLOAT )
+            int alt179=2;
+            int LA179_0 = input.LA(1);
 
-            if ( (LA176_0==RULE_INT) ) {
-                alt176=1;
+            if ( (LA179_0==RULE_INT) ) {
+                alt179=1;
             }
-            else if ( (LA176_0==RULE_FLOAT) ) {
-                alt176=2;
+            else if ( (LA179_0==RULE_FLOAT) ) {
+                alt179=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 176, 0, input);
+                    new NoViableAltException("", 179, 0, input);
 
                 throw nvae;
             }
-            switch (alt176) {
+            switch (alt179) {
                 case 1 :
-                    // InternalWreslEditorParser.g:8277:6: this_INT_0= RULE_INT
+                    // InternalWreslEditorParser.g:8318:6: this_INT_0= RULE_INT
                     {
                     this_INT_0=(Token)match(input,RULE_INT,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -24852,7 +25014,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditorParser.g:8285:10: this_FLOAT_1= RULE_FLOAT
+                    // InternalWreslEditorParser.g:8326:10: this_FLOAT_1= RULE_FLOAT
                     {
                     this_FLOAT_1=(Token)match(input,RULE_FLOAT,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -24892,7 +25054,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleIncludeFile"
-    // InternalWreslEditorParser.g:8300:1: entryRuleIncludeFile returns [EObject current=null] : iv_ruleIncludeFile= ruleIncludeFile EOF ;
+    // InternalWreslEditorParser.g:8341:1: entryRuleIncludeFile returns [EObject current=null] : iv_ruleIncludeFile= ruleIncludeFile EOF ;
     public final EObject entryRuleIncludeFile() throws RecognitionException {
         EObject current = null;
 
@@ -24900,8 +25062,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:8301:2: (iv_ruleIncludeFile= ruleIncludeFile EOF )
-            // InternalWreslEditorParser.g:8302:2: iv_ruleIncludeFile= ruleIncludeFile EOF
+            // InternalWreslEditorParser.g:8342:2: (iv_ruleIncludeFile= ruleIncludeFile EOF )
+            // InternalWreslEditorParser.g:8343:2: iv_ruleIncludeFile= ruleIncludeFile EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getIncludeFileRule()); 
@@ -24932,7 +25094,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleIncludeFile"
-    // InternalWreslEditorParser.g:8309:1: ruleIncludeFile returns [EObject current=null] : ( (otherlv_0= Include | otherlv_1= Include ) (otherlv_2= LeftSquareBracket ( ( (lv_local_3_1= Local | lv_local_3_2= Local ) ) ) otherlv_4= RightSquareBracket )? ( (lv_file_5_0= RULE_STRING ) ) ) ;
+    // InternalWreslEditorParser.g:8350:1: ruleIncludeFile returns [EObject current=null] : ( (otherlv_0= Include | otherlv_1= Include ) (otherlv_2= LeftSquareBracket ( ( (lv_local_3_1= Local | lv_local_3_2= Local ) ) ) otherlv_4= RightSquareBracket )? ( (lv_file_5_0= RULE_STRING ) ) ) ;
     public final EObject ruleIncludeFile() throws RecognitionException {
         EObject current = null;
 
@@ -24947,29 +25109,29 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:8312:28: ( ( (otherlv_0= Include | otherlv_1= Include ) (otherlv_2= LeftSquareBracket ( ( (lv_local_3_1= Local | lv_local_3_2= Local ) ) ) otherlv_4= RightSquareBracket )? ( (lv_file_5_0= RULE_STRING ) ) ) )
-            // InternalWreslEditorParser.g:8313:1: ( (otherlv_0= Include | otherlv_1= Include ) (otherlv_2= LeftSquareBracket ( ( (lv_local_3_1= Local | lv_local_3_2= Local ) ) ) otherlv_4= RightSquareBracket )? ( (lv_file_5_0= RULE_STRING ) ) )
+            // InternalWreslEditorParser.g:8353:28: ( ( (otherlv_0= Include | otherlv_1= Include ) (otherlv_2= LeftSquareBracket ( ( (lv_local_3_1= Local | lv_local_3_2= Local ) ) ) otherlv_4= RightSquareBracket )? ( (lv_file_5_0= RULE_STRING ) ) ) )
+            // InternalWreslEditorParser.g:8354:1: ( (otherlv_0= Include | otherlv_1= Include ) (otherlv_2= LeftSquareBracket ( ( (lv_local_3_1= Local | lv_local_3_2= Local ) ) ) otherlv_4= RightSquareBracket )? ( (lv_file_5_0= RULE_STRING ) ) )
             {
-            // InternalWreslEditorParser.g:8313:1: ( (otherlv_0= Include | otherlv_1= Include ) (otherlv_2= LeftSquareBracket ( ( (lv_local_3_1= Local | lv_local_3_2= Local ) ) ) otherlv_4= RightSquareBracket )? ( (lv_file_5_0= RULE_STRING ) ) )
-            // InternalWreslEditorParser.g:8313:2: (otherlv_0= Include | otherlv_1= Include ) (otherlv_2= LeftSquareBracket ( ( (lv_local_3_1= Local | lv_local_3_2= Local ) ) ) otherlv_4= RightSquareBracket )? ( (lv_file_5_0= RULE_STRING ) )
+            // InternalWreslEditorParser.g:8354:1: ( (otherlv_0= Include | otherlv_1= Include ) (otherlv_2= LeftSquareBracket ( ( (lv_local_3_1= Local | lv_local_3_2= Local ) ) ) otherlv_4= RightSquareBracket )? ( (lv_file_5_0= RULE_STRING ) ) )
+            // InternalWreslEditorParser.g:8354:2: (otherlv_0= Include | otherlv_1= Include ) (otherlv_2= LeftSquareBracket ( ( (lv_local_3_1= Local | lv_local_3_2= Local ) ) ) otherlv_4= RightSquareBracket )? ( (lv_file_5_0= RULE_STRING ) )
             {
-            // InternalWreslEditorParser.g:8313:2: (otherlv_0= Include | otherlv_1= Include )
-            int alt177=2;
-            int LA177_0 = input.LA(1);
+            // InternalWreslEditorParser.g:8354:2: (otherlv_0= Include | otherlv_1= Include )
+            int alt180=2;
+            int LA180_0 = input.LA(1);
 
-            if ( (LA177_0==Include) ) {
-                int LA177_1 = input.LA(2);
+            if ( (LA180_0==Include) ) {
+                int LA180_1 = input.LA(2);
 
-                if ( (synpred235_InternalWreslEditorParser()) ) {
-                    alt177=1;
+                if ( (synpred238_InternalWreslEditorParser()) ) {
+                    alt180=1;
                 }
                 else if ( (true) ) {
-                    alt177=2;
+                    alt180=2;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return current;}
                     NoViableAltException nvae =
-                        new NoViableAltException("", 177, 1, input);
+                        new NoViableAltException("", 180, 1, input);
 
                     throw nvae;
                 }
@@ -24977,15 +25139,15 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 177, 0, input);
+                    new NoViableAltException("", 180, 0, input);
 
                 throw nvae;
             }
-            switch (alt177) {
+            switch (alt180) {
                 case 1 :
-                    // InternalWreslEditorParser.g:8314:2: otherlv_0= Include
+                    // InternalWreslEditorParser.g:8355:2: otherlv_0= Include
                     {
-                    otherlv_0=(Token)match(input,Include,FOLLOW_89); if (state.failed) return current;
+                    otherlv_0=(Token)match(input,Include,FOLLOW_90); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_0, grammarAccess.getIncludeFileAccess().getIncludeKeyword_0_0());
@@ -24995,9 +25157,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditorParser.g:8320:2: otherlv_1= Include
+                    // InternalWreslEditorParser.g:8361:2: otherlv_1= Include
                     {
-                    otherlv_1=(Token)match(input,Include,FOLLOW_89); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,Include,FOLLOW_90); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getIncludeFileAccess().getINCLUDEKeyword_0_1());
@@ -25009,16 +25171,16 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalWreslEditorParser.g:8324:2: (otherlv_2= LeftSquareBracket ( ( (lv_local_3_1= Local | lv_local_3_2= Local ) ) ) otherlv_4= RightSquareBracket )?
-            int alt179=2;
-            int LA179_0 = input.LA(1);
+            // InternalWreslEditorParser.g:8365:2: (otherlv_2= LeftSquareBracket ( ( (lv_local_3_1= Local | lv_local_3_2= Local ) ) ) otherlv_4= RightSquareBracket )?
+            int alt182=2;
+            int LA182_0 = input.LA(1);
 
-            if ( (LA179_0==LeftSquareBracket) ) {
-                alt179=1;
+            if ( (LA182_0==LeftSquareBracket) ) {
+                alt182=1;
             }
-            switch (alt179) {
+            switch (alt182) {
                 case 1 :
-                    // InternalWreslEditorParser.g:8325:2: otherlv_2= LeftSquareBracket ( ( (lv_local_3_1= Local | lv_local_3_2= Local ) ) ) otherlv_4= RightSquareBracket
+                    // InternalWreslEditorParser.g:8366:2: otherlv_2= LeftSquareBracket ( ( (lv_local_3_1= Local | lv_local_3_2= Local ) ) ) otherlv_4= RightSquareBracket
                     {
                     otherlv_2=(Token)match(input,LeftSquareBracket,FOLLOW_18); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -25026,29 +25188,29 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                           	newLeafNode(otherlv_2, grammarAccess.getIncludeFileAccess().getLeftSquareBracketKeyword_1_0());
                           
                     }
-                    // InternalWreslEditorParser.g:8329:1: ( ( (lv_local_3_1= Local | lv_local_3_2= Local ) ) )
-                    // InternalWreslEditorParser.g:8330:1: ( (lv_local_3_1= Local | lv_local_3_2= Local ) )
+                    // InternalWreslEditorParser.g:8370:1: ( ( (lv_local_3_1= Local | lv_local_3_2= Local ) ) )
+                    // InternalWreslEditorParser.g:8371:1: ( (lv_local_3_1= Local | lv_local_3_2= Local ) )
                     {
-                    // InternalWreslEditorParser.g:8330:1: ( (lv_local_3_1= Local | lv_local_3_2= Local ) )
-                    // InternalWreslEditorParser.g:8331:1: (lv_local_3_1= Local | lv_local_3_2= Local )
+                    // InternalWreslEditorParser.g:8371:1: ( (lv_local_3_1= Local | lv_local_3_2= Local ) )
+                    // InternalWreslEditorParser.g:8372:1: (lv_local_3_1= Local | lv_local_3_2= Local )
                     {
-                    // InternalWreslEditorParser.g:8331:1: (lv_local_3_1= Local | lv_local_3_2= Local )
-                    int alt178=2;
-                    int LA178_0 = input.LA(1);
+                    // InternalWreslEditorParser.g:8372:1: (lv_local_3_1= Local | lv_local_3_2= Local )
+                    int alt181=2;
+                    int LA181_0 = input.LA(1);
 
-                    if ( (LA178_0==Local) ) {
-                        int LA178_1 = input.LA(2);
+                    if ( (LA181_0==Local) ) {
+                        int LA181_1 = input.LA(2);
 
-                        if ( (synpred236_InternalWreslEditorParser()) ) {
-                            alt178=1;
+                        if ( (synpred239_InternalWreslEditorParser()) ) {
+                            alt181=1;
                         }
                         else if ( (true) ) {
-                            alt178=2;
+                            alt181=2;
                         }
                         else {
                             if (state.backtracking>0) {state.failed=true; return current;}
                             NoViableAltException nvae =
-                                new NoViableAltException("", 178, 1, input);
+                                new NoViableAltException("", 181, 1, input);
 
                             throw nvae;
                         }
@@ -25056,13 +25218,13 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     else {
                         if (state.backtracking>0) {state.failed=true; return current;}
                         NoViableAltException nvae =
-                            new NoViableAltException("", 178, 0, input);
+                            new NoViableAltException("", 181, 0, input);
 
                         throw nvae;
                     }
-                    switch (alt178) {
+                    switch (alt181) {
                         case 1 :
-                            // InternalWreslEditorParser.g:8332:3: lv_local_3_1= Local
+                            // InternalWreslEditorParser.g:8373:3: lv_local_3_1= Local
                             {
                             lv_local_3_1=(Token)match(input,Local,FOLLOW_19); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
@@ -25082,7 +25244,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 2 :
-                            // InternalWreslEditorParser.g:8345:8: lv_local_3_2= Local
+                            // InternalWreslEditorParser.g:8386:8: lv_local_3_2= Local
                             {
                             lv_local_3_2=(Token)match(input,Local,FOLLOW_19); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
@@ -25122,11 +25284,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalWreslEditorParser.g:8366:3: ( (lv_file_5_0= RULE_STRING ) )
-            // InternalWreslEditorParser.g:8367:1: (lv_file_5_0= RULE_STRING )
+            // InternalWreslEditorParser.g:8407:3: ( (lv_file_5_0= RULE_STRING ) )
+            // InternalWreslEditorParser.g:8408:1: (lv_file_5_0= RULE_STRING )
             {
-            // InternalWreslEditorParser.g:8367:1: (lv_file_5_0= RULE_STRING )
-            // InternalWreslEditorParser.g:8368:3: lv_file_5_0= RULE_STRING
+            // InternalWreslEditorParser.g:8408:1: (lv_file_5_0= RULE_STRING )
+            // InternalWreslEditorParser.g:8409:3: lv_file_5_0= RULE_STRING
             {
             lv_file_5_0=(Token)match(input,RULE_STRING,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -25175,7 +25337,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleIncludeModel"
-    // InternalWreslEditorParser.g:8392:1: entryRuleIncludeModel returns [String current=null] : iv_ruleIncludeModel= ruleIncludeModel EOF ;
+    // InternalWreslEditorParser.g:8433:1: entryRuleIncludeModel returns [String current=null] : iv_ruleIncludeModel= ruleIncludeModel EOF ;
     public final String entryRuleIncludeModel() throws RecognitionException {
         String current = null;
 
@@ -25183,8 +25345,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:8393:1: (iv_ruleIncludeModel= ruleIncludeModel EOF )
-            // InternalWreslEditorParser.g:8394:2: iv_ruleIncludeModel= ruleIncludeModel EOF
+            // InternalWreslEditorParser.g:8434:1: (iv_ruleIncludeModel= ruleIncludeModel EOF )
+            // InternalWreslEditorParser.g:8435:2: iv_ruleIncludeModel= ruleIncludeModel EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getIncludeModelRule()); 
@@ -25215,7 +25377,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleIncludeModel"
-    // InternalWreslEditorParser.g:8401:1: ruleIncludeModel returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= Include | kw= Include ) (kw= Model | kw= Model ) this_ID_4= RULE_ID ) ;
+    // InternalWreslEditorParser.g:8442:1: ruleIncludeModel returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= Include | kw= Include ) (kw= Model | kw= Model ) this_ID_4= RULE_ID ) ;
     public final AntlrDatatypeRuleToken ruleIncludeModel() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -25225,29 +25387,29 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:8405:6: ( ( (kw= Include | kw= Include ) (kw= Model | kw= Model ) this_ID_4= RULE_ID ) )
-            // InternalWreslEditorParser.g:8406:1: ( (kw= Include | kw= Include ) (kw= Model | kw= Model ) this_ID_4= RULE_ID )
+            // InternalWreslEditorParser.g:8446:6: ( ( (kw= Include | kw= Include ) (kw= Model | kw= Model ) this_ID_4= RULE_ID ) )
+            // InternalWreslEditorParser.g:8447:1: ( (kw= Include | kw= Include ) (kw= Model | kw= Model ) this_ID_4= RULE_ID )
             {
-            // InternalWreslEditorParser.g:8406:1: ( (kw= Include | kw= Include ) (kw= Model | kw= Model ) this_ID_4= RULE_ID )
-            // InternalWreslEditorParser.g:8406:2: (kw= Include | kw= Include ) (kw= Model | kw= Model ) this_ID_4= RULE_ID
+            // InternalWreslEditorParser.g:8447:1: ( (kw= Include | kw= Include ) (kw= Model | kw= Model ) this_ID_4= RULE_ID )
+            // InternalWreslEditorParser.g:8447:2: (kw= Include | kw= Include ) (kw= Model | kw= Model ) this_ID_4= RULE_ID
             {
-            // InternalWreslEditorParser.g:8406:2: (kw= Include | kw= Include )
-            int alt180=2;
-            int LA180_0 = input.LA(1);
+            // InternalWreslEditorParser.g:8447:2: (kw= Include | kw= Include )
+            int alt183=2;
+            int LA183_0 = input.LA(1);
 
-            if ( (LA180_0==Include) ) {
-                int LA180_1 = input.LA(2);
+            if ( (LA183_0==Include) ) {
+                int LA183_1 = input.LA(2);
 
-                if ( (synpred238_InternalWreslEditorParser()) ) {
-                    alt180=1;
+                if ( (synpred241_InternalWreslEditorParser()) ) {
+                    alt183=1;
                 }
                 else if ( (true) ) {
-                    alt180=2;
+                    alt183=2;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return current;}
                     NoViableAltException nvae =
-                        new NoViableAltException("", 180, 1, input);
+                        new NoViableAltException("", 183, 1, input);
 
                     throw nvae;
                 }
@@ -25255,13 +25417,13 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 180, 0, input);
+                    new NoViableAltException("", 183, 0, input);
 
                 throw nvae;
             }
-            switch (alt180) {
+            switch (alt183) {
                 case 1 :
-                    // InternalWreslEditorParser.g:8407:2: kw= Include
+                    // InternalWreslEditorParser.g:8448:2: kw= Include
                     {
                     kw=(Token)match(input,Include,FOLLOW_73); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -25274,7 +25436,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditorParser.g:8414:2: kw= Include
+                    // InternalWreslEditorParser.g:8455:2: kw= Include
                     {
                     kw=(Token)match(input,Include,FOLLOW_73); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -25289,23 +25451,23 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalWreslEditorParser.g:8419:2: (kw= Model | kw= Model )
-            int alt181=2;
-            int LA181_0 = input.LA(1);
+            // InternalWreslEditorParser.g:8460:2: (kw= Model | kw= Model )
+            int alt184=2;
+            int LA184_0 = input.LA(1);
 
-            if ( (LA181_0==Model) ) {
-                int LA181_1 = input.LA(2);
+            if ( (LA184_0==Model) ) {
+                int LA184_1 = input.LA(2);
 
-                if ( (synpred239_InternalWreslEditorParser()) ) {
-                    alt181=1;
+                if ( (synpred242_InternalWreslEditorParser()) ) {
+                    alt184=1;
                 }
                 else if ( (true) ) {
-                    alt181=2;
+                    alt184=2;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return current;}
                     NoViableAltException nvae =
-                        new NoViableAltException("", 181, 1, input);
+                        new NoViableAltException("", 184, 1, input);
 
                     throw nvae;
                 }
@@ -25313,13 +25475,13 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 181, 0, input);
+                    new NoViableAltException("", 184, 0, input);
 
                 throw nvae;
             }
-            switch (alt181) {
+            switch (alt184) {
                 case 1 :
-                    // InternalWreslEditorParser.g:8420:2: kw= Model
+                    // InternalWreslEditorParser.g:8461:2: kw= Model
                     {
                     kw=(Token)match(input,Model,FOLLOW_8); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -25332,7 +25494,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditorParser.g:8427:2: kw= Model
+                    // InternalWreslEditorParser.g:8468:2: kw= Model
                     {
                     kw=(Token)match(input,Model,FOLLOW_8); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -25382,7 +25544,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleIncludeGroup"
-    // InternalWreslEditorParser.g:8447:1: entryRuleIncludeGroup returns [String current=null] : iv_ruleIncludeGroup= ruleIncludeGroup EOF ;
+    // InternalWreslEditorParser.g:8488:1: entryRuleIncludeGroup returns [String current=null] : iv_ruleIncludeGroup= ruleIncludeGroup EOF ;
     public final String entryRuleIncludeGroup() throws RecognitionException {
         String current = null;
 
@@ -25390,8 +25552,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:8448:1: (iv_ruleIncludeGroup= ruleIncludeGroup EOF )
-            // InternalWreslEditorParser.g:8449:2: iv_ruleIncludeGroup= ruleIncludeGroup EOF
+            // InternalWreslEditorParser.g:8489:1: (iv_ruleIncludeGroup= ruleIncludeGroup EOF )
+            // InternalWreslEditorParser.g:8490:2: iv_ruleIncludeGroup= ruleIncludeGroup EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getIncludeGroupRule()); 
@@ -25422,7 +25584,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleIncludeGroup"
-    // InternalWreslEditorParser.g:8456:1: ruleIncludeGroup returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= Include | kw= Include ) (kw= Group | kw= Group ) this_ID_4= RULE_ID ) ;
+    // InternalWreslEditorParser.g:8497:1: ruleIncludeGroup returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= Include | kw= Include ) (kw= Group | kw= Group ) this_ID_4= RULE_ID ) ;
     public final AntlrDatatypeRuleToken ruleIncludeGroup() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -25432,29 +25594,29 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:8460:6: ( ( (kw= Include | kw= Include ) (kw= Group | kw= Group ) this_ID_4= RULE_ID ) )
-            // InternalWreslEditorParser.g:8461:1: ( (kw= Include | kw= Include ) (kw= Group | kw= Group ) this_ID_4= RULE_ID )
+            // InternalWreslEditorParser.g:8501:6: ( ( (kw= Include | kw= Include ) (kw= Group | kw= Group ) this_ID_4= RULE_ID ) )
+            // InternalWreslEditorParser.g:8502:1: ( (kw= Include | kw= Include ) (kw= Group | kw= Group ) this_ID_4= RULE_ID )
             {
-            // InternalWreslEditorParser.g:8461:1: ( (kw= Include | kw= Include ) (kw= Group | kw= Group ) this_ID_4= RULE_ID )
-            // InternalWreslEditorParser.g:8461:2: (kw= Include | kw= Include ) (kw= Group | kw= Group ) this_ID_4= RULE_ID
+            // InternalWreslEditorParser.g:8502:1: ( (kw= Include | kw= Include ) (kw= Group | kw= Group ) this_ID_4= RULE_ID )
+            // InternalWreslEditorParser.g:8502:2: (kw= Include | kw= Include ) (kw= Group | kw= Group ) this_ID_4= RULE_ID
             {
-            // InternalWreslEditorParser.g:8461:2: (kw= Include | kw= Include )
-            int alt182=2;
-            int LA182_0 = input.LA(1);
+            // InternalWreslEditorParser.g:8502:2: (kw= Include | kw= Include )
+            int alt185=2;
+            int LA185_0 = input.LA(1);
 
-            if ( (LA182_0==Include) ) {
-                int LA182_1 = input.LA(2);
+            if ( (LA185_0==Include) ) {
+                int LA185_1 = input.LA(2);
 
-                if ( (synpred240_InternalWreslEditorParser()) ) {
-                    alt182=1;
+                if ( (synpred243_InternalWreslEditorParser()) ) {
+                    alt185=1;
                 }
                 else if ( (true) ) {
-                    alt182=2;
+                    alt185=2;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return current;}
                     NoViableAltException nvae =
-                        new NoViableAltException("", 182, 1, input);
+                        new NoViableAltException("", 185, 1, input);
 
                     throw nvae;
                 }
@@ -25462,15 +25624,15 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 182, 0, input);
+                    new NoViableAltException("", 185, 0, input);
 
                 throw nvae;
             }
-            switch (alt182) {
+            switch (alt185) {
                 case 1 :
-                    // InternalWreslEditorParser.g:8462:2: kw= Include
+                    // InternalWreslEditorParser.g:8503:2: kw= Include
                     {
-                    kw=(Token)match(input,Include,FOLLOW_90); if (state.failed) return current;
+                    kw=(Token)match(input,Include,FOLLOW_91); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -25481,9 +25643,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditorParser.g:8469:2: kw= Include
+                    // InternalWreslEditorParser.g:8510:2: kw= Include
                     {
-                    kw=(Token)match(input,Include,FOLLOW_90); if (state.failed) return current;
+                    kw=(Token)match(input,Include,FOLLOW_91); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -25496,23 +25658,23 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalWreslEditorParser.g:8474:2: (kw= Group | kw= Group )
-            int alt183=2;
-            int LA183_0 = input.LA(1);
+            // InternalWreslEditorParser.g:8515:2: (kw= Group | kw= Group )
+            int alt186=2;
+            int LA186_0 = input.LA(1);
 
-            if ( (LA183_0==Group) ) {
-                int LA183_1 = input.LA(2);
+            if ( (LA186_0==Group) ) {
+                int LA186_1 = input.LA(2);
 
-                if ( (synpred241_InternalWreslEditorParser()) ) {
-                    alt183=1;
+                if ( (synpred244_InternalWreslEditorParser()) ) {
+                    alt186=1;
                 }
                 else if ( (true) ) {
-                    alt183=2;
+                    alt186=2;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return current;}
                     NoViableAltException nvae =
-                        new NoViableAltException("", 183, 1, input);
+                        new NoViableAltException("", 186, 1, input);
 
                     throw nvae;
                 }
@@ -25520,13 +25682,13 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 183, 0, input);
+                    new NoViableAltException("", 186, 0, input);
 
                 throw nvae;
             }
-            switch (alt183) {
+            switch (alt186) {
                 case 1 :
-                    // InternalWreslEditorParser.g:8475:2: kw= Group
+                    // InternalWreslEditorParser.g:8516:2: kw= Group
                     {
                     kw=(Token)match(input,Group,FOLLOW_8); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -25539,7 +25701,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditorParser.g:8482:2: kw= Group
+                    // InternalWreslEditorParser.g:8523:2: kw= Group
                     {
                     kw=(Token)match(input,Group,FOLLOW_8); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -25589,7 +25751,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleSpecialIdent"
-    // InternalWreslEditorParser.g:8502:1: entryRuleSpecialIdent returns [String current=null] : iv_ruleSpecialIdent= ruleSpecialIdent EOF ;
+    // InternalWreslEditorParser.g:8543:1: entryRuleSpecialIdent returns [String current=null] : iv_ruleSpecialIdent= ruleSpecialIdent EOF ;
     public final String entryRuleSpecialIdent() throws RecognitionException {
         String current = null;
 
@@ -25597,8 +25759,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:8503:1: (iv_ruleSpecialIdent= ruleSpecialIdent EOF )
-            // InternalWreslEditorParser.g:8504:2: iv_ruleSpecialIdent= ruleSpecialIdent EOF
+            // InternalWreslEditorParser.g:8544:1: (iv_ruleSpecialIdent= ruleSpecialIdent EOF )
+            // InternalWreslEditorParser.g:8545:2: iv_ruleSpecialIdent= ruleSpecialIdent EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getSpecialIdentRule()); 
@@ -25629,7 +25791,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSpecialIdent"
-    // InternalWreslEditorParser.g:8511:1: ruleSpecialIdent returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_TafCfs_0= ruleTafCfs | this_DaysIn_1= ruleDaysIn | this_WaterYear_2= ruleWaterYear | this_Month_3= ruleMonth | this_Day_4= ruleDay | this_CalendarMonth_5= ruleCalendarMonth | this_PrevMonth_6= rulePrevMonth | this_I_7= ruleI ) ;
+    // InternalWreslEditorParser.g:8552:1: ruleSpecialIdent returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_TafCfs_0= ruleTafCfs | this_DaysIn_1= ruleDaysIn | this_WaterYear_2= ruleWaterYear | this_Month_3= ruleMonth | this_Day_4= ruleDay | this_CalendarMonth_5= ruleCalendarMonth | this_PrevMonth_6= rulePrevMonth | this_I_7= ruleI ) ;
     public final AntlrDatatypeRuleToken ruleSpecialIdent() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -25653,40 +25815,40 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:8515:6: ( (this_TafCfs_0= ruleTafCfs | this_DaysIn_1= ruleDaysIn | this_WaterYear_2= ruleWaterYear | this_Month_3= ruleMonth | this_Day_4= ruleDay | this_CalendarMonth_5= ruleCalendarMonth | this_PrevMonth_6= rulePrevMonth | this_I_7= ruleI ) )
-            // InternalWreslEditorParser.g:8516:1: (this_TafCfs_0= ruleTafCfs | this_DaysIn_1= ruleDaysIn | this_WaterYear_2= ruleWaterYear | this_Month_3= ruleMonth | this_Day_4= ruleDay | this_CalendarMonth_5= ruleCalendarMonth | this_PrevMonth_6= rulePrevMonth | this_I_7= ruleI )
+            // InternalWreslEditorParser.g:8556:6: ( (this_TafCfs_0= ruleTafCfs | this_DaysIn_1= ruleDaysIn | this_WaterYear_2= ruleWaterYear | this_Month_3= ruleMonth | this_Day_4= ruleDay | this_CalendarMonth_5= ruleCalendarMonth | this_PrevMonth_6= rulePrevMonth | this_I_7= ruleI ) )
+            // InternalWreslEditorParser.g:8557:1: (this_TafCfs_0= ruleTafCfs | this_DaysIn_1= ruleDaysIn | this_WaterYear_2= ruleWaterYear | this_Month_3= ruleMonth | this_Day_4= ruleDay | this_CalendarMonth_5= ruleCalendarMonth | this_PrevMonth_6= rulePrevMonth | this_I_7= ruleI )
             {
-            // InternalWreslEditorParser.g:8516:1: (this_TafCfs_0= ruleTafCfs | this_DaysIn_1= ruleDaysIn | this_WaterYear_2= ruleWaterYear | this_Month_3= ruleMonth | this_Day_4= ruleDay | this_CalendarMonth_5= ruleCalendarMonth | this_PrevMonth_6= rulePrevMonth | this_I_7= ruleI )
-            int alt184=8;
+            // InternalWreslEditorParser.g:8557:1: (this_TafCfs_0= ruleTafCfs | this_DaysIn_1= ruleDaysIn | this_WaterYear_2= ruleWaterYear | this_Month_3= ruleMonth | this_Day_4= ruleDay | this_CalendarMonth_5= ruleCalendarMonth | this_PrevMonth_6= rulePrevMonth | this_I_7= ruleI )
+            int alt187=8;
             switch ( input.LA(1) ) {
             case Cfs_taf:
             case Taf_cfs:
             case Af_cfs:
             case Cfs_af:
                 {
-                alt184=1;
+                alt187=1;
                 }
                 break;
             case Daysintimestep:
             case Daysinmonth:
             case Daysin:
                 {
-                alt184=2;
+                alt187=2;
                 }
                 break;
             case Wateryear:
                 {
-                alt184=3;
+                alt187=3;
                 }
                 break;
             case Month:
                 {
-                alt184=4;
+                alt187=4;
                 }
                 break;
             case Day:
                 {
-                alt184=5;
+                alt187=5;
                 }
                 break;
             case Apr:
@@ -25702,7 +25864,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             case Oct:
             case Sep:
                 {
-                alt184=6;
+                alt187=6;
                 }
                 break;
             case Prevapr:
@@ -25718,25 +25880,25 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             case Prevoct:
             case Prevsep:
                 {
-                alt184=7;
+                alt187=7;
                 }
                 break;
             case I:
                 {
-                alt184=8;
+                alt187=8;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 184, 0, input);
+                    new NoViableAltException("", 187, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt184) {
+            switch (alt187) {
                 case 1 :
-                    // InternalWreslEditorParser.g:8517:5: this_TafCfs_0= ruleTafCfs
+                    // InternalWreslEditorParser.g:8558:5: this_TafCfs_0= ruleTafCfs
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -25762,7 +25924,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditorParser.g:8529:5: this_DaysIn_1= ruleDaysIn
+                    // InternalWreslEditorParser.g:8570:5: this_DaysIn_1= ruleDaysIn
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -25788,7 +25950,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalWreslEditorParser.g:8541:5: this_WaterYear_2= ruleWaterYear
+                    // InternalWreslEditorParser.g:8582:5: this_WaterYear_2= ruleWaterYear
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -25814,7 +25976,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalWreslEditorParser.g:8553:5: this_Month_3= ruleMonth
+                    // InternalWreslEditorParser.g:8594:5: this_Month_3= ruleMonth
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -25840,7 +26002,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalWreslEditorParser.g:8565:5: this_Day_4= ruleDay
+                    // InternalWreslEditorParser.g:8606:5: this_Day_4= ruleDay
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -25866,7 +26028,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalWreslEditorParser.g:8577:5: this_CalendarMonth_5= ruleCalendarMonth
+                    // InternalWreslEditorParser.g:8618:5: this_CalendarMonth_5= ruleCalendarMonth
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -25892,7 +26054,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalWreslEditorParser.g:8589:5: this_PrevMonth_6= rulePrevMonth
+                    // InternalWreslEditorParser.g:8630:5: this_PrevMonth_6= rulePrevMonth
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -25918,7 +26080,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // InternalWreslEditorParser.g:8601:5: this_I_7= ruleI
+                    // InternalWreslEditorParser.g:8642:5: this_I_7= ruleI
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -25967,7 +26129,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTafCfs"
-    // InternalWreslEditorParser.g:8619:1: entryRuleTafCfs returns [String current=null] : iv_ruleTafCfs= ruleTafCfs EOF ;
+    // InternalWreslEditorParser.g:8660:1: entryRuleTafCfs returns [String current=null] : iv_ruleTafCfs= ruleTafCfs EOF ;
     public final String entryRuleTafCfs() throws RecognitionException {
         String current = null;
 
@@ -25975,8 +26137,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:8620:1: (iv_ruleTafCfs= ruleTafCfs EOF )
-            // InternalWreslEditorParser.g:8621:2: iv_ruleTafCfs= ruleTafCfs EOF
+            // InternalWreslEditorParser.g:8661:1: (iv_ruleTafCfs= ruleTafCfs EOF )
+            // InternalWreslEditorParser.g:8662:2: iv_ruleTafCfs= ruleTafCfs EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getTafCfsRule()); 
@@ -26007,7 +26169,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTafCfs"
-    // InternalWreslEditorParser.g:8628:1: ruleTafCfs returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_AF_CFS_0= ruleAF_CFS | this_CF_SAF_1= ruleCF_SAF | this_CFS_TAF_2= ruleCFS_TAF | this_TAF_CFS_3= ruleTAF_CFS ) ;
+    // InternalWreslEditorParser.g:8669:1: ruleTafCfs returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_AF_CFS_0= ruleAF_CFS | this_CF_SAF_1= ruleCF_SAF | this_CFS_TAF_2= ruleCFS_TAF | this_TAF_CFS_3= ruleTAF_CFS ) ;
     public final AntlrDatatypeRuleToken ruleTafCfs() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -26023,43 +26185,43 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:8632:6: ( (this_AF_CFS_0= ruleAF_CFS | this_CF_SAF_1= ruleCF_SAF | this_CFS_TAF_2= ruleCFS_TAF | this_TAF_CFS_3= ruleTAF_CFS ) )
-            // InternalWreslEditorParser.g:8633:1: (this_AF_CFS_0= ruleAF_CFS | this_CF_SAF_1= ruleCF_SAF | this_CFS_TAF_2= ruleCFS_TAF | this_TAF_CFS_3= ruleTAF_CFS )
+            // InternalWreslEditorParser.g:8673:6: ( (this_AF_CFS_0= ruleAF_CFS | this_CF_SAF_1= ruleCF_SAF | this_CFS_TAF_2= ruleCFS_TAF | this_TAF_CFS_3= ruleTAF_CFS ) )
+            // InternalWreslEditorParser.g:8674:1: (this_AF_CFS_0= ruleAF_CFS | this_CF_SAF_1= ruleCF_SAF | this_CFS_TAF_2= ruleCFS_TAF | this_TAF_CFS_3= ruleTAF_CFS )
             {
-            // InternalWreslEditorParser.g:8633:1: (this_AF_CFS_0= ruleAF_CFS | this_CF_SAF_1= ruleCF_SAF | this_CFS_TAF_2= ruleCFS_TAF | this_TAF_CFS_3= ruleTAF_CFS )
-            int alt185=4;
+            // InternalWreslEditorParser.g:8674:1: (this_AF_CFS_0= ruleAF_CFS | this_CF_SAF_1= ruleCF_SAF | this_CFS_TAF_2= ruleCFS_TAF | this_TAF_CFS_3= ruleTAF_CFS )
+            int alt188=4;
             switch ( input.LA(1) ) {
             case Af_cfs:
                 {
-                alt185=1;
+                alt188=1;
                 }
                 break;
             case Cfs_af:
                 {
-                alt185=2;
+                alt188=2;
                 }
                 break;
             case Cfs_taf:
                 {
-                alt185=3;
+                alt188=3;
                 }
                 break;
             case Taf_cfs:
                 {
-                alt185=4;
+                alt188=4;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 185, 0, input);
+                    new NoViableAltException("", 188, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt185) {
+            switch (alt188) {
                 case 1 :
-                    // InternalWreslEditorParser.g:8634:5: this_AF_CFS_0= ruleAF_CFS
+                    // InternalWreslEditorParser.g:8675:5: this_AF_CFS_0= ruleAF_CFS
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -26085,7 +26247,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditorParser.g:8646:5: this_CF_SAF_1= ruleCF_SAF
+                    // InternalWreslEditorParser.g:8687:5: this_CF_SAF_1= ruleCF_SAF
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -26111,7 +26273,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalWreslEditorParser.g:8658:5: this_CFS_TAF_2= ruleCFS_TAF
+                    // InternalWreslEditorParser.g:8699:5: this_CFS_TAF_2= ruleCFS_TAF
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -26137,7 +26299,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalWreslEditorParser.g:8670:5: this_TAF_CFS_3= ruleTAF_CFS
+                    // InternalWreslEditorParser.g:8711:5: this_TAF_CFS_3= ruleTAF_CFS
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -26186,7 +26348,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleI"
-    // InternalWreslEditorParser.g:8688:1: entryRuleI returns [String current=null] : iv_ruleI= ruleI EOF ;
+    // InternalWreslEditorParser.g:8729:1: entryRuleI returns [String current=null] : iv_ruleI= ruleI EOF ;
     public final String entryRuleI() throws RecognitionException {
         String current = null;
 
@@ -26194,8 +26356,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:8689:1: (iv_ruleI= ruleI EOF )
-            // InternalWreslEditorParser.g:8690:2: iv_ruleI= ruleI EOF
+            // InternalWreslEditorParser.g:8730:1: (iv_ruleI= ruleI EOF )
+            // InternalWreslEditorParser.g:8731:2: iv_ruleI= ruleI EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getIRule()); 
@@ -26226,7 +26388,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleI"
-    // InternalWreslEditorParser.g:8697:1: ruleI returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= I ;
+    // InternalWreslEditorParser.g:8738:1: ruleI returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= I ;
     public final AntlrDatatypeRuleToken ruleI() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -26235,8 +26397,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:8701:6: (kw= I )
-            // InternalWreslEditorParser.g:8703:2: kw= I
+            // InternalWreslEditorParser.g:8742:6: (kw= I )
+            // InternalWreslEditorParser.g:8744:2: kw= I
             {
             kw=(Token)match(input,I,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -26266,7 +26428,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAF_CFS"
-    // InternalWreslEditorParser.g:8716:1: entryRuleAF_CFS returns [String current=null] : iv_ruleAF_CFS= ruleAF_CFS EOF ;
+    // InternalWreslEditorParser.g:8757:1: entryRuleAF_CFS returns [String current=null] : iv_ruleAF_CFS= ruleAF_CFS EOF ;
     public final String entryRuleAF_CFS() throws RecognitionException {
         String current = null;
 
@@ -26274,8 +26436,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:8717:1: (iv_ruleAF_CFS= ruleAF_CFS EOF )
-            // InternalWreslEditorParser.g:8718:2: iv_ruleAF_CFS= ruleAF_CFS EOF
+            // InternalWreslEditorParser.g:8758:1: (iv_ruleAF_CFS= ruleAF_CFS EOF )
+            // InternalWreslEditorParser.g:8759:2: iv_ruleAF_CFS= ruleAF_CFS EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getAF_CFSRule()); 
@@ -26306,7 +26468,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAF_CFS"
-    // InternalWreslEditorParser.g:8725:1: ruleAF_CFS returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= Af_cfs ;
+    // InternalWreslEditorParser.g:8766:1: ruleAF_CFS returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= Af_cfs ;
     public final AntlrDatatypeRuleToken ruleAF_CFS() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -26315,8 +26477,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:8729:6: (kw= Af_cfs )
-            // InternalWreslEditorParser.g:8731:2: kw= Af_cfs
+            // InternalWreslEditorParser.g:8770:6: (kw= Af_cfs )
+            // InternalWreslEditorParser.g:8772:2: kw= Af_cfs
             {
             kw=(Token)match(input,Af_cfs,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -26346,7 +26508,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleCF_SAF"
-    // InternalWreslEditorParser.g:8744:1: entryRuleCF_SAF returns [String current=null] : iv_ruleCF_SAF= ruleCF_SAF EOF ;
+    // InternalWreslEditorParser.g:8785:1: entryRuleCF_SAF returns [String current=null] : iv_ruleCF_SAF= ruleCF_SAF EOF ;
     public final String entryRuleCF_SAF() throws RecognitionException {
         String current = null;
 
@@ -26354,8 +26516,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:8745:1: (iv_ruleCF_SAF= ruleCF_SAF EOF )
-            // InternalWreslEditorParser.g:8746:2: iv_ruleCF_SAF= ruleCF_SAF EOF
+            // InternalWreslEditorParser.g:8786:1: (iv_ruleCF_SAF= ruleCF_SAF EOF )
+            // InternalWreslEditorParser.g:8787:2: iv_ruleCF_SAF= ruleCF_SAF EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getCF_SAFRule()); 
@@ -26386,7 +26548,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCF_SAF"
-    // InternalWreslEditorParser.g:8753:1: ruleCF_SAF returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= Cfs_af ;
+    // InternalWreslEditorParser.g:8794:1: ruleCF_SAF returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= Cfs_af ;
     public final AntlrDatatypeRuleToken ruleCF_SAF() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -26395,8 +26557,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:8757:6: (kw= Cfs_af )
-            // InternalWreslEditorParser.g:8759:2: kw= Cfs_af
+            // InternalWreslEditorParser.g:8798:6: (kw= Cfs_af )
+            // InternalWreslEditorParser.g:8800:2: kw= Cfs_af
             {
             kw=(Token)match(input,Cfs_af,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -26426,7 +26588,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleCFS_TAF"
-    // InternalWreslEditorParser.g:8772:1: entryRuleCFS_TAF returns [String current=null] : iv_ruleCFS_TAF= ruleCFS_TAF EOF ;
+    // InternalWreslEditorParser.g:8813:1: entryRuleCFS_TAF returns [String current=null] : iv_ruleCFS_TAF= ruleCFS_TAF EOF ;
     public final String entryRuleCFS_TAF() throws RecognitionException {
         String current = null;
 
@@ -26434,8 +26596,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:8773:1: (iv_ruleCFS_TAF= ruleCFS_TAF EOF )
-            // InternalWreslEditorParser.g:8774:2: iv_ruleCFS_TAF= ruleCFS_TAF EOF
+            // InternalWreslEditorParser.g:8814:1: (iv_ruleCFS_TAF= ruleCFS_TAF EOF )
+            // InternalWreslEditorParser.g:8815:2: iv_ruleCFS_TAF= ruleCFS_TAF EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getCFS_TAFRule()); 
@@ -26466,7 +26628,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCFS_TAF"
-    // InternalWreslEditorParser.g:8781:1: ruleCFS_TAF returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= Cfs_taf ;
+    // InternalWreslEditorParser.g:8822:1: ruleCFS_TAF returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= Cfs_taf ;
     public final AntlrDatatypeRuleToken ruleCFS_TAF() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -26475,8 +26637,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:8785:6: (kw= Cfs_taf )
-            // InternalWreslEditorParser.g:8787:2: kw= Cfs_taf
+            // InternalWreslEditorParser.g:8826:6: (kw= Cfs_taf )
+            // InternalWreslEditorParser.g:8828:2: kw= Cfs_taf
             {
             kw=(Token)match(input,Cfs_taf,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -26506,7 +26668,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTAF_CFS"
-    // InternalWreslEditorParser.g:8800:1: entryRuleTAF_CFS returns [String current=null] : iv_ruleTAF_CFS= ruleTAF_CFS EOF ;
+    // InternalWreslEditorParser.g:8841:1: entryRuleTAF_CFS returns [String current=null] : iv_ruleTAF_CFS= ruleTAF_CFS EOF ;
     public final String entryRuleTAF_CFS() throws RecognitionException {
         String current = null;
 
@@ -26514,8 +26676,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:8801:1: (iv_ruleTAF_CFS= ruleTAF_CFS EOF )
-            // InternalWreslEditorParser.g:8802:2: iv_ruleTAF_CFS= ruleTAF_CFS EOF
+            // InternalWreslEditorParser.g:8842:1: (iv_ruleTAF_CFS= ruleTAF_CFS EOF )
+            // InternalWreslEditorParser.g:8843:2: iv_ruleTAF_CFS= ruleTAF_CFS EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getTAF_CFSRule()); 
@@ -26546,7 +26708,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTAF_CFS"
-    // InternalWreslEditorParser.g:8809:1: ruleTAF_CFS returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= Taf_cfs ;
+    // InternalWreslEditorParser.g:8850:1: ruleTAF_CFS returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= Taf_cfs ;
     public final AntlrDatatypeRuleToken ruleTAF_CFS() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -26555,8 +26717,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:8813:6: (kw= Taf_cfs )
-            // InternalWreslEditorParser.g:8815:2: kw= Taf_cfs
+            // InternalWreslEditorParser.g:8854:6: (kw= Taf_cfs )
+            // InternalWreslEditorParser.g:8856:2: kw= Taf_cfs
             {
             kw=(Token)match(input,Taf_cfs,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -26586,7 +26748,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDaysIn"
-    // InternalWreslEditorParser.g:8828:1: entryRuleDaysIn returns [String current=null] : iv_ruleDaysIn= ruleDaysIn EOF ;
+    // InternalWreslEditorParser.g:8869:1: entryRuleDaysIn returns [String current=null] : iv_ruleDaysIn= ruleDaysIn EOF ;
     public final String entryRuleDaysIn() throws RecognitionException {
         String current = null;
 
@@ -26594,8 +26756,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:8829:1: (iv_ruleDaysIn= ruleDaysIn EOF )
-            // InternalWreslEditorParser.g:8830:2: iv_ruleDaysIn= ruleDaysIn EOF
+            // InternalWreslEditorParser.g:8870:1: (iv_ruleDaysIn= ruleDaysIn EOF )
+            // InternalWreslEditorParser.g:8871:2: iv_ruleDaysIn= ruleDaysIn EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getDaysInRule()); 
@@ -26626,7 +26788,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDaysIn"
-    // InternalWreslEditorParser.g:8837:1: ruleDaysIn returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= Daysin | kw= Daysinmonth | kw= Daysintimestep ) ;
+    // InternalWreslEditorParser.g:8878:1: ruleDaysIn returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= Daysin | kw= Daysinmonth | kw= Daysintimestep ) ;
     public final AntlrDatatypeRuleToken ruleDaysIn() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -26635,38 +26797,38 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:8841:6: ( (kw= Daysin | kw= Daysinmonth | kw= Daysintimestep ) )
-            // InternalWreslEditorParser.g:8842:1: (kw= Daysin | kw= Daysinmonth | kw= Daysintimestep )
+            // InternalWreslEditorParser.g:8882:6: ( (kw= Daysin | kw= Daysinmonth | kw= Daysintimestep ) )
+            // InternalWreslEditorParser.g:8883:1: (kw= Daysin | kw= Daysinmonth | kw= Daysintimestep )
             {
-            // InternalWreslEditorParser.g:8842:1: (kw= Daysin | kw= Daysinmonth | kw= Daysintimestep )
-            int alt186=3;
+            // InternalWreslEditorParser.g:8883:1: (kw= Daysin | kw= Daysinmonth | kw= Daysintimestep )
+            int alt189=3;
             switch ( input.LA(1) ) {
             case Daysin:
                 {
-                alt186=1;
+                alt189=1;
                 }
                 break;
             case Daysinmonth:
                 {
-                alt186=2;
+                alt189=2;
                 }
                 break;
             case Daysintimestep:
                 {
-                alt186=3;
+                alt189=3;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 186, 0, input);
+                    new NoViableAltException("", 189, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt186) {
+            switch (alt189) {
                 case 1 :
-                    // InternalWreslEditorParser.g:8843:2: kw= Daysin
+                    // InternalWreslEditorParser.g:8884:2: kw= Daysin
                     {
                     kw=(Token)match(input,Daysin,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -26679,7 +26841,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditorParser.g:8850:2: kw= Daysinmonth
+                    // InternalWreslEditorParser.g:8891:2: kw= Daysinmonth
                     {
                     kw=(Token)match(input,Daysinmonth,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -26692,7 +26854,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalWreslEditorParser.g:8857:2: kw= Daysintimestep
+                    // InternalWreslEditorParser.g:8898:2: kw= Daysintimestep
                     {
                     kw=(Token)match(input,Daysintimestep,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -26728,7 +26890,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleWaterYear"
-    // InternalWreslEditorParser.g:8870:1: entryRuleWaterYear returns [String current=null] : iv_ruleWaterYear= ruleWaterYear EOF ;
+    // InternalWreslEditorParser.g:8911:1: entryRuleWaterYear returns [String current=null] : iv_ruleWaterYear= ruleWaterYear EOF ;
     public final String entryRuleWaterYear() throws RecognitionException {
         String current = null;
 
@@ -26736,8 +26898,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:8871:1: (iv_ruleWaterYear= ruleWaterYear EOF )
-            // InternalWreslEditorParser.g:8872:2: iv_ruleWaterYear= ruleWaterYear EOF
+            // InternalWreslEditorParser.g:8912:1: (iv_ruleWaterYear= ruleWaterYear EOF )
+            // InternalWreslEditorParser.g:8913:2: iv_ruleWaterYear= ruleWaterYear EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getWaterYearRule()); 
@@ -26768,7 +26930,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleWaterYear"
-    // InternalWreslEditorParser.g:8879:1: ruleWaterYear returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= Wateryear ;
+    // InternalWreslEditorParser.g:8920:1: ruleWaterYear returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= Wateryear ;
     public final AntlrDatatypeRuleToken ruleWaterYear() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -26777,8 +26939,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:8883:6: (kw= Wateryear )
-            // InternalWreslEditorParser.g:8885:2: kw= Wateryear
+            // InternalWreslEditorParser.g:8924:6: (kw= Wateryear )
+            // InternalWreslEditorParser.g:8926:2: kw= Wateryear
             {
             kw=(Token)match(input,Wateryear,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -26808,7 +26970,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleMonth"
-    // InternalWreslEditorParser.g:8898:1: entryRuleMonth returns [String current=null] : iv_ruleMonth= ruleMonth EOF ;
+    // InternalWreslEditorParser.g:8939:1: entryRuleMonth returns [String current=null] : iv_ruleMonth= ruleMonth EOF ;
     public final String entryRuleMonth() throws RecognitionException {
         String current = null;
 
@@ -26816,8 +26978,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:8899:1: (iv_ruleMonth= ruleMonth EOF )
-            // InternalWreslEditorParser.g:8900:2: iv_ruleMonth= ruleMonth EOF
+            // InternalWreslEditorParser.g:8940:1: (iv_ruleMonth= ruleMonth EOF )
+            // InternalWreslEditorParser.g:8941:2: iv_ruleMonth= ruleMonth EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getMonthRule()); 
@@ -26848,7 +27010,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleMonth"
-    // InternalWreslEditorParser.g:8907:1: ruleMonth returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= Month ;
+    // InternalWreslEditorParser.g:8948:1: ruleMonth returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= Month ;
     public final AntlrDatatypeRuleToken ruleMonth() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -26857,8 +27019,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:8911:6: (kw= Month )
-            // InternalWreslEditorParser.g:8913:2: kw= Month
+            // InternalWreslEditorParser.g:8952:6: (kw= Month )
+            // InternalWreslEditorParser.g:8954:2: kw= Month
             {
             kw=(Token)match(input,Month,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -26888,7 +27050,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDay"
-    // InternalWreslEditorParser.g:8926:1: entryRuleDay returns [String current=null] : iv_ruleDay= ruleDay EOF ;
+    // InternalWreslEditorParser.g:8967:1: entryRuleDay returns [String current=null] : iv_ruleDay= ruleDay EOF ;
     public final String entryRuleDay() throws RecognitionException {
         String current = null;
 
@@ -26896,8 +27058,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:8927:1: (iv_ruleDay= ruleDay EOF )
-            // InternalWreslEditorParser.g:8928:2: iv_ruleDay= ruleDay EOF
+            // InternalWreslEditorParser.g:8968:1: (iv_ruleDay= ruleDay EOF )
+            // InternalWreslEditorParser.g:8969:2: iv_ruleDay= ruleDay EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getDayRule()); 
@@ -26928,7 +27090,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDay"
-    // InternalWreslEditorParser.g:8935:1: ruleDay returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= Day ;
+    // InternalWreslEditorParser.g:8976:1: ruleDay returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= Day ;
     public final AntlrDatatypeRuleToken ruleDay() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -26937,8 +27099,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:8939:6: (kw= Day )
-            // InternalWreslEditorParser.g:8941:2: kw= Day
+            // InternalWreslEditorParser.g:8980:6: (kw= Day )
+            // InternalWreslEditorParser.g:8982:2: kw= Day
             {
             kw=(Token)match(input,Day,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -26968,7 +27130,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleCalendarMonth"
-    // InternalWreslEditorParser.g:8954:1: entryRuleCalendarMonth returns [String current=null] : iv_ruleCalendarMonth= ruleCalendarMonth EOF ;
+    // InternalWreslEditorParser.g:8995:1: entryRuleCalendarMonth returns [String current=null] : iv_ruleCalendarMonth= ruleCalendarMonth EOF ;
     public final String entryRuleCalendarMonth() throws RecognitionException {
         String current = null;
 
@@ -26976,8 +27138,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:8955:1: (iv_ruleCalendarMonth= ruleCalendarMonth EOF )
-            // InternalWreslEditorParser.g:8956:2: iv_ruleCalendarMonth= ruleCalendarMonth EOF
+            // InternalWreslEditorParser.g:8996:1: (iv_ruleCalendarMonth= ruleCalendarMonth EOF )
+            // InternalWreslEditorParser.g:8997:2: iv_ruleCalendarMonth= ruleCalendarMonth EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getCalendarMonthRule()); 
@@ -27008,7 +27170,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCalendarMonth"
-    // InternalWreslEditorParser.g:8963:1: ruleCalendarMonth returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= Jan | kw= Feb | kw= Mar | kw= Apr | kw= May | kw= Jun | kw= Jul | kw= Aug | kw= Sep | kw= Oct | kw= Nov | kw= Dec ) ;
+    // InternalWreslEditorParser.g:9004:1: ruleCalendarMonth returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= Jan | kw= Feb | kw= Mar | kw= Apr | kw= May | kw= Jun | kw= Jul | kw= Aug | kw= Sep | kw= Oct | kw= Nov | kw= Dec ) ;
     public final AntlrDatatypeRuleToken ruleCalendarMonth() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -27017,83 +27179,83 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:8967:6: ( (kw= Jan | kw= Feb | kw= Mar | kw= Apr | kw= May | kw= Jun | kw= Jul | kw= Aug | kw= Sep | kw= Oct | kw= Nov | kw= Dec ) )
-            // InternalWreslEditorParser.g:8968:1: (kw= Jan | kw= Feb | kw= Mar | kw= Apr | kw= May | kw= Jun | kw= Jul | kw= Aug | kw= Sep | kw= Oct | kw= Nov | kw= Dec )
+            // InternalWreslEditorParser.g:9008:6: ( (kw= Jan | kw= Feb | kw= Mar | kw= Apr | kw= May | kw= Jun | kw= Jul | kw= Aug | kw= Sep | kw= Oct | kw= Nov | kw= Dec ) )
+            // InternalWreslEditorParser.g:9009:1: (kw= Jan | kw= Feb | kw= Mar | kw= Apr | kw= May | kw= Jun | kw= Jul | kw= Aug | kw= Sep | kw= Oct | kw= Nov | kw= Dec )
             {
-            // InternalWreslEditorParser.g:8968:1: (kw= Jan | kw= Feb | kw= Mar | kw= Apr | kw= May | kw= Jun | kw= Jul | kw= Aug | kw= Sep | kw= Oct | kw= Nov | kw= Dec )
-            int alt187=12;
+            // InternalWreslEditorParser.g:9009:1: (kw= Jan | kw= Feb | kw= Mar | kw= Apr | kw= May | kw= Jun | kw= Jul | kw= Aug | kw= Sep | kw= Oct | kw= Nov | kw= Dec )
+            int alt190=12;
             switch ( input.LA(1) ) {
             case Jan:
                 {
-                alt187=1;
+                alt190=1;
                 }
                 break;
             case Feb:
                 {
-                alt187=2;
+                alt190=2;
                 }
                 break;
             case Mar:
                 {
-                alt187=3;
+                alt190=3;
                 }
                 break;
             case Apr:
                 {
-                alt187=4;
+                alt190=4;
                 }
                 break;
             case May:
                 {
-                alt187=5;
+                alt190=5;
                 }
                 break;
             case Jun:
                 {
-                alt187=6;
+                alt190=6;
                 }
                 break;
             case Jul:
                 {
-                alt187=7;
+                alt190=7;
                 }
                 break;
             case Aug:
                 {
-                alt187=8;
+                alt190=8;
                 }
                 break;
             case Sep:
                 {
-                alt187=9;
+                alt190=9;
                 }
                 break;
             case Oct:
                 {
-                alt187=10;
+                alt190=10;
                 }
                 break;
             case Nov:
                 {
-                alt187=11;
+                alt190=11;
                 }
                 break;
             case Dec:
                 {
-                alt187=12;
+                alt190=12;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 187, 0, input);
+                    new NoViableAltException("", 190, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt187) {
+            switch (alt190) {
                 case 1 :
-                    // InternalWreslEditorParser.g:8969:2: kw= Jan
+                    // InternalWreslEditorParser.g:9010:2: kw= Jan
                     {
                     kw=(Token)match(input,Jan,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -27106,7 +27268,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditorParser.g:8976:2: kw= Feb
+                    // InternalWreslEditorParser.g:9017:2: kw= Feb
                     {
                     kw=(Token)match(input,Feb,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -27119,7 +27281,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalWreslEditorParser.g:8983:2: kw= Mar
+                    // InternalWreslEditorParser.g:9024:2: kw= Mar
                     {
                     kw=(Token)match(input,Mar,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -27132,7 +27294,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalWreslEditorParser.g:8990:2: kw= Apr
+                    // InternalWreslEditorParser.g:9031:2: kw= Apr
                     {
                     kw=(Token)match(input,Apr,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -27145,7 +27307,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalWreslEditorParser.g:8997:2: kw= May
+                    // InternalWreslEditorParser.g:9038:2: kw= May
                     {
                     kw=(Token)match(input,May,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -27158,7 +27320,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalWreslEditorParser.g:9004:2: kw= Jun
+                    // InternalWreslEditorParser.g:9045:2: kw= Jun
                     {
                     kw=(Token)match(input,Jun,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -27171,7 +27333,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalWreslEditorParser.g:9011:2: kw= Jul
+                    // InternalWreslEditorParser.g:9052:2: kw= Jul
                     {
                     kw=(Token)match(input,Jul,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -27184,7 +27346,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // InternalWreslEditorParser.g:9018:2: kw= Aug
+                    // InternalWreslEditorParser.g:9059:2: kw= Aug
                     {
                     kw=(Token)match(input,Aug,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -27197,7 +27359,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 9 :
-                    // InternalWreslEditorParser.g:9025:2: kw= Sep
+                    // InternalWreslEditorParser.g:9066:2: kw= Sep
                     {
                     kw=(Token)match(input,Sep,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -27210,7 +27372,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 10 :
-                    // InternalWreslEditorParser.g:9032:2: kw= Oct
+                    // InternalWreslEditorParser.g:9073:2: kw= Oct
                     {
                     kw=(Token)match(input,Oct,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -27223,7 +27385,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 11 :
-                    // InternalWreslEditorParser.g:9039:2: kw= Nov
+                    // InternalWreslEditorParser.g:9080:2: kw= Nov
                     {
                     kw=(Token)match(input,Nov,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -27236,7 +27398,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 12 :
-                    // InternalWreslEditorParser.g:9046:2: kw= Dec
+                    // InternalWreslEditorParser.g:9087:2: kw= Dec
                     {
                     kw=(Token)match(input,Dec,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -27272,7 +27434,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRulePrevMonth"
-    // InternalWreslEditorParser.g:9059:1: entryRulePrevMonth returns [String current=null] : iv_rulePrevMonth= rulePrevMonth EOF ;
+    // InternalWreslEditorParser.g:9100:1: entryRulePrevMonth returns [String current=null] : iv_rulePrevMonth= rulePrevMonth EOF ;
     public final String entryRulePrevMonth() throws RecognitionException {
         String current = null;
 
@@ -27280,8 +27442,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:9060:1: (iv_rulePrevMonth= rulePrevMonth EOF )
-            // InternalWreslEditorParser.g:9061:2: iv_rulePrevMonth= rulePrevMonth EOF
+            // InternalWreslEditorParser.g:9101:1: (iv_rulePrevMonth= rulePrevMonth EOF )
+            // InternalWreslEditorParser.g:9102:2: iv_rulePrevMonth= rulePrevMonth EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getPrevMonthRule()); 
@@ -27312,7 +27474,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePrevMonth"
-    // InternalWreslEditorParser.g:9068:1: rulePrevMonth returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= Prevjan | kw= Prevfeb | kw= Prevmar | kw= Prevapr | kw= Prevmay | kw= Prevjun | kw= Prevjul | kw= Prevaug | kw= Prevsep | kw= Prevoct | kw= Prevnov | kw= Prevdec ) ;
+    // InternalWreslEditorParser.g:9109:1: rulePrevMonth returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= Prevjan | kw= Prevfeb | kw= Prevmar | kw= Prevapr | kw= Prevmay | kw= Prevjun | kw= Prevjul | kw= Prevaug | kw= Prevsep | kw= Prevoct | kw= Prevnov | kw= Prevdec ) ;
     public final AntlrDatatypeRuleToken rulePrevMonth() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -27321,83 +27483,83 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:9072:6: ( (kw= Prevjan | kw= Prevfeb | kw= Prevmar | kw= Prevapr | kw= Prevmay | kw= Prevjun | kw= Prevjul | kw= Prevaug | kw= Prevsep | kw= Prevoct | kw= Prevnov | kw= Prevdec ) )
-            // InternalWreslEditorParser.g:9073:1: (kw= Prevjan | kw= Prevfeb | kw= Prevmar | kw= Prevapr | kw= Prevmay | kw= Prevjun | kw= Prevjul | kw= Prevaug | kw= Prevsep | kw= Prevoct | kw= Prevnov | kw= Prevdec )
+            // InternalWreslEditorParser.g:9113:6: ( (kw= Prevjan | kw= Prevfeb | kw= Prevmar | kw= Prevapr | kw= Prevmay | kw= Prevjun | kw= Prevjul | kw= Prevaug | kw= Prevsep | kw= Prevoct | kw= Prevnov | kw= Prevdec ) )
+            // InternalWreslEditorParser.g:9114:1: (kw= Prevjan | kw= Prevfeb | kw= Prevmar | kw= Prevapr | kw= Prevmay | kw= Prevjun | kw= Prevjul | kw= Prevaug | kw= Prevsep | kw= Prevoct | kw= Prevnov | kw= Prevdec )
             {
-            // InternalWreslEditorParser.g:9073:1: (kw= Prevjan | kw= Prevfeb | kw= Prevmar | kw= Prevapr | kw= Prevmay | kw= Prevjun | kw= Prevjul | kw= Prevaug | kw= Prevsep | kw= Prevoct | kw= Prevnov | kw= Prevdec )
-            int alt188=12;
+            // InternalWreslEditorParser.g:9114:1: (kw= Prevjan | kw= Prevfeb | kw= Prevmar | kw= Prevapr | kw= Prevmay | kw= Prevjun | kw= Prevjul | kw= Prevaug | kw= Prevsep | kw= Prevoct | kw= Prevnov | kw= Prevdec )
+            int alt191=12;
             switch ( input.LA(1) ) {
             case Prevjan:
                 {
-                alt188=1;
+                alt191=1;
                 }
                 break;
             case Prevfeb:
                 {
-                alt188=2;
+                alt191=2;
                 }
                 break;
             case Prevmar:
                 {
-                alt188=3;
+                alt191=3;
                 }
                 break;
             case Prevapr:
                 {
-                alt188=4;
+                alt191=4;
                 }
                 break;
             case Prevmay:
                 {
-                alt188=5;
+                alt191=5;
                 }
                 break;
             case Prevjun:
                 {
-                alt188=6;
+                alt191=6;
                 }
                 break;
             case Prevjul:
                 {
-                alt188=7;
+                alt191=7;
                 }
                 break;
             case Prevaug:
                 {
-                alt188=8;
+                alt191=8;
                 }
                 break;
             case Prevsep:
                 {
-                alt188=9;
+                alt191=9;
                 }
                 break;
             case Prevoct:
                 {
-                alt188=10;
+                alt191=10;
                 }
                 break;
             case Prevnov:
                 {
-                alt188=11;
+                alt191=11;
                 }
                 break;
             case Prevdec:
                 {
-                alt188=12;
+                alt191=12;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 188, 0, input);
+                    new NoViableAltException("", 191, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt188) {
+            switch (alt191) {
                 case 1 :
-                    // InternalWreslEditorParser.g:9074:2: kw= Prevjan
+                    // InternalWreslEditorParser.g:9115:2: kw= Prevjan
                     {
                     kw=(Token)match(input,Prevjan,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -27410,7 +27572,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditorParser.g:9081:2: kw= Prevfeb
+                    // InternalWreslEditorParser.g:9122:2: kw= Prevfeb
                     {
                     kw=(Token)match(input,Prevfeb,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -27423,7 +27585,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalWreslEditorParser.g:9088:2: kw= Prevmar
+                    // InternalWreslEditorParser.g:9129:2: kw= Prevmar
                     {
                     kw=(Token)match(input,Prevmar,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -27436,7 +27598,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalWreslEditorParser.g:9095:2: kw= Prevapr
+                    // InternalWreslEditorParser.g:9136:2: kw= Prevapr
                     {
                     kw=(Token)match(input,Prevapr,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -27449,7 +27611,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalWreslEditorParser.g:9102:2: kw= Prevmay
+                    // InternalWreslEditorParser.g:9143:2: kw= Prevmay
                     {
                     kw=(Token)match(input,Prevmay,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -27462,7 +27624,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalWreslEditorParser.g:9109:2: kw= Prevjun
+                    // InternalWreslEditorParser.g:9150:2: kw= Prevjun
                     {
                     kw=(Token)match(input,Prevjun,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -27475,7 +27637,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalWreslEditorParser.g:9116:2: kw= Prevjul
+                    // InternalWreslEditorParser.g:9157:2: kw= Prevjul
                     {
                     kw=(Token)match(input,Prevjul,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -27488,7 +27650,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // InternalWreslEditorParser.g:9123:2: kw= Prevaug
+                    // InternalWreslEditorParser.g:9164:2: kw= Prevaug
                     {
                     kw=(Token)match(input,Prevaug,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -27501,7 +27663,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 9 :
-                    // InternalWreslEditorParser.g:9130:2: kw= Prevsep
+                    // InternalWreslEditorParser.g:9171:2: kw= Prevsep
                     {
                     kw=(Token)match(input,Prevsep,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -27514,7 +27676,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 10 :
-                    // InternalWreslEditorParser.g:9137:2: kw= Prevoct
+                    // InternalWreslEditorParser.g:9178:2: kw= Prevoct
                     {
                     kw=(Token)match(input,Prevoct,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -27527,7 +27689,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 11 :
-                    // InternalWreslEditorParser.g:9144:2: kw= Prevnov
+                    // InternalWreslEditorParser.g:9185:2: kw= Prevnov
                     {
                     kw=(Token)match(input,Prevnov,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -27540,7 +27702,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 12 :
-                    // InternalWreslEditorParser.g:9151:2: kw= Prevdec
+                    // InternalWreslEditorParser.g:9192:2: kw= Prevdec
                     {
                     kw=(Token)match(input,Prevdec,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -27576,7 +27738,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleMultiStep"
-    // InternalWreslEditorParser.g:9164:1: entryRuleMultiStep returns [String current=null] : iv_ruleMultiStep= ruleMultiStep EOF ;
+    // InternalWreslEditorParser.g:9205:1: entryRuleMultiStep returns [String current=null] : iv_ruleMultiStep= ruleMultiStep EOF ;
     public final String entryRuleMultiStep() throws RecognitionException {
         String current = null;
 
@@ -27584,8 +27746,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:9165:1: (iv_ruleMultiStep= ruleMultiStep EOF )
-            // InternalWreslEditorParser.g:9166:2: iv_ruleMultiStep= ruleMultiStep EOF
+            // InternalWreslEditorParser.g:9206:1: (iv_ruleMultiStep= ruleMultiStep EOF )
+            // InternalWreslEditorParser.g:9207:2: iv_ruleMultiStep= ruleMultiStep EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getMultiStepRule()); 
@@ -27616,7 +27778,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleMultiStep"
-    // InternalWreslEditorParser.g:9173:1: ruleMultiStep returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= M ;
+    // InternalWreslEditorParser.g:9214:1: ruleMultiStep returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= M ;
     public final AntlrDatatypeRuleToken ruleMultiStep() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -27625,8 +27787,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:9177:6: (kw= M )
-            // InternalWreslEditorParser.g:9179:2: kw= M
+            // InternalWreslEditorParser.g:9218:6: (kw= M )
+            // InternalWreslEditorParser.g:9220:2: kw= M
             {
             kw=(Token)match(input,M,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -27656,7 +27818,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTimeStep"
-    // InternalWreslEditorParser.g:9192:1: entryRuleTimeStep returns [String current=null] : iv_ruleTimeStep= ruleTimeStep EOF ;
+    // InternalWreslEditorParser.g:9233:1: entryRuleTimeStep returns [String current=null] : iv_ruleTimeStep= ruleTimeStep EOF ;
     public final String entryRuleTimeStep() throws RecognitionException {
         String current = null;
 
@@ -27664,8 +27826,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:9193:1: (iv_ruleTimeStep= ruleTimeStep EOF )
-            // InternalWreslEditorParser.g:9194:2: iv_ruleTimeStep= ruleTimeStep EOF
+            // InternalWreslEditorParser.g:9234:1: (iv_ruleTimeStep= ruleTimeStep EOF )
+            // InternalWreslEditorParser.g:9235:2: iv_ruleTimeStep= ruleTimeStep EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getTimeStepRule()); 
@@ -27696,7 +27858,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTimeStep"
-    // InternalWreslEditorParser.g:9201:1: ruleTimeStep returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= Timestep ;
+    // InternalWreslEditorParser.g:9242:1: ruleTimeStep returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= Timestep ;
     public final AntlrDatatypeRuleToken ruleTimeStep() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -27705,8 +27867,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:9205:6: (kw= Timestep )
-            // InternalWreslEditorParser.g:9207:2: kw= Timestep
+            // InternalWreslEditorParser.g:9246:6: (kw= Timestep )
+            // InternalWreslEditorParser.g:9248:2: kw= Timestep
             {
             kw=(Token)match(input,Timestep,FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -27736,7 +27898,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTimeStepValue"
-    // InternalWreslEditorParser.g:9220:1: entryRuleTimeStepValue returns [String current=null] : iv_ruleTimeStepValue= ruleTimeStepValue EOF ;
+    // InternalWreslEditorParser.g:9261:1: entryRuleTimeStepValue returns [String current=null] : iv_ruleTimeStepValue= ruleTimeStepValue EOF ;
     public final String entryRuleTimeStepValue() throws RecognitionException {
         String current = null;
 
@@ -27744,8 +27906,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalWreslEditorParser.g:9221:1: (iv_ruleTimeStepValue= ruleTimeStepValue EOF )
-            // InternalWreslEditorParser.g:9222:2: iv_ruleTimeStepValue= ruleTimeStepValue EOF
+            // InternalWreslEditorParser.g:9262:1: (iv_ruleTimeStepValue= ruleTimeStepValue EOF )
+            // InternalWreslEditorParser.g:9263:2: iv_ruleTimeStepValue= ruleTimeStepValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getTimeStepValueRule()); 
@@ -27776,7 +27938,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTimeStepValue"
-    // InternalWreslEditorParser.g:9229:1: ruleTimeStepValue returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= MON | kw= DAY ) ;
+    // InternalWreslEditorParser.g:9270:1: ruleTimeStepValue returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= MON | kw= DAY ) ;
     public final AntlrDatatypeRuleToken ruleTimeStepValue() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -27785,29 +27947,29 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalWreslEditorParser.g:9233:6: ( (kw= MON | kw= DAY ) )
-            // InternalWreslEditorParser.g:9234:1: (kw= MON | kw= DAY )
+            // InternalWreslEditorParser.g:9274:6: ( (kw= MON | kw= DAY ) )
+            // InternalWreslEditorParser.g:9275:1: (kw= MON | kw= DAY )
             {
-            // InternalWreslEditorParser.g:9234:1: (kw= MON | kw= DAY )
-            int alt189=2;
-            int LA189_0 = input.LA(1);
+            // InternalWreslEditorParser.g:9275:1: (kw= MON | kw= DAY )
+            int alt192=2;
+            int LA192_0 = input.LA(1);
 
-            if ( (LA189_0==MON) ) {
-                alt189=1;
+            if ( (LA192_0==MON) ) {
+                alt192=1;
             }
-            else if ( (LA189_0==DAY) ) {
-                alt189=2;
+            else if ( (LA192_0==DAY) ) {
+                alt192=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 189, 0, input);
+                    new NoViableAltException("", 192, 0, input);
 
                 throw nvae;
             }
-            switch (alt189) {
+            switch (alt192) {
                 case 1 :
-                    // InternalWreslEditorParser.g:9235:2: kw= MON
+                    // InternalWreslEditorParser.g:9276:2: kw= MON
                     {
                     kw=(Token)match(input,MON,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -27820,7 +27982,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalWreslEditorParser.g:9242:2: kw= DAY
+                    // InternalWreslEditorParser.g:9283:2: kw= DAY
                     {
                     kw=(Token)match(input,DAY,FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -28803,44 +28965,100 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     }
     // $ANTLR end synpred167_InternalWreslEditorParser
 
-    // $ANTLR start synpred171_InternalWreslEditorParser
-    public final void synpred171_InternalWreslEditorParser_fragment() throws RecognitionException {   
+    // $ANTLR start synpred168_InternalWreslEditorParser
+    public final void synpred168_InternalWreslEditorParser_fragment() throws RecognitionException {   
+        EObject lv_condition_7_0 = null;
+
+
+        // InternalWreslEditorParser.g:5292:1: ( (lv_condition_7_0= ruleCondition ) )
+        // InternalWreslEditorParser.g:5292:1: (lv_condition_7_0= ruleCondition )
+        {
+        // InternalWreslEditorParser.g:5292:1: (lv_condition_7_0= ruleCondition )
+        // InternalWreslEditorParser.g:5293:3: lv_condition_7_0= ruleCondition
+        {
+        if ( state.backtracking==0 ) {
+           
+          	        newCompositeNode(grammarAccess.getSequenceAccess().getConditionConditionParserRuleCall_0_5_0_0()); 
+          	    
+        }
+        pushFollow(FOLLOW_2);
+        lv_condition_7_0=ruleCondition();
+
+        state._fsp--;
+        if (state.failed) return ;
+
+        }
+
+
+        }
+    }
+    // $ANTLR end synpred168_InternalWreslEditorParser
+
+    // $ANTLR start synpred169_InternalWreslEditorParser
+    public final void synpred169_InternalWreslEditorParser_fragment() throws RecognitionException {   
+        Token this_ORDER_8=null;
+        Token lv_order_9_0=null;
+
+        // InternalWreslEditorParser.g:5309:4: (this_ORDER_8= RULE_ORDER ( (lv_order_9_0= RULE_INT ) ) )
+        // InternalWreslEditorParser.g:5309:4: this_ORDER_8= RULE_ORDER ( (lv_order_9_0= RULE_INT ) )
+        {
+        this_ORDER_8=(Token)match(input,RULE_ORDER,FOLLOW_52); if (state.failed) return ;
+        // InternalWreslEditorParser.g:5313:1: ( (lv_order_9_0= RULE_INT ) )
+        // InternalWreslEditorParser.g:5314:1: (lv_order_9_0= RULE_INT )
+        {
+        // InternalWreslEditorParser.g:5314:1: (lv_order_9_0= RULE_INT )
+        // InternalWreslEditorParser.g:5315:3: lv_order_9_0= RULE_INT
+        {
+        lv_order_9_0=(Token)match(input,RULE_INT,FOLLOW_2); if (state.failed) return ;
+
+        }
+
+
+        }
+
+
+        }
+    }
+    // $ANTLR end synpred169_InternalWreslEditorParser
+
+    // $ANTLR start synpred174_InternalWreslEditorParser
+    public final void synpred174_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_0=null;
 
-        // InternalWreslEditorParser.g:5380:2: (otherlv_0= Condition )
-        // InternalWreslEditorParser.g:5380:2: otherlv_0= Condition
+        // InternalWreslEditorParser.g:5421:2: (otherlv_0= Condition )
+        // InternalWreslEditorParser.g:5421:2: otherlv_0= Condition
         {
         otherlv_0=(Token)match(input,Condition,FOLLOW_2); if (state.failed) return ;
 
         }
     }
-    // $ANTLR end synpred171_InternalWreslEditorParser
+    // $ANTLR end synpred174_InternalWreslEditorParser
 
-    // $ANTLR start synpred176_InternalWreslEditorParser
-    public final void synpred176_InternalWreslEditorParser_fragment() throws RecognitionException {   
+    // $ANTLR start synpred179_InternalWreslEditorParser
+    public final void synpred179_InternalWreslEditorParser_fragment() throws RecognitionException {   
         EObject lv_e1_0_0 = null;
 
         EObject lv_e2_2_0 = null;
 
 
-        // InternalWreslEditorParser.g:5621:2: ( ( ( (lv_e1_0_0= ruleExpression ) ) ruleRelation ( (lv_e2_2_0= ruleExpression ) ) ) )
-        // InternalWreslEditorParser.g:5621:2: ( ( (lv_e1_0_0= ruleExpression ) ) ruleRelation ( (lv_e2_2_0= ruleExpression ) ) )
+        // InternalWreslEditorParser.g:5662:2: ( ( ( (lv_e1_0_0= ruleExpression ) ) ruleRelation ( (lv_e2_2_0= ruleExpression ) ) ) )
+        // InternalWreslEditorParser.g:5662:2: ( ( (lv_e1_0_0= ruleExpression ) ) ruleRelation ( (lv_e2_2_0= ruleExpression ) ) )
         {
-        // InternalWreslEditorParser.g:5621:2: ( ( (lv_e1_0_0= ruleExpression ) ) ruleRelation ( (lv_e2_2_0= ruleExpression ) ) )
-        // InternalWreslEditorParser.g:5621:3: ( (lv_e1_0_0= ruleExpression ) ) ruleRelation ( (lv_e2_2_0= ruleExpression ) )
+        // InternalWreslEditorParser.g:5662:2: ( ( (lv_e1_0_0= ruleExpression ) ) ruleRelation ( (lv_e2_2_0= ruleExpression ) ) )
+        // InternalWreslEditorParser.g:5662:3: ( (lv_e1_0_0= ruleExpression ) ) ruleRelation ( (lv_e2_2_0= ruleExpression ) )
         {
-        // InternalWreslEditorParser.g:5621:3: ( (lv_e1_0_0= ruleExpression ) )
-        // InternalWreslEditorParser.g:5622:1: (lv_e1_0_0= ruleExpression )
+        // InternalWreslEditorParser.g:5662:3: ( (lv_e1_0_0= ruleExpression ) )
+        // InternalWreslEditorParser.g:5663:1: (lv_e1_0_0= ruleExpression )
         {
-        // InternalWreslEditorParser.g:5622:1: (lv_e1_0_0= ruleExpression )
-        // InternalWreslEditorParser.g:5623:3: lv_e1_0_0= ruleExpression
+        // InternalWreslEditorParser.g:5663:1: (lv_e1_0_0= ruleExpression )
+        // InternalWreslEditorParser.g:5664:3: lv_e1_0_0= ruleExpression
         {
         if ( state.backtracking==0 ) {
            
           	        newCompositeNode(grammarAccess.getConditionalTermAccess().getE1ExpressionParserRuleCall_0_0_0()); 
           	    
         }
-        pushFollow(FOLLOW_80);
+        pushFollow(FOLLOW_81);
         lv_e1_0_0=ruleExpression();
 
         state._fsp--;
@@ -28856,11 +29074,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
         state._fsp--;
         if (state.failed) return ;
-        // InternalWreslEditorParser.g:5650:1: ( (lv_e2_2_0= ruleExpression ) )
-        // InternalWreslEditorParser.g:5651:1: (lv_e2_2_0= ruleExpression )
+        // InternalWreslEditorParser.g:5691:1: ( (lv_e2_2_0= ruleExpression ) )
+        // InternalWreslEditorParser.g:5692:1: (lv_e2_2_0= ruleExpression )
         {
-        // InternalWreslEditorParser.g:5651:1: (lv_e2_2_0= ruleExpression )
-        // InternalWreslEditorParser.g:5652:3: lv_e2_2_0= ruleExpression
+        // InternalWreslEditorParser.g:5692:1: (lv_e2_2_0= ruleExpression )
+        // InternalWreslEditorParser.g:5693:3: lv_e2_2_0= ruleExpression
         {
         if ( state.backtracking==0 ) {
            
@@ -28884,15 +29102,15 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
         }
     }
-    // $ANTLR end synpred176_InternalWreslEditorParser
+    // $ANTLR end synpred179_InternalWreslEditorParser
 
-    // $ANTLR start synpred178_InternalWreslEditorParser
-    public final void synpred178_InternalWreslEditorParser_fragment() throws RecognitionException {   
-        // InternalWreslEditorParser.g:5681:7: ( ( LeftParenthesis ruleLogicalExpression RightParenthesis ) )
-        // InternalWreslEditorParser.g:5681:8: ( LeftParenthesis ruleLogicalExpression RightParenthesis )
+    // $ANTLR start synpred181_InternalWreslEditorParser
+    public final void synpred181_InternalWreslEditorParser_fragment() throws RecognitionException {   
+        // InternalWreslEditorParser.g:5722:7: ( ( LeftParenthesis ruleLogicalExpression RightParenthesis ) )
+        // InternalWreslEditorParser.g:5722:8: ( LeftParenthesis ruleLogicalExpression RightParenthesis )
         {
-        // InternalWreslEditorParser.g:5681:8: ( LeftParenthesis ruleLogicalExpression RightParenthesis )
-        // InternalWreslEditorParser.g:5682:1: LeftParenthesis ruleLogicalExpression RightParenthesis
+        // InternalWreslEditorParser.g:5722:8: ( LeftParenthesis ruleLogicalExpression RightParenthesis )
+        // InternalWreslEditorParser.g:5723:1: LeftParenthesis ruleLogicalExpression RightParenthesis
         {
         match(input,LeftParenthesis,FOLLOW_12); if (state.failed) return ;
         pushFollow(FOLLOW_16);
@@ -28907,42 +29125,16 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
         }
     }
-    // $ANTLR end synpred178_InternalWreslEditorParser
-
-    // $ANTLR start synpred235_InternalWreslEditorParser
-    public final void synpred235_InternalWreslEditorParser_fragment() throws RecognitionException {   
-        Token otherlv_0=null;
-
-        // InternalWreslEditorParser.g:8314:2: (otherlv_0= Include )
-        // InternalWreslEditorParser.g:8314:2: otherlv_0= Include
-        {
-        otherlv_0=(Token)match(input,Include,FOLLOW_2); if (state.failed) return ;
-
-        }
-    }
-    // $ANTLR end synpred235_InternalWreslEditorParser
-
-    // $ANTLR start synpred236_InternalWreslEditorParser
-    public final void synpred236_InternalWreslEditorParser_fragment() throws RecognitionException {   
-        Token lv_local_3_1=null;
-
-        // InternalWreslEditorParser.g:8332:3: (lv_local_3_1= Local )
-        // InternalWreslEditorParser.g:8332:3: lv_local_3_1= Local
-        {
-        lv_local_3_1=(Token)match(input,Local,FOLLOW_2); if (state.failed) return ;
-
-        }
-    }
-    // $ANTLR end synpred236_InternalWreslEditorParser
+    // $ANTLR end synpred181_InternalWreslEditorParser
 
     // $ANTLR start synpred238_InternalWreslEditorParser
     public final void synpred238_InternalWreslEditorParser_fragment() throws RecognitionException {   
-        Token kw=null;
+        Token otherlv_0=null;
 
-        // InternalWreslEditorParser.g:8407:2: (kw= Include )
-        // InternalWreslEditorParser.g:8407:2: kw= Include
+        // InternalWreslEditorParser.g:8355:2: (otherlv_0= Include )
+        // InternalWreslEditorParser.g:8355:2: otherlv_0= Include
         {
-        kw=(Token)match(input,Include,FOLLOW_2); if (state.failed) return ;
+        otherlv_0=(Token)match(input,Include,FOLLOW_2); if (state.failed) return ;
 
         }
     }
@@ -28950,42 +29142,68 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
     // $ANTLR start synpred239_InternalWreslEditorParser
     public final void synpred239_InternalWreslEditorParser_fragment() throws RecognitionException {   
-        Token kw=null;
+        Token lv_local_3_1=null;
 
-        // InternalWreslEditorParser.g:8420:2: (kw= Model )
-        // InternalWreslEditorParser.g:8420:2: kw= Model
+        // InternalWreslEditorParser.g:8373:3: (lv_local_3_1= Local )
+        // InternalWreslEditorParser.g:8373:3: lv_local_3_1= Local
         {
-        kw=(Token)match(input,Model,FOLLOW_2); if (state.failed) return ;
+        lv_local_3_1=(Token)match(input,Local,FOLLOW_2); if (state.failed) return ;
 
         }
     }
     // $ANTLR end synpred239_InternalWreslEditorParser
 
-    // $ANTLR start synpred240_InternalWreslEditorParser
-    public final void synpred240_InternalWreslEditorParser_fragment() throws RecognitionException {   
+    // $ANTLR start synpred241_InternalWreslEditorParser
+    public final void synpred241_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token kw=null;
 
-        // InternalWreslEditorParser.g:8462:2: (kw= Include )
-        // InternalWreslEditorParser.g:8462:2: kw= Include
+        // InternalWreslEditorParser.g:8448:2: (kw= Include )
+        // InternalWreslEditorParser.g:8448:2: kw= Include
         {
         kw=(Token)match(input,Include,FOLLOW_2); if (state.failed) return ;
 
         }
     }
-    // $ANTLR end synpred240_InternalWreslEditorParser
+    // $ANTLR end synpred241_InternalWreslEditorParser
 
-    // $ANTLR start synpred241_InternalWreslEditorParser
-    public final void synpred241_InternalWreslEditorParser_fragment() throws RecognitionException {   
+    // $ANTLR start synpred242_InternalWreslEditorParser
+    public final void synpred242_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token kw=null;
 
-        // InternalWreslEditorParser.g:8475:2: (kw= Group )
-        // InternalWreslEditorParser.g:8475:2: kw= Group
+        // InternalWreslEditorParser.g:8461:2: (kw= Model )
+        // InternalWreslEditorParser.g:8461:2: kw= Model
+        {
+        kw=(Token)match(input,Model,FOLLOW_2); if (state.failed) return ;
+
+        }
+    }
+    // $ANTLR end synpred242_InternalWreslEditorParser
+
+    // $ANTLR start synpred243_InternalWreslEditorParser
+    public final void synpred243_InternalWreslEditorParser_fragment() throws RecognitionException {   
+        Token kw=null;
+
+        // InternalWreslEditorParser.g:8503:2: (kw= Include )
+        // InternalWreslEditorParser.g:8503:2: kw= Include
+        {
+        kw=(Token)match(input,Include,FOLLOW_2); if (state.failed) return ;
+
+        }
+    }
+    // $ANTLR end synpred243_InternalWreslEditorParser
+
+    // $ANTLR start synpred244_InternalWreslEditorParser
+    public final void synpred244_InternalWreslEditorParser_fragment() throws RecognitionException {   
+        Token kw=null;
+
+        // InternalWreslEditorParser.g:8516:2: (kw= Group )
+        // InternalWreslEditorParser.g:8516:2: kw= Group
         {
         kw=(Token)match(input,Group,FOLLOW_2); if (state.failed) return ;
 
         }
     }
-    // $ANTLR end synpred241_InternalWreslEditorParser
+    // $ANTLR end synpred244_InternalWreslEditorParser
 
     // Delegated rules
 
@@ -29059,6 +29277,34 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
         state.failed=false;
         return success;
     }
+    public final boolean synpred242_InternalWreslEditorParser() {
+        state.backtracking++;
+        int start = input.mark();
+        try {
+            synpred242_InternalWreslEditorParser_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !state.failed;
+        input.rewind(start);
+        state.backtracking--;
+        state.failed=false;
+        return success;
+    }
+    public final boolean synpred168_InternalWreslEditorParser() {
+        state.backtracking++;
+        int start = input.mark();
+        try {
+            synpred168_InternalWreslEditorParser_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !state.failed;
+        input.rewind(start);
+        state.backtracking--;
+        state.failed=false;
+        return success;
+    }
     public final boolean synpred97_InternalWreslEditorParser() {
         state.backtracking++;
         int start = input.mark();
@@ -29078,6 +29324,20 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
         int start = input.mark();
         try {
             synpred150_InternalWreslEditorParser_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !state.failed;
+        input.rewind(start);
+        state.backtracking--;
+        state.failed=false;
+        return success;
+    }
+    public final boolean synpred179_InternalWreslEditorParser() {
+        state.backtracking++;
+        int start = input.mark();
+        try {
+            synpred179_InternalWreslEditorParser_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -29171,6 +29431,20 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
         state.failed=false;
         return success;
     }
+    public final boolean synpred181_InternalWreslEditorParser() {
+        state.backtracking++;
+        int start = input.mark();
+        try {
+            synpred181_InternalWreslEditorParser_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !state.failed;
+        input.rewind(start);
+        state.backtracking--;
+        state.failed=false;
+        return success;
+    }
     public final boolean synpred75_InternalWreslEditorParser() {
         state.backtracking++;
         int start = input.mark();
@@ -29255,34 +29529,6 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
         state.failed=false;
         return success;
     }
-    public final boolean synpred171_InternalWreslEditorParser() {
-        state.backtracking++;
-        int start = input.mark();
-        try {
-            synpred171_InternalWreslEditorParser_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !state.failed;
-        input.rewind(start);
-        state.backtracking--;
-        state.failed=false;
-        return success;
-    }
-    public final boolean synpred178_InternalWreslEditorParser() {
-        state.backtracking++;
-        int start = input.mark();
-        try {
-            synpred178_InternalWreslEditorParser_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !state.failed;
-        input.rewind(start);
-        state.backtracking--;
-        state.failed=false;
-        return success;
-    }
     public final boolean synpred31_InternalWreslEditorParser() {
         state.backtracking++;
         int start = input.mark();
@@ -29302,6 +29548,20 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
         int start = input.mark();
         try {
             synpred134_InternalWreslEditorParser_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !state.failed;
+        input.rewind(start);
+        state.backtracking--;
+        state.failed=false;
+        return success;
+    }
+    public final boolean synpred244_InternalWreslEditorParser() {
+        state.backtracking++;
+        int start = input.mark();
+        try {
+            synpred244_InternalWreslEditorParser_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -29409,20 +29669,6 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
         state.failed=false;
         return success;
     }
-    public final boolean synpred236_InternalWreslEditorParser() {
-        state.backtracking++;
-        int start = input.mark();
-        try {
-            synpred236_InternalWreslEditorParser_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !state.failed;
-        input.rewind(start);
-        state.backtracking--;
-        state.failed=false;
-        return success;
-    }
     public final boolean synpred126_InternalWreslEditorParser() {
         state.backtracking++;
         int start = input.mark();
@@ -29479,6 +29725,20 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
         state.failed=false;
         return success;
     }
+    public final boolean synpred243_InternalWreslEditorParser() {
+        state.backtracking++;
+        int start = input.mark();
+        try {
+            synpred243_InternalWreslEditorParser_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !state.failed;
+        input.rewind(start);
+        state.backtracking--;
+        state.failed=false;
+        return success;
+    }
     public final boolean synpred44_InternalWreslEditorParser() {
         state.backtracking++;
         int start = input.mark();
@@ -29507,6 +29767,20 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
         state.failed=false;
         return success;
     }
+    public final boolean synpred169_InternalWreslEditorParser() {
+        state.backtracking++;
+        int start = input.mark();
+        try {
+            synpred169_InternalWreslEditorParser_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !state.failed;
+        input.rewind(start);
+        state.backtracking--;
+        state.failed=false;
+        return success;
+    }
     public final boolean synpred154_InternalWreslEditorParser() {
         state.backtracking++;
         int start = input.mark();
@@ -29526,20 +29800,6 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
         int start = input.mark();
         try {
             synpred147_InternalWreslEditorParser_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !state.failed;
-        input.rewind(start);
-        state.backtracking--;
-        state.failed=false;
-        return success;
-    }
-    public final boolean synpred176_InternalWreslEditorParser() {
-        state.backtracking++;
-        int start = input.mark();
-        try {
-            synpred176_InternalWreslEditorParser_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -29582,20 +29842,6 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
         int start = input.mark();
         try {
             synpred129_InternalWreslEditorParser_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !state.failed;
-        input.rewind(start);
-        state.backtracking--;
-        state.failed=false;
-        return success;
-    }
-    public final boolean synpred235_InternalWreslEditorParser() {
-        state.backtracking++;
-        int start = input.mark();
-        try {
-            synpred235_InternalWreslEditorParser_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -29773,6 +30019,20 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
         state.failed=false;
         return success;
     }
+    public final boolean synpred174_InternalWreslEditorParser() {
+        state.backtracking++;
+        int start = input.mark();
+        try {
+            synpred174_InternalWreslEditorParser_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !state.failed;
+        input.rewind(start);
+        state.backtracking--;
+        state.failed=false;
+        return success;
+    }
     public final boolean synpred82_InternalWreslEditorParser() {
         state.backtracking++;
         int start = input.mark();
@@ -29848,20 +30108,6 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
         int start = input.mark();
         try {
             synpred127_InternalWreslEditorParser_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !state.failed;
-        input.rewind(start);
-        state.backtracking--;
-        state.failed=false;
-        return success;
-    }
-    public final boolean synpred240_InternalWreslEditorParser() {
-        state.backtracking++;
-        int start = input.mark();
-        try {
-            synpred240_InternalWreslEditorParser_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -30142,9 +30388,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     protected DFA8 dfa8 = new DFA8(this);
     protected DFA10 dfa10 = new DFA10(this);
     protected DFA103 dfa103 = new DFA103(this);
-    protected DFA156 dfa156 = new DFA156(this);
-    protected DFA163 dfa163 = new DFA163(this);
-    protected DFA164 dfa164 = new DFA164(this);
+    protected DFA148 dfa148 = new DFA148(this);
+    protected DFA159 dfa159 = new DFA159(this);
+    protected DFA166 dfa166 = new DFA166(this);
+    protected DFA167 dfa167 = new DFA167(this);
     static final String dfa_1s = "\22\uffff";
     static final String dfa_2s = "\1\46\1\126\2\uffff\1\u0083\1\54\1\144\1\127\1\142\1\6\1\141\1\u0083\1\uffff\1\54\1\144\1\142\1\6\1\u0083";
     static final String dfa_3s = "\1\74\1\u0083\2\uffff\1\u0083\1\54\1\144\1\127\1\142\1\116\2\u0083\1\uffff\1\54\1\144\1\142\1\116\1\u0083";
@@ -30284,12 +30531,82 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             return "3693:1: (this_ID_0= RULE_ID | ruleNumber | this_Function_2= ruleFunction | ruleSpecialIdent )";
         }
     }
-    static final String dfa_20s = "\75\uffff";
-    static final String dfa_21s = "\1\4\14\uffff\1\0\57\uffff";
-    static final String dfa_22s = "\1\u0083\14\uffff\1\0\57\uffff";
-    static final String dfa_23s = "\1\uffff\1\1\71\uffff\1\2\1\3";
-    static final String dfa_24s = "\15\uffff\1\0\57\uffff}>";
-    static final String[] dfa_25s = {
+    static final String dfa_20s = "\12\uffff";
+    static final String dfa_21s = "\1\2\11\uffff";
+    static final String dfa_22s = "\1\7\1\0\10\uffff";
+    static final String dfa_23s = "\1\u0080\1\0\10\uffff";
+    static final String dfa_24s = "\2\uffff\1\2\6\uffff\1\1";
+    static final String dfa_25s = "\1\uffff\1\0\10\uffff}>";
+    static final String[] dfa_26s = {
+            "\1\1\5\uffff\2\2\34\uffff\1\2\2\uffff\1\2\66\uffff\1\2\32\uffff\1\2",
+            "\1\uffff",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+    };
+
+    static final short[] dfa_20 = DFA.unpackEncodedString(dfa_20s);
+    static final short[] dfa_21 = DFA.unpackEncodedString(dfa_21s);
+    static final char[] dfa_22 = DFA.unpackEncodedStringToUnsignedChars(dfa_22s);
+    static final char[] dfa_23 = DFA.unpackEncodedStringToUnsignedChars(dfa_23s);
+    static final short[] dfa_24 = DFA.unpackEncodedString(dfa_24s);
+    static final short[] dfa_25 = DFA.unpackEncodedString(dfa_25s);
+    static final short[][] dfa_26 = unpackEncodedStringArray(dfa_26s);
+
+    class DFA148 extends DFA {
+
+        public DFA148(BaseRecognizer recognizer) {
+            this.recognizer = recognizer;
+            this.decisionNumber = 148;
+            this.eot = dfa_20;
+            this.eof = dfa_21;
+            this.min = dfa_22;
+            this.max = dfa_23;
+            this.accept = dfa_24;
+            this.special = dfa_25;
+            this.transition = dfa_26;
+        }
+        public String getDescription() {
+            return "5291:3: ( (lv_condition_7_0= ruleCondition ) )?";
+        }
+        public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
+            TokenStream input = (TokenStream)_input;
+        	int _s = s;
+            switch ( s ) {
+                    case 0 : 
+                        int LA148_1 = input.LA(1);
+
+                         
+                        int index148_1 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred168_InternalWreslEditorParser()) ) {s = 9;}
+
+                        else if ( (true) ) {s = 2;}
+
+                         
+                        input.seek(index148_1);
+                        if ( s>=0 ) return s;
+                        break;
+            }
+            if (state.backtracking>0) {state.failed=true; return -1;}
+            NoViableAltException nvae =
+                new NoViableAltException(getDescription(), 148, _s, input);
+            error(nvae);
+            throw nvae;
+        }
+    }
+    static final String dfa_27s = "\75\uffff";
+    static final String dfa_28s = "\1\4\14\uffff\1\0\57\uffff";
+    static final String dfa_29s = "\1\u0083\14\uffff\1\0\57\uffff";
+    static final String dfa_30s = "\1\uffff\1\1\71\uffff\1\2\1\3";
+    static final String dfa_31s = "\15\uffff\1\0\57\uffff}>";
+    static final String[] dfa_32s = {
             "\2\1\5\uffff\1\1\4\uffff\1\1\5\uffff\20\1\11\uffff\1\1\15\uffff\4\1\1\uffff\4\1\1\uffff\4\1\1\uffff\1\1\3\uffff\1\1\5\uffff\1\15\2\uffff\1\1\1\uffff\1\1\7\uffff\1\1\5\uffff\1\73\22\1\7\uffff\1\1",
             "",
             "",
@@ -30353,80 +30670,6 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             ""
     };
 
-    static final short[] dfa_20 = DFA.unpackEncodedString(dfa_20s);
-    static final char[] dfa_21 = DFA.unpackEncodedStringToUnsignedChars(dfa_21s);
-    static final char[] dfa_22 = DFA.unpackEncodedStringToUnsignedChars(dfa_22s);
-    static final short[] dfa_23 = DFA.unpackEncodedString(dfa_23s);
-    static final short[] dfa_24 = DFA.unpackEncodedString(dfa_24s);
-    static final short[][] dfa_25 = unpackEncodedStringArray(dfa_25s);
-
-    class DFA156 extends DFA {
-
-        public DFA156(BaseRecognizer recognizer) {
-            this.recognizer = recognizer;
-            this.decisionNumber = 156;
-            this.eot = dfa_20;
-            this.eof = dfa_20;
-            this.min = dfa_21;
-            this.max = dfa_22;
-            this.accept = dfa_23;
-            this.special = dfa_24;
-            this.transition = dfa_25;
-        }
-        public String getDescription() {
-            return "5621:1: ( ( ( (lv_e1_0_0= ruleExpression ) ) ruleRelation ( (lv_e2_2_0= ruleExpression ) ) ) | ruleLogicalFunction | ( ( ( LeftParenthesis ruleLogicalExpression RightParenthesis ) )=> (otherlv_4= LeftParenthesis this_LogicalExpression_5= ruleLogicalExpression otherlv_6= RightParenthesis ) ) )";
-        }
-        public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
-            TokenStream input = (TokenStream)_input;
-        	int _s = s;
-            switch ( s ) {
-                    case 0 : 
-                        int LA156_13 = input.LA(1);
-
-                         
-                        int index156_13 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred176_InternalWreslEditorParser()) ) {s = 1;}
-
-                        else if ( (synpred178_InternalWreslEditorParser()) ) {s = 60;}
-
-                         
-                        input.seek(index156_13);
-                        if ( s>=0 ) return s;
-                        break;
-            }
-            if (state.backtracking>0) {state.failed=true; return -1;}
-            NoViableAltException nvae =
-                new NoViableAltException(getDescription(), 156, _s, input);
-            error(nvae);
-            throw nvae;
-        }
-    }
-    static final String dfa_26s = "\16\uffff";
-    static final String dfa_27s = "\1\uffff\1\14\1\uffff\5\12\6\uffff";
-    static final String dfa_28s = "\1\4\1\16\1\uffff\5\16\1\uffff\1\4\4\uffff";
-    static final String dfa_29s = "\1\u0083\1\u0080\1\uffff\5\u0080\1\uffff\1\u0083\4\uffff";
-    static final String dfa_30s = "\2\uffff\1\2\5\uffff\1\3\1\uffff\1\5\1\6\1\1\1\4";
-    static final String dfa_31s = "\16\uffff}>";
-    static final String[] dfa_32s = {
-            "\2\12\5\uffff\1\12\4\uffff\1\5\5\uffff\14\12\1\6\1\3\1\4\1\12\11\uffff\1\7\15\uffff\4\12\1\uffff\4\12\1\uffff\4\12\1\uffff\1\12\3\uffff\1\13\5\uffff\1\11\14\uffff\1\12\6\uffff\20\10\2\2\7\uffff\1\1",
-            "\1\14\30\uffff\1\14\5\uffff\1\14\2\uffff\3\14\4\uffff\1\14\3\uffff\1\14\12\uffff\1\14\4\uffff\1\14\2\uffff\2\14\1\uffff\4\14\1\uffff\1\10\6\14\1\uffff\3\14\1\10\1\14\1\uffff\2\14\26\uffff\2\14\2\uffff\1\14",
-            "",
-            "\1\12\30\uffff\1\12\5\uffff\1\12\2\uffff\3\12\4\uffff\1\12\3\uffff\1\12\12\uffff\1\12\4\uffff\1\12\2\uffff\2\12\1\uffff\4\12\1\uffff\1\10\6\12\1\uffff\3\12\1\uffff\1\12\1\uffff\2\12\26\uffff\2\12\2\uffff\1\12",
-            "\1\12\30\uffff\1\12\5\uffff\1\12\2\uffff\3\12\4\uffff\1\12\3\uffff\1\12\12\uffff\1\12\4\uffff\1\12\2\uffff\2\12\1\uffff\4\12\1\uffff\1\10\6\12\1\uffff\3\12\1\uffff\1\12\1\uffff\2\12\26\uffff\2\12\2\uffff\1\12",
-            "\1\12\30\uffff\1\12\5\uffff\1\12\2\uffff\3\12\4\uffff\1\12\3\uffff\1\12\12\uffff\1\12\4\uffff\1\12\2\uffff\2\12\1\uffff\4\12\1\uffff\1\10\6\12\1\uffff\3\12\1\uffff\1\12\1\uffff\2\12\26\uffff\2\12\2\uffff\1\12",
-            "\1\12\30\uffff\1\12\5\uffff\1\12\2\uffff\3\12\4\uffff\1\12\3\uffff\1\12\12\uffff\1\12\4\uffff\1\12\2\uffff\2\12\1\uffff\4\12\1\uffff\1\10\6\12\1\uffff\3\12\1\uffff\1\12\1\uffff\2\12\26\uffff\2\12\2\uffff\1\12",
-            "\1\12\30\uffff\1\12\5\uffff\1\12\2\uffff\3\12\4\uffff\1\12\3\uffff\1\12\12\uffff\1\12\4\uffff\1\12\2\uffff\2\12\1\uffff\4\12\1\uffff\1\10\6\12\1\uffff\3\12\1\uffff\1\12\1\uffff\2\12\26\uffff\2\12\2\uffff\1\12",
-            "",
-            "\2\15\5\uffff\1\15\4\uffff\1\15\5\uffff\20\15\11\uffff\1\15\15\uffff\4\15\1\uffff\4\15\1\uffff\4\15\1\uffff\1\15\1\uffff\1\10\1\uffff\1\15\5\uffff\1\15\2\uffff\1\15\1\uffff\1\15\7\uffff\1\15\6\uffff\22\15\7\uffff\1\15",
-            "",
-            "",
-            "",
-            ""
-    };
-
-    static final short[] dfa_26 = DFA.unpackEncodedString(dfa_26s);
     static final short[] dfa_27 = DFA.unpackEncodedString(dfa_27s);
     static final char[] dfa_28 = DFA.unpackEncodedStringToUnsignedChars(dfa_28s);
     static final char[] dfa_29 = DFA.unpackEncodedStringToUnsignedChars(dfa_29s);
@@ -30434,12 +30677,12 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     static final short[] dfa_31 = DFA.unpackEncodedString(dfa_31s);
     static final short[][] dfa_32 = unpackEncodedStringArray(dfa_32s);
 
-    class DFA163 extends DFA {
+    class DFA159 extends DFA {
 
-        public DFA163(BaseRecognizer recognizer) {
+        public DFA159(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 163;
-            this.eot = dfa_26;
+            this.decisionNumber = 159;
+            this.eot = dfa_27;
             this.eof = dfa_27;
             this.min = dfa_28;
             this.max = dfa_29;
@@ -30448,49 +30691,52 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             this.transition = dfa_32;
         }
         public String getDescription() {
-            return "6038:1: ( ( (otherlv_0= RULE_ID ) ) | ( (lv_n_1_0= ruleNumber ) ) | ( (lv_f_2_0= ruleFunction ) ) | (otherlv_3= LeftParenthesis ( (lv_e_4_0= ruleExpression ) ) otherlv_5= RightParenthesis ) | ( (lv_s_6_0= ruleSpecialIdent ) ) | ruleMultiStep )";
+            return "5662:1: ( ( ( (lv_e1_0_0= ruleExpression ) ) ruleRelation ( (lv_e2_2_0= ruleExpression ) ) ) | ruleLogicalFunction | ( ( ( LeftParenthesis ruleLogicalExpression RightParenthesis ) )=> (otherlv_4= LeftParenthesis this_LogicalExpression_5= ruleLogicalExpression otherlv_6= RightParenthesis ) ) )";
+        }
+        public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
+            TokenStream input = (TokenStream)_input;
+        	int _s = s;
+            switch ( s ) {
+                    case 0 : 
+                        int LA159_13 = input.LA(1);
+
+                         
+                        int index159_13 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred179_InternalWreslEditorParser()) ) {s = 1;}
+
+                        else if ( (synpred181_InternalWreslEditorParser()) ) {s = 60;}
+
+                         
+                        input.seek(index159_13);
+                        if ( s>=0 ) return s;
+                        break;
+            }
+            if (state.backtracking>0) {state.failed=true; return -1;}
+            NoViableAltException nvae =
+                new NoViableAltException(getDescription(), 159, _s, input);
+            error(nvae);
+            throw nvae;
         }
     }
-    static final String dfa_33s = "\45\uffff";
-    static final String dfa_34s = "\37\uffff\1\41\1\44\4\uffff";
-    static final String dfa_35s = "\1\20\6\126\21\uffff\1\4\1\133\2\uffff\1\172\2\142\2\16\4\uffff";
-    static final String dfa_36s = "\1\u0083\1\141\5\126\21\uffff\2\u0083\2\uffff\1\172\2\142\2\u0080\4\uffff";
-    static final String dfa_37s = "\7\uffff\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\1\15\1\16\1\17\1\20\1\21\1\22\1\23\2\uffff\1\1\1\2\5\uffff\1\24\1\25\1\27\1\26";
-    static final String dfa_38s = "\45\uffff}>";
+    static final String dfa_33s = "\16\uffff";
+    static final String dfa_34s = "\1\uffff\1\14\1\uffff\5\12\6\uffff";
+    static final String dfa_35s = "\1\4\1\7\1\uffff\5\7\1\uffff\1\4\4\uffff";
+    static final String dfa_36s = "\1\u0083\1\u0080\1\uffff\5\u0080\1\uffff\1\u0083\4\uffff";
+    static final String dfa_37s = "\2\uffff\1\2\5\uffff\1\3\1\uffff\1\5\1\6\1\1\1\4";
+    static final String dfa_38s = "\16\uffff}>";
     static final String[] dfa_39s = {
-            "\1\4\21\uffff\1\5\1\2\1\3\12\uffff\1\6\46\uffff\1\11\23\uffff\1\10\1\7\1\12\1\13\1\14\1\15\1\16\1\17\1\20\1\21\1\22\1\23\1\24\1\25\1\26\1\27\11\uffff\1\1",
-            "\1\30\12\uffff\1\31",
-            "\1\30",
-            "\1\30",
-            "\1\30",
-            "\1\30",
-            "\1\30",
+            "\2\12\5\uffff\1\12\4\uffff\1\5\5\uffff\14\12\1\6\1\3\1\4\1\12\11\uffff\1\7\15\uffff\4\12\1\uffff\4\12\1\uffff\4\12\1\uffff\1\12\3\uffff\1\13\5\uffff\1\11\14\uffff\1\12\6\uffff\20\10\2\2\7\uffff\1\1",
+            "\1\14\5\uffff\2\14\30\uffff\1\14\3\uffff\1\14\1\uffff\2\14\1\uffff\3\14\4\uffff\1\14\3\uffff\1\14\12\uffff\1\14\4\uffff\1\14\2\uffff\2\14\1\uffff\4\14\1\uffff\1\10\6\14\1\uffff\3\14\1\10\1\14\1\uffff\2\14\26\uffff\2\14\2\uffff\1\14",
             "",
+            "\1\12\5\uffff\2\12\30\uffff\1\12\3\uffff\1\12\1\uffff\2\12\1\uffff\3\12\4\uffff\1\12\3\uffff\1\12\12\uffff\1\12\4\uffff\1\12\2\uffff\2\12\1\uffff\4\12\1\uffff\1\10\6\12\1\uffff\3\12\1\uffff\1\12\1\uffff\2\12\26\uffff\2\12\2\uffff\1\12",
+            "\1\12\5\uffff\2\12\30\uffff\1\12\3\uffff\1\12\1\uffff\2\12\1\uffff\3\12\4\uffff\1\12\3\uffff\1\12\12\uffff\1\12\4\uffff\1\12\2\uffff\2\12\1\uffff\4\12\1\uffff\1\10\6\12\1\uffff\3\12\1\uffff\1\12\1\uffff\2\12\26\uffff\2\12\2\uffff\1\12",
+            "\1\12\5\uffff\2\12\30\uffff\1\12\3\uffff\1\12\1\uffff\2\12\1\uffff\3\12\4\uffff\1\12\3\uffff\1\12\12\uffff\1\12\4\uffff\1\12\2\uffff\2\12\1\uffff\4\12\1\uffff\1\10\6\12\1\uffff\3\12\1\uffff\1\12\1\uffff\2\12\26\uffff\2\12\2\uffff\1\12",
+            "\1\12\5\uffff\2\12\30\uffff\1\12\3\uffff\1\12\1\uffff\2\12\1\uffff\3\12\4\uffff\1\12\3\uffff\1\12\12\uffff\1\12\4\uffff\1\12\2\uffff\2\12\1\uffff\4\12\1\uffff\1\10\6\12\1\uffff\3\12\1\uffff\1\12\1\uffff\2\12\26\uffff\2\12\2\uffff\1\12",
+            "\1\12\5\uffff\2\12\30\uffff\1\12\3\uffff\1\12\1\uffff\2\12\1\uffff\3\12\4\uffff\1\12\3\uffff\1\12\12\uffff\1\12\4\uffff\1\12\2\uffff\2\12\1\uffff\4\12\1\uffff\1\10\6\12\1\uffff\3\12\1\uffff\1\12\1\uffff\2\12\26\uffff\2\12\2\uffff\1\12",
             "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "\2\32\5\uffff\1\32\4\uffff\1\32\5\uffff\20\32\11\uffff\1\32\15\uffff\4\32\1\uffff\4\32\1\uffff\4\32\1\uffff\1\32\3\uffff\1\32\5\uffff\1\32\1\33\1\uffff\1\32\1\uffff\1\32\7\uffff\1\32\6\uffff\22\32\7\uffff\1\32",
-            "\1\34\47\uffff\1\35",
-            "",
-            "",
-            "\1\36",
-            "\1\37",
-            "\1\40",
-            "\1\41\30\uffff\1\41\5\uffff\1\41\2\uffff\3\41\4\uffff\1\41\3\uffff\1\41\12\uffff\1\41\4\uffff\1\41\2\uffff\2\41\1\uffff\4\41\1\uffff\1\42\6\41\1\uffff\3\41\1\uffff\1\41\1\uffff\2\41\26\uffff\2\41\2\uffff\1\41",
-            "\1\44\30\uffff\1\44\5\uffff\1\44\2\uffff\3\44\4\uffff\1\44\3\uffff\1\44\12\uffff\1\44\4\uffff\1\44\2\uffff\2\44\1\uffff\4\44\1\uffff\1\43\6\44\1\uffff\3\44\1\uffff\1\44\1\uffff\2\44\26\uffff\2\44\2\uffff\1\44",
+            "\2\15\5\uffff\1\15\4\uffff\1\15\5\uffff\20\15\11\uffff\1\15\15\uffff\4\15\1\uffff\4\15\1\uffff\4\15\1\uffff\1\15\1\uffff\1\10\1\uffff\1\15\5\uffff\1\15\2\uffff\1\15\1\uffff\1\15\7\uffff\1\15\6\uffff\22\15\7\uffff\1\15",
             "",
             "",
             "",
@@ -30505,11 +30751,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     static final short[] dfa_38 = DFA.unpackEncodedString(dfa_38s);
     static final short[][] dfa_39 = unpackEncodedStringArray(dfa_39s);
 
-    class DFA164 extends DFA {
+    class DFA166 extends DFA {
 
-        public DFA164(BaseRecognizer recognizer) {
+        public DFA166(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 164;
+            this.decisionNumber = 166;
             this.eot = dfa_33;
             this.eof = dfa_34;
             this.min = dfa_35;
@@ -30519,7 +30765,78 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             this.transition = dfa_39;
         }
         public String getDescription() {
-            return "6173:1: (this_ExternalFunction1_0= ruleExternalFunction1 | this_ExternalFunction2_1= ruleExternalFunction2 | this_MaxFunction_2= ruleMaxFunction | this_MinFunction_3= ruleMinFunction | (otherlv_4= LeftParenthesis this_SumContent_5= ruleSumContent otherlv_6= RightParenthesis ) | this_ModFunction_7= ruleModFunction | this_IntFunction_8= ruleIntFunction | this_AbsFunction_9= ruleAbsFunction | this_RoundFunction_10= ruleRoundFunction | this_PowFunction_11= rulePowFunction | this_LogFunction_12= ruleLogFunction | this_SinFunction_13= ruleSinFunction | this_CosFunction_14= ruleCosFunction | this_TanFunction_15= ruleTanFunction | this_CotFunction_16= ruleCotFunction | this_AsinFunction_17= ruleAsinFunction | this_AcosFunction_18= ruleAcosFunction | this_AtanFunction_19= ruleAtanFunction | this_AcotFunction_20= ruleAcotFunction | this_VarModel_21= ruleVarModel | this_VarModelStep_22= ruleVarModelStep | this_VarModelIndex_23= ruleVarModelIndex | this_VarModelIndexStep_24= ruleVarModelIndexStep )";
+            return "6079:1: ( ( (otherlv_0= RULE_ID ) ) | ( (lv_n_1_0= ruleNumber ) ) | ( (lv_f_2_0= ruleFunction ) ) | (otherlv_3= LeftParenthesis ( (lv_e_4_0= ruleExpression ) ) otherlv_5= RightParenthesis ) | ( (lv_s_6_0= ruleSpecialIdent ) ) | ruleMultiStep )";
+        }
+    }
+    static final String dfa_40s = "\45\uffff";
+    static final String dfa_41s = "\36\uffff\1\40\3\uffff\1\44\2\uffff";
+    static final String dfa_42s = "\1\20\6\126\21\uffff\1\133\1\4\1\142\1\172\2\uffff\1\7\1\142\2\uffff\1\7\2\uffff";
+    static final String dfa_43s = "\1\u0083\1\141\5\126\21\uffff\2\u0083\1\142\1\172\2\uffff\1\u0080\1\142\2\uffff\1\u0080\2\uffff";
+    static final String dfa_44s = "\7\uffff\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\1\15\1\16\1\17\1\20\1\21\1\22\1\23\4\uffff\1\1\1\2\2\uffff\1\24\1\25\1\uffff\1\27\1\26";
+    static final String dfa_45s = "\45\uffff}>";
+    static final String[] dfa_46s = {
+            "\1\4\21\uffff\1\5\1\2\1\3\12\uffff\1\6\46\uffff\1\11\23\uffff\1\10\1\7\1\12\1\13\1\14\1\15\1\16\1\17\1\20\1\21\1\22\1\23\1\24\1\25\1\26\1\27\11\uffff\1\1",
+            "\1\31\12\uffff\1\30",
+            "\1\31",
+            "\1\31",
+            "\1\31",
+            "\1\31",
+            "\1\31",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "\1\33\47\uffff\1\32",
+            "\2\34\5\uffff\1\34\4\uffff\1\34\5\uffff\20\34\11\uffff\1\34\15\uffff\4\34\1\uffff\4\34\1\uffff\4\34\1\uffff\1\34\3\uffff\1\34\5\uffff\1\34\1\35\1\uffff\1\34\1\uffff\1\34\7\uffff\1\34\6\uffff\22\34\7\uffff\1\34",
+            "\1\36",
+            "\1\37",
+            "",
+            "",
+            "\1\40\5\uffff\2\40\30\uffff\1\40\3\uffff\1\40\1\uffff\2\40\1\uffff\3\40\4\uffff\1\40\3\uffff\1\40\12\uffff\1\40\4\uffff\1\40\2\uffff\2\40\1\uffff\4\40\1\uffff\1\41\6\40\1\uffff\3\40\1\uffff\1\40\1\uffff\2\40\26\uffff\2\40\2\uffff\1\40",
+            "\1\42",
+            "",
+            "",
+            "\1\44\5\uffff\2\44\30\uffff\1\44\3\uffff\1\44\1\uffff\2\44\1\uffff\3\44\4\uffff\1\44\3\uffff\1\44\12\uffff\1\44\4\uffff\1\44\2\uffff\2\44\1\uffff\4\44\1\uffff\1\43\6\44\1\uffff\3\44\1\uffff\1\44\1\uffff\2\44\26\uffff\2\44\2\uffff\1\44",
+            "",
+            ""
+    };
+
+    static final short[] dfa_40 = DFA.unpackEncodedString(dfa_40s);
+    static final short[] dfa_41 = DFA.unpackEncodedString(dfa_41s);
+    static final char[] dfa_42 = DFA.unpackEncodedStringToUnsignedChars(dfa_42s);
+    static final char[] dfa_43 = DFA.unpackEncodedStringToUnsignedChars(dfa_43s);
+    static final short[] dfa_44 = DFA.unpackEncodedString(dfa_44s);
+    static final short[] dfa_45 = DFA.unpackEncodedString(dfa_45s);
+    static final short[][] dfa_46 = unpackEncodedStringArray(dfa_46s);
+
+    class DFA167 extends DFA {
+
+        public DFA167(BaseRecognizer recognizer) {
+            this.recognizer = recognizer;
+            this.decisionNumber = 167;
+            this.eot = dfa_40;
+            this.eof = dfa_41;
+            this.min = dfa_42;
+            this.max = dfa_43;
+            this.accept = dfa_44;
+            this.special = dfa_45;
+            this.transition = dfa_46;
+        }
+        public String getDescription() {
+            return "6214:1: (this_ExternalFunction1_0= ruleExternalFunction1 | this_ExternalFunction2_1= ruleExternalFunction2 | this_MaxFunction_2= ruleMaxFunction | this_MinFunction_3= ruleMinFunction | (otherlv_4= LeftParenthesis this_SumContent_5= ruleSumContent otherlv_6= RightParenthesis ) | this_ModFunction_7= ruleModFunction | this_IntFunction_8= ruleIntFunction | this_AbsFunction_9= ruleAbsFunction | this_RoundFunction_10= ruleRoundFunction | this_PowFunction_11= rulePowFunction | this_LogFunction_12= ruleLogFunction | this_SinFunction_13= ruleSinFunction | this_CosFunction_14= ruleCosFunction | this_TanFunction_15= ruleTanFunction | this_CotFunction_16= ruleCotFunction | this_AsinFunction_17= ruleAsinFunction | this_AcosFunction_18= ruleAcosFunction | this_AtanFunction_19= ruleAtanFunction | this_AcotFunction_20= ruleAcotFunction | this_VarModel_21= ruleVarModel | this_VarModelStep_22= ruleVarModelStep | this_VarModelIndex_23= ruleVarModelIndex | this_VarModelIndexStep_24= ruleVarModelIndexStep )";
         }
     }
  
@@ -30527,8 +30844,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_1 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_2 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_3 = new BitSet(new long[]{0x1500024000040202L,0x0000004000000000L});
-    public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x0000000000002000L});
-    public static final BitSet FOLLOW_5 = new BitSet(new long[]{0x0000480000002000L});
+    public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x0000000000006080L,0x0000002000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_5 = new BitSet(new long[]{0x0000480000006080L,0x0000002000000000L,0x0000000000000001L});
     public static final BitSet FOLLOW_6 = new BitSet(new long[]{0x0000480000000002L});
     public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x0000000000000000L,0x0000001000000000L});
     public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000008L});
@@ -30597,22 +30914,23 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_71 = new BitSet(new long[]{0x0000000000000000L,0x00000001C0000000L});
     public static final BitSet FOLLOW_72 = new BitSet(new long[]{0x1500024000040200L,0x0000006000000000L});
     public static final BitSet FOLLOW_73 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_74 = new BitSet(new long[]{0x0000000000004080L,0x0000002000000000L,0x0000000000000001L});
-    public static final BitSet FOLLOW_75 = new BitSet(new long[]{0x0000000000004000L,0x0000002000000000L,0x0000000000000001L});
-    public static final BitSet FOLLOW_76 = new BitSet(new long[]{0x0000000000004000L,0x0000002000000000L});
-    public static final BitSet FOLLOW_77 = new BitSet(new long[]{0x0060000000000000L});
-    public static final BitSet FOLLOW_78 = new BitSet(new long[]{0xE000803FFFC10830L,0xCFFFFE080A4117BDL,0x0000000000000008L});
-    public static final BitSet FOLLOW_79 = new BitSet(new long[]{0x0000000000000002L,0x3000000000000000L});
-    public static final BitSet FOLLOW_80 = new BitSet(new long[]{0x0000000000000000L,0x00000001401E0000L});
-    public static final BitSet FOLLOW_81 = new BitSet(new long[]{0x0000000000000002L,0x000000000A000000L});
-    public static final BitSet FOLLOW_82 = new BitSet(new long[]{0x0000000000000002L,0x0000000011000000L});
-    public static final BitSet FOLLOW_83 = new BitSet(new long[]{0x0000000000000000L,0x0000000000004000L});
-    public static final BitSet FOLLOW_84 = new BitSet(new long[]{0x0000000000000000L,0x0400000008000000L,0x0000000000000008L});
-    public static final BitSet FOLLOW_85 = new BitSet(new long[]{0x0000000000000000L,0x0000000020000000L});
-    public static final BitSet FOLLOW_86 = new BitSet(new long[]{0x0000000000000000L,0x0000000008000000L});
-    public static final BitSet FOLLOW_87 = new BitSet(new long[]{0x0000801C00010800L,0x0000000000000000L,0x0000000000000008L});
-    public static final BitSet FOLLOW_88 = new BitSet(new long[]{0x60000003FFC00000L,0x00000000000017BDL,0x0000000000000008L});
-    public static final BitSet FOLLOW_89 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L,0x0000000000000002L});
-    public static final BitSet FOLLOW_90 = new BitSet(new long[]{0x0000080000000000L});
+    public static final BitSet FOLLOW_74 = new BitSet(new long[]{0x0000000000000082L,0x0000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_75 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_76 = new BitSet(new long[]{0x0000000000004080L,0x0000002000000000L});
+    public static final BitSet FOLLOW_77 = new BitSet(new long[]{0x0000000000004000L,0x0000002000000000L});
+    public static final BitSet FOLLOW_78 = new BitSet(new long[]{0x0060000000000000L});
+    public static final BitSet FOLLOW_79 = new BitSet(new long[]{0xE000803FFFC10830L,0xCFFFFE080A4117BDL,0x0000000000000008L});
+    public static final BitSet FOLLOW_80 = new BitSet(new long[]{0x0000000000000002L,0x3000000000000000L});
+    public static final BitSet FOLLOW_81 = new BitSet(new long[]{0x0000000000000000L,0x00000001401E0000L});
+    public static final BitSet FOLLOW_82 = new BitSet(new long[]{0x0000000000000002L,0x000000000A000000L});
+    public static final BitSet FOLLOW_83 = new BitSet(new long[]{0x0000000000000002L,0x0000000011000000L});
+    public static final BitSet FOLLOW_84 = new BitSet(new long[]{0x0000000000000000L,0x0000000000004000L});
+    public static final BitSet FOLLOW_85 = new BitSet(new long[]{0x0000000000000000L,0x0400000008000000L,0x0000000000000008L});
+    public static final BitSet FOLLOW_86 = new BitSet(new long[]{0x0000000000000000L,0x0000000020000000L});
+    public static final BitSet FOLLOW_87 = new BitSet(new long[]{0x0000000000000000L,0x0000000008000000L});
+    public static final BitSet FOLLOW_88 = new BitSet(new long[]{0x0000801C00010800L,0x0000000000000000L,0x0000000000000008L});
+    public static final BitSet FOLLOW_89 = new BitSet(new long[]{0x60000003FFC00000L,0x00000000000017BDL,0x0000000000000008L});
+    public static final BitSet FOLLOW_90 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L,0x0000000000000002L});
+    public static final BitSet FOLLOW_91 = new BitSet(new long[]{0x0000080000000000L});
 
 }
