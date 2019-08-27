@@ -180,7 +180,8 @@ Bundle-ClassPath: lib_x64/gridUtil.jar,
  lib_x64/jpy.jar,
  lib_x64/sqljdbc4-2.0.jar,
  lib_x64/mysql-connector-java-5.1.42-bin.jar,
+ lib_x64/jep-3.8.2.jar,
  .
-Bundle-NativeCode: lib/cb.dll; lib/javaHeclib.dll; lib/rmaUtil.dll; processor=x86, lib_x64/cb.dll; lib_x64/javaHeclib.dll; lib_x64/rmaUtil.dll; processor=x86_64
+Bundle-NativeCode: lib/cb.dll; lib/javaHeclib.dll; lib/rmaUtil.dll; processor=x86, lib_x64/cb.dll; lib_x64/javaHeclib.dll; lib_x64/rmaUtil.dll; lib_x64/jep.dll; processor=x86_64
 Bundle-Activator: wrimsv2_plugin.debugger.core.DebugCorePlugin
 Bundle-ActivationPolicy: lazy

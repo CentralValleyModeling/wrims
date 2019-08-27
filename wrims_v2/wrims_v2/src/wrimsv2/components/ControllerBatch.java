@@ -80,7 +80,7 @@ public class ControllerBatch {
 			
 			if (StudyUtils.total_errors+Error.getTotalError()==0 && !StudyUtils.compileOnly){
 				if (!StudyUtils.loadParserData && !FilePaths.fullMainPath.endsWith(".par")){
-					StudyUtils.writeObj(sds, FilePaths.fullMainPath+".par");
+					StudyUtils.writeObj(sds, FilePaths.mainDirectory+File.separator+StudyUtils.configFileName+".par");
 				}
 				new PreEvaluator(sds);
 				new PreRunModel(sds);

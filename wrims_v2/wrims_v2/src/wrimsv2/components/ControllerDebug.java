@@ -109,7 +109,7 @@ public class ControllerDebug extends Thread {
 			StudyDataSet sds = parse();
 			if (StudyParser.total_errors==0){
 				if (!StudyUtils.loadParserData && !FilePaths.fullMainPath.endsWith(".par")){
-					StudyUtils.writeObj(sds, FilePaths.fullMainPath+".par");
+					StudyUtils.writeObj(sds, FilePaths.mainDirectory+File.separator+StudyUtils.configFileName+".par");
 				}
 				totalCycles=sds.getModelList().size();
 				di.sendEvent("totalcycle#"+totalCycles);

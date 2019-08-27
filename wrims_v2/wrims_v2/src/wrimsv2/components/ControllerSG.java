@@ -1,6 +1,7 @@
 package wrimsv2.components;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class ControllerSG {
 			StudyDataSet sds = parse();
 			if (StudyUtils.total_errors==0){
 				if (!StudyUtils.loadParserData && !FilePaths.fullMainPath.endsWith(".par")){
-					StudyUtils.writeObj(sds, FilePaths.fullMainPath+".par");
+					StudyUtils.writeObj(sds, FilePaths.mainDirectory+File.separator+StudyUtils.configFileName+".par");
 				}
 				new PreEvaluator(sds);
 				runModel(sds);
@@ -60,7 +61,7 @@ public class ControllerSG {
 			StudyDataSet sds = parse();
 			if (StudyUtils.total_errors==0){
 				if (!StudyUtils.loadParserData && !FilePaths.fullMainPath.endsWith(".par")){
-					StudyUtils.writeObj(sds, FilePaths.fullMainPath+".par");
+					StudyUtils.writeObj(sds, FilePaths.mainDirectory+File.separator+StudyUtils.configFileName+".par");
 				}
 				new PreEvaluator(sds);
 				runModel(sds);
