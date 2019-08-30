@@ -44,6 +44,7 @@ public class Functionsuitablehabitat extends ExternalFunction{
 	public float SuitableHabitat(float x0, float x1, float x2){
 		try {
 			//setPythonEnv();
+			new LoadDll("jep.dll");
 			
 			String scriptPath = FilePaths.mainDirectory+File.separator+"External";
 			

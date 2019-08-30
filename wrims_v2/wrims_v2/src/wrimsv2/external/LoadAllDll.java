@@ -16,6 +16,5 @@ public class LoadAllDll {
 		for (int i=0; i<allDll.size(); i++){
 			new LoadDll(allDll.get(i));
 		}
-		new LoadDll("jep.dll");
 	}
 }
