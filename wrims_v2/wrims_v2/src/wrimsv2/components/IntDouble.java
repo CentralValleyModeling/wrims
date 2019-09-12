@@ -3,10 +3,19 @@ package wrimsv2.components;
 public class IntDouble {
 	private Number data;
 	private boolean isInteger;
+	private String argName;
+	private int index;
 	
 	public IntDouble(Number value, boolean isInt) {
 		data=value;
 		isInteger=isInt;
+	}
+	
+	public IntDouble(Number value, boolean isInt, String name, int index) {
+		data=value;
+		isInteger=isInt;
+		argName=name;
+		this.index=index;
 	}
 	
 	public Number getData(){
@@ -33,5 +42,21 @@ public class IntDouble {
 			newIntDouble= new IntDouble(data.doubleValue(), isInteger);
 		}
 		return newIntDouble;
+	}
+	
+	public String getName(){
+		return argName;
+	}
+	
+	public void setName(String argName){
+		this.argName=argName;
+	}
+	
+	public int getIndex(){
+		return index;
+	}
+	
+	public void setIndex(int index){
+		this.index=index;
 	}
 }
