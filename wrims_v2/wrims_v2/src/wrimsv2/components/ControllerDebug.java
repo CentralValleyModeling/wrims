@@ -378,7 +378,11 @@ public class ControllerDebug extends Thread {
 							Error.writeErrorLog();
 							noError=false;
 						}
-						if (ControlData.outputType==1) HDF5Writer.writeOneCycle(mds, cycleI);
+						if (ControlData.outputType==1){
+							if (ControlData.isOutputCycle && isSelectedCycleOutput){
+								HDF5Writer.writeOneCycle(mds, cycleI);
+							}
+						}
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (ControlData.solverName.equalsIgnoreCase("CBC")){CbcSolver.resetModel();}
 						pauseForDebug(modelIndex);

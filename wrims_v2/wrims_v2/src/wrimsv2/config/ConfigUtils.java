@@ -756,11 +756,11 @@ public class ConfigUtils {
 		
 		String outputCycleDataToDss = configMap.get("outputcycledatatodss");
 		if (outputCycleDataToDss.equalsIgnoreCase("yes") || outputCycleDataToDss.equalsIgnoreCase("true")){
-			ControlData.outputCycleToDss=true;
+			ControlData.isOutputCycle=true;
 		}else{
-			ControlData.outputCycleToDss=false;
+			ControlData.isOutputCycle=false;
 		}
-		System.out.println("OutputCycleDataToDSS:    " + ControlData.outputCycleToDss);
+		System.out.println("OutputCycleDataToDSS:    " + ControlData.isOutputCycle);
 		
 		String outputAllCycleData = configMap.get("outputallcycledata");
 		if (outputAllCycleData.equalsIgnoreCase("yes") || outputAllCycleData.equalsIgnoreCase("true")){

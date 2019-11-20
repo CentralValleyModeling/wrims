@@ -107,6 +107,9 @@ public class DssOperation {
 	public static boolean getSVInitTimeseries(String name){
 		
 		Timeseries ts=ControlData.currTsMap.get(name);
+		if (ts==null){
+			return false;
+		}
 		String partC=ts.kind;
 		DataSet ds=getDataForInitial(regularExp(ControlData.partA),regularExp(ts.dssBPart),regularExp(partC),"",regularExp(ControlData.partE), regularExp(ControlData.initPartF));
 		
@@ -300,7 +303,7 @@ public class DssOperation {
 						storeFlags);
 		}
 		
-		if (ControlData.outputCycleToDss) writeDVAliasCycleDataToDSS();
+		if (ControlData.isOutputCycle) writeDVAliasCycleDataToDSS();
 	}
 	
 	public static void writeDVAliasCycleDataToDSS() {
@@ -517,7 +520,7 @@ public class DssOperation {
 						storeFlags);
 		}
 		
-		if (ControlData.outputCycleToDss) saveDvarCycleData(writer, fileName);
+		if (ControlData.isOutputCycle) saveDvarCycleData(writer, fileName);
 		
 		System.out.println("Dvar file saved.");
 	}

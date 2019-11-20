@@ -286,7 +286,7 @@ public class WPPMSTab extends AbstractLaunchConfigurationTab {
 		});
 		
 		Label dvarFileLabel = new Label(comp, SWT.NONE);
-		dvarFileLabel.setText("&Dvar DSS File:");
+		dvarFileLabel.setText("&Dvar File:");
 		gd = new GridData(GridData.BEGINNING);
 		dvarFileLabel.setLayoutData(gd);
 		dvarFileLabel.setFont(font);
@@ -326,7 +326,7 @@ public class WPPMSTab extends AbstractLaunchConfigurationTab {
 		});
 		
 		Label svarFileLabel = new Label(comp, SWT.NONE);
-		svarFileLabel.setText("&Svar DSS File:");
+		svarFileLabel.setText("&Svar File:");
 		gd = new GridData(GridData.BEGINNING);
 		svarFileLabel.setLayoutData(gd);
 		svarFileLabel.setFont(font);
@@ -366,7 +366,7 @@ public class WPPMSTab extends AbstractLaunchConfigurationTab {
 		});
 		
 		Label initFileLabel = new Label(comp, SWT.NONE);
-		initFileLabel.setText("&Init DSS File:");
+		initFileLabel.setText("&Init File:");
 		gd = new GridData(GridData.BEGINNING);
 		initFileLabel.setLayoutData(gd);
 		initFileLabel.setFont(font);

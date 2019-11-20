@@ -95,8 +95,12 @@ public class DSSHDF5Converter {
 	
 	public DSSHDF5Converter(String[] args) {
 		processArgs(args);
+	}
+	
+	public void process(){
 		convertSVFile();
 		convertInitFile();
+		System.out.println("Conversion done");
 	}
 	
 	public void convertSVFile(){
@@ -837,7 +841,7 @@ public class DSSHDF5Converter {
 		
 		int dim = getTotalTimeStep("1DAY");
 		
-		DSSUtil.generateCatalog(FilePaths.fullSvarFilePath);
+		//DSSUtil.generateCatalog(FilePaths.fullSvarFilePath);
 		ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarFilePath);
 		String[] parts=new String[6];
 		parts[0]=regularExp(ControlData.partA);
@@ -1108,7 +1112,7 @@ public class DSSHDF5Converter {
 		initDailyNames = new ArrayList<String>();
 		initDailyData = new HashMap<String, double[]>();
 		
-		DSSUtil.generateCatalog(FilePaths.fullInitFilePath);
+		//DSSUtil.generateCatalog(FilePaths.fullInitFilePath);
 		ControlData.groupInit= DSSUtil.createGroup("local", FilePaths.fullInitFilePath);
 		String[] parts=new String[6];
 		parts[0]=regularExp(ControlData.partA);
@@ -1262,7 +1266,9 @@ public class DSSHDF5Converter {
 	}
 	
 	public static void main(String[] args){
-		new DSSHDF5Converter(args);
+		DSSHDF5Converter dssToH5 = new DSSHDF5Converter(args);
+		dssToH5.process();
+		System.exit(0);
 	}
 	
 	public static String regularExp(String part){
