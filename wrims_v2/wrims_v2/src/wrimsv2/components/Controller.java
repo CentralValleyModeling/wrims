@@ -1,12 +1,15 @@
 package wrimsv2.components;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Map;
+
 import org.antlr.runtime.RecognitionException;
+
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.commondata.wresldata.StudyDataSet;
@@ -33,7 +36,7 @@ public class Controller {
 			StudyDataSet sds = parse();
 			if (StudyUtils.total_errors==0){
 				if (!StudyUtils.loadParserData && !FilePaths.fullMainPath.endsWith(".par")){
-					StudyUtils.writeObj(sds, FilePaths.fullMainPath+".par");
+					StudyUtils.writeObj(sds, FilePaths.mainDirectory+File.separator+StudyUtils.configFileName+".par");
 				}
 				new PreEvaluator(sds);
 				runModel(sds);

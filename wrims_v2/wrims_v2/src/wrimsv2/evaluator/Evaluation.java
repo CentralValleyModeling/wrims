@@ -133,7 +133,7 @@ public class Evaluation {
 			if (li.getName().equals(ident) && li.getIndexStart()){
 				ControlData.sumIndex.push(li);
 				EvalExpression ee = new EvalExpression();
-				IntDouble id = new IntDouble(li.getValue(),true);
+				IntDouble id = new IntDouble(li.getValue(),true, ident, 0);
 				ee.setValue(id);
 				return ee;
 			}
@@ -142,30 +142,30 @@ public class Evaluation {
 		if (ControlData.currSvMap.containsKey(ident)){
 			EvalExpression ee=new EvalExpression();
 			IntDouble id0 = ControlData.currSvMap.get(ident).getData();
-			IntDouble id1 = new IntDouble(id0.getData(), id0.isInt());
+			IntDouble id1 = new IntDouble(id0.getData(), id0.isInt(), ident, 0);
 			ee.setValue(id1);
 			return ee;
 		}else if (ControlData.currTsMap.containsKey(ident)){
 			EvalExpression ee=new EvalExpression();
 			IntDouble id0 = ControlData.currTsMap.get(ident).getData();
-			IntDouble id1 = new IntDouble(id0.getData(), id0.isInt());
+			IntDouble id1 = new IntDouble(id0.getData(), id0.isInt(), ident, 0);
 			ee.setValue(id1);
 			return ee;
 		}else if (ControlData.isPostProcessing && ControlData.currDvMap.containsKey(ident)){
 			EvalExpression ee=new EvalExpression();
 			IntDouble id0 = ControlData.currDvMap.get(ident).getData();
-			IntDouble id1 = new IntDouble(id0.getData(), id0.isInt());
+			IntDouble id1 = new IntDouble(id0.getData(), id0.isInt(), ident, 0);
 			ee.setValue(id1);
 			return ee;
 		}else if (ControlData.isPostProcessing && ControlData.currAliasMap.containsKey(ident)){
 			EvalExpression ee=new EvalExpression();
 			IntDouble id0 = ControlData.currAliasMap.get(ident).getData();
-			IntDouble id1 = new IntDouble(id0.getData(), id0.isInt());
+			IntDouble id1 = new IntDouble(id0.getData(), id0.isInt(), ident, 0);
 			ee.setValue(id1);
 			return ee;
 		}else if (!ControlData.isPostProcessing && ControlData.currAliasMap.containsKey(ident) && !ControlData.currDvMap.containsKey(ident)){
 			EvalExpression ee=new EvalExpression();
-			IntDouble id0=new IntDouble(1.0, false);
+			IntDouble id0=new IntDouble(1.0, false, ident, 0);
 			ee.setValue(id0);
 			Error.addEvaluationError("Alias "+ident+" should not appear in constraint. ");
 			return ee;
@@ -176,26 +176,26 @@ public class Evaluation {
 			return ee;	
 		} else if (!ControlData.isPostProcessing && !ControlData.currAliasMap.containsKey(ident) && !ControlData.currDvMap.containsKey(ident) && !ControlData.currDvSlackSurplusMap.containsKey(ident)){
 			EvalExpression ee=new EvalExpression();
-			IntDouble id0=new IntDouble(1.0, false);
+			IntDouble id0=new IntDouble(1.0, false, ident, 0);
 			ee.setValue(id0);
 			Error.addEvaluationError(ident+" is not defined before used.");
 			return ee;				
 		}
 		
 		EvalExpression ee=new EvalExpression();
-		IntDouble id0 = new IntDouble (0, true);
+		IntDouble id0 = new IntDouble (0, true, ident, 0);
 		ee.setValue(id0);
 		HashMap<String, IntDouble> multiplier=ee.getMultiplier();
 		IntDouble id;
 		if (ControlData.currDvMap.containsKey(ident)){
 			Dvar dv = ControlData.currDvMap.get(ident);
 			if (dv.integer.equals(Param.yes)){
-				id= new IntDouble(1,true);
+				id= new IntDouble(1,true, ident, 0);
 			}else{
-				id= new IntDouble(1.0,false);
+				id= new IntDouble(1.0,false, ident, 0);
 			}
 		}else{
-			id= new IntDouble(1.0,false);
+			id= new IntDouble(1.0,false, ident, 0);
 		}
 		multiplier.put(ident, id);
 		return ee;
@@ -206,7 +206,7 @@ public class Evaluation {
 		if (!ControlData.currSvMap.containsKey(ident)){
 			if (!ControlData.currTsMap.containsKey(ident)){
 				Error.addEvaluationError("State variable "+ident+" is not defined before used.");
-				IntDouble id=new IntDouble(1.0, false);
+				IntDouble id=new IntDouble(1.0, false, ident, 0);
 				return new EvalExpression(id);
 			}else{
 				data=ControlData.currTsMap.get(ident).getData();
@@ -217,10 +217,10 @@ public class Evaluation {
 		
 		if (data == null){
 			Error.addEvaluationError("The value of state variable "+ident+" is not defined before used.");
-			IntDouble id=new IntDouble(1.0, false);
+			IntDouble id=new IntDouble(1.0, false, ident, 0);
 			return new EvalExpression(id);
 		}
-		return new EvalExpression(new IntDouble(data.getData(), data.isInt()));
+		return new EvalExpression(new IntDouble(data.getData(), data.isInt(), ident, 0));
 	}
 	
 	public static EvalExpression term_INTEGER (String integer){
@@ -562,6 +562,49 @@ public class Evaluation {
 				ControlData.allExternalFunctionMap.put(ident, ef);
 			}
 			ef.execute(stack);
+
+			if (stack.size()>1){
+				for (int i=0; i<eeArray.size(); i++){
+					ArrayList<EvalExpression> eeArray1=eeArray.get(i);
+					int size=eeArray1.size();
+					if (size ==1){
+						EvalExpression ee = eeArray1.get(0);
+						if (!ee.isNumeric()){
+							int ai=i+1;
+							Error.addEvaluationError("The function " +ident+" has an unkown argument at argument index of "+ai+".");
+							result=new IntDouble (0.0,false);
+							return new EvalExpression(result);
+						}
+				
+						IntDouble id=ee.getValue();
+						if (id.isInt()){
+							int value=(Integer) stack.pop();
+							ValueEvaluation.setSvarIntValue(id, value);
+						}else{
+							double value=(Double) stack.pop();
+							ValueEvaluation.setSvarDoubleValue(id, value);
+						}
+					}else if (size>1){
+						IntDouble id=eeArray1.get(0).getValue();
+						if (id.isInt()){
+							int[] valueArray = new int[size];
+							valueArray=(int[])stack.pop();
+							for (int j=0; j<size; j++){
+								EvalExpression ee = eeArray1.get(j);
+								ValueEvaluation.setSvarIntValue(ee.getValue(), valueArray[j]);
+							}
+						}else{
+							double[] valueArray = new double[size];
+							valueArray=(double[])stack.pop();
+							for (int j=0; j<size; j++){
+								EvalExpression ee = eeArray1.get(j);
+								ValueEvaluation.setSvarDoubleValue(ee.getValue(), valueArray[j]);
+							}
+						}
+					}
+				}			
+			}
+			
 			String valueString=stack.pop().toString();
 			
 			if (valueString.contains(".")){       
@@ -1142,6 +1185,8 @@ public class Evaluation {
 			ArrayList<ArrayList<IntDouble>> indexArray=new ArrayList<ArrayList<IntDouble>> ();
 			indexArray.add(indexArray1);
 			IntDouble id=ValueEvaluation.argFunction(ident, indexArray);
+			id.setIndex(i);
+			id.setName(ident);
 			eeArray.add(new EvalExpression(id));
 		}
 		return eeArray;

@@ -115,31 +115,31 @@ public class ValueEvaluation {
 	public static IntDouble term_IDENT (String ident){
 		if (ControlData.currSvMap.containsKey(ident)){
 			IntDouble id0=ControlData.currSvMap.get(ident).getData();
-			return new IntDouble(id0.getData(),id0.isInt());
+			return new IntDouble(id0.getData(),id0.isInt(),ident, 0);
 		}else if (ControlData.currTsMap.containsKey(ident)){
 			IntDouble id0=ControlData.currTsMap.get(ident).getData();
-			return new IntDouble(id0.getData(),id0.isInt());
+			return new IntDouble(id0.getData(),id0.isInt(), ident, 0);
 		}else if (ControlData.isPostProcessing && ControlData.currDvMap.containsKey(ident)){
 			IntDouble id0=ControlData.currDvMap.get(ident).getData();
-			return new IntDouble(id0.getData(),id0.isInt());
+			return new IntDouble(id0.getData(),id0.isInt(), ident, 0);
 		}else if (ControlData.isPostProcessing && ControlData.currAliasMap.containsKey(ident)){
 			IntDouble id0=ControlData.currAliasMap.get(ident).getData();
-			return new IntDouble(id0.getData(),id0.isInt());
+			return new IntDouble(id0.getData(),id0.isInt(), ident, 0);
 		}
 		if (ControlData.sumIndex.size()>0){
 			LoopIndex li=ControlData.sumIndex.pop();
 			if (li.getName().equals(ident) && li.getIndexStart()){
 				ControlData.sumIndex.push(li);
-				return new IntDouble(li.getValue(),true);
+				return new IntDouble(li.getValue(),true, ident, 0);
 			}
 			ControlData.sumIndex.push(li);
 		}
 		if (ControlData.parameterMap.containsKey(ident)){
 			IntDouble id0=ControlData.parameterMap.get(ident).getData();
-			return new IntDouble(id0.getData(),id0.isInt());					
+			return new IntDouble(id0.getData(),id0.isInt(), ident, 0);					
 		}
 		Error.addEvaluationError(ident+" is not in svar, dvar, alias, or parameter list.");
-		return new IntDouble (1.0, false);
+		return new IntDouble (1.0, false, ident, 0);
 	}
 	
 	public static IntDouble term_SVAR (String ident){
@@ -147,7 +147,7 @@ public class ValueEvaluation {
 		if (!ControlData.currSvMap.containsKey(ident)){
 			if (!ControlData.currTsMap.containsKey(ident)){
 				Error.addEvaluationError("State variable "+ident+" is not defined before used.");
-				return new IntDouble(1.0, false);
+				return new IntDouble(1.0, false, ident, 0);
 			}else{
 				data=ControlData.currTsMap.get(ident).getData();
 			}
@@ -157,9 +157,9 @@ public class ValueEvaluation {
 		
 		if (data == null){
 			Error.addEvaluationError("The value of state variable "+ident+" is not defined before used.");
-			return new IntDouble(1.0, false);
+			return new IntDouble(1.0, false, ident, 0);
 		}
-		return new IntDouble(data.getData(), data.isInt());
+		return new IntDouble(data.getData(), data.isInt(), ident, 0);
 	}
 	
 	public static IntDouble term_INTEGER (String integer){
@@ -349,8 +349,42 @@ public class ValueEvaluation {
 				ControlData.allExternalFunctionMap.put(ident, ef);
 			}
 			ef.execute(stack);
+			if (stack.size()>1){
+				for (int i=0; i<idArray.size(); i++){
+					ArrayList<IntDouble> idArray1 = idArray.get(i);
+					int size =idArray1.size(); 
+					if (size==1){
+						IntDouble id=idArray1.get(0);
+						if (id.isInt()){
+							int value=(Integer) stack.pop();
+							setSvarIntValue(id, value);
+						}else{
+							double value=(Double) stack.pop();
+							setSvarDoubleValue(id, value);
+						}      
+					}else if (size>1){
+						IntDouble id=idArray1.get(0);
+						if (id.isInt()){
+							int[] valueArray=new int[size];
+							valueArray=(int[])stack.pop();
+							for (int j=0; j<size; j++){
+								setSvarIntValue(idArray1.get(j), valueArray[j]);
+							}
+						}else{
+							double[] valueArray=new double[size];
+							valueArray=(double[])stack.pop();
+							for (int j=0; j<size; j++){
+								setSvarDoubleValue(idArray1.get(j), valueArray[j]);
+							}
+						}
+					}else{
+						int ai=i+1;
+						Error.addEvaluationError("The No. "+ai+" argument of function "+ident+" has no data.");				return new IntDouble (1.0, false);
+					}
+				}
+			}
+
 			String valueString=stack.pop().toString();
-			
 			if (valueString.contains(".")){       
 				return new IntDouble(Double.parseDouble(valueString), false);
 			}else{
@@ -855,6 +889,8 @@ public class ValueEvaluation {
 			ArrayList<ArrayList<IntDouble>> indexArray = new ArrayList<ArrayList<IntDouble>>();
 			indexArray.add(indexArray1);
 			IntDouble id=ValueEvaluation.argFunction(ident, indexArray);
+			id.setIndex(i);
+			id.setName(ident);
 			idArray.add(id);
 		}
 		return idArray;
@@ -1200,5 +1236,37 @@ public class ValueEvaluation {
 	
 	public static IntDouble expressionInput(IntDouble id){
 		return id;
+	}
+	
+	public static void setSvarIntValue(IntDouble id, int value){
+		String name=id.getName();
+		int index=id.getIndex();
+		
+		if (ControlData.currSvMap.containsKey(name)){ 
+			if (index==0)	{
+				ControlData.currSvMap.get(name).getData().setData(value);
+			}else if(index>0){
+				String futSvName=name+"__fut__"+index;
+				if (ControlData.currSvFutMap.containsKey(futSvName)){
+					ControlData.currSvFutMap.get(futSvName).getData().setData(value);
+				}
+			}
+		}
+	}
+	
+	public static void setSvarDoubleValue(IntDouble id, double value){
+		String name=id.getName();
+		int index=id.getIndex();
+		
+		if (ControlData.currSvMap.containsKey(name)){ 
+			if (index==0)	{
+				ControlData.currSvMap.get(name).getData().setData(value);
+			}else if(index>0){
+				String futSvName=name+"__fut__"+index;
+				if (ControlData.currSvFutMap.containsKey(futSvName)){
+					ControlData.currSvFutMap.get(futSvName).getData().setData(value);
+				}
+			}
+		}
 	}
 }
