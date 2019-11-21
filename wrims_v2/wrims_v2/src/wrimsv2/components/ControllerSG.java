@@ -319,6 +319,7 @@ public class ControllerSG {
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
 			HDF5Writer.writeTimestepData();
+			HDF5Writer.writeCyclesData();
 			HDF5Writer.closeDataStructure();
 		}else{
 			if (ControlData.writeInitToDVOutput){
@@ -582,6 +583,7 @@ public class ControllerSG {
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
 			HDF5Writer.writeTimestepData();
+			HDF5Writer.writeCyclesData();
 			HDF5Writer.closeDataStructure();
 		}else{
 			if (ControlData.writeInitToDVOutput){

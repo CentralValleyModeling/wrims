@@ -434,6 +434,7 @@ public class ControllerDebug extends Thread {
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
 			HDF5Writer.writeTimestepData();
+			HDF5Writer.writeCyclesData();
 			HDF5Writer.closeDataStructure();
 		}else if (ControlData.outputType==2){
 			mySQLCWriter.process();
