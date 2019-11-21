@@ -2,6 +2,7 @@ package wrimsv2.hdf5;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -12,7 +13,7 @@ import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.components.ControlData;
-
+import wrimsv2.evaluator.DssDataSetFixLength;
 import ncsa.hdf.hdf5lib.H5;
 import ncsa.hdf.hdf5lib.HDF5Constants;
 import ncsa.hdf.hdf5lib.exceptions.HDF5LibraryException;
@@ -158,6 +159,43 @@ public class HDF5Util {
 			e.printStackTrace();
 			return "";
 		}
+	}
+	
+	public static void writeCycleVariableNames(String[] write_data, int gid, String strCycleI){
+		
+		String dName="Cycle "+strCycleI+" List";
+		
+		int size = write_data.length;
+		long[] dims = {size};
+		
+		try {
+			int tidName = H5.H5Tcopy(HDF5Constants.H5T_C_S1);
+			H5.H5Tset_size(tidName, 256);
+				
+			int sidList = H5.H5Screate_simple(1, dims, null);
+			if (sidList >= 0 && size>0){
+				int didList=-1;
+				try{
+					didList = H5.H5Dopen(gid, dName);
+				}catch(Exception e){
+					didList = H5.H5Dcreate(gid,
+							dName, tidName,
+							sidList, HDF5Constants.H5P_DEFAULT, HDF5Constants.H5P_DEFAULT, HDF5Constants.H5P_DEFAULT);
+				}
+				
+				if (didList >= 0){
+					HDF5Util.writeStringData(didList, tidName, write_data, 256);
+				}
+				
+	            H5.H5Sclose(sidList);
+	            H5.H5Tclose(tidName);
+	            H5.H5Dclose(didList);
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public static void writeCycleStaticData(int index, int size, int gid, double[][] write_data){

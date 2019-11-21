@@ -25,6 +25,7 @@ import wrimsv2.solver.CbcSolver;
 import wrimsv2.solver.XASolver;
 import wrimsv2.solver.SetXALog;
 import wrimsv2.solver.InitialXASolver;
+import wrimsv2.tools.General;
 import wrimsv2.wreslparser.elements.StudyUtils;
 import wrimsv2.wreslplus.elements.procedures.ErrorCheck;
 
@@ -280,7 +281,13 @@ public class ControllerSG {
 							noError=false;
 						}
 						int cycleI=i+1;
-						if (ControlData.outputType==1) HDF5Writer.writeOneCycle(mds, cycleI);
+						String strCycleI=cycleI+"";
+						boolean isSelectedCycleOutput=General.isSelectedCycleOutput(strCycleI);
+						if (ControlData.outputType==1){
+							if (ControlData.isOutputCycle && isSelectedCycleOutput){
+								HDF5Writer.writeOneCycle(mds, cycleI);
+							}
+						}
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
 						//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==2) new RCCComparison();
@@ -312,6 +319,7 @@ public class ControllerSG {
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
 			HDF5Writer.writeTimestepData();
+			HDF5Writer.writeCyclesData();
 			HDF5Writer.closeDataStructure();
 		}else{
 			if (ControlData.writeInitToDVOutput){
@@ -424,7 +432,13 @@ public class ControllerSG {
 							noError=false;
 						}
 						int cycleI=i+1;
-						if (ControlData.outputType==1) HDF5Writer.writeOneCycle(mds, cycleI);
+						String strCycleI=cycleI+"";
+						boolean isSelectedCycleOutput=General.isSelectedCycleOutput(strCycleI);
+						if (ControlData.outputType==1){
+							if (ControlData.isOutputCycle && isSelectedCycleOutput){
+								HDF5Writer.writeOneCycle(mds, cycleI);
+							}
+						}
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
 
@@ -569,6 +583,7 @@ public class ControllerSG {
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
 			HDF5Writer.writeTimestepData();
+			HDF5Writer.writeCyclesData();
 			HDF5Writer.closeDataStructure();
 		}else{
 			if (ControlData.writeInitToDVOutput){

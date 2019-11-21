@@ -61,6 +61,7 @@ public class PreRunModel {
 			DSSUtil.generateCatalog(FilePaths.fullSvarFilePath);
 			ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarFilePath);
 			if (!FilePaths.fullSvarFile2Path.equals("")){
+				DSSUtil.generateCatalog(FilePaths.fullSvarFile2Path);
 				ControlData.groupSvar2= DSSUtil.createGroup("local", FilePaths.fullSvarFile2Path);
 			}
 			readTimeseries();

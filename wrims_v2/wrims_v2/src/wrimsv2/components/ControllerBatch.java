@@ -332,7 +332,13 @@ public class ControllerBatch {
 							noError=false;
 						}
 						int cycleI=i+1;
-						if (ControlData.outputType==1) HDF5Writer.writeOneCycle(mds, cycleI);
+						String strCycleI=cycleI+"";
+						boolean isSelectedCycleOutput=General.isSelectedCycleOutput(strCycleI);
+						if (ControlData.outputType==1){
+							if (ControlData.isOutputCycle && isSelectedCycleOutput){
+								HDF5Writer.writeOneCycle(mds, cycleI);
+							}
+						}
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
 
@@ -388,6 +394,7 @@ public class ControllerBatch {
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
 			HDF5Writer.writeTimestepData();
+			HDF5Writer.writeCyclesData();
 			HDF5Writer.closeDataStructure();
 		}else if (ControlData.outputType==2){
 			mySQLCWriter.process();
@@ -686,7 +693,11 @@ public class ControllerBatch {
 							Error.writeErrorLog();
 							noError=false;
 						}
-						if (ControlData.outputType==1) HDF5Writer.writeOneCycle(mds, cycleI);
+						if (ControlData.outputType==1){
+							if (ControlData.isOutputCycle && isSelectedCycleOutput){
+								HDF5Writer.writeOneCycle(mds, cycleI);
+							}
+						}
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
 
@@ -737,6 +748,7 @@ public class ControllerBatch {
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
 			HDF5Writer.writeTimestepData();
+			HDF5Writer.writeCyclesData();
 			HDF5Writer.closeDataStructure();
 		}else if (ControlData.outputType==2){
 			mySQLCWriter.process();
@@ -841,7 +853,13 @@ public class ControllerBatch {
 							noError=false;
 						}
 						int cycleI=i+1;
-						if (ControlData.outputType==1) HDF5Writer.writeOneCycle(mds, cycleI);
+						String strCycleI=cycleI+"";
+						boolean isSelectedCycleOutput=General.isSelectedCycleOutput(strCycleI);
+						if (ControlData.outputType==1){
+							if (ControlData.isOutputCycle && isSelectedCycleOutput){
+								HDF5Writer.writeOneCycle(mds, cycleI);
+							}
+						}
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
 
@@ -879,6 +897,7 @@ public class ControllerBatch {
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
 			HDF5Writer.writeTimestepData();
+			HDF5Writer.writeCyclesData();
 			HDF5Writer.closeDataStructure();
 		}else if (ControlData.outputType==2){
 			mySQLCWriter.process();
@@ -1050,7 +1069,13 @@ public class ControllerBatch {
 							noError=false;
 						}
 						int cycleI=i+1;
-						if (ControlData.outputType==1) HDF5Writer.writeOneCycle(mds, cycleI);
+						String strCycleI=cycleI+"";
+						boolean isSelectedCycleOutput=General.isSelectedCycleOutput(strCycleI);
+						if (ControlData.outputType==1){
+							if (ControlData.isOutputCycle && isSelectedCycleOutput){
+								HDF5Writer.writeOneCycle(mds, cycleI);
+							}
+						}
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
 
@@ -1088,6 +1113,7 @@ public class ControllerBatch {
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
 			HDF5Writer.writeTimestepData();
+			HDF5Writer.writeCyclesData();
 			HDF5Writer.closeDataStructure();
 		}else if (ControlData.outputType==2){
 			mySQLCWriter.process();
@@ -1185,7 +1211,13 @@ public class ControllerBatch {
 							noError=false;
 						}
 						int cycleI=i+1;
-						if (ControlData.outputType==1) HDF5Writer.writeOneCycle(mds, cycleI);
+						String strCycleI=cycleI+"";
+						boolean isSelectedCycleOutput=General.isSelectedCycleOutput(strCycleI);
+						if (ControlData.outputType==1){
+							if (ControlData.isOutputCycle && isSelectedCycleOutput){
+								HDF5Writer.writeOneCycle(mds, cycleI);
+							}
+						}
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
 	
@@ -1243,6 +1275,7 @@ public class ControllerBatch {
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
 			HDF5Writer.writeTimestepData();
+			HDF5Writer.writeCyclesData();
 			HDF5Writer.closeDataStructure();
 		}else if (ControlData.outputType==2){
 			mySQLCWriter.process();
@@ -1379,7 +1412,13 @@ public class ControllerBatch {
 							noError=false;
 						}
 						int cycleI=i+1;
-						if (ControlData.outputType==1) HDF5Writer.writeOneCycle(mds, cycleI);
+						String strCycleI=cycleI+"";
+						boolean isSelectedCycleOutput=General.isSelectedCycleOutput(strCycleI);
+						if (ControlData.outputType==1){
+							if (ControlData.isOutputCycle && isSelectedCycleOutput){
+								HDF5Writer.writeOneCycle(mds, cycleI);
+							}
+						}
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
 
@@ -1548,6 +1587,7 @@ public class ControllerBatch {
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
 			HDF5Writer.writeTimestepData();
+			HDF5Writer.writeCyclesData();
 			HDF5Writer.closeDataStructure();
 		}else if (ControlData.outputType==2){
 			mySQLCWriter.process();

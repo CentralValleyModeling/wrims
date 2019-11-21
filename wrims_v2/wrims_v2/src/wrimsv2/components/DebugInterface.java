@@ -465,7 +465,7 @@ public class DebugInterface {
 			ControlData.currYear=ControlData.cycleEndYear;
 			ControlData.currMonth=ControlData.cycleEndMonth;
 			ControlData.currDay=ControlData.cycleEndDay;
-			if (ControlData.outputCycleToDss){
+			if (ControlData.isOutputCycle){
 				Date resimDate=new Date(ControlData.resimYear-1900, ControlData.resimMonth-1, ControlData.resimDay);
 				Date cycleDataDate = new Date(ControlData.cycleDataStartYear-1900, ControlData.cycleDataStartMonth-1, ControlData.cycleDataStartDay);
 				if (resimDate.before(cycleDataDate)){
@@ -492,7 +492,7 @@ public class DebugInterface {
 				e.printStackTrace();
 			}
 		}else if(request.equals("OutputCycleDataToDssOn")){
-			if (!ControlData.outputCycleToDss) initOutputCycleDataToDss();
+			if (!ControlData.isOutputCycle) initOutputCycleDataToDss();
 			try {
 				sendRequest("OutputCycleDataToDssOn");
 			} catch (IOException e) {
@@ -501,7 +501,7 @@ public class DebugInterface {
 			}
 			System.out.println("Output cycle data to Dss file is turned on");
 		}else if(request.equals("OutputCycleDataToDssOff")){
-			ControlData.outputCycleToDss=false;
+			ControlData.isOutputCycle=false;
 			try {
 				sendRequest("OutputCycleDataToDssOff");
 			} catch (IOException e) {
@@ -2392,7 +2392,7 @@ public class DebugInterface {
 	}	
 	
 	private void initOutputCycleDataToDss(){
-		ControlData.outputCycleToDss=true;
+		ControlData.isOutputCycle=true;
 		ControlData.cycleDataStartYear=ControlData.currYear;
 		ControlData.cycleDataStartMonth=ControlData.currMonth;
 		ControlData.cycleDataStartDay=ControlData.currDay;
