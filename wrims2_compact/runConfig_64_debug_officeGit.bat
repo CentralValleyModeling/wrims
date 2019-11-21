@@ -48,16 +48,17 @@ set AppJars=%AppJars%;D:\cvwrsm\git_office\cvwrsm\wrims_v2\wrims_v2\jar_out\WRIM
 : user defined java class and dll :
 :---------------------------------:
 set ExternalDir=%RunDir%External
+set SupportDll=%~dp0\supporting_dlls_64
 
 :------------:
 : class path :
 :------------:
-set CLASSPATH=-classpath "%ExternalDir%;%AppJars%;%libDir%"
+set CLASSPATH=-classpath "%ExternalDir%;%AppJars%;%libDir%;%SupportDll%"
 
 :------------:
 : dll path   :
 :------------:
-set PATH=%ExternalDir%;%JarDir2%;%libDir%
+set PATH=%ExternalDir%;%JarDir2%;%libDir%;%SupportDll%
 
 
 :-------------------------------------------------------:
