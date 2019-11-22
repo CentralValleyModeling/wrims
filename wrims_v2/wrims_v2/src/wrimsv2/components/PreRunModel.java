@@ -24,6 +24,8 @@ import wrimsv2.hdf5.HDF5Writer;
 
 public class PreRunModel {
 	public PreRunModel(StudyDataSet sds){
+		setSelectedOutputCycles();
+		
 		ControlData.currStudyDataSet=sds;
 		VariableTimeStep.procCycleTimeStep(sds);
 		ControlData.totalTimeStep=VariableTimeStep.getTotalTimeStep(sds);
@@ -88,11 +90,10 @@ public class PreRunModel {
 		if (ControlData.outputType==1){
 			System.out.println("Create HDF5 output data structure.");
 			HDF5Writer.createDataStructure();
-			HDF5Writer.listCycleStaticVariables(sds);
+			HDF5Writer.listCycleStaticSv(sds);
 			System.out.println("HDF5 output data structure is created.");
 		}
 		
-		setSelectedOutputCycles();
 	}
 
 	public void readTimeseries(){

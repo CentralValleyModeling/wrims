@@ -57,11 +57,11 @@ public class HDF5Writer {
 	private static int gidMonthly=-1;
 	private static String gDaily="Daily";
 	private static int gidDaily=-1;
-	private static String gSC="Static Cycle";
+	private static String gSC="Static Cycle SV";
 	private static int gidSC=-1;
-	private static String gDC="Dynamic Cycle";
+	private static String gDC="Dynamic Cycle SV";
 	private static int gidDC=-1;
-	private static String gCS="Cycles";
+	private static String gCS="Cycles DV Alias";
 	private static int gidCS=-1;
 	private static String gSCMonthly="Monthly";
 	private static int gidSCMonthly=-1;
@@ -397,7 +397,7 @@ public class HDF5Writer {
 		}
 	}
 	
-	public static void writeCyclesData(){
+	public static void writeCyclesDvAlias(){
 		if (fid>0 && ControlData.isOutputCycle){
 			int size = DataTimeSeries.dvAliasTSCycles.size();
 			for (int i=0; i<size; i++){
@@ -406,7 +406,7 @@ public class HDF5Writer {
 				if (General.isSelectedCycleOutput(strCycleI)){
 					HashMap<String, DssDataSetFixLength> dvAliasCycle = DataTimeSeries.dvAliasTSCycles.get(i);
 					differMonthlyDailyCycle(dvAliasCycle);
-					listCycleVariables(strCycleI);
+					listCycleDvAliasVariables(strCycleI);
 					writeMonthlyCycleDvarAlias(strCycleI);
 					writeDailyCycleDvarAlias(strCycleI);
 				}
@@ -716,29 +716,29 @@ public static void writeMonthlyTimestepDvarAlias(){
 		}
 	}
 	
-	public static void writeOneCycle(ModelDataSet mds, int index){
+	public static void writeOneCycleSv(ModelDataSet mds, int index){
 		if (fid>0){
 			if (ControlData.timeStep.equals("1MON")) {
-				writeMonthlyCycle(mds, index);
+				writeMonthlyCycleSv(mds, index);
 			}else if (ControlData.timeStep.equals("1DAY")){
-				writeDailyCycle(mds, index);
+				writeDailyCycleSv(mds, index);
 			}
 		}
 	}
 	
-	public static void writeMonthlyCycle(ModelDataSet mds, int index){
+	public static void writeMonthlyCycleSv(ModelDataSet mds, int index){
 		
-		if (gidSCMonthly>=0) writeMonthlyCycleStaticVariables(mds, index);
-		if (gidDCMonthly>=0) writeMonthlyCycleDynamicVariables(mds, index);
+		if (gidSCMonthly>=0) writeMonthlyCycleStaticSv(mds, index);
+		if (gidDCMonthly>=0) writeMonthlyCycleDynamicSv(mds, index);
 		
 	}
 	
-	public static void writeDailyCycle(ModelDataSet mds, int index){
-		if (gidSCDaily>=0) writeDailyCycleStaticVariables(mds, index);
-		if (gidDCDaily>=0) writeDailyCycleDynamicVariables(mds, index);
+	public static void writeDailyCycleSv(ModelDataSet mds, int index){
+		if (gidSCDaily>=0) writeDailyCycleStaticSv(mds, index);
+		if (gidDCDaily>=0) writeDailyCycleDynamicSv(mds, index);
 	}
 	
-	public static void listCycleStaticVariables(StudyDataSet sds){
+	public static void listCycleStaticSv(StudyDataSet sds){
 		ArrayList<String> ml = sds.getModelList();
 		Map<String, ModelDataSet> mm = sds.getModelDataSetMap();
 		ArrayList<String> mtsl = sds.getModelTimeStepList();
@@ -747,11 +747,15 @@ public static void writeMonthlyTimestepDvarAlias(){
 			String model=ml.get(i);
 			ModelDataSet mds = mm.get(model);
 			String timestep = mtsl.get(i);
+			int cycleI=i+1;
+			String strCycleI=cycleI+"";
 			
-			if (timestep.equals("1MON")){
-				if (gidSCMonthly>=0) HDF5Util.writeCycleStaticVariableNames(mds, gidSCMonthly, i);
-			}else if (timestep.equals("1DAY")){
-				if (gidSCDaily>=0) HDF5Util.writeCycleStaticVariableNames(mds, gidSCDaily, i);
+			if (ControlData.isOutputCycle && General.isSelectedCycleOutput(strCycleI)){
+				if (timestep.equals("1MON")){
+					if (gidSCMonthly>=0) HDF5Util.writeCycleStaticSvNames(mds, gidSCMonthly, i);
+				}else if (timestep.equals("1DAY")){
+					if (gidSCDaily>=0) HDF5Util.writeCycleStaticSvNames(mds, gidSCDaily, i);
+				}
 			}
 		}
 	}
@@ -814,7 +818,7 @@ public static void writeMonthlyTimestepDvarAlias(){
 		}
 	}
 	
-	public static void listCycleVariables(String strCycleI){
+	public static void listCycleDvAliasVariables(String strCycleI){
 		if (gidCSMonthly>=0) HDF5Util.writeCycleVariableNames(monthlyCycleVarNames, gidCSMonthly, strCycleI);
 		if (gidCSDaily>=0) HDF5Util.writeCycleVariableNames(dailyCycleVarNames, gidCSDaily, strCycleI);
 	}
@@ -897,22 +901,24 @@ public static void writeMonthlyTimestepDvarAlias(){
 		}
 	}
 	
-	public static void writeMonthlyCycleStaticVariables(ModelDataSet mds, int index){
+	public static void writeMonthlyCycleStaticSv(ModelDataSet mds, int index){
 		
-		ArrayList<String> dvList = mds.dvList;
+		//ArrayList<String> dvList = mds.dvList;
 		ArrayList<String> svList = mds.svList;
-		ArrayList<String> asList = mds.asList;
-		Map<String, Dvar> dvMap = mds.dvMap;
+		//ArrayList<String> asList = mds.asList;
+		//Map<String, Dvar> dvMap = mds.dvMap;
 		Map<String, Svar> svMap = mds.svMap;
-		Map<String, Alias> asMap = mds.asMap;
-		int dvSize = dvList.size();
+		//Map<String, Alias> asMap = mds.asMap;
+		//int dvSize = dvList.size();
 		int svSize = svList.size();
-		int asSize = asList.size();
+		//int asSize = asList.size();
 		
-		int size=dvSize+svSize+asSize;
+		//int size=dvSize+svSize+asSize;
+		int size=svSize;
 		
 		double[][] write_data = new double[1][size];
 		
+		/*
 		for (int i=0; i<dvSize; i++){
 			String name=dvList.get(i);
 						
@@ -928,32 +934,36 @@ public static void writeMonthlyTimestepDvarAlias(){
 			write_data[0][i+offset]=data;						
 		}
 		offset=dvSize+asSize;
+		*/
+		
 		for (int i=0; i<svSize; i++){
 			String name=svList.get(i);
 						
 			double data = svMap.get(name).getData().getData().doubleValue();
-			write_data[0][i+offset]=data;						
+			write_data[0][i]=data;						
 		}
 		
-		HDF5Util.writeCycleStaticData(index, size, gidSCMonthly, write_data);
+		HDF5Util.writeCycleStaticSv(index, size, gidSCMonthly, write_data);
 	}
 	
-	public static void writeDailyCycleStaticVariables(ModelDataSet mds, int index){
+	public static void writeDailyCycleStaticSv(ModelDataSet mds, int index){
 		
-		ArrayList<String> dvList = mds.dvList;
+		//ArrayList<String> dvList = mds.dvList;
 		ArrayList<String> svList = mds.svList;
-		ArrayList<String> asList = mds.asList;
-		Map<String, Dvar> dvMap = mds.dvMap;
+		//ArrayList<String> asList = mds.asList;
+		//Map<String, Dvar> dvMap = mds.dvMap;
 		Map<String, Svar> svMap = mds.svMap;
-		Map<String, Alias> asMap = mds.asMap;
-		int dvSize = dvList.size();
+		//Map<String, Alias> asMap = mds.asMap;
+		//int dvSize = dvList.size();
 		int svSize = svList.size();
-		int asSize = asList.size();
+		//int asSize = asList.size();
 		
-		int size=dvSize+svSize+asSize;
+		//int size=dvSize+svSize+asSize;
+		int size=svSize;
 		
 		double[][] write_data = new double[1][size];
 		
+		/*
 		for (int i=0; i<dvSize; i++){
 			String name=dvList.get(i);
 						
@@ -969,25 +979,27 @@ public static void writeMonthlyTimestepDvarAlias(){
 			write_data[0][i+offset]=data;						
 		}
 		offset=dvSize+asSize;
+		*/
+		
 		for (int i=0; i<svSize; i++){
 			String name=svList.get(i);
 						
 			double data = svMap.get(name).getData().getData().doubleValue();
-			write_data[0][i+offset]=data;						
+			write_data[0][i]=data;						
 		}
 		
-		HDF5Util.writeCycleStaticData(index, size, gidSCDaily, write_data);
+		HDF5Util.writeCycleStaticSv(index, size, gidSCDaily, write_data);
 	}
 
 	
-	public static void writeMonthlyCycleDynamicVariables(ModelDataSet mds, int index){
+	public static void writeMonthlyCycleDynamicSv(ModelDataSet mds, int index){
 		String dName=+ControlData.currYear+"-"+ControlData.currMonth+" Cycle "+index+" Table";
-		HDF5Util.writeCycleDynamicVariables(mds, gidDCMonthly, dName);
+		HDF5Util.writeCycleDynamicSv(mds, gidDCMonthly, dName);
 	}
 	
-	public static void writeDailyCycleDynamicVariables(ModelDataSet mds, int index){
+	public static void writeDailyCycleDynamicSv(ModelDataSet mds, int index){
 		String dName=+ControlData.currYear+"-"+ControlData.currMonth+"-"+ControlData.currDay+" Cycle "+index+" Table";
-		HDF5Util.writeCycleDynamicVariables(mds, gidDCDaily, dName);
+		HDF5Util.writeCycleDynamicSv(mds, gidDCDaily, dName);
 	}
 	
 	public static void skipOneCycle(ModelDataSet mds, int index){
@@ -1002,25 +1014,26 @@ public static void writeMonthlyTimestepDvarAlias(){
 	
 	public static void skipMonthlyCycle(ModelDataSet mds, int index){
 		
-		if (gidSCMonthly>=0) skipMonthlyCycleStaticVariables(mds, index);
+		if (gidSCMonthly>=0) skipMonthlyCycleStaticSv(mds, index);
 		
 	}
 	
 	public static void skipDailyCycle(ModelDataSet mds, int index){
 		
-		if (gidSCDaily>=0) skipDailyCycleStaticVariables(mds, index);
+		if (gidSCDaily>=0) skipDailyCycleStaticSv(mds, index);
 		
 	}
 	
-	public static void skipMonthlyCycleStaticVariables(ModelDataSet mds, int index){
-		ArrayList<String> dvList = mds.dvList;
+	public static void skipMonthlyCycleStaticSv(ModelDataSet mds, int index){
+		//ArrayList<String> dvList = mds.dvList;
 		ArrayList<String> svList = mds.svList;
-		ArrayList<String> asList = mds.asList;
-		int dvSize = dvList.size();
+		//ArrayList<String> asList = mds.asList;
+		//int dvSize = dvList.size();
 		int svSize = svList.size();
-		int asSize = asList.size();
+		//int asSize = asList.size();
 		
-		int size=dvSize+svSize+asSize;
+		//int size=dvSize+svSize+asSize;
+		int size=svSize;
 		
 		double[][] write_data = new double[1][size];
 		
@@ -1028,18 +1041,19 @@ public static void writeMonthlyTimestepDvarAlias(){
 			write_data[0][i]=0.0;						
 		}
 		
-		HDF5Util.writeCycleStaticData(index, size, gidSCMonthly, write_data);
+		HDF5Util.writeCycleStaticSv(index, size, gidSCMonthly, write_data);
 	}
 	
-	public static void skipDailyCycleStaticVariables(ModelDataSet mds, int index){
-		ArrayList<String> dvList = mds.dvList;
+	public static void skipDailyCycleStaticSv(ModelDataSet mds, int index){
+		//ArrayList<String> dvList = mds.dvList;
 		ArrayList<String> svList = mds.svList;
-		ArrayList<String> asList = mds.asList;
-		int dvSize = dvList.size();
+		//ArrayList<String> asList = mds.asList;
+		//int dvSize = dvList.size();
 		int svSize = svList.size();
-		int asSize = asList.size();
+		//int asSize = asList.size();
 		
-		int size=dvSize+svSize+asSize;
+		//int size=dvSize+svSize+asSize;
+		int size=svSize;
 		
 		double[][] write_data = new double[1][size];
 		
@@ -1047,7 +1061,7 @@ public static void writeMonthlyTimestepDvarAlias(){
 			write_data[0][i]=0.0;						
 		}
 		
-		HDF5Util.writeCycleStaticData(index, size, gidSCDaily, write_data);
+		HDF5Util.writeCycleStaticSv(index, size, gidSCDaily, write_data);
 	}
 	
 	public static void closeDataStructure(){

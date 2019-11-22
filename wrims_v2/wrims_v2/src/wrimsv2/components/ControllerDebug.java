@@ -380,7 +380,7 @@ public class ControllerDebug extends Thread {
 						}
 						if (ControlData.outputType==1){
 							if (ControlData.isOutputCycle && isSelectedCycleOutput){
-								HDF5Writer.writeOneCycle(mds, cycleI);
+								HDF5Writer.writeOneCycleSv(mds, cycleI);
 							}
 						}
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
@@ -396,7 +396,11 @@ public class ControllerDebug extends Thread {
 							VariableTimeStep.currTimeAddOneDay();
 						}
 					}else{
-						if (ControlData.outputType==1) HDF5Writer.skipOneCycle(mds, cycleI);
+						if (ControlData.outputType==1){
+							if (ControlData.isOutputCycle && isSelectedCycleOutput){
+								HDF5Writer.skipOneCycle(mds, cycleI);
+							}
+						}
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" skipped. ("+model+")");
 						new AssignPastCycleVariable();
 						deferPause(modelIndex);
@@ -434,7 +438,7 @@ public class ControllerDebug extends Thread {
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
 			HDF5Writer.writeTimestepData();
-			HDF5Writer.writeCyclesData();
+			HDF5Writer.writeCyclesDvAlias();
 			HDF5Writer.closeDataStructure();
 		}else if (ControlData.outputType==2){
 			mySQLCWriter.process();
