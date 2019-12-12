@@ -84,7 +84,7 @@ public class ControlData {
 	public static Group groupSvar;
 	public static Group groupSvar2;
 	public static DSSDataWriter writer;
-	public static String solverName="Cbc'";
+	public static String solverName="cbc'";
 	public static Optimizer xasolver;
 	public static OrToolsSolver otsolver;
 	//public static int cbcSolverOptions = 2;

@@ -55,6 +55,7 @@ import wrimsv2.evaluator.ValueEvaluatorParser;
 import wrimsv2.external.LoadAllDll;
 import wrimsv2.hdf5.HDF5Writer;
 import wrimsv2.ilp.ILP;
+import wrimsv2.launch.LaunchConfiguration;
 import wrimsv2.solver.CbcSolver;
 import wrimsv2.solver.CloseCurrentSolver;
 import wrimsv2.solver.LPSolveSolver;
@@ -102,7 +103,11 @@ public class ControllerDebug extends Thread {
 	@Override
 	public void run() {
 		new DataBaseProfile(args);
-		ConfigUtils.loadArgs(args);
+		if (args[0].toLowerCase().startsWith("-launch")){
+			procLaunch(args);
+		}else{
+			ConfigUtils.loadArgs(args);
+		}
 		connectToDataBase();
 		//generateStudyFile();
 		try {
@@ -650,5 +655,10 @@ public class ControllerDebug extends Thread {
 		}else if (ControlData.outputType==4){
 			sqlServerRWriter=new SQLServerRWriter();
 		}
+	}
+	
+	public void procLaunch(String[] args){
+		String launchFilePath = args[0].substring(args[0].indexOf("=") + 1, args[0].length());
+		new LaunchConfiguration(launchFilePath);
 	}
 }

@@ -26,6 +26,7 @@ import wrimsv2.evaluator.PreEvaluator;
 import wrimsv2.evaluator.ValueEvaluatorParser;
 import wrimsv2.hdf5.HDF5Writer;
 import wrimsv2.ilp.ILP;
+import wrimsv2.launch.LaunchConfiguration;
 import wrimsv2.solver.Cbc0Solver;
 import wrimsv2.solver.CbcSolver;
 import wrimsv2.solver.Clp0Solver;
@@ -112,7 +113,11 @@ public class ControllerBatch {
 	public void processArgs(String[] args){
 	
 		if(args[0].startsWith("-")) {
-			ConfigUtils.loadArgs(args);
+			if (args[0].toLowerCase().startsWith("-launch")){
+				procLaunch(args);
+			}else{
+				ConfigUtils.loadArgs(args);
+			}
 			if (args[0].toLowerCase().endsWith(".launch.config")){
 				enableConfigProgress=true;
 			}
@@ -1664,5 +1669,10 @@ public class ControllerBatch {
 		}else if (ControlData.outputType==4){
 			sqlServerRWriter=new SQLServerRWriter();
 		}
+	}
+	
+	public void procLaunch(String[] args){
+		String launchFilePath = args[0].substring(args[0].indexOf("=") + 1, args[0].length());
+		new LaunchConfiguration(launchFilePath);
 	}
 }

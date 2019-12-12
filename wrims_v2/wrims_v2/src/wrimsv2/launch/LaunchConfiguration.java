@@ -118,6 +118,7 @@ public class LaunchConfiguration {
 			root = parser.parse(new InputSource(stream)).getDocumentElement();
 			initializeFromXML(root);
 			setConfig(filePath);
+			setPref();
 		} catch (SAXException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -425,5 +426,16 @@ public class LaunchConfiguration {
 		String absPath=new File(launchFilePath).getParentFile().getAbsolutePath();
 		absPath=absPath+"\\"+path;
 		return absPath;
+	}
+	
+	public void setPref(){
+		String w2dir = System.getenv("temp_wrims2");
+		try {
+			String dataDir = new File(w2dir).getCanonicalPath()+"\\data";
+			SettingPref.load(dataDir);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return;
+		}
 	}
 }
