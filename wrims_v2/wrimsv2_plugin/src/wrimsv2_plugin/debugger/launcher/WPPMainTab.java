@@ -802,12 +802,8 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 				out.println("OVFile             "+FileProcess.procRelativePath(ovFile, launchConfig));
 			}
 			
-			if (DebugCorePlugin.outputCycleToDss){
-				out.println("OutputCycleDatatoDss yes");
-			}else{
-				out.println("OutputCycleDatatoDss no");
-			}
-			
+			out.println("OutputCycleDatatoDss no");
+						
 			if (DebugCorePlugin.outputAllCycles){
 				out.println("outputallcycledata yes");
 			}else{

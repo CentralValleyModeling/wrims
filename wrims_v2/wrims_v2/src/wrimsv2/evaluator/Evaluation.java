@@ -867,13 +867,18 @@ public class Evaluation {
 		
 		int index=indexValue+ControlData.currTimeStep.get(ControlData.currCycleIndex);
 		if (index>=0){
-			DssDataSetFixLength dds=DataTimeSeries.dvAliasTS.get(entryNameTS);
-			if (dds==null){
+			if (indexValue>=0 && (ControlData.currEvalTypeIndex==0 || ControlData.currEvalTypeIndex==7)){
 				Error.addEvaluationError(ident + " at timestep " +indexValue+" doesn't have value");
 				return 1.0;
+			}else{
+				DssDataSetFixLength dds=DataTimeSeries.dvAliasTS.get(entryNameTS);
+				if (dds==null){
+					Error.addEvaluationError(ident + " at timestep " +indexValue+" doesn't have value");
+					return 1.0;
+				}
+				double[] data=dds.getData();
+				return data[index];
 			}
-			double[] data=dds.getData();
-			return data[index];
 		}
 		
 		if (!DataTimeSeries.dvAliasInit.containsKey(entryNameTS)){

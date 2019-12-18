@@ -141,7 +141,7 @@ public class BatchRunProcess {
 	
 	public void regularLaunch(LaunchConfigInfo configuration, String launchFilePath) throws CoreException{
 			
-		createBatch(configuration, launchFilePath);
+		createBatch(configuration, launchFilePath, false);
 		
 		try {
 			engineFileFullPath = launchFilePath+".bat";
@@ -169,7 +169,7 @@ public class BatchRunProcess {
 		
 		while (procRun.continueRun(this) && terminateCode==0){				
 		
-			createBatch(configuration, launchFilePath);
+			createBatch(configuration, launchFilePath, false);
 		
 			try {
 				engineFileFullPath = launchFilePath+".bat";
@@ -289,7 +289,7 @@ public class BatchRunProcess {
 		endDay=Integer.parseInt(configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_ENDDAY, (String)null));
 	}
 	
-	public void createBatch(LaunchConfigInfo configuration, String launchFilePath){
+	public void createBatch(LaunchConfigInfo configuration, String launchFilePath, boolean isWsiDiRun){
 		
 		String suffix="";
 		if (sid>1) suffix="_MS"+sid;
@@ -391,7 +391,7 @@ public class BatchRunProcess {
 		
 		engineFileFullPath = launchFilePath+".bat";
 		try {
-			String configFilePath = generateConfigFile(configuration, mainFileAbsPath, launchFilePath);
+			String configFilePath = generateConfigFile(configuration, mainFileAbsPath, launchFilePath, isWsiDiRun);
 			FileWriter debugFile = new FileWriter(engineFileFullPath);
 			PrintWriter out = new PrintWriter(debugFile);
 			generateBatch(out, configFilePath);
@@ -419,7 +419,7 @@ public class BatchRunProcess {
 		out.close();
 	}
 	
-	public String generateConfigFile(LaunchConfigInfo configuration, String mainFileAbsPath, String launchFilePath){
+	public String generateConfigFile(LaunchConfigInfo configuration, String mainFileAbsPath, String launchFilePath, boolean isWsiDiRun){
 		
 		Map<String, String> configMap = new HashMap<String, String>();
 		String configFilePath = null;
@@ -492,7 +492,7 @@ public class BatchRunProcess {
 				configMap.put("prefixinittodvarfile", "no");
 			}
 			
-			if (DebugCorePlugin.outputCycleToDss){
+			if (DebugCorePlugin.outputCycleToDss && !isWsiDiRun){
 				configMap.put("outputcycledatatodss", "yes");
 			}else{
 				configMap.put("outputcycledatatodss", "no");
