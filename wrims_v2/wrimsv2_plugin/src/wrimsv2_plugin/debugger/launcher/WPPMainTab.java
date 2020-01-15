@@ -691,8 +691,8 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		String engineFileFullPath = "WRIMSv2_Engine.bat";
 		try {
 			String configFilePath = generateWsiDiConfigFile();
-			FileWriter debugFile = new FileWriter(engineFileFullPath);
-			PrintWriter out = new PrintWriter(debugFile);
+			FileWriter engineFile = new FileWriter(engineFileFullPath);
+			PrintWriter out = new PrintWriter(engineFile);
 			generateBatch(out, configFilePath);
 			Process process = Runtime.getRuntime().exec("cmd /c start " + "WSIDIGenerator\\wsidi_generator.bat");
 		}catch (IOException e) {

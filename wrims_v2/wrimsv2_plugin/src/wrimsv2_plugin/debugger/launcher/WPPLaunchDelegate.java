@@ -474,8 +474,8 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			String engineFileFullPath = "WRIMSv2_Engine.bat";
 			try {
 				String configFilePath = generateConfigFile(configuration, mainFileAbsPath);
-				FileWriter debugFile = new FileWriter(engineFileFullPath);
-				PrintWriter out = new PrintWriter(debugFile);
+				FileWriter engineFile = new FileWriter(engineFileFullPath);
+				PrintWriter out = new PrintWriter(engineFile);
 				generateBatch(out, mode, requestPort, eventPort, configFilePath);
 			}catch (IOException e) {
 				WPPException.handleException(e);
