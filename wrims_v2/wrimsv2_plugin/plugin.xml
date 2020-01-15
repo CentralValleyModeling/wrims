@@ -300,7 +300,39 @@
 		name="Export Study">
 	</command>
 </extension>
+<extension
+	point="org.eclipse.ui.commands">
+	<command
+		description="DSS HDF5 Conversion"
+		id="wpp.dsshdf5conversion"
+		defaultHandler="wrimsv2_plugin.debugger.commanditem.DSSHDF5Conversion"
+		name="DSS HDF5 Conversion">
+	</command>
+</extension>
 <extension point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         	<command 
+         	commandId="wpp.dsshdf5conversion"
+            style="push">
+            <visibleWhen checkEnabled="false">
+              <with variable="selection">
+                 <iterate ifEmpty="false" operator="or">
+                    <adapt type="org.eclipse.core.resources.IResource">
+                       <or>
+                          <test property="org.eclipse.core.resources.extension"
+                                value="config">
+                          </test>
+                          <test property="org.eclipse.core.resources.extension"
+                                value="launch">
+                          </test>
+                       </or>
+                    </adapt>
+                 </iterate>
+              </with>
+           </visibleWhen>
+         </command>
+      </menuContribution>
       <menuContribution
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          	<command 
