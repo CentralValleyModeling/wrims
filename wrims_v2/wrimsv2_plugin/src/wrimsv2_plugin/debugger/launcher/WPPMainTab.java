@@ -691,8 +691,8 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		String engineFileFullPath = "WRIMSv2_Engine.bat";
 		try {
 			String configFilePath = generateWsiDiConfigFile();
-			FileWriter debugFile = new FileWriter(engineFileFullPath);
-			PrintWriter out = new PrintWriter(debugFile);
+			FileWriter engineFile = new FileWriter(engineFileFullPath);
+			PrintWriter out = new PrintWriter(engineFile);
 			generateBatch(out, configFilePath);
 			Process process = Runtime.getRuntime().exec("cmd /c start " + "WSIDIGenerator\\wsidi_generator.bat");
 		}catch (IOException e) {
@@ -802,12 +802,8 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 				out.println("OVFile             "+FileProcess.procRelativePath(ovFile, launchConfig));
 			}
 			
-			if (DebugCorePlugin.outputCycleToDss){
-				out.println("OutputCycleDatatoDss yes");
-			}else{
-				out.println("OutputCycleDatatoDss no");
-			}
-			
+			out.println("OutputCycleDatatoDss no");
+						
 			if (DebugCorePlugin.outputAllCycles){
 				out.println("outputallcycledata yes");
 			}else{

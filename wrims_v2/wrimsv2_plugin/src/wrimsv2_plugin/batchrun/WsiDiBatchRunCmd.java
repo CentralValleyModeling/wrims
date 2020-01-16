@@ -121,7 +121,7 @@ public class WsiDiBatchRunCmd {
 				LaunchConfigInfo config = configMap.get(lfp);
 				BatchRunProcess brp = brpMap.get(lfp);
 				brp.getStartEndDate(config);
-				brp.createBatch(config, lfp);
+				brp.createBatch(config, lfp, true);
 			}
 		}
 	}
@@ -161,7 +161,7 @@ public class WsiDiBatchRunCmd {
 				LaunchConfigInfo config = configMap.get(lfp);
 				BatchRunProcess brp = brpMap.get(lfp);
 				brp.getStartEndDate(config);
-				brp.createBatch(config, lfp);
+				brp.createBatch(config, lfp, true);
 			}
 		}
 	}
@@ -176,7 +176,7 @@ public class WsiDiBatchRunCmd {
 			if (configMap.containsKey(lfp) && brpMap.containsKey(lfp)){
 				LaunchConfigInfo config = configMap.get(lfp);
 				BatchRunProcess brp = brpMap.get(lfp);
-				brp.createBatch(config, lfp);
+				brp.createBatch(config, lfp, true);
 				if (i==0){
 					dvNamesLine=dvNamesLine+"r\""+brp.dvFileFullPath+"\"";
 					lookupNamesLine=lookupNamesLine+"r\""+brp.lookupFullPath+"\"";

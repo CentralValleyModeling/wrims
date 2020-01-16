@@ -35,6 +35,7 @@ import wrimsv2.evaluator.DssOperation;
 import wrimsv2.evaluator.Evaluation;
 import wrimsv2.evaluator.PreEvaluator;
 import wrimsv2.evaluator.TimeOperation;
+import wrimsv2.launch.LaunchConfiguration;
 import wrimsv2.wreslparser.elements.StudyUtils;
 
 public class DSSHDF5Converter {
@@ -1235,11 +1236,18 @@ public class DSSHDF5Converter {
 	
 	public void processArgs(String[] args){
 		
-		if(args[0].startsWith("-")) {
+		if (args[0].toLowerCase().startsWith("-launch")){
+			procLaunch(args);
+		}else if(args[0].startsWith("-")) {
 			ConfigUtils.loadArgs(args);
 		} else {		
 			setControlData(args);
 		}		
+	}
+	
+	public void procLaunch(String[] args){
+		String launchFilePath = args[0].substring(args[0].indexOf("=") + 1, args[0].length());
+		new LaunchConfiguration(launchFilePath);
 	}
 	
 	public void setControlData(String[] args){

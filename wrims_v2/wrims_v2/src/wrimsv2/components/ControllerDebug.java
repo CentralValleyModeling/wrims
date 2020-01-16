@@ -55,6 +55,7 @@ import wrimsv2.evaluator.ValueEvaluatorParser;
 import wrimsv2.external.LoadAllDll;
 import wrimsv2.hdf5.HDF5Writer;
 import wrimsv2.ilp.ILP;
+import wrimsv2.launch.LaunchConfiguration;
 import wrimsv2.solver.CbcSolver;
 import wrimsv2.solver.CloseCurrentSolver;
 import wrimsv2.solver.LPSolveSolver;
@@ -102,7 +103,11 @@ public class ControllerDebug extends Thread {
 	@Override
 	public void run() {
 		new DataBaseProfile(args);
-		ConfigUtils.loadArgs(args);
+		if (args[0].toLowerCase().startsWith("-launch")){
+			procLaunch(args);
+		}else{
+			ConfigUtils.loadArgs(args);
+		}
 		connectToDataBase();
 		//generateStudyFile();
 		try {
@@ -380,7 +385,7 @@ public class ControllerDebug extends Thread {
 						}
 						if (ControlData.outputType==1){
 							if (ControlData.isOutputCycle && isSelectedCycleOutput){
-								HDF5Writer.writeOneCycle(mds, cycleI);
+								HDF5Writer.writeOneCycleSv(mds, cycleI);
 							}
 						}
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
@@ -396,7 +401,11 @@ public class ControllerDebug extends Thread {
 							VariableTimeStep.currTimeAddOneDay();
 						}
 					}else{
-						if (ControlData.outputType==1) HDF5Writer.skipOneCycle(mds, cycleI);
+						if (ControlData.outputType==1){
+							if (ControlData.isOutputCycle && isSelectedCycleOutput){
+								HDF5Writer.skipOneCycle(mds, cycleI);
+							}
+						}
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" skipped. ("+model+")");
 						new AssignPastCycleVariable();
 						deferPause(modelIndex);
@@ -434,7 +443,7 @@ public class ControllerDebug extends Thread {
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
 			HDF5Writer.writeTimestepData();
-			HDF5Writer.writeCyclesData();
+			HDF5Writer.writeCyclesDvAlias();
 			HDF5Writer.closeDataStructure();
 		}else if (ControlData.outputType==2){
 			mySQLCWriter.process();
@@ -646,5 +655,10 @@ public class ControllerDebug extends Thread {
 		}else if (ControlData.outputType==4){
 			sqlServerRWriter=new SQLServerRWriter();
 		}
+	}
+	
+	public void procLaunch(String[] args){
+		String launchFilePath = args[0].substring(args[0].indexOf("=") + 1, args[0].length());
+		new LaunchConfiguration(launchFilePath);
 	}
 }

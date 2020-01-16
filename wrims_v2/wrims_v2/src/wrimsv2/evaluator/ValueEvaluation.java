@@ -560,6 +560,10 @@ public class ValueEvaluation {
 	public static double dvarAliasTimeSeries(String ident, int indexValue){
 		String entryNameTS=DssOperation.entryNameTS(ident, ControlData.timeStep);
 		if (indexValue>0){
+			if (indexValue>=0 && (ControlData.currEvalTypeIndex==0 || ControlData.currEvalTypeIndex==7)){
+				Error.addEvaluationError(ident + " at timestep " +indexValue+" doesn't have value");
+				return 1.0;
+			}			
 			String newName = ident+"__fut__"+indexValue;
 			Map<String, Dvar> dvMap = SolverData.getDvarMap();
 			Map<String, Alias> asFutMap = ControlData.currModelDataSet.asFutMap;
@@ -575,13 +579,18 @@ public class ValueEvaluation {
 		
 		int index=indexValue+ControlData.currTimeStep.get(ControlData.currCycleIndex);
 		if (index>=0){
-			DssDataSetFixLength dds=DataTimeSeries.dvAliasTS.get(entryNameTS);
-			if (dds==null){
+			if (indexValue>=0 && (ControlData.currEvalTypeIndex==0 || ControlData.currEvalTypeIndex==7)){
 				Error.addEvaluationError(ident + " at timestep " +indexValue+" doesn't have value");
 				return 1.0;
+			}else{
+				DssDataSetFixLength dds=DataTimeSeries.dvAliasTS.get(entryNameTS);
+				if (dds==null){
+					Error.addEvaluationError(ident + " at timestep " +indexValue+" doesn't have value");
+					return 1.0;
+				}
+				double[] data=dds.getData();
+				return data[index];
 			}
-			double[] data=dds.getData();
-			return data[index];
 		}
 		
 		if (!DataTimeSeries.dvAliasInit.containsKey(entryNameTS)){

@@ -13,10 +13,6 @@ public class General {
 				foundTheCycle=true;
 			}
 		}
-		if (foundTheCycle){
-			return true;
-		}else{
-			return false;
-		}
+		return foundTheCycle;
 	}
 }

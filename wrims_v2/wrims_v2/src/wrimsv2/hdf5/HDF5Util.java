@@ -198,7 +198,7 @@ public class HDF5Util {
 		
 	}
 	
-	public static void writeCycleStaticData(int index, int size, int gid, double[][] write_data){
+	public static void writeCycleStaticSv(int index, int size, int gid, double[][] write_data){
 		String dName="Cycle "+index+" Table";
 		long[] dims = {1, size};
 		long[] dims1 = {1, size};
@@ -260,19 +260,21 @@ public class HDF5Util {
 		} 
 	}
 	
-	public static void writeCycleStaticVariableNames(ModelDataSet mds, int gid, int index){
+	public static void writeCycleStaticSvNames(ModelDataSet mds, int gid, int index){
 		
-		ArrayList<String> dvList = mds.dvList;
+		//ArrayList<String> dvList = mds.dvList;
 		ArrayList<String> svList = mds.svList;
-		ArrayList<String> asList = mds.asList;
-		int dvSize = dvList.size();
+		//ArrayList<String> asList = mds.asList;
+		//int dvSize = dvList.size();
 		int svSize = svList.size();
-		int asSize = asList.size();
+		//int asSize = asList.size();
 		
-		int size=dvSize+svSize+asSize;
+		//int size=dvSize+svSize+asSize;
+		int size=svSize;
 		
 		String[] write_data = new String[size];
 		
+		/*
 		for (int i=0; i<dvSize; i++){
 			write_data[i]=dvList.get(i);						
 		}
@@ -282,8 +284,10 @@ public class HDF5Util {
 			write_data[i+offset]=asList.get(i);					
 		}
 		offset=dvSize+asSize;
+		*/
+		
 		for (int i=0; i<svSize; i++){
-			write_data[i+offset]=svList.get(i);						
+			write_data[i]=svList.get(i);						
 		}
 		
 		int j=index+1;
@@ -320,22 +324,24 @@ public class HDF5Util {
 		
 	}
 	
-	public static void writeCycleDynamicVariables(ModelDataSet mds, int gid, String dName){
+	public static void writeCycleDynamicSv(ModelDataSet mds, int gid, String dName){
 		
-		Map<String, Dvar> solverDvMap = SolverData.getDvarMap();
-		ArrayList<String> dvTimeArrayList = mds.dvTimeArrayList;
+		//Map<String, Dvar> solverDvMap = SolverData.getDvarMap();
+		//ArrayList<String> dvTimeArrayList = mds.dvTimeArrayList;
 		Map<String, Svar> svFutMap = mds.svFutMap;
-		Map<String, Alias> asFutMap = mds.asFutMap;
+		//Map<String, Alias> asFutMap = mds.asFutMap;
 
-		int dvSize=dvTimeArrayList.size();
-		int asSize=asFutMap.size();
+		//int dvSize=dvTimeArrayList.size();
+		//int asSize=asFutMap.size();
 		int svSize=svFutMap.size();
 		
-		int size=dvSize+svSize+asSize;
+		//int size=dvSize+svSize+asSize;
+		int size=svSize;
 		
 		String[] vNames = new String[size];
 		double[] vValues = new double[size];
 		
+		/*
 		for (int i=0; i<dvSize; i++){
 			String name=dvTimeArrayList.get(i);
 			vNames[i]=name;
@@ -355,6 +361,9 @@ public class HDF5Util {
 		}
 		
 		offset=dvSize+asSize;
+		*/
+		
+		int offset=0;
 		Set<String> svKeys = svFutMap.keySet();
 		Iterator<String> svIter = svKeys.iterator();
 		while (svIter.hasNext()){
