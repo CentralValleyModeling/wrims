@@ -3,12 +3,13 @@ package wrimsv2.components;
 public class IntDouble {
 	private Number data;
 	private boolean isInteger;
-	private String argName;
+	private String argName="";
 	private int index;
 	
 	public IntDouble(Number value, boolean isInt) {
 		data=value;
 		isInteger=isInt;
+		argName="";
 	}
 	
 	public IntDouble(Number value, boolean isInt, String name, int index) {

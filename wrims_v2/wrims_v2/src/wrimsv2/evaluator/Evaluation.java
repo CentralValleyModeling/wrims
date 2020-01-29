@@ -502,6 +502,13 @@ public class Evaluation {
 			if (ControlData.currSvMap.containsKey(ident)||ControlData.currTsMap.containsKey(ident)||ControlData.currDvMap.containsKey(ident)||ControlData.currAliasMap.containsKey(ident)||ControlData.currDvSlackSurplusMap.containsKey(ident)) {
 				ArrayList<EvalExpression> eeArray1 = eeArray.get(0);
 				if (eeArray1.size()==1){
+					String idName = eeArray1.get(0).getValue().getName();
+					for (int k=0; k<12; k++){
+						if (idName.equals(TimeOperation.month_const[k])){
+							Error.addEvaluationError(idName+" can't be used in "+ident+"("+idName+")");
+							return new EvalExpression(new IntDouble (1.0, false));
+						}
+					}
 					return getTimeSeries(ident, eeArray1);
 				}else{
 					Error.addEvaluationError("Variable "+ident+" has number of indexes different from 1.");
@@ -1542,7 +1549,7 @@ public class Evaluation {
 	
 	public static EvalExpression term_MONTH_CONST(String month){
 		int monthValue=TimeOperation.monthValue(month);
-		IntDouble id=new IntDouble(TimeOperation.waterMonthValue(monthValue), true);
+		IntDouble id=new IntDouble(TimeOperation.waterMonthValue(monthValue), true, month, 0);
 		return new EvalExpression(id);
 	}
 	
