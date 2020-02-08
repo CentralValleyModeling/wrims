@@ -1,9 +1,12 @@
 package wrimsv2.evaluator;
 
 import wrimsv2.components.ControlData;
+
 import java.util.Date;
 
 public class TimeOperation {
+	public static String[] month_const={"jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"}; 
+	
 	public static String dssTimeFrame(int year1, int month1, int day1, int year2, int month2, int day2){
 		return dayName(day1)+monthName(month1)+year1+" 0100 - "+dayName(day2)+monthName(month2)+year2+" 0000";
 	}

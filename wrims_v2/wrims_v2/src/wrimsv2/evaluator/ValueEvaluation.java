@@ -305,6 +305,13 @@ public class ValueEvaluation {
 			if (ControlData.currSvMap.containsKey(ident)||ControlData.currTsMap.containsKey(ident)||ControlData.currDvMap.containsKey(ident)||ControlData.currAliasMap.containsKey(ident)) {
 				ArrayList<IntDouble> idArray1 = idArray.get(0);
 				if (idArray1.size()==1){
+					String idName = idArray1.get(0).getName();
+					for (int k=0; k<12; k++){
+						if (idName.equals(TimeOperation.month_const[k])){
+							Error.addEvaluationError(idName+" can't be used in "+ident+"("+idName+")");
+							return new IntDouble (1.0, false);
+						}
+					}
 					return getTimeSeries(ident, idArray1);
 				}else{
 					Error.addEvaluationError("Variable "+ident+" has number of indexes different from 1.");
@@ -1131,7 +1138,7 @@ public class ValueEvaluation {
 	
 	public static IntDouble  term_MONTH_CONST(String month){
 		int monthValue=TimeOperation.monthValue(month);
-		return new IntDouble(TimeOperation.waterMonthValue(monthValue), true);
+		return new IntDouble(TimeOperation.waterMonthValue(monthValue), true, month, 0);
 	}
 	
 	public static IntDouble term_PASTMONTH(String pastMonth){
