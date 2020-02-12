@@ -284,8 +284,8 @@ public class CbcSolver {
 		for (int i=0; i<sizeA; i++){
 			dvBiMap.put(i,ControlData.currModelDataSet.dvList.get(i));				
 		}
-		for (int i=sizeA; i<sizeA+sizeB; i++){
-			dvBiMap.put(i,ControlData.currModelDataSet.dvTimeArrayList.get(i));				
+		for (int i=0; i<sizeB; i++){
+			dvBiMap.put(i+sizeA,ControlData.currModelDataSet.dvTimeArrayList.get(i));				
 		}
 		dvBiMapInverse = dvBiMap.inverse();
 		
@@ -320,8 +320,8 @@ public class CbcSolver {
 		for (int i=0; i<sizeA; i++){
 			dvBiMap.put(i,ControlData.currModelDataSet.dvList.get(i));				
 		}
-		for (int i=sizeA; i<sizeA+sizeB; i++){
-			dvBiMap.put(i,ControlData.currModelDataSet.dvTimeArrayList.get(i));				
+		for (int i=0; i<sizeB; i++){
+			dvBiMap.put(i+sizeA,ControlData.currModelDataSet.dvTimeArrayList.get(i));				
 		}
 		dvBiMapInverse = dvBiMap.inverse();
 		
@@ -353,8 +353,8 @@ public class CbcSolver {
 		for (int i=0; i<sizeA; i++){
 			dvBiMap.put(i,ControlData.currModelDataSet.dvList.get(i));				
 		}
-		for (int i=sizeA; i<sizeA+sizeB; i++){
-			dvBiMap.put(i,ControlData.currModelDataSet.dvTimeArrayList.get(i));				
+		for (int i=0; i<sizeB; i++){
+			dvBiMap.put(i+sizeA,ControlData.currModelDataSet.dvTimeArrayList.get(i));				
 		}
 		dvBiMapInverse = dvBiMap.inverse();
 		
