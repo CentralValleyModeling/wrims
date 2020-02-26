@@ -219,7 +219,9 @@ public class ControllerBatch {
 			
 		} else if(StudyUtils.loadParserData) {
 
-			return StudyUtils.loadObject(StudyUtils.parserDataPath);
+			StudyDataSet sds = StudyUtils.loadObject(StudyUtils.parserDataPath);
+			LoadParameter.process(sds);
+			return sds;			
 		
 		} else if(StudyUtils.compileOnly) {
 			

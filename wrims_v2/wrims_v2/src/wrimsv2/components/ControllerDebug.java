@@ -212,7 +212,9 @@ public class ControllerDebug extends Thread {
 	
 	public StudyDataSet parse()throws RecognitionException, IOException{
 		if(StudyUtils.loadParserData) {
-			return StudyUtils.loadObject(StudyUtils.parserDataPath);
+			StudyDataSet sds = StudyUtils.loadObject(StudyUtils.parserDataPath);
+			LoadParameter.process(sds);
+			return sds;
 		}else{
 			return StudyUtils.checkStudy(FilePaths.fullMainPath);
 		}
