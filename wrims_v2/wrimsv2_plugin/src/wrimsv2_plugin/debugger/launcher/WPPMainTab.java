@@ -787,6 +787,8 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 			out.println("IlpLogVarValue     "+"no");
 			out.println("WreslPlus          "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_WRESLPLUS, "no"));
 			out.println("AllowSvTsInit      "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_ALLOWSVTSINIT, "no"));
+			out.println("AllRestartFiles    "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_ALLRESTARTFILES, "no"));
+			out.println("NumberRestartFiles "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_NUMBERRESTARTFILES, "no"));
 			out.println("DatabaseURL        "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_DATABASEURL, "none"));
 			out.println("SQLGroup           "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_SQLGROUP, "calsim"));
 			String ovOption=launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_OVOPTION, "0");

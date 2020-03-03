@@ -108,6 +108,8 @@ public class BatchRunProcess {
 	public String engineFileFullPath;
 	public String dvFileFullPath;
 	public String lookupFullPath;
+	private String allRestartFiles;
+	private String numberRestartFiles;
 		
 	public void launch(LaunchConfigInfo configuration, String launchFilePath) throws CoreException {		
 		
@@ -371,6 +373,8 @@ public class BatchRunProcess {
 			jarXA="XAOptimizer.jar";
 		}
 		allowSvTsInit=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_ALLOWSVTSINIT, "no");
+		allRestartFiles=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_ALLRESTARTFILES, "no");
+		numberRestartFiles=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_NUMBERRESTARTFILES, "12");
 		
 		databaseURL=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_DATABASEURL, "none");
 		sqlGroup=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_SQLGROUP, "calsim");
@@ -474,6 +478,8 @@ public class BatchRunProcess {
 			
 			configMap.put("WreslPlus".toLowerCase(), wreslPlus);
 			configMap.put("AllowSvTsInit".toLowerCase(), allowSvTsInit);
+			configMap.put("AllRestartFiles".toLowerCase(), allRestartFiles);
+			configMap.put("NumberRestartFiles".toLowerCase(), numberRestartFiles);
 			
 			configMap.put("DatabaseURL".toLowerCase(), databaseURL);
 			configMap.put("SQLGroup".toLowerCase(), sqlGroup);

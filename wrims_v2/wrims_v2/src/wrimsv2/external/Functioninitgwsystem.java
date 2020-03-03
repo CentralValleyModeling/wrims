@@ -47,6 +47,11 @@ public class Functioninitgwsystem extends ExternalFunction{
 		}
 
 		int iNRestartFiles=12;
+		if (ControlData.allRestartFiles){
+			iNRestartFiles=0;
+		}else{
+			iNRestartFiles=ControlData.numberRestartFiles;
+		}
 		
 		float result = initgwsystem(cGWPath,iLenGWPath,cOutPath,iLenOutPath,cTimeStep,iNTimeSteps,iSimBeginMonth,iSimBeginYear,iSimMode,iNRestartFiles,iResimulate);
 		// push the result on the Stack

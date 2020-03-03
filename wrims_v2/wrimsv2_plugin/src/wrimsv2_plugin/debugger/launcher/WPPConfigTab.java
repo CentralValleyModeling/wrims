@@ -18,6 +18,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
@@ -31,6 +32,9 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 	private Button allowSvTsInitButton;
 	private Button DSSHDF5ConversionButton;
 	private ILaunchConfiguration currConfiguration;
+	private Button restartFilesButton;
+	private Button allRestartFilesButton;
+	private Text restartFilesText;
 	
 	@Override
 	public void createControl(Composite parent) {
@@ -40,7 +44,7 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 		setControl(comp);
 		GridLayout topLayout = new GridLayout();
 		topLayout.verticalSpacing = 0;
-		topLayout.numColumns = 7;
+		topLayout.numColumns = 6;
 		comp.setLayout(topLayout);
 		comp.setFont(font);
 		
@@ -157,12 +161,79 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 			}
 
 		});
+				
+		Label restartFilesLabel = new Label(comp, SWT.NONE);
+		restartFilesLabel.setText("&Number of Groundwater Restart Files:");
+		gd = new GridData(GridData.BEGINNING);
+		gd.horizontalSpan=2;
+		restartFilesLabel.setLayoutData(gd);
+		restartFilesLabel.setFont(font);
+				
+		restartFilesButton = new Button(comp, SWT.RADIO);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 1;
+		restartFilesButton.setLayoutData(gd);
+		restartFilesButton.setFont(font);
+		restartFilesButton.setEnabled(true);
+		restartFilesButton.addSelectionListener(new SelectionListener(){
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				restartFilesButton.setSelection(true);
+				allRestartFilesButton.setSelection(false);
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		restartFilesText = new Text(comp, SWT.RADIO);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 1;
+		restartFilesText.setLayoutData(gd);
+		restartFilesText.setFont(font);
+		
+		Label spaceLabel = new Label(comp, SWT.NONE);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 1;
+		spaceLabel.setLayoutData(gd);
+		spaceLabel.setFont(font);
+		spaceLabel.setText(" ");
+		
+		allRestartFilesButton = new Button(comp, SWT.RADIO);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 1;
+		allRestartFilesButton.setLayoutData(gd);
+		allRestartFilesButton.setFont(font);
+		allRestartFilesButton.setEnabled(true);
+		allRestartFilesButton.setText("All the files");
+		allRestartFilesButton.addSelectionListener(new SelectionListener(){
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				allRestartFilesButton.setSelection(true);
+				restartFilesButton.setSelection(false);
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 	}
 
 	@Override
 	public void setDefaults(ILaunchConfigurationWorkingCopy configuration) {
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_WRESLPLUS, "no");
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_ALLOWSVTSINIT, "no");
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_ALLRESTARTFILES, "no");
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_NUMBERRESTARTFILES, "12");
 	}
 
 	@Override
@@ -203,6 +274,27 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 		} catch (CoreException e) {
 			WPPException.handleException(e);
 		}
+		
+		String allRestartFiles = null;
+		try {
+			allRestartFiles = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ALLRESTARTFILES, "no");
+			if (allRestartFiles.equalsIgnoreCase("yes")){
+				allRestartFilesButton.setSelection(true);
+				restartFilesButton.setSelection(false);
+			}else{
+				allRestartFilesButton.setSelection(false);
+				restartFilesButton.setSelection(true);
+			}
+		} catch (CoreException e) {
+			WPPException.handleException(e);
+		}
+		
+		try {
+			String numberRestartFiles=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_NUMBERRESTARTFILES, "12");
+			restartFilesText.setText(numberRestartFiles);
+		} catch (CoreException e) {
+			WPPException.handleException(e);
+		}
 	}
 
 	@Override
@@ -230,6 +322,17 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 			allowSvTsInit="no";
 		}
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_ALLOWSVTSINIT, allowSvTsInit);
+		
+		String allRestartFiles="no";
+		if (allRestartFilesButton.getSelection()){
+			allRestartFiles="yes";
+		}else{
+			allRestartFiles="no";
+		}
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_ALLRESTARTFILES, allRestartFiles);
+		
+		String numberRestartFiles=restartFilesText.getText();
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_NUMBERRESTARTFILES, numberRestartFiles);
 	}
 
 	@Override
