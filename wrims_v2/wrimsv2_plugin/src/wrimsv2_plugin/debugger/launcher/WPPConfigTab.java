@@ -181,12 +181,14 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 			public void widgetSelected(SelectionEvent e) {
 				restartFilesButton.setSelection(true);
 				allRestartFilesButton.setSelection(false);
+				updateLaunchConfigurationDialog();
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-				
+				restartFilesButton.setSelection(true);
+				allRestartFilesButton.setSelection(false);
+				updateLaunchConfigurationDialog();				
 			}
 			
 		});
@@ -196,6 +198,14 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 		gd.horizontalSpan = 1;
 		restartFilesText.setLayoutData(gd);
 		restartFilesText.setFont(font);
+		restartFilesText.addModifyListener(new ModifyListener(){
+
+			@Override
+			public void modifyText(ModifyEvent e) {
+				updateLaunchConfigurationDialog();
+			}
+			
+		});
 		
 		Label spaceLabel = new Label(comp, SWT.NONE);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
@@ -217,12 +227,14 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 			public void widgetSelected(SelectionEvent e) {
 				allRestartFilesButton.setSelection(true);
 				restartFilesButton.setSelection(false);
+				updateLaunchConfigurationDialog();
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-				
+				allRestartFilesButton.setSelection(true);
+				restartFilesButton.setSelection(false);
+				updateLaunchConfigurationDialog();
 			}
 			
 		});
