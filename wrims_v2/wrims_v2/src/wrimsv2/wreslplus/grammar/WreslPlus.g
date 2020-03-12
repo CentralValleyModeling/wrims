@@ -84,7 +84,7 @@ options {
 
 wreslFile
 @after{ mObj = $t.modelObj;}
-	: t=mt ; 
+	: ('{' t=mt '}') | t=mt ; 
 
 wreslMain
 scope { StudyTemp sty;} 
