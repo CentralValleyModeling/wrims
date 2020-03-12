@@ -1,10 +1,15 @@
 package wrimsv2.components;
 
-public class IntDouble {
+import java.io.Serializable;
+
+public class IntDouble{
 	private Number data;
 	private boolean isInteger;
 	private String argName="";
 	private int index;
+	
+	public IntDouble() {
+	}
 	
 	public IntDouble(Number value, boolean isInt) {
 		data=value;

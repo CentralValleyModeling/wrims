@@ -105,6 +105,8 @@ public class LaunchConfiguration {
 	public static final String ATTR_WPP_CALSIMHYDRORUN=ID_WPP_DEBUG_MODEL + ".CALSIMHYDRORUN";
 	public static final String ATTR_WPP_CALSIMHYDROEXE=ID_WPP_DEBUG_MODEL + ".CALSIMHYDROEXE";
 	public static final String ATTR_WPP_ILPLOG=ID_WPP_DEBUG_MODEL+".ILPLOG";
+	public static final String ATTR_WPP_ALLRESTARTFILES=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_ALLRESTARTFILES";
+	public static final String ATTR_WPP_NUMBERRESTARTFILES=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_NUMBERRESTARTFILES";
 	
 	//private ILaunchConfigurationType fType;
 	
@@ -398,12 +400,13 @@ public class LaunchConfiguration {
 			StudyUtils.useWreslPlus = true;
 		}
 				
-		String allowSvTsInit=getStringAttribute(ATTR_WPP_ALLOWSVTSINIT, "no");
-		if (allowSvTsInit.equalsIgnoreCase("no")){
-			ControlData.allowSvTsInit=false;
+		String allRestartFiles = getStringAttribute(ATTR_WPP_ALLRESTARTFILES, "no");
+		if (allRestartFiles.equalsIgnoreCase("no")){
+			ControlData.allRestartFiles=false;
 		}else{
-			ControlData.allowSvTsInit=true;
+			ControlData.allRestartFiles=true;
 		}
+		ControlData.numberRestartFiles  = Integer.parseInt(getStringAttribute(ATTR_WPP_NUMBERRESTARTFILES, "12"));
 		
 		ControlData.databaseURL=getStringAttribute(ATTR_WPP_DATABASEURL, "none");
 		ControlData.sqlGroup=getStringAttribute(ATTR_WPP_SQLGROUP, "calsim");

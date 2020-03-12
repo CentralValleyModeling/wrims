@@ -748,6 +748,17 @@ public class ConfigUtils {
 		}
 		System.out.println("AllowSvTsInit:    " + ControlData.allowSvTsInit);
 		
+		String allRestartFiles = configMap.get("allrestartfiles");
+		if (allRestartFiles.equalsIgnoreCase("yes") || allRestartFiles.equalsIgnoreCase("true")){
+			ControlData.allRestartFiles = true;	
+		} else {
+			ControlData.allRestartFiles  = false;	
+		}
+		System.out.println("AllRestartFiles:    " + ControlData.allRestartFiles);
+		
+		ControlData.numberRestartFiles = Integer.parseInt(configMap.get("numberrestartfiles"));
+		System.out.println("NumberRestartFiles:    " + ControlData.numberRestartFiles);
+		
 		ControlData.databaseURL = configMap.get("databaseurl");
 		ControlData.sqlGroup = configMap.get("sqlgroup");
 		ControlData.ovOption = Integer.parseInt(configMap.get("ovoption"));

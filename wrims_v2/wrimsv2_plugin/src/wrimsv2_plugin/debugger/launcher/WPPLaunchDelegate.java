@@ -85,6 +85,8 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 	private String ovFile="";
 	private boolean isSensitivity=false;
 	private int sri=1;
+	private String allRestartFiles;
+	private String numberRestartFiles;
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.ILaunchConfigurationDelegate#launch(org.eclipse.debug.core.ILaunchConfiguration, java.lang.String, org.eclipse.debug.core.ILaunch, org.eclipse.core.runtime.IProgressMonitor)
@@ -455,6 +457,8 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 				jarXA="XAOptimizer.jar";
 			}
 			allowSvTsInit=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ALLOWSVTSINIT, "no");
+			allRestartFiles=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ALLRESTARTFILES, "no");
+			numberRestartFiles=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_NUMBERRESTARTFILES, "12");
 			
 			databaseURL=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_DATABASEURL, "none");
 			sqlGroup=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SQLGROUP, "calsim");
@@ -564,6 +568,8 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			
 			configMap.put("WreslPlus".toLowerCase(), wreslPlus);
 			configMap.put("AllowSvTsInit".toLowerCase(), allowSvTsInit);
+			configMap.put("AllRestartFiles".toLowerCase(), allRestartFiles);
+			configMap.put("NumberRestartFiles".toLowerCase(), numberRestartFiles);
 			
 			configMap.put("DatabaseURL".toLowerCase(), databaseURL);
 			configMap.put("SQLGroup".toLowerCase(), sqlGroup);
@@ -669,6 +675,8 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			out.println("IlpLogAllCycles    "+configMap.get("IlpLogAllCycles".toLowerCase()));
 			out.println("WreslPlus          "+configMap.get("WreslPlus".toLowerCase()));
 			out.println("AllowSvTsInit      "+configMap.get("AllowSvTsInit".toLowerCase()));
+			out.println("AllRestartFiles    "+configMap.get("AllRestartFiles".toLowerCase()));
+			out.println("NumberRestartFiles "+configMap.get("NumberRestartFiles".toLowerCase()));
 			out.println("DatabaseURL        "+configMap.get("DatabaseURL".toLowerCase()));
 			out.println("SQLGroup           "+configMap.get("SQLGroup".toLowerCase()));
 			out.println("OVOption           "+configMap.get("OVOption".toLowerCase()));
