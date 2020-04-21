@@ -42,6 +42,7 @@ import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
+import java.util.prefs.Preferences;
 
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
@@ -151,7 +152,7 @@ public abstract class SchematicBase extends ViewPart {
 	
 	private static final Object VALUE_TEXT = "__VT__";
 	
-	private static int precision = 0;
+	//private static int precision = 0;
 	
 	private static double FACTOR = 1000. * 43560 / (24 * 60 * 60);
 	
@@ -160,6 +161,8 @@ public abstract class SchematicBase extends ViewPart {
 	private int baseIndex = 0;
 
 	private SearchText searchText;
+	
+	public static String DECIMAL_PLACES = "decimalPlaces";
 
 	/**
 	 * The constructor.
@@ -1321,7 +1324,7 @@ public abstract class SchematicBase extends ViewPart {
 							continue;
 						}
 						String value = valuesInStudy.get(name);
-						value = truncateAfterDecimal(value, precision,
+						value = truncateAfterDecimal(value, DssPluginCore._preferences.getInt(DECIMAL_PLACES, 0),
 								true);
 						if (object instanceof ShapeNode) {
 							ShapeNode shapeNode = (ShapeNode) object;

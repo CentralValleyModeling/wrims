@@ -117,8 +117,6 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 
 	protected Clipboard _sysClipboard = null;
 
-	private Preferences _preferences;
-
 	private boolean _showCommas = true;
 
 	private boolean _showTotalColumn = true;
@@ -134,7 +132,7 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 	}
 
 	public MonthlyTablePanel() {
-		_preferences = Preferences.userNodeForPackage(getClass());
+		//_preferences = Preferences.userNodeForPackage(getClass());
 		_sysClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 		setLayout(new BorderLayout());
 		JPanel panel = new JPanel();
@@ -145,9 +143,9 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 		JLabel precisionLabel = new JLabel("Decimal Places: ");
 		add(panel, "North");
 		// _table = new MonthlyTable(this);
-		setShowCommas(_preferences.getBoolean(SHOW_COMMAS, true));
-		setShowTotalColumn(_preferences.getBoolean(SHOW_TOTAL_COLUMN, true));
-		setDecimalPlaces(_preferences.getInt(DECIMAL_PLACES, 0));
+		setShowCommas(DssPluginCore._preferences.getBoolean(SHOW_COMMAS, true));
+		setShowTotalColumn(DssPluginCore._preferences.getBoolean(SHOW_TOTAL_COLUMN, true));
+		setDecimalPlaces(DssPluginCore._preferences.getInt(DECIMAL_PLACES, 0));
 		_table = new MonthlyTable(this);
 		_tableScrollPane = _table.getScrollPane();
 		add(_tableScrollPane, "Center");
@@ -603,7 +601,7 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 		if (oldPlaces != numberDecimals) {
 			_table.setPrecision(numberDecimals);
 			_decimalPlaces=numberDecimals;
-			_preferences.putInt(DECIMAL_PLACES, numberDecimals);
+			DssPluginCore._preferences.putInt(DECIMAL_PLACES, numberDecimals);
 			validate();
 			repaint();
 			firePropertyChange(DECIMAL_PLACES_PROPERTY, oldPlaces,
@@ -614,7 +612,7 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 	private void ViewCommas_Action() {
 		_showCommas = !_showCommas;
 		_table.setShowCommas(_showCommas);
-		_preferences.putBoolean(SHOW_COMMAS, _showCommas);
+		DssPluginCore._preferences.putBoolean(SHOW_COMMAS, _showCommas);
 		validate();
 		repaint();
 		firePropertyChange(SHOW_COMMAS_PROPERTY, !_showCommas, _showCommas);
@@ -623,7 +621,7 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 	private void ViewTotalColumn_Action() {
 		_showTotalColumn = _viewTotalColumn.getState();
 		_table.setShowTotalColumn(_showTotalColumn);
-		_preferences.putBoolean(SHOW_TOTAL_COLUMN, _showTotalColumn);
+		DssPluginCore._preferences.putBoolean(SHOW_TOTAL_COLUMN, _showTotalColumn);
 		validate();
 		repaint();
 		firePropertyChange(SHOW_TOTAL_COLUMN_PROPERTY, !_showTotalColumn,

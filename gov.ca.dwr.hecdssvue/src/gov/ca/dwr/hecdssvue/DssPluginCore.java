@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Vector;
+import java.util.prefs.Preferences;
 
 import org.swixml.SwingEngine;
 
@@ -38,6 +39,8 @@ public class DssPluginCore {
 
 	public final static String DEFAULT_TIME_WINDOW = "All";
 	public static String tw=DEFAULT_TIME_WINDOW;
+	
+	public static Preferences _preferences;
 
 	public static ArrayList<Integer> months= new ArrayList<Integer>(){{
 	    add(10);
