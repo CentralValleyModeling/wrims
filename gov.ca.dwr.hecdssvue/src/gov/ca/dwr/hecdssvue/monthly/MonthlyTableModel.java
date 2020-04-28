@@ -1181,8 +1181,10 @@ public final class MonthlyTableModel extends AbstractTableModel { // extends
 						}
 					}
 				}
-				_columnNames.add("TTL"); // the last column is the line total/#
+				_columnNames.add("TTL"); // the 2nd last column is the line total/#
 											// of values on the line
+				
+				_columnNames.add("AVG");
 				
 				_hdaValues = new HecDoubleArray(_tsc.values);
 				_hdaValues.setPrecision(precision);
@@ -1269,6 +1271,10 @@ public final class MonthlyTableModel extends AbstractTableModel { // extends
 							// int subtraction = 0;
 							// if (!isShowTotalColumn())
 							// ++subtraction;
+							
+							((HecDoubleArray) row[1]).element(
+									displayMonths.size()+1).set(sum/displayMonths.size()); 
+							
 							if (column == _columnNames.size() - 2) { // -
 																		// subtraction)
 																		// {
@@ -1364,9 +1370,12 @@ public final class MonthlyTableModel extends AbstractTableModel { // extends
 					((HecDoubleArray) row[1]).setPrecision(precision);
 					_data.add(row);
 					initVisibleColumns();
-					if (!showTotalColumn)
+					if (!showTotalColumn){
+						setColumnVisibility(_columnNames.size() - 2,
+								showTotalColumn);
 						setColumnVisibility(_columnNames.size() - 1,
 							showTotalColumn);
+					}
 				}
 				
 			}
@@ -1424,7 +1433,7 @@ public final class MonthlyTableModel extends AbstractTableModel { // extends
 						++subtraction;
 					for (int j = 0; j < ((HecDoubleArray) rowArray[1])
 							.numberElements()
-							- 1 - subtraction; ++j) { // 13 elements
+							- 2 - subtraction; ++j) { // 13 elements
 						if (_visibleColumns[j]) { // 14 length
 							rowOfVisibles.element(j).set(
 									((HecDoubleArray) rowArray[1]).element(j));
@@ -1454,7 +1463,7 @@ public final class MonthlyTableModel extends AbstractTableModel { // extends
 						++subtraction;
 					for (int j = 0; j < ((HecDoubleArray) rowArray[1])
 							.numberElements()
-							- 1 - subtraction; ++j) {
+							- 2 - subtraction; ++j) {
 						if (_visibleColumns[j]) {
 							rowOfVisibles.element(j).set(
 									((HecDoubleArray) rowArray[1]).element(j));
