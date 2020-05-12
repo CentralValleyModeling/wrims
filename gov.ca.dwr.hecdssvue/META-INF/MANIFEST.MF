@@ -16,6 +16,7 @@ Bundle-NativeCode: cb.dll; javaHeclib.dll; rmaUtil.dll; processor=x86, lib_x64/c
 Bundle-ActivationPolicy: lazy
 Export-Package: gov.ca.dwr.hecdssvue;uses:="org.eclipse.jface.resource,org.eclipse.ui.plugin,org.osgi.framework",
  gov.ca.dwr.hecdssvue.components,
+ gov.ca.dwr.hecdssvue.panel,
  gov.ca.dwr.hecdssvue.views;
   uses:="org.eclipse.core.runtime.jobs,
    javax.swing,

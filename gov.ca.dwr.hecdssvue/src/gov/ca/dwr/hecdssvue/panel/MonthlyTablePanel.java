@@ -20,6 +20,10 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedWriter;
@@ -42,10 +46,12 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 
+import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.ui.IWorkbenchPartSite;
-import org.eclipse.ui.internal.WorkbenchPartReference;
 
 import rma.swing.table.TableExportOptions;
 import rma.util.RMAIO;
@@ -462,7 +468,7 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 		return _showTotalColumn;
 	}
 
-	void setDecimalPlaces(int decimalPlaces) {
+	public void setDecimalPlaces(int decimalPlaces) {
 		if (decimalPlaces != _decimalPlaces) {
 			int oldPlaces = _decimalPlaces;
 			_decimalPlaces = decimalPlaces;
@@ -496,6 +502,7 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 			if (menuitem != null) { // then all gui components are null;
 									// DecimalPlaces_Action cannot be called
 				menuitem.setSelected(true);
+				menuitem.update(menuitem.getGraphics());
 				DecimalPlaces_Action(_decimalPlaces);
 			} else {
 				validate();

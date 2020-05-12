@@ -9,6 +9,7 @@ import gov.ca.dwr.jdiagram.Activator;
 import gov.ca.dwr.jdiagram.FontUtil;
 import gov.ca.dwr.jdiagram.RectangleZoomBehavior;
 import gov.ca.dwr.jdiagram.SchematicPluginCore;
+import gov.ca.dwr.jdiagram.dialog.DecimalDialog;
 import gov.ca.dwr.jdiagram.dialog.PDFOptionDialog;
 import gov.ca.dwr.jdiagram.panel.MagnifierPanel;
 import gov.ca.dwr.jdiagram.toolbars.DateCombo;
@@ -140,6 +141,8 @@ public abstract class SchematicBase extends ViewPart {
 	
 	private Action fontAction;
 	
+	private Action decimalAction;
+	
 	private Action forwardAction;
 	
 	private Action backwardAction;
@@ -162,7 +165,7 @@ public abstract class SchematicBase extends ViewPart {
 
 	private SearchText searchText;
 	
-	public static String DECIMAL_PLACES = "decimalPlaces";
+	private static String DECIMAL_PLACES = "decimalPlaces";
 
 	/**
 	 * The constructor.
@@ -355,6 +358,7 @@ public abstract class SchematicBase extends ViewPart {
 		manager.add(zoomRectAction);
 		manager.add(zoomMagnifier);
 		manager.add(fontAction);
+		manager.add(decimalAction);
 		dateCombo=new DateCombo(this);
 		manager.add(dateCombo);
 		manager.add(backwardAction);
@@ -509,6 +513,21 @@ public abstract class SchematicBase extends ViewPart {
 							}
 							//getDiagramView().resumeRepaint();
 						}
+					}
+				});
+			};
+		};
+		
+		decimalAction = new Action("Decimal", Activator.getImageDescriptor("decimal.png")){
+			
+			public void run(){
+				final IWorkbench workbench=PlatformUI.getWorkbench();
+				workbench.getDisplay().asyncExec(new Runnable(){
+					public void run(){
+						Shell shell=workbench.getActiveWorkbenchWindow().getShell();
+						Display display=shell.getDisplay();
+						DecimalDialog decimalDialog = new DecimalDialog(shell, getSchematic());
+						decimalDialog.openDialog();
 					}
 				});
 			};
@@ -1760,5 +1779,9 @@ public abstract class SchematicBase extends ViewPart {
 	
 	public Component getContentPane(){
 		return contentPane;
+	}
+	
+	public SchematicBase getSchematic(){
+		return this;
 	}
 }

@@ -1,5 +1,6 @@
 package gov.ca.dwr.hecdssvue;
 
+import gov.ca.dwr.hecdssvue.panel.MonthlyTablePanel;
 import hec.heclib.dss.CondensedReference;
 import hec.heclib.dss.HecDss;
 import hec.hecmath.HecMath;
@@ -110,4 +111,5 @@ public class DssPluginCore {
 	public static DtsTreePanel dtp;
 	
 	public static String lastCopiedDssFolder="c:\\";
+	public static MonthlyTablePanel mtp;
 }
