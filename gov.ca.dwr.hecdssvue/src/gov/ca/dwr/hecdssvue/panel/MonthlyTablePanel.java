@@ -501,6 +501,7 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 
 			if (menuitem != null) { // then all gui components are null;
 									// DecimalPlaces_Action cannot be called
+				_decimalGroup.clearSelection();
 				menuitem.setSelected(true);
 				menuitem.update(menuitem.getGraphics());
 				DecimalPlaces_Action(_decimalPlaces);

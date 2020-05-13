@@ -74,7 +74,7 @@ public class WPPOptionDialog extends Dialog {
 	    tabFolder.setSize(400, 300);
 	    tabFolder.setLayoutData(gridData);
 		
-		gridData=new GridData(GridData.FILL_BOTH);
+		gridData=new GridData(GridData.HORIZONTAL_ALIGN_CENTER);
 		gridData.horizontalSpan=1;
 	    
 		Button ok = new Button(shell, SWT.PUSH);

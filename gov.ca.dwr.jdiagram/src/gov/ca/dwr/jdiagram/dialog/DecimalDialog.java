@@ -53,7 +53,7 @@ public class DecimalDialog extends Dialog {
 		Shell shell=new Shell(getParent(), getStyle());
 		shell.setText(getText());
 		createContents(shell);
-		shell.setSize(300, 120);
+		shell.setSize(325, 120);
 		shell.setLocation(450, 300);
 		//shell.pack();
 		shell.open();
