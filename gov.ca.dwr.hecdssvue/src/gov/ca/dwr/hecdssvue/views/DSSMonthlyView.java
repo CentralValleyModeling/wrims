@@ -58,7 +58,7 @@ public class DSSMonthlyView extends AbstractDSSView {
 	
 	public void createPartControl(Composite parent){
 		super.createPartControl(parent);
-		monthly = new MonthlyTablePanel();
+		monthly = new MonthlyTablePanel(_frame);
 		DssPluginCore.mtp=monthly;
 		contentPane.add(monthly);
 	}
