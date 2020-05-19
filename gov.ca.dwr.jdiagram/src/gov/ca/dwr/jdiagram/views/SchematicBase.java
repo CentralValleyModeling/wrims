@@ -143,6 +143,8 @@ public abstract class SchematicBase extends ViewPart {
 	
 	private Action decimalAction;
 	
+	private Action tafTypeAction;
+	
 	private Action forwardAction;
 	
 	private Action backwardAction;
@@ -359,6 +361,7 @@ public abstract class SchematicBase extends ViewPart {
 		manager.add(zoomMagnifier);
 		manager.add(fontAction);
 		manager.add(decimalAction);
+		manager.add(tafTypeAction);
 		dateCombo=new DateCombo(this);
 		manager.add(dateCombo);
 		manager.add(backwardAction);
@@ -528,6 +531,23 @@ public abstract class SchematicBase extends ViewPart {
 						Display display=shell.getDisplay();
 						DecimalDialog decimalDialog = new DecimalDialog(shell, getSchematic());
 						decimalDialog.openDialog();
+					}
+				});
+			};
+		};
+		
+		tafTypeAction = new Action("TAF Type", Activator.getImageDescriptor("M.png")){
+			
+			public void run(){
+				final IWorkbench workbench=PlatformUI.getWorkbench();
+				workbench.getDisplay().asyncExec(new Runnable(){
+					public void run(){
+						SchematicPluginCore.isTAFMonthly=!SchematicPluginCore.isTAFMonthly;
+						if (SchematicPluginCore.isTAFMonthly){
+							tafTypeAction.setImageDescriptor(Activator.getImageDescriptor("M.png"));
+						}else{
+							tafTypeAction.setImageDescriptor(Activator.getImageDescriptor("Y.png"));
+						}
 					}
 				});
 			};
@@ -857,6 +877,9 @@ public abstract class SchematicBase extends ViewPart {
 								boolean isTAFSelected = (DssPluginCore.units.equalsIgnoreCase("taf") ? true
 										: false);
 								tsc = unitsConversion(isStorage, tsc, isTAFSelected, k, name);
+								if (DssPluginCore.units.equals("TAF") && tsc.units.equals("TAF") && !SchematicPluginCore.isTAFMonthly){
+									tsc = convertAnnualTAFData(tsc); // CB added constant IV
+								}
 								HecTime hecStartTime = new HecTime();
 								hecStartTime.set(tsc.startTime);
 								HecTime ht = new HecTime();
@@ -1141,6 +1164,9 @@ public abstract class SchematicBase extends ViewPart {
 							value="N/A";
 						} else {
 							value = data + " " + units;
+							if (DssPluginCore.units.equals("TAF") && !SchematicPluginCore.isTAFMonthly){
+								value = data*12 + " " + units;
+							}
 						}
 						if (DssPluginCore.mode.equals(DssPluginCore.diff)) {
 							if (k > baseIndex) {
@@ -1154,6 +1180,10 @@ public abstract class SchematicBase extends ViewPart {
 								try {
 									double baseVal = Double.parseDouble(baseFields[0]);
 									double altVal = Double.parseDouble(altFields[0]);
+									if (DssPluginCore.units.equals("TAF") && !SchematicPluginCore.isTAFMonthly){
+										baseVal=baseVal*12;
+										altVal=altVal*12;
+									}
 									results[k].put(name, (altVal - baseVal) + " " + baseFields[1]);
 								} catch (NumberFormatException nfe) {
 									results[k].put(name,"N/A");
@@ -1215,6 +1245,9 @@ public abstract class SchematicBase extends ViewPart {
 							value="N/A";
 						} else {
 							value = data + " " + units;
+							if (DssPluginCore.units.equals("TAF") && !SchematicPluginCore.isTAFMonthly){
+								value = data*12 + " " + units;
+							}
 						}
 						if (DssPluginCore.mode.equals(DssPluginCore.diff)) {
 							if (k > baseIndex) {
@@ -1228,6 +1261,10 @@ public abstract class SchematicBase extends ViewPart {
 								try {
 									double baseVal = Double.parseDouble(baseFields[0]);
 									double altVal = Double.parseDouble(altFields[0]);
+									if (DssPluginCore.units.equals("TAF") && !SchematicPluginCore.isTAFMonthly){
+										baseVal=baseVal*12;
+										altVal=altVal*12;
+									}
 									results[k].put(name, (altVal - baseVal) + " " + baseFields[1]);
 								} catch (NumberFormatException nfe) {
 									results[k].put(name,"N/A");
@@ -1276,6 +1313,9 @@ public abstract class SchematicBase extends ViewPart {
 								boolean isTAFSelected = (DssPluginCore.units.equalsIgnoreCase("taf") ? true
 										: false);
 								tsc = unitsConversion(isStorage, tsc, isTAFSelected, k, name);
+								if (DssPluginCore.units.equals("TAF") && tsc.units.equals("TAF") && !SchematicPluginCore.isTAFMonthly){
+									tsc = convertAnnualTAFData(tsc); // CB added constant IV
+								}
 								HecTime hecStartTime = new HecTime();
 								hecStartTime.set(tsc.startTime);
 								HecTime ht = new HecTime();
@@ -1541,7 +1581,7 @@ public abstract class SchematicBase extends ViewPart {
 			// factor
 			dataSet.units="CFS";
 			DssPluginCore.allSchematicVariableUnitsCFS[index].put(name, "CFS");
-		}
+		} 
 		return dataSet;
 	}
 	
@@ -1578,7 +1618,11 @@ public abstract class SchematicBase extends ViewPart {
 				// "+values[i]);
 				// CB nvalues[i] = tsc.values[i] * ndays * factor;
 				if (isCFStoTAF) {
-					nvalues[i] = tsc.values[i] * ndays / FACTOR;
+					if (SchematicPluginCore.isTAFMonthly){
+						nvalues[i] = tsc.values[i] * ndays / FACTOR;
+					}else{
+						nvalues[i] = tsc.values[i] * ndays / FACTOR*12;
+					}
 				} else {
 					nvalues[i] = tsc.values[i] / ndays * FACTOR;
 				}
@@ -1586,6 +1630,35 @@ public abstract class SchematicBase extends ViewPart {
 			tsc.values = nvalues;
 		} catch (Exception e) {
 			System.out.println("Exception adjustMonthlyData: " + e);
+		}
+		return tsc;
+	}
+	
+	public TimeSeriesContainer convertAnnualTAFData(TimeSeriesContainer tsc) { // CB added
+		// the
+		// boolean
+		// and
+		// made
+		// a
+		// constant
+		// IV
+		// factor
+		HecTime ht = null;
+		try {
+			double[] nvalues = new double[tsc.values.length];
+			int[] times = tsc.times;
+			int ndays = 0;
+			ht = new HecTime();
+			for (int i = 0; i < times.length; i++) {
+				ht.set(times[i]);
+				// FIX: subtract 1 min
+				ht.add(-1);
+				//ndays = ht.day();
+				nvalues[i] = tsc.values[i] *12; 
+			}
+			tsc.values = nvalues;
+		} catch (Exception e) {
+			System.out.println("Exception convertAnnualTAFData: " + e);
 		}
 		return tsc;
 	}
