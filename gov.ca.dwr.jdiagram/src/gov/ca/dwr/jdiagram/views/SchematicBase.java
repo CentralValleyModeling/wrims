@@ -168,6 +168,8 @@ public abstract class SchematicBase extends ViewPart {
 	private SearchText searchText;
 	
 	private static String DECIMAL_PLACES = "decimalPlaces";
+	
+	private static String ISMONTHLYTAF="ismonthlytaf";
 
 	/**
 	 * The constructor.
@@ -536,7 +538,8 @@ public abstract class SchematicBase extends ViewPart {
 			};
 		};
 		
-		tafTypeAction = new Action("TAF Type", Activator.getImageDescriptor("M.png")){
+		SchematicPluginCore.isTAFMonthly = DssPluginCore._preferences.getBoolean(ISMONTHLYTAF, true);
+		tafTypeAction = new Action("TAF Type"){
 			
 			public void run(){
 				final IWorkbench workbench=PlatformUI.getWorkbench();
@@ -544,14 +547,21 @@ public abstract class SchematicBase extends ViewPart {
 					public void run(){
 						SchematicPluginCore.isTAFMonthly=!SchematicPluginCore.isTAFMonthly;
 						if (SchematicPluginCore.isTAFMonthly){
+							DssPluginCore._preferences.putBoolean(ISMONTHLYTAF, true);
 							tafTypeAction.setImageDescriptor(Activator.getImageDescriptor("M.png"));
 						}else{
+							DssPluginCore._preferences.putBoolean(ISMONTHLYTAF, false);
 							tafTypeAction.setImageDescriptor(Activator.getImageDescriptor("Y.png"));
 						}
 					}
 				});
 			};
 		};
+		if (SchematicPluginCore.isTAFMonthly){
+			tafTypeAction.setImageDescriptor(Activator.getImageDescriptor("M.png"));
+		}else{
+			tafTypeAction.setImageDescriptor(Activator.getImageDescriptor("Y.png"));
+		}
 		
 		forwardAction = new Action("Forward", Activator.getImageDescriptor("forward.png")){
 			
