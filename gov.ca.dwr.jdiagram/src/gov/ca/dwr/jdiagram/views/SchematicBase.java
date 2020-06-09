@@ -1628,11 +1628,7 @@ public abstract class SchematicBase extends ViewPart {
 				// "+values[i]);
 				// CB nvalues[i] = tsc.values[i] * ndays * factor;
 				if (isCFStoTAF) {
-					if (SchematicPluginCore.isTAFMonthly){
-						nvalues[i] = tsc.values[i] * ndays / FACTOR;
-					}else{
-						nvalues[i] = tsc.values[i] * ndays / FACTOR*12;
-					}
+					nvalues[i] = tsc.values[i] * ndays / FACTOR;
 				} else {
 					nvalues[i] = tsc.values[i] / ndays * FACTOR;
 				}
