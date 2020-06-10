@@ -78,26 +78,26 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	private Text authorText;
 	private Text dateText;
 	private Text descriptionText;
-	private Text fMainFileText;
+	public Text fMainFileText;
 	private Button fMainFileButton;
-	private Text fDvarFileText;
+	public Text fDvarFileText;
 	private Button fDvarFileButton;
-	private Text fSvarFileText;
+	public Text fSvarFileText;
 	private Button fSvarFileButton;
-	private Text fInitFileText;
+	public Text fInitFileText;
 	private Button fInitFileButton;
-	private Text groundWaterFolderText;
+	public Text groundWaterFolderText;
 	private Button groundWaterFolderButton;
-	private Text aPartText;
-	private Text svFPartText;
-	private Text initFPartText;
-	private Combo timeStepCombo;
-	private Combo startYearCombo;
-	private Combo startMonthCombo;
-	private Combo startDayCombo;
-	private Combo endYearCombo;
-	private Combo endMonthCombo;
-	private Combo endDayCombo;
+	public Text aPartText;
+	public Text svFPartText;
+	public Text initFPartText;
+	public Combo timeStepCombo;
+	public Combo startYearCombo;
+	public Combo startMonthCombo;
+	public Combo startDayCombo;
+	public Combo endYearCombo;
+	public Combo endMonthCombo;
+	public Combo endDayCombo;
 	private Button pa;
 	private Label msl;
 	private Combo ms;
@@ -107,7 +107,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	private Button calsimHydroButton;
 	
 	private ILaunchConfiguration launchConfig;
-	String externalPath="";
+	private String externalPath="";
 	
 	private DayItemListener sdl=new DayItemListener(1);
 	private DayItemListener edl=new DayItemListener(2);
@@ -622,6 +622,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 			
 		});
 		
+		/*
 		wsidigen = new Button(comp, SWT.NONE);
 		wsidigen.setText("&Wsi-Di Generator");
 		gd = new GridData(GridData.BEGINNING);
@@ -634,6 +635,13 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 				wsidigenerator();
 			}
 		});
+		*/
+		
+		Label emptyLabel1 = new Label (comp, SWT.NONE);
+		emptyLabel1.setText("");
+		gd = new GridData(GridData.END);
+		gd.horizontalSpan=3;
+		emptyLabel1.setLayoutData(gd);
 		
 		ch = new Button(comp, SWT.CHECK);
 		ch.setText("CalSimHydro");
@@ -687,146 +695,6 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		calsimHydroButton.setLayoutData(gd);
 	}
 	
-	public void wsidigenerator(){
-		String engineFileFullPath = "WRIMSv2_Engine.bat";
-		try {
-			String configFilePath = generateWsiDiConfigFile();
-			FileWriter engineFile = new FileWriter(engineFileFullPath);
-			PrintWriter out = new PrintWriter(engineFile);
-			generateBatch(out, configFilePath);
-			Process process = Runtime.getRuntime().exec("cmd /c start " + "WSIDIGenerator\\wsidi_generator.bat");
-		}catch (IOException e) {
-			WPPException.handleException(e);
-		}
-	}
-	
-	public String generateWsiDiConfigFile(){
-		
-		String configFilePath="";
-		String mainFile=fMainFileText.getText();
-		try {				
-			String mainFileAbsPath;
-			if (new File(mainFile).isAbsolute()){
-				mainFileAbsPath = mainFile;
-			}else{
-				mainFileAbsPath = procRelativePath(mainFile);
-			}
-			
-			int index = mainFileAbsPath.lastIndexOf(File.separator);
-			String mainDirectory = mainFileAbsPath.substring(0, index + 1);
-			externalPath = mainDirectory + "External";
-			
-			String studyDir = new File(mainFileAbsPath).getParentFile().getParentFile().getAbsolutePath();
-			String configName = "__study.config";
-			File f = new File(studyDir, configName);
-			File dir = new File(f.getParent());
-			dir.mkdirs();
-			f.createNewFile();
-			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(f)));
-			 
-			out.println("##################################################################################");
-			out.println("# Command line Example:");
-			out.println("# C:\\wrimsv2_SG\\bin\\runConfig_limitedXA.bat D:\\example\\EXISTING_BO.config");
-			out.println("# ");	
-			out.println("# Note:");			
-			out.println("# 1. This config file and the RUN directory must be placed in the same directory.");
-			out.println("# 2. Use relative path to increase the portability.");
-			out.println("#    For example, use RUN\\main.wresl for MainFile and DSS\\INIT.dss for InitFile");
-			out.println("##################################################################################");	
-			out.println("");
-			out.println("");
-			
-			out.println("MainFile           "+mainFileAbsPath.toLowerCase());
-			out.println("Solver             "+DebugCorePlugin.solver.toLowerCase());
-			String dvarFile = fDvarFileText.getText();
-			if (new File(dvarFile).isAbsolute()){
-				//String wsidiDvarPath=getWsiDiDvarFilePath(dvarFile);
-				String wsidiDvarPath=dvarFile;
-				String lookupPath=getLookupFolderPath(mainFileAbsPath);
-				out.println("DvarFile           "+wsidiDvarPath.toLowerCase());
-				createWsiDiMain(wsidiDvarPath, lookupPath);
-			}else{
-				String procDvarFile=procRelativePath(dvarFile);
-				//String wsidiDvarFile=getWsiDiDvarFilePath(procDvarFile);
-				String wsidiDvarFile=procDvarFile;
-				String lookupFolder=getLookupFolderPath(mainFileAbsPath);
-				out.println("DvarFile           " + wsidiDvarFile.toLowerCase());
-				createWsiDiMain(wsidiDvarFile, lookupFolder);
-			}
-			String svarFile = fSvarFileText.getText();
-			if (new File(svarFile).isAbsolute()){
-				out.println("SvarFile           "+svarFile.toLowerCase());
-			}else{
-				String procSvarFile=procRelativePath(svarFile);
-				out.println("SvarFile           "+procSvarFile.toLowerCase());
-			}
-			String gwDataFolder = groundWaterFolderText.getText();
-			if (new File(gwDataFolder).isAbsolute()){
-				out.println("GroundwaterDir     "+gwDataFolder.toLowerCase());
-			}else{
-				out.println("GroundwaterDir     "+procRelativePath(gwDataFolder).toLowerCase());
-			}
-			out.println("SvarAPart          " + aPartText.getText().toLowerCase());
-			out.println("SvarFPart          " + svFPartText.getText().toLowerCase());
-			String initFile = fInitFileText.getText();
-			if (new File(initFile).isAbsolute()){
-				out.println("InitFile           "+initFile.toLowerCase());
-			}else{
-				out.println("InitFile           "+procRelativePath(initFile).toLowerCase());
-			}
-			out.println("InitFPart          "+initFPartText.getText().toLowerCase());
-			out.println("TimeStep           "+timeStepCombo.getText().toLowerCase());
-			out.println("StartYear          "+startYearCombo.getText().toLowerCase());
-			out.println("StartMonth         "+TimeOperation.monthValue(startMonthCombo.getText().toLowerCase()));
-			out.println("StartDay           "+startDayCombo.getText().toLowerCase());
-			out.println("StopYear           "+endYearCombo.getText().toLowerCase());
-			out.println("StopMonth          "+TimeOperation.monthValue(endMonthCombo.getText().toLowerCase()));
-			out.println("StopDay            "+endDayCombo.getText().toLowerCase());
-			out.println("IlpLog             "+"no");
-			out.println("IlpLogFormat       "+"none");
-			out.println("IlpLogVarValue     "+"no");
-			out.println("WreslPlus          "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_WRESLPLUS, "no"));
-			out.println("AllowSvTsInit      "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_ALLOWSVTSINIT, "no"));
-			out.println("AllRestartFiles    "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_ALLRESTARTFILES, "no"));
-			out.println("NumberRestartFiles "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_NUMBERRESTARTFILES, "12"));
-			out.println("DatabaseURL        "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_DATABASEURL, "none"));
-			out.println("SQLGroup           "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_SQLGROUP, "calsim"));
-			String ovOption=launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_OVOPTION, "0");
-			String ovFile=launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_OVFILE, "");
-			if (ovFile.trim().equals("")){
-				out.println("OVOption           0");
-				out.println("OVFile             .");
-			}else if (new File(ovFile).isAbsolute()){
-				out.println("OVOption           "+ovOption);
-				out.println("OVFile             "+ovFile);
-			}else{
-				out.println("OVOption           "+ovOption);
-				out.println("OVFile             "+FileProcess.procRelativePath(ovFile, launchConfig));
-			}
-			
-			out.println("OutputCycleDatatoDss no");
-						
-			if (DebugCorePlugin.outputAllCycles){
-				out.println("outputallcycledata yes");
-			}else{
-				out.println("outputallcycledata no");
-			}
-			
-			out.println("selectedcycleoutput "+DebugCorePlugin.outputCycles.replace(" ", ""));
-			
-			//if (DebugCorePlugin.solver.equalsIgnoreCase("LpSolve")) {
-			//	out.println("LpSolveConfigFile         callite.lpsolve");
-			//	out.println("LpSolveNumberOfRetries    2");				
-			//}	
-			out.close();
-			configFilePath= new File(studyDir, configName).getAbsolutePath();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return configFilePath;
-	}
-	
 	public void generateBatch(PrintWriter out, String configFilePath){
 		String freeXA;
 		try {
@@ -853,45 +721,6 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		} catch (CoreException e) {
 			WPPException.handleException(e);
 		}
-	}
-	
-	public void createWsiDiMain(String dvarPath, String lookupPath){
-		String wsidiMainTemplate = ".\\WSIDIGenerator\\Main_template.py";
-		String wsidiMainFile = ".\\WSIDIGenerator\\Main.py";
-		try {
-	         FileInputStream fs= new FileInputStream(wsidiMainTemplate);
-	         BufferedReader br = new BufferedReader(new InputStreamReader(fs));
-	         LineNumberReader reader = new LineNumberReader(br);
-	         FileWriter writer = new FileWriter(wsidiMainFile);
-	         String line;
-	         int count =0;
-	         while((line = br.readLine())!=null){
-	              count++;
-	              if(count==28){
-	            	  writer.write("        studyDvName=r\""+dvarPath+"\"\n");
-	              }else if (count==29){
-	            	  writer.write("        lookupName=r\""+lookupPath+"\"\n");
-	              }else{
-	                  writer.append(line+"\n");
-	              }
-	         }
-	         writer.close();
-	    }
-	    catch (IOException e) {
-	        e.printStackTrace();
-	    }
-	}
-	
-	public String getWsiDiDvarFilePath(String dvFileName){
-		File dvFile=new File(dvFileName);
-		return dvFile.getParentFile().getAbsolutePath()+"\\genwsidi_dv.dss";
-	}
-	
-	public String getLookupFolderPath(String mainFilePath){
-		int index = mainFilePath.lastIndexOf(File.separator);
-		String mainDirectory = mainFilePath.substring(0, index + 1);
-		String lookupPath = mainDirectory + "lookup";
-		return lookupPath;
 	}
 	
 	public String procRelativePath(String path){
