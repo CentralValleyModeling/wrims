@@ -134,12 +134,12 @@ public class ILP {
 			} else if (CbcSolver.logObj && ControlData.solverName.equalsIgnoreCase("Cbc")){
 				_noteFile_cbc_obj = Tools.openFile(_ilpDir.getAbsolutePath(), "Note_cbc_obj.log");
 			} else if (CbcSolver.intLog && ControlData.solverName.equalsIgnoreCase("Cbc")){
-				_noteFile_cbc_int_log = Tools.openFile(_ilpDir.getAbsolutePath(), "Note_cbc_int_check.log");
+				_noteFile_cbc_int_log = Tools.openFile(_ilpDir.getAbsolutePath(), "Note_cbc_int_check.csv");
 				if (ControlData.currStudyDataSet.cycIntDvMap!=null) {
-					ILP.writeNote("cyc ", _noteFile_cbc_int_log);
+					ILP.writeNote("cyc,int_violation,solver,time,", _noteFile_cbc_int_log);
 					//ILP.writeNote("cyc ", _noteFile_xa_int);
 					for (String s:ControlData.currStudyDataSet.allIntDv ){
-						ILP.writeNote( s+" ", _noteFile_cbc_int_log);
+						ILP.writeNote( s+",", _noteFile_cbc_int_log);
 						//ILP.writeNote( s+" ", _noteFile_xa_int);
 					}
 					ILP.writeNote("\r\n", _noteFile_cbc_int_log);

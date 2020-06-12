@@ -42,7 +42,7 @@ import com.google.common.collect.HashBiMap;
 
 public class CbcSolver {
 	
-	public static Map <String, Double> varDoubleMap;
+	public static LinkedHashMap <String, Double> varDoubleMap;
 	
 	private static SWIGTYPE_p_OsiClpSolverInterface solver; // = jCbc.new_jOsiClpSolverInterface(); //this is our LP solver!
 	private static SWIGTYPE_p_CbcModel model; // = jCbc.new_jCbcModel();// This defines a new empty CbcModel
@@ -68,7 +68,7 @@ public class CbcSolver {
 	//public static final double zeroTolerence =  1e-10;
 	public static double solve_2_primalT =  1e-8;
 	public static final double solve_2_primalT_relax =  1e-6;
-	public static final double solve_2_primalT_relax_most =  1e-4;
+	//public static final double solve_2_primalT_relax_most =  1e-4;
 	public static final double solve_3_primalT =  1e-9;
 	//public static final double solve_3_primalT_relax =  1e-7;
 	public static double solve_whs_primalT =  1e-9;
@@ -114,6 +114,7 @@ public class CbcSolver {
 	public static String solveName="";
 	public static boolean logObj=false;
 	public static boolean intLog=true;
+	public static boolean intViolation=false;
 	
 	public static int solvFunc = 90; // default 
 	public static int warm_2nd_solvFunc = 20; // default 
@@ -247,6 +248,21 @@ public class CbcSolver {
 			}
 			long beginT_cd = System.currentTimeMillis();	
 			collectDvar(); 
+			
+			// check integer violation
+			for (String k:dvIntMap.keySet()){
+				//System.out.println(k);
+				if (varDoubleMap.containsKey(k)){
+					double v = varDoubleMap.get(k);
+					if (Math.abs(v-Math.round(v))>1e-7){
+						reloadAndWriteLp("_infeasible", true);
+						Error.addSolvingError("Infeasible solution. Integer "+k+": "+v);
+						//iis();
+						break;
+					}
+				}
+			}
+			
 			long beginT_ad = System.currentTimeMillis();	
 			if (!ControlData.cbc_debug_routeXA) assignDvar();
 			long endT_ad = System.currentTimeMillis();	
@@ -1116,7 +1132,7 @@ public class CbcSolver {
 	private static void collectDvar() {
 
 		int ColumnSize = jCbc.getNumCols(model);
-		varDoubleMap = new HashMap<String, Double>();
+		varDoubleMap = new LinkedHashMap<String, Double>();
 				
 		if (saveWarm||useWarm) {
 			int ii = ControlData.currCycleIndex + 1;
@@ -1383,7 +1399,8 @@ public class CbcSolver {
 	private static void callCbc() {
 		solveName="cal";
 		jCbc.setIntegerTolerance(model, integerT);
-		jCbc.callCbc("-log 0 -preprocess off -presolve off -cutsOnOff off -primalT 1e-4 -integerT 1e-7 -solve", model);
+		//jCbc.callCbc("-log 0 -preprocess off -presolve off -cutsOnOff off -primalT 1e-4 -integerT 1e-7 -solve", model);
+		jCbc.callCbc("-log 0 -preprocess off -presolve on -cutsOnOff on -primalT 1e-5 -integerT 1e-8 -solve", model);
 	}
 
 }

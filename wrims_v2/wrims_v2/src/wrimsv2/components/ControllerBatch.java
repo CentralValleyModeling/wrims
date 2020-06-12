@@ -1461,27 +1461,37 @@ public class ControllerBatch {
 						if (CbcSolver.intLog && (!ControlData.cbc_debug_routeXA && !ControlData.cbc_debug_routeCbc)) {
 							
 							String cbc_int = "";
+							
+							// write solve name
+							cbc_int +=  ","+CbcSolver.solveName;
+							
+							// write solve time
+							cbc_int +=  ","+String.format("%8.2f",ControlData.solverTime_cbc_this);
+							
 							if (sds.cycIntDvMap != null && sds.cycIntDvMap.containsKey(ControlData.currCycleIndex)) {
 								ArrayList<String> intDVs = new ArrayList<String>(sds.cycIntDvMap.get(ControlData.currCycleIndex));
+								Boolean int_violation = false;
 								for (String v : sds.allIntDv) {
 									if (intDVs.contains(v)){
 										//xa_int  += " "+ Math.round(ControlData.xasolver.getColumnActivity(v));
 										if (Error.getTotalError()==0) {
-											cbc_int += " "+ Math.round(CbcSolver.varDoubleMap.get(v));
+											//cbc_int += " "+ Math.round(CbcSolver.varDoubleMap.get(v));
+											double x = CbcSolver.varDoubleMap.get(v);
+											cbc_int += ","+ x;
+											if   (Math.abs( Math.round(x)-x)>1E-7) {int_violation=true;}
+											
 										} else {
-											cbc_int += " ?";
+											cbc_int += ",?";
+											int_violation=null;
 										}
 									} else {
 										//xa_int  += "  ";
-										cbc_int += "  ";
+										cbc_int += ",";
 									}
 								}
+								cbc_int = "," + int_violation + cbc_int;
 							}
-							// write solve time
-							cbc_int +=  "  "+String.format("%8.2f",ControlData.solverTime_cbc_this);
-							
-							// write solve name
-							cbc_int +=  "  "+CbcSolver.solveName;
+
 
 							ILP.writeNoteLn(ILP.getYearMonthCycle(), ""+ cbc_int, ILP._noteFile_cbc_int_log);
 							
