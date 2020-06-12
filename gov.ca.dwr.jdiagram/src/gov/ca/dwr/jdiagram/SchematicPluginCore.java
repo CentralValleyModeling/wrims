@@ -24,4 +24,6 @@ public class SchematicPluginCore {
 	public static ArrayList<DiagramItem> copiedItems = new ArrayList<DiagramItem>();
 	
 	public static Diagram copyDiagram = null;
+	
+	public static boolean isTAFMonthly = true;
 }

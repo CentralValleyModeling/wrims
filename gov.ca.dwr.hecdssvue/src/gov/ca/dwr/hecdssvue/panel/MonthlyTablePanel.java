@@ -12,6 +12,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
+import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.PrintGraphics;
 import java.awt.PrintJob;
@@ -20,6 +21,10 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedWriter;
@@ -33,19 +38,21 @@ import javax.swing.AbstractCellEditor;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 
+import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.ui.IWorkbenchPartSite;
-import org.eclipse.ui.internal.WorkbenchPartReference;
 
 import rma.swing.table.TableExportOptions;
 import rma.util.RMAIO;
@@ -93,7 +100,7 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 
 	protected ButtonGroup _decimalGroup;
 
-	protected JMenu _viewDecimals;
+	protected JMenuItem _viewDecimals;
 
 	protected JCheckBoxMenuItem _viewCommas;
 
@@ -117,13 +124,13 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 
 	protected Clipboard _sysClipboard = null;
 
-	private Preferences _preferences;
-
 	private boolean _showCommas = true;
 
 	private boolean _showTotalColumn = true;
 
 	private int _decimalPlaces = -3;
+	
+	private Frame _frame;
 
 	class SymWindow extends WindowAdapter {
 		public void windowClosing(WindowEvent event) {
@@ -133,8 +140,9 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 		}
 	}
 
-	public MonthlyTablePanel() {
-		_preferences = Preferences.userNodeForPackage(getClass());
+	public MonthlyTablePanel(Frame frame) {
+		_frame=frame;
+		//_preferences = Preferences.userNodeForPackage(getClass());
 		_sysClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 		setLayout(new BorderLayout());
 		JPanel panel = new JPanel();
@@ -145,9 +153,9 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 		JLabel precisionLabel = new JLabel("Decimal Places: ");
 		add(panel, "North");
 		// _table = new MonthlyTable(this);
-		setShowCommas(_preferences.getBoolean(SHOW_COMMAS, true));
-		setShowTotalColumn(_preferences.getBoolean(SHOW_TOTAL_COLUMN, true));
-		setDecimalPlaces(_preferences.getInt(DECIMAL_PLACES, 0));
+		setShowCommas(DssPluginCore._preferences.getBoolean(SHOW_COMMAS, true));
+		setShowTotalColumn(DssPluginCore._preferences.getBoolean(SHOW_TOTAL_COLUMN, true));
+		setDecimalPlaces(DssPluginCore._preferences.getInt(DECIMAL_PLACES, 0));
 		_table = new MonthlyTable(this);
 		_tableScrollPane = _table.getScrollPane();
 		add(_tableScrollPane, "Center");
@@ -229,19 +237,29 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 			_viewMenu.add(_viewTotalColumn);
 		}
 
-		_viewDecimals = new JMenu("Show Decimal Places");
+		_viewDecimals = new JMenuItem("Set Decimal Places");
 		_viewDecimals.setMnemonic('D');
+		_viewDecimals.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				int dp=DssPluginCore._preferences.getInt(DECIMAL_PLACES, 0);
+				String input=(String) JOptionPane.showInputDialog(_frame, "Set Decimal Places", "Decimal Places", JOptionPane.PLAIN_MESSAGE, null, null, String.valueOf(dp));
+				setDecimalPlaces(Integer.parseInt(input));
+			}
+		});
+		
 		_decimalGroup = new ButtonGroup();
 		_decimalAuto = new JRadioButtonMenuItem("auto");
 		_decimalAuto.setMnemonic('a');
 		_decimalAuto.setSelected(true);
 		_decimalGroup.add(_decimalAuto);
-		_viewDecimals.add(_decimalAuto);
+		//_viewDecimals.add(_decimalAuto);
 		_decimalAuto.addActionListener(this);
 		_decimal0 = new JRadioButtonMenuItem("0.");
 		_decimal0.setMnemonic('0');
 		_decimalGroup.add(_decimal0);
-		_viewDecimals.add(_decimal0);
+		//_viewDecimals.add(_decimal0);
 		_decimal0.addActionListener(new ActionListener(){
 
 			@Override
@@ -254,7 +272,7 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 		_decimal1 = new JRadioButtonMenuItem("0.0");
 		_decimal1.setMnemonic('1');
 		_decimalGroup.add(_decimal1);
-		_viewDecimals.add(_decimal1);
+		//_viewDecimals.add(_decimal1);
 		_decimal1.addActionListener(new ActionListener(){
 
 			@Override
@@ -267,7 +285,7 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 		_decimal2 = new JRadioButtonMenuItem("0.00");
 		_decimal2.setMnemonic('2');
 		_decimalGroup.add(_decimal2);
-		_viewDecimals.add(_decimal2);
+		//_viewDecimals.add(_decimal2);
 		_decimal2.addActionListener(new ActionListener(){
 
 			@Override
@@ -280,7 +298,7 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 		_decimal3 = new JRadioButtonMenuItem("0.000");
 		_decimal3.setMnemonic('3');
 		_decimalGroup.add(_decimal3);
-		_viewDecimals.add(_decimal3);
+		//_viewDecimals.add(_decimal3);
 		_decimal3.addActionListener(new ActionListener(){
 
 			@Override
@@ -293,7 +311,7 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 		_decimal4 = new JRadioButtonMenuItem("0.0000");
 		_decimal4.setMnemonic('4');
 		_decimalGroup.add(_decimal4);
-		_viewDecimals.add(_decimal4);
+		//_viewDecimals.add(_decimal4);
 		_decimal4.addActionListener(new ActionListener(){
 
 			@Override
@@ -306,7 +324,7 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 		_decimal5 = new JRadioButtonMenuItem("0.00000");
 		_decimal5.setMnemonic('5');
 		_decimalGroup.add(_decimal5);
-		_viewDecimals.add(_decimal5);
+		//_viewDecimals.add(_decimal5);
 		_decimal5.addActionListener(new ActionListener(){
 
 			@Override
@@ -319,7 +337,7 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 		_decimal6 = new JRadioButtonMenuItem("0.000000");
 		_decimal6.setMnemonic('6');
 		_decimalGroup.add(_decimal6);
-		_viewDecimals.add(_decimal6);
+		//_viewDecimals.add(_decimal6);
 		_decimal6.addActionListener(new ActionListener(){
 
 			@Override
@@ -464,7 +482,7 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 		return _showTotalColumn;
 	}
 
-	void setDecimalPlaces(int decimalPlaces) {
+	public void setDecimalPlaces(int decimalPlaces) {
 		if (decimalPlaces != _decimalPlaces) {
 			int oldPlaces = _decimalPlaces;
 			_decimalPlaces = decimalPlaces;
@@ -497,7 +515,9 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 
 			if (menuitem != null) { // then all gui components are null;
 									// DecimalPlaces_Action cannot be called
+				_decimalGroup.clearSelection();
 				menuitem.setSelected(true);
+				menuitem.update(menuitem.getGraphics());
 				DecimalPlaces_Action(_decimalPlaces);
 			} else {
 				validate();
@@ -603,7 +623,7 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 		if (oldPlaces != numberDecimals) {
 			_table.setPrecision(numberDecimals);
 			_decimalPlaces=numberDecimals;
-			_preferences.putInt(DECIMAL_PLACES, numberDecimals);
+			DssPluginCore._preferences.putInt(DECIMAL_PLACES, numberDecimals);
 			validate();
 			repaint();
 			firePropertyChange(DECIMAL_PLACES_PROPERTY, oldPlaces,
@@ -614,7 +634,7 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 	private void ViewCommas_Action() {
 		_showCommas = !_showCommas;
 		_table.setShowCommas(_showCommas);
-		_preferences.putBoolean(SHOW_COMMAS, _showCommas);
+		DssPluginCore._preferences.putBoolean(SHOW_COMMAS, _showCommas);
 		validate();
 		repaint();
 		firePropertyChange(SHOW_COMMAS_PROPERTY, !_showCommas, _showCommas);
@@ -623,7 +643,7 @@ public class MonthlyTablePanel extends JPanel implements ActionListener {
 	private void ViewTotalColumn_Action() {
 		_showTotalColumn = _viewTotalColumn.getState();
 		_table.setShowTotalColumn(_showTotalColumn);
-		_preferences.putBoolean(SHOW_TOTAL_COLUMN, _showTotalColumn);
+		DssPluginCore._preferences.putBoolean(SHOW_TOTAL_COLUMN, _showTotalColumn);
 		validate();
 		repaint();
 		firePropertyChange(SHOW_TOTAL_COLUMN_PROPERTY, !_showTotalColumn,

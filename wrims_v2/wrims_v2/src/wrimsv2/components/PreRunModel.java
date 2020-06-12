@@ -1,6 +1,13 @@
 package wrimsv2.components;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -94,6 +101,7 @@ public class PreRunModel {
 			System.out.println("HDF5 output data structure is created.");
 		}
 		
+		setGroundwaterInitFile();
 	}
 
 	public void readTimeseries(){
@@ -159,5 +167,53 @@ public class PreRunModel {
 	public void setSelectedOutputCycles(){
 		String strSelectedCycleOutput = ControlData.selectedCycleOutput.replace("\'", "");
 		ControlData.selectedCycles = strSelectedCycleOutput.split(",");
+	}
+	
+	public void setGroundwaterInitFile(){
+		if (FilePaths.groundwaterDir!=null || !FilePaths.groundwaterDir.equals("")){
+			File orig = new File(FilePaths.groundwaterDir+"\\CVGroundwater.in");
+			if (orig.exists()){
+				File des = new File(FilePaths.groundwaterDir+"\\CVGroundwater_bk.in");
+				try {
+					Files.copy(orig.toPath(), des.toPath(), StandardCopyOption.REPLACE_EXISTING);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				setGroundwaterInitFilePath(des, orig);
+			}
+		}
+	}
+	
+	public void setGroundwaterInitFilePath(File backup, File input){
+		try {
+            FileReader fr = new FileReader(backup);
+            BufferedReader br = new BufferedReader(fr);
+            FileWriter fw = new FileWriter(input);
+            BufferedWriter bw = new BufferedWriter(fw);
+            String line;
+            int lineCount=1;
+			while ((line = br.readLine()) != null) {
+                if (line.toUpperCase().contains("11: INITIAL CONDITIONS DATA FILE")){
+                	if (ControlData.startMonth==1){
+                		String initMonth="DEC";
+                		int initYear=ControlData.startYear-1;
+                		line="Restart\\CVInitial_Restart_"+initMonth+initYear+".dat                /11: INITIAL CONDITIONS DATA FILE (INPUT, REQUIRED)";
+                	}else{
+                		String initMonth=TimeOperation.monthName(ControlData.startMonth-1);
+                		int initYear=ControlData.startYear;
+                		line="Restart\\CVInitial_Restart_"+initMonth+initYear+".dat                /11: INITIAL CONDITIONS DATA FILE (INPUT, REQUIRED)";
+                	}
+				}   
+                bw.write(line+"\n");
+                lineCount++;
+            }                   
+			br.close();
+			bw.close();
+			fr.close();
+			fw.close();
+        }   
+        catch (Exception e) {
+        	e.printStackTrace();
+        }  
 	}
 }

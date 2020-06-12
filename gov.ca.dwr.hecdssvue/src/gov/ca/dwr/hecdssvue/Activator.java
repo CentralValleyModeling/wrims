@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Scanner;
 import java.util.Vector;
+import java.util.prefs.Preferences;
 
 import gov.ca.dwr.hecdssvue.components.NumericTextField;
 import hec.heclib.dss.HecDSSFileAccess;
@@ -40,6 +41,7 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
+		DssPluginCore._preferences = Preferences.userNodeForPackage(getClass());
 		HecDSSFileAccess.setMessageLevel(0);
 		DssPluginCore.swix = new SwingEngine(this);
 		DssPluginCore.swix.getTaglib().registerTag("numtextfield", NumericTextField.class);

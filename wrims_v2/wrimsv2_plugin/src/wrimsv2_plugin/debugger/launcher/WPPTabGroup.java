@@ -24,6 +24,7 @@ public class WPPTabGroup extends AbstractLaunchConfigurationTabGroup {
 	
 	private WPPMainTab mainTab;
 	private WPPConfigTab configTab;
+	private WPPWsiDiTab wsidiTab;
 	private WPPPATab paTab;
 	private WPPMSTab msTab;
 	private WPPSQLTab sqlTab;
@@ -38,6 +39,7 @@ public class WPPTabGroup extends AbstractLaunchConfigurationTabGroup {
 	public void createTabs(ILaunchConfigurationDialog dialog, String mode) {
 		mainTab=new WPPMainTab();
 		configTab=new WPPConfigTab();
+		wsidiTab=new WPPWsiDiTab(mainTab);
 		paTab=new WPPPATab();
 		msTab=new WPPMSTab();
 		sqlTab=new WPPSQLTab();
@@ -48,6 +50,7 @@ public class WPPTabGroup extends AbstractLaunchConfigurationTabGroup {
 		setTabs(new ILaunchConfigurationTab[] {
 				mainTab,
 				configTab,
+				wsidiTab,
 				paTab,
 				msTab,
 				sqlTab,
@@ -63,6 +66,10 @@ public class WPPTabGroup extends AbstractLaunchConfigurationTabGroup {
 	
 	public WPPConfigTab getConfigTab(){
 		return configTab;
+	}
+	
+	public WPPWsiDiTab getWsiDiTab(){
+		return wsidiTab;
 	}
 	
 	public WPPPATab getPATab(){

@@ -26,6 +26,7 @@ public abstract class AbstractDSSView extends ViewPart {
 
 	protected Container contentPane;
 	protected Composite swingContainer;
+	public Frame _frame;
 
 	public AbstractDSSView() {
 		super();
@@ -88,6 +89,7 @@ public abstract class AbstractDSSView extends ViewPart {
 		ISelection selection = getSite().getWorkbenchWindow()
 				.getSelectionService().getSelection();
 		listener.selectionChanged(getSite().getPart(), selection);
+		_frame=frame;
 	}
 
 	/**

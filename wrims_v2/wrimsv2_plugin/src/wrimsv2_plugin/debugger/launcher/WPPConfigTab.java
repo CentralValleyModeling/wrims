@@ -193,7 +193,7 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 			
 		});
 		
-		restartFilesText = new Text(comp, SWT.RADIO);
+		restartFilesText = new Text(comp, SWT.SINGLE | SWT.BORDER);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 1;
 		restartFilesText.setLayoutData(gd);

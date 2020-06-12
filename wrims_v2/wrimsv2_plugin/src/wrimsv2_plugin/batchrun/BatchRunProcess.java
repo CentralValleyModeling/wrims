@@ -575,6 +575,8 @@ public class BatchRunProcess {
 			out.println("IlpLogAllCycles    "+configMap.get("IlpLogAllCycles".toLowerCase()));
 			out.println("WreslPlus          "+configMap.get("WreslPlus".toLowerCase()));
 			out.println("AllowSvTsInit      "+configMap.get("AllowSvTsInit".toLowerCase()));
+			out.println("AllRestartFiles    "+configMap.get("AllRestartFiles".toLowerCase()));
+			out.println("NumberRestartFiles "+configMap.get("NumberRestartFiles".toLowerCase()));
 			out.println("DatabaseURL        "+configMap.get("DatabaseURL".toLowerCase()));
 			out.println("SQLGroup           "+configMap.get("SQLGroup".toLowerCase()));
 			out.println("OVOption           "+configMap.get("OVOption".toLowerCase()));

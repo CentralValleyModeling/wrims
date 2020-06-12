@@ -1,5 +1,6 @@
 package gov.ca.dwr.hecdssvue;
 
+import gov.ca.dwr.hecdssvue.panel.MonthlyTablePanel;
 import hec.heclib.dss.CondensedReference;
 import hec.heclib.dss.HecDss;
 import hec.hecmath.HecMath;
@@ -9,6 +10,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Vector;
+import java.util.prefs.Preferences;
 
 import org.swixml.SwingEngine;
 
@@ -38,6 +40,8 @@ public class DssPluginCore {
 
 	public final static String DEFAULT_TIME_WINDOW = "All";
 	public static String tw=DEFAULT_TIME_WINDOW;
+	
+	public static Preferences _preferences;
 
 	public static ArrayList<Integer> months= new ArrayList<Integer>(){{
 	    add(10);
@@ -107,4 +111,5 @@ public class DssPluginCore {
 	public static DtsTreePanel dtp;
 	
 	public static String lastCopiedDssFolder="c:\\";
+	public static MonthlyTablePanel mtp;
 }
