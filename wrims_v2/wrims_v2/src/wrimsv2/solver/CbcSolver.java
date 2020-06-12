@@ -1288,7 +1288,7 @@ public class CbcSolver {
 		//jCbc.writeMps(model, oPath);
 		if(logMps){jCbc.writeMps1(model, oPath+".mps", 1, 2);}
 		
-		logIntVars(label);
+		//logIntVars(label);
 
 	}
 	
@@ -1301,7 +1301,7 @@ public class CbcSolver {
 		//jCbc.writeMps(model, oPath);
 		if(logMps){jCbc.writeMps1(model, oPath+".mps", 1, 2);}
 		
-		logIntVars(label);
+		//logIntVars(label);
 
 	}
 	
