@@ -713,7 +713,11 @@ public class ControllerBatch {
 						}
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
-
+						
+						if (CbcSolver.intLog) {
+							CbcSolver.logIntCheck(sds);	
+						}
+												
 						if (ControlData.solverType == Param.SOLVER_CBC1.intValue()||ControlData.solverType == Param.SOLVER_CBC.intValue()) { CbcSolver.resetModel();}
 						
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
@@ -1459,44 +1463,8 @@ public class ControllerBatch {
 
 						
 						if (CbcSolver.intLog && (!ControlData.cbc_debug_routeXA && !ControlData.cbc_debug_routeCbc)) {
-							
-							String cbc_int = "";
-							
-							// write solve name
-							cbc_int +=  ","+CbcSolver.solveName;
-							
-							// write solve time
-							cbc_int +=  ","+String.format("%8.2f",ControlData.solverTime_cbc_this);
-							
-							if (sds.cycIntDvMap != null && sds.cycIntDvMap.containsKey(ControlData.currCycleIndex)) {
-								ArrayList<String> intDVs = new ArrayList<String>(sds.cycIntDvMap.get(ControlData.currCycleIndex));
-								Boolean int_violation = false;
-								for (String v : sds.allIntDv) {
-									if (intDVs.contains(v)){
-										//xa_int  += " "+ Math.round(ControlData.xasolver.getColumnActivity(v));
-										if (Error.getTotalError()==0) {
-											//cbc_int += " "+ Math.round(CbcSolver.varDoubleMap.get(v));
-											double x = CbcSolver.varDoubleMap.get(v);
-											cbc_int += ","+ x;
-											if   (Math.abs( Math.round(x)-x)>1E-7) {int_violation=true;}
-											
-										} else {
-											cbc_int += ",?";
-											int_violation=null;
-										}
-									} else {
-										//xa_int  += "  ";
-										cbc_int += ",";
-									}
-								}
-								cbc_int = "," + int_violation + cbc_int;
-							}
-
-
-							ILP.writeNoteLn(ILP.getYearMonthCycle(), ""+ cbc_int, ILP._noteFile_cbc_int_log);
-							
+							CbcSolver.logIntCheck(sds);	
 						}
-						
 						
 						if (ControlData.cbc_debug_routeXA ||ControlData.cbc_debug_routeCbc ) {
 																			
