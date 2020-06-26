@@ -1,0 +1,1 @@
+define C_CVPDMC {lower 0 upper 3500 kind 'FLOW-CHANNEL' units 'CFS'} !Lower DMC to Mendota Pool

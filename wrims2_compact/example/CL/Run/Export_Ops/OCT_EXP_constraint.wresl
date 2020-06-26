@@ -1,0 +1,32 @@
+!OCT_EXP_constraint.wresl
+!
+!April 2011 Revised PP assumptions include zero exports during the pulse period in October. This code is to restrict exports in October.
+! For October assuming 1st to 15th (15 days) pre-pulse and 16th to 31st (16 days) pulse.
+! OMR req for pre-pulse period in Oct is obtained from OMRiverFlowReq lookup table and is defined in OMR_req1.
+! For constraining October exports, a weighted average is computed by estimating allowed exports at OMR_req1 for the first 15 days (pre-pulse)
+! and assuming 0 exports for the remaining 16 days(pulse).
+
+define Exp_PrePul { value ((OMR_req1 - coefA*AD_SJR_VAMP - coefc)/coefb - D408D416_est*CCWDFraction - netDICU_SOD)}
+
+define OctExpLimit {
+	case Oct {
+		condition	month==OCT
+		value		Exp_PrePul*15./31. + 0.*16./31.}
+	case other {
+		condition	always
+		value		MAXEXP_RPA } }
+
+define MAXEXP_OCT_CVP {value max(Jonesminpump,min(0.5*OctExpLimit,maxJonescalc)) }
+define MAXEXP_OCT_SWP {value max(banksminpump,OctExpLimit - MAXEXP_OCT_CVP) }
+
+goal set_MAXEXP_OCT_SWP {
+    lhs     D_BANKS_TD
+    rhs     MAXEXP_OCT_SWP
+    lhs<rhs penalty    0}
+define MAXEXP_OCT_SWPdv {alias MAXEXP_OCT_SWP kind 'EXPORT-LIMIT' units 'CFS'}
+
+goal set_MAXEXP_OCT_CVP {
+    lhs     D_JONES_TD
+    rhs     MAXEXP_OCT_CVP
+    lhs<rhs penalty    0}
+define MAXEXP_OCT_CVPdv {alias MAXEXP_OCT_CVP kind 'EXPORT-LIMIT' units 'CFS'}

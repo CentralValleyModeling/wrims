@@ -1,0 +1,137 @@
+/*************************************
+Options_Switches.wresl
+ 
+Z.Q. Richard Chen DWR (02/07/2011)
+
+Read option switches for lookup table
+**************************************/
+
+/* Run Settings Dashboard */
+define RunBasis_DLTSW {select Option from GUI_RunBasis where Index=1}
+
+/* Hydro Climate Dashboard*/
+define X2_SLR             {select Option from GUI_HydroClimate where Index=2}  
+define  X2_ANN_KM {                                                           !Delta\ANN\lastX2_ANN_KM.wresl 
+    case KM { condition X2_SLR == 0
+    value 1
+    }
+    case SLR { 
+    condition always 
+    value 0}}
+
+define CC_Scenario {select Option from GUI_HydroClimate where Index = 4}
+
+define Climate_Proj {
+	case LLT{
+		condition int(LOD_DLTSW) == 3
+		value CC_Scenario + 5}
+	case ELT{
+		condition int(LOD_DLTSW) == 2
+		value CC_Scenario}
+	case NO_CC{
+		condition always
+		value 0} 
+}
+
+/* South of Delta SWP and CVP options*/
+!Read in user-defined SWP demand type, 1 = not user-defined, 
+!2 = user-defined demand for MWD, Other MI, and AG 
+define SWPdemandswitch {select Option from GUI_SODdemand where Index = 0}
+
+!Read in user-defined demands for SOD
+define SWP_mwd_udef         {select Option from GUI_SODdemand  where Index = 1}
+define SWP_oth_udef         {select Option from GUI_SODdemand  where Index = 2}
+define SWP_ag_udef          {select Option from GUI_SODdemand  where Index = 3}
+define max_user_interrupt   {select Option from GUI_SODdemand where Index = 4}
+
+!Pull in user-defined CVP demand type, 1 = full contract, 2 = user-defined for AG, MI, and Refuge
+define CVPdemandswitch      {select Option from GUI_SODdemand where Index = 5}
+
+define acvpdem_pag_udef_s   {select Option from GUI_SODdemand where Index = 6}
+define acvpdem_pmi_udef_s   {select Option from GUI_SODdemand where Index = 7}
+define acvpdem_prf_udef_s   {select Option from GUI_SODdemand where Index = 8}
+
+/* D1641/D1485 Regulation Switches*/
+define RV_DLTSW     {select OPTION from gui_Regs where Index = 4}
+define X2_DLTSW     {select OPTION from gui_Regs where Index = 5}
+define X2ROE_DLTSW  {
+         case UDefX2 {
+           condition X2_DLTSW == 2
+           value 0 }
+         case others {
+           condition always
+           select OPTION from gui_Regs where Index = 6}
+}
+define X2Udef_Select { 
+    case X2_Udef {
+	condition X2_DLTSW == 2
+	select X2Active from GUI_X2Active where month=month} !X2 active momth table 	
+   case otherwise {
+	condition always 
+	value 0}
+	}
+define VAMP_DLTSW   {select OPTION from gui_Regs where Index = 7} 
+define TRNTY_DLTSW     {select OPTION from gui_Regs where Index = 14}
+define PUMP_DLTSW     {select OPTION from gui_Regs where Index = 15}   
+
+! Delta Salinity      
+define EM_DLTSW     {select OPTION from gui_Regs where Index = 8}
+define JP_DLTSW     {select OPTION from gui_Regs where Index = 9}
+define RS_DLTSW     {select OPTION from gui_Regs where Index = 10}
+define CO_DLTSW     {select OPTION from gui_Regs where Index = 11}
+
+
+/* BO RPAs and other regulations*/
+define FallX2             {select Option from GUI_RPAsOtherRegs where Index=1} !Delta\ANN\X2days_FWS_WQ.wresl
+define Action_4_1_2       {select Option from GUI_RPAsOtherRegs where Index=2} !Export_Ops\NMFS_SALMON_BO_DCC.wresl
+define Action_4_2_1       {select Option from GUI_RPAsOtherRegs where Index=3} !Export_Ops\NMFS_SALMON_BO_SJR.wresl 
+define OMRBOON            {select Option from GUI_RPAsOtherRegs where Index=4} !whether implement FWS Action : no action: value=0; action: value=1
+define ClearCrkBOswitch   {select Option from GUI_RPAsOtherRegs where Index=5} !BO and B2Actions\B2Action1Repeat.wresl
+!define ESO_ON             {select Option from GUI_RPAsOtherRegs where Index=16}
+
+/*NON-D1641 Delta Flow Switches     */ 
+define QOMR_DLTSW   {select OPTION from GUI_RPAsOtherRegs where Index = 6}
+define QWEST_DLTSW  {select OPTION from GUI_RPAsOtherRegs where Index = 7}
+define EISJR_DLTSW  {select OPTION from GUI_RPAsOtherRegs where Index = 8}      
+
+/* B2 Switches  */
+define B2Action1          {select Option from GUI_RPAsOtherRegs where Index=9} !B2Actions\B2Action1Repeat.wresl
+define B2Action2          {select Option from GUI_RPAsOtherRegs where Index=10} !B2Actions\B2Action2.wresl
+define B2Action3          {select Option from GUI_RPAsOtherRegs where Index=11} !B2Actions\B2Action3.wresl
+define B2Action4          {select Option from GUI_RPAsOtherRegs where Index=12} !B2Actions\B2Action4Repeat.wresl
+define B2Action5          {select Option from GUI_RPAsOtherRegs where Index=13} !B2Actions\B2Action5Repeat.wresl
+define B2Action6          {select Option from GUI_RPAsOtherRegs where Index=14} !B2Actions\B2Action6.wresl
+define B2Action7          {select Option from GUI_RPAsOtherRegs where Index=15} !B2Actions\B2Action7.wresl
+
+/* Operation options*/
+define CVC_ON             {select Option from GUI_Operations where Index=1} !Wheeling\wheelcap.wresl 
+!define JPOD_ON            {select Option from GUI_Operations where Index=2} !Wheeling\wheelcap.wresl 
+define IntertieSwitch     {select Option from GUI_Operations where Index=3} !Export_Ops\intertie.wresl
+define CVPDedBanksSwitch  {value 0} ! use as place holder
+!define SWPShastaSwitch    {value 0} ! use as place holder
+ 
+/* Water Management Action*/
+define fremont_notch_on   {select Option from GUI_BDCP_FacilityControl where Index=5}  !hydrology\WEIRS\weir_steps_dailyops.wresl
+ 
+ /* San Joaquin Switches */
+define VAMP_Flow          {select Option from GUI_SJR where Index=1} !VAMP_Flow -  VAMP pulse flows (Apr 15-May 15)
+define Vern_RPA           {select Option from GUI_SJR where Index=2} !Vern_RPA -  Vernalis RPA 60-day pulse flow (April-May).
+define D1641_Base         {select Option from GUI_SJR where Index=3} !D1641_Base -  Vernalis D-1641 baseflows (Feb-Apr 14, May 16-June) 
+define D1641_SALINITY     {select Option from GUI_SJR where Index=4} !D1641_SALINITY  - Vernalis D-1641 salinity criteria
+define STAN_RPA           {select Option from GUI_SJR where Index=5} !STAN_RPA - Stanislaus RPA flows. Turn on or off
+define REST_REQ           {select Option from GUI_SJR where Index=6} !REST_REQ - SJR Restoration flows.  Allow user to switch between interim=0 and full=1 flows
+!Dynamic_SJR now handled in main file
+!define Dynamic_SJR	  {select Option from GUI_SJR where Index=7} !Dynamic_SJR - Turns on dynamic SJR
+
+/* Facility options*/
+define EnlargShastaOn    {select Option from GUI_EnlargedShasta where Index=1} 
+define EnlargShastaSize  {select Option from GUI_EnlargedShasta where Index=2} 
+define EnlargSLOn    {select Option from GUI_EnlargedSanLuis where Index=1} ! Taraky 20161109, BDO, DWR. San Luis Switch on/off
+define EnlargSLSize  {select Option from GUI_EnlargedSanLuis where Index=2} ! Taraky 20161109, BDO, DWR. San Luis enlargement size
+define SLE_UserDef	{select Option from GUI_EnlargedSanLuis where Index =3} ! Taraky 20161109, BDO, DWR. San Luis enlargement size, user defined
+define TDExports       	 {select Option from GUI_BDCP_FacilityControl where Index = 4}
+define LVEM_Cap			{select Option from GUI_LosVaqueros where Index = 2} ! - Los Vaqueros Maximum Capacity [160 TAF]
+define LVEM_VC			{select Option from GUI_LosVaqueros where Index = 3} ! - Alternate Intake (Victoria Canal) Diversion Capacity [250 cfs] 
+define LVEM_OR			{select Option from GUI_LosVaqueros where Index = 4} ! - Old RIver Diversion Capacity [250 cfs]
+define LVEM_RS			{select Option from GUI_LosVaqueros where Index = 5} ! - Rock Slough Diversion Capacity [350 cfs]
+define LVEM_WQ			{select Option from GUI_LosVaqueros where Index = 6} ! - Target Maximum Salinity at Delivery [65 mg/L Cl]

@@ -1,0 +1,37 @@
+! Net demands north of navigation control point (ncp) are comprised of the following:
+! diversions: 1. Non-project demands (DSA 10,12,15,58)
+!	      2. CVP settlement
+!	      3. Refuge
+!             4. CVP water service contractors (ag+mi) - subject to cuts
+! accretions: 1. Return flows (DSA 10,15,58)
+
+! Ryan Wilbur 8-6-03
+ 
+! non-project demands  (DSA 10,12,15,58)
+define(fm) NPD_NNCP_fm {select NPD from Demands_NNCP where month=mv($m)}
+
+
+! cvp settlement demands (DSA 10,12,15,58) - cut to 75% of contract if shasta critical year
+define(fm) CVPS_NNCP_temp_fm {select CVPS from Demands_NNCP where month=mv($m)}
+define(fm) CVPS_NNCP_fm {value   CVPS_NNCP_temp_fm($m)*(1.-0.25*ShastaCriteriaMet)}
+define(fm) CVPS_NNCP_fm_dv {alias CVPS_NNCP_fm($m) kind 'FAM-CVP-Demands' units 'taf'} 
+
+! cvp contractors ag+mi (DSA 10,12,15,58) - subject to cuts (cuts not applied)
+define(fm) CVPC_AG_NNCP_fm {select CVPC_AG from Demands_NNCP where month=mv($m)}
+define(fm) CVPC_MI_NNCP_fm {select CVPC_MI from Demands_NNCP where month=mv($m)}
+define(fm) CVPC_NNCP_fm {std kind 'FAM-CVP-Demands' units 'taf'} 
+goal(fm) set_CVPC_NNCP_fm{CVPC_NNCP_fm($m) = CVPC_AG_NNCP_fm($m)*cvp_ag_per_fam+CVPC_MI_NNCP_fm($m)*cvp_mi_per_fam}
+
+! wildlife refuge
+define(fm) WR_NNCP_fm {select WR from Demands_NNCP where month=mv($m)} 
+
+! return flow (DSA 10,15,58)
+define(fm) RF_NNCP_fm {select RF from Demands_NNCP where month=mv($m)}
+
+! to prevent non-infeasible solutions:
+define(fm) XXD31_fm {std kind 'FLOW' units 'TAF'}
+
+
+! set demands
+goal(fm) set_D30_fm {D30_fm($m) = NPD_NNCP_fm($m) + CVPS_NNCP_fm($m) + CVPC_NNCP_fm($m) + WR_NNCP_fm($m) - RF_NNCP_fm($m) - XXD31_fm($m)}
+

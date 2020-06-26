@@ -1,0 +1,116 @@
+! Defines CVP South of Delta demands.
+! Allocation reductions must follow the reduction priorities shown below:
+!     if shasta critical year, cut Exchange and Refuge to 75%
+!     1. (first cut) AG cut to 75%
+!     2. AG cut to 50%, MI cut to 75%
+!     3. AG cut to 25%
+!     4. AG cut to 0%, MI cut to 75%
+!     5. MI cut to 0%
+!     6. Exchange and Refuge cut to 0%
+!     7. (last cut) Losses cut to 0%
+
+! Ryan Wilbur 8-1-03
+
+! demand allocation cut level
+define cut1 {value 1.}
+define cut2 {value 1.}
+define cut3 {value 1.}
+define cut4 {value 1.}
+define cut5 {value 1.}
+define cut6 {lower 0 upper 1. kind 'CVP-CUT' units 'PERCENT'}
+define cut7 {value 1.}
+
+! max annual demand by type
+define CVP_MAX    {value 3475.}
+define CVP_AG_MAX {value 1963.}
+define CVP_MI_MAX {value  148.}
+define CVP_EX_MAX {value  875.}
+define CVP_RF_MAX {value  305.}
+define CVP_LS_MAX {value  184.}
+
+! annual delivery by type
+!define CVP    {lower 0 upper 3475. kind 'CVP-DEL' units 'TAF'}
+!define CVP_AG {lower 0 upper 1841. kind 'CVP-DEL' units 'TAF'}
+!define CVP_MI {lower 0 upper  144. kind 'CVP-DEL' units 'TAF'}
+define CVP_EX {lower 0 upper  875. kind 'CVP-DEL' units 'TAF'}
+define CVP_RF {lower 0 upper  305. kind 'CVP-DEL' units 'TAF'}
+define CVP_LS {lower 0 upper  184. kind 'CVP-DEL' units 'TAF'}
+
+!goal setCVP {CVP = CVP_AG + CVP_MI + CVP_EX + CVP_RF + CVP_LS}
+
+! partition ag and mi into annual sub-levels for tiered cut procedure
+define CVP_AG1 {value 490.75}
+define CVP_AG2 {value 490.75}
+define CVP_AG3 {value 490.75}
+define CVP_AG4 {value 490.75}
+				  
+define CVP_MI1 {value 74.}
+define CVP_MI2 {value 37.}
+define CVP_MI3 {value 37.}
+
+! limit cut6 to 75% for shasta critical years
+goal setCut6 {lhs cut6 case ShaCrit{condition wyt_SHASTA_cvp==4 rhs 0.75 } 
+                       case other  {condition always rhs 1.0  }}
+
+goal setCVP_EX {CVP_EX = CVP_EX_MAX*cut6}
+goal setCVP_RF {CVP_RF = CVP_RF_MAX*cut6}
+goal setCVP_LS {CVP_LS = CVP_LS_MAX*cut7}
+
+! monthly deliveries for each type
+define(fm) CVP_AG_fm {std kind 'CVP-DEL-AG' units 'TAF'}
+
+define(fm) CVP_MI_fm {std kind 'CVP-DEL-MI' units 'TAF'}
+
+define(fm) CVP_EX_fm {std kind 'CVP-DEL-EX' units 'TAF'}
+
+define(fm) CVP_RF_fm {std kind 'CVP-DEL-RF' units 'TAF'}
+
+define(fm) CVP_LS_fm {std kind 'CVP-DEL-LS' units 'TAF'}
+
+! monthly demand pattern for each type
+define(fm) CVP_AGDEM_fm {select AGDEM from CVPDemandPattern where month=mv($m)}
+
+define(fm) CVP_MIDEM_fm {select MIDEM from CVPDemandPattern where month=mv($m)}
+
+define(fm) CVP_EXDEM_fm {select EXDEM from CVPDemandPattern where month=mv($m)}
+
+define(fm) CVP_RFDEM_fm {select RFDEM from CVPDemandPattern where month=mv($m)}
+
+define(fm) CVP_LSDEM_fm {select LSDEM from CVPDemandPattern where month=mv($m)}
+
+
+define(fm) CVP_AG_Bound_fm{value CVP_AGDEM_fm($m)*CVP_AG1 + CVP_AGDEM_fm($m)*CVP_AG2 + CVP_AGDEM_fm($m)*CVP_AG3 + CVP_AGDEM_fm($m)*CVP_AG4}
+define(fm) CVP_MI_Bound_fm{value CVP_MIDEM_fm($m)*CVP_MI1 + CVP_MIDEM_fm($m)*CVP_MI2 + CVP_MIDEM_fm($m)*CVP_MI3}
+
+! set all monthly deliveries
+goal(fm) setCVP_AG_fm {CVP_AG_fm($m) < CVP_AG_Bound_fm($m)}
+goal(fm) setCVP_MI_fm {CVP_MI_fm($m) < CVP_MI_Bound_fm($m)}
+goal(fm) setCVP_EX_fm {CVP_EX_fm($m) < CVP_EXDEM_fm($m)*CVP_EX}
+goal(fm) setCVP_RF_fm {CVP_RF_fm($m) < CVP_RFDEM_fm($m)*CVP_RF}
+goal(fm) setCVP_LS_fm {CVP_LS_fm($m) < CVP_LSDEM_fm($m)*CVP_LS}
+
+
+define cvp_ag_per_fam{alias (sum(i=fm-11, fm, 1) CVP_AG_fm($m))/(sum(i=fm-11, fm, 1) CVP_AG_Bound_fm($m))}
+define cvp_mi_per_fam{alias (sum(i=fm-11, fm, 1) CVP_MI_fm($m))/(sum(i=fm-11, fm, 1) CVP_MI_Bound_fm($m))}
+
+! total all demands
+!goal setCVP_AG {CVP_AG = (sum(i=0, fm, 1) CVP_AG_fm(i))}
+
+!goal setCVP_MI {CVP_MI = (sum(i=0, fm, 1) CVP_MI_fm(i))}
+
+goal(fm) setCVP_fm {D7_fm($m) = CVP_AG_fm($m) + CVP_MI_fm($m) + CVP_EX_fm($m) + CVP_RF_fm($m) + CVP_LS_fm($m)}
+
+! temp variables
+!define CVP_Allocation {lower 0 upper 1 kind 'Percent' units 'percent'}
+define CVP_Delivery_South {lower 0 upper 6000 kind 'Delivery' units 'TAF'}
+goal set_CVP_Del_South {CVP_Delivery_South = (sum(i=0, fm, 1) D7_fm(i)) + (sum(i=fm-11, -1, 1) del_cvp_total_s(i)*cfs_taf(i))}
+
+define CVP_Delivery_North{std kind 'Delivery' units 'taf'}
+goal set_CVP_Del_North {CVP_Delivery_North = (sum(i=0, fm, 1) CVPS_NNCP_fm_dv(i)+CVPC_NNCP_fm(i)+CVPS_SNCP_fm_dv(i)+Amer1_fm_dv(i)+Amer2_fm_dv(i)) + (sum(i=fm-11, -1, 1) del_cvp_total_n(i)*cfs_taf(i))}
+
+define CVP_Delivery_Sys{std kind 'Delivery' units 'taf'}
+goal set_CVP_Del_Sys{CVP_Delivery_Sys=CVP_Delivery_South+CVP_Delivery_North}
+
+!define CVP_Delivery {lower 0 upper 6000 kind 'Delivery' units 'TAF'}
+!goal set_CVP_Del {CVP_Delivery = CVP}
+!goal set_CVP_All {CVP_Allocation = CVP/3475.}

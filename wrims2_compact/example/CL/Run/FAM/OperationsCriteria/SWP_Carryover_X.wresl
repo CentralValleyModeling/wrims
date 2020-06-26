@@ -1,0 +1,95 @@
+! September carryover storage targets are implemented with slack & surplus variables.
+! Slack variables have a large negative weight to avoid storage below the target.
+! Surplus variables have not so large a negative weight to encourage using storage
+! for deliveries.
+! Sequence of drawdown below target: Shasta/Oroville,Folsom,SWP/CVP San Luis,Whiskeytown,Trinity
+! Sequnece of filling above target: Shasta/Oroville,Folsom,SWP/CVP San Luis,Whiskeytown,Trinity
+! Ryan Wilbur 12-14-03
+! Hongbing Yin 1/28/04
+
+! oroville Sep:
+define S6_Sep_hi {std kind 'Penalty' units 'TAF'}
+define S6_Sep_lo {std kind 'Penalty' units 'TAF'} 
+define S6Septarget {std kind 'Storage' units 'TAF'}
+goal setS6Sep {
+  lhs S6Septarget
+  case a {
+    condition S_Orovl(PrevSep) < 1000.
+    rhs 1000.}
+  case b {
+    condition always
+    rhs 1000. + 0.5*SWP_Delivery/4191.061*(S_Orovl(PrevSep)-1000.)}   
+}
+goal(fm) sS6_EOS_Sep {
+  lhs S_Orovl($m)
+  case a {
+    condition mv($m)==Sep .and. S_Orovl(PrevSep) < 1000.
+    rhs 1000. + S6_Sep_hi - S6_Sep_lo}
+  case b {
+    condition mv($m)==Sep
+    rhs 1000. + 0.5*SWP_Delivery/4191.061*(S_Orovl(PrevSep)-1000.) + S6_Sep_hi - S6_Sep_lo}   
+}
+
+goal(fm) S6_Aug_EOM {
+	lhs S_Orovl($m)
+	case Aug{
+		condition mv($m)==Aug
+		rhs S6Septarget
+		lhs>rhs  penalty 0
+		lhs<rhs  penalty 10000	
+	}
+	}
+
+! oroville Dec:
+define S6_Dec_hi {std kind 'Penalty' units 'TAF'}
+define S6_Dec_lo {std kind 'Penalty' units 'TAF'}
+define S6_Dectarget {value 1000}
+define S6Dectarget {alias S6_Dectarget kind 'Storage' units 'TAF'}
+goal(fm) sS6_EOS_Dec {
+	lhs S6_Dectarget + S6_Dec_hi - S6_Dec_lo
+	case Dec{
+		condition mv($m)==Dec
+		rhs S_Orovl($m)
+	}
+}   
+
+! swp san luis: Added storage targets for Oct and Nov - Aaron 02/19/10
+define S12_EOStarget {value 42}
+
+define S12_Oct_hi {std kind 'PENALTY' units 'TAF'}
+define S12_Oct_lo {std kind 'PENALTY' units 'TAF'}
+define S12Octtarget {std kind 'storage' units 'taf'}
+goal setS12Octtarget {S12Octtarget = S12_EOStarget + SWP_Scale*SWP_Carryover/3.}
+goal(fm) sS12_EOS_Oct {
+	lhs S12Octtarget + S12_Oct_hi - S12_Oct_lo
+	case Oct{
+		condition mv($m)==Oct
+		rhs S_SLSWP($m)
+	}
+}
+
+define S12_Nov_hi {std kind 'PENALTY' units 'TAF'}
+define S12_Nov_lo {std kind 'PENALTY' units 'TAF'}
+define S12Novtarget {std kind 'storage' units 'taf'}
+goal setS12Novtarget {S12Novtarget = S12_EOStarget + SWP_Scale*SWP_Carryover*2./3.}
+goal(fm) sS12_EOS_Nov {
+	lhs S12Novtarget + S12_Nov_hi - S12_Nov_lo
+	case Nov{
+		condition mv($m)==Nov
+		rhs S_SLSWP($m)
+	}
+}
+
+define S12_Dec_hi {std kind 'PENALTY' units 'TAF'}
+define S12_Dec_lo {std kind 'PENALTY' units 'TAF'}
+define S12Dectarget {std kind 'storage' units 'taf'}
+goal setS12Dectarget {S12Dectarget = S12_EOStarget + SWP_Scale*SWP_Carryover}
+goal(fm) sS12_EOS_Dec {
+	lhs S12Dectarget + S12_Dec_hi - S12_Dec_lo
+	case Dec{
+		condition mv($m)==Dec
+		rhs S_SLSWP($m)
+	}
+}
+
+define SWP_COTardv {alias SWP_Scale*SWP_Carryover kind 'Storage' units 'TAF'}

@@ -1,0 +1,31 @@
+! Flood conservation values and constraints for each reservoir are included below:
+! Ryan Wilbur 8-1-03
+
+! trinity flood conservation (values from res_level.table - used for CalsimII):
+define(fm) S1_FC_fm {select trinity from FloodConservation where month = mv($m)}
+goal(fm) set_TFC_fm {S_Trnty($m) < S1_FC_fm($m)}
+define(fm) S1_FC_dv_fm {alias S1_FC_fm($m) kind 'STORAGE' units 'TAF'}
+
+! whiskeytown flood conservation (values from res_level.table - used for CalsimII):
+define(fm) S3_FC_fm {select whiskeytown from FloodConservation where month = mv($m)}	  
+goal(fm) set_WFC_fm {S_Wkytn($m) < S3_FC_fm($m)}
+define(fm) S3_FC_dv_fm {alias S3_FC_fm($m) kind 'STORAGE' units 'TAF'}
+
+! shasta flood conservation:
+!use CalSim II flood level:
+define SFC {timeseries 'S4LEVEL5' kind 'STORAGE-LEVEL' units 'TAF'}
+define(fm) S4_FC_fm {value SFC($m)}
+goal(fm) set_SFC_fm {S_Shsta($m) < S4_FC_fm($m)}
+define(fm) S4_FC_dv_fm {alias S4_FC_fm($m) kind 'STORAGE' units 'TAF'}
+
+! oroville flood conservation:
+define OFC {timeseries 'S6LEVEL5' kind 'STORAGE-LEVEL' units 'TAF'}
+define(fm) S6_FC_fm {value OFC($m)}
+goal(fm) set_OFC_fm {S_Orovl($m) < S6_FC_fm($m)}
+define(fm) S6_FC_dv_fm {alias S6_FC_fm($m) kind 'STORAGE' units 'TAF'}
+
+! folsom flood conservation:
+define FFC {timeseries 'S8LEVEL5' kind 'STORAGE-LEVEL' units 'TAF'}
+define(fm) S8_FC_fm {value FFC($m)}
+goal(fm) set_FFC_fm {S_Folsm($m) < S8_FC_fm($m)}
+define(fm) S8_FC_dv_fm {alias S8_FC_fm($m) kind 'STORAGE' units 'TAF'}

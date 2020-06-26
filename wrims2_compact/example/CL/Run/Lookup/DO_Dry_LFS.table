@@ -1,0 +1,10 @@
+!Dry year Delta Outflow targets for LFS under Proposed Action based on the No Action flows
+!based on actual 8RI values
+DO_Dry_LFS
+Mar_May_Idx	    flow
+0.0	0.0
+3841	9200.0
+4526	11400.0
+5052	13300.0
+5749	17200.0
+6547	23000.0

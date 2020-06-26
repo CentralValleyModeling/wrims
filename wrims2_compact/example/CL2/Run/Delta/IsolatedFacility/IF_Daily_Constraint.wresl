@@ -1,0 +1,8 @@
+!Cap IF diversion
+ 
+goal setD400_169 {
+	lhs D_HoodIF
+	case other {
+	condition always
+	rhs C_Freeport_HoodIF lhs<rhs penalty 0.}
+        }

@@ -1,0 +1,9 @@
+! set different Enlarged Shasta options
+!1	1	!"Enlarged Shasta: 0 = off, 1 = on"
+!2	3	!"Size of enlargement: 1 = 6.5 feet (256 taf), 2 = 12.5 feet (443 taf), 3 = 18.5 feet (634 taf) 
+GUI_EnlargedShasta
+Index	Option
+4	50	!PLACEHOLDER FOR UNUSED VALUE
+5	50	!PLACEHOLDER FOR UNUSED VALUE
+1	0	!EnlargedShastaSwitch - Shasta Enlargement: ON(1) OFF(0)
+2	0	!Size of enlargement: 0

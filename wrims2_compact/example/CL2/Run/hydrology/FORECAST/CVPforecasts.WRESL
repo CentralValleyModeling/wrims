@@ -1,0 +1,686 @@
+/*This file defines the forecast information used by the CVP.
+  Dustin Jones 01/11/00
+
+  Forecast of Runoff for CVP is defined as: [ Shasta Lake Inflow forecast based on the
+  Sacramento R. component of SRI - Sum of Shasta Lake Inflows (I4) since 1-OCT ] +
+  [ American R. Component of the SRI - Sum of Folsom Lake Inflows (I8 + I17) since 1-OCT ].
+
+  Forecast of Runoff for the CVP NOD is defined as: [ Shasta Lake Inflow forecast based
+  on the Sacramento R. component of SRI - Sum of Shasta Lake Inflows (I4) since 1-OCT ].
+*/
+
+
+! Forecast of Sacramento River Runoff into Shasta Lake for REMAINDER of WATER YEAR
+define frcst_sac {
+       case Febfore0 {
+           condition  month == FEB .and. Climate_Proj == 0
+           select     FEB_0
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case Febfore1 {
+           condition  month == FEB .and. Climate_Proj == 1
+           select     FEB_1
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case Febfore2 {
+           condition  month == FEB .and. Climate_Proj == 2
+           select     FEB_2
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case Febfore3 {
+           condition  month == FEB .and. Climate_Proj == 3
+           select     FEB_3
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case Febfore4 {
+           condition  month == FEB .and. Climate_Proj == 4
+           select     FEB_4
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case Febfore5 {
+           condition  month == FEB .and. Climate_Proj == 5
+           select     FEB_5
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case Febfore6 {
+           condition  month == FEB .and. Climate_Proj == 6
+           select     FEB_6
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case Febfore7 {
+           condition  month == FEB .and. Climate_Proj == 7
+           select     FEB_7
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case Febfore8 {
+           condition  month == FEB .and. Climate_Proj == 8
+           select     FEB_8
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case Febfore9 {
+           condition  month == FEB .and. Climate_Proj == 9
+           select     FEB_9
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case Febfore10 {
+           condition  month == FEB .and. Climate_Proj == 10
+           select     FEB_10
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }       
+       case MARfore0 {
+           condition  month == MAR .and. Climate_Proj == 0
+           select     MAR_0
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case MARfore1 {
+           condition  month == MAR .and. Climate_Proj == 1
+           select     MAR_1
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case MARfore2 {
+           condition  month == MAR .and. Climate_Proj == 2
+           select     MAR_2
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case MARfore3 {
+           condition  month == MAR .and. Climate_Proj == 3
+           select     MAR_3
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case MARfore4 {
+           condition  month == MAR .and. Climate_Proj == 4
+           select     MAR_4
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case MARfore5 {
+           condition  month == MAR .and. Climate_Proj == 5
+           select     MAR_5
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case MARfore6 {
+           condition  month == MAR .and. Climate_Proj == 6
+           select     MAR_6
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case MARfore7 {
+           condition  month == MAR .and. Climate_Proj == 7
+           select     MAR_7
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case MARfore8 {
+           condition  month == MAR .and. Climate_Proj == 8
+           select     MAR_8
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case MARfore9 {
+           condition  month == MAR .and. Climate_Proj == 9
+           select     MAR_9
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case MARfore10 {
+           condition  month == MAR .and. Climate_Proj == 10
+           select     MAR_10
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }           
+       case APRfore0 {
+           condition  month == APR .and. Climate_Proj == 0
+           select     APR_0
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case APRfore1 {
+           condition  month == APR .and. Climate_Proj == 1
+           select     APR_1
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case APRfore2 {
+           condition  month == APR .and. Climate_Proj == 2
+           select     APR_2
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case APRfore3 {
+           condition  month == APR .and. Climate_Proj == 3
+           select     APR_3
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case APRfore4 {
+           condition  month == APR .and. Climate_Proj == 4
+           select     APR_4
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case APRfore5 {
+           condition  month == APR .and. Climate_Proj == 5
+           select     APR_5
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case APRfore6 {
+           condition  month == APR .and. Climate_Proj == 6
+           select     APR_6
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case APRfore7 {
+           condition  month == APR .and. Climate_Proj == 7
+           select     APR_7
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case APRfore8 {
+           condition  month == APR .and. Climate_Proj == 8
+           select     APR_8
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case APRfore9 {
+           condition  month == APR .and. Climate_Proj == 9
+           select     APR_9
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case APRfore10 {
+           condition  month == APR .and. Climate_Proj == 10
+           select     APR_10
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }           
+       case MAYfore0 {
+           condition  month == MAY .and. Climate_Proj == 0
+           select     MAY_0
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case MAYfore1 {
+           condition  month == MAY .and. Climate_Proj == 1
+           select     MAY_1
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case MAYfore2 {
+           condition  month == MAY .and. Climate_Proj == 2
+           select     MAY_2
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case MAYfore3 {
+           condition  month == MAY .and. Climate_Proj == 3
+           select     MAY_3
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case MAYfore4 {
+           condition  month == MAY .and. Climate_Proj == 4
+           select     MAY_4
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case MAYfore5 {
+           condition  month == MAY .and. Climate_Proj == 5
+           select     MAY_5
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case MAYfore6 {
+           condition  month == MAY .and. Climate_Proj == 6
+           select     MAY_6
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case MAYfore7 {
+           condition  month == MAY .and. Climate_Proj == 7
+           select     MAY_7
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case MAYfore8 {
+           condition  month == MAY .and. Climate_Proj == 8
+           select     MAY_8
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case MAYfore9 {
+           condition  month == MAY .and. Climate_Proj == 9
+           select     MAY_9
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case MAYfore10 {
+           condition  month == MAY .and. Climate_Proj == 10
+           select     MAY_10
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }           
+       case JuntoJan {
+           condition  always
+           value      0  }
+       }
+
+
+! Forecast of American River Runoff into Folsom Lake for REMAINDER of WATER YEAR
+define frcst_amr {
+       case Febfore0 {
+           condition  month == FEB .and. Climate_Proj == 0
+           select     FEB_0
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case Febfore1 {
+           condition  month == FEB .and. Climate_Proj == 1
+           select     FEB_1
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case Febfore2 {
+           condition  month == FEB .and. Climate_Proj == 2
+           select     FEB_2
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case Febfore3 {
+           condition  month == FEB .and. Climate_Proj == 3
+           select     FEB_3
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case Febfore4 {
+           condition  month == FEB .and. Climate_Proj == 4
+           select     FEB_4
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case Febfore5 {
+           condition  month == FEB .and. Climate_Proj == 5
+           select     FEB_5
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case Febfore6 {
+           condition  month == FEB .and. Climate_Proj == 6
+           select     FEB_6
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case Febfore7 {
+           condition  month == FEB .and. Climate_Proj == 7
+           select     FEB_7
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case Febfore8 {
+           condition  month == FEB .and. Climate_Proj == 8
+           select     FEB_8
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case Febfore9 {
+           condition  month == FEB .and. Climate_Proj == 9
+           select     FEB_9
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case Febfore10 {
+           condition  month == FEB .and. Climate_Proj == 10
+           select     FEB_10
+           from       american_runoff_forecast
+           where      wateryear=wateryear }           
+       case MARfore0 {
+           condition  month == MAR .and. Climate_Proj == 0
+           select     MAR_0
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case MARfore1 {
+           condition  month == MAR .and. Climate_Proj == 1
+           select     MAR_1
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case MARfore2 {
+           condition  month == MAR .and. Climate_Proj == 2
+           select     MAR_2
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case MARfore3 {
+           condition  month == MAR .and. Climate_Proj == 3
+           select     MAR_3
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case MARfore4 {
+           condition  month == MAR .and. Climate_Proj == 4
+           select     MAR_4
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case MARfore5 {
+           condition  month == MAR .and. Climate_Proj == 5
+           select     MAR_5
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case MARfore6 {
+           condition  month == MAR .and. Climate_Proj == 6
+           select     MAR_6
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case MARfore7 {
+           condition  month == MAR .and. Climate_Proj == 7
+           select     MAR_7
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case MARfore8 {
+           condition  month == MAR .and. Climate_Proj == 8
+           select     MAR_8
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case MARfore9 {
+           condition  month == MAR .and. Climate_Proj == 9
+           select     MAR_9
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case MARfore10 {
+           condition  month == MAR .and. Climate_Proj == 10
+           select     MAR_10
+           from       american_runoff_forecast
+           where      wateryear=wateryear }           
+       case APRfore0 {
+           condition  month == APR .and. Climate_Proj == 0
+           select     APR_0
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case APRfore1 {
+           condition  month == APR .and. Climate_Proj == 1
+           select     APR_1
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case APRfore2 {
+           condition  month == APR .and. Climate_Proj == 2
+           select     APR_2
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case APRfore3 {
+           condition  month == APR .and. Climate_Proj == 3
+           select     APR_3
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case APRfore4 {
+           condition  month == APR .and. Climate_Proj == 4
+           select     APR_4
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case APRfore5 {
+           condition  month == APR .and. Climate_Proj == 5
+           select     APR_5
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case APRfore6 {
+           condition  month == APR .and. Climate_Proj == 6
+           select     APR_6
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case APRfore7 {
+           condition  month == APR .and. Climate_Proj == 7
+           select     APR_7
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case APRfore8 {
+           condition  month == APR .and. Climate_Proj == 8
+           select     APR_8
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case APRfore9 {
+           condition  month == APR .and. Climate_Proj == 9
+           select     APR_9
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case APRfore10 {
+           condition  month == APR .and. Climate_Proj == 10
+           select     APR_10
+           from       american_runoff_forecast
+           where      wateryear=wateryear }           
+       case MAYfore0 {
+           condition  month == MAY .and. Climate_Proj == 0
+           select     MAY_0
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case MAYfore1 {
+           condition  month == MAY .and. Climate_Proj == 1
+           select     MAY_1
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case MAYfore2 {
+           condition  month == MAY .and. Climate_Proj == 2
+           select     MAY_2
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case MAYfore3 {
+           condition  month == MAY .and. Climate_Proj == 3
+           select     MAY_3
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case MAYfore4 {
+           condition  month == MAY .and. Climate_Proj == 4
+           select     MAY_4
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case MAYfore5 {
+           condition  month == MAY .and. Climate_Proj == 5
+           select     MAY_5
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case MAYfore6 {
+           condition  month == MAY .and. Climate_Proj == 6
+           select     MAY_6
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case MAYfore7 {
+           condition  month == MAY .and. Climate_Proj == 7
+           select     MAY_7
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case MAYfore8 {
+           condition  month == MAY .and. Climate_Proj == 8
+           select     MAY_8
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case MAYfore9 {
+           condition  month == MAY .and. Climate_Proj == 9
+           select     MAY_9
+           from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case MAYfore10 {
+           condition  month == MAY .and. Climate_Proj == 10
+           select     MAY_10
+           from       american_runoff_forecast
+           where      wateryear=wateryear }           
+       case JUNfore0 {
+                condition  month == JUN .and. Climate_Proj == 0
+                select     JUN_0
+                from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case JUNfore1 {
+                condition  month == JUN .and. Climate_Proj == 1
+                select     JUN_1
+                from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case JUNfore2 {
+                condition  month == JUN .and. Climate_Proj == 2
+                select     JUN_2
+                from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case JUNfore3 {
+                condition  month == JUN .and. Climate_Proj == 3
+                select     JUN_3
+                from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case JUNfore4 {
+                condition  month == JUN .and. Climate_Proj == 4
+                select     JUN_4
+                from       american_runoff_forecast
+           where      wateryear=wateryear }           
+       case JUNfore5 {
+                condition  month == JUN .and. Climate_Proj == 5
+                select     JUN_5
+                from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case JUNfore6 {
+                condition  month == JUN .and. Climate_Proj == 6
+                select     JUN_6
+                from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case JUNfore7 {
+                condition  month == JUN .and. Climate_Proj == 7
+                select     JUN_7
+                from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case JUNfore8 {
+                condition  month == JUN .and. Climate_Proj == 8
+                select     JUN_8
+                from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case JUNfore9 {
+                condition  month == JUN .and. Climate_Proj == 9
+                select     JUN_9
+                from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case JUNfore10 {
+                condition  month == JUN .and. Climate_Proj == 10
+                select     JUN_10
+                from       american_runoff_forecast
+           where      wateryear=wateryear }           
+       case JULfore0 {
+                condition  month == JUL .and. Climate_Proj == 0
+                select     JUL_0
+                from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case JULfore1 {
+                condition  month == JUL .and. Climate_Proj == 1
+                select     JUL_1
+                from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case JULfore2 {
+                condition  month == JUL .and. Climate_Proj == 2
+                select     JUL_2
+                from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case JULfore3 {
+                condition  month == JUL .and. Climate_Proj == 3
+                select     JUL_3
+                from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case JULfore4 {
+                condition  month == JUL .and. Climate_Proj == 4
+                select     JUL_4
+                from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case JULfore5 {
+                condition  month == JUL .and. Climate_Proj == 5
+                select     JUL_5
+                from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case JULfore6 {
+                condition  month == JUL .and. Climate_Proj == 6
+                select     JUL_6
+                from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case JULfore7 {
+                condition  month == JUL .and. Climate_Proj == 7
+                select     JUL_7
+                from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case JULfore8 {
+                condition  month == JUL .and. Climate_Proj == 8
+                select     JUL_8
+                from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case JULfore9 {
+                condition  month == JUL .and. Climate_Proj == 9
+                select     JUL_9
+                from       american_runoff_forecast
+           where      wateryear=wateryear }
+       case JULfore10 {
+                condition  month == JUL .and. Climate_Proj == 10
+                select     JUL_10
+                from       american_runoff_forecast
+           where      wateryear=wateryear }           
+      case AUGfore0 {
+               condition  month == AUG .and. Climate_Proj == 0
+               select     AUG_0
+               from       american_runoff_forecast
+           where      wateryear=wateryear }
+      case AUGfore1 {
+               condition  month == AUG .and. Climate_Proj == 1
+               select     AUG_1
+               from       american_runoff_forecast
+           where      wateryear=wateryear }
+      case AUGfore2 {
+               condition  month == AUG .and. Climate_Proj == 2
+               select     AUG_2
+               from       american_runoff_forecast
+           where      wateryear=wateryear }
+      case AUGfore3 {
+               condition  month == AUG .and. Climate_Proj == 3
+               select     AUG_3
+               from       american_runoff_forecast
+           where      wateryear=wateryear }
+      case AUGfore4 {
+               condition  month == AUG .and. Climate_Proj == 4
+               select     AUG_4
+               from       american_runoff_forecast
+           where      wateryear=wateryear }
+      case AUGfore5 {
+               condition  month == AUG .and. Climate_Proj == 5
+               select     AUG_5
+               from       american_runoff_forecast
+           where      wateryear=wateryear }
+      case AUGfore6 {
+               condition  month == AUG .and. Climate_Proj == 6
+               select     AUG_6
+               from       american_runoff_forecast
+           where      wateryear=wateryear }
+      case AUGfore7 {
+               condition  month == AUG .and. Climate_Proj == 7
+               select     AUG_7
+               from       american_runoff_forecast
+           where      wateryear=wateryear }
+      case AUGfore8 {
+               condition  month == AUG .and. Climate_Proj == 8
+               select     AUG_8
+               from       american_runoff_forecast
+           where      wateryear=wateryear }
+      case AUGfore9 {
+               condition  month == AUG .and. Climate_Proj == 9
+               select     AUG_9
+               from       american_runoff_forecast
+           where      wateryear=wateryear }
+      case AUGfore10 {
+               condition  month == AUG .and. Climate_Proj == 10
+               select     AUG_10
+               from       american_runoff_forecast
+           where      wateryear=wateryear }           
+      case SEPfore0 {
+                condition  month == SEP .and. Climate_Proj == 0
+                select     SEP_0
+                from       american_runoff_forecast
+           where      wateryear=wateryear }
+      case SEPfore1 {
+                condition  month == SEP .and. Climate_Proj == 1
+                select     SEP_1
+                from       american_runoff_forecast
+           where      wateryear=wateryear }
+      case SEPfore2 {
+                condition  month == SEP .and. Climate_Proj == 2
+                select     SEP_2
+                from       american_runoff_forecast
+           where      wateryear=wateryear }
+      case SEPfore3 {
+                condition  month == SEP .and. Climate_Proj == 3
+                select     SEP_3
+                from       american_runoff_forecast
+           where      wateryear=wateryear }
+      case SEPfore4 {
+                condition  month == SEP .and. Climate_Proj == 4
+                select     SEP_4
+                from       american_runoff_forecast
+           where      wateryear=wateryear }
+      case SEPfore5 {
+                condition  month == SEP .and. Climate_Proj == 5
+                select     SEP_5
+                from       american_runoff_forecast
+           where      wateryear=wateryear }
+      case SEPfore6 {
+                condition  month == SEP .and. Climate_Proj == 6
+                select     SEP_6
+                from       american_runoff_forecast
+           where      wateryear=wateryear }
+      case SEPfore7 {
+                condition  month == SEP .and. Climate_Proj == 7
+                select     SEP_7
+                from       american_runoff_forecast
+           where      wateryear=wateryear }
+      case SEPfore8 {
+                condition  month == SEP .and. Climate_Proj == 8
+                select     SEP_8
+                from       american_runoff_forecast
+           where      wateryear=wateryear }
+      case SEPfore9 {
+                condition  month == SEP .and. Climate_Proj == 9
+                select     SEP_9
+                from       american_runoff_forecast
+           where      wateryear=wateryear }
+      case SEPfore10 {
+                condition  month == SEP .and. Climate_Proj == 10
+                select     SEP_10
+                from       american_runoff_forecast
+           where      wateryear=wateryear }           
+      case Oct_Jan {
+                condition  always
+                value 0.0 }
+       }

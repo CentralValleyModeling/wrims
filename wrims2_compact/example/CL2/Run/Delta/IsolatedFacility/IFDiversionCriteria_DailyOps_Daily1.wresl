@@ -1,0 +1,10 @@
+!Daily upstream flow estimation from a previous cycle corrected monthly flow and using the daily fractions.
+!Previous cycle monthly upstream flow is corrected with the difference of previous and current estimated Fremont weir spills
+
+define qFreeportnospill{value		C_Freeport[Daily1]+ D_FreWeir[Daily1]+ D_SacWeir[Daily1]}
+define Qsac129{value		C_Wilkns[Daily1]}
+
+define qFreeportnospilldv {alias qFreeportnospill kind 'debug' units 'cfs'}
+
+!Estimate Daily flow conditions, bypass requirements and bounds on IF Diversion
+INCLUDE 'IFDiversionCriteria_DailyOps.wresl'

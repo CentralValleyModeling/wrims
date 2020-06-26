@@ -1,0 +1,31 @@
+! Evaporation definitions for each reservoir are included below:
+! Ryan Wilbur 01-28-04
+
+! trinity evaporation:
+define E1 {timeseries 'evap_S1' kind 'EVAPORATION-RATE' units 'IN'}
+define(fm) E1_fm {value E1($m)}
+
+! whiskeytown evaporation:
+define E2 {timeseries 'evap_S3' kind 'EVAPORATION-RATE' units 'IN'}
+define(fm) E2_fm {value E2($m)}
+
+! shasta evaporation:
+define E3 {timeseries 'evap_S4' kind 'EVAPORATION-RATE' units 'IN'}
+define(fm) E3_fm {value E3($m)}
+
+! oroville evaporation:
+define E4 {timeseries 'evap_S6' kind 'EVAPORATION-RATE' units 'IN'}
+define(fm) E4_fm {value E4($m)}
+
+! folsom evaporation:
+define E5 {timeseries 'evap_S8' kind 'EVAPORATION-RATE' units 'IN'}
+define(fm) E5_fm {value E5($m)}
+
+! swp san luis evaporation:
+define E6 {timeseries 'evap_S12' kind 'EVAPORATION-RATE' units 'IN'}
+define(fm) E6_fm {value E6($m)}
+
+! cvp san luis evaporation:
+define E7 {timeseries 'evap_S11' kind 'EVAPORATION-RATE' units 'IN'}
+define(fm) E7_fm {value E7($m)}
+

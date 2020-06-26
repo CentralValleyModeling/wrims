@@ -1,0 +1,1913 @@
+
+
+!Initial operations Criteria
+/*
+Constant Low-Level Pumping (Dec-Jun):
+****************************************
+Diversions up to 6% of river flow for flows greater than 5,000 cfs. No more than 300 cfs at any one
+intake.    */
+define range1 {select range1 from NDD_t1 where month = month }
+define prc1   {select prc1   from NDD_t1 where month = month }
+
+define range2 {select range2 from NDD_t1 where month = month }
+define prc2   {select prc2   from NDD_t1 where month = month }
+
+define LLP_d1 {
+	case range1 {condition  Qfreeport_1 > range1  .and. Qfreeport_1 < range2     value   max(0., min(900.,Qfreeport_1 -5000 ,prc1* Qfreeport_1)) }
+	case range2 {condition  Qfreeport_1 >= range2    value   max(0., min(900.,Qfreeport_1 -5000 ,prc2* Qfreeport_1 ))}
+	case other  {condition always value 0. }   }
+
+define LLP_d2 {
+	case range1 {condition  Qfreeport_2 > range1  .and. Qfreeport_2 < range2     value   max(0., min(900.,Qfreeport_2 -5000 ,prc1* Qfreeport_2)) }
+	case range2 {condition  Qfreeport_2 >= range2    value   max(0., min(900.,Qfreeport_2 -5000 ,prc2* Qfreeport_2 ))}
+	case other  {condition always value 0. }   }
+
+define LLP_d3 {
+	case range1 {condition  Qfreeport_3 > range1  .and. Qfreeport_3 < range2     value   max(0., min(900.,Qfreeport_3 -5000 ,prc1* Qfreeport_3)) }
+	case range2 {condition  Qfreeport_3 >= range2    value   max(0., min(900.,Qfreeport_3 -5000 ,prc2* Qfreeport_3 ))}
+	case other  {condition always value 0. }   }
+
+define LLP_d4 {
+	case range1 {condition  Qfreeport_4 > range1  .and. Qfreeport_4 < range2     value   max(0., min(900.,Qfreeport_4 -5000 ,prc1* Qfreeport_4)) }
+	case range2 {condition  Qfreeport_4 >= range2    value   max(0., min(900.,Qfreeport_4 -5000 ,prc2* Qfreeport_4 ))}
+	case other  {condition always value 0. }   }
+
+define LLP_d5 {
+	case range1 {condition  Qfreeport_5 > range1  .and. Qfreeport_5 < range2     value   max(0., min(900.,Qfreeport_5 -5000 ,prc1* Qfreeport_5)) }
+	case range2 {condition  Qfreeport_5 >= range2    value   max(0., min(900.,Qfreeport_5 -5000 ,prc2* Qfreeport_5 ))}
+	case other  {condition always value 0. }   }
+
+define LLP_d6 {
+	case range1 {condition  Qfreeport_6 > range1  .and. Qfreeport_6 < range2     value   max(0., min(900.,Qfreeport_6 -5000 ,prc1* Qfreeport_6)) }
+	case range2 {condition  Qfreeport_6 >= range2    value   max(0., min(900.,Qfreeport_6 -5000 ,prc2* Qfreeport_6 ))}
+	case other  {condition always value 0. }   }
+
+define LLP_d7 {
+	case range1 {condition  Qfreeport_7 > range1  .and. Qfreeport_7 < range2     value   max(0., min(900.,Qfreeport_7 -5000 ,prc1* Qfreeport_7)) }
+	case range2 {condition  Qfreeport_7 >= range2    value   max(0., min(900.,Qfreeport_7 -5000 ,prc2* Qfreeport_7 ))}
+	case other  {condition always value 0. }   }
+
+define LLP_d8 {
+	case range1 {condition  Qfreeport_8 > range1  .and. Qfreeport_8 < range2     value   max(0., min(900.,Qfreeport_8 -5000 ,prc1* Qfreeport_8)) }
+	case range2 {condition  Qfreeport_8 >= range2    value   max(0., min(900.,Qfreeport_8 -5000 ,prc2* Qfreeport_8 ))}
+	case other  {condition always value 0. }   }
+
+define LLP_d9 {
+	case range1 {condition  Qfreeport_9 > range1  .and. Qfreeport_9 < range2     value   max(0., min(900.,Qfreeport_9 -5000 ,prc1* Qfreeport_9)) }
+	case range2 {condition  Qfreeport_9 >= range2    value   max(0., min(900.,Qfreeport_9 -5000 ,prc2* Qfreeport_9 ))}
+	case other  {condition always value 0. }   }
+
+define LLP_d10 {
+	case range1 {condition  Qfreeport_10 > range1  .and. Qfreeport_10 < range2     value   max(0., min(900.,Qfreeport_10 -5000 ,prc1* Qfreeport_10)) }
+	case range2 {condition  Qfreeport_10 >= range2    value   max(0., min(900.,Qfreeport_10 -5000 ,prc2* Qfreeport_10 ))}
+	case other  {condition always value 0. }   }
+
+define LLP_d11 {
+	case range1 {condition  Qfreeport_11 > range1  .and. Qfreeport_11 < range2     value   max(0., min(900.,Qfreeport_11 -5000 ,prc1* Qfreeport_11)) }
+	case range2 {condition  Qfreeport_11 >= range2    value   max(0., min(900.,Qfreeport_11 -5000 ,prc2* Qfreeport_11 ))}
+	case other  {condition always value 0. }   }
+
+define LLP_d12 {
+	case range1 {condition  Qfreeport_12 > range1  .and. Qfreeport_12 < range2     value   max(0., min(900.,Qfreeport_12 -5000 ,prc1* Qfreeport_12)) }
+	case range2 {condition  Qfreeport_12 >= range2    value   max(0., min(900.,Qfreeport_12 -5000 ,prc2* Qfreeport_12 ))}
+	case other  {condition always value 0. }   }
+
+define LLP_d13 {
+	case range1 {condition  Qfreeport_13 > range1  .and. Qfreeport_13 < range2     value   max(0., min(900.,Qfreeport_13 -5000 ,prc1* Qfreeport_13)) }
+	case range2 {condition  Qfreeport_13 >= range2    value   max(0., min(900.,Qfreeport_13 -5000 ,prc2* Qfreeport_13 ))}
+	case other  {condition always value 0. }   }
+
+define LLP_d14 {
+	case range1 {condition  Qfreeport_14 > range1  .and. Qfreeport_14 < range2     value   max(0., min(900.,Qfreeport_14 -5000 ,prc1* Qfreeport_14)) }
+	case range2 {condition  Qfreeport_14 >= range2    value   max(0., min(900.,Qfreeport_14 -5000 ,prc2* Qfreeport_14 ))}
+	case other  {condition always value 0. }   }
+
+define LLP_d15 {
+	case range1 {condition  Qfreeport_15 > range1  .and. Qfreeport_15 < range2     value   max(0., min(900.,Qfreeport_15 -5000 ,prc1* Qfreeport_15)) }
+	case range2 {condition  Qfreeport_15 >= range2    value   max(0., min(900.,Qfreeport_15 -5000 ,prc2* Qfreeport_15 ))}
+	case other  {condition always value 0. }   }
+
+define LLP_d16 {
+	case range1 {condition  Qfreeport_16 > range1  .and. Qfreeport_16 < range2     value   max(0., min(900.,Qfreeport_16 -5000 ,prc1* Qfreeport_16)) }
+	case range2 {condition  Qfreeport_16 >= range2    value   max(0., min(900.,Qfreeport_16 -5000 ,prc2* Qfreeport_16 ))}
+	case other  {condition always value 0. }   }
+
+define LLP_d17 {
+	case range1 {condition  Qfreeport_17 > range1  .and. Qfreeport_17 < range2     value   max(0., min(900.,Qfreeport_17 -5000 ,prc1* Qfreeport_17)) }
+	case range2 {condition  Qfreeport_17 >= range2    value   max(0., min(900.,Qfreeport_17 -5000 ,prc2* Qfreeport_17 ))}
+	case other  {condition always value 0. }   }
+
+define LLP_d18 {
+	case range1 {condition  Qfreeport_18 > range1  .and. Qfreeport_18 < range2     value   max(0., min(900.,Qfreeport_18 -5000 ,prc1* Qfreeport_18)) }
+	case range2 {condition  Qfreeport_18 >= range2    value   max(0., min(900.,Qfreeport_18 -5000 ,prc2* Qfreeport_18 ))}
+	case other  {condition always value 0. }   }
+
+define LLP_d19 {
+	case range1 {condition  Qfreeport_19 > range1  .and. Qfreeport_19 < range2     value   max(0., min(900.,Qfreeport_19 -5000 ,prc1* Qfreeport_19)) }
+	case range2 {condition  Qfreeport_19 >= range2    value   max(0., min(900.,Qfreeport_19 -5000 ,prc2* Qfreeport_19 ))}
+	case other  {condition always value 0. }   }
+
+define LLP_d20 {
+	case range1 {condition  Qfreeport_20 > range1  .and. Qfreeport_20 < range2     value   max(0., min(900.,Qfreeport_20 -5000 ,prc1* Qfreeport_20)) }
+	case range2 {condition  Qfreeport_20 >= range2    value   max(0., min(900.,Qfreeport_20 -5000 ,prc2* Qfreeport_20 ))}
+	case other  {condition always value 0. }   }
+
+define LLP_d21 {
+	case range1 {condition  Qfreeport_21 > range1  .and. Qfreeport_21 < range2     value   max(0., min(900.,Qfreeport_21 -5000 ,prc1* Qfreeport_21)) }
+	case range2 {condition  Qfreeport_21 >= range2    value   max(0., min(900.,Qfreeport_21 -5000 ,prc2* Qfreeport_21 ))}
+	case other  {condition always value 0. }   }
+
+define LLP_d22 {
+	case range1 {condition  Qfreeport_22 > range1  .and. Qfreeport_22 < range2     value   max(0., min(900.,Qfreeport_22 -5000 ,prc1* Qfreeport_22)) }
+	case range2 {condition  Qfreeport_22 >= range2    value   max(0., min(900.,Qfreeport_22 -5000 ,prc2* Qfreeport_22 ))}
+	case other  {condition always value 0. }   }
+
+define LLP_d23 {
+	case range1 {condition  Qfreeport_23 > range1  .and. Qfreeport_23 < range2     value   max(0., min(900.,Qfreeport_23 -5000 ,prc1* Qfreeport_23)) }
+	case range2 {condition  Qfreeport_23 >= range2    value   max(0., min(900.,Qfreeport_23 -5000 ,prc2* Qfreeport_23 ))}
+	case other  {condition always value 0. }   }
+
+define LLP_d24 {
+	case range1 {condition  Qfreeport_24 > range1  .and. Qfreeport_24 < range2     value   max(0., min(900.,Qfreeport_24 -5000 ,prc1* Qfreeport_24)) }
+	case range2 {condition  Qfreeport_24 >= range2    value   max(0., min(900.,Qfreeport_24 -5000 ,prc2* Qfreeport_24 ))}
+	case other  {condition always value 0. }   }
+
+define LLP_d25 {
+	case range1 {condition  Qfreeport_25 > range1  .and. Qfreeport_25 < range2     value   max(0., min(900.,Qfreeport_25 -5000 ,prc1* Qfreeport_25)) }
+	case range2 {condition  Qfreeport_25 >= range2    value   max(0., min(900.,Qfreeport_25 -5000 ,prc2* Qfreeport_25 ))}
+	case other  {condition always value 0. }   }
+
+define LLP_d26 {
+	case range1 {condition  Qfreeport_26 > range1  .and. Qfreeport_26 < range2     value   max(0., min(900.,Qfreeport_26 -5000 ,prc1* Qfreeport_26)) }
+	case range2 {condition  Qfreeport_26 >= range2    value   max(0., min(900.,Qfreeport_26 -5000 ,prc2* Qfreeport_26 ))}
+	case other  {condition always value 0. }   }
+
+define LLP_d27 {
+	case range1 {condition  Qfreeport_27 > range1  .and. Qfreeport_27 < range2     value   max(0., min(900.,Qfreeport_27 -5000 ,prc1* Qfreeport_27)) }
+	case range2 {condition  Qfreeport_27 >= range2    value   max(0., min(900.,Qfreeport_27 -5000 ,prc2* Qfreeport_27 ))}
+	case other  {condition always value 0. }   }
+
+define LLP_d28 {
+	case range1 {condition  Qfreeport_28 > range1  .and. Qfreeport_28 < range2     value   max(0., min(900.,Qfreeport_28 -5000 ,prc1* Qfreeport_28)) }
+	case range2 {condition  Qfreeport_28 >= range2    value   max(0., min(900.,Qfreeport_28 -5000 ,prc2* Qfreeport_28 ))}
+	case other  {condition always value 0. }   }
+
+define LLP_d29 {
+	case range1 {condition  Qfreeport_29 > range1  .and. Qfreeport_29 < range2     value   max(0., min(900.,Qfreeport_29 -5000 ,prc1* Qfreeport_29)) }
+	case range2 {condition  Qfreeport_29 >= range2    value   max(0., min(900.,Qfreeport_29 -5000 ,prc2* Qfreeport_29 ))}
+	case other  {condition always value 0. }   }
+
+define LLP_d30 {
+	case range1 {condition  Qfreeport_30 > range1  .and. Qfreeport_30 < range2     value   max(0., min(900.,Qfreeport_30 -5000 ,prc1* Qfreeport_30)) }
+	case range2 {condition  Qfreeport_30 >= range2    value   max(0., min(900.,Qfreeport_30 -5000 ,prc2* Qfreeport_30 ))}
+	case other  {condition always value 0. }   }
+
+define LLP_d31 {
+	case range1 {condition  Qfreeport_31 > range1  .and. Qfreeport_31 < range2     value   max(0., min(900.,Qfreeport_31 -5000 ,prc1* Qfreeport_31)) }
+	case range2 {condition  Qfreeport_31 >= range2    value   max(0., min(900.,Qfreeport_31 -5000 ,prc2* Qfreeport_31 ))}
+	case other  {condition always value 0. }   }
+
+define LLP_d1dv {alias LLP_d1 kind 'FLOW' units 'cfs'}
+define LLP_d2dv {alias LLP_d2 kind 'FLOW' units 'cfs'}
+define LLP_d3dv {alias LLP_d3 kind 'FLOW' units 'cfs'}
+define LLP_d4dv {alias LLP_d4 kind 'FLOW' units 'cfs'}
+define LLP_d5dv {alias LLP_d5 kind 'FLOW' units 'cfs'}
+define LLP_d6dv {alias LLP_d6 kind 'FLOW' units 'cfs'}
+define LLP_d7dv {alias LLP_d7 kind 'FLOW' units 'cfs'}
+define LLP_d8dv {alias LLP_d8 kind 'FLOW' units 'cfs'}
+define LLP_d9dv {alias LLP_d9 kind 'FLOW' units 'cfs'}
+define LLP_d10dv {alias LLP_d10 kind 'FLOW' units 'cfs'}
+define LLP_d11dv {alias LLP_d11 kind 'FLOW' units 'cfs'}
+define LLP_d12dv {alias LLP_d12 kind 'FLOW' units 'cfs'}
+define LLP_d13dv {alias LLP_d13 kind 'FLOW' units 'cfs'}
+define LLP_d14dv {alias LLP_d14 kind 'FLOW' units 'cfs'}
+define LLP_d15dv {alias LLP_d15 kind 'FLOW' units 'cfs'}
+define LLP_d16dv {alias LLP_d16 kind 'FLOW' units 'cfs'}
+define LLP_d17dv {alias LLP_d17 kind 'FLOW' units 'cfs'}
+define LLP_d18dv {alias LLP_d18 kind 'FLOW' units 'cfs'}
+define LLP_d19dv {alias LLP_d19 kind 'FLOW' units 'cfs'}
+define LLP_d20dv {alias LLP_d20 kind 'FLOW' units 'cfs'}
+define LLP_d21dv {alias LLP_d21 kind 'FLOW' units 'cfs'}
+define LLP_d22dv {alias LLP_d22 kind 'FLOW' units 'cfs'}
+define LLP_d23dv {alias LLP_d23 kind 'FLOW' units 'cfs'}
+define LLP_d24dv {alias LLP_d24 kind 'FLOW' units 'cfs'}
+define LLP_d25dv {alias LLP_d25 kind 'FLOW' units 'cfs'}
+define LLP_d26dv {alias LLP_d26 kind 'FLOW' units 'cfs'}
+define LLP_d27dv {alias LLP_d27 kind 'FLOW' units 'cfs'}
+define LLP_d28dv {alias LLP_d28 kind 'FLOW' units 'cfs'}
+define LLP_d29dv {alias LLP_d29 kind 'FLOW' units 'cfs'}
+define LLP_d30dv {alias LLP_d30 kind 'FLOW' units 'cfs'}
+define LLP_d31dv {alias LLP_d31 kind 'FLOW' units 'cfs'}
+
+define bypass_LLP_d1 {value Qfreeport_1 - LLP_d1}
+define bypass_LLP_d2 {value Qfreeport_2 - LLP_d2}
+define bypass_LLP_d3 {value Qfreeport_3 - LLP_d3}
+define bypass_LLP_d4 {value Qfreeport_4 - LLP_d4}
+define bypass_LLP_d5 {value Qfreeport_5 - LLP_d5}
+define bypass_LLP_d6 {value Qfreeport_6 - LLP_d6}
+define bypass_LLP_d7 {value Qfreeport_7 - LLP_d7}
+define bypass_LLP_d8 {value Qfreeport_8 - LLP_d8}
+define bypass_LLP_d9 {value Qfreeport_9 - LLP_d9}
+define bypass_LLP_d10 {value Qfreeport_10 - LLP_d10}
+define bypass_LLP_d11 {value Qfreeport_11 - LLP_d11}
+define bypass_LLP_d12 {value Qfreeport_12 - LLP_d12}
+define bypass_LLP_d13 {value Qfreeport_13 - LLP_d13}
+define bypass_LLP_d14 {value Qfreeport_14 - LLP_d14}
+define bypass_LLP_d15 {value Qfreeport_15 - LLP_d15}
+define bypass_LLP_d16 {value Qfreeport_16 - LLP_d16}
+define bypass_LLP_d17 {value Qfreeport_17 - LLP_d17}
+define bypass_LLP_d18 {value Qfreeport_18 - LLP_d18}
+define bypass_LLP_d19 {value Qfreeport_19 - LLP_d19}
+define bypass_LLP_d20 {value Qfreeport_20 - LLP_d20}
+define bypass_LLP_d21 {value Qfreeport_21 - LLP_d21}
+define bypass_LLP_d22 {value Qfreeport_22 - LLP_d22}
+define bypass_LLP_d23 {value Qfreeport_23 - LLP_d23}
+define bypass_LLP_d24 {value Qfreeport_24 - LLP_d24}
+define bypass_LLP_d25 {value Qfreeport_25 - LLP_d25}
+define bypass_LLP_d26 {value Qfreeport_26 - LLP_d26}
+define bypass_LLP_d27 {value Qfreeport_27 - LLP_d27}
+define bypass_LLP_d28 {value Qfreeport_28 - LLP_d28}
+define bypass_LLP_d29 {value Qfreeport_29 - LLP_d29}
+define bypass_LLP_d30 {value Qfreeport_30 - LLP_d30}
+define bypass_LLP_d31 {value Qfreeport_31 - LLP_d31}
+
+define bypass_LLP_d1dv {alias bypass_LLP_d1 kind 'FLOW' units 'cfs'}
+define bypass_LLP_d2dv {alias bypass_LLP_d2 kind 'FLOW' units 'cfs'}
+define bypass_LLP_d3dv {alias bypass_LLP_d3 kind 'FLOW' units 'cfs'}
+define bypass_LLP_d4dv {alias bypass_LLP_d4 kind 'FLOW' units 'cfs'}
+define bypass_LLP_d5dv {alias bypass_LLP_d5 kind 'FLOW' units 'cfs'}
+define bypass_LLP_d6dv {alias bypass_LLP_d6 kind 'FLOW' units 'cfs'}
+define bypass_LLP_d7dv {alias bypass_LLP_d7 kind 'FLOW' units 'cfs'}
+define bypass_LLP_d8dv {alias bypass_LLP_d8 kind 'FLOW' units 'cfs'}
+define bypass_LLP_d9dv {alias bypass_LLP_d9 kind 'FLOW' units 'cfs'}
+define bypass_LLP_d10dv {alias bypass_LLP_d10 kind 'FLOW' units 'cfs'}
+define bypass_LLP_d11dv {alias bypass_LLP_d11 kind 'FLOW' units 'cfs'}
+define bypass_LLP_d12dv {alias bypass_LLP_d12 kind 'FLOW' units 'cfs'}
+define bypass_LLP_d13dv {alias bypass_LLP_d13 kind 'FLOW' units 'cfs'}
+define bypass_LLP_d14dv {alias bypass_LLP_d14 kind 'FLOW' units 'cfs'}
+define bypass_LLP_d15dv {alias bypass_LLP_d15 kind 'FLOW' units 'cfs'}
+define bypass_LLP_d16dv {alias bypass_LLP_d16 kind 'FLOW' units 'cfs'}
+define bypass_LLP_d17dv {alias bypass_LLP_d17 kind 'FLOW' units 'cfs'}
+define bypass_LLP_d18dv {alias bypass_LLP_d18 kind 'FLOW' units 'cfs'}
+define bypass_LLP_d19dv {alias bypass_LLP_d19 kind 'FLOW' units 'cfs'}
+define bypass_LLP_d20dv {alias bypass_LLP_d20 kind 'FLOW' units 'cfs'}
+define bypass_LLP_d21dv {alias bypass_LLP_d21 kind 'FLOW' units 'cfs'}
+define bypass_LLP_d22dv {alias bypass_LLP_d22 kind 'FLOW' units 'cfs'}
+define bypass_LLP_d23dv {alias bypass_LLP_d23 kind 'FLOW' units 'cfs'}
+define bypass_LLP_d24dv {alias bypass_LLP_d24 kind 'FLOW' units 'cfs'}
+define bypass_LLP_d25dv {alias bypass_LLP_d25 kind 'FLOW' units 'cfs'}
+define bypass_LLP_d26dv {alias bypass_LLP_d26 kind 'FLOW' units 'cfs'}
+define bypass_LLP_d27dv {alias bypass_LLP_d27 kind 'FLOW' units 'cfs'}
+define bypass_LLP_d28dv {alias bypass_LLP_d28 kind 'FLOW' units 'cfs'}
+define bypass_LLP_d29dv {alias bypass_LLP_d29 kind 'FLOW' units 'cfs'}
+define bypass_LLP_d30dv {alias bypass_LLP_d30 kind 'FLOW' units 'cfs'}
+define bypass_LLP_d31dv {alias bypass_LLP_d31 kind 'FLOW' units 'cfs'}
+
+/*Initial Pulse Protection:
+****************************************
+Low level pumping maintained through the initial pulse period. For the purpose of monitoring, the
+initiation of the pulse is defined by the following criteria:
+(1) Wilkins Slough flow changing by more than 45% over a five day period and
+(2) flowgreater than 12,000 cfs.
+
+Trigger Definition:
+0 = Not in pulse period
+1 = In pulse period
+
+*/
+
+define TPulseON_D31dv {std kind 'TRIGGER' units 'none'}
+define TPulseOFF1_D31dv {std kind 'TRIGGER' units 'none'}
+define TPulseOFF2_D31dv {std kind 'TRIGGER' units 'none'}
+
+
+define TPulseON_D1   {
+	case start    {condition month==OCT value 0. }
+	case trigON31 {condition  daysindv(-1) == 31. .and. qsac129_1/max(0.1,qsac129_28dv(-1),-qsac129_1+qsac129_28dv(-1)) >= 1.45 .and. qsac129_1 > 12000.0 value 1. }
+	case trigON30 {condition  daysindv(-1) == 30. .and. qsac129_1/max(0.1,qsac129_27dv(-1),-qsac129_1+qsac129_27dv(-1)) >= 1.45 .and. qsac129_1 > 12000.0 value 1. }
+	case trigON29 {condition  daysindv(-1) == 29. .and. qsac129_1/max(0.1,qsac129_26dv(-1),-qsac129_1+qsac129_26dv(-1)) >= 1.45 .and. qsac129_1 > 12000.0 value 1. }
+	case trigON28 {condition  daysindv(-1) == 28. .and. qsac129_1/max(0.1,qsac129_25dv(-1),-qsac129_1+qsac129_25dv(-1)) >= 1.45 .and. qsac129_1 > 12000.0 value 1. }
+	case other  {condition always value 0. }   }
+
+define TPulseON_D2   {
+	case start    {condition month==OCT .and. int(wateryear)==1922 value 0.}
+	case trigON31 {condition  daysindv(-1) == 31. .and. qsac129_2/max(0.1,qsac129_29dv(-1),-qsac129_2+qsac129_29dv(-1)) >= 1.45 .and. qsac129_2 > 12000.0 value 1. }
+	case trigON30 {condition  daysindv(-1) == 30. .and. qsac129_2/max(0.1,qsac129_28dv(-1),-qsac129_2+qsac129_28dv(-1)) >= 1.45 .and. qsac129_2 > 12000.0 value 1. }
+	case trigON29 {condition  daysindv(-1) == 29. .and. qsac129_2/max(0.1,qsac129_27dv(-1),-qsac129_2+qsac129_27dv(-1)) >= 1.45 .and. qsac129_2 > 12000.0 value 1. }
+	case trigON28 {condition  daysindv(-1) == 28. .and. qsac129_2/max(0.1,qsac129_26dv(-1),-qsac129_2+qsac129_26dv(-1)) >= 1.45 .and. qsac129_2 > 12000.0 value 1. }
+	case other  {condition always value 0. }   }
+
+define TPulseON_D3   {
+	case start    {condition month==OCT .and. int(wateryear)==1922 value 0.}
+	case trigON31 {condition  daysindv(-1) == 31. .and. qsac129_3/max(0.1,qsac129_30dv(-1),-qsac129_3+qsac129_30dv(-1)) >= 1.45 .and. qsac129_3 > 12000.0 value 1. }
+	case trigON30 {condition  daysindv(-1) == 30. .and. qsac129_3/max(0.1,qsac129_29dv(-1),-qsac129_3+qsac129_29dv(-1)) >= 1.45 .and. qsac129_3 > 12000.0 value 1. }
+	case trigON29 {condition  daysindv(-1) == 29. .and. qsac129_3/max(0.1,qsac129_28dv(-1),-qsac129_3+qsac129_28dv(-1)) >= 1.45 .and. qsac129_3 > 12000.0 value 1. }
+	case trigON28 {condition  daysindv(-1) == 28. .and. qsac129_3/max(0.1,qsac129_27dv(-1),-qsac129_3+qsac129_27dv(-1)) >= 1.45 .and. qsac129_3 > 12000.0 value 1. }
+	case other  {condition always value 0. }   }
+
+define TPulseON_D4   {
+	case start    {condition month==OCT .and. int(wateryear)==1922 value 0.}
+	case trigON31 {condition  daysindv(-1) == 31. .and. qsac129_4/max(0.1, qsac129_31dv(-1),-qsac129_4+qsac129_31dv(-1)) >= 1.45 .and. qsac129_4 > 12000.0 value 1. }
+	case trigON30 {condition  daysindv(-1) == 30. .and. qsac129_4/max(0.1, qsac129_30dv(-1),-qsac129_4+qsac129_30dv(-1)) >= 1.45 .and. qsac129_4 > 12000.0 value 1. }
+	case trigON29 {condition  daysindv(-1) == 29. .and. qsac129_4/max(0.1, qsac129_29dv(-1),-qsac129_4+qsac129_29dv(-1)) >= 1.45 .and. qsac129_4 > 12000.0 value 1. }
+	case trigON28 {condition  daysindv(-1) == 28. .and. qsac129_4/max(0.1, qsac129_28dv(-1),-qsac129_4+qsac129_28dv(-1)) >= 1.45 .and. qsac129_4 > 12000.0 value 1. }
+	case other  {condition always value 0. }   }
+
+
+define TPulseON_D5   {
+	case trigON {condition  qsac129_5/qsac129_1 > 1.45 .and. qsac129_5 > 12000.0 value 1. }
+	case other  {condition always value 0. }   }
+define TPulseON_D6   {
+	case trigON {condition  qsac129_6/qsac129_2 > 1.45 .and. qsac129_6 > 12000.0 value 1. }
+	case other  {condition always value 0. }   }
+define TPulseON_D7   {
+	case trigON {condition  qsac129_7/qsac129_3 > 1.45 .and. qsac129_7 > 12000.0 value 1. }
+	case other  {condition always value 0. }   }
+define TPulseON_D8   {
+	case trigON {condition  qsac129_8/qsac129_4 > 1.45 .and. qsac129_8 > 12000.0 value 1. }
+	case other  {condition always value 0. }   }
+define TPulseON_D9   {
+	case trigON {condition  qsac129_9/qsac129_5 > 1.45 .and. qsac129_9 > 12000.0 value 1. }
+	case other  {condition always value 0. }   }
+define TPulseON_D10   {
+	case trigON {condition  qsac129_10/qsac129_6 > 1.45 .and. qsac129_10 > 12000.0 value 1. }
+	case other  {condition always value 0. }   }
+define TPulseON_D11   {
+	case trigON {condition  qsac129_11/qsac129_7 > 1.45 .and. qsac129_11 > 12000.0 value 1. }
+	case other  {condition always value 0. }   }
+define TPulseON_D12   {
+	case trigON {condition  qsac129_12/qsac129_8 > 1.45 .and. qsac129_12 > 12000.0 value 1. }
+	case other  {condition always value 0. }   }
+define TPulseON_D13   {
+	case trigON {condition  qsac129_13/qsac129_9 > 1.45 .and. qsac129_13 > 12000.0 value 1. }
+	case other  {condition always value 0. }   }
+define TPulseON_D14   {
+	case trigON {condition  qsac129_14/qsac129_10 > 1.45 .and. qsac129_14 > 12000.0 value 1. }
+	case other  {condition always value 0. }   }
+define TPulseON_D15   {
+	case trigON {condition  qsac129_15/qsac129_11 > 1.45 .and. qsac129_15 > 12000.0 value 1. }
+	case other  {condition always value 0. }   }
+define TPulseON_D16   {
+	case trigON {condition  qsac129_16/qsac129_12 > 1.45 .and. qsac129_16 > 12000.0 value 1. }
+	case other  {condition always value 0. }   }
+define TPulseON_D17   {
+	case trigON {condition  qsac129_17/qsac129_13 > 1.45 .and. qsac129_17 > 12000.0 value 1. }
+	case other  {condition always value 0. }   }
+define TPulseON_D18   {
+	case trigON {condition  qsac129_18/qsac129_14 > 1.45 .and. qsac129_18 > 12000.0 value 1. }
+	case other  {condition always value 0. }   }
+define TPulseON_D19   {
+	case trigON {condition  qsac129_19/qsac129_15 > 1.45 .and. qsac129_19 > 12000.0 value 1. }
+	case other  {condition always value 0. }   }
+define TPulseON_D20   {
+	case trigON {condition  qsac129_20/qsac129_16 > 1.45 .and. qsac129_20 > 12000.0 value 1. }
+	case other  {condition always value 0. }   }
+define TPulseON_D21   {
+	case trigON {condition  qsac129_21/qsac129_17 > 1.45 .and. qsac129_21 > 12000.0 value 1. }
+	case other  {condition always value 0. }   }
+define TPulseON_D22   {
+	case trigON {condition  qsac129_22/qsac129_18 > 1.45 .and. qsac129_22 > 12000.0 value 1. }
+	case other  {condition always value 0. }   }
+define TPulseON_D23   {
+	case trigON {condition  qsac129_23/qsac129_19 > 1.45 .and. qsac129_23 > 12000.0 value 1. }
+	case other  {condition always value 0. }   }
+define TPulseON_D24   {
+	case trigON {condition  qsac129_24/qsac129_20 > 1.45 .and. qsac129_24 > 12000.0 value 1. }
+	case other  {condition always value 0. }   }
+define TPulseON_D25   {
+	case trigON {condition  qsac129_25/qsac129_21 > 1.45 .and. qsac129_25 > 12000.0 value 1. }
+	case other  {condition always value 0. }   }
+define TPulseON_D26   {
+	case trigON {condition  qsac129_26/qsac129_22 > 1.45 .and. qsac129_26 > 12000.0 value 1. }
+	case other  {condition always value 0. }   }
+define TPulseON_D27   {
+	case trigON {condition  qsac129_27/qsac129_23 > 1.45 .and. qsac129_27 > 12000.0 value 1. }
+	case other  {condition always value 0. }   }
+define TPulseON_D28   {
+	case trigON {condition  qsac129_28/qsac129_24 > 1.45 .and. qsac129_28 > 12000.0 value 1. }
+	case other  {condition always value 0. }   }
+define TPulseON_D29   {
+	case trigON {condition  qsac129_29/qsac129_25 > 1.45 .and. qsac129_29 > 12000.0 value 1. }
+	case other  {condition always value 0. }   }
+define TPulseON_D30   {
+	case trigON {condition  qsac129_30/qsac129_26 > 1.45 .and. qsac129_30 > 12000.0 value 1. }
+	case other  {condition always value 0. }   }
+define TPulseON_D31   {
+	case trigON {condition  qsac129_31/qsac129_27 > 1.45 .and. qsac129_31 > 12000.0 value 1. }
+	case other  {condition always value 0. }   }
+
+goal setTRG31 {
+	lhs TPulseON_D31dv
+	case Mon31 {condition  daysin == 31. rhs TPulseON_D31}
+	case Mon30 {condition  daysin == 30. rhs TPulseON_D30}
+	case Mon29 {condition  daysin == 29. rhs TPulseON_D29}
+	case Mon28 {condition  daysin == 28. rhs TPulseON_D28} }
+
+define TPulseON_d1dv {alias TPulseON_d1 kind 'TRIGGER' units 'NONE'}
+define TPulseON_d2dv {alias TPulseON_d2 kind 'TRIGGER' units 'NONE'}
+define TPulseON_d3dv {alias TPulseON_d3 kind 'TRIGGER' units 'NONE'}
+define TPulseON_d4dv {alias TPulseON_d4 kind 'TRIGGER' units 'NONE'}
+define TPulseON_d5dv {alias TPulseON_d5 kind 'TRIGGER' units 'NONE'}
+define TPulseON_d6dv {alias TPulseON_d6 kind 'TRIGGER' units 'NONE'}
+define TPulseON_d7dv {alias TPulseON_d7 kind 'TRIGGER' units 'NONE'}
+define TPulseON_d8dv {alias TPulseON_d8 kind 'TRIGGER' units 'NONE'}
+define TPulseON_d9dv {alias TPulseON_d9 kind 'TRIGGER' units 'NONE'}
+define TPulseON_d10dv {alias TPulseON_d10 kind 'TRIGGER' units 'NONE'}
+define TPulseON_d11dv {alias TPulseON_d11 kind 'TRIGGER' units 'NONE'}
+define TPulseON_d12dv {alias TPulseON_d12 kind 'TRIGGER' units 'NONE'}
+define TPulseON_d13dv {alias TPulseON_d13 kind 'TRIGGER' units 'NONE'}
+define TPulseON_d14dv {alias TPulseON_d14 kind 'TRIGGER' units 'NONE'}
+define TPulseON_d15dv {alias TPulseON_d15 kind 'TRIGGER' units 'NONE'}
+define TPulseON_d16dv {alias TPulseON_d16 kind 'TRIGGER' units 'NONE'}
+define TPulseON_d17dv {alias TPulseON_d17 kind 'TRIGGER' units 'NONE'}
+define TPulseON_d18dv {alias TPulseON_d18 kind 'TRIGGER' units 'NONE'}
+define TPulseON_d19dv {alias TPulseON_d19 kind 'TRIGGER' units 'NONE'}
+define TPulseON_d20dv {alias TPulseON_d20 kind 'TRIGGER' units 'NONE'}
+define TPulseON_d21dv {alias TPulseON_d21 kind 'TRIGGER' units 'NONE'}
+define TPulseON_d22dv {alias TPulseON_d22 kind 'TRIGGER' units 'NONE'}
+define TPulseON_d23dv {alias TPulseON_d23 kind 'TRIGGER' units 'NONE'}
+define TPulseON_d24dv {alias TPulseON_d24 kind 'TRIGGER' units 'NONE'}
+define TPulseON_d25dv {alias TPulseON_d25 kind 'TRIGGER' units 'NONE'}
+define TPulseON_d26dv {alias TPulseON_d26 kind 'TRIGGER' units 'NONE'}
+define TPulseON_d27dv {alias TPulseON_d27 kind 'TRIGGER' units 'NONE'}
+define TPulseON_d28dv {alias TPulseON_d28 kind 'TRIGGER' units 'NONE'}
+define TPulseON_d29dv {alias TPulseON_d29 kind 'TRIGGER' units 'NONE'}
+define TPulseON_d30dv {alias TPulseON_d30 kind 'TRIGGER' units 'NONE'}
+!define TPulseON_d31dv {alias TPulseON_d31 kind 'TRIGGER' units 'NONE'}
+
+
+ /*
+Trigger to turn Pulse OFF
+**************************************************************************************
+Low-level pumping continues until
+(1) Wilkins Slough returns to prepulse flows (flow on first day of 5-day increase),
+(2) flows decrease for 5 consecutive days, or
+(3)flows are greater than 20,000 cfs for 10 consecutive
+days.
+
+After pulse period has ended, operations will return to the bypass flow table (SubTable A).
+These parameters are for modeling purposes.
+
+Actual operations will be based on real-time monitoring of fish movement.
+If the first flush begins before Dec 1, May bypass criteria must be initiated following first flush and
+the second pulse period will have the same protective operation.
+
+Trigger Definition:
+0 = Neither condition (1) or (2) was triggered
+1 = Either condition (1) or (2) above was triggered (Oct 1 reset)
+
+
+*/
+!***************************************************************************************
+
+
+
+
+/*(1) Wilkins Slough returns to prepulse flows (flow on first day of 5-day increase),
+  (2) flows decrease for 5 consecutive days
+ */
+define TPulseOFF1_D1   {	case start    {condition month==OCT value 0. }
+	case trigOFF1 {condition int(TPulseON_D31dv(-1))==1 .and.  daysindv(-1) == 31. .and. qsac129_1 < qsac129_31dv(-1) .and.  qsac129_31dv(-1)< qsac129_30dv(-1) .and. qsac129_30dv(-1) < qsac129_29dv(-1) .and.
+	                                qsac129_29dv(-1) < qsac129_28dv(-1) .and.  qsac129_28dv(-1) < qsac129_27dv(-1) .or. qsac129_1 <=12000. value 1. }
+	case trigOFF2 {condition int(TPulseON_D31dv(-1))==1 .and. daysindv(-1) == 30. .and. qsac129_1 < qsac129_30dv(-1) .and.  qsac129_30dv(-1) < qsac129_29dv(-1) .and. qsac129_29dv(-1) < qsac129_28dv(-1) .and.
+	                                qsac129_28dv(-1) < qsac129_27dv(-1) .and.  qsac129_27dv(-1) < qsac129_26dv(-1) .or. qsac129_1 <=12000. value 1. }
+	case trigOFF3 {condition  int(TPulseON_D31dv(-1))==1 .and. daysindv(-1) == 29. .and. qsac129_1 < qsac129_29dv(-1) .and.  qsac129_29dv(-1) < qsac129_28dv(-1) .and. qsac129_28dv(-1) < qsac129_27dv(-1) .and.
+	                                qsac129_27dv(-1) < qsac129_26dv(-1) .and.  qsac129_26dv(-1) < qsac129_25dv(-1) .or. qsac129_1 <=12000. value 1. }
+	case trigOFF4 {condition int(TPulseON_D31dv(-1))==1 .and. daysindv(-1) == 28. .and. qsac129_1 < qsac129_28dv(-1) .and.  qsac129_28dv(-1) < qsac129_27dv(-1) .and. qsac129_27dv(-1) < qsac129_26dv(-1) .and.
+	                                qsac129_26dv(-1) < qsac129_25dv(-1) .and.  qsac129_25dv(-1) < qsac129_24dv(-1) .or. qsac129_1 <=12000. value 1. }
+	case other  {condition always value 0. }   }
+
+define TPulseOFF1_D2   {	case start    {condition month==OCT .and. int(wateryear)==1922 value 0.}
+	case trigOFF1 {condition daysindv(-1) == 31. .and. qsac129_2 < qsac129_1 .and.  qsac129_1 < qsac129_31dv(-1) .and. qsac129_31dv(-1) < qsac129_30dv(-1) .and.
+	                                qsac129_30dv(-1) < qsac129_29dv(-1) .and.  qsac129_29dv(-1) < qsac129_28dv(-1) .or. qsac129_2 <=12000. value 1. }
+	case trigOFF2 {condition daysindv(-1) == 30. .and. qsac129_2 < qsac129_1 .and.  qsac129_1 < qsac129_30dv(-1) .and. qsac129_30dv(-1) < qsac129_29dv(-1) .and.
+	                                qsac129_29dv(-1) < qsac129_28dv(-1) .and.  qsac129_28dv(-1) < qsac129_27dv(-1) .or. qsac129_2 <=12000. value 1. }
+	case trigOFF3 {condition daysindv(-1) == 29. .and. qsac129_2 < qsac129_1 .and.  qsac129_1 < qsac129_29dv(-1) .and. qsac129_29dv(-1) < qsac129_28dv(-1) .and.
+	                                qsac129_28dv(-1) < qsac129_27dv(-1) .and.  qsac129_27dv(-1) < qsac129_26dv(-1) .or. qsac129_2 <=12000. value 1. }
+	case trigOFF4 {condition daysindv(-1) == 28. .and. qsac129_2 < qsac129_1 .and.  qsac129_1 < qsac129_28dv(-1) .and. qsac129_28dv(-1) < qsac129_27dv(-1) .and.
+	                                qsac129_27dv(-1) < qsac129_26dv(-1) .and.  qsac129_26dv(-1) < qsac129_25dv(-1) .or. qsac129_2 <=12000. value 1. }
+	case other  {condition always value 0. }   }
+
+define TPulseOFF1_D3   {	case start    {condition month==OCT .and. int(wateryear)==1922 value 0.}
+	case trigOFF1 {condition daysindv(-1) == 31. .and. qsac129_3 < qsac129_2 .and.  qsac129_2 < qsac129_1 .and. qsac129_1 < qsac129_31dv(-1) .and.
+	                                qsac129_31dv(-1) < qsac129_30dv(-1) .and.  qsac129_30dv(-1) < qsac129_29dv(-1) .or. qsac129_3 <=12000. value 1. }
+	case trigOFF2 {condition daysindv(-1) == 30. .and. qsac129_3 < qsac129_2 .and.  qsac129_2 < qsac129_1 .and. qsac129_1 < qsac129_30dv(-1) .and.
+	                                qsac129_30dv(-1) < qsac129_29dv(-1) .and.  qsac129_29dv(-1) < qsac129_28dv(-1) .or. qsac129_3 <=12000. value 1. }
+	case trigOFF3 {condition daysindv(-1) == 29. .and. qsac129_3 < qsac129_2 .and.  qsac129_2 < qsac129_1 .and. qsac129_1 < qsac129_29dv(-1) .and.
+	                                qsac129_29dv(-1) < qsac129_28dv(-1) .and.  qsac129_28dv(-1) < qsac129_27dv(-1) .or. qsac129_3 <=12000. value 1. }
+	case trigOFF4 {condition daysindv(-1) == 28. .and. qsac129_3 < qsac129_2 .and.  qsac129_2 < qsac129_1 .and. qsac129_1 < qsac129_28dv(-1) .and.
+	                                qsac129_28dv(-1) < qsac129_27dv(-1) .and.  qsac129_27dv(-1) < qsac129_26dv(-1) .or. qsac129_3 <=12000. value 1. }
+	case other  {condition always value 0. }   }
+
+
+define TPulseOFF1_D4   {	case start    {condition month==OCT .and. int(wateryear)==1922 value 0.}
+	case trigOFF1 {condition daysindv(-1) == 31. .and. qsac129_4 < qsac129_3 .and.  qsac129_3 < qsac129_2 .and. qsac129_2 < qsac129_1 .and.
+	                                qsac129_1 < qsac129_31dv(-1) .and.  qsac129_31dv(-1) < qsac129_30dv(-1) .or. qsac129_4 <=12000. value 1. }
+	case trigOFF2 {condition daysindv(-1) == 30. .and. qsac129_4 < qsac129_3.and.  qsac129_3 < qsac129_2 .and. qsac129_2 < qsac129_1 .and.
+	                                qsac129_1 < qsac129_30dv(-1) .and.  qsac129_30dv(-1) < qsac129_29dv(-1) .or. qsac129_4 <=12000. value 1. }
+	case trigOFF3 {condition daysindv(-1) == 29. .and. qsac129_4 < qsac129_3 .and.  qsac129_3 < qsac129_2 .and. qsac129_2 < qsac129_1 .and.
+	                                qsac129_1 < qsac129_29dv(-1) .and.  qsac129_29dv(-1) < qsac129_28dv(-1) .or. qsac129_4 <=12000. value 1. }
+	case trigOFF4 {condition daysindv(-1) == 28. .and. qsac129_4 < qsac129_3 .and.  qsac129_3 < qsac129_2 .and. qsac129_2 < qsac129_1 .and.
+	                                qsac129_1 < qsac129_28dv(-1) .and.  qsac129_28dv(-1) < qsac129_27dv(-1) .or. qsac129_4 <=12000. value 1. }
+	case other  {condition always value 0. }   }
+
+
+define TPulseOFF1_D5   {	case start    {condition month==OCT .and. int(wateryear)==1922 value 0.}
+	case trigOFF1 {condition daysindv(-1) == 31. .and. qsac129_5 < qsac129_4 .and.  qsac129_4 < qsac129_3 .and. qsac129_3 < qsac129_2 .and.
+	                                qsac129_2 < qsac129_1 .and.  qsac129_1 < qsac129_31dv(-1) .or. qsac129_5 <=12000. value 1. }
+	case trigOFF2 {condition daysindv(-1) == 30. .and. qsac129_5 < qsac129_4.and.  qsac129_4 < qsac129_3 .and. qsac129_3 < qsac129_2 .and.
+	                                qsac129_2 < qsac129_1 .and.  qsac129_1 < qsac129_30dv(-1) .or. qsac129_5 <=12000. value 1. }
+	case trigOFF3 {condition daysindv(-1) == 29. .and. qsac129_5 < qsac129_4 .and.  qsac129_4 < qsac129_3 .and. qsac129_3 < qsac129_2 .and.
+	                                qsac129_2 < qsac129_1 .and.  qsac129_1 < qsac129_29dv(-1) .or. qsac129_5 <=12000. value 1. }
+	case trigOFF4 {condition daysindv(-1) == 28. .and. qsac129_5 < qsac129_4 .and.  qsac129_4 < qsac129_3 .and. qsac129_3 < qsac129_2 .and.
+	                                qsac129_2 < qsac129_1 .and.  qsac129_1 < qsac129_28dv(-1) .or. qsac129_5 <=12000. value 1. }
+	case other  {condition always value 0. }   }
+
+
+define TPulseOFF1_D6   {
+	case trigOFF {condition qsac129_6 < qsac129_5 .and.  qsac129_5 < qsac129_4 .and. qsac129_4 < qsac129_3 .and.
+	                                qsac129_3 < qsac129_2 .and.  qsac129_2 < qsac129_1 .or. qsac129_6 <=12000. value 1. }
+	case other  {condition always value 0. }   }
+define TPulseOFF1_D7   {
+	case trigOFF {condition qsac129_7 < qsac129_6 .and.  qsac129_6 < qsac129_5 .and. qsac129_5 < qsac129_4 .and.
+	                                qsac129_4 < qsac129_3 .and.  qsac129_3 < qsac129_2 .or. qsac129_7 <=12000. value 1. }
+	case other  {condition always value 0. }   }
+define TPulseOFF1_D8   {
+	case trigOFF {condition qsac129_8 < qsac129_7 .and.  qsac129_7 < qsac129_6 .and. qsac129_6 < qsac129_5 .and.
+	                                qsac129_5 < qsac129_4 .and.  qsac129_4 < qsac129_3 .or. qsac129_8 <=12000. value 1. }
+	case other  {condition always value 0. }   }
+define TPulseOFF1_D9   {
+	case trigOFF {condition qsac129_9 < qsac129_8 .and.  qsac129_8 < qsac129_7 .and. qsac129_7 < qsac129_6 .and.
+	                                qsac129_6 < qsac129_5 .and.  qsac129_5 < qsac129_4 .or. qsac129_9 <=12000. value 1. }
+	case other  {condition always value 0. }   }
+define TPulseOFF1_D10   {
+	case trigOFF {condition qsac129_10 < qsac129_9 .and.  qsac129_9 < qsac129_8 .and. qsac129_8 < qsac129_7 .and.
+	                                qsac129_7 < qsac129_6 .and.  qsac129_6 < qsac129_5 .or. qsac129_10 <=12000. value 1. }
+	case other  {condition always value 0. }   }
+define TPulseOFF1_D11   {
+	case trigOFF {condition qsac129_11 < qsac129_10 .and.  qsac129_10 < qsac129_9 .and. qsac129_9 < qsac129_8 .and.
+	                                qsac129_8 < qsac129_7 .and.  qsac129_7 < qsac129_6 .or. qsac129_11 <=12000. value 1. }
+	case other  {condition always value 0. }   }
+define TPulseOFF1_D12   {
+	case trigOFF {condition qsac129_12 < qsac129_11 .and.  qsac129_11 < qsac129_10 .and. qsac129_10 < qsac129_9 .and.
+	                                qsac129_9 < qsac129_8 .and.  qsac129_8 < qsac129_7 .or. qsac129_12 <=12000. value 1. }
+	case other  {condition always value 0. }   }
+define TPulseOFF1_D13   {
+	case trigOFF {condition qsac129_13 < qsac129_12 .and.  qsac129_12 < qsac129_11 .and. qsac129_11 < qsac129_10 .and.
+	                                qsac129_10 < qsac129_9 .and.  qsac129_9 < qsac129_8 .or. qsac129_13 <=12000. value 1. }
+	case other  {condition always value 0. }   }
+define TPulseOFF1_D14   {
+	case trigOFF {condition qsac129_14 < qsac129_13 .and.  qsac129_13 < qsac129_12 .and. qsac129_12 < qsac129_11 .and.
+	                                qsac129_11 < qsac129_10 .and.  qsac129_10 < qsac129_9 .or. qsac129_14 <=12000. value 1. }
+	case other  {condition always value 0. }   }
+define TPulseOFF1_D15   {
+	case trigOFF {condition qsac129_15 < qsac129_14 .and.  qsac129_14 < qsac129_13 .and. qsac129_13 < qsac129_12 .and.
+	                                qsac129_12 < qsac129_11 .and.  qsac129_11 < qsac129_10 .or. qsac129_15 <=12000. value 1. }
+	case other  {condition always value 0. }   }
+define TPulseOFF1_D16   {
+	case trigOFF {condition qsac129_16 < qsac129_15 .and.  qsac129_15 < qsac129_14 .and. qsac129_14 < qsac129_13 .and.
+	                                qsac129_13 < qsac129_12 .and.  qsac129_12 < qsac129_11 .or. qsac129_16 <=12000. value 1. }
+	case other  {condition always value 0. }   }
+define TPulseOFF1_D17   {
+	case trigOFF {condition qsac129_17 < qsac129_16 .and.  qsac129_16 < qsac129_15 .and. qsac129_15 < qsac129_14 .and.
+	                                qsac129_14 < qsac129_13 .and.  qsac129_13 < qsac129_12 .or. qsac129_17 <=12000. value 1. }
+	case other  {condition always value 0. }   }
+define TPulseOFF1_D18   {
+	case trigOFF {condition qsac129_18 < qsac129_17 .and.  qsac129_17 < qsac129_16 .and. qsac129_16 < qsac129_15 .and.
+	                                qsac129_15 < qsac129_14 .and.  qsac129_14 < qsac129_13 .or. qsac129_18 <=12000. value 1. }
+	case other  {condition always value 0. }   }
+define TPulseOFF1_D19   {
+	case trigOFF {condition qsac129_19 < qsac129_18 .and.  qsac129_18 < qsac129_17 .and. qsac129_17 < qsac129_16 .and.
+	                                qsac129_16 < qsac129_15 .and.  qsac129_15 < qsac129_14 .or. qsac129_19 <=12000. value 1. }
+	case other  {condition always value 0. }   }
+define TPulseOFF1_D20   {
+	case trigOFF {condition qsac129_20 < qsac129_19 .and.  qsac129_19 < qsac129_18 .and. qsac129_18 < qsac129_17 .and.
+	                                qsac129_17 < qsac129_16 .and.  qsac129_16 < qsac129_15 .or. qsac129_20 <=12000. value 1. }
+	case other  {condition always value 0. }   }
+define TPulseOFF1_D21   {
+	case trigOFF {condition qsac129_21 < qsac129_20 .and.  qsac129_20 < qsac129_19 .and. qsac129_19 < qsac129_18 .and.
+	                                qsac129_18 < qsac129_17 .and.  qsac129_17 < qsac129_16 .or. qsac129_21 <=12000. value 1. }
+	case other  {condition always value 0. }   }
+define TPulseOFF1_D22   {
+	case trigOFF {condition qsac129_22 < qsac129_21 .and.  qsac129_21 < qsac129_20 .and. qsac129_20 < qsac129_19 .and.
+	                                qsac129_19 < qsac129_18 .and.  qsac129_18 < qsac129_17 .or. qsac129_22 <=12000. value 1. }
+	case other  {condition always value 0. }   }
+define TPulseOFF1_D23   {
+	case trigOFF {condition qsac129_23 < qsac129_22 .and.  qsac129_22 < qsac129_21 .and. qsac129_21 < qsac129_20 .and.
+	                                qsac129_20 < qsac129_19 .and.  qsac129_19 < qsac129_18 .or. qsac129_23 <=12000. value 1. }
+	case other  {condition always value 0. }   }
+define TPulseOFF1_D24   {
+	case trigOFF {condition qsac129_24 < qsac129_23 .and.  qsac129_23 < qsac129_22 .and. qsac129_22 < qsac129_21 .and.
+	                                qsac129_21 < qsac129_20 .and.  qsac129_20 < qsac129_19 .or. qsac129_24 <=12000. value 1. }
+	case other  {condition always value 0. }   }
+define TPulseOFF1_D25   {
+	case trigOFF {condition qsac129_25 < qsac129_24 .and.  qsac129_24 < qsac129_23 .and. qsac129_23 < qsac129_22 .and.
+	                                qsac129_22 < qsac129_21 .and.  qsac129_21 < qsac129_20 .or. qsac129_25 <=12000. value 1. }
+	case other  {condition always value 0. }   }
+define TPulseOFF1_D26   {
+	case trigOFF {condition qsac129_26 < qsac129_25 .and.  qsac129_25 < qsac129_24 .and. qsac129_24 < qsac129_23 .and.
+	                                qsac129_23 < qsac129_22 .and.  qsac129_22 < qsac129_21 .or. qsac129_26 <=12000. value 1. }
+	case other  {condition always value 0. }   }
+define TPulseOFF1_D27   {
+	case trigOFF {condition qsac129_27 < qsac129_26 .and.  qsac129_26 < qsac129_25 .and. qsac129_25 < qsac129_24 .and.
+	                                qsac129_24 < qsac129_23 .and.  qsac129_23 < qsac129_22 .or. qsac129_27 <=12000. value 1. }
+	case other  {condition always value 0. }   }
+define TPulseOFF1_D28   {
+	case trigOFF {condition qsac129_28 < qsac129_27 .and.  qsac129_27 < qsac129_26 .and. qsac129_26 < qsac129_25 .and.
+	                                qsac129_25 < qsac129_24 .and.  qsac129_24 < qsac129_23 .or. qsac129_28 <=12000. value 1. }
+	case other  {condition always value 0. }   }
+define TPulseOFF1_D29   {
+	case trigOFF {condition qsac129_29 < qsac129_28 .and.  qsac129_28 < qsac129_27 .and. qsac129_27 < qsac129_26 .and.
+	                                qsac129_26 < qsac129_25 .and.  qsac129_25 < qsac129_24 .or. qsac129_29 <=12000. value 1. }
+	case other  {condition always value 0. }   }
+define TPulseOFF1_D30   {
+	case trigOFF {condition qsac129_30 < qsac129_29 .and.  qsac129_29 < qsac129_28 .and. qsac129_28 < qsac129_27 .and.
+	                                qsac129_27 < qsac129_26 .and.  qsac129_26 < qsac129_25 .or. qsac129_30 <=12000. value 1. }
+	case other  {condition always value 0. }   }
+define TPulseOFF1_D31   {
+	case trigOFF {condition qsac129_31 < qsac129_30 .and.  qsac129_30 < qsac129_29 .and. qsac129_29 < qsac129_28 .and.
+	                                qsac129_28 < qsac129_27 .and.  qsac129_27 < qsac129_26 .or. qsac129_31 <=12000. value 1. }
+	case other  {condition always value 0. }   }
+
+
+
+
+goal setTRGOFF1_31 {
+	lhs TPulseOFF1_D31dv
+	case Mon31 {condition  daysin == 31. rhs TPulseOFF1_D31}
+	case Mon30 {condition  daysin == 30. rhs TPulseOFF1_D30}
+	case Mon29 {condition  daysin == 29. rhs TPulseOFF1_D29}
+	case Mon28 {condition  daysin == 28. rhs TPulseOFF1_D28} }
+
+define TPulseOFF1_d1dv {alias TPulseOFF1_d1 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF1_d2dv {alias TPulseOFF1_d2 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF1_d3dv {alias TPulseOFF1_d3 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF1_d4dv {alias TPulseOFF1_d4 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF1_d5dv {alias TPulseOFF1_d5 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF1_d6dv {alias TPulseOFF1_d6 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF1_d7dv {alias TPulseOFF1_d7 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF1_d8dv {alias TPulseOFF1_d8 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF1_d9dv {alias TPulseOFF1_d9 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF1_d10dv {alias TPulseOFF1_d10 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF1_d11dv {alias TPulseOFF1_d11 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF1_d12dv {alias TPulseOFF1_d12 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF1_d13dv {alias TPulseOFF1_d13 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF1_d14dv {alias TPulseOFF1_d14 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF1_d15dv {alias TPulseOFF1_d15 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF1_d16dv {alias TPulseOFF1_d16 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF1_d17dv {alias TPulseOFF1_d17 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF1_d18dv {alias TPulseOFF1_d18 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF1_d19dv {alias TPulseOFF1_d19 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF1_d20dv {alias TPulseOFF1_d20 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF1_d21dv {alias TPulseOFF1_d21 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF1_d22dv {alias TPulseOFF1_d22 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF1_d23dv {alias TPulseOFF1_d23 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF1_d24dv {alias TPulseOFF1_d24 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF1_d25dv {alias TPulseOFF1_d25 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF1_d26dv {alias TPulseOFF1_d26 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF1_d27dv {alias TPulseOFF1_d27 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF1_d28dv {alias TPulseOFF1_d28 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF1_d29dv {alias TPulseOFF1_d29 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF1_d30dv {alias TPulseOFF1_d30 kind 'TRIGGER' units 'NONE'}
+ !goal setTPOFF1_d31dv {TPulseOFF1_d31dv = TPulseOFF1_d31 }
+
+
+! Second Trigger OFF
+/*(3)flows are greater than 20,000 cfs for 10 consecutive
+days.
+
+Trigger Definition:
+0 = Condition (3) was not triggered
+1 = Condition (3) was triggered
+
+*/
+
+define TPulseOFF2_D1   {
+case start    {condition month==OCT value 0.}
+case trigOFF1 {condition daysindv(-1)==31 	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d31dv(-1) > 20000.	.and.	bypass_LLP_d30dv(-1) > 20000.	.and.	bypass_LLP_d29dv(-1) > 20000.	.and.	bypass_LLP_d28dv(-1) > 20000.	.and.	bypass_LLP_d27dv(-1) > 20000.	.and.	bypass_LLP_d26dv(-1) > 20000.	.and.	bypass_LLP_d25dv(-1) > 20000.	.and.	bypass_LLP_d24dv(-1) > 20000.	.and.	bypass_LLP_d23dv(-1) > 20000.	 value 1.	 }
+case trigOFF2 {condition daysindv(-1)==30 	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d30dv(-1) > 20000.	.and.	bypass_LLP_d29dv(-1) > 20000.	.and.	bypass_LLP_d28dv(-1) > 20000.	.and.	bypass_LLP_d27dv(-1) > 20000.	.and.	bypass_LLP_d26dv(-1) > 20000.	.and.	bypass_LLP_d25dv(-1) > 20000.	.and.	bypass_LLP_d24dv(-1) > 20000.	.and.	bypass_LLP_d23dv(-1) > 20000.	.and.	bypass_LLP_d22dv(-1) > 20000.	 value 1.	 }
+case trigOFF3 {condition daysindv(-1)==29 	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d29dv(-1) > 20000.	.and.	bypass_LLP_d28dv(-1) > 20000.	.and.	bypass_LLP_d27dv(-1) > 20000.	.and.	bypass_LLP_d26dv(-1) > 20000.	.and.	bypass_LLP_d25dv(-1) > 20000.	.and.	bypass_LLP_d24dv(-1) > 20000.	.and.	bypass_LLP_d23dv(-1) > 20000.	.and.	bypass_LLP_d22dv(-1) > 20000.	.and.	bypass_LLP_d21dv(-1) > 20000.	 value 1.	 }
+case trigOFF4 {condition daysindv(-1)==28 	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d28dv(-1) > 20000.	.and.	bypass_LLP_d27dv(-1) > 20000.	.and.	bypass_LLP_d26dv(-1) > 20000.	.and.	bypass_LLP_d25dv(-1) > 20000.	.and.	bypass_LLP_d24dv(-1) > 20000.	.and.	bypass_LLP_d23dv(-1) > 20000.	.and.	bypass_LLP_d22dv(-1) > 20000.	.and.	bypass_LLP_d21dv(-1) > 20000.	.and.	bypass_LLP_d20dv(-1) > 20000.	 value 1.	 }
+case other  {condition always value 0. }   }
+
+define TPulseOFF2_D2   {
+case start    {condition month==OCT .and. int(wateryear)==1922 value 0.}
+case trigOFF1 {condition daysindv(-1)==31 	.and.	bypass_LLP_d2 > 20000.	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d31dv(-1) > 20000.	.and.	bypass_LLP_d30dv(-1) > 20000.	.and.	bypass_LLP_d29dv(-1) > 20000.	.and.	bypass_LLP_d28dv(-1) > 20000.	.and.	bypass_LLP_d27dv(-1) > 20000.	.and.	bypass_LLP_d26dv(-1) > 20000.	.and.	bypass_LLP_d25dv(-1) > 20000.	.and.	bypass_LLP_d24dv(-1) > 20000.	 value 1.	 }
+case trigOFF2 {condition daysindv(-1)==30 	.and.	bypass_LLP_d2 > 20000.	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d30dv(-1) > 20000.	.and.	bypass_LLP_d29dv(-1) > 20000.	.and.	bypass_LLP_d28dv(-1) > 20000.	.and.	bypass_LLP_d27dv(-1) > 20000.	.and.	bypass_LLP_d26dv(-1) > 20000.	.and.	bypass_LLP_d25dv(-1) > 20000.	.and.	bypass_LLP_d24dv(-1) > 20000.	.and.	bypass_LLP_d23dv(-1) > 20000.	 value 1.	 }
+case trigOFF3 {condition daysindv(-1)==29 	.and.	bypass_LLP_d2 > 20000.	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d29dv(-1) > 20000.	.and.	bypass_LLP_d28dv(-1) > 20000.	.and.	bypass_LLP_d27dv(-1) > 20000.	.and.	bypass_LLP_d26dv(-1) > 20000.	.and.	bypass_LLP_d25dv(-1) > 20000.	.and.	bypass_LLP_d24dv(-1) > 20000.	.and.	bypass_LLP_d23dv(-1) > 20000.	.and.	bypass_LLP_d22dv(-1) > 20000.	 value 1.	 }
+case trigOFF4 {condition daysindv(-1)==28 	.and.	bypass_LLP_d2 > 20000.	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d28dv(-1) > 20000.	.and.	bypass_LLP_d27dv(-1) > 20000.	.and.	bypass_LLP_d26dv(-1) > 20000.	.and.	bypass_LLP_d25dv(-1) > 20000.	.and.	bypass_LLP_d24dv(-1) > 20000.	.and.	bypass_LLP_d23dv(-1) > 20000.	.and.	bypass_LLP_d22dv(-1) > 20000.	.and.	bypass_LLP_d21dv(-1) > 20000.	 value 1.	 }
+case other  {condition always value 0. }   }
+
+define TPulseOFF2_D3   {
+case start    {condition month==OCT .and. int(wateryear)==1922 value 0.}
+case trigOFF1 {condition daysindv(-1)==31 	.and.	bypass_LLP_d3 > 20000.	.and.	bypass_LLP_d2 > 20000.	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d31dv(-1) > 20000.	.and.	bypass_LLP_d30dv(-1) > 20000.	.and.	bypass_LLP_d29dv(-1) > 20000.	.and.	bypass_LLP_d28dv(-1) > 20000.	.and.	bypass_LLP_d27dv(-1) > 20000.	.and.	bypass_LLP_d26dv(-1) > 20000.	.and.	bypass_LLP_d25dv(-1) > 20000.	 value 1.	 }
+case trigOFF2 {condition daysindv(-1)==30 	.and.	bypass_LLP_d3 > 20000.	.and.	bypass_LLP_d2 > 20000.	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d30dv(-1) > 20000.	.and.	bypass_LLP_d29dv(-1) > 20000.	.and.	bypass_LLP_d28dv(-1) > 20000.	.and.	bypass_LLP_d27dv(-1) > 20000.	.and.	bypass_LLP_d26dv(-1) > 20000.	.and.	bypass_LLP_d25dv(-1) > 20000.	.and.	bypass_LLP_d24dv(-1) > 20000.	 value 1.	 }
+case trigOFF3 {condition daysindv(-1)==29 	.and.	bypass_LLP_d3 > 20000.	.and.	bypass_LLP_d2 > 20000.	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d29dv(-1) > 20000.	.and.	bypass_LLP_d28dv(-1) > 20000.	.and.	bypass_LLP_d27dv(-1) > 20000.	.and.	bypass_LLP_d26dv(-1) > 20000.	.and.	bypass_LLP_d25dv(-1) > 20000.	.and.	bypass_LLP_d24dv(-1) > 20000.	.and.	bypass_LLP_d23dv(-1) > 20000.	 value 1.	 }
+case trigOFF4 {condition daysindv(-1)==28 	.and.	bypass_LLP_d3 > 20000.	.and.	bypass_LLP_d2 > 20000.	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d28dv(-1) > 20000.	.and.	bypass_LLP_d27dv(-1) > 20000.	.and.	bypass_LLP_d26dv(-1) > 20000.	.and.	bypass_LLP_d25dv(-1) > 20000.	.and.	bypass_LLP_d24dv(-1) > 20000.	.and.	bypass_LLP_d23dv(-1) > 20000.	.and.	bypass_LLP_d22dv(-1) > 20000.	 value 1.	 }
+case other  {condition always value 0. }   }
+
+define TPulseOFF2_D4   {
+case start    {condition month==OCT .and. int(wateryear)==1922 value 0.}
+case trigOFF1 {condition daysindv(-1)==31 	.and.	bypass_LLP_d4 > 20000.	.and.	bypass_LLP_d3 > 20000.	.and.	bypass_LLP_d2 > 20000.	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d31dv(-1) > 20000.	.and.	bypass_LLP_d30dv(-1) > 20000.	.and.	bypass_LLP_d29dv(-1) > 20000.	.and.	bypass_LLP_d28dv(-1) > 20000.	.and.	bypass_LLP_d27dv(-1) > 20000.	.and.	bypass_LLP_d26dv(-1) > 20000.	 value 1.	 }
+case trigOFF2 {condition daysindv(-1)==30 	.and.	bypass_LLP_d4 > 20000.	.and.	bypass_LLP_d3 > 20000.	.and.	bypass_LLP_d2 > 20000.	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d30dv(-1) > 20000.	.and.	bypass_LLP_d29dv(-1) > 20000.	.and.	bypass_LLP_d28dv(-1) > 20000.	.and.	bypass_LLP_d27dv(-1) > 20000.	.and.	bypass_LLP_d26dv(-1) > 20000.	.and.	bypass_LLP_d25dv(-1) > 20000.	 value 1.	 }
+case trigOFF3 {condition daysindv(-1)==29 	.and.	bypass_LLP_d4 > 20000.	.and.	bypass_LLP_d3 > 20000.	.and.	bypass_LLP_d2 > 20000.	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d29dv(-1) > 20000.	.and.	bypass_LLP_d28dv(-1) > 20000.	.and.	bypass_LLP_d27dv(-1) > 20000.	.and.	bypass_LLP_d26dv(-1) > 20000.	.and.	bypass_LLP_d25dv(-1) > 20000.	.and.	bypass_LLP_d24dv(-1) > 20000.	 value 1.	 }
+case trigOFF4 {condition daysindv(-1)==28 	.and.	bypass_LLP_d4 > 20000.	.and.	bypass_LLP_d3 > 20000.	.and.	bypass_LLP_d2 > 20000.	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d28dv(-1) > 20000.	.and.	bypass_LLP_d27dv(-1) > 20000.	.and.	bypass_LLP_d26dv(-1) > 20000.	.and.	bypass_LLP_d25dv(-1) > 20000.	.and.	bypass_LLP_d24dv(-1) > 20000.	.and.	bypass_LLP_d23dv(-1) > 20000.	 value 1.	 }
+case other  {condition always value 0. }   }
+
+define TPulseOFF2_D5   {
+case start    {condition month==OCT .and. int(wateryear)==1922 value 0.}
+case trigOFF1 {condition daysindv(-1)==31 	.and.	bypass_LLP_d5 > 20000.	.and.	bypass_LLP_d4 > 20000.	.and.	bypass_LLP_d3 > 20000.	.and.	bypass_LLP_d2 > 20000.	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d31dv(-1) > 20000.	.and.	bypass_LLP_d30dv(-1) > 20000.	.and.	bypass_LLP_d29dv(-1) > 20000.	.and.	bypass_LLP_d28dv(-1) > 20000.	.and.	bypass_LLP_d27dv(-1) > 20000.	 value 1.	 }
+case trigOFF2 {condition daysindv(-1)==30 	.and.	bypass_LLP_d5 > 20000.	.and.	bypass_LLP_d4 > 20000.	.and.	bypass_LLP_d3 > 20000.	.and.	bypass_LLP_d2 > 20000.	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d30dv(-1) > 20000.	.and.	bypass_LLP_d29dv(-1) > 20000.	.and.	bypass_LLP_d28dv(-1) > 20000.	.and.	bypass_LLP_d27dv(-1) > 20000.	.and.	bypass_LLP_d26dv(-1) > 20000.	 value 1.	 }
+case trigOFF3 {condition daysindv(-1)==29 	.and.	bypass_LLP_d5 > 20000.	.and.	bypass_LLP_d4 > 20000.	.and.	bypass_LLP_d3 > 20000.	.and.	bypass_LLP_d2 > 20000.	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d29dv(-1) > 20000.	.and.	bypass_LLP_d28dv(-1) > 20000.	.and.	bypass_LLP_d27dv(-1) > 20000.	.and.	bypass_LLP_d26dv(-1) > 20000.	.and.	bypass_LLP_d25dv(-1) > 20000.	 value 1.	 }
+case trigOFF4 {condition daysindv(-1)==28 	.and.	bypass_LLP_d5 > 20000.	.and.	bypass_LLP_d4 > 20000.	.and.	bypass_LLP_d3 > 20000.	.and.	bypass_LLP_d2 > 20000.	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d28dv(-1) > 20000.	.and.	bypass_LLP_d27dv(-1) > 20000.	.and.	bypass_LLP_d26dv(-1) > 20000.	.and.	bypass_LLP_d25dv(-1) > 20000.	.and.	bypass_LLP_d24dv(-1) > 20000.	 value 1.	 }
+case other  {condition always value 0. }   }
+
+define TPulseOFF2_D6   {
+case start    {condition month==OCT .and. int(wateryear)==1922 value 0.}
+case trigOFF1 {condition daysindv(-1)==31 	.and.	bypass_LLP_d6 > 20000.	.and.	bypass_LLP_d5 > 20000.	.and.	bypass_LLP_d4 > 20000.	.and.	bypass_LLP_d3 > 20000.	.and.	bypass_LLP_d2 > 20000.	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d31dv(-1) > 20000.	.and.	bypass_LLP_d30dv(-1) > 20000.	.and.	bypass_LLP_d29dv(-1) > 20000.	.and.	bypass_LLP_d28dv(-1) > 20000.	 value 1.	 }
+case trigOFF2 {condition daysindv(-1)==30 	.and.	bypass_LLP_d6 > 20000.	.and.	bypass_LLP_d5 > 20000.	.and.	bypass_LLP_d4 > 20000.	.and.	bypass_LLP_d3 > 20000.	.and.	bypass_LLP_d2 > 20000.	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d30dv(-1) > 20000.	.and.	bypass_LLP_d29dv(-1) > 20000.	.and.	bypass_LLP_d28dv(-1) > 20000.	.and.	bypass_LLP_d27dv(-1) > 20000.	 value 1.	 }
+case trigOFF3 {condition daysindv(-1)==29 	.and.	bypass_LLP_d6 > 20000.	.and.	bypass_LLP_d5 > 20000.	.and.	bypass_LLP_d4 > 20000.	.and.	bypass_LLP_d3 > 20000.	.and.	bypass_LLP_d2 > 20000.	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d29dv(-1) > 20000.	.and.	bypass_LLP_d28dv(-1) > 20000.	.and.	bypass_LLP_d27dv(-1) > 20000.	.and.	bypass_LLP_d26dv(-1) > 20000.	 value 1.	 }
+case trigOFF4 {condition daysindv(-1)==28 	.and.	bypass_LLP_d6 > 20000.	.and.	bypass_LLP_d5 > 20000.	.and.	bypass_LLP_d4 > 20000.	.and.	bypass_LLP_d3 > 20000.	.and.	bypass_LLP_d2 > 20000.	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d28dv(-1) > 20000.	.and.	bypass_LLP_d27dv(-1) > 20000.	.and.	bypass_LLP_d26dv(-1) > 20000.	.and.	bypass_LLP_d25dv(-1) > 20000.	 value 1.	 }
+case other  {condition always value 0. }   }
+
+define TPulseOFF2_D7   {
+case start    {condition month==OCT .and. int(wateryear)==1922 value 0.}
+case trigOFF1 {condition daysindv(-1)==31 	.and.	bypass_LLP_d7 > 20000.	.and.	bypass_LLP_d6 > 20000.	.and.	bypass_LLP_d5 > 20000.	.and.	bypass_LLP_d4 > 20000.	.and.	bypass_LLP_d3 > 20000.	.and.	bypass_LLP_d2 > 20000.	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d31dv(-1) > 20000.	.and.	bypass_LLP_d30dv(-1) > 20000.	.and.	bypass_LLP_d29dv(-1) > 20000.	 value 1.	 }
+case trigOFF2 {condition daysindv(-1)==30 	.and.	bypass_LLP_d7 > 20000.	.and.	bypass_LLP_d6 > 20000.	.and.	bypass_LLP_d5 > 20000.	.and.	bypass_LLP_d4 > 20000.	.and.	bypass_LLP_d3 > 20000.	.and.	bypass_LLP_d2 > 20000.	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d30dv(-1) > 20000.	.and.	bypass_LLP_d29dv(-1) > 20000.	.and.	bypass_LLP_d28dv(-1) > 20000.	 value 1.	 }
+case trigOFF3 {condition daysindv(-1)==29 	.and.	bypass_LLP_d7 > 20000.	.and.	bypass_LLP_d6 > 20000.	.and.	bypass_LLP_d5 > 20000.	.and.	bypass_LLP_d4 > 20000.	.and.	bypass_LLP_d3 > 20000.	.and.	bypass_LLP_d2 > 20000.	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d29dv(-1) > 20000.	.and.	bypass_LLP_d28dv(-1) > 20000.	.and.	bypass_LLP_d27dv(-1) > 20000.	 value 1.	 }
+case trigOFF4 {condition daysindv(-1)==28 	.and.	bypass_LLP_d7 > 20000.	.and.	bypass_LLP_d6 > 20000.	.and.	bypass_LLP_d5 > 20000.	.and.	bypass_LLP_d4 > 20000.	.and.	bypass_LLP_d3 > 20000.	.and.	bypass_LLP_d2 > 20000.	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d28dv(-1) > 20000.	.and.	bypass_LLP_d27dv(-1) > 20000.	.and.	bypass_LLP_d26dv(-1) > 20000.	 value 1.	 }
+case other  {condition always value 0. }   }
+
+define TPulseOFF2_D8   {
+case start    {condition month==OCT .and. int(wateryear)==1922 value 0.}
+case trigOFF1 {condition daysindv(-1)==31 	.and.	bypass_LLP_d8 > 20000.	.and.	bypass_LLP_d7 > 20000.	.and.	bypass_LLP_d6 > 20000.	.and.	bypass_LLP_d5 > 20000.	.and.	bypass_LLP_d4 > 20000.	.and.	bypass_LLP_d3 > 20000.	.and.	bypass_LLP_d2 > 20000.	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d31dv(-1) > 20000.	.and.	bypass_LLP_d30dv(-1) > 20000.	 value 1.	 }
+case trigOFF2 {condition daysindv(-1)==30 	.and.	bypass_LLP_d8 > 20000.	.and.	bypass_LLP_d7 > 20000.	.and.	bypass_LLP_d6 > 20000.	.and.	bypass_LLP_d5 > 20000.	.and.	bypass_LLP_d4 > 20000.	.and.	bypass_LLP_d3 > 20000.	.and.	bypass_LLP_d2 > 20000.	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d30dv(-1) > 20000.	.and.	bypass_LLP_d29dv(-1) > 20000.	 value 1.	 }
+case trigOFF3 {condition daysindv(-1)==29 	.and.	bypass_LLP_d8 > 20000.	.and.	bypass_LLP_d7 > 20000.	.and.	bypass_LLP_d6 > 20000.	.and.	bypass_LLP_d5 > 20000.	.and.	bypass_LLP_d4 > 20000.	.and.	bypass_LLP_d3 > 20000.	.and.	bypass_LLP_d2 > 20000.	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d29dv(-1) > 20000.	.and.	bypass_LLP_d28dv(-1) > 20000.	 value 1.	 }
+case trigOFF4 {condition daysindv(-1)==28 	.and.	bypass_LLP_d8 > 20000.	.and.	bypass_LLP_d7 > 20000.	.and.	bypass_LLP_d6 > 20000.	.and.	bypass_LLP_d5 > 20000.	.and.	bypass_LLP_d4 > 20000.	.and.	bypass_LLP_d3 > 20000.	.and.	bypass_LLP_d2 > 20000.	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d28dv(-1) > 20000.	.and.	bypass_LLP_d27dv(-1) > 20000.	 value 1.	 }
+case other  {condition always value 0. }   }
+
+define TPulseOFF2_D9   {
+case start    {condition month==OCT .and. int(wateryear)==1922 value 0.}
+case trigOFF1 {condition daysindv(-1)==31 	.and.	bypass_LLP_d9 > 20000.	.and.	bypass_LLP_d8 > 20000.	.and.	bypass_LLP_d7 > 20000.	.and.	bypass_LLP_d6 > 20000.	.and.	bypass_LLP_d5 > 20000.	.and.	bypass_LLP_d4 > 20000.	.and.	bypass_LLP_d3 > 20000.	.and.	bypass_LLP_d2 > 20000.0	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d31dv(-1) > 20000.	 value 1.	 }
+case trigOFF2 {condition daysindv(-1)==30 	.and.	bypass_LLP_d9 > 20000.	.and.	bypass_LLP_d8 > 20000.	.and.	bypass_LLP_d7 > 20000.	.and.	bypass_LLP_d6 > 20000.	.and.	bypass_LLP_d5 > 20000.	.and.	bypass_LLP_d4 > 20000.	.and.	bypass_LLP_d3 > 20000.	.and.	bypass_LLP_d2 > 20000.0	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d30dv(-1) > 20000.	 value 1.	 }
+case trigOFF3 {condition daysindv(-1)==29 	.and.	bypass_LLP_d9 > 20000.	.and.	bypass_LLP_d8 > 20000.	.and.	bypass_LLP_d7 > 20000.	.and.	bypass_LLP_d6 > 20000.	.and.	bypass_LLP_d5 > 20000.	.and.	bypass_LLP_d4 > 20000.	.and.	bypass_LLP_d3 > 20000.	.and.	bypass_LLP_d2 > 20000.0	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d29dv(-1) > 20000.	 value 1.	 }
+case trigOFF4 {condition daysindv(-1)==28 	.and.	bypass_LLP_d9 > 20000.	.and.	bypass_LLP_d8 > 20000.	.and.	bypass_LLP_d7 > 20000.	.and.	bypass_LLP_d6 > 20000.	.and.	bypass_LLP_d5 > 20000.	.and.	bypass_LLP_d4 > 20000.	.and.	bypass_LLP_d3 > 20000.	.and.	bypass_LLP_d2 > 20000.0	.and.	bypass_LLP_d1 > 20000.	.and.	bypass_LLP_d28dv(-1) > 20000.	 value 1.	 }
+case other  {condition always value 0. }   }
+
+define TPulseOFF2_D10   {
+case trigOFF {condition 	bypass_LLP_d10 > 20000.0 .and.  bypass_LLP_d9 > 20000.0 .and.
+	bypass_LLP_d8 > 20000.0 .and.  bypass_LLP_d7 > 20000.0 .and.
+	bypass_LLP_d6 > 20000.0 .and.  bypass_LLP_d5 > 20000.0 .and.
+	bypass_LLP_d4 > 20000.0 .and.  bypass_LLP_d3 > 20000.0 .and.
+	bypass_LLP_d2 > 20000.0 .and.  bypass_LLP_d1 > 20000.0 value 1. }
+                         case other  {condition always value 0. }   }
+define TPulseOFF2_D11   {
+case trigOFF {condition 	bypass_LLP_d11 > 20000.0 .and.  bypass_LLP_d10 > 20000.0 .and.
+	bypass_LLP_d9 > 20000.0 .and.  bypass_LLP_d8 > 20000.0 .and.
+	bypass_LLP_d7 > 20000.0 .and.  bypass_LLP_d6 > 20000.0 .and.
+	bypass_LLP_d5 > 20000.0 .and.  bypass_LLP_d4 > 20000.0 .and.
+	bypass_LLP_d3 > 20000.0 .and.  bypass_LLP_d2 > 20000.0 value 1. }
+                         case other  {condition always value 0. }   }
+define TPulseOFF2_D12   {
+case trigOFF {condition 	bypass_LLP_d10 > 20000.0 .and.  bypass_LLP_d9 > 20000.0 .and.
+	bypass_LLP_d8 > 20000.0 .and.  bypass_LLP_d7 > 20000.0 .and.
+	bypass_LLP_d6 > 20000.0 .and.  bypass_LLP_d5 > 20000.0 .and.
+	bypass_LLP_d4 > 20000.0 .and.  bypass_LLP_d3 > 20000.0 .and.
+	bypass_LLP_d2 > 20000.0 .and.  bypass_LLP_d1 > 20000.0 value 1. }
+                         case other  {condition always value 0. }   }
+define TPulseOFF2_D13   {
+case trigOFF {condition 	bypass_LLP_d10 > 20000.0 .and.  bypass_LLP_d9 > 20000.0 .and.
+	bypass_LLP_d8 > 20000.0 .and.  bypass_LLP_d7 > 20000.0 .and.
+	bypass_LLP_d6 > 20000.0 .and.  bypass_LLP_d5 > 20000.0 .and.
+	bypass_LLP_d4 > 20000.0 .and.  bypass_LLP_d3 > 20000.0 .and.
+	bypass_LLP_d2 > 20000.0 .and.  bypass_LLP_d1 > 20000.0 value 1. }
+                         case other  {condition always value 0. }   }
+define TPulseOFF2_D14   {
+case trigOFF {condition 	bypass_LLP_d10 > 20000.0 .and.  bypass_LLP_d9 > 20000.0 .and.
+	bypass_LLP_d8 > 20000.0 .and.  bypass_LLP_d7 > 20000.0 .and.
+	bypass_LLP_d6 > 20000.0 .and.  bypass_LLP_d5 > 20000.0 .and.
+	bypass_LLP_d4 > 20000.0 .and.  bypass_LLP_d3 > 20000.0 .and.
+	bypass_LLP_d2 > 20000.0 .and.  bypass_LLP_d1 > 20000.0 value 1. }
+                         case other  {condition always value 0. }   }
+define TPulseOFF2_D15   {
+case trigOFF {condition 	bypass_LLP_d10 > 20000.0 .and.  bypass_LLP_d9 > 20000.0 .and.
+	bypass_LLP_d8 > 20000.0 .and.  bypass_LLP_d7 > 20000.0 .and.
+	bypass_LLP_d6 > 20000.0 .and.  bypass_LLP_d5 > 20000.0 .and.
+	bypass_LLP_d4 > 20000.0 .and.  bypass_LLP_d3 > 20000.0 .and.
+	bypass_LLP_d2 > 20000.0 .and.  bypass_LLP_d1 > 20000.0 value 1. }
+                         case other  {condition always value 0. }   }
+define TPulseOFF2_D16   {
+case trigOFF {condition 	bypass_LLP_d10 > 20000.0 .and.  bypass_LLP_d9 > 20000.0 .and.
+	bypass_LLP_d8 > 20000.0 .and.  bypass_LLP_d7 > 20000.0 .and.
+	bypass_LLP_d6 > 20000.0 .and.  bypass_LLP_d5 > 20000.0 .and.
+	bypass_LLP_d4 > 20000.0 .and.  bypass_LLP_d3 > 20000.0 .and.
+	bypass_LLP_d2 > 20000.0 .and.  bypass_LLP_d1 > 20000.0 value 1. }
+                         case other  {condition always value 0. }   }
+define TPulseOFF2_D17   {
+case trigOFF {condition 	bypass_LLP_d10 > 20000.0 .and.  bypass_LLP_d9 > 20000.0 .and.
+	bypass_LLP_d8 > 20000.0 .and.  bypass_LLP_d7 > 20000.0 .and.
+	bypass_LLP_d6 > 20000.0 .and.  bypass_LLP_d5 > 20000.0 .and.
+	bypass_LLP_d4 > 20000.0 .and.  bypass_LLP_d3 > 20000.0 .and.
+	bypass_LLP_d2 > 20000.0 .and.  bypass_LLP_d1 > 20000.0 value 1. }
+                         case other  {condition always value 0. }   }
+define TPulseOFF2_D18   {
+case trigOFF {condition 	bypass_LLP_d10 > 20000.0 .and.  bypass_LLP_d9 > 20000.0 .and.
+	bypass_LLP_d8 > 20000.0 .and.  bypass_LLP_d7 > 20000.0 .and.
+	bypass_LLP_d6 > 20000.0 .and.  bypass_LLP_d5 > 20000.0 .and.
+	bypass_LLP_d4 > 20000.0 .and.  bypass_LLP_d3 > 20000.0 .and.
+	bypass_LLP_d2 > 20000.0 .and.  bypass_LLP_d1 > 20000.0 value 1. }
+                         case other  {condition always value 0. }   }
+define TPulseOFF2_D19   {
+case trigOFF {condition 	bypass_LLP_d10 > 20000.0 .and.  bypass_LLP_d9 > 20000.0 .and.
+	bypass_LLP_d8 > 20000.0 .and.  bypass_LLP_d7 > 20000.0 .and.
+	bypass_LLP_d6 > 20000.0 .and.  bypass_LLP_d5 > 20000.0 .and.
+	bypass_LLP_d4 > 20000.0 .and.  bypass_LLP_d3 > 20000.0 .and.
+	bypass_LLP_d2 > 20000.0 .and.  bypass_LLP_d1 > 20000.0 value 1. }
+                         case other  {condition always value 0. }   }
+define TPulseOFF2_D20   {
+case trigOFF {condition 	bypass_LLP_d10 > 20000.0 .and.  bypass_LLP_d9 > 20000.0 .and.
+	bypass_LLP_d8 > 20000.0 .and.  bypass_LLP_d7 > 20000.0 .and.
+	bypass_LLP_d6 > 20000.0 .and.  bypass_LLP_d5 > 20000.0 .and.
+	bypass_LLP_d4 > 20000.0 .and.  bypass_LLP_d3 > 20000.0 .and.
+	bypass_LLP_d2 > 20000.0 .and.  bypass_LLP_d1 > 20000.0 value 1. }
+                         case other  {condition always value 0. }   }
+define TPulseOFF2_D21   {
+case trigOFF {condition 	bypass_LLP_d10 > 20000.0 .and.  bypass_LLP_d9 > 20000.0 .and.
+	bypass_LLP_d8 > 20000.0 .and.  bypass_LLP_d7 > 20000.0 .and.
+	bypass_LLP_d6 > 20000.0 .and.  bypass_LLP_d5 > 20000.0 .and.
+	bypass_LLP_d4 > 20000.0 .and.  bypass_LLP_d3 > 20000.0 .and.
+	bypass_LLP_d2 > 20000.0 .and.  bypass_LLP_d1 > 20000.0 value 1. }
+                         case other  {condition always value 0. }   }
+define TPulseOFF2_D22   {
+case trigOFF {condition 	bypass_LLP_d10 > 20000.0 .and.  bypass_LLP_d9 > 20000.0 .and.
+	bypass_LLP_d8 > 20000.0 .and.  bypass_LLP_d7 > 20000.0 .and.
+	bypass_LLP_d6 > 20000.0 .and.  bypass_LLP_d5 > 20000.0 .and.
+	bypass_LLP_d4 > 20000.0 .and.  bypass_LLP_d3 > 20000.0 .and.
+	bypass_LLP_d2 > 20000.0 .and.  bypass_LLP_d1 > 20000.0 value 1. }
+                         case other  {condition always value 0. }   }
+define TPulseOFF2_D23   {
+case trigOFF {condition 	bypass_LLP_d10 > 20000.0 .and.  bypass_LLP_d9 > 20000.0 .and.
+	bypass_LLP_d8 > 20000.0 .and.  bypass_LLP_d7 > 20000.0 .and.
+	bypass_LLP_d6 > 20000.0 .and.  bypass_LLP_d5 > 20000.0 .and.
+	bypass_LLP_d4 > 20000.0 .and.  bypass_LLP_d3 > 20000.0 .and.
+	bypass_LLP_d2 > 20000.0 .and.  bypass_LLP_d1 > 20000.0 value 1. }
+                         case other  {condition always value 0. }   }
+define TPulseOFF2_D24   {
+case trigOFF {condition 	bypass_LLP_d10 > 20000.0 .and.  bypass_LLP_d9 > 20000.0 .and.
+	bypass_LLP_d8 > 20000.0 .and.  bypass_LLP_d7 > 20000.0 .and.
+	bypass_LLP_d6 > 20000.0 .and.  bypass_LLP_d5 > 20000.0 .and.
+	bypass_LLP_d4 > 20000.0 .and.  bypass_LLP_d3 > 20000.0 .and.
+	bypass_LLP_d2 > 20000.0 .and.  bypass_LLP_d1 > 20000.0 value 1. }
+                         case other  {condition always value 0. }   }
+define TPulseOFF2_D25   {
+case trigOFF {condition 	bypass_LLP_d10 > 20000.0 .and.  bypass_LLP_d9 > 20000.0 .and.
+	bypass_LLP_d8 > 20000.0 .and.  bypass_LLP_d7 > 20000.0 .and.
+	bypass_LLP_d6 > 20000.0 .and.  bypass_LLP_d5 > 20000.0 .and.
+	bypass_LLP_d4 > 20000.0 .and.  bypass_LLP_d3 > 20000.0 .and.
+	bypass_LLP_d2 > 20000.0 .and.  bypass_LLP_d1 > 20000.0 value 1. }
+                         case other  {condition always value 0. }   }
+define TPulseOFF2_D26   {
+case trigOFF {condition 	bypass_LLP_d10 > 20000.0 .and.  bypass_LLP_d9 > 20000.0 .and.
+	bypass_LLP_d8 > 20000.0 .and.  bypass_LLP_d7 > 20000.0 .and.
+	bypass_LLP_d6 > 20000.0 .and.  bypass_LLP_d5 > 20000.0 .and.
+	bypass_LLP_d4 > 20000.0 .and.  bypass_LLP_d3 > 20000.0 .and.
+	bypass_LLP_d2 > 20000.0 .and.  bypass_LLP_d1 > 20000.0 value 1. }
+                         case other  {condition always value 0. }   }
+define TPulseOFF2_D27   {
+case trigOFF {condition 	bypass_LLP_d10 > 20000.0 .and.  bypass_LLP_d9 > 20000.0 .and.
+	bypass_LLP_d8 > 20000.0 .and.  bypass_LLP_d7 > 20000.0 .and.
+	bypass_LLP_d6 > 20000.0 .and.  bypass_LLP_d5 > 20000.0 .and.
+	bypass_LLP_d4 > 20000.0 .and.  bypass_LLP_d3 > 20000.0 .and.
+	bypass_LLP_d2 > 20000.0 .and.  bypass_LLP_d1 > 20000.0 value 1. }
+                         case other  {condition always value 0. }   }
+define TPulseOFF2_D28   {
+case trigOFF {condition 	bypass_LLP_d10 > 20000.0 .and.  bypass_LLP_d9 > 20000.0 .and.
+	bypass_LLP_d8 > 20000.0 .and.  bypass_LLP_d7 > 20000.0 .and.
+	bypass_LLP_d6 > 20000.0 .and.  bypass_LLP_d5 > 20000.0 .and.
+	bypass_LLP_d4 > 20000.0 .and.  bypass_LLP_d3 > 20000.0 .and.
+	bypass_LLP_d2 > 20000.0 .and.  bypass_LLP_d1 > 20000.0 value 1. }
+                         case other  {condition always value 0. }   }
+define TPulseOFF2_D29   {
+case trigOFF {condition 	bypass_LLP_d10 > 20000.0 .and.  bypass_LLP_d9 > 20000.0 .and.
+	bypass_LLP_d8 > 20000.0 .and.  bypass_LLP_d7 > 20000.0 .and.
+	bypass_LLP_d6 > 20000.0 .and.  bypass_LLP_d5 > 20000.0 .and.
+	bypass_LLP_d4 > 20000.0 .and.  bypass_LLP_d3 > 20000.0 .and.
+	bypass_LLP_d2 > 20000.0 .and.  bypass_LLP_d1 > 20000.0 value 1. }
+                         case other  {condition always value 0. }   }
+define TPulseOFF2_D30   {
+case trigOFF {condition 	bypass_LLP_d10 > 20000.0 .and.  bypass_LLP_d9 > 20000.0 .and.
+	bypass_LLP_d8 > 20000.0 .and.  bypass_LLP_d7 > 20000.0 .and.
+	bypass_LLP_d6 > 20000.0 .and.  bypass_LLP_d5 > 20000.0 .and.
+	bypass_LLP_d4 > 20000.0 .and.  bypass_LLP_d3 > 20000.0 .and.
+	bypass_LLP_d2 > 20000.0 .and.  bypass_LLP_d1 > 20000.0 value 1. }
+                         case other  {condition always value 0. }   }
+define TPulseOFF2_D31   {
+case trigOFF {condition 	bypass_LLP_d10 > 20000.0 .and.  bypass_LLP_d9 > 20000.0 .and.
+	bypass_LLP_d8 > 20000.0 .and.  bypass_LLP_d7 > 20000.0 .and.
+	bypass_LLP_d6 > 20000.0 .and.  bypass_LLP_d5 > 20000.0 .and.
+	bypass_LLP_d4 > 20000.0 .and.  bypass_LLP_d3 > 20000.0 .and.
+	bypass_LLP_d2 > 20000.0 .and.  bypass_LLP_d1 > 20000.0 value 1. }
+                         case other  {condition always value 0. }   }
+
+define TPulseOFF2_d1dv {alias TPulseOFF2_d1 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF2_d2dv {alias TPulseOFF2_d2 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF2_d3dv {alias TPulseOFF2_d3 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF2_d4dv {alias TPulseOFF2_d4 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF2_d5dv {alias TPulseOFF2_d5 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF2_d6dv {alias TPulseOFF2_d6 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF2_d7dv {alias TPulseOFF2_d7 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF2_d8dv {alias TPulseOFF2_d8 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF2_d9dv {alias TPulseOFF2_d9 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF2_d10dv {alias TPulseOFF2_d10 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF2_d11dv {alias TPulseOFF2_d11 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF2_d12dv {alias TPulseOFF2_d12 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF2_d13dv {alias TPulseOFF2_d13 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF2_d14dv {alias TPulseOFF2_d14 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF2_d15dv {alias TPulseOFF2_d15 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF2_d16dv {alias TPulseOFF2_d16 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF2_d17dv {alias TPulseOFF2_d17 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF2_d18dv {alias TPulseOFF2_d18 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF2_d19dv {alias TPulseOFF2_d19 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF2_d20dv {alias TPulseOFF2_d20 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF2_d21dv {alias TPulseOFF2_d21 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF2_d22dv {alias TPulseOFF2_d22 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF2_d23dv {alias TPulseOFF2_d23 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF2_d24dv {alias TPulseOFF2_d24 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF2_d25dv {alias TPulseOFF2_d25 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF2_d26dv {alias TPulseOFF2_d26 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF2_d27dv {alias TPulseOFF2_d27 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF2_d28dv {alias TPulseOFF2_d28 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF2_d29dv {alias TPulseOFF2_d29 kind 'TRIGGER' units 'NONE'}
+define TPulseOFF2_d30dv {alias TPulseOFF2_d30 kind 'TRIGGER' units 'NONE'}
+
+goal setTRGOFF2_31 {
+	lhs TPulseOFF2_D31dv
+	case Mon31 {condition  daysin == 31. rhs TPulseOFF2_D31}
+	case Mon30 {condition  daysin == 30. rhs TPulseOFF2_D30}
+	case Mon29 {condition  daysin == 29. rhs TPulseOFF2_D29}
+	case Mon28 {condition  daysin == 28. rhs TPulseOFF2_D28} }
+
+!***********************************************************************************
+
+
+define PCSwitch_d31dv {std kind 'TRIGGER' units 'none'}
+
+define PCSwitch_d1{
+	case reset {condition month==OCT .or. month==DEC value  0.}
+	case count {condition int(TPulseON_d31dv(-1)) ==0.  .and. int(TPulseON_d1) ==1 value 1.}
+	case other{condition always value  PCSwitch_d31dv(-1)}}
+
+define PCSwitch_d2{
+	case count {condition int(TPulseON_d1) ==0.  .and. int(TPulseON_d2) ==1 value 1.}
+	case other{condition always value  PCSwitch_d1}}
+
+define PCSwitch_d3{
+	case count {condition int(TPulseON_d2) ==0.  .and. int(TPulseON_d3) ==1 value 1.}
+	case other{condition always value  PCSwitch_d2}}
+
+define PCSwitch_d4{
+	case count {condition int(TPulseON_d3) ==0.  .and. int(TPulseON_d4) ==1 value 1.}
+	case other{condition always value  PCSwitch_d3}}
+
+define PCSwitch_d5{
+	case count {condition int(TPulseON_d4) ==0.  .and. int(TPulseON_d5) ==1 value 1.}
+	case other{condition always value  PCSwitch_d4}}
+
+define PCSwitch_d6{
+	case count {condition int(TPulseON_d5) ==0.  .and. int(TPulseON_d6) ==1 value 1.}
+	case other{condition always value  PCSwitch_d5}}
+
+define PCSwitch_d7{
+	case count {condition int(TPulseON_d6) ==0.  .and. int(TPulseON_d7) ==1 value 1.}
+	case other{condition always value  PCSwitch_d6}}
+
+define PCSwitch_d8{
+	case count {condition int(TPulseON_d7) ==0.  .and. int(TPulseON_d8) ==1 value 1.}
+	case other{condition always value  PCSwitch_d7}}
+
+define PCSwitch_d9{
+	case count {condition int(TPulseON_d8) ==0.  .and. int(TPulseON_d9) ==1 value 1.}
+	case other{condition always value  PCSwitch_d8}}
+
+define PCSwitch_d10{
+	case count {condition int(TPulseON_d9) ==0.  .and. int(TPulseON_d10) ==1 value 1.}
+	case other{condition always value  PCSwitch_d9}}
+
+define PCSwitch_d11{
+	case count {condition int(TPulseON_d10) ==0.  .and. int(TPulseON_d11) ==1 value 1.}
+	case other{condition always value  PCSwitch_d10}}
+
+define PCSwitch_d12{
+	case count {condition int(TPulseON_d11) ==0.  .and. int(TPulseON_d12) ==1 value 1.}
+	case other{condition always value  PCSwitch_d11}}
+
+define PCSwitch_d13{
+	case count {condition int(TPulseON_d12) ==0.  .and. int(TPulseON_d13) ==1 value 1.}
+	case other{condition always value  PCSwitch_d12}}
+
+define PCSwitch_d14{
+	case count {condition int(TPulseON_d13) ==0.  .and. int(TPulseON_d14) ==1 value 1.}
+	case other{condition always value  PCSwitch_d13}}
+
+define PCSwitch_d15{
+	case count {condition int(TPulseON_d14) ==0.  .and. int(TPulseON_d15) ==1 value 1.}
+	case other{condition always value  PCSwitch_d14}}
+
+define PCSwitch_d16{
+	case count {condition int(TPulseON_d15) ==0.  .and. int(TPulseON_d16) ==1 value 1.}
+	case other{condition always value  PCSwitch_d15}}
+
+define PCSwitch_d17{
+	case count {condition int(TPulseON_d16) ==0.  .and. int(TPulseON_d17) ==1 value 1.}
+	case other{condition always value  PCSwitch_d16}}
+
+define PCSwitch_d18{
+	case count {condition int(TPulseON_d17) ==0.  .and. int(TPulseON_d18) ==1 value 1.}
+	case other{condition always value  PCSwitch_d17}}
+
+define PCSwitch_d19{
+	case count {condition int(TPulseON_d18) ==0.  .and. int(TPulseON_d19) ==1 value 1.}
+	case other{condition always value  PCSwitch_d18}}
+
+define PCSwitch_d20{
+	case count {condition int(TPulseON_d19) ==0.  .and. int(TPulseON_d20) ==1 value 1.}
+	case other{condition always value  PCSwitch_d19}}
+
+define PCSwitch_d21{
+	case count {condition int(TPulseON_d20) ==0.  .and. int(TPulseON_d21) ==1 value 1.}
+	case other{condition always value  PCSwitch_d20}}
+
+define PCSwitch_d22{
+	case count {condition int(TPulseON_d21) ==0.  .and. int(TPulseON_d22) ==1 value 1.}
+	case other{condition always value  PCSwitch_d21}}
+
+define PCSwitch_d23{
+	case count {condition int(TPulseON_d22) ==0.  .and. int(TPulseON_d23) ==1 value 1.}
+	case other{condition always value  PCSwitch_d22}}
+
+define PCSwitch_d24{
+	case count {condition int(TPulseON_d23) ==0.  .and. int(TPulseON_d24) ==1 value 1.}
+	case other{condition always value  PCSwitch_d23}}
+
+define PCSwitch_d25{
+	case count {condition int(TPulseON_d24) ==0.  .and. int(TPulseON_d25) ==1 value 1.}
+	case other{condition always value  PCSwitch_d24}}
+
+define PCSwitch_d26{
+	case count {condition int(TPulseON_d25) ==0.  .and. int(TPulseON_d26) ==1 value 1.}
+	case other{condition always value  PCSwitch_d25}}
+
+define PCSwitch_d27{
+	case count {condition int(TPulseON_d26) ==0.  .and. int(TPulseON_d27) ==1 value 1.}
+	case other{condition always value  PCSwitch_d26}}
+
+define PCSwitch_d28{
+	case count {condition int(TPulseON_d27) ==0.  .and. int(TPulseON_d28) ==1 value 1.}
+	case other{condition always value  PCSwitch_d27}}
+
+define PCSwitch_d29{
+	case count {condition int(TPulseON_d28) ==0.  .and. int(TPulseON_d29) ==1 value 1.}
+	case other{condition always value  PCSwitch_d28}}
+
+define PCSwitch_d30{
+	case count {condition int(TPulseON_d29) ==0.  .and. int(TPulseON_d30) ==1 value 1.}
+	case other{condition always value  PCSwitch_d29}}
+
+define PCSwitch_d31{
+	case count {condition int(TPulseON_d30) ==0.  .and. int(TPulseON_d31) ==1 value 1.}
+	case other{condition always value  PCSwitch_d30}}
+
+goal setPCSwitch_31 {
+	lhs PCSwitch_D31dv
+	case Mon31 {condition  daysin == 31. rhs PCSwitch_d31}
+	case Mon30 {condition  daysin == 30. rhs PCSwitch_d30}
+	case Mon29 {condition  daysin == 29. rhs PCSwitch_d29}
+	case Mon28 {condition  daysin == 28. rhs PCSwitch_d28} }
+
+
+! P switches 1= Pulse is ON  0=Pulse is OFF
+
+define PSwitch_D31dv {std kind 'TRIGGER' units 'none'}
+
+define PSwitch_d1{
+	case oct { condition month==OCT value TpulseON_d1}
+	case outsidep {condition int(PSwitch_d31dv(-1)) ==0. value max(0.,TpulseON_d1-PCSwitch_d31dv(-1))}
+	case insidep {condition int(PSwitch_d31dv(-1)) ==1. value  min (1-TpulseOFF1_d1, 1-TpulseOFF2_d1)}
+	case other{condition always value PSwitch_d31dv(-1)}}
+
+define PSwitch_d2{
+	case outsidep {condition int(PSwitch_d1) ==0.  value max(0., TpulseON_d2-PCSwitch_d1)}
+	case insidep {condition int(PSwitch_d1) ==1.  value min (1-TpulseOFF1_d2, 1-TpulseOFF2_d2)}
+	case other{condition always value  PSwitch_d1}}
+
+define PSwitch_d3{
+	case outsidep {condition int(PSwitch_d2) ==0.  value max(0., TpulseON_d3-PCSwitch_d2)}
+	case insidep {condition int(PSwitch_d2) ==1.  value min (1-TpulseOFF1_d3, 1-TpulseOFF2_d3)}
+	case other{condition always value  PSwitch_d2}}
+
+define PSwitch_d4{
+	case outsidep {condition int(PSwitch_d3) ==0.  value max(0., TpulseON_d4-PCSwitch_d3)}
+	case insidep {condition int(PSwitch_d3) ==1.  value min (1-TpulseOFF1_d4, 1-TpulseOFF2_d4)}
+	case other{condition always value  PSwitch_d3}}
+
+define PSwitch_d5{
+	case outsidep {condition int(PSwitch_d4) ==0.  value max(0., TpulseON_d5-PCSwitch_d4)}
+	case insidep {condition int(PSwitch_d4) ==1.  value min (1-TpulseOFF1_d5, 1-TpulseOFF2_d5)}
+	case other{condition always value  PSwitch_d4}}
+
+define PSwitch_d6{
+	case outsidep {condition int(PSwitch_d5) ==0.  value max(0., TpulseON_d6-PCSwitch_d5)}
+	case insidep {condition int(PSwitch_d5) ==1.  value min (1-TpulseOFF1_d6, 1-TpulseOFF2_d6)}
+	case other{condition always value  PSwitch_d5}}
+
+define PSwitch_d7{
+	case outsidep {condition int(PSwitch_d6) ==0.  value max(0., TpulseON_d7-PCSwitch_d6)}
+	case insidep {condition int(PSwitch_d6) ==1.  value min (1-TpulseOFF1_d7, 1-TpulseOFF2_d7)}
+	case other{condition always value  PSwitch_d6}}
+
+define PSwitch_d8{
+	case outsidep {condition int(PSwitch_d7) ==0.  value max(0., TpulseON_d8-PCSwitch_d7)}
+	case insidep {condition int(PSwitch_d7) ==1.  value min (1-TpulseOFF1_d8, 1-TpulseOFF2_d8)}
+	case other{condition always value  PSwitch_d7}}
+
+define PSwitch_d9{
+	case outsidep {condition int(PSwitch_d8) ==0.  value max(0., TpulseON_d9-PCSwitch_d8)}
+	case insidep {condition int(PSwitch_d8) ==1.  value min (1-TpulseOFF1_d9, 1-TpulseOFF2_d9)}
+	case other{condition always value  PSwitch_d8}}
+
+define PSwitch_d10{
+	case outsidep {condition int(PSwitch_d9) ==0.  value max(0., TpulseON_d10-PCSwitch_d9)}
+	case insidep {condition int(PSwitch_d9) ==1.  value min (1-TpulseOFF1_d10, 1-TpulseOFF2_d10)}
+	case other{condition always value  PSwitch_d9}}
+
+define PSwitch_d11{
+	case outsidep {condition int(PSwitch_d10) ==0.  value max(0., TpulseON_d11-PCSwitch_d10)}
+	case insidep {condition int(PSwitch_d10) ==1.  value min (1-TpulseOFF1_d11, 1-TpulseOFF2_d11)}
+	case other{condition always value  PSwitch_d10}}
+
+define PSwitch_d12{
+	case outsidep {condition int(PSwitch_d11) ==0.  value max(0., TpulseON_d12-PCSwitch_d11)}
+	case insidep {condition int(PSwitch_d11) ==1.  value min (1-TpulseOFF1_d12, 1-TpulseOFF2_d12)}
+	case other{condition always value  PSwitch_d11}}
+
+define PSwitch_d13{
+	case outsidep {condition int(PSwitch_d12) ==0.  value max(0., TpulseON_d13-PCSwitch_d12)}
+	case insidep {condition int(PSwitch_d12) ==1.  value min (1-TpulseOFF1_d13, 1-TpulseOFF2_d13)}
+	case other{condition always value  PSwitch_d12}}
+
+define PSwitch_d14{
+	case outsidep {condition int(PSwitch_d13) ==0.  value max(0., TpulseON_d14-PCSwitch_d13)}
+	case insidep {condition int(PSwitch_d13) ==1.  value min (1-TpulseOFF1_d14, 1-TpulseOFF2_d14)}
+	case other{condition always value  PSwitch_d13}}
+
+define PSwitch_d15{
+	case outsidep {condition int(PSwitch_d14) ==0.  value max(0., TpulseON_d15-PCSwitch_d14)}
+	case insidep {condition int(PSwitch_d14) ==1.  value min (1-TpulseOFF1_d15, 1-TpulseOFF2_d15)}
+	case other{condition always value  PSwitch_d14}}
+
+define PSwitch_d16{
+	case outsidep {condition int(PSwitch_d15) ==0.  value max(0., TpulseON_d16-PCSwitch_d15)}
+	case insidep {condition int(PSwitch_d15) ==1.  value min (1-TpulseOFF1_d16, 1-TpulseOFF2_d16)}
+	case other{condition always value  PSwitch_d15}}
+
+define PSwitch_d17{
+	case outsidep {condition int(PSwitch_d16) ==0.  value max(0., TpulseON_d17-PCSwitch_d16)}
+	case insidep {condition int(PSwitch_d16) ==1.  value min (1-TpulseOFF1_d17, 1-TpulseOFF2_d17)}
+	case other{condition always value  PSwitch_d16}}
+
+define PSwitch_d18{
+	case outsidep {condition int(PSwitch_d17) ==0.  value max(0., TpulseON_d18-PCSwitch_d17)}
+	case insidep {condition int(PSwitch_d17) ==1.  value min (1-TpulseOFF1_d18, 1-TpulseOFF2_d18)}
+	case other{condition always value  PSwitch_d17}}
+
+define PSwitch_d19{
+	case outsidep {condition int(PSwitch_d18) ==0.  value max(0., TpulseON_d19-PCSwitch_d18)}
+	case insidep {condition int(PSwitch_d18) ==1.  value min (1-TpulseOFF1_d19, 1-TpulseOFF2_d19)}
+	case other{condition always value  PSwitch_d18}}
+
+define PSwitch_d20{
+	case outsidep {condition int(PSwitch_d19) ==0.  value max(0., TpulseON_d20-PCSwitch_d19)}
+	case insidep {condition int(PSwitch_d19) ==1.  value min (1-TpulseOFF1_d20, 1-TpulseOFF2_d20)}
+	case other{condition always value  PSwitch_d19}}
+
+define PSwitch_d21{
+	case outsidep {condition int(PSwitch_d20) ==0.  value max(0., TpulseON_d21-PCSwitch_d20)}
+	case insidep {condition int(PSwitch_d20) ==1.  value min (1-TpulseOFF1_d21, 1-TpulseOFF2_d21)}
+	case other{condition always value  PSwitch_d20}}
+
+define PSwitch_d22{
+	case outsidep {condition int(PSwitch_d21) ==0.  value max(0., TpulseON_d22-PCSwitch_d21)}
+	case insidep {condition int(PSwitch_d21) ==1.  value min (1-TpulseOFF1_d22, 1-TpulseOFF2_d22)}
+	case other{condition always value  PSwitch_d21}}
+
+define PSwitch_d23{
+	case outsidep {condition int(PSwitch_d22) ==0.  value max(0., TpulseON_d23-PCSwitch_d22)}
+	case insidep {condition int(PSwitch_d22) ==1.  value min (1-TpulseOFF1_d23, 1-TpulseOFF2_d23)}
+	case other{condition always value  PSwitch_d22}}
+
+define PSwitch_d24{
+	case outsidep {condition int(PSwitch_d23) ==0.  value max(0., TpulseON_d24-PCSwitch_d23)}
+	case insidep {condition int(PSwitch_d23) ==1.  value min (1-TpulseOFF1_d24, 1-TpulseOFF2_d24)}
+	case other{condition always value  PSwitch_d23}}
+
+define PSwitch_d25{
+	case outsidep {condition int(PSwitch_d24) ==0.  value max(0., TpulseON_d25-PCSwitch_d24)}
+	case insidep {condition int(PSwitch_d24) ==1.  value min (1-TpulseOFF1_d25, 1-TpulseOFF2_d25)}
+	case other{condition always value  PSwitch_d24}}
+
+define PSwitch_d26{
+	case outsidep {condition int(PSwitch_d25) ==0.  value max(0., TpulseON_d26-PCSwitch_d25)}
+	case insidep {condition int(PSwitch_d25) ==1.  value min (1-TpulseOFF1_d26, 1-TpulseOFF2_d26)}
+	case other{condition always value  PSwitch_d25}}
+
+define PSwitch_d27{
+	case outsidep {condition int(PSwitch_d26) ==0.  value max(0., TpulseON_d27-PCSwitch_d26)}
+	case insidep {condition int(PSwitch_d26) ==1.  value min (1-TpulseOFF1_d27, 1-TpulseOFF2_d27)}
+	case other{condition always value  PSwitch_d26}}
+
+define PSwitch_d28{
+	case outsidep {condition int(PSwitch_d27) ==0.  value max(0., TpulseON_d28-PCSwitch_d27)}
+	case insidep {condition int(PSwitch_d27) ==1.  value min (1-TpulseOFF1_d28, 1-TpulseOFF2_d28)}
+	case other{condition always value  PSwitch_d27}}
+
+define PSwitch_d29{
+	case outsidep {condition int(PSwitch_d28) ==0.  value max(0., TpulseON_d29-PCSwitch_d28)}
+	case insidep {condition int(PSwitch_d28) ==1.  value min (1-TpulseOFF1_d29, 1-TpulseOFF2_d29)}
+	case other{condition always value  PSwitch_d28}}
+
+define PSwitch_d30{
+	case outsidep {condition int(PSwitch_d29) ==0.  value max(0., TpulseON_d30-PCSwitch_d29)}
+	case insidep {condition int(PSwitch_d29) ==1.  value min (1-TpulseOFF1_d30, 1-TpulseOFF2_d30)}
+	case other{condition always value  PSwitch_d29}}
+
+define PSwitch_d31{
+	case outsidep {condition int(PSwitch_d30) ==0.  value max(0., TpulseON_d31-PCSwitch_d30)}
+	case insidep {condition int(PSwitch_d30) ==1.  value min (1-TpulseOFF1_d31, 1-TpulseOFF2_d31)}
+	case other{condition always value  PSwitch_d30}}
+
+
+
+
+goal setPSwitch_d31 {
+	lhs PSwitch_D31dv
+	case Mon31 {condition  daysin == 31. rhs PSwitch_D31}
+	case Mon30 {condition  daysin == 30. rhs PSwitch_D30}
+	case Mon29 {condition  daysin == 29. rhs PSwitch_D29}
+	case Mon28 {condition  daysin == 28. rhs PSwitch_D28} }
+
+define PSwitch_d1dv {alias PSwitch_d1 kind 'TRIGGER' units 'NONE'}
+define PSwitch_d2dv {alias PSwitch_d2 kind 'TRIGGER' units 'NONE'}
+define PSwitch_d3dv {alias PSwitch_d3 kind 'TRIGGER' units 'NONE'}
+define PSwitch_d4dv {alias PSwitch_d4 kind 'TRIGGER' units 'NONE'}
+define PSwitch_d5dv {alias PSwitch_d5 kind 'TRIGGER' units 'NONE'}
+define PSwitch_d6dv {alias PSwitch_d6 kind 'TRIGGER' units 'NONE'}
+define PSwitch_d7dv {alias PSwitch_d7 kind 'TRIGGER' units 'NONE'}
+define PSwitch_d8dv {alias PSwitch_d8 kind 'TRIGGER' units 'NONE'}
+define PSwitch_d9dv {alias PSwitch_d9 kind 'TRIGGER' units 'NONE'}
+define PSwitch_d10dv {alias PSwitch_d10 kind 'TRIGGER' units 'NONE'}
+define PSwitch_d11dv {alias PSwitch_d11 kind 'TRIGGER' units 'NONE'}
+define PSwitch_d12dv {alias PSwitch_d12 kind 'TRIGGER' units 'NONE'}
+define PSwitch_d13dv {alias PSwitch_d13 kind 'TRIGGER' units 'NONE'}
+define PSwitch_d14dv {alias PSwitch_d14 kind 'TRIGGER' units 'NONE'}
+define PSwitch_d15dv {alias PSwitch_d15 kind 'TRIGGER' units 'NONE'}
+define PSwitch_d16dv {alias PSwitch_d16 kind 'TRIGGER' units 'NONE'}
+define PSwitch_d17dv {alias PSwitch_d17 kind 'TRIGGER' units 'NONE'}
+define PSwitch_d18dv {alias PSwitch_d18 kind 'TRIGGER' units 'NONE'}
+define PSwitch_d19dv {alias PSwitch_d19 kind 'TRIGGER' units 'NONE'}
+define PSwitch_d20dv {alias PSwitch_d20 kind 'TRIGGER' units 'NONE'}
+define PSwitch_d21dv {alias PSwitch_d21 kind 'TRIGGER' units 'NONE'}
+define PSwitch_d22dv {alias PSwitch_d22 kind 'TRIGGER' units 'NONE'}
+define PSwitch_d23dv {alias PSwitch_d23 kind 'TRIGGER' units 'NONE'}
+define PSwitch_d24dv {alias PSwitch_d24 kind 'TRIGGER' units 'NONE'}
+define PSwitch_d25dv {alias PSwitch_d25 kind 'TRIGGER' units 'NONE'}
+define PSwitch_d26dv {alias PSwitch_d26 kind 'TRIGGER' units 'NONE'}
+define PSwitch_d27dv {alias PSwitch_d27 kind 'TRIGGER' units 'NONE'}
+define PSwitch_d28dv {alias PSwitch_d28 kind 'TRIGGER' units 'NONE'}
+define PSwitch_d29dv {alias PSwitch_d29 kind 'TRIGGER' units 'NONE'}
+define PSwitch_d30dv {alias PSwitch_d30 kind 'TRIGGER' units 'NONE'}
+!define PSwitch_d31dv {alias PSwitch_d31 kind 'TRIGGER' units 'NONE'}
+
+define TPulseON {value TPulseON_d1+TPulseON_d2+TPulseON_d3+TPulseON_d4
+       +TPulseON_d5+TPulseON_d6+TPulseON_d7+TPulseON_d8+TPulseON_d9
+       +TPulseON_d10+TPulseON_d11+TPulseON_d12+TPulseON_d13+TPulseON_d14
+       +TPulseON_d15+TPulseON_d16+TPulseON_d17+TPulseON_d18+TPulseON_d19
+       +TPulseON_d20+TPulseON_d21+TPulseON_d22+TPulseON_d23+TPulseON_d24
+       +TPulseON_d25+TPulseON_d26+TPulseON_d27+TPulseON_d28+TPulseON_d29
+       +TPulseON_d30+TPulseON_d31}
+define TPulseONdv {alias TPulseON kind 'TRIGGER' units 'NONE'}
+
+
+/* Post-Pulse Operations:
+***************************************
+After initial flush(es), go to Level I post-pulse bypass rule (see SubTable A) until 15 total days of
+bypass flows above 20,000 cfs. Then go to the Level II post-pulse bypass rule until 30 total days
+of bypass flows above 20,000 cfs. Then go to the Level III post-pulse bypass rule.
+*/
+
+! Define Level I curve for estimating count of daily flowse greater 20,000 cfs
+define L1curve_d1 { select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_1 use linear where month=month}
+define L1curve_d2 { select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_2 use linear where month=month}
+define L1curve_d3 { select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_3 use linear where month=month}
+define L1curve_d4 { select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_4 use linear where month=month}
+define L1curve_d5 { select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_5 use linear where month=month}
+define L1curve_d6 { select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_6 use linear where month=month}
+define L1curve_d7 { select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_7 use linear where month=month}
+define L1curve_d8 { select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_8 use linear where month=month}
+define L1curve_d9 { select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_9 use linear where month=month}
+define L1curve_d10 { select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_10 use linear where month=month}
+define L1curve_d11 { select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_11 use linear where month=month}
+define L1curve_d12 { select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_12 use linear where month=month}
+define L1curve_d13 { select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_13 use linear where month=month}
+define L1curve_d14 { select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_14 use linear where month=month}
+define L1curve_d15 { select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_15 use linear where month=month}
+define L1curve_d16 { select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_16 use linear where month=month}
+define L1curve_d17 { select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_17 use linear where month=month}
+define L1curve_d18 { select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_18 use linear where month=month}
+define L1curve_d19 { select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_19 use linear where month=month}
+define L1curve_d20 { select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_20 use linear where month=month}
+define L1curve_d21 { select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_21 use linear where month=month}
+define L1curve_d22 { select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_22 use linear where month=month}
+define L1curve_d23 { select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_23 use linear where month=month}
+define L1curve_d24 { select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_24 use linear where month=month}
+define L1curve_d25 { select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_25 use linear where month=month}
+define L1curve_d26 { select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_26 use linear where month=month}
+define L1curve_d27 { select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_27 use linear where month=month}
+define L1curve_d28 { select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_28 use linear where month=month}
+define L1curve_d29 { select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_29 use linear where month=month}
+define L1curve_d30 { select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_30 use linear where month=month}
+define L1curve_d31 { select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_31 use linear where month=month}
+
+define L1curve_d1dv {alias L1curve_d1 kind 'FLOW-BYPASS' units 'CFS'}
+define L1curve_d2dv {alias L1curve_d2 kind 'FLOW-BYPASS' units 'CFS'}
+define L1curve_d3dv {alias L1curve_d3 kind 'FLOW-BYPASS' units 'CFS'}
+define L1curve_d4dv {alias L1curve_d4 kind 'FLOW-BYPASS' units 'CFS'}
+define L1curve_d5dv {alias L1curve_d5 kind 'FLOW-BYPASS' units 'CFS'}
+define L1curve_d6dv {alias L1curve_d6 kind 'FLOW-BYPASS' units 'CFS'}
+define L1curve_d7dv {alias L1curve_d7 kind 'FLOW-BYPASS' units 'CFS'}
+define L1curve_d8dv {alias L1curve_d8 kind 'FLOW-BYPASS' units 'CFS'}
+define L1curve_d9dv {alias L1curve_d9 kind 'FLOW-BYPASS' units 'CFS'}
+define L1curve_d10dv {alias L1curve_d10 kind 'FLOW-BYPASS' units 'CFS'}
+define L1curve_d11dv {alias L1curve_d11 kind 'FLOW-BYPASS' units 'CFS'}
+define L1curve_d12dv {alias L1curve_d12 kind 'FLOW-BYPASS' units 'CFS'}
+define L1curve_d13dv {alias L1curve_d13 kind 'FLOW-BYPASS' units 'CFS'}
+define L1curve_d14dv {alias L1curve_d14 kind 'FLOW-BYPASS' units 'CFS'}
+define L1curve_d15dv {alias L1curve_d15 kind 'FLOW-BYPASS' units 'CFS'}
+define L1curve_d16dv {alias L1curve_d16 kind 'FLOW-BYPASS' units 'CFS'}
+define L1curve_d17dv {alias L1curve_d17 kind 'FLOW-BYPASS' units 'CFS'}
+define L1curve_d18dv {alias L1curve_d18 kind 'FLOW-BYPASS' units 'CFS'}
+define L1curve_d19dv {alias L1curve_d19 kind 'FLOW-BYPASS' units 'CFS'}
+define L1curve_d20dv {alias L1curve_d20 kind 'FLOW-BYPASS' units 'CFS'}
+define L1curve_d21dv {alias L1curve_d21 kind 'FLOW-BYPASS' units 'CFS'}
+define L1curve_d22dv {alias L1curve_d22 kind 'FLOW-BYPASS' units 'CFS'}
+define L1curve_d23dv {alias L1curve_d23 kind 'FLOW-BYPASS' units 'CFS'}
+define L1curve_d24dv {alias L1curve_d24 kind 'FLOW-BYPASS' units 'CFS'}
+define L1curve_d25dv {alias L1curve_d25 kind 'FLOW-BYPASS' units 'CFS'}
+define L1curve_d26dv {alias L1curve_d26 kind 'FLOW-BYPASS' units 'CFS'}
+define L1curve_d27dv {alias L1curve_d27 kind 'FLOW-BYPASS' units 'CFS'}
+define L1curve_d28dv {alias L1curve_d28 kind 'FLOW-BYPASS' units 'CFS'}
+define L1curve_d29dv {alias L1curve_d29 kind 'FLOW-BYPASS' units 'CFS'}
+define L1curve_d30dv {alias L1curve_d30 kind 'FLOW-BYPASS' units 'CFS'}
+define L1curve_d31dv {alias L1curve_d31 kind 'FLOW-BYPASS' units 'CFS'}
+
+! Define Level II curve (highest potential diversion before going to Level III, thus lowest bypass flow) for estimating count of daily flowse greater 20,000 cfs
+define L2curve_d1 { select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_1 use linear where month=month}
+define L2curve_d2 { select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_2 use linear where month=month}
+define L2curve_d3 { select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_3 use linear where month=month}
+define L2curve_d4 { select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_4 use linear where month=month}
+define L2curve_d5 { select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_5 use linear where month=month}
+define L2curve_d6 { select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_6 use linear where month=month}
+define L2curve_d7 { select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_7 use linear where month=month}
+define L2curve_d8 { select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_8 use linear where month=month}
+define L2curve_d9 { select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_9 use linear where month=month}
+define L2curve_d10 { select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_10 use linear where month=month}
+define L2curve_d11 { select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_11 use linear where month=month}
+define L2curve_d12 { select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_12 use linear where month=month}
+define L2curve_d13 { select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_13 use linear where month=month}
+define L2curve_d14 { select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_14 use linear where month=month}
+define L2curve_d15 { select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_15 use linear where month=month}
+define L2curve_d16 { select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_16 use linear where month=month}
+define L2curve_d17 { select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_17 use linear where month=month}
+define L2curve_d18 { select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_18 use linear where month=month}
+define L2curve_d19 { select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_19 use linear where month=month}
+define L2curve_d20 { select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_20 use linear where month=month}
+define L2curve_d21 { select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_21 use linear where month=month}
+define L2curve_d22 { select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_22 use linear where month=month}
+define L2curve_d23 { select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_23 use linear where month=month}
+define L2curve_d24 { select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_24 use linear where month=month}
+define L2curve_d25 { select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_25 use linear where month=month}
+define L2curve_d26 { select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_26 use linear where month=month}
+define L2curve_d27 { select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_27 use linear where month=month}
+define L2curve_d28 { select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_28 use linear where month=month}
+define L2curve_d29 { select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_29 use linear where month=month}
+define L2curve_d30 { select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_30 use linear where month=month}
+define L2curve_d31 { select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_31 use linear where month=month}
+
+define L2curve_d1dv {alias L2curve_d1 kind 'FLOW-BYPASS' units 'CFS'}
+define L2curve_d2dv {alias L2curve_d2 kind 'FLOW-BYPASS' units 'CFS'}
+define L2curve_d3dv {alias L2curve_d3 kind 'FLOW-BYPASS' units 'CFS'}
+define L2curve_d4dv {alias L2curve_d4 kind 'FLOW-BYPASS' units 'CFS'}
+define L2curve_d5dv {alias L2curve_d5 kind 'FLOW-BYPASS' units 'CFS'}
+define L2curve_d6dv {alias L2curve_d6 kind 'FLOW-BYPASS' units 'CFS'}
+define L2curve_d7dv {alias L2curve_d7 kind 'FLOW-BYPASS' units 'CFS'}
+define L2curve_d8dv {alias L2curve_d8 kind 'FLOW-BYPASS' units 'CFS'}
+define L2curve_d9dv {alias L2curve_d9 kind 'FLOW-BYPASS' units 'CFS'}
+define L2curve_d10dv {alias L2curve_d10 kind 'FLOW-BYPASS' units 'CFS'}
+define L2curve_d11dv {alias L2curve_d11 kind 'FLOW-BYPASS' units 'CFS'}
+define L2curve_d12dv {alias L2curve_d12 kind 'FLOW-BYPASS' units 'CFS'}
+define L2curve_d13dv {alias L2curve_d13 kind 'FLOW-BYPASS' units 'CFS'}
+define L2curve_d14dv {alias L2curve_d14 kind 'FLOW-BYPASS' units 'CFS'}
+define L2curve_d15dv {alias L2curve_d15 kind 'FLOW-BYPASS' units 'CFS'}
+define L2curve_d16dv {alias L2curve_d16 kind 'FLOW-BYPASS' units 'CFS'}
+define L2curve_d17dv {alias L2curve_d17 kind 'FLOW-BYPASS' units 'CFS'}
+define L2curve_d18dv {alias L2curve_d18 kind 'FLOW-BYPASS' units 'CFS'}
+define L2curve_d19dv {alias L2curve_d19 kind 'FLOW-BYPASS' units 'CFS'}
+define L2curve_d20dv {alias L2curve_d20 kind 'FLOW-BYPASS' units 'CFS'}
+define L2curve_d21dv {alias L2curve_d21 kind 'FLOW-BYPASS' units 'CFS'}
+define L2curve_d22dv {alias L2curve_d22 kind 'FLOW-BYPASS' units 'CFS'}
+define L2curve_d23dv {alias L2curve_d23 kind 'FLOW-BYPASS' units 'CFS'}
+define L2curve_d24dv {alias L2curve_d24 kind 'FLOW-BYPASS' units 'CFS'}
+define L2curve_d25dv {alias L2curve_d25 kind 'FLOW-BYPASS' units 'CFS'}
+define L2curve_d26dv {alias L2curve_d26 kind 'FLOW-BYPASS' units 'CFS'}
+define L2curve_d27dv {alias L2curve_d27 kind 'FLOW-BYPASS' units 'CFS'}
+define L2curve_d28dv {alias L2curve_d28 kind 'FLOW-BYPASS' units 'CFS'}
+define L2curve_d29dv {alias L2curve_d29 kind 'FLOW-BYPASS' units 'CFS'}
+define L2curve_d30dv {alias L2curve_d30 kind 'FLOW-BYPASS' units 'CFS'}
+define L2curve_d31dv {alias L2curve_d31 kind 'FLOW-BYPASS' units 'CFS'}
+
+!Count of days with SAC flows >20,000 cfs
+INCLUDE 'SAC20000count.wresl'
+
+
+! *******************************************************************************************************
+
+define  NDD_level_d1 {
+	case LLP   {condition int(PSwitch_D1)==1 value 0.  }
+	case level1 {condition count_d1<15.  value 1. }
+	case level3 {condition count_d1 >= 30.  value 3. }
+	case level2 {condition count_d1 >= 15.  value 2. }
+	case other  {condition always           value 99.} }
+
+define  NDD_level_d2 {
+	case LLP   {condition int(PSwitch_D2)==1 value 0.  }
+	case level1 {condition count_d2<15.  value 1. }
+	case level3 {condition count_d2 >= 30.  value 3. }
+	case level2 {condition count_d2 >= 15.  value 2. }
+	case other  {condition always           value 99.}
+}
+define  NDD_level_d3 {
+	case LLP   {condition int(PSwitch_D3)==1 value 0.  }
+	case level1 {condition count_d3<15.  value 1. }
+	case level3 {condition count_d3 >= 30.  value 3. }
+	case level2 {condition count_d3 >= 15.  value 2. }
+	case other  {condition always           value 99.}
+}
+define  NDD_level_d4 {
+	case LLP   {condition int(PSwitch_D4)==1 value 0.  }
+	case level1 {condition count_d4<15.  value 1. }
+	case level3 {condition count_d4 >= 30.  value 3. }
+	case level2 {condition count_d4 >= 15.  value 2. }
+	case other  {condition always           value 99.}
+}
+define  NDD_level_d5 {
+	case LLP   {condition int(PSwitch_D5)==1 value 0.  }
+	case level1 {condition count_d5<15.  value 1. }
+	case level3 {condition count_d5 >= 30.  value 3. }
+	case level2 {condition count_d5 >= 15.  value 2. }
+	case other  {condition always           value 99.}
+}
+define  NDD_level_d6 {
+	case LLP   {condition int(PSwitch_D6)==1 value 0.  }
+	case level1 {condition count_d6<15.  value 1. }
+	case level3 {condition count_d6 >= 30.  value 3. }
+	case level2 {condition count_d6 >= 15.  value 2. }
+	case other  {condition always           value 99.}
+}
+define  NDD_level_d7 {
+	case LLP   {condition int(PSwitch_D7)==1 value 0.  }
+	case level1 {condition count_d7<15.  value 1. }
+	case level3 {condition count_d7 >= 30.  value 3. }
+	case level2 {condition count_d7 >= 15.  value 2. }
+	case other  {condition always           value 99.}
+}
+define  NDD_level_d8 {
+	case LLP   {condition int(PSwitch_D8)==1 value 0.  }
+	case level1 {condition count_d8<15.  value 1. }
+	case level3 {condition count_d8 >= 30.  value 3. }
+	case level2 {condition count_d8 >= 15.  value 2. }
+	case other  {condition always           value 99.}
+}
+define  NDD_level_d9 {
+	case LLP   {condition int(PSwitch_D9)==1 value 0.  }
+	case level1 {condition count_d9<15.  value 1. }
+	case level3 {condition count_d9 >= 30.  value 3. }
+	case level2 {condition count_d9 >= 15.  value 2. }
+	case other  {condition always           value 99.}
+}
+define  NDD_level_d10 {
+	case LLP   {condition int(PSwitch_D10)==1 value 0.  }
+	case level1 {condition count_d10<15.  value 1. }
+	case level3 {condition count_d10 >= 30.  value 3. }
+	case level2 {condition count_d10 >= 15.  value 2. }
+	case other  {condition always           value 99.}
+}
+define  NDD_level_d11 {
+	case LLP   {condition int(PSwitch_D11)==1 value 0.  }
+	case level1 {condition count_d11<15.  value 1. }
+	case level3 {condition count_d11 >= 30.  value 3. }
+	case level2 {condition count_d11 >= 15.  value 2. }
+	case other  {condition always           value 99.}
+}
+define  NDD_level_d12 {
+	case LLP   {condition int(PSwitch_D12)==1 value 0.  }
+	case level1 {condition count_d12<15.  value 1. }
+	case level3 {condition count_d12 >= 30.  value 3. }
+	case level2 {condition count_d12 >= 15.  value 2. }
+	case other  {condition always           value 99.}
+}
+define  NDD_level_d13 {
+	case LLP   {condition int(PSwitch_D13)==1 value 0.  }
+	case level1 {condition count_d13<15.  value 1. }
+	case level3 {condition count_d13 >= 30.  value 3. }
+	case level2 {condition count_d13 >= 15.  value 2. }
+	case other  {condition always           value 99.}
+}
+define  NDD_level_d14 {
+	case LLP   {condition int(PSwitch_D14)==1 value 0.  }
+	case level1 {condition count_d14<15.  value 1. }
+	case level3 {condition count_d14 >= 30.  value 3. }
+	case level2 {condition count_d14 >= 15.  value 2. }
+	case other  {condition always           value 99.}
+}
+define  NDD_level_d15 {
+	case LLP   {condition int(PSwitch_D15)==1 value 0.  }
+	case level1 {condition count_d15<15.  value 1. }
+	case level3 {condition count_d15 >= 30.  value 3. }
+	case level2 {condition count_d15 >= 15.  value 2. }
+	case other  {condition always           value 99.}
+}
+define  NDD_level_d16 {
+	case LLP   {condition int(PSwitch_D16)==1 value 0.  }
+	case level1 {condition count_d16<15.  value 1. }
+	case level3 {condition count_d16 >= 30.  value 3. }
+	case level2 {condition count_d16 >= 15.  value 2. }
+	case other  {condition always           value 99.}
+}
+define  NDD_level_d17 {
+	case LLP   {condition int(PSwitch_D17)==1 value 0.  }
+	case level1 {condition count_d17<15.  value 1. }
+	case level3 {condition count_d17 >= 30.  value 3. }
+	case level2 {condition count_d17 >= 15.  value 2. }
+	case other  {condition always           value 99.}
+}
+define  NDD_level_d18 {
+	case LLP   {condition int(PSwitch_D18)==1 value 0.  }
+	case level1 {condition count_d18<15.  value 1. }
+	case level3 {condition count_d18 >= 30.  value 3. }
+	case level2 {condition count_d18 >= 15.  value 2. }
+	case other  {condition always           value 99.}
+}
+define  NDD_level_d19 {
+	case LLP   {condition int(PSwitch_D19)==1 value 0.  }
+	case level1 {condition count_d19<15.  value 1. }
+	case level3 {condition count_d19 >= 30.  value 3. }
+	case level2 {condition count_d19 >= 15.  value 2. }
+	case other  {condition always           value 99.}
+}
+define  NDD_level_d20 {
+	case LLP   {condition int(PSwitch_D20)==1 value 0.  }
+	case level1 {condition count_d20<15.  value 1. }
+	case level3 {condition count_d20 >= 30.  value 3. }
+	case level2 {condition count_d20 >= 15.  value 2. }
+	case other  {condition always           value 99.}
+}
+define  NDD_level_d21 {
+	case LLP   {condition int(PSwitch_D21)==1 value 0.  }
+	case level1 {condition count_d21<15.  value 1. }
+	case level3 {condition count_d21 >= 30.  value 3. }
+	case level2 {condition count_d21 >= 15.  value 2. }
+	case other  {condition always           value 99.}
+}
+define  NDD_level_d22 {
+	case LLP   {condition int(PSwitch_D22)==1 value 0.  }
+	case level1 {condition count_d22<15.  value 1. }
+	case level3 {condition count_d22 >= 30.  value 3. }
+	case level2 {condition count_d22 >= 15.  value 2. }
+	case other  {condition always           value 99.}
+}
+define  NDD_level_d23 {
+	case LLP   {condition int(PSwitch_D23)==1 value 0.  }
+	case level1 {condition count_d23<15.  value 1. }
+	case level3 {condition count_d23 >= 30.  value 3. }
+	case level2 {condition count_d23 >= 15.  value 2. }
+	case other  {condition always           value 99.}
+}
+define  NDD_level_d24 {
+	case LLP   {condition int(PSwitch_D24)==1 value 0.  }
+	case level1 {condition count_d24<15.  value 1. }
+	case level3 {condition count_d24 >= 30.  value 3. }
+	case level2 {condition count_d24 >= 15.  value 2. }
+	case other  {condition always           value 99.}
+}
+define  NDD_level_d25 {
+	case LLP   {condition int(PSwitch_D25)==1 value 0.  }
+	case level1 {condition count_d25<15.  value 1. }
+	case level3 {condition count_d25 >= 30.  value 3. }
+	case level2 {condition count_d25 >= 15.  value 2. }
+	case other  {condition always           value 99.}
+}
+define  NDD_level_d26 {
+	case LLP   {condition int(PSwitch_D26)==1 value 0.  }
+	case level1 {condition count_d26<15.  value 1. }
+	case level3 {condition count_d26 >= 30.  value 3. }
+	case level2 {condition count_d26 >= 15.  value 2. }
+	case other  {condition always           value 99.}
+}
+define  NDD_level_d27 {
+	case LLP   {condition int(PSwitch_D27)==1 value 0.  }
+	case level1 {condition count_d27<15.  value 1. }
+	case level3 {condition count_d27 >= 30.  value 3. }
+	case level2 {condition count_d27 >= 15.  value 2. }
+	case other  {condition always           value 99.}
+}
+define  NDD_level_d28 {
+	case LLP   {condition int(PSwitch_D28)==1 value 0.  }
+	case level1 {condition count_d28<15.  value 1. }
+	case level3 {condition count_d28 >= 30.  value 3. }
+	case level2 {condition count_d28 >= 15.  value 2. }
+	case other  {condition always           value 99.}
+}
+define  NDD_level_d29 {
+	case LLP   {condition int(PSwitch_D29)==1 value 0.  }
+	case level1 {condition count_d29<15.  value 1. }
+	case level3 {condition count_d29 >= 30.  value 3. }
+	case level2 {condition count_d29 >= 15.  value 2. }
+	case other  {condition always           value 99.}
+}
+define  NDD_level_d30 {
+	case LLP   {condition int(PSwitch_D30)==1 value 0.  }
+	case level1 {condition count_d30<15.  value 1. }
+	case level3 {condition count_d30 >= 30.  value 3. }
+	case level2 {condition count_d30 >= 15.  value 2. }
+	case other  {condition always           value 99.}
+}
+define  NDD_level_d31 {
+	case LLP   {condition int(PSwitch_D31)==1 value 0.  }
+	case level1 {condition count_d31<15.  value 1. }
+	case level3 {condition count_d31 >= 30.  value 3. }
+	case level2 {condition count_d31 >= 15.  value 2. }
+	case other  {condition always           value 99.}
+}
+
+define  NDD_level_d1dv {alias NDD_level_d1 kind 'LEVEL' units 'NONE'}
+define  NDD_level_d2dv {alias NDD_level_d2 kind 'LEVEL' units 'NONE'}
+define  NDD_level_d3dv {alias NDD_level_d3 kind 'LEVEL' units 'NONE'}
+define  NDD_level_d4dv {alias NDD_level_d4 kind 'LEVEL' units 'NONE'}
+define  NDD_level_d5dv {alias NDD_level_d5 kind 'LEVEL' units 'NONE'}
+define  NDD_level_d6dv {alias NDD_level_d6 kind 'LEVEL' units 'NONE'}
+define  NDD_level_d7dv {alias NDD_level_d7 kind 'LEVEL' units 'NONE'}
+define  NDD_level_d8dv {alias NDD_level_d8 kind 'LEVEL' units 'NONE'}
+define  NDD_level_d9dv {alias NDD_level_d9 kind 'LEVEL' units 'NONE'}
+define  NDD_level_d10dv {alias NDD_level_d10 kind 'LEVEL' units 'NONE'}
+define  NDD_level_d11dv {alias NDD_level_d11 kind 'LEVEL' units 'NONE'}
+define  NDD_level_d12dv {alias NDD_level_d12 kind 'LEVEL' units 'NONE'}
+define  NDD_level_d13dv {alias NDD_level_d13 kind 'LEVEL' units 'NONE'}
+define  NDD_level_d14dv {alias NDD_level_d14 kind 'LEVEL' units 'NONE'}
+define  NDD_level_d15dv {alias NDD_level_d15 kind 'LEVEL' units 'NONE'}
+define  NDD_level_d16dv {alias NDD_level_d16 kind 'LEVEL' units 'NONE'}
+define  NDD_level_d17dv {alias NDD_level_d17 kind 'LEVEL' units 'NONE'}
+define  NDD_level_d18dv {alias NDD_level_d18 kind 'LEVEL' units 'NONE'}
+define  NDD_level_d19dv {alias NDD_level_d19 kind 'LEVEL' units 'NONE'}
+define  NDD_level_d20dv {alias NDD_level_d20 kind 'LEVEL' units 'NONE'}
+define  NDD_level_d21dv {alias NDD_level_d21 kind 'LEVEL' units 'NONE'}
+define  NDD_level_d22dv {alias NDD_level_d22 kind 'LEVEL' units 'NONE'}
+define  NDD_level_d23dv {alias NDD_level_d23 kind 'LEVEL' units 'NONE'}
+define  NDD_level_d24dv {alias NDD_level_d24 kind 'LEVEL' units 'NONE'}
+define  NDD_level_d25dv {alias NDD_level_d25 kind 'LEVEL' units 'NONE'}
+define  NDD_level_d26dv {alias NDD_level_d26 kind 'LEVEL' units 'NONE'}
+define  NDD_level_d27dv {alias NDD_level_d27 kind 'LEVEL' units 'NONE'}
+define  NDD_level_d28dv {alias NDD_level_d28 kind 'LEVEL' units 'NONE'}
+define  NDD_level_d29dv {alias NDD_level_d29 kind 'LEVEL' units 'NONE'}
+define  NDD_level_d30dv {alias NDD_level_d30 kind 'LEVEL' units 'NONE'}
+define  NDD_level_d31dv {alias NDD_level_d31 kind 'LEVEL' units 'NONE'}
+! ******************************************************************************************************************************************************
+
+define  NDD_bypass_1 {
+	case LLP   {condition int(NDD_Level_d1)==0   value max(Qfreeport_1-LLP_d1,0.)  }
+	case level1 {condition int(NDD_Level_d1)==1 select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_1 use linear where month=month}
+	case level2 {condition int(NDD_Level_d1)==2 select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_1 use linear where month=month}
+	case level3 {condition int(NDD_Level_d1)==3 select Level_III from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_1 use linear where month=month}
+	case other  {condition always           select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_1 use linear where month=month}
+}
+define  NDD_bypass_2 {
+	case LLP   {condition int(NDD_Level_d2)==0   value max(Qfreeport_2-LLP_d2,0.)  }
+	case level1 {condition int(NDD_Level_d2)==1 select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_2 use linear where month=month}
+	case level2 {condition int(NDD_Level_d2)==2 select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_2 use linear where month=month}
+	case level3 {condition int(NDD_Level_d2)==3 select Level_III from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_2 use linear where month=month}
+	case other  {condition always           select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_2 use linear where month=month}
+}
+define  NDD_bypass_3 {
+	case LLP   {condition int(NDD_Level_d3)==0   value max(Qfreeport_3-LLP_d3,0.)  }
+	case level1 {condition int(NDD_Level_d3)==1 select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_3 use linear where month=month}
+	case level2 {condition int(NDD_Level_d3)==2 select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_3 use linear where month=month}
+	case level3 {condition int(NDD_Level_d3)==3 select Level_III from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_3 use linear where month=month}
+	case other  {condition always           select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_3 use linear where month=month}
+}
+define  NDD_bypass_4 {
+	case LLP   {condition int(NDD_Level_d4)==0   value max(Qfreeport_4-LLP_d4,0.)  }
+	case level1 {condition int(NDD_Level_d4)==1 select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_4 use linear where month=month}
+	case level2 {condition int(NDD_Level_d4)==2 select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_4 use linear where month=month}
+	case level3 {condition int(NDD_Level_d4)==3 select Level_III from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_4 use linear where month=month}
+	case other  {condition always           select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_4 use linear where month=month}
+}
+define  NDD_bypass_5 {
+	case LLP   {condition int(NDD_Level_d5)==0   value max(Qfreeport_5-LLP_d5,0.)  }
+	case level1 {condition int(NDD_Level_d5)==1 select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_5 use linear where month=month}
+	case level2 {condition int(NDD_Level_d5)==2 select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_5 use linear where month=month}
+	case level3 {condition int(NDD_Level_d5)==3 select Level_III from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_5 use linear where month=month}
+	case other  {condition always           select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_5 use linear where month=month}
+}
+define  NDD_bypass_6 {
+	case LLP   {condition int(NDD_Level_d6)==0   value max(Qfreeport_6-LLP_d6,0.)  }
+	case level1 {condition int(NDD_Level_d6)==1 select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_6 use linear where month=month}
+	case level2 {condition int(NDD_Level_d6)==2 select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_6 use linear where month=month}
+	case level3 {condition int(NDD_Level_d6)==3 select Level_III from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_6 use linear where month=month}
+	case other  {condition always           select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_6 use linear where month=month}
+}
+define  NDD_bypass_7 {
+	case LLP   {condition int(NDD_Level_d7)==0   value max(Qfreeport_7-LLP_d7,0.)  }
+	case level1 {condition int(NDD_Level_d7)==1 select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_7 use linear where month=month}
+	case level2 {condition int(NDD_Level_d7)==2 select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_7 use linear where month=month}
+	case level3 {condition int(NDD_Level_d7)==3 select Level_III from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_7 use linear where month=month}
+	case other  {condition always           select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_7 use linear where month=month}
+}
+define  NDD_bypass_8 {
+	case LLP   {condition int(NDD_Level_d8)==0   value max(Qfreeport_8-LLP_d8,0.)  }
+	case level1 {condition int(NDD_Level_d8)==1 select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_8 use linear where month=month}
+	case level2 {condition int(NDD_Level_d8)==2 select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_8 use linear where month=month}
+	case level3 {condition int(NDD_Level_d8)==3 select Level_III from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_8 use linear where month=month}
+	case other  {condition always           select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_8 use linear where month=month}
+}
+define  NDD_bypass_9 {
+	case LLP   {condition int(NDD_Level_d9)==0   value max(Qfreeport_9-LLP_d9,0.)  }
+	case level1 {condition int(NDD_Level_d9)==1 select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_9 use linear where month=month}
+	case level2 {condition int(NDD_Level_d9)==2 select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_9 use linear where month=month}
+	case level3 {condition int(NDD_Level_d9)==3 select Level_III from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_9 use linear where month=month}
+	case other  {condition always           select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_9 use linear where month=month}
+}
+define  NDD_bypass_10 {
+	case LLP   {condition int(NDD_Level_d10)==0   value max(Qfreeport_10-LLP_d10,0.)  }
+	case level1 {condition int(NDD_Level_d10)==1 select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_10 use linear where month=month}
+	case level2 {condition int(NDD_Level_d10)==2 select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_10 use linear where month=month}
+	case level3 {condition int(NDD_Level_d10)==3 select Level_III from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_10 use linear where month=month}
+	case other  {condition always           select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_10 use linear where month=month}
+}
+define  NDD_bypass_11 {
+	case LLP   {condition int(NDD_Level_d11)==0   value max(Qfreeport_11-LLP_d11,0.)  }
+	case level1 {condition int(NDD_Level_d11)==1 select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_11 use linear where month=month}
+	case level2 {condition int(NDD_Level_d11)==2 select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_11 use linear where month=month}
+	case level3 {condition int(NDD_Level_d11)==3 select Level_III from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_11 use linear where month=month}
+	case other  {condition always           select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_11 use linear where month=month}
+}
+define  NDD_bypass_12 {
+	case LLP   {condition int(NDD_Level_d12)==0   value max(Qfreeport_12-LLP_d12,0.)  }
+	case level1 {condition int(NDD_Level_d12)==1 select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_12 use linear where month=month}
+	case level2 {condition int(NDD_Level_d12)==2 select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_12 use linear where month=month}
+	case level3 {condition int(NDD_Level_d12)==3 select Level_III from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_12 use linear where month=month}
+	case other  {condition always           select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_12 use linear where month=month}
+}
+define  NDD_bypass_13 {
+	case LLP   {condition int(NDD_Level_d13)==0   value max(Qfreeport_13-LLP_d13,0.)  }
+	case level1 {condition int(NDD_Level_d13)==1 select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_13 use linear where month=month}
+	case level2 {condition int(NDD_Level_d13)==2 select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_13 use linear where month=month}
+	case level3 {condition int(NDD_Level_d13)==3 select Level_III from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_13 use linear where month=month}
+	case other  {condition always           select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_13 use linear where month=month}
+}
+define  NDD_bypass_14 {
+	case LLP   {condition int(NDD_Level_d14)==0   value max(Qfreeport_14-LLP_d14,0.)  }
+	case level1 {condition int(NDD_Level_d14)==1 select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_14 use linear where month=month}
+	case level2 {condition int(NDD_Level_d14)==2 select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_14 use linear where month=month}
+	case level3 {condition int(NDD_Level_d14)==3 select Level_III from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_14 use linear where month=month}
+	case other  {condition always           select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_14 use linear where month=month}
+}
+define  NDD_bypass_15 {
+	case LLP   {condition int(NDD_Level_d15)==0   value max(Qfreeport_15-LLP_d15,0.)  }
+	case level1 {condition int(NDD_Level_d15)==1 select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_15 use linear where month=month}
+	case level2 {condition int(NDD_Level_d15)==2 select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_15 use linear where month=month}
+	case level3 {condition int(NDD_Level_d15)==3 select Level_III from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_15 use linear where month=month}
+	case other  {condition always           select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_15 use linear where month=month}
+}
+define  NDD_bypass_16 {
+	case LLP   {condition int(NDD_Level_d16)==0   value max(Qfreeport_16-LLP_d16,0.)  }
+	case level1 {condition int(NDD_Level_d16)==1 select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_16 use linear where month=month}
+	case level2 {condition int(NDD_Level_d16)==2 select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_16 use linear where month=month}
+	case level3 {condition int(NDD_Level_d16)==3 select Level_III from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_16 use linear where month=month}
+	case other  {condition always           select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_16 use linear where month=month}
+}
+define  NDD_bypass_17 {
+	case LLP   {condition int(NDD_Level_d17)==0   value max(Qfreeport_17-LLP_d17,0.)  }
+	case level1 {condition int(NDD_Level_d17)==1 select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_17 use linear where month=month}
+	case level2 {condition int(NDD_Level_d17)==2 select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_17 use linear where month=month}
+	case level3 {condition int(NDD_Level_d17)==3 select Level_III from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_17 use linear where month=month}
+	case other  {condition always           select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_17 use linear where month=month}
+}
+define  NDD_bypass_18 {
+	case LLP   {condition int(NDD_Level_d18)==0   value max(Qfreeport_18-LLP_d18,0.)  }
+	case level1 {condition int(NDD_Level_d18)==1 select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_18 use linear where month=month}
+	case level2 {condition int(NDD_Level_d18)==2 select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_18 use linear where month=month}
+	case level3 {condition int(NDD_Level_d18)==3 select Level_III from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_18 use linear where month=month}
+	case other  {condition always           select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_18 use linear where month=month}
+}
+define  NDD_bypass_19 {
+	case LLP   {condition int(NDD_Level_d19)==0   value max(Qfreeport_19-LLP_d19,0.)  }
+	case level1 {condition int(NDD_Level_d19)==1 select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_19 use linear where month=month}
+	case level2 {condition int(NDD_Level_d19)==2 select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_19 use linear where month=month}
+	case level3 {condition int(NDD_Level_d19)==3 select Level_III from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_19 use linear where month=month}
+	case other  {condition always           select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_19 use linear where month=month}
+}
+define  NDD_bypass_20 {
+	case LLP   {condition int(NDD_Level_d20)==0   value max(Qfreeport_20-LLP_d20,0.)  }
+	case level1 {condition int(NDD_Level_d20)==1 select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_20 use linear where month=month}
+	case level2 {condition int(NDD_Level_d20)==2 select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_20 use linear where month=month}
+	case level3 {condition int(NDD_Level_d20)==3 select Level_III from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_20 use linear where month=month}
+	case other  {condition always           select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_20 use linear where month=month}
+}
+define  NDD_bypass_21 {
+	case LLP   {condition int(NDD_Level_d21)==0   value max(Qfreeport_21-LLP_d21,0.)  }
+	case level1 {condition int(NDD_Level_d21)==1 select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_21 use linear where month=month}
+	case level2 {condition int(NDD_Level_d21)==2 select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_21 use linear where month=month}
+	case level3 {condition int(NDD_Level_d21)==3 select Level_III from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_21 use linear where month=month}
+	case other  {condition always           select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_21 use linear where month=month}
+}
+define  NDD_bypass_22 {
+	case LLP   {condition int(NDD_Level_d22)==0   value max(Qfreeport_22-LLP_d22,0.)  }
+	case level1 {condition int(NDD_Level_d22)==1 select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_22 use linear where month=month}
+	case level2 {condition int(NDD_Level_d22)==2 select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_22 use linear where month=month}
+	case level3 {condition int(NDD_Level_d22)==3 select Level_III from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_22 use linear where month=month}
+	case other  {condition always           select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_22 use linear where month=month}
+}
+define  NDD_bypass_23 {
+	case LLP   {condition int(NDD_Level_d23)==0   value max(Qfreeport_23-LLP_d23,0.)  }
+	case level1 {condition int(NDD_Level_d23)==1 select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_23 use linear where month=month}
+	case level2 {condition int(NDD_Level_d23)==2 select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_23 use linear where month=month}
+	case level3 {condition int(NDD_Level_d23)==3 select Level_III from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_23 use linear where month=month}
+	case other  {condition always           select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_23 use linear where month=month}
+}
+define  NDD_bypass_24 {
+	case LLP   {condition int(NDD_Level_d24)==0   value max(Qfreeport_24-LLP_d24,0.)  }
+	case level1 {condition int(NDD_Level_d24)==1 select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_24 use linear where month=month}
+	case level2 {condition int(NDD_Level_d24)==2 select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_24 use linear where month=month}
+	case level3 {condition int(NDD_Level_d24)==3 select Level_III from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_24 use linear where month=month}
+	case other  {condition always           select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_24 use linear where month=month}
+}
+define  NDD_bypass_25 {
+	case LLP   {condition int(NDD_Level_d25)==0   value max(Qfreeport_25-LLP_d25,0.)  }
+	case level1 {condition int(NDD_Level_d25)==1 select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_25 use linear where month=month}
+	case level2 {condition int(NDD_Level_d25)==2 select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_25 use linear where month=month}
+	case level3 {condition int(NDD_Level_d25)==3 select Level_III from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_25 use linear where month=month}
+	case other  {condition always           select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_25 use linear where month=month}
+}
+define  NDD_bypass_26 {
+	case LLP   {condition int(NDD_Level_d26)==0   value max(Qfreeport_26-LLP_d26,0.)  }
+	case level1 {condition int(NDD_Level_d26)==1 select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_26 use linear where month=month}
+	case level2 {condition int(NDD_Level_d26)==2 select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_26 use linear where month=month}
+	case level3 {condition int(NDD_Level_d26)==3 select Level_III from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_26 use linear where month=month}
+	case other  {condition always           select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_26 use linear where month=month}
+}
+define  NDD_bypass_27 {
+	case LLP   {condition int(NDD_Level_d27)==0   value max(Qfreeport_27-LLP_d27,0.)  }
+	case level1 {condition int(NDD_Level_d27)==1 select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_27 use linear where month=month}
+	case level2 {condition int(NDD_Level_d27)==2 select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_27 use linear where month=month}
+	case level3 {condition int(NDD_Level_d27)==3 select Level_III from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_27 use linear where month=month}
+	case other  {condition always           select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_27 use linear where month=month}
+}
+define  NDD_bypass_28 {
+	case LLP   {condition int(NDD_Level_d28)==0   value max(Qfreeport_28-LLP_d28,0.)  }
+	case level1 {condition int(NDD_Level_d28)==1 select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_28 use linear where month=month}
+	case level2 {condition int(NDD_Level_d28)==2 select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_28 use linear where month=month}
+	case level3 {condition int(NDD_Level_d28)==3 select Level_III from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_28 use linear where month=month}
+	case other  {condition always           select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_28 use linear where month=month}
+}
+define  NDD_bypass_29 {
+	case LLP   {condition int(NDD_Level_d29)==0   value max(Qfreeport_29-LLP_d29,0.)  }
+	case level1 {condition int(NDD_Level_d29)==1 select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_29 use linear where month=month}
+	case level2 {condition int(NDD_Level_d29)==2 select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_29 use linear where month=month}
+	case level3 {condition int(NDD_Level_d29)==3 select Level_III from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_29 use linear where month=month}
+	case other  {condition always           select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_29 use linear where month=month}
+}
+define  NDD_bypass_30 {
+	case LLP   {condition int(NDD_Level_d30)==0   value max(Qfreeport_30-LLP_d30,0.)  }
+	case level1 {condition int(NDD_Level_d30)==1 select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_30 use linear where month=month}
+	case level2 {condition int(NDD_Level_d30)==2 select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_30 use linear where month=month}
+	case level3 {condition int(NDD_Level_d30)==3 select Level_III from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_30 use linear where month=month}
+	case other  {condition always           select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_30 use linear where month=month}
+}
+define  NDD_bypass_31 {
+	case LLP   {condition int(NDD_Level_d31)==0   value max(Qfreeport_31-LLP_d31,0.)  }
+	case level1 {condition int(NDD_Level_d31)==1 select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_31 use linear where month=month}
+	case level2 {condition int(NDD_Level_d31)==2 select Level_II from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_31 use linear where month=month}
+	case level3 {condition int(NDD_Level_d31)==3 select Level_III from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_31 use linear where month=month}
+	case other  {condition always           select Level_I from IFBypassFlows_vs_SAC given Sac_Flow=Qfreeport_31 use linear where month=month}
+}
+
+
+

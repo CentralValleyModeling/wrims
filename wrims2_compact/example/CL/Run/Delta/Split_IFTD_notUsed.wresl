@@ -1,0 +1,184 @@
+/*************************************
+Split_IFTD.wresl
+ 
+ZhiQiang Richard Chen DWR (10/26/2012)
+
+Banks Split between SWP and CVP exports thru Bank PP. 
+CVP exports include Cross valley canal (CVC) and CVP Wheelings using TD and IF water
+**************************************/
+
+define D_Banks_IF {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_Banks_TD {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+goal setD_BanksTDIF { D_Banks = D_Banks_TD}! + D_Banks_IF }
+
+define D_Jones_TD {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_Jones_IF {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+goal setD_JonesTDIF { D_Jones = D_Jones_TD}!  + D_Jones_IF }
+
+
+!define D_Jones_CVP {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+!define D_Banks_CVC {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+!define D_Banks_CVPWHL {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+
+!define D_Banks_EXP1 {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+!define D_Banks_EXP2 {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+!define D_Banks_SWP {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+!define D_Jones_EXP1 {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+!define D_Jones_EXP2 {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+
+
+!Banks TD/IF Splits
+
+define D_Banks_EXP1_TD {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_Banks_EXP1_IF {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_Banks_EXP2_TD {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_Banks_EXP2_IF {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_Banks_SWP_TD {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_Banks_SWP_IF {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_Banks_WTS_TD1 {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_Banks_WTS_TD2 {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_Banks_WTS_TD {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_Banks_WTS_IF {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_Banks_CVP_TD {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_Banks_CVP_IF {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_Banks_CVC_TD {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_Banks_CVC_IF {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_Banks_CVPWHL_TD {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_Banks_CVPWHL_IF {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+
+
+goal setD_Banks_EXP1 { D_Banks_EXP1 = D_Banks_EXP1_TD + D_Banks_EXP1_IF }
+goal setD_Banks_EXP2 { D_Banks_EXP2 = D_Banks_EXP2_TD + D_Banks_EXP2_IF }
+
+goal setD_Banksswp    { D_Banks_SWP = D_Banks_SWP_TD + D_Banks_SWP_IF }
+goal setD_BanksSWP_TD { D_Banks_SWP_TD = D_Banks_EXP1_TD + D_Banks_EXP2_TD }
+goal setD_BanksSWP_IF { D_Banks_SWP_IF = D_Banks_EXP1_IF + D_Banks_EXP2_IF }
+
+goal setD_BanksCVC { D_Banks_CVC = D_Banks_CVC_TD + D_Banks_CVC_IF }
+
+if int(PBwheel_ON)==1{
+	goal setD_BanksCVP_TD  { D_Banks_CVP_TD = D_Banks_CVC_TD + D_Banks_CVPWHL_TD + D_Banks_whlpb} } ! + D_Banks_CVPDED_TD }
+else {
+	goal setD_BanksCVP_TD  { D_Banks_CVP_TD = D_Banks_CVC_TD + D_Banks_CVPWHL_TD}} ! + D_Banks_CVPDED_TD }
+	
+goal setD_BanksCVP_IF  { D_Banks_CVP_IF = D_Banks_CVC_IF + D_Banks_CVPWHL_IF} ! + D_Banks_CVPDED_IF }
+goal setD_BanksCVPWHL  { D_Banks_cvpwhl = D_Banks_CVPWHL_TD + D_Banks_CVPWHL_IF }
+
+define D_Banks_CVCSURP_TD {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_Banks_CVCSURP_IF {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_Banks_WHLSURP_TD {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_Banks_WHLSURP_IF {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+goal setD_Banks_cvcsurp {D_Banks_CVCSURP = D_Banks_cvcsurp_IF + D_Banks_cvcsurp_TD}
+goal setD_Banks_whlsurp {D_Banks_WHLSURP = D_Banks_WHLSURP_IF + D_Banks_WHLSURP_TD}
+
+goal setD_BanksTD { D_Banks_TD = D_Banks_CVP_TD + D_Banks_SWP_TD }!  + D_BanksWTS_TD + D_BanksEWA_TD }
+goal setD_BanksIF { D_Banks_IF = D_Banks_CVP_IF + D_Banks_SWP_IF }!  + D_BanksWTS_IF + D_BanksEWA_IF }
+
+
+!Tracy TD/IF Splits
+
+define D_Jones_CVP_TD {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_Jones_CVP_IF {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_Jones_EXP1_TD {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_Jones_EXP1_IF {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_Jones_EXP2_TD {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_Jones_EXP2_IF {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+
+
+
+goal setD_Jonescvpexp1 {D_Jones_EXP1 = D_Jones_EXP1_TD + D_Jones_EXP1_IF}
+goal setD_Jonescvpexp2 {D_Jones_EXP2 = D_Jones_EXP2_TD + D_Jones_EXP2_IF}
+
+goal setD_JonesCVP    { D_Jones_CVP = D_Jones_CVP_TD + D_Jones_CVP_IF }
+goal setD_Jonescvp_TD {D_Jones_CVP_TD = D_Jones_EXP1_TD + D_Jones_EXP2_TD}
+goal setD_Jonescvp_IF {D_Jones_CVP_IF = D_Jones_EXP1_IF + D_Jones_EXP2_IF}
+
+
+
+goal setD_JonesTD { D_Jones_TD = D_Jones_CVP_TD } !+ D_JonesWTS_TD }
+goal setD_JonesIF { D_Jones_IF = D_Jones_CVP_IF } !+ D_JonesWTS_IF }
+
+
+/***
+ 
+define D_Jones_WTS {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_Banks_WTS{std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+
+
+define D_Banks_CVPDED_exp1 {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_Banks_CVPDED_exp2 {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_Banks_CVPDED {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+
+
+!Banks TD/IF Splits
+
+
+define D_Banks_CVPDED_TD {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_Banks_CVPDED_IF {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+
+define D_Banks_EWA_TD {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_Banks_EWA_IF {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+
+define D_Banks_CVPDEDEX1TD {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_Banks_CVPDEDEX1IF {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_Banks_CVPDEDEX2TD {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_Banks_CVPDEDEX2IF {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+
+
+goal setD_BanksWTS_TD { D_Banks_WTS_TD = D_Banks_WTS_TD1 + D_Banks_WTS_TD2 }
+goal setD_BanksWTS { D_Banks_WTS = D_Banks_WTS_TD + D_Banks_WTS_IF }
+
+goal setD419CVPDEDEXP1 { D_BanksCVPDED_EXP1 = D_BanksCVPDEDEX1TD + D_BanksCVPDEDEX1IF }
+goal setD419CVPDEDEXP2 { D_BanksCVPDED_EXP2 = D_BanksCVPDEDEX2TD + D_BanksCVPDEDEX2IF }
+
+goal setD_BanksCVPDED  { D_BanksCVPDED = D_BanksCVPDED_TD + D_BanksCVPDED_IF }
+goal setD419CVPDEDTD { D_BanksCVPDED_TD = D_BanksCVPDEDEX1TD + D_BanksCVPDEDEX2TD }
+goal setD419CVPDEDIF { D_BanksCVPDED_IF = D_BanksCVPDEDEX1IF + D_BanksCVPDEDEX2IF }
+
+
+define D_JonesWTS_TD {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_JonesWTS_IF {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+
+goal setD_JonesWTS { D_JonesWTS = D_JonesWTS_TD + D_JonesWTS_IF }
+***/
+
+define D_ExpNoWhlTD {std kind 'flow-delivery' units 'cfs'}
+goal set_Exp_NoWhl_TD {D_ExpNoWhlTD = D_Banks_SWP_TD + D_Jones_CVP_TD}
+
+define C_Hood_whlcv {std kind 'FLOW-CHANNEL' UNITS 'CFS'}
+define C_Hood_whljp {std kind 'FLOW-CHANNEL' UNITS 'CFS'}
+!define C_Hood_WTS   {std kind 'FLOW-CHANNEL' UNITS 'CFS'}
+!define C_Hood_EWA   {std kind 'FLOW-CHANNEL' UNITS 'CFS'}
+define C_Hood_Reop {std kind 'flow-channel' units 'cfs'}
+goal split_C_Hood_Reop {C_Hood_Reop = C_Hood_whlcv + C_Hood_whljp}
+
+!IF splits for reoperations
+define D_Hood_whlcv {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define D_Hood_whljp {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+!define D_Hood_WTS   {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+!define D_Hood_EWA   {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+goal splitD_Hood_whlcv {D_Hood_whlcv = D_Banks_CVC_IF}
+goal splitD_Hood_whljp {D_Hood_whljp = D_Banks_CVPWHL_IF}
+!goal splitD_Hood_WTS   {D_Hood_WTS   = D_JonesWTS_IF + D_BanksWTS_IF}
+!goal splitD_Hood_EWA   {D_Hood_EWA   = D_BanksEWA_IF}
+
+!Delta inflow splits for reoperations
+! For wheeling, C_400whl** is all released water, potentially including carriage water
+
+goal splitC_Hood_whlcv {D_Banks_CVC_TD = C_Hood_whlcv - C_Delta_whlcv + D_Banks_cvcsurp_TD}
+goal splitC_Hood_whljp {D_Banks_CVPWHL_TD = C_Hood_whljp - C_Delta_whljp + D_Banks_whlsurp_TD}
+
+goal splitCVCIFTD    {D_Banks_cvcrels = C_Hood_whlcv - C_Delta_whlcv + D_Hood_whlcv - D_Banks_CVCSURP_IF}
+goal splitJPODIFTD   {D_Banks_whlrels = C_Hood_whljp - C_Delta_whljp + D_Hood_whljp - D_Banks_WHLSURP_IF}
+
+/***
+define D_Banks_SWP_IF_sh {std kind 'flow-delivery' units 'cfs'}
+define D_Banks_SWP_IF_ex {std kind 'flow-delivery' units 'cfs'}
+goal split_Banks_share {D_Banks_SWP_IF = D_Banks_SWP_IF_sh + D_Banks_SWP_IF_ex}
+
+define D_Jones_CVP_IF_sh {std kind 'flow-delivery' units 'cfs'}
+define D_Jones_CVP_IF_ex {std kind 'flow-delivery' units 'cfs'}
+goal split_Jones_share {D_Jones_CVP_IF = D_Jones_CVP_IF_sh + D_Jones_CVP_IF_ex}
+
+goal set_capacity_share {D_Jones_CVP_IF_sh = D_Banks_SWP_IF_sh} !Sharing will be given small positive weight.
+***/

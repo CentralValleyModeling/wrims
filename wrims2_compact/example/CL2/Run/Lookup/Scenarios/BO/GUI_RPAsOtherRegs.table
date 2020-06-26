@@ -1,0 +1,33 @@
+! set RPA and B2 Action options for CalLite model
+!1	0	!Fall_X2 (FWS RPA Action 4): Off (D-1641) = 0; On (BO) = 1
+!2	0	!Action_4_1_2 - Delta Cross Channel (NMFS BO Action 4.1.2): Off=0; On=1
+!3	0	!Action_4_2_1 - SJR Inflow to Export Ratio (NMFS BO Action 4.2.1): Off=0; On=1
+!4	0	!ORMROON - Old and Middle River (FWS RPA Action 1-3): Off=0; On=1;
+!5	0	!ClearCrkBOswitch - Clear Creek (NMFS RPA Action 1.1.1): Off=0; On=1
+!6	0	!QOMR_DLTSW: Off = 0; On = 1; User Defined = 2
+!7	0	!QWEST_DLTSW: Off = 0; On = 1; User Defined = 2
+!8	0	!EISJR_DLTSW: Off = 0; On = 1; User Defined = 2
+!9	0   !B2Action1: Off=0; On=1
+!10	0   !B2Action2: Off=0; On=1
+!11	0   !B2Action3: Off=0; On=1
+!12	0   !B2Action4: Off=0; On=1
+!13	0   !B2Action5: Off=0; On=1
+!14	0   !B2Action6: Off=0; On=1
+!15	0   !B2Action7: Off=0; On=1
+GUI_RPAsOtherRegs
+Index	Option
+1	1	!Fall_X2
+2	1	!Action_4_1_2
+3	1	!Action_4_2_1
+4	1	!ORMROON
+5	1	!ClearCrkBOswitch
+6	0	!QOMR_DLTSW
+7	0	!QWEST_DLTSW
+8	0	!EISJR_DLTSW
+9	1   !B2Action1
+10	1   !B2Action2
+11	1   !B2Action3
+12	1   !B2Action4
+13	1   !B2Action5
+14	1   !B2Action6
+15	1   !B2Action7

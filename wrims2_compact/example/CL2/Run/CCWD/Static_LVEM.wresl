@@ -1,0 +1,26 @@
+define demand_D420 {timeseries kind 'DEMAND' units 'cfs' }
+define demand_D_CCWDVCOR {timeseries kind 'DEMAND' units 'CFS'}!Non-Project Diversion (Victoria Canal and Old River) to CCWD
+define demand_D_CCWDINTK {timeseries kind 'DEMAND' units 'CFS'}!Non-Project Diversion (Intake) to CCWD  
+goal set_D_CCWDVCOR {D_CCWDVCOR = demand_D_CCWDVCOR}
+goal set_D_CCWDINTK {D_CCWDINTK = demand_D_CCWDINTK}
+
+define WQ408_RS {timeseries kind 'salinity' units 'mg/L'}
+!define lim_CVP_ann {timeseries kind 'allocation-limit' units 'cfs'}
+
+
+!Rock Slough Intake capacity [D408_RS_max, units cfs]
+define D408_RS_max {value 350.} !cfs
+
+!Old River Intake capacity [D408_OR_max, units cfs]
+define D408_OR_max {value 250.} !cfs
+
+!Victoria Canal (Alternative) Intake capacity [D408_VC_max, units cfs]
+!define LOD_DLTSW {select Option from options where Index=9}
+define D408_VC_max {
+    case CCWD_Future{
+        condition int(LOD_DLTSW) >= 1 
+        value 250.} !cfs
+    case otherwise{
+        condition always
+        value 0.}
+}        

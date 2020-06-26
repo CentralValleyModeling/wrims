@@ -1,0 +1,23 @@
+!Allow wheeling through IF but favor TD export of wheeling water.
+ 
+/***goal setD400_169 {
+	lhs D_HoodIF
+	case other {
+	condition always
+	rhs C_Freeport_HoodIF + D_Banks_CVP_IF - D_Banks_CVP_IF[B2_BO] lhs<rhs penalty 0.}
+        }
+
+goal favor_TD_wheeling {
+	lhs D_Banks_CVP_IF
+	rhs D_Banks_CVP_IF[B2_BO]
+	lhs>rhs		penalty 10
+	lhs<rhs		penalty	0
+}***/
+
+goal setD400_169 {
+	lhs D_HoodIF
+	case other {
+	condition always
+	rhs C_Freeport_HoodIF lhs<rhs penalty 0.}
+        }
+

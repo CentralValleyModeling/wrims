@@ -1,0 +1,49 @@
+/**********************
+IsolatedFacility.wresl
+
+Z.Q. Richard Chen DWR 10/25/2012
+
+Add a GUI switches to turn on/off IF exports or Through_Delta (TD) export.  
+***********************/
+!Isolated Facility Operation
+
+! Isolated Diversion Limits, ready to implement limits in IF diversions as a function of Sac Flows due to fish screens at the IF intake
+define max_IF_cap  {select capacity from IsolatedFacility where month=month}
+define IFBypassPerc   {select minbypass from IsolatedFacility where month=month}
+define IFPercentFlow {select perc_flow from IsolatedFacility where month=month}
+define CCWDmaxIF   {select CCWDmax from IsolatedFacility where month=month}
+
+goal setActivateJonesIF { D_Jones_IF  < JonesIFSwitch * 99999.}
+goal setActivateBanksIF { D_Banks_IF  < BanksIFSwitch * 99999.}
+goal setActivateCCWDIF  { D_CCWDIF    < CCWDIFSwitch * 99999.}
+
+goal MaxHoodDiv { D_HoodIF < max_IF_cap }
+goal MaxHoodReq { D_HoodIF < C_Freeport*IFPercentFlow }
+goal BypassReq  { D_HoodIF < C_Freeport*(1.-IFBypassPerc) }
+goal MaxCCWDIFDiv { D_CCWDIF < C_Freeport*IFPercentFlow }
+
+
+!Exports only from IF if TD switch is off
+goal setD_ExpTDzero {D_ExpTD < TDExports * 99999.}
+
+!Accounting of IF flow between CVP and SWP
+goal setexportsIF { D_HoodIF = D_Banks_IF + D_Jones_IF + D_CCWDIF}
+
+!CCWD Limit
+goal limitD_CCWDIF { D_CCWDIF < D_CCWDVCOR} !D408 + D416 }
+
+!OutputVariables
+!Total Exports
+define TOTAL_EXP  {alias D_Banks + D_Jones kind 'FLOW-DELIVERY' UNITS 'CFS'}  !for output only
+
+define C_Freeport_BFMIN {upper 99999. lower 0. kind 'flow-channel' units 'cfs'} !Minimum flow at SAC, cannot be diverted into IF
+!define C_Freeport_BFEXC {upper 99999. lower 0. kind 'flow-channel' units 'cfs'} !Extra Flow about Minimum flow at SAC, cannot be diverted into IF
+define C_Freeport_HoodIF {upper 99999. kind 'flow-channel' units 'cfs'} !Max Flow that will be diverted at D400
+
+
+
+!INCLUDE '\IFDiversionCriteria.wresl'
+
+
+
+

@@ -1,0 +1,90 @@
+/************************************
+export_index_swp.wresl
+
+Nazrul Islam DWR 05/20/2010
+
+The Delta Index for the SWP SOD is the sum of Jan - May Eight River Index values.  The
+Export Index is determined using the lookup table, dltidx_expidx_swp_s, based upon the value
+of the Delta Index.  The Export Index is the Mar-Aug estimated export capability of the SWP.
+************************************/
+
+! Determination of Delta Index
+define Dlt_Idx_SWP_s {
+    case MartoMay0 {
+           condition  month >= MAR .and. month <= MAY .and. Climate_Proj == 0
+           select     Dlt_Idx_0
+           from       Delta_Index
+           where      wateryear=wateryear}
+    case MartoMay1 {
+           condition  month >= MAR .and. month <= MAY .and. Climate_Proj == 1
+           select     Dlt_Idx_1
+           from       Delta_Index
+           where      wateryear=wateryear}
+    case MartoMay2 {
+           condition  month >= MAR .and. month <= MAY .and. Climate_Proj == 2
+           select     Dlt_Idx_2
+           from       Delta_Index
+           where      wateryear=wateryear}
+    case MartoMay3 {
+           condition  month >= MAR .and. month <= MAY .and. Climate_Proj == 3
+           select     Dlt_Idx_3
+           from       Delta_Index
+           where      wateryear=wateryear}
+    case MartoMay4 {
+           condition  month >= MAR .and. month <= MAY .and. Climate_Proj == 4
+           select     Dlt_Idx_4
+           from       Delta_Index
+           where      wateryear=wateryear}
+    case MartoMay5 {
+           condition  month >= MAR .and. month <= MAY .and. Climate_Proj == 5
+           select     Dlt_Idx_5
+           from       Delta_Index
+           where      wateryear=wateryear}
+    case MartoMay6 {
+           condition  month >= MAR .and. month <= MAY .and. Climate_Proj == 6
+           select     Dlt_Idx_6
+           from       Delta_Index
+           where      wateryear=wateryear}
+    case MartoMay7 {
+           condition  month >= MAR .and. month <= MAY .and. Climate_Proj == 7
+           select     Dlt_Idx_7
+           from       Delta_Index
+           where      wateryear=wateryear}
+    case MartoMay8 {
+           condition  month >= MAR .and. month <= MAY .and. Climate_Proj == 8
+           select     Dlt_Idx_8
+           from       Delta_Index
+           where      wateryear=wateryear}
+    case MartoMay9 {
+           condition  month >= MAR .and. month <= MAY .and. Climate_Proj == 9
+           select     Dlt_Idx_9
+           from       Delta_Index
+           where      wateryear=wateryear}
+    case MartoMay10 {
+           condition  month >= MAR .and. month <= MAY .and. Climate_Proj == 10
+           select     Dlt_Idx_10
+           from       Delta_Index
+           where      wateryear=wateryear}           
+
+    case JuntoFeb {
+           condition  always
+           value      0 }
+              }
+
+define Dlt_Idx_SWP_sdv {alias Dlt_Idx_SWP_s kind 'delta-index' units 'taf'}
+
+! Determination of Export Index
+define Exp_Idx_SWP_s {
+    case MartoMay {
+           condition  month >= MAR .and. month <= MAY
+           select     Exp_Idx
+           from       dltidx_expidx_swp_s
+           given      Dlt_Idx=Dlt_Idx_SWP_s
+           use        linear }
+
+    case JuntoFeb {
+           condition  always
+           value      0 }
+              }
+
+define Exp_Idx_SWP_sdv {alias Exp_Idx_SWP_s kind 'export-index' units 'taf'}

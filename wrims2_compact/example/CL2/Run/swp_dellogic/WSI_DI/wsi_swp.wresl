@@ -1,0 +1,118 @@
+/************************************
+wsi_swp.wresl
+
+Nazrul Islam DWR 05/20/2010
+
+
+The Water Supply Index (WSI) for the SWP is the sum of the beginning of months storages
+(BOM) for Lake Oroville (S_Orovl) and SWP-San Luis Reservoir (S_SLSWP) and the Forecast of Runoff
+for the Feather River.
+
+Forecast of Runoff for SWP is defined as: Feather River component of the Sacramento
+River Index (SRI) - Sum of Oroville Lake Inflows (I_Orovl) since 1-OCT.
+************************************/
+
+define frcst_fea {
+    case JantoMay0  {
+        condition   month >= JAN .and. month <=MAY .and. Climate_Proj == 0
+        select      frcst_fea_0
+        from        feather_runoff_forecast
+        where       wateryear=wateryear, month=month  }        
+    case JantoMay1  {
+        condition   month >= JAN .and. month <=MAY .and. Climate_Proj == 1
+        select      frcst_fea_1
+        from        feather_runoff_forecast
+        where       wateryear=wateryear, month=month  }        
+    case JantoMay2  {
+        condition   month >= JAN .and. month <=MAY .and. Climate_Proj == 2
+        select      frcst_fea_2
+        from        feather_runoff_forecast
+        where       wateryear=wateryear, month=month  }        
+    case JantoMay3  {
+        condition   month >= JAN .and. month <=MAY .and. Climate_Proj == 3
+        select      frcst_fea_3
+        from        feather_runoff_forecast
+        where       wateryear=wateryear, month=month  }        
+    case JantoMay4  {
+        condition   month >= JAN .and. month <=MAY .and. Climate_Proj == 4
+        select      frcst_fea_4
+        from        feather_runoff_forecast
+        where       wateryear=wateryear, month=month  }        
+    case JantoMay5  {
+        condition   month >= JAN .and. month <=MAY .and. Climate_Proj == 5
+        select      frcst_fea_5
+        from        feather_runoff_forecast
+        where       wateryear=wateryear, month=month  }        
+    case JantoMay6  {
+        condition   month >= JAN .and. month <=MAY .and. Climate_Proj == 6
+        select      frcst_fea_6
+        from        feather_runoff_forecast
+        where       wateryear=wateryear, month=month  }        
+    case JantoMay7  {
+        condition   month >= JAN .and. month <=MAY .and. Climate_Proj == 7
+        select      frcst_fea_7
+        from        feather_runoff_forecast
+        where       wateryear=wateryear, month=month  }        
+    case JantoMay8  {
+        condition   month >= JAN .and. month <=MAY .and. Climate_Proj == 8
+        select      frcst_fea_8
+        from        feather_runoff_forecast
+        where       wateryear=wateryear, month=month  }        
+    case JantoMay9  {
+        condition   month >= JAN .and. month <=MAY .and. Climate_Proj == 9
+        select      frcst_fea_9
+        from        feather_runoff_forecast
+        where       wateryear=wateryear, month=month  }        
+    case JantoMay10  {
+        condition   month >= JAN .and. month <=MAY .and. Climate_Proj == 10
+        select      frcst_fea_10
+        from        feather_runoff_forecast
+        where       wateryear=wateryear, month=month  }                
+  case other {
+    condition   always
+    value       0.0 }
+}
+
+define co_final_dv {std kind 'carryover' units 'taf'}
+define co_available_dv {std kind 'carryover' units 'taf'}
+define co_correction {
+	case Jan {
+		condition	month == jan
+		value		max(0.,co_final_dv(-1) - max(0., co_final_dv(-1) - (S_SLSWP(-1) - 42.)))
+	}
+	case FebToMarFullSL {
+		condition	month >= feb .and. month <= mar .and. S_SLSWP(-1) >= 1067
+		value		max(0.,co_available_dv(-1) - swp_co_total(-1)*cfs_taf(-1) - min(max(0.,co_available_dv(-1) - swp_co_total(-1)*cfs_taf(-1)), swp_IN_total(-1)*cfs_taf(-1) + max(0.,6680.-D_Banks(-1)) * cfs_taf(-1)))
+	}
+	case FebToMarOth {
+		condition	month >= feb .and. month <= mar
+		value		max(0.,co_available_dv(-1) - swp_co_total(-1)*cfs_taf(-1) - min(max(0.,co_available_dv(-1) - swp_co_total(-1)*cfs_taf(-1)), swp_IN_total(-1)*cfs_taf(-1)))
+	}
+	case otherwise {
+		condition	always
+		value		0.
+	}
+}
+define co_correction_ {alias co_correction kind 'carryover' units 'taf'}
+		
+define S_SLSWP_effective {case JantoMar {
+                       condition range(month,jan,mar)
+                       value max(S_SLSWP(-1) - co_correction, 0.0)}
+                     case Rest {
+                       condition always
+                       value S_SLSWP(-1)}}
+
+define WSI_SWP {
+    case JantoMay {
+        condition  month >= JAN .and. month <= MAY
+        ! Taraky 20161005, DWR. Add South of Delta Storage expansion for SWP
+        value     S_Orovl(-1) + S_SLSWP_effective + S_SLSWPE(-1) + frcst_fea  }     ! Previous month storage plus forecast inflow
+    case other {
+        condition   always
+        value       0.0 }
+}
+
+define WSI_SWP_dv {alias WSI_SWP kind 'water-supply-index' units 'taf'}
+
+
+

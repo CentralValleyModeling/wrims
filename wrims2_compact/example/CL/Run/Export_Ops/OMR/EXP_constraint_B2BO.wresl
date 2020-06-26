@@ -1,0 +1,146 @@
+/*************************************
+EXP_constraint.wresl
+ 
+Hao Xie   DWR (09/03/2010)
+
+Export constraint
+
+Z.Q. Richard Chen DWR (10/06/2010) 
+   Adding BO switch to the goal statements.
+   05/25/2010: enable constrain in individual BO actions
+Chris Quan DWR 11/23/2016 includes enhanced spring outflow (ESO)    
+**************************************/
+
+! Determine health and safety level at OMR that must be allowed
+define HandS_minpump {
+     case JanMay {
+          condition month>=JAN .and. month<=MAY
+          value 1500.}
+     case Jun {
+          condition month==JUN
+!          value 2000.}
+          value 1500.}
+     case other {
+          condition always
+          value 0.}
+}
+! Take the most restrictive of the NMFS export restrictions but consider the Health
+!   and safety level export that must be allowed
+define MAXEXP_RPA {
+	case IF_On {
+		condition int(IF_SWPorCVP_Onoff)==1
+		value min(NMFS_MaxExp, NMFS_MaxExp_DCC, FWS_MaxExp_X2)}
+	case IF_Off {
+		condition always
+		value max( min(NMFS_MaxExp, NMFS_MaxExp_DCC, FWS_MaxExp_X2), HandS_minpump)}
+}
+!
+! **********************************************************************************************
+!
+
+define Export_dec_RPA {value max(0.,D_EXPTD[base] - MAXEXP_RPA)}
+define SWP_exp_dec_RPA {value max(0.,min(Export_dec_RPA,D_Banks_swp_TD[base] - D_Jones_TD[base]))}
+define CVP_exp_dec_RPA {value max(0.,min(Export_dec_RPA,D_Jones_TD[base] - D_Banks_swp_TD[base]))}
+define Comb_exp_dec_RPA {value max(0., Export_dec_RPA - SWP_exp_dec_RPA - CVP_exp_dec_RPA)}
+
+define Export_dec_RPA_ {alias Export_dec_RPA kind 'temp' units 'cfs'}
+define SWP_exp_dec_RPA_ {alias SWP_exp_dec_RPA kind 'temp' units 'cfs'}
+define CVP_exp_dec_RPA_ {alias CVP_exp_dec_RPA kind 'temp' units 'cfs'}
+define Comb_exp_dec_RPA_ {alias Comb_exp_dec_RPA kind 'temp' units 'cfs'}
+
+define MAXEXP_RPA_CVP {value max(jonesminpump,d_jones_td[BASE] - CVP_exp_dec_RPA - 0.5*Comb_exp_dec_RPA) }
+define MAXEXP_RPA_SWP {value max(banksminpump,d_banks_swp_td[base] - SWP_exp_dec_RPA - 0.5*Comb_exp_dec_RPA) }
+
+
+goal set_MAXEXP_RPA_SWP {
+    lhs     D_Banks_swp_TD
+    case BOSWITCHON {
+    condition FallX2 == 1 .or. Action_4_1_2 == 1 .or. Action_4_2_1 == 1    
+    rhs     MAXEXP_RPA_SWP
+    lhs<rhs penalty    0}
+    }    
+    
+define MAXEXP_RPA_SWPdv {alias MAXEXP_RPA_SWP kind 'EXPORT-LIMIT' units 'CFS'}
+
+goal set_MAXEXP_RPA_CVP {
+    lhs     D_Jones_TD
+    case BOSWITCHON {
+    condition FallX2 == 1 .or. Action_4_1_2 == 1 .or. Action_4_2_1 == 1
+    rhs     MAXEXP_RPA_CVP
+    lhs<rhs penalty    0}
+    }
+    
+define MAXEXP_RPA_CVPdv {alias MAXEXP_RPA_CVP kind 'EXPORT-LIMIT' units 'CFS'}
+
+if int(banksifswitch) > 0.5 .or. int(jonesifswitch) > 0.5 {
+goal set_MAXEXP_RPA {
+    lhs     D_banks_swp_TD + D_jones_TD
+    case BOSWITCHON {
+		condition FallX2 == 1 .or. Action_4_1_2 == 1 .or. Action_4_2_1 == 1
+		rhs     MAXEXP_RPA
+    lhs<rhs penalty    0}
+    }
+}
+
+define MAXEXP_RPAdv {alias MAXEXP_RPA kind 'EXPORT-LIMIT' units 'CFS'}
+
+
+/***
+goal set_MAXEXP_RPA_SWP {
+    lhs     D_Banks
+    rhs     MAXEXP_RPA_SWP
+    lhs<rhs penalty    0}
+define MAXEXP_RPA_SWPdv {alias MAXEXP_RPA_SWP kind 'EXPORT-LIMIT' units 'CFS'}
+
+goal set_MAXEXP_RPA_CVP {
+    lhs     D_Jones
+    rhs     MAXEXP_RPA_CVP
+    lhs<rhs penalty    0}
+***/
+
+if int(banksifswitch) > 0.5 .or. int(jonesifswitch) > 0.5 {
+goal set_HandSminpump {
+    lhs     D_Jones_TD + D_Banks_TD + D_Jones_IF + D_Banks_IF
+    rhs     HandS_minpump
+    lhs>rhs penalty 0
+    lhs<rhs penalty 90000}
+}
+
+
+!Limit Partner use of LV by export constraints.
+goal constrain_LVP {D_jones_TD + D_banks_TD /*+ D408_P_WHL_SF_E1*/  < maxexp_rpa}
+
+! Determination of Delta Index
+define Dlt_Idx_JM {			!same as Dlt_Idx_LFS in the delta-outflow.wresl
+           select     Mar_May_Idx
+           from       mar_may_8RI
+           where      wateryear=wateryear
+}
+define LFS_DO_Trg_lo   {select LFSDOtrig from LFS_DO_Trigger where trig = 1} !lower bound
+define LFS_DO_Trg_up   {select LFSDOtrig from LFS_DO_Trigger where trig = 2} !upper bound
+
+define DO_req_flow_fish1 {value max(DO_req_flow_fishExp - C_SacSJR[B2_BO],0.)}
+define DOreqflowfish1dv {alias DO_req_flow_fish1 KIND 'FLOW-REQ' UNITS 'CFS'}
+define DO_req_flow_lfsdry1 {value max(DO_req_flow_LFS_Dry - C_SacSJR[B2_BO],0.)}
+define DOreqlfsdry1dv {alias DO_req_flow_lfsdry1 KIND 'FLOW-REQ' UNITS 'CFS'}
+
+define DLT_IDX_JM_dv {alias Dlt_Idx_JM kind 'debug' units 'none'}
+
+goal limitEXP {
+    lhs D_Jones + D_Banks
+      case FISH_DO {
+          condition month>=MAR .and. month<=MAY .and. Dlt_Idx_JM>=LFS_DO_Trg_lo .and. Dlt_Idx_JM<=LFS_DO_Trg_up
+          rhs         max(D_Jones[B2_BO] + D_Banks[B2_BO] + min(C_SacSJR[B2_BO] - DO_req_flow_fishExp,0.), HandS_minpump)
+     lhs>rhs    penalty 99999.
+     lhs<rhs    penalty 0.}}
+
+
+
+goal limitEXPDry {
+    lhs D_Jones + D_Banks
+      case FISH_DO {
+          condition month>=MAR .and. month<=MAY
+          rhs         max(D_Jones[B2_BO] + D_Banks[B2_BO] + min(C_SacSJR[B2_BO] - DO_req_flow_LFS_Dry,0.), HandS_minpump)
+     lhs>rhs    penalty 99999.
+     lhs<rhs    penalty 0.}
+}

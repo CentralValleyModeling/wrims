@@ -1,0 +1,141 @@
+! Determination of Mar - May 8RI
+define LFS_DO_Trig_lo   {select LFSDOtrig from LFS_DO_Trigger where trig = 1}	!lower bound
+define LFS_DO_Trig_up   {select LFSDOtrig from LFS_DO_Trigger where trig = 2} !upper bound
+
+define Dlt_Idx_LFS {
+           select     Mar_May_Idx
+           from       mar_may_8RI
+           where      wateryear=wateryear
+}
+define Mar_8RI {
+           select     Mar_Idx
+           from       mar_may_8RI
+           where      wateryear=wateryear
+}
+define Apr_8RI {
+           select     Apr_Idx
+           from       mar_may_8RI
+           where      wateryear=wateryear
+}
+define May_8RI {
+           select     May_Idx
+           from       mar_may_8RI
+           where      wateryear=wateryear
+}
+define DO_req_LFS_Wet {
+     case wet {
+	  condition month>=Mar .and. month<=MAY .and. Dlt_Idx_LFS>=LFS_DO_Trig_lo .and. Dlt_Idx_LFS<=LFS_DO_Trig_up
+	  select flow from DO_Wet_LFS given Mar_May_Idx = dlt_idx_lfs use linear}
+     case other {
+	  condition always
+	  value 0.}
+}
+
+! Forecast of Feather River Runoff into Lake Oroville for Delta Outflow April-May split
+define frcst_fea_apr {select frcst_fea from feather_runoff_April_90_forecast where wateryear=wateryear, month=7}
+define frcst_fea_may {select frcst_fea from feather_runoff_April_90_forecast where wateryear=wateryear, month=8}
+
+define OroInfAprMayFrcst {
+    case    Apr {
+      condition    month == APR
+      value frcst_fea_apr + frcst_fea_may }
+    case other{
+      condition    always
+      value 0.}
+}
+define OroInfFrsctdv {alias OroInfAprMayFrcst Kind 'DEBUG' Units 'TAF'}
+
+
+/*define OroInfAprMay {
+    case    Apr {
+      condition    month == APR
+      value I_OROVL + I_OROVL(1) }
+    case other{
+      condition    always
+      value 0.}
+}
+define OroInfAprMaydv {alias OroInfAprMay Kind 'DEBUG' Units 'TAF'} */
+
+define DO_req_flow_LFS {
+    case    LFS_Mar {
+      condition    month == MAR .and. Dlt_Idx_LFS>=LFS_DO_Trig_lo .and. Dlt_Idx_LFS<=LFS_DO_Trig_up
+      value        DO_req_LFS_Wet}
+!      value        3.*DO_req_LFS_Wet}
+!      value        max(3.*DO_req_LFS_Wet*Mar_8RI/Dlt_Idx_LFS,DO_req_LFS_Wet)}
+    case    LFS_Apr {
+      condition    month == APR .and. Dlt_Idx_LFS>=LFS_DO_Trig_lo .and. Dlt_Idx_LFS<=LFS_DO_Trig_up
+!     value       max(2*DO_req_LFS_Wet - C_SacSJR(-1),0.)}
+     value       max(3*DO_req_LFS_Wet - C_SacSJR(-1),0.)*(frcst_fea_apr/OroInfAprMayFrcst)}		!(I6/(I6 + I6(1)))}
+!      value       max(3.*DO_req_LFS_Wet - C_SacSJR(-1),0.)*Apr_8RI/(Apr_8RI+May_8RI)}
+    case    LFS_May {
+      condition    month == MAY .and. Dlt_Idx_LFS>=LFS_DO_Trig_lo .and. Dlt_Idx_LFS<=LFS_DO_Trig_up
+      value        max(3*DO_req_LFS_Wet - C_SacSJR(-1) - C_SacSJR(-2),0.)}
+    case other {
+      condition    always
+      value        0.}
+}
+define DO_req_LFS_Dry {
+     case wet {
+	  condition month>=Mar .and. month<=MAY .and. Dlt_Idx_LFS>=LFS_DO_Trig_lo .and. Dlt_Idx_LFS<=LFS_DO_Trig_up
+	  value 0.}
+     case dry {
+	  condition month>=Mar .and. month<=MAY
+	  select flow from DO_Dry_LFS given Mar_May_Idx = dlt_idx_lfs use linear}
+     case other {
+	  condition always
+	  value 0.}
+}
+define DO_req_flow_LFS_Dry {
+     case wet {
+	  condition month>=Mar .and. month<=MAY .and. Dlt_Idx_LFS>=LFS_DO_Trig_lo .and. Dlt_Idx_LFS<=LFS_DO_Trig_up
+	  value 0.}
+     case dry {
+      condition   month == MAR
+      value       max(3.*DO_req_LFS_Dry*Mar_8RI/Dlt_Idx_LFS,DO_req_LFS_Dry)}
+    case    LFS_Apr {
+      condition   month == APR
+      value       max(3.*DO_req_LFS_Dry - C_SacSJR(-1),0.)*Apr_8RI/(Apr_8RI+May_8RI)}
+    case    LFS_May {
+      condition   month == MAY
+      value       max(3.*DO_req_LFS_Dry - C_SacSJR(-1) - C_SacSJR(-2),0.)}
+     case other {
+      condition    always
+      value        0.}
+}    
+
+/*!define DO_req_flw_LFS_Dry {timeseries kind 'FLOW-CHANNEL' units 'CFS'} !C_SacSJR from NAA_Q5_ELT_SJRR_off_040815_final
+define DO_req_flow_LFS_Dry {
+    case LFS_Mar {
+      condition   month == MAR
+           select     NAA_Mar_DO
+           from       NAA_MM_DO_Targets
+           where      year=wateryear
+      }
+    case    LFS_Apr {
+      condition   month == APR
+           select     NAA_Apr_DO
+           from       NAA_MM_DO_Targets
+           where      year=wateryear
+      }
+    case    LFS_May {
+      condition   month == MAY
+           select     NAA_May_DO
+           from       NAA_MM_DO_Targets
+           where      year=wateryear
+      }
+     case other {
+      condition    always
+      value       0.}
+}*/
+
+define DO_req_flow_fishExp {value DO_req_flow_LFS}
+define DO_req_flow_fish {value DO_req_flow_fishExp}
+define DOreqflowfishExp {alias DO_req_flow_fishExp KIND 'FLOW-REQ' UNITS 'CFS'}
+define DOreqflowfishdv {alias DO_req_flow_fish KIND 'FLOW-REQ' UNITS 'CFS'}
+
+define Del_Idx_LFS_dv {alias Dlt_Idx_LFS KIND 'DEBUG' UNITS 'TAF'}
+define DOreqlfswetdv {alias DO_req_LFS_Wet KIND 'FLOW-REQ' UNITS 'CFS'}
+define DOreqflow_lfsdv {alias DO_req_flow_lfs KIND 'FLOW-REQ' UNITS 'CFS'}
+define DOreqlfsdrydv {alias DO_req_LFS_Dry KIND 'FLOW-REQ' UNITS 'CFS'}
+define DOreqflwlfsdrydv {alias DO_req_flow_LFS_Dry KIND 'FLOW-REQ' UNITS 'CFS'}
+

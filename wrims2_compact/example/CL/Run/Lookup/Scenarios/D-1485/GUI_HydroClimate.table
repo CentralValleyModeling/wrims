@@ -1,0 +1,12 @@
+! set hydroclimate and sea level rise options
+!Index   Option 
+!1	1	!LOD_DLTSW: Level of Development: 0=Existing LOD (No CC); 1=Future LOD (No CC); 2=ELT CC; 3=LLT CC
+!2	1	!X2_SLR: Calculate X2 by using ANN or KM equation: ANN=1; KM=0
+!3	0	!SLR_DLTSW: Sea Level Rise Scenario: 0=Base (No SLR); 1=15cm SLR; 2=45cm SLR
+!4	5	!CC Scenarios Q1-Q5 = 1-5; 0=No CC
+GUI_HydroClimate
+Index	Option
+1	1	!LOD_DLTSW: Level of Development: 0=Existing LOD (No CC); 1=Future LOD (No CC); 2=ELT CC; 3=LLT CC
+2	1	!X2_SLR: Calculate X2 by using ANN or KM equation: ANN=1; KM=0
+3	0	!SLR_DLTSW: Sea Level Rise Scenario: 0=Base (No SLR); 1=15cm SLR; 2=45cm SLR
+4	0	!CC Scenarios Q1-Q5 = 1-5; 0=No CC

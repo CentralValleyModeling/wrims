@@ -1,0 +1,15 @@
+!Index 2-6 is ONLY dynamic if LVEM_switch is on. Otherwise, statically calculated from timeseries (Static_LVEM.wresl)
+!1		1			!LVEM_switch - Los Vaqueros Expansion: ON(1) OFF(0)
+!2		160			!LVEM_Cap - Los Vaqueros Maximum Capacity [160 TAF]
+!3		250			!LVEM_VC - Alternate Intake (Victoria Canal) Diversion Capacity [250 cfs]
+!4		250			!LVEM_OR - Old RIver Diversion Capacity [250 cfs]
+!5		350			!LVEM_RS - Rock Slough Diversion Capacity [350 cfs]
+!6		65			!LVEM_WQ - Target Maximum Salinity at Delivery [65 mg/L Cl]
+GUI_LosVaqueros
+Index	Option
+1	0	!LVEM_switch - Los Vaqueros Expansion: ON(1) OFF(0)
+2	160	!LVEM_Cap - Los Vaqueros User-Defined Maximum Capacity
+3	250	!LVEM_VC - Alternate Intake (Victoria Canal) Diversion Capacity [250 cfs]
+4	250	!LVEM_OR - Old RIver Diversion Capacity [250 cfs]
+5	350	!LVEM_RS - Rock Slough Diversion Capacity [350 cfs]
+6	65	!LVEM_WQ - Target Maximum Salinity at Delivery [65 mg/L Cl]

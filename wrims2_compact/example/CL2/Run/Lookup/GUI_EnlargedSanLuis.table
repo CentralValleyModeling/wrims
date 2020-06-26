@@ -1,0 +1,10 @@
+! Taraky 20161109, BDO, DWR
+! set different Enlarged San Luis options
+!1	1	!"Enlarged San Luis: 0 = off, 1 = on"
+!2	2	!"Size of enlargement: 1 = 10000 taf, 2 = User Defined (taf) 
+!3	500	! Read user input for San Luis Enlargement (taf)
+GUI_EnlargedSanLuis
+Index	Option
+1	0	!EnlargedSanLuisSwitch - San Luis Enlargement: ON(1) OFF(0)
+2	1	!"Size of enlargement: 1 = 10000 taf
+3	1000	!Size of user-defined enlargement

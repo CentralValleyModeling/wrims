@@ -1,0 +1,20 @@
+/*
+Do not allow filling of LV if OMR is controlling Delta exports.
+This constraint can be turned off in UserInput.wresl and the 
+months it applies can be set in CCWD_OMR_CONTROL.table.
+*/
+
+define lim_Fill_OMR__z4 {timeseries kind 'fill-constraint' units 'cfs'}
+define lim_Fill_OMR {value lim_Fill_OMR__z4}
+
+define lim_Fill_OMR_ {alias lim_Fill_OMR kind 'fill-constraint' units 'cfs'}
+
+goal set_lim_Fill_OMR {C422_Fill_CC < C423_Fill + lim_Fill_OMR}
+
+!In TXFR step, do not allow OMR to affect deliveries to the service area.
+!Also, take into account ORVC preference in the case that filling is shut off
+!umder OMR and more service area demand could be met through ORVC than when filling.
+
+define C424__z4 {timeseries kind 'flow-channel' units 'cfs'}
+goal protect_SA {C424_DT < C424__z4}
+

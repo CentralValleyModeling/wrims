@@ -1,0 +1,32 @@
+define(fm) W_OMR_Target_fm{
+	case Dec{     !Action 1: Jan 1 - 10
+		condition mv($m)==Dec .and. RunBasis_DLTSW==2 
+		value (-2000.*14. - 8000.*17.)/31.
+	}
+	case JanFeb{  !Action 2: Jan 11 - Feb 20
+		condition (mv($m)==Jan .or. mv($m)==Feb) .and. RunBasis_DLTSW==2  
+		value -5000.
+	}
+	case MarApr{  !Action 3
+		condition (mv($m)==Mar .or. mv($m)==Apr) .and. RunBasis_DLTSW==2 
+		value -5000.
+	}
+	case May{	  !Action 3
+		condition mv($m)==May .and. RunBasis_DLTSW==2 
+		value -5000
+	}
+	case Jun{	  !Action 3
+		condition mv($m)==Jun .and. RunBasis_DLTSW==2 
+		value -5000.
+	}
+	case other{
+		condition always  value -999999.
+	}
+}
+
+define(fm) max_swp_omr_fm {value max(300.,0.5*((0.58*I33B_fm($m)-W_OMR_target_fm($m))/0.713 - D33C_fm($m)))*cfs_taf($m)}
+define(fm) max_cvp_omr_fm {value max(800.,0.5*((0.58*I33B_fm($m)-W_OMR_target_fm($m))/0.713 - D33C_fm($m)))*cfs_taf($m)}
+
+define(fm) max_swp_omr_fm_dv{alias max_swp_omr_fm($m) kind 'export_limit' units 'taf'}
+define(fm) max_cvp_omr_fm_dv{alias max_cvp_omr_fm($m) kind 'export_limit' units 'taf'}
+!*********************************************************************************************

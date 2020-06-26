@@ -1,0 +1,18 @@
+!LVM_Ops.wresl
+
+	INCLUDE 'CCWD_Ops\CCWD_WQ_ops.wresl'
+	INCLUDE 'CCWD_Ops\CCWD_Intake_Preference.wresl'
+
+!Calculate Delta Surplus for CC and for SWP/CVP.
+
+define Delta_Surplus {std kind 'surplus-estimate' units 'cfs'}
+define Delta_Surplus_CC {std kind 'surplus-estimate' units 'cfs'}
+
+goal set_Delta_Surplus_CC {Delta_Surplus_CC = C_delta_SWP + c_delta_CVP}
+goal lim_Delta_Surplus {Delta_Surplus < Delta_Surplus_CC}
+goal lim_Delta_Surplus2 {Delta_Surplus < eiexpctrl - d_exptd - D408_P}
+
+
+        !
+	INCLUDE 'system\connectivity-table.wresl'
+	INCLUDE 'system\weight-table.wresl'

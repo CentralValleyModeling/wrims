@@ -1,0 +1,16 @@
+!!! This code implements the CONV_ assumption to maintain limited flushing for south Delta water quality.
+!!! During Jul - Aug south delta exports are preferred to pump up to 3,000 cfs before diverting from north.
+
+
+define prefer_TD_exp {value 5000.}
+define prefer_IF_exp {value max(D_JONES_CVP[BASE_INIT] + D_BANKS_SWP[BASE_INIT] - prefer_TD_exp,0.)}
+
+goal Prefer_TD_Exports {
+    lhs  D_JONES_CVP_IF + D_BANKS_SWP_IF
+    case JulNov {
+         condition     month>=JUL .and. month<=AUG
+         rhs           prefer_IF_exp
+         lhs<rhs       penalty 0.
+         lhs>rhs       penalty 1000.
+    }
+}

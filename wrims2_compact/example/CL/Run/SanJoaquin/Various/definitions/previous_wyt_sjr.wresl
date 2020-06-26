@@ -1,0 +1,298 @@
+! Previous_wyt_sjr.wresl
+! Edward Chang
+! 4/04/00
+! Joint Model
+! The code computes the sum of the current or previous two year's water year types.
+! Revised by C. Hsu, 4/3/03, USBR, for review and documentation project
+!#########################################################################
+/*
+The code computes the sum of the current and previous or previous
+two year's water year types, for use in Project Demands, VAMP
+and Mud & Salt Slough Accretion determination
+*/
+! Previous year's SJR water year type index, select water year type from lookup table
+/*define wyt_SJR_prv1 {
+	case OCTtoJAN_CC0 {
+         condition  month >= OCT .and. month <= JAN .and. Climate_Proj == 0
+         select     index_0
+         from       wytypeSJR
+         where      wateryear=wateryear - 2.}
+    case OCTtoJAN_CC1 {
+         condition  month >= OCT .and. month <= JAN .and. Climate_Proj == 1
+         select     index_1
+         from       wytypeSJR
+         where      wateryear=wateryear - 2.}
+    case OCTtoJAN_CC2 {
+         condition  month >= OCT .and. month <= JAN .and. Climate_Proj == 2
+         select     index_2
+         from       wytypeSJR
+         where      wateryear=wateryear - 2.}
+    case OCTtoJAN_CC3 {
+         condition  month >= OCT .and. month <= JAN .and. Climate_Proj == 3
+         select     index_3
+         from       wytypeSJR
+         where      wateryear=wateryear - 2.}
+    case OCTtoJAN_CC4 {
+         condition  month >= OCT .and. month <= JAN .and. Climate_Proj == 4
+         select     index_4
+         from       wytypeSJR
+         where      wateryear=wateryear - 2.}
+    case OCTtoJAN_CC5 {
+         condition  month >= OCT .and. month <= JAN .and. Climate_Proj == 5
+         select     index_5
+         from       wytypeSJR
+         where      wateryear=wateryear - 2.}         
+    case OCTtoJAN_CC6 {
+         condition  month >= OCT .and. month <= JAN .and. Climate_Proj == 6
+         select     index_6
+         from       wytypeSJR
+         where      wateryear=wateryear - 2.}
+    case OCTtoJAN_CC7 {
+         condition  month >= OCT .and. month <= JAN .and. Climate_Proj == 7
+         select     index_7
+         from       wytypeSJR
+         where      wateryear=wateryear - 2.}
+    case OCTtoJAN_CC8 {
+         condition  month >= OCT .and. month <= JAN .and. Climate_Proj == 8
+         select     index_8
+         from       wytypeSJR
+         where      wateryear=wateryear - 2.}
+    case OCTtoJAN_CC9 {
+         condition  month >= OCT .and. month <= JAN .and. Climate_Proj == 9
+         select     index_9
+         from       wytypeSJR
+         where      wateryear=wateryear - 2.}
+    case OCTtoJAN_CC10 {
+         condition  month >= OCT .and. month <= JAN .and. Climate_Proj == 10
+         select     index_10
+         from       wytypeSJR
+         where      wateryear=wateryear - 2.}         
+    case rest_CC0 {
+         condition  Climate_Proj == 0
+         select     index_0
+         from       wytypeSJR
+         where      wateryear=wateryear - 1.}
+    case rest_CC1 {
+         condition  Climate_Proj == 1
+         select     index_1
+         from       wytypeSJR
+         where      wateryear=wateryear - 1.}
+    case rest_CC2 {
+         condition  Climate_Proj == 2
+         select     index_2
+         from       wytypeSJR
+         where      wateryear=wateryear - 1.}
+    case rest_CC3 {
+         condition  Climate_Proj == 3
+         select     index_3
+         from       wytypeSJR
+         where      wateryear=wateryear - 1.}
+    case rest_CC4 {
+         condition  Climate_Proj == 4
+         select     index_4
+         from       wytypeSJR
+         where      wateryear=wateryear - 1.}
+    case rest_CC5 {
+         condition  Climate_Proj == 5
+         select     index_5
+         from       wytypeSJR
+         where      wateryear=wateryear - 1.}
+    case rest_CC6 {
+         condition  Climate_Proj == 6
+         select     index_6
+         from       wytypeSJR
+         where      wateryear=wateryear - 1.}
+    case rest_CC7 {
+         condition  Climate_Proj == 7
+         select     index_7
+         from       wytypeSJR
+         where      wateryear=wateryear - 1.}
+    case rest_CC8 {
+         condition  Climate_Proj == 8
+         select     index_8
+         from       wytypeSJR
+         where      wateryear=wateryear - 1.}
+    case rest_CC9 {
+         condition  Climate_Proj == 9
+         select     index_9
+         from       wytypeSJR
+         where      wateryear=wateryear - 1.}
+    case rest_CC10 {
+         condition  Climate_Proj == 10
+         select     index_10
+         from       wytypeSJR
+         where      wateryear=wateryear - 1.} 
+        }
+*/
+! Two years ago's SJR water year type index, select water year type from lookup table
+/*define wyt_SJR_prv2 {
+	case OCTtoJAN_CC0 {
+         condition  month >= OCT .and. month <= JAN .and. Climate_Proj == 0
+         select     index_0
+         from       wytypeSJR
+         where      wateryear=wateryear - 3.}
+    case OCTtoJAN_CC1 {
+         condition  month >= OCT .and. month <= JAN .and. Climate_Proj == 1
+         select     index_1
+         from       wytypeSJR
+         where      wateryear=wateryear - 3.}
+    case OCTtoJAN_CC2 {
+         condition  month >= OCT .and. month <= JAN .and. Climate_Proj == 2
+         select     index_2
+         from       wytypeSJR
+         where      wateryear=wateryear - 3.}
+    case OCTtoJAN_CC3 {
+         condition  month >= OCT .and. month <= JAN .and. Climate_Proj == 3
+         select     index_3
+         from       wytypeSJR
+         where      wateryear=wateryear - 3.}
+    case OCTtoJAN_CC4 {
+         condition  month >= OCT .and. month <= JAN .and. Climate_Proj == 4
+         select     index_4
+         from       wytypeSJR
+         where      wateryear=wateryear - 3.}
+    case OCTtoJAN_CC5 {
+         condition  month >= OCT .and. month <= JAN .and. Climate_Proj == 5
+         select     index_5
+         from       wytypeSJR
+         where      wateryear=wateryear - 3.}         
+    case OCTtoJAN_CC6 {
+         condition  month >= OCT .and. month <= JAN .and. Climate_Proj == 6
+         select     index_6
+         from       wytypeSJR
+         where      wateryear=wateryear - 3.}
+    case OCTtoJAN_CC7 {
+         condition  month >= OCT .and. month <= JAN .and. Climate_Proj == 7
+         select     index_7
+         from       wytypeSJR
+         where      wateryear=wateryear - 3.}
+    case OCTtoJAN_CC8 {
+         condition  month >= OCT .and. month <= JAN .and. Climate_Proj == 8
+         select     index_8
+         from       wytypeSJR
+         where      wateryear=wateryear - 3.}
+    case OCTtoJAN_CC9 {
+         condition  month >= OCT .and. month <= JAN .and. Climate_Proj == 9
+         select     index_9
+         from       wytypeSJR
+         where      wateryear=wateryear - 3.}
+    case OCTtoJAN_CC10 {
+         condition  month >= OCT .and. month <= JAN .and. Climate_Proj == 10
+         select     index_10
+         from       wytypeSJR
+         where      wateryear=wateryear - 3.}         
+    case rest_CC0 {
+         condition  Climate_Proj == 0
+         select     index_0
+         from       wytypeSJR
+         where      wateryear=wateryear - 2.}
+    case rest_CC1 {
+         condition  Climate_Proj == 1
+         select     index_1
+         from       wytypeSJR
+         where      wateryear=wateryear - 2.}
+    case rest_CC2 {
+         condition  Climate_Proj == 2
+         select     index_2
+         from       wytypeSJR
+         where      wateryear=wateryear - 2.}
+    case rest_CC3 {
+         condition  Climate_Proj == 3
+         select     index_3
+         from       wytypeSJR
+         where      wateryear=wateryear - 2.}
+    case rest_CC4 {
+         condition  Climate_Proj == 4
+         select     index_4
+         from       wytypeSJR
+         where      wateryear=wateryear - 2.}
+    case rest_CC5 {
+         condition  Climate_Proj == 5
+         select     index_5
+         from       wytypeSJR
+         where      wateryear=wateryear - 2.}
+    case rest_CC6 {
+         condition  Climate_Proj == 6
+         select     index_6
+         from       wytypeSJR
+         where      wateryear=wateryear - 2.}
+    case rest_CC7 {
+         condition  Climate_Proj == 7
+         select     index_7
+         from       wytypeSJR
+         where      wateryear=wateryear - 2.}
+    case rest_CC8 {
+         condition  Climate_Proj == 8
+         select     index_8
+         from       wytypeSJR
+         where      wateryear=wateryear - 2.}
+    case rest_CC9 {
+         condition  Climate_Proj == 9
+         select     index_9
+         from       wytypeSJR
+         where      wateryear=wateryear - 2.}
+    case rest_CC10 {
+         condition  Climate_Proj == 10
+         select     index_10
+         from       wytypeSJR
+         where      wateryear=wateryear - 2.} 
+        }
+*/
+! Average of current and previous 4 water year types
+define wyt_SJRave5 {
+	case rest_CC0 {
+         condition  Climate_Proj == 0
+         select     index_0
+         from       wytypeSJRave5
+         where      wateryear=wateryear}
+    case rest_CC1 {
+         condition  Climate_Proj == 1
+         select     index_1
+         from       wytypeSJRave5
+         where      wateryear=wateryear}
+    case rest_CC2 {
+         condition  Climate_Proj == 2
+         select     index_2
+         from       wytypeSJRave5
+         where      wateryear=wateryear}
+    case rest_CC3 {
+         condition  Climate_Proj == 3
+         select     index_3
+         from       wytypeSJRave5
+         where      wateryear=wateryear}
+    case rest_CC4 {
+         condition  Climate_Proj == 4
+         select     index_4
+         from       wytypeSJRave5
+         where      wateryear=wateryear}
+    case rest_CC5 {
+         condition  Climate_Proj == 5
+         select     index_5
+         from       wytypeSJRave5
+         where      wateryear=wateryear}
+    case rest_CC6 {
+         condition  Climate_Proj == 6
+         select     index_6
+         from       wytypeSJRave5
+         where      wateryear=wateryear}
+    case rest_CC7 {
+         condition  Climate_Proj == 7
+         select     index_7
+         from       wytypeSJRave5
+         where      wateryear=wateryear}
+    case rest_CC8 {
+         condition  Climate_Proj == 8
+         select     index_8
+         from       wytypeSJRave5
+         where      wateryear=wateryear}
+    case rest_CC9 {
+         condition  Climate_Proj == 9
+         select     index_9
+         from       wytypeSJRave5
+         where      wateryear=wateryear}
+    case rest_CC10 {
+         condition  Climate_Proj == 10
+         select     index_10
+         from       wytypeSJRave5
+         where      wateryear=wateryear} 
+         }

@@ -1,0 +1,413 @@
+!***************************************************************************************
+!Counts the number of pulse events, limits to 1 Oct-Nov and 1 Dec onward
+/*define pcount_d31dv {std kind 'p-count' units 'NONE'}
+
+define pcount_d1{
+	case start    {condition month==OCT .or. month==DEC value 0. }
+	case zero_to_1 {condition int(TPulseON_D31dv(-1))==0. .and. int(TPulseON_D1) ==1  .and. int(PSwitch_d31dv(-1)) == 0. value pcount_d31dv(-1)+1}
+	case other   {condition always value pcount_d31dv(-1) }
+}
+define pcount_d2 {
+	case count { condition int(TPulseON_d1)==0 .and. int(TPulseON_d2)==1 .and. int(PSwitch_d1) == 0. value pcount_d1 + 1. }
+	case other { condition always value pcount_d1} }
+
+define pcount_d3 {
+	case count { condition int(TPulseON_d2)==0 .and. int(TPulseON_d3)==1 .and. int(PSwitch_d2) == 0. value pcount_d2 + 1. }
+	case other { condition always value pcount_d2} }
+
+define pcount_d4 {
+	case count { condition int(TPulseON_d3)==0 .and. int(TPulseON_d4)==1 .and. int(PSwitch_d3) == 0. value pcount_d3 + 1. }
+	case other { condition always value pcount_d3} }
+
+define pcount_d5 {
+	case count { condition int(TPulseON_d4)==0 .and. int(TPulseON_d5)==1 .and. int(PSwitch_d4) == 0. value pcount_d4 + 1. }
+	case other { condition always value pcount_d4} }
+
+define pcount_d6 {
+	case count { condition int(TPulseON_d5)==0 .and. int(TPulseON_d6)==1 .and. int(PSwitch_d5) == 0. value pcount_d5 + 1. }
+	case other { condition always value pcount_d5} }
+
+define pcount_d7 {
+	case count { condition int(TPulseON_d6)==0 .and. int(TPulseON_d7)==1 .and. int(PSwitch_d6) == 0. value pcount_d6 + 1. }
+	case other { condition always value pcount_d6} }
+
+define pcount_d8 {
+	case count { condition int(TPulseON_d7)==0 .and. int(TPulseON_d8)==1 .and. int(PSwitch_d7) == 0. value pcount_d7 + 1. }
+	case other { condition always value pcount_d7} }
+
+define pcount_d9 {
+	case count { condition int(TPulseON_d8)==0 .and. int(TPulseON_d9)==1 .and. int(PSwitch_d8) == 0. value pcount_d8 + 1. }
+	case other { condition always value pcount_d8} }
+
+define pcount_d10 {
+	case count { condition int(TPulseON_d9)==0 .and. int(TPulseON_d10)==1 .and. int(PSwitch_d9) == 0. value pcount_d9 + 1. }
+	case other { condition always value pcount_d9} }
+
+define pcount_d11 {
+	case count { condition int(TPulseON_d10)==0 .and. int(TPulseON_d11)==1 .and. int(PSwitch_d10) == 0. value pcount_d10 + 1. }
+	case other { condition always value pcount_d10} }
+
+define pcount_d12 {
+	case count { condition int(TPulseON_d11)==0 .and. int(TPulseON_d12)==1 .and. int(PSwitch_d11) == 0. value pcount_d11 + 1. }
+	case other { condition always value pcount_d11} }
+
+define pcount_d13 {
+	case count { condition int(TPulseON_d12)==0 .and. int(TPulseON_d13)==1 .and. int(PSwitch_d12) == 0. value pcount_d12 + 1. }
+	case other { condition always value pcount_d12} }
+
+define pcount_d14 {
+	case count { condition int(TPulseON_d13)==0 .and. int(TPulseON_d14)==1 .and. int(PSwitch_d13) == 0. value pcount_d13 + 1. }
+	case other { condition always value pcount_d13} }
+
+define pcount_d15 {
+	case count { condition int(TPulseON_d14)==0 .and. int(TPulseON_d15)==1 .and. int(PSwitch_d14) == 0. value pcount_d14 + 1. }
+	case other { condition always value pcount_d14} }
+
+define pcount_d16 {
+	case count { condition int(TPulseON_d15)==0 .and. int(TPulseON_d16)==1 .and. int(PSwitch_d15) == 0. value pcount_d15 + 1. }
+	case other { condition always value pcount_d15} }
+
+define pcount_d17 {
+	case count { condition int(TPulseON_d16)==0 .and. int(TPulseON_d17)==1 .and. int(PSwitch_d16) == 0. value pcount_d16 + 1. }
+	case other { condition always value pcount_d16} }
+
+define pcount_d18 {
+	case count { condition int(TPulseON_d17)==0 .and. int(TPulseON_d18)==1 .and. int(PSwitch_d17) == 0. value pcount_d17 + 1. }
+	case other { condition always value pcount_d17} }
+
+define pcount_d19 {
+	case count { condition int(TPulseON_d18)==0 .and. int(TPulseON_d19)==1 .and. int(PSwitch_d18) == 0. value pcount_d18 + 1. }
+	case other { condition always value pcount_d18} }
+
+define pcount_d20 {
+	case count { condition int(TPulseON_d19)==0 .and. int(TPulseON_d20)==1 .and. int(PSwitch_d19) == 0. value pcount_d19 + 1. }
+	case other { condition always value pcount_d19} }
+
+define pcount_d21 {
+	case count { condition int(TPulseON_d20)==0 .and. int(TPulseON_d21)==1 .and. int(PSwitch_d20) == 0. value pcount_d20 + 1. }
+	case other { condition always value pcount_d20} }
+
+define pcount_d22 {
+	case count { condition int(TPulseON_d21)==0 .and. int(TPulseON_d22)==1 .and. int(PSwitch_d21) == 0. value pcount_d21 + 1. }
+	case other { condition always value pcount_d21} }
+
+define pcount_d23 {
+	case count { condition int(TPulseON_d22)==0 .and. int(TPulseON_d23)==1 .and. int(PSwitch_d22) == 0. value pcount_d22 + 1. }
+	case other { condition always value pcount_d22} }
+
+define pcount_d24 {
+	case count { condition int(TPulseON_d23)==0 .and. int(TPulseON_d24)==1 .and. int(PSwitch_d23) == 0. value pcount_d23 + 1. }
+	case other { condition always value pcount_d23} }
+
+define pcount_d25 {
+	case count { condition int(TPulseON_d24)==0 .and. int(TPulseON_d25)==1 .and. int(PSwitch_d24) == 0. value pcount_d24 + 1. }
+	case other { condition always value pcount_d24} }
+
+define pcount_d26 {
+	case count { condition int(TPulseON_d25)==0 .and. int(TPulseON_d26)==1 .and. int(PSwitch_d25) == 0. value pcount_d25 + 1. }
+	case other { condition always value pcount_d25} }
+
+define pcount_d27 {
+	case count { condition int(TPulseON_d26)==0 .and. int(TPulseON_d27)==1 .and. int(PSwitch_d26) == 0. value pcount_d26 + 1. }
+	case other { condition always value pcount_d26} }
+
+define pcount_d28 {
+	case count { condition int(TPulseON_d27)==0 .and. int(TPulseON_d28)==1 .and. int(PSwitch_d27) == 0. value pcount_d27 + 1. }
+	case other { condition always value pcount_d27} }
+
+define pcount_d29 {
+	case count { condition int(TPulseON_d28)==0 .and. int(TPulseON_d29)==1 .and. int(PSwitch_d28) == 0. value pcount_d28 + 1. }
+	case other { condition always value pcount_d28} }
+
+define pcount_d30 {
+	case count { condition int(TPulseON_d29)==0 .and. int(TPulseON_d30)==1 .and. int(PSwitch_d29) == 0. value pcount_d29 + 1. }
+	case other { condition always value pcount_d29} }
+
+define pcount_d31 {
+	case count { condition int(TPulseON_d30)==0 .and. int(TPulseON_d31)==1 .and. int(PSwitch_d30) == 0. value pcount_d30 + 1. }
+	case other { condition always value pcount_d30} }
+
+
+goal setpcount_31 {
+	lhs pcount_D31dv
+	case Mon31 {condition  daysin == 31. rhs pcount_D31}
+	case Mon30 {condition  daysin == 30. rhs pcount_D30}
+	case Mon29 {condition  daysin == 29. rhs pcount_D29}
+	case Mon28 {condition  daysin == 28. rhs pcount_D28} }
+
+ */
+
+! ******************************************************************************************************
+
+!Counts the days of Sac Flows  greater than 20,000 cfs
+define count_d31dv {std kind 'day-count' units 'days'}
+
+define count_d1{
+	case start    {condition month==OCT value 0. }
+	case zero_to_1 {condition int(Pswitch_d1)==1. .or. int(PCSwitch_d1)==0.   value 0.}
+	case greater20k1 {condition count_d31dv(-1) < 15. .and. max(Qfreeport_1 - 9000.,L1curve_d1) >20000. value count_d31dv(-1)+1 }
+	case greater20k2 {condition max(Qfreeport_1 - 9000.,L2curve_d1) >20000. value count_d31dv(-1)+1 }
+	case other   {condition always value count_d31dv(-1) }
+}
+define count_d2{
+	case zero_to_1 {condition int(Pswitch_d2)==1. .or. int(PCSwitch_d2)==0.   value 0.}
+	case greater20k1 {condition count_d1< 15. .and. max(Qfreeport_2-9000.,L1curve_d2) >20000. value count_d1+1}
+	case greater20k2 {condition max(Qfreeport_2-9000.,L2curve_d2) >20000. value count_d1+1}
+	case other   {condition always value count_d1}
+}
+define count_d3{
+	case zero_to_1 {condition int(Pswitch_d3)==1. .or. int(PCSwitch_d3)==0.   value 0.}
+	case greater20k1 {condition count_d2< 15. .and. max(Qfreeport_3-9000.,L1curve_d3) >20000. value count_d2+1}
+	case greater20k2 {condition max(Qfreeport_3-9000.,L2curve_d3) >20000. value count_d2+1}
+	case other   {condition always value count_d2}
+}
+define count_d4{
+	case zero_to_1 {condition int(Pswitch_d4)==1. .or. int(PCSwitch_d4)==0.   value 0.}
+	case greater20k1 {condition count_d3< 15. .and. max(Qfreeport_4-9000.,L1curve_d4) >20000. value count_d3+1}
+	case greater20k2 {condition max(Qfreeport_4-9000.,L2curve_d4) >20000. value count_d3+1}
+	case other   {condition always value count_d3}
+}
+define count_d5{
+	case zero_to_1 {condition int(Pswitch_d5)==1. .or. int(PCSwitch_d5)==0.   value 0.}
+	case greater20k1 {condition count_d4< 15. .and. max(Qfreeport_5-9000.,L1curve_d5) >20000. value count_d4+1}
+	case greater20k2 {condition max(Qfreeport_5-9000.,L2curve_d5) >20000. value count_d4+1}
+	case other   {condition always value count_d4}
+}
+define count_d6{
+	case zero_to_1 {condition int(Pswitch_d6)==1. .or. int(PCSwitch_d6)==0.   value 0.}
+	case greater20k1 {condition count_d5< 15. .and. max(Qfreeport_6-9000.,L1curve_d6) >20000. value count_d5+1}
+	case greater20k2 {condition max(Qfreeport_6-9000.,L2curve_d6) >20000. value count_d5+1}
+	case other   {condition always value count_d5}
+}
+define count_d7{
+	case zero_to_1 {condition int(Pswitch_d7)==1. .or. int(PCSwitch_d7)==0.   value 0.}
+	case greater20k1 {condition count_d6< 15. .and. max(Qfreeport_7-9000.,L1curve_d7) >20000. value count_d6+1}
+	case greater20k2 {condition max(Qfreeport_7-9000.,L2curve_d7) >20000. value count_d6+1}
+	case other   {condition always value count_d6}
+}
+define count_d8{
+	case zero_to_1 {condition int(Pswitch_d8)==1. .or. int(PCSwitch_d8)==0.   value 0.}
+	case greater20k1 {condition count_d7< 15. .and. max(Qfreeport_8-9000.,L1curve_d8) >20000. value count_d7+1}
+	case greater20k2 {condition max(Qfreeport_8-9000.,L2curve_d8) >20000. value count_d7+1}
+	case other   {condition always value count_d7}
+}
+define count_d9{
+	case zero_to_1 {condition int(Pswitch_d9)==1. .or. int(PCSwitch_d9)==0.   value 0.}
+	case greater20k1 {condition count_d8< 15. .and. max(Qfreeport_9-9000.,L1curve_d9) >20000. value count_d8+1}
+	case greater20k2 {condition max(Qfreeport_9-9000.,L2curve_d9) >20000. value count_d8+1}
+	case other   {condition always value count_d8}
+}
+define count_d10{
+	case zero_to_1 {condition int(Pswitch_d10)==1. .or. int(PCSwitch_d10)==0.   value 0.}
+	case greater20k1 {condition count_d9< 15. .and. max(Qfreeport_10-9000.,L1curve_d10) >20000. value count_d9+1}
+	case greater20k2 {condition max(Qfreeport_10-9000.,L2curve_d10) >20000. value count_d9+1}
+	case other   {condition always value count_d9}
+}
+define count_d11{
+	case zero_to_1 {condition int(Pswitch_d11)==1. .or. int(PCSwitch_d11)==0.   value 0.}
+	case greater20k1 {condition count_d10< 15. .and. max(Qfreeport_11-9000.,L1curve_d11) >20000. value count_d10+1}
+	case greater20k2 {condition max(Qfreeport_11-9000.,L2curve_d11) >20000. value count_d10+1}
+	case other   {condition always value count_d10}
+}
+define count_d12{
+	case zero_to_1 {condition int(Pswitch_d12)==1. .or. int(PCSwitch_d12)==0.   value 0.}
+	case greater20k1 {condition count_d11< 15. .and. max(Qfreeport_12-9000.,L1curve_d12) >20000. value count_d11+1}
+	case greater20k2 {condition max(Qfreeport_12-9000.,L2curve_d12) >20000. value count_d11+1}
+	case other   {condition always value count_d11}
+}
+define count_d13{
+	case zero_to_1 {condition int(Pswitch_d13)==1. .or. int(PCSwitch_d13)==0.   value 0.}
+	case greater20k1 {condition count_d12< 15. .and. max(Qfreeport_13-9000.,L1curve_d13) >20000. value count_d12+1}
+	case greater20k2 {condition max(Qfreeport_13-9000.,L2curve_d13) >20000. value count_d12+1}
+	case other   {condition always value count_d12}
+}
+define count_d14{
+	case zero_to_1 {condition int(Pswitch_d14)==1. .or. int(PCSwitch_d14)==0.   value 0.}
+	case greater20k1 {condition count_d13< 15. .and. max(Qfreeport_14-9000.,L1curve_d14) >20000. value count_d13+1}
+	case greater20k2 {condition max(Qfreeport_14-9000.,L2curve_d14) >20000. value count_d13+1}
+	case other   {condition always value count_d13}
+}
+define count_d15{
+	case zero_to_1 {condition int(Pswitch_d15)==1. .or. int(PCSwitch_d15)==0.   value 0.}
+	case greater20k1 {condition count_d14< 15. .and. max(Qfreeport_15-9000.,L1curve_d15) >20000. value count_d14+1}
+	case greater20k2 {condition max(Qfreeport_15-9000.,L2curve_d15) >20000. value count_d14+1}
+	case other   {condition always value count_d14}
+}
+define count_d16{
+	case zero_to_1 {condition int(Pswitch_d16)==1. .or. int(PCSwitch_d16)==0.   value 0.}
+	case greater20k1 {condition count_d15< 15. .and. max(Qfreeport_16-9000.,L1curve_d16) >20000. value count_d15+1}
+	case greater20k2 {condition max(Qfreeport_16-9000.,L2curve_d16) >20000. value count_d15+1}
+	case other   {condition always value count_d15}
+}
+define count_d17{
+	case zero_to_1 {condition int(Pswitch_d17)==1. .or. int(PCSwitch_d17)==0.   value 0.}
+	case greater20k1 {condition count_d16< 15. .and. max(Qfreeport_17-9000.,L1curve_d17) >20000. value count_d16+1}
+	case greater20k2 {condition max(Qfreeport_17-9000.,L2curve_d17) >20000. value count_d16+1}
+	case other   {condition always value count_d16}
+}
+define count_d18{
+	case zero_to_1 {condition int(Pswitch_d18)==1. .or. int(PCSwitch_d18)==0.   value 0.}
+	case greater20k1 {condition count_d17< 15. .and. max(Qfreeport_18-9000.,L1curve_d18) >20000. value count_d17+1}
+	case greater20k2 {condition max(Qfreeport_18-9000.,L2curve_d18) >20000. value count_d17+1}
+	case other   {condition always value count_d17}
+}
+define count_d19{
+	case zero_to_1 {condition int(Pswitch_d19)==1. .or. int(PCSwitch_d19)==0.   value 0.}
+	case greater20k1 {condition count_d18< 15. .and. max(Qfreeport_19-9000.,L1curve_d19) >20000. value count_d18+1}
+	case greater20k2 {condition max(Qfreeport_19-9000.,L2curve_d19) >20000. value count_d18+1}
+	case other   {condition always value count_d18}
+}
+define count_d20{
+	case zero_to_1 {condition int(Pswitch_d20)==1. .or. int(PCSwitch_d20)==0.   value 0.}
+	case greater20k1 {condition count_d19< 15. .and. max(Qfreeport_20-9000.,L1curve_d20) >20000. value count_d19+1}
+	case greater20k2 {condition max(Qfreeport_20-9000.,L2curve_d20) >20000. value count_d19+1}
+	case other   {condition always value count_d19}
+}
+define count_d21{
+	case zero_to_1 {condition int(Pswitch_d21)==1. .or. int(PCSwitch_d21)==0.   value 0.}
+	case greater20k1 {condition count_d20< 15. .and. max(Qfreeport_21-9000.,L1curve_d21) >20000. value count_d20+1}
+	case greater20k2 {condition max(Qfreeport_21-9000.,L2curve_d21) >20000. value count_d20+1}
+	case other   {condition always value count_d20}
+}
+define count_d22{
+	case zero_to_1 {condition int(Pswitch_d22)==1. .or. int(PCSwitch_d22)==0.   value 0.}
+	case greater20k1 {condition count_d21< 15. .and. max(Qfreeport_22-9000.,L1curve_d22) >20000. value count_d21+1}
+	case greater20k2 {condition max(Qfreeport_22-9000.,L2curve_d22) >20000. value count_d21+1}
+	case other   {condition always value count_d21}
+}
+define count_d23{
+	case zero_to_1 {condition int(Pswitch_d23)==1. .or. int(PCSwitch_d23)==0.   value 0.}
+	case greater20k1 {condition count_d22< 15. .and. max(Qfreeport_23-9000.,L1curve_d23) >20000. value count_d22+1}
+	case greater20k2 {condition max(Qfreeport_23-9000.,L2curve_d23) >20000. value count_d22+1}
+	case other   {condition always value count_d22}
+}
+define count_d24{
+	case zero_to_1 {condition int(Pswitch_d24)==1. .or. int(PCSwitch_d24)==0.   value 0.}
+	case greater20k1 {condition count_d23< 15. .and. max(Qfreeport_24-9000.,L1curve_d24) >20000. value count_d23+1}
+	case greater20k2 {condition max(Qfreeport_24-9000.,L2curve_d24) >20000. value count_d23+1}
+	case other   {condition always value count_d23}
+}
+define count_d25{
+	case zero_to_1 {condition int(Pswitch_d25)==1. .or. int(PCSwitch_d25)==0.   value 0.}
+	case greater20k1 {condition count_d24< 15. .and. max(Qfreeport_25-9000.,L1curve_d25) >20000. value count_d24+1}
+	case greater20k2 {condition max(Qfreeport_25-9000.,L2curve_d25) >20000. value count_d24+1}
+	case other   {condition always value count_d24}
+}
+define count_d26{
+	case zero_to_1 {condition int(Pswitch_d26)==1. .or. int(PCSwitch_d26)==0.   value 0.}
+	case greater20k1 {condition count_d25< 15. .and. max(Qfreeport_26-9000.,L1curve_d26) >20000. value count_d25+1}
+	case greater20k2 {condition max(Qfreeport_26-9000.,L2curve_d26) >20000. value count_d25+1}
+	case other   {condition always value count_d25}
+}
+define count_d27{
+	case zero_to_1 {condition int(Pswitch_d27)==1. .or. int(PCSwitch_d27)==0.   value 0.}
+	case greater20k1 {condition count_d26< 15. .and. max(Qfreeport_27-9000.,L1curve_d27) >20000. value count_d26+1}
+	case greater20k2 {condition max(Qfreeport_27-9000.,L2curve_d27) >20000. value count_d26+1}
+	case other   {condition always value count_d26}
+}
+define count_d28{
+	case zero_to_1 {condition int(Pswitch_d28)==1. .or. int(PCSwitch_d28)==0.   value 0.}
+	case greater20k1 {condition count_d27< 15. .and. max(Qfreeport_28-9000.,L1curve_d28) >20000. value count_d27+1}
+	case greater20k2 {condition max(Qfreeport_28-9000.,L2curve_d28) >20000. value count_d27+1}
+	case other   {condition always value count_d27}
+}
+define count_d29{
+	case zero_to_1 {condition int(Pswitch_d29)==1. .or. int(PCSwitch_d29)==0.   value 0.}
+	case greater20k1 {condition count_d28< 15. .and. max(Qfreeport_29-9000.,L1curve_d29) >20000. value count_d28+1}
+	case greater20k2 {condition max(Qfreeport_29-9000.,L2curve_d29) >20000. value count_d28+1}
+	case other   {condition always value count_d28}
+}
+define count_d30{
+	case zero_to_1 {condition int(Pswitch_d30)==1. .or. int(PCSwitch_d30)==0.   value 0.}
+	case greater20k1 {condition count_d29< 15. .and. max(Qfreeport_30-9000.,L1curve_d30) >20000. value count_d29+1}
+	case greater20k2 {condition max(Qfreeport_30-9000.,L2curve_d30) >20000. value count_d29+1}
+	case other   {condition always value count_d29}
+}
+define count_d31{
+	case zero_to_1 {condition int(Pswitch_d31)==1. .or. int(PCSwitch_d31)==0.   value 0.}
+	case greater20k1 {condition count_d30< 15. .and. max(Qfreeport_31-9000.,L1curve_d31) >20000. value count_d30+1}
+	case greater20k2 {condition max(Qfreeport_31-9000.,L2curve_d31) >20000. value count_d30+1}
+	case other   {condition always value count_d30}
+}
+
+
+goal setcount_31 {
+	lhs count_D31dv
+	case Mon31 {condition  daysin == 31. rhs count_D31}
+	case Mon30 {condition  daysin == 30. rhs count_D30}
+	case Mon29 {condition  daysin == 29. rhs count_D29}
+	case Mon28 {condition  daysin == 28. rhs count_D28} }
+
+
+
+
+!******************************* WRITE OUT CONTROLLING LEVEL *********************************************************
+
+define count_d1dv {alias count_d1 kind 'DAY-COUNT' units 'DAYS'}
+define count_d2dv {alias count_d2 kind 'DAY-COUNT' units 'DAYS'}
+define count_d3dv {alias count_d3 kind 'DAY-COUNT' units 'DAYS'}
+define count_d4dv {alias count_d4 kind 'DAY-COUNT' units 'DAYS'}
+define count_d5dv {alias count_d5 kind 'DAY-COUNT' units 'DAYS'}
+define count_d6dv {alias count_d6 kind 'DAY-COUNT' units 'DAYS'}
+define count_d7dv {alias count_d7 kind 'DAY-COUNT' units 'DAYS'}
+define count_d8dv {alias count_d8 kind 'DAY-COUNT' units 'DAYS'}
+define count_d9dv {alias count_d9 kind 'DAY-COUNT' units 'DAYS'}
+define count_d10dv {alias count_d10 kind 'DAY-COUNT' units 'DAYS'}
+define count_d11dv {alias count_d11 kind 'DAY-COUNT' units 'DAYS'}
+define count_d12dv {alias count_d12 kind 'DAY-COUNT' units 'DAYS'}
+define count_d13dv {alias count_d13 kind 'DAY-COUNT' units 'DAYS'}
+define count_d14dv {alias count_d14 kind 'DAY-COUNT' units 'DAYS'}
+define count_d15dv {alias count_d15 kind 'DAY-COUNT' units 'DAYS'}
+define count_d16dv {alias count_d16 kind 'DAY-COUNT' units 'DAYS'}
+define count_d17dv {alias count_d17 kind 'DAY-COUNT' units 'DAYS'}
+define count_d18dv {alias count_d18 kind 'DAY-COUNT' units 'DAYS'}
+define count_d19dv {alias count_d19 kind 'DAY-COUNT' units 'DAYS'}
+define count_d20dv {alias count_d20 kind 'DAY-COUNT' units 'DAYS'}
+define count_d21dv {alias count_d21 kind 'DAY-COUNT' units 'DAYS'}
+define count_d22dv {alias count_d22 kind 'DAY-COUNT' units 'DAYS'}
+define count_d23dv {alias count_d23 kind 'DAY-COUNT' units 'DAYS'}
+define count_d24dv {alias count_d24 kind 'DAY-COUNT' units 'DAYS'}
+define count_d25dv {alias count_d25 kind 'DAY-COUNT' units 'DAYS'}
+define count_d26dv {alias count_d26 kind 'DAY-COUNT' units 'DAYS'}
+define count_d27dv {alias count_d27 kind 'DAY-COUNT' units 'DAYS'}
+define count_d28dv {alias count_d28 kind 'DAY-COUNT' units 'DAYS'}
+define count_d29dv {alias count_d29 kind 'DAY-COUNT' units 'DAYS'}
+define count_d30dv {alias count_d30 kind 'DAY-COUNT' units 'DAYS'}
+!define count_d31dv {alias count_d31 kind 'DAY-COUNT' units 'DAYS'}
+
+/*define pcount_d1dv {alias pcount_d1 kind 'P-COUNT' units 'NONE'}
+define pcount_d2dv {alias pcount_d2 kind 'P-COUNT' units 'NONE'}
+define pcount_d3dv {alias pcount_d3 kind 'P-COUNT' units 'NONE'}
+define pcount_d4dv {alias pcount_d4 kind 'P-COUNT' units 'NONE'}
+define pcount_d5dv {alias pcount_d5 kind 'P-COUNT' units 'NONE'}
+define pcount_d6dv {alias pcount_d6 kind 'P-COUNT' units 'NONE'}
+define pcount_d7dv {alias pcount_d7 kind 'P-COUNT' units 'NONE'}
+define pcount_d8dv {alias pcount_d8 kind 'P-COUNT' units 'NONE'}
+define pcount_d9dv {alias pcount_d9 kind 'P-COUNT' units 'NONE'}
+define pcount_d10dv {alias pcount_d10 kind 'P-COUNT' units 'NONE'}
+define pcount_d11dv {alias pcount_d11 kind 'P-COUNT' units 'NONE'}
+define pcount_d12dv {alias pcount_d12 kind 'P-COUNT' units 'NONE'}
+define pcount_d13dv {alias pcount_d13 kind 'P-COUNT' units 'NONE'}
+define pcount_d14dv {alias pcount_d14 kind 'P-COUNT' units 'NONE'}
+define pcount_d15dv {alias pcount_d15 kind 'P-COUNT' units 'NONE'}
+define pcount_d16dv {alias pcount_d16 kind 'P-COUNT' units 'NONE'}
+define pcount_d17dv {alias pcount_d17 kind 'P-COUNT' units 'NONE'}
+define pcount_d18dv {alias pcount_d18 kind 'P-COUNT' units 'NONE'}
+define pcount_d19dv {alias pcount_d19 kind 'P-COUNT' units 'NONE'}
+define pcount_d20dv {alias pcount_d20 kind 'P-COUNT' units 'NONE'}
+define pcount_d21dv {alias pcount_d21 kind 'P-COUNT' units 'NONE'}
+define pcount_d22dv {alias pcount_d22 kind 'P-COUNT' units 'NONE'}
+define pcount_d23dv {alias pcount_d23 kind 'P-COUNT' units 'NONE'}
+define pcount_d24dv {alias pcount_d24 kind 'P-COUNT' units 'NONE'}
+define pcount_d25dv {alias pcount_d25 kind 'P-COUNT' units 'NONE'}
+define pcount_d26dv {alias pcount_d26 kind 'P-COUNT' units 'NONE'}
+define pcount_d27dv {alias pcount_d27 kind 'P-COUNT' units 'NONE'}
+define pcount_d28dv {alias pcount_d28 kind 'P-COUNT' units 'NONE'}
+define pcount_d29dv {alias pcount_d29 kind 'P-COUNT' units 'NONE'}
+define pcount_d30dv {alias pcount_d30 kind 'P-COUNT' units 'NONE'}
+!define pcount_d31dv {alias pcount_d31 kind 'P-COUNT' units 'NONE'}    */
+
+
+
+
+

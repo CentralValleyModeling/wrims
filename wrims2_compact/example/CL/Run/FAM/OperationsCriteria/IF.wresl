@@ -1,0 +1,17 @@
+goal(fm) capacity_IF{D33E_IF_fm($m)+D33D_IF_fm($m)<9000*cfs_taf($m)}
+
+goal(fm) zero_D33E_IF_fm{
+	lhs D33E_IF_fm($m)
+	case Jones_NOIF{
+		condition JonesIFSwitch==0.0
+		rhs 0.0
+	}
+}
+
+goal(fm) zero_D33D_IF_fm{
+	lhs D33D_IF_fm($m)
+	case Banks_NOIF{
+		condition BanksIFSwitch==0.0
+		rhs 0.0
+	}
+}

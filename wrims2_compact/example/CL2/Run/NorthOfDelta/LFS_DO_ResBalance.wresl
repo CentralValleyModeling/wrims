@@ -1,0 +1,134 @@
+!Fish Delta outlfow request after export curtailments
+define DO_req_flow_fish2 {value max(DO_req_flow_fishExp-C_SacSJR[LFS_DO1],0.)}
+
+! Determination of Delta Index
+define DltIdxJM {			!same as Dlt_Idx_LFS in the delta-outflow.wresl
+           select     Mar_May_Idx
+           from       mar_may_8RI
+           where      wateryear=wateryear
+}
+define LFS_DO_Trgg_lo   {select LFSDOtrig from LFS_DO_Trigger where trig = 1} !lower bound
+define LFS_DO_Trgg_up   {select LFSDOtrig from LFS_DO_Trigger where trig = 2} !upper bound
+
+
+define DO_Fish_OnOff {
+        case on {
+        condition month>=MAR .and. month<=MAY .and. DltIdxJM>=LFS_DO_Trgg_lo .and. DltIdxJM<=LFS_DO_Trgg_up
+        value 1.0}
+        case off {
+        condition always
+        value 0.0}
+}
+
+!Calculation of Oroville Storage based on forecasted inflows to be use as a condition to release water for Delta Outflow fish agencies requirements
+define OroInf_AM_Frcst {
+    case  Apr {
+      condition    month == APR
+      value OroInfAprMayFrcst + (I_KellyRidge + I_KellyRidge(1))*cfs_taf}
+    case other{
+      condition    always
+      value 0.}
+}
+define OroInfAMFrcstdv {alias OroInf_AM_Frcst kind 'FORECAST' units 'TAF'}
+
+define OroInf_May_Frcst {
+    case  May {
+      condition    month == MAY
+      value frcst_fea_may + I_KellyRidge*cfs_taf}
+    case other{
+      condition    always
+      value 0.}
+}
+define OroInfMayFrcstdv {alias OroInf_May_Frcst kind 'FORECAST' units 'TAF'}
+
+define OroDivAprMay   {
+    case  AprMay {
+      condition    month == APR
+      value  dem_d6_PWR  +  dem_d6_PWR(1) + dem_d201_PIMI + dem_d201_PIMI(1) + 
+             dem_d201_POMI + dem_d201_POMI(1) + dem_d202_PWR + dem_d202_PWR(1) + 
+             dem_d7a_PAG + dem_d7a_PAG(1) + dem_d7a_PWR + dem_d7a_PWR(1) + 
+             dem_d7b_PAG + dem_d7b_PAG(1) + dem_d7b_PWR + dem_d7b_PWR(1) +
+             dem_D7C_DCMP + dem_D7C_DCMP(1)
+      }
+    case other {
+      condition    always
+      value 0.}
+}
+define OroDivAprMaydv {alias OroDivAprMay kind 'FORECAST' units 'TAF'}
+
+define OroDivEstmt   {
+      value  dem_d6_PWR  + dem_d201_PIMI + dem_d201_POMI + dem_d202_PWR + 
+             dem_d7a_PAG + dem_d7a_PWR + dem_d7b_PAG + dem_d7b_PWR + dem_D7C_DCMP
+      }
+define OroDivEstmtdv {alias OroDivEstmt kind 'FORECAST' units 'TAF'}
+
+
+!Oroville April and May MIF release estimates in cfs to meet Feather River minimum flow for use in forecasting end of May storage.
+define OroRelApr_MIF {value 1500.0}
+define OroRelMay_MIF {value 2000.0}
+
+define OroMayStorFrcst {
+    case  Apr {
+      condition    month == APR
+      value max(0.0,(OroInf_AM_Frcst - OroDivAprMay -(OroRelApr_MIF+OroRelMay_MIF)*cfs_taf+ S_Orovl(-1)))}
+    case  May {
+      condition    month == MAY
+      value max(0.0,(OroInf_May_Frcst - OroDivEstmt -(OroRelMay_MIF)*cfs_taf+ S_Orovl(-1)))}
+    case other{
+      condition    always
+      value 0.}
+}
+define OroMayStorFcstdv {alias OroMayStorFrcst kind 'FORECAST' units 'TAF'}
+
+define onoff_Oro_DOdv {std kind 'DEBUG' units 'SWITCH'}
+define onoff_Oro_DO {
+	case firstmon {
+		condition month == OCT .and. wateryear == 1922
+		value	  0.0 }
+	case hiStorApr {
+		condition month == APR .and. OroMayStorFrcst > OroFish[LFS_DO1] .and. DO_Fish_OnOff == 1.                !If End of May Oroville Target is different from April's then OroFish[B2_BO] should be May's value.
+		value	  1.0 }
+	case hiStorMay {
+		condition month == MAY .and. OroMayStorFrcst > OroFish[LFS_DO1] .and. DO_Fish_OnOff == 1.
+		value	  1.0 }    !onoff_Oro_DOdv(-1)
+	case loStor {
+		condition always
+		value	  0.0 } }
+goal setonoff_oro_DO {onoff_Oro_DOdv = onoff_Oro_DO }
+
+!Maximum reservoir releases based on availability at zone 4 and inflow coming into the reservoirs
+!define ORO_maxrelfish {value 99999.*onoff_Oro_DO} !min(I_Orovl,10000.)*onoff_Oro_DO}
+define ORO_maxrelfish {
+	case AprNoSpill {
+		condition month == APR .and. DO_Fish_OnOff == 1.
+        	value min(max(0.,(((I_Orovl+I_KellyRidge)*cfs_taf - OroDivEstmt + S_Orovl(-1))-OroFish[LFS_DO1])*taf_cfs),max(0.,17000.-C_Therm[LFS_DO1]))*onoff_Oro_DO}
+	case MayNoSpill {
+		condition month == MAY .and. DO_Fish_OnOff == 1.
+        	value min(max(0.,(((I_Orovl+I_KellyRidge)*cfs_taf - OroDivEstmt + S_Orovl(-1))-OroFish[LFS_DO1])*taf_cfs),max(0.,17000.-C_Therm[LFS_DO1]))*onoff_Oro_DO}
+        case AprSpill {
+		condition month == APR .and. DO_Fish_OnOff == 1. .and. C_Therm[LFS_DO1] > 17000.
+	        value max(0.,(((I_Orovl+I_KellyRidge)*cfs_taf - OroDivEstmt + S_Orovl(-1))-OroFish[LFS_DO1])*taf_cfs)*onoff_Oro_DO}
+	case MaySpill {
+		condition month == MAY .and. DO_Fish_OnOff == 1. .and. C_Therm[LFS_DO1] > 17000.
+        	value max(0.,(((I_Orovl+I_KellyRidge)*cfs_taf - OroDivEstmt + S_Orovl(-1))-OroFish[LFS_DO1])*taf_cfs)*onoff_Oro_DO}
+	case Other {
+		condition always
+		value	  0.0 } }
+
+define ORO_relfish {value max(min(DO_req_flow_fish2,ORO_maxrelfish-C_Therm[LFS_DO1]),0.)}
+
+define ORO_relmax {
+        case OROrelfish0 {
+           condition ORO_relfish == 0.
+           value 0.}
+        case Other {
+           condition always
+           value (C_Therm[LFS_DO1]+ORO_relfish)*DO_Fish_OnOff}
+}
+
+!QA/QC
+define ORO_relfishdv {alias ORO_relfish kind 'FLOW-MAX' units 'CFS'}
+define ORO_relmaxdv {alias ORO_relmax kind 'FLOW-MAX' units 'CFS'}
+define DOreqflowfish2dv {alias DO_req_flow_fish2 KIND 'FLOW-REQ' UNITS 'CFS'}
+define onoff_Fish_DOdv {alias DO_Fish_OnOff kind 'DEBUG' units 'SWITCH'}
+define ORO_maxrelfishdv {alias ORO_maxrelfish kind 'DEBUG' units 'CFS'}

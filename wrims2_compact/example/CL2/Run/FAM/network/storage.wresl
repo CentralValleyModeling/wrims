@@ -1,0 +1,28 @@
+! Reservoir storage definitions.
+! Ryan Wilbur 8-1-03
+
+! trinity storage:
+define(fm) S_Trnty {lower 240 upper 2447 kind 'STORAGE' units 'TAF'}
+define S1_pre{
+	case OctDec{condition month<=Dec value S_Trnty(Dec-month-12)}
+	case JanSep{condition always value S_Trnty(Dec-month)}
+}
+
+! whiskeytown storage:
+define(fm) S_Wkytn {lower 180 upper 240 kind 'STORAGE' units 'TAF'}
+
+! shasta storage:
+define(fm) S_Shsta {lower 550 upper 4552 kind 'STORAGE' units 'TAF'}
+
+! oroville storage:
+define(fm) S_Orovl {lower 29.6 upper 3558 kind 'STORAGE' units 'TAF'}
+
+! folsom storage:
+define(fm) S_Folsm {lower 90 upper 975 kind 'STORAGE' units 'TAF'}
+
+! swp san luis storage:
+define(fm) S_SLSWP {lower 55 upper 1067 kind 'STORAGE' units 'TAF'}
+
+! cvp san luis storage:
+define(fm) S_SLCVP {lower 45 upper 972 kind 'STORAGE' units 'TAF'}
+

@@ -1,0 +1,69 @@
+/*************************************
+AnnSacFlow.wresl
+ 
+Nazrul Islam, DWR, (06/27/2010)
+Required sac flow for estimated exports considering all ann stations:
+define AnnSacReq {value min(max(0.0,RSReqSac,JPReqSac,EMReqSac,COReqSac),EstTotExp/0.65+6000.)}
+
+*************************************************/
+
+/***define AnnSacReq_max {value max(0.0,RSReqSac,JPReqSac,EMReqSac,COReqSac)}
+define AnnSacReqmaxdv {alias AnnSacReq_max kind 'FLOW' units 'CFS'}
+
+define AnnSacReq {value min(AnnSacReq_max,EstTotExpTD/0.65+7000.)}
+define AnnSacReqdv {alias AnnSacReq kind 'FLOW' units 'CFS'}
+
+!split C_Hood & C_YoloBP:
+define C_Hood_mif {std kind 'FLOW-MIN-INSTREAM' units 'cfs'}
+define C_Hood_exc {std kind 'FLOW-EXCESS-INSTREAM' units 'cfs'}
+goal C_HoodtotalANN {C_Hood_ANN = C_Hood_mif + C_Hood_exc + C_Hood_Reop}
+define C_YoloBP_mif {std kind 'FLOW-MIN-INSTREAM' units 'cfs'}
+define C_YoloBP_exc {std kind 'FLOW-EXCESS-INSTREAM' units 'cfs'}
+goal C_YoloBPtotal {C_YoloBP = C_YoloBP_mif + C_YoloBP_exc}
+
+goal setAnnSacFlow { C_Hood_mif + C_YoloBP_mif < AnnSacReq}***/
+
+
+!required sac flow for estimated exports considering all ann stations:
+!define AnnSacReq {value min(max(0.0,RSReqSac,JPReqSac,EMReqSac,COReqSac),EstTotExp/0.65+6000.)}
+
+if int(AN_DLTSW)==3 {
+define AnnSacReq {
+    case JunSep_D1485 {
+		condition month>=Jun .and. month<=Sep
+		value min(max(0.0,RSReqSac,JPReqSac,EMReqSac,COReqSac,ANReqSac,CHReqSac),EstTotExpTD/0.65+7000.)}	
+	case OctMay_IF_On_D1485 {
+		condition int(IF_SWPorCVP_OnOff)== 1
+		value max(0.0,RSReqSac,JPReqSac,EMReqSac,COReqSac,ANReqSac,CHReqSac)}
+	case OctMay_IF_off_D1485 {
+		condition always
+		value min(max(0.0,RSReqSac,JPReqSac,EMReqSac,COReqSac,ANReqSac,CHReqSac),EstTotExpTD/0.65+7000.)}
+}
+}
+
+else {
+define AnnSacReq {
+	case JunSep_D1641 {
+		condition month>=Jun .and. month<=Sep
+		value min(max(0.0,RSReqSac,JPReqSac,EMReqSac,COReqSac),EstTotExpTD/0.65+7000.)}
+	case OctMay_IF_On_D1641 {
+		condition int(IF_SWPorCVP_OnOff)== 1
+		value max(0.0,RSReqSac,JPReqSac,EMReqSac,COReqSac)}
+	case OctMay_IF_off_D1641 {
+		condition always
+		value min(max(0.0,RSReqSac,JPReqSac,EMReqSac,COReqSac),EstTotExpTD/0.65+7000.)}	
+}
+}
+
+!define AnnSacReq {value max(0.0,RSReqSac,JPReqSac,EMReqSac,COReqSac)}
+define AnnSacReqdv {alias AnnSacReq kind 'FLOW' units 'CFS'}
+
+!split C_Hood & C_YoloBP:
+define C_Hood_mif {std kind 'FLOW-MIN-INSTREAM' units 'cfs'}
+define C_Hood_exc {std kind 'FLOW-EXCESS-INSTREAM' units 'cfs'}
+goal C_HoodtotalANN {C_Hood_ANN = C_Hood_mif + C_Hood_exc + C_Hood_Reop}
+define C_YoloBP_mif {std kind 'FLOW-MIN-INSTREAM' units 'cfs'}
+define C_YoloBP_exc {std kind 'FLOW-EXCESS-INSTREAM' units 'cfs'}
+goal C_YoloBPtotal {C_YoloBP = C_YoloBP_mif + C_YoloBP_exc}
+
+goal setAnnSacFlow { C_Hood_mif + C_YoloBP_mif < AnnSacReq}

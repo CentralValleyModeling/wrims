@@ -1,0 +1,2 @@
+! OroRel_stub.wresl
+define Oro_relmax {value 0. }   ! not used this cycle

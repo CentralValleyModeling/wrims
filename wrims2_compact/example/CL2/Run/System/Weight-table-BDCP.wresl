@@ -1,0 +1,10 @@
+Objective obj_bdcp = {
+[C_Hood_WHLCV,1000],   !Determine why this is necessary
+[D_Banks_TD,-2],
+[D_Jones_TD,-2],
+![D_Banks_SWP_IF_sh, 0.01]
+}
+
+
+
+

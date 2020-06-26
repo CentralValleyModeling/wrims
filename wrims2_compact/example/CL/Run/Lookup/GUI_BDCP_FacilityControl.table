@@ -1,0 +1,13 @@
+!Index	Option
+!1	0	!JonesIFSwitch - Jones IF Export: ON(1) OFF(0)
+!2	0	!BanksIFSwitch - Banks IF Export: ON(1) OFF(0)
+!3	0	!CCWDIFSwitch - CCWD IF Export: ON(1) OFF(0)
+!4	1	!TDExports: ON(1) OFF(0)
+!5	0	!fremont_notch_on - Fremont Weir Notch ON(1) OFF(0)
+GUI_BDCP_FacilityControl
+Index	Option
+1	0	!JonesIFSwitch - Jones IF Export: ON(1) OFF(0)
+2	0	!BanksIFSwitch - Banks IF Export: ON(1) OFF(0)
+3	0	!CCWDIFSwitch - CCWD IF Export: ON(1) OFF(0)
+4	1	!TDExports: ON(1) OFF(0)
+5	1	!fremont_notch_on - Fremont Weir Notch ON(1) OFF(0)

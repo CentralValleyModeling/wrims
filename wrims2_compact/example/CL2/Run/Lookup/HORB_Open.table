@@ -1,0 +1,15 @@
+!Percentage HORB gates are open based on SJR conditions: (1) Drier, SJR flows less than 5,000 cfs; (2) Wetter, SJR flows more than 5,000 cfs and (3) SJR flows greater than 10,000 cfs
+HORB_Open
+Month	SJR_Dry	SJR_Wet	SJR_High
+1	0.25	0.25	1
+2	0.75	0.75	1
+3	1	1	1
+4	0.5	0.5	1
+5	0.5	0.5	1
+6	0.5	0.5	1
+7	0.5	0.5	1
+8	0.5	0.5	1
+9	0.75	0.75	1
+10	1	1	1
+11	1	1	1
+12	1	1	1

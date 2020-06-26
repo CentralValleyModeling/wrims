@@ -1,0 +1,3 @@
+!Include this file when no NDD diversions should occur in the given cycle.
+
+   goal No_IF_cycle {D_hoodif < 0}

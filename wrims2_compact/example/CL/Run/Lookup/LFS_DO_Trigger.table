@@ -1,0 +1,8 @@
+!Bounds of Mar-May 8RI values to trigger export cuts + storage releases to meet the longfin smelt outflow requirement.
+!trig = 1 is lower bound of the 8RI
+!trig = 2 is upper bound of the 8RI
+!Use 99999. (extreme high 8RI) value for both triggers so that only export cuts are triggered and not the storage releases.
+LFS_DO_Trigger
+trig	LFSDOtrig
+1	     6547.4
+2       99999.

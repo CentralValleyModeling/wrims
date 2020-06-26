@@ -1,0 +1,13 @@
+!First, connect the Rock Slough, Old River and Victoria Canal intakes to D416 and D408.
+goal connect_D408 {D_CCWDVCOR = D408_OR + D408_VC}
+goal connect_D416 {D_CCWDINTK = D408_RS}
+
+!Connect Mokelumne Intertie to Freeport diversion and limit to interie diversion planned in cycle 1.
+!goal connect_MOK_Intertie {I424 = D168B_ccwd}
+
+!Limit LV water right to Delta Surplus
+goal lim_LVright_toDS {D408_DS < 1000.*C_DELTA_CVP + 1000.*C_DELTA_SWP}
+
+!Limit transfers to in-Delta
+goal lim_TX {D_BrananIs + D_ConeyIs + D_MedfordIs + D_Stockton + D_Terminous + D408_TX < demand_D_BrananIs_NP + demand_D_ConeyIs_NP + demand_D_MedfordIs_NP + demand_D_Stockton_NP + demand_D_Terminous_NP}
+
