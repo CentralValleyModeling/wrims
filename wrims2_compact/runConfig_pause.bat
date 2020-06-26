@@ -10,9 +10,9 @@ IF [%1]==[] (
 	exit
 	)
 	
-set wreslFilePath=%1
+set ConfigFilePath=%1
 
-for %%F in (%wreslFilePath%) do set dirname=%%~dpF
+for %%F in (%ConfigFilePath%) do set dirname=%%~dpF
 set RunDir=%dirname%run\
 set temp=%dirname%
 echo off
@@ -22,8 +22,8 @@ echo off
 : wrims2 lib jars  :
 :------------------:
 
-set JarDir2=D:\cvwrsm\git_office\cvwrsm\wrims_v2\wrimsv2_plugin\lib_x64
-set libDir=D:\cvwrsm\git_office\cvwrsm\wrims_v2\wrimsv2_plugin\lib_x64
+set JarDir2=%~dp0\jars
+set libDir=%~dp0\lib_64
 
 set AppJars=%AppJars%;%JarDir2%\heclib.jar
 set AppJars=%AppJars%;%JarDir2%\jnios.jar
@@ -42,7 +42,8 @@ set AppJars=%AppJars%;%JarDir2%\antlr-3.5.2-runtime.jar
 set AppJars=%AppJars%;%JarDir2%\coinor.jar
 set AppJars=%AppJars%;%JarDir2%\sqljdbc4-2.0.jar
 set AppJars=%AppJars%;%JarDir2%\mysql-connector-java-5.1.42-bin.jar
-set AppJars=%AppJars%;D:\cvwrsm\git_office\cvwrsm\wrims_v2\wrims_v2\jar_out\WRIMSv2.jar
+set AppJars=%AppJars%;%JarDir2%\WRIMSv2.jar
+
 
 :---------------------------------:
 : user defined java class and dll :
@@ -67,6 +68,6 @@ set PATH=%ExternalDir%;%JarDir2%;%libDir%;%SupportDll%
 
 
 
-%javahome%/java -Xms4096m -Xss1024K -Djava.library.path=%PATH% %CLASSPATH% wrimsv2.components.IncFileCollector %wreslFilePath% z:\incFileCollect\cs3 ""
+%javahome%/java -Xms4096m -Xss1024K -Djava.library.path=%PATH% %CLASSPATH% wrimsv2.components.ControllerBatch -config="%configFilePath%"
 
 pause
