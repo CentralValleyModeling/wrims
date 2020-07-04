@@ -284,15 +284,16 @@ public class ConfigUtils {
 		}
 		System.out.println("PrefixInitToDvarFile: "+ControlData.writeInitToDVOutput);
 
-		// CbcDebug
-		if (configMap.keySet().contains("cbcdebug")){
+		// SolveCompare
+		k = "solvecompare";
+		if (configMap.keySet().contains(k)){
 			
-			String s = configMap.get("cbcdebug");
+			String s = configMap.get(k);
 			
-			if (s.equalsIgnoreCase("cbc")){
+			if (s.equalsIgnoreCase("xa_cbc")){
 				ControlData.cbc_debug_routeXA = false;	
 				ControlData.cbc_debug_routeCbc = true;	
-			} else if (s.equalsIgnoreCase("xa")) {
+			} else if (s.equalsIgnoreCase("cbc_xa")) {
 				ControlData.cbc_debug_routeXA = true;
 				ControlData.cbc_debug_routeCbc = false;	
 			} else {
@@ -303,8 +304,8 @@ public class ConfigUtils {
 			ControlData.cbc_debug_routeXA = false;
 			ControlData.cbc_debug_routeCbc = false;	
 		}
-		System.out.println("CbcDebug (use XA solution): "+ControlData.cbc_debug_routeXA);
-		System.out.println("CbcDebug (use Cbc solution): "+ControlData.cbc_debug_routeCbc);
+		System.out.println("SolveCompare (use XA solution as base): "+ControlData.cbc_debug_routeXA);
+		System.out.println("SolveCompare (use Cbc solution as base): "+ControlData.cbc_debug_routeCbc);
 
 		// watch variable
 		if (configMap.keySet().contains("watch")){
@@ -379,8 +380,8 @@ public class ConfigUtils {
 		}
 		System.out.println("CbcLibName: "+CbcSolver.cbcLibName);
 		
-		// zeroT // default is ? check  ControlData.zeroTolerance
-		k = "zerot";
+		// CbcToleranceZero // default is 1e-11 ControlData.zeroTolerance
+		k = "cbctolerancezero";
 		if (configMap.keySet().contains(k)){
 			
 			String s = configMap.get(k);			
@@ -388,15 +389,15 @@ public class ConfigUtils {
 			try {
 				ControlData.zeroTolerance = Double.parseDouble(s);
 			} catch (NumberFormatException e) {
-				System.out.println("zeroT: Error reading config value");
+				System.out.println("CbcToleranceZero: Error reading config value");
 			}
 			
 		}
-		System.out.println("ZeroT: "+ControlData.zeroTolerance);
+		System.out.println("CbcToleranceZero: "+ControlData.zeroTolerance);
 		
 		
-		// CbcIntegerT
-		k = "cbcintegert";
+		// CbcToleranceInteger default 1e-9
+		k = "cbctoleranceinteger";
 		if (configMap.keySet().contains(k)){
 			
 			String s = configMap.get(k);			
@@ -404,45 +405,60 @@ public class ConfigUtils {
 			try {
 				CbcSolver.integerT = Double.parseDouble(s);
 			} catch (NumberFormatException e) {
-				System.out.println("CbcIntegerT: Error reading config value");
+				System.out.println("CbcToleranceInteger: Error reading config value");
 			}
 			
 		}
-		System.out.println("CbcIntegerT: "+CbcSolver.integerT);
-		
-		// XAIntegerT
-		k = "xaintegert";
+		System.out.println("CbcToleranceInteger: "+CbcSolver.integerT);
+
+		// CbcToleranceIntegerCheck default 1e-8
+		k = "cbctoleranceintegercheck";
 		if (configMap.keySet().contains(k)){
 			
 			String s = configMap.get(k);			
 			
 			try {
-				ControlData.xaIntegerT = Double.parseDouble(s);
+				CbcSolver.integerT_check = Double.parseDouble(s);
 			} catch (NumberFormatException e) {
-				System.out.println("XAIntegerT: Error reading config value");
+				System.out.println("CbcToleranceIntegercheck: Error reading config value");
 			}
 			
 		}
-		System.out.println("XAIntegerT: "+ControlData.xaIntegerT);
+		System.out.println("CbcToleranceIntegercheck: "+CbcSolver.integerT_check);		
+		
+//		// XAIntegerT
+//		k = "xaintegert";
+//		if (configMap.keySet().contains(k)){
+//			
+//			String s = configMap.get(k);			
+//			
+//			try {
+//				ControlData.xaIntegerT = Double.parseDouble(s);
+//			} catch (NumberFormatException e) {
+//				System.out.println("XAIntegerT: Error reading config value");
+//			}
+//			
+//		}
+//		System.out.println("XAIntegerT: "+ControlData.xaIntegerT);
 		
 		
-		// xasort // default is unknown
-		k = "xasort";
-		if (configMap.keySet().contains(k)){
-			
-			String s = configMap.get(k).toLowerCase();
-			
-			if (s.equals("yes")||s.equals("no")||s.equals("col")||s.equals("row")){
-				ControlData.xaSort=s;	
-			} else {
-				System.out.println("XASort: No | Yes | Row | Col");;
-			}
-		}
-		System.out.println("XASort: "+ControlData.xaSort);
+//		// xasort // default is unknown
+//		k = "xasort";
+//		if (configMap.keySet().contains(k)){
+//			
+//			String s = configMap.get(k).toLowerCase();
+//			
+//			if (s.equals("yes")||s.equals("no")||s.equals("col")||s.equals("row")){
+//				ControlData.xaSort=s;	
+//			} else {
+//				System.out.println("XASort: No | Yes | Row | Col");;
+//			}
+//		}
+//		System.out.println("XASort: "+ControlData.xaSort);
 		
 		
-		// CbcSolve2PrimalT // default is ?
-		k = "cbcsolve2primalt";
+		// CbcTolerancePrimal // default is 1e-8
+		k = "cbctoleranceprimal";
 		if (configMap.keySet().contains(k)){
 			
 			String s = configMap.get(k);			
@@ -450,14 +466,29 @@ public class ConfigUtils {
 			try {
 				CbcSolver.solve_2_primalT = Double.parseDouble(s);
 			} catch (NumberFormatException e) {
-				System.out.println("CbcSolve2PrimalT: Error reading config value");
+				System.out.println("CbcTolerancePrimal: Error reading config value");
 			}
 			
 		}
-		System.out.println("CbcSolve2PrimalT: "+CbcSolver.solve_2_primalT);
+		System.out.println("CbcTolerancePrimal: "+CbcSolver.solve_2_primalT);
+
+		// CbcTolerancePrimalRelax // default is 1e-6
+		k = "cbctoleranceprimalrelax";
+		if (configMap.keySet().contains(k)){
+			
+			String s = configMap.get(k);			
+			
+			try {
+				CbcSolver.solve_2_primalT_relax = Double.parseDouble(s);
+			} catch (NumberFormatException e) {
+				System.out.println("CbcTolerancePrimalRelax: Error reading config value");
+			}
+			
+		}
+		System.out.println("CbcTolerancePrimalRelax: "+CbcSolver.solve_2_primalT_relax);		
 		
-		// CbcSolveWhsPrimalT 
-		k = "cbcsolvewhsprimalt";
+		// CbcSolveWhsPrimalT // default is 1e-9
+		k = "cbctolerancewarmprimal";
 		if (configMap.keySet().contains(k)){
 			
 			String s = configMap.get(k);			
@@ -465,11 +496,11 @@ public class ConfigUtils {
 			try {
 				CbcSolver.solve_whs_primalT = Double.parseDouble(s);
 			} catch (NumberFormatException e) {
-				System.out.println("CbcSolveWhsPrimalT: Error reading config value");
+				System.out.println("CbcToleranceWarmPrimal: Error reading config value");
 			}
 			
 		}
-		System.out.println("CbcSolveWhsPrimalT: "+CbcSolver.solve_whs_primalT);
+		System.out.println("CbcToleranceWarmPrimal: "+CbcSolver.solve_whs_primalT);
 		
 		// LogIfObjDiff
 		k = "logifobjdiff";
@@ -1050,6 +1081,8 @@ public class ConfigUtils {
 		configMap.put("outputAllCycleData".toLowerCase(), "yes");
 		configMap.put("SelectedCycleOutput".toLowerCase(), "\'\'");
 		configMap.put("svarfile2".toLowerCase(), "");
+		configMap.put("AllRestartFiles".toLowerCase(), "No");
+		configMap.put("NumberRestartFiles".toLowerCase(), "12");
 		return configMap;
 
 	}

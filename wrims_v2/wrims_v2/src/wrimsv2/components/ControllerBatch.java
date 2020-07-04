@@ -89,7 +89,9 @@ public class ControllerBatch {
 				long check = Calendar.getInstance().getTimeInMillis();
 				
 				ILP.getIlpDir();
+				ILP.setVarDir();
 				ILP.createNoteFile();
+				ILP.setMaximumFractionDigits();
 				
 				runModel(sds);
 				long endTimeInMillis = Calendar.getInstance().getTimeInMillis();
@@ -244,6 +246,8 @@ public class ControllerBatch {
 			runModelOrTools(sds, "GLPK_MIXED_INTEGER_PROGRAMMING");	
 		} else if (ControlData.solverName.equalsIgnoreCase("Clp")){
 			runModelClp(sds);	
+		} else if (ControlData.solverName.equalsIgnoreCase("Cbc")&&(ControlData.cbc_debug_routeXA||ControlData.cbc_debug_routeCbc)){
+			runModelCbc(sds);
 		} else if (ILP.logging){
 			runModelILP(sds);
 		} else if (ControlData.solverName.equalsIgnoreCase("Cbc")){
@@ -549,7 +553,7 @@ public class ControllerBatch {
 					
 						boolean isLastCycle = (i == modelList.size() - 1);
 						
-						if (ILP.logging && isSelectedCycleOutput) {
+						if (ILP.logging && (isSelectedCycleOutput || ILP.loggingAllCycles)) {
 
 							long beginT = System.currentTimeMillis();
 							ILP.setIlpFile();
@@ -714,7 +718,7 @@ public class ControllerBatch {
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
 						
-						if (CbcSolver.intLog) {
+						if (CbcSolver.intLog && ControlData.solverType == Param.SOLVER_CBC.intValue()) {
 							CbcSolver.logIntCheck(sds);	
 						}
 												
@@ -1413,6 +1417,12 @@ public class ControllerBatch {
 						
 						if (ControlData.cbc_debug_routeCbc || ControlData.cbc_debug_routeXA) {
 							originalDvarKeys = new LinkedHashSet<String>(SolverData.getDvarMap().keySet());
+//							ILP.getIlpDir();
+//							ILP.setVarDir();
+							ILP.setSvarFile();
+//							ILP.setMaximumFractionDigits();
+							// write svar
+							ILP.writeSvarValue();
 						}
 						
 						if (ControlData.cbc_debug_routeCbc) {
@@ -1462,87 +1472,13 @@ public class ControllerBatch {
 						if (Error.error_evaluation.size()>=1) noError=false;
 
 						
-						if (CbcSolver.intLog && (!ControlData.cbc_debug_routeXA && !ControlData.cbc_debug_routeCbc)) {
+						//if (CbcSolver.intLog && (!ControlData.cbc_debug_routeXA && !ControlData.cbc_debug_routeCbc)) {
+						if (CbcSolver.intLog) {
 							CbcSolver.logIntCheck(sds);	
 						}
 						
-						if (ControlData.cbc_debug_routeXA ||ControlData.cbc_debug_routeCbc ) {
-																			
-							// write watch var values
-							boolean recordLP = false;
-							double wa_cbc = 0;
-							double wa_xa  = 0;
-							if (ControlData.watchList != null) {
-								String wa_cbc_str = "";
-								String wa_xa_str = "";
-								for (String s : ControlData.watchList) {
-									if (ControlData.currModelDataSet.dvList.contains(s)){
-									
-										//System.out.println(s);
-										wa_cbc = CbcSolver.varDoubleMap.get(s);
-										wa_xa  = ControlData.xasolver.getColumnActivity(s);
-										wa_cbc_str += String.format("%14.3f", wa_cbc) + "  ";
-										wa_xa_str += String.format("%14.3f",  wa_xa) + "  ";
-										
-										if (Math.abs(wa_xa-wa_cbc)>ControlData.watchList_tolerance) recordLP=true; 
-									}
-								}
-								ILP.writeNoteLn(ILP.getYearMonthCycle(), wa_cbc_str, ILP._watchFile_cbc);
-								ILP.writeNoteLn(ILP.getYearMonthCycle(), wa_xa_str, ILP._watchFile_xa);
-								
-							}
-							
-							// write int value, time, and obj diff
-							ILP.writeNoteLn(ILP.getYearMonthCycle(), ""+ControlData.xasolver.getObjective(), ILP._noteFile_xa_obj);
-							ILP.writeNoteLn(ILP.getYearMonthCycle(), ""+ControlData.clp_cbc_objective, ILP._noteFile_cbc_obj);
-							
-							String xa_int = "";
-							String cbc_int = "";
-							if (sds.cycIntDvMap != null) {
-								ArrayList<String> intDVs = new ArrayList<String>(sds.cycIntDvMap.get(ControlData.currCycleIndex));
-								for (String v :sds.allIntDv) {
-									if (intDVs.contains(v)){
-										xa_int  += " "+ Math.round(ControlData.xasolver.getColumnActivity(v));
-										if (Error.getTotalError()==0) {
-											cbc_int += " "+ Math.round(CbcSolver.varDoubleMap.get(v));
-										} else {
-											cbc_int += " ?";
-										}
-									} else {
-										xa_int  += "  ";
-										cbc_int += "  ";
-									}
-								}
-							}
-							
-							// write solve name
-							cbc_int +=  "  "+CbcSolver.solveName;
-							xa_int  +=  "  "+CbcSolver.solveName;
-							
-							if (Error.getTotalError() == 0) {
-								if (recordLP) {
-									CbcSolver.reloadAndWriteLp("_watch_diff", true);
-								}
-								
-								double diff = ControlData.clp_cbc_objective - ControlData.xasolver.getObjective();
-								if (Math.abs(diff) > CbcSolver.record_if_obj_diff) {
-									CbcSolver.reloadAndWriteLp("_obj"+Math.round(diff), true);
-								}
-								if (Math.abs(diff) > CbcSolver.log_if_obj_diff) {
-									xa_int += "  obj: " + String.format("%16.3f", diff);
-									cbc_int += "  obj: " + String.format("%16.3f", diff);
-									if (diff>CbcSolver.maxObjDiff){
-										CbcSolver.maxObjDiff = diff;
-										CbcSolver.maxObjDiff_id = ILP.getYearMonthCycle();
-									} else if(diff<CbcSolver.maxObjDiff_minus){
-										CbcSolver.maxObjDiff_minus = diff;
-										CbcSolver.maxObjDiff_minus_id = ILP.getYearMonthCycle();										
-									}
-								}
-							}
-							ILP.writeNoteLn(ILP.getYearMonthCycle(), ""+ xa_int, ILP._noteFile_xa_int);
-							ILP.writeNoteLn(ILP.getYearMonthCycle(), ""+ cbc_int, ILP._noteFile_cbc_int);
-							
+						if (ControlData.cbc_debug_routeXA ||ControlData.cbc_debug_routeCbc ) {										
+							CbcSolver.logCbcDebug(sds);
 						}
 						
 						CbcSolver.resetModel();

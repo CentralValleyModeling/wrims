@@ -132,7 +132,7 @@ public class ControlData {
 	public static boolean cbc_debug_routeCbc=false;	// use cbc solution
 	public static String[] watchList;
 	public static double watchList_tolerance = 1e99;
-	public static double zeroTolerance =  1e-11;
+	public static double zeroTolerance =  1e-11;  // can read from config cbcToleranceZero
 	public static Double xaIntegerT =  null;
 	public static String xaSort = null;
 	public static boolean resimDate=false;

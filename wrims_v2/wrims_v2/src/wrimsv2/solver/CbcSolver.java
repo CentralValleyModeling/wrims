@@ -66,14 +66,15 @@ public class CbcSolver {
 	
 	private static  double maxValue = 1e28; //Double.POSITIVE_INFINITY;
 	//public static final double zeroTolerence =  1e-10;
-	public static double solve_2_primalT =  1e-8;
-	public static final double solve_2_primalT_relax =  1e-6;
+	public static double solve_2_primalT =  1e-8;        // can read from config cbcTolerancePrimal
+	public static double solve_2_primalT_relax =  1e-6;  // can read from config cbcTolerancePrimalRelax
 	//public static final double solve_2_primalT_relax_most =  1e-4;
-	public static final double solve_3_primalT =  1e-9;
+	private static final double solve_3_primalT =  1e-9;
 	//public static final double solve_3_primalT_relax =  1e-7;
-	public static double solve_whs_primalT =  1e-9;
+	public static double solve_whs_primalT =  1e-9;      // can read from config cbcToleranceWarmPrimal
 	public static final Integer cutoff_n =  12;
-	public static double integerT =  1e-9;
+	public static double integerT =  1e-9;               // can read from config cbcToleranceInteger
+	public static double integerT_check = 1e-8;          // can read from config cbcToleranceIntegerCheck
 	public static String cbcLibName = "jCbc";
 	
 	private static String modelName;
@@ -145,12 +146,12 @@ public class CbcSolver {
 		ILP.getIlpDir();
 		ILP.createNoteFile();
 		
-		if (ControlData.useCbcWarmStart || ControlData.cbc_debug_routeCbc || ControlData.cbc_debug_routeXA){
+		//if (ControlData.useCbcWarmStart || ControlData.cbc_debug_routeCbc || ControlData.cbc_debug_routeXA){
 			dvIntMap = new LinkedHashMap<String, Integer>();
 			for (String d: sds.allIntDv){
 				dvIntMap.put(d, 0);
 			}
-		}
+		//}
 		
 		names_dummy = jCbc.new_jarray_string(0); 
 		values_dummy = jCbc.new_jarray_int(0); 
@@ -254,14 +255,15 @@ public class CbcSolver {
 				//System.out.println(k);
 				if (varDoubleMap.containsKey(k)){
 					double v = varDoubleMap.get(k);
-					if (Math.abs(v-Math.round(v))>1e-7){
+					if (Math.abs(v-Math.round(v))>integerT_check){
 						reloadAndWriteLp("_infeasible", true);
-						Error.addSolvingError("Infeasible solution. Integer "+k+": "+v);
+						Error.addSolvingError("Infeasible solution.");// Integer "+k+": "+v);
 						//iis();
 						break;
 					}
 				}
 			}
+			
 			
 			long beginT_ad = System.currentTimeMillis();	
 			if (!ControlData.cbc_debug_routeXA) assignDvar();
@@ -901,21 +903,21 @@ public class CbcSolver {
 			status2 = jCbc.secondaryStatus(model);
 		}	
 
-		if (status != 0 || status2 != 0) {
-			//note_msg(jCbc.getModelName(solver), " Solve_"+solveName+" infeasible. Use solve_2 with primalT="+solve_2_primalT_relax_most);
-			reloadProblem();
-			solve_2(solve_2_primalT_relax);	
-			status = jCbc.status(model);
-			status2 = jCbc.secondaryStatus(model);
-		}	
+//		if (status != 0 || status2 != 0) {
+//			//note_msg(jCbc.getModelName(solver), " Solve_"+solveName+" infeasible. Use solve_2 with primalT="+solve_2_primalT_relax_most);
+//			reloadProblem();
+//			solve_2(solve_2_primalT_relax);	
+//			status = jCbc.status(model);
+//			status2 = jCbc.secondaryStatus(model);
+//		}	
 		
-		if (status != 0 || status2 != 0) {
-			//note_msg(jCbc.getModelName(solver), " Solve_"+solveName+" infeasible. Use callCbc.");
-			reloadProblem();
-			callCbc();	
-			status = jCbc.status(model);
-			status2 = jCbc.secondaryStatus(model);
-		}	
+//		if (status != 0 || status2 != 0) {
+//			//note_msg(jCbc.getModelName(solver), " Solve_"+solveName+" infeasible. Use callCbc.");
+//			reloadProblem();
+//			callCbc();	
+//			status = jCbc.status(model);
+//			status2 = jCbc.secondaryStatus(model);
+//		}	
 		
 		}
 	  
@@ -1319,42 +1321,99 @@ public class CbcSolver {
 		}	
 	}
 	
-	public static void logIntCheck(StudyDataSet sds){
+	public static void logCbcDebug(StudyDataSet sds){
 			
-			String cbc_int = "";
-			
-			// write solve name
-			cbc_int +=  ","+CbcSolver.solveName;
-			
-			// write solve time
-			cbc_int +=  ","+String.format("%8.2f",ControlData.solverTime_cbc_this);
-			
-			if (sds.cycIntDvMap != null && sds.cycIntDvMap.containsKey(ControlData.currCycleIndex)) {
-				ArrayList<String> intDVs = new ArrayList<String>(sds.cycIntDvMap.get(ControlData.currCycleIndex));
-				Boolean int_violation = false;
-				for (String v : sds.allIntDv) {
-					if (intDVs.contains(v)){
-						//xa_int  += " "+ Math.round(ControlData.xasolver.getColumnActivity(v));
-						if (Error.getTotalError()==0) {
-							//cbc_int += " "+ Math.round(CbcSolver.varDoubleMap.get(v));
-							double x = CbcSolver.varDoubleMap.get(v);
-							cbc_int += ","+ x;
-							if   (Math.abs( Math.round(x)-x)>1E-7) {int_violation=true;}
-							
-						} else {
-							cbc_int += ",?";
-							int_violation=null;
-						}
-					} else {
-						//xa_int  += "  ";
-						cbc_int += ",";
-					}
-				}
-				cbc_int = "," + int_violation + cbc_int;
-			}
-
-			ILP.writeNoteLn(ILP.getYearMonthCycle(), ""+ cbc_int, ILP._noteFile_cbc_int_log);					
+//		ILP.getIlpDir();
+//		ILP.setVarDir();
+		//ILP.setSvarFile();
+//		ILP.setMaximumFractionDigits();
+		// write svar
+		//ILP.writeSvarValue();
+		// write dvar
+		ILP.findDvarEffective();
+		//System.out.println("write cbc dvar");
+		ILP.setDvarFile("cbc");
+		ILP.writeDvarValue_Clp0_Cbc0(CbcSolver.varDoubleMap);
+		//System.out.println("write xa dvar");
+		ILP.setDvarFile("xa");
+		ILP.writeDvarValue_XA();
 		
+		
+		// write watch var values
+		boolean recordLP = false;
+		boolean recordVar = false;
+		double wa_cbc = 0;
+		double wa_xa  = 0;
+		if (ControlData.watchList != null) {
+			String wa_cbc_str = "";
+			String wa_xa_str = "";
+			for (String s : ControlData.watchList) {
+				if (ControlData.currModelDataSet.dvList.contains(s)){
+				
+					//System.out.println(s);
+					wa_cbc = CbcSolver.varDoubleMap.get(s);
+					wa_xa  = ControlData.xasolver.getColumnActivity(s);
+					wa_cbc_str += String.format("%14.3f", wa_cbc) + "  ";
+					wa_xa_str += String.format("%14.3f",  wa_xa) + "  ";
+					
+					if (Math.abs(wa_xa-wa_cbc)>ControlData.watchList_tolerance) recordLP=true; 
+				}
+			}
+			ILP.writeNoteLn(ILP.getYearMonthCycle(), wa_cbc_str, ILP._watchFile_cbc);
+			ILP.writeNoteLn(ILP.getYearMonthCycle(), wa_xa_str, ILP._watchFile_xa);
+			
+		}
+		
+		// write int value, time, and obj diff
+		ILP.writeNoteLn(ILP.getYearMonthCycle(), ""+ControlData.xasolver.getObjective(), ILP._noteFile_xa_obj);
+		ILP.writeNoteLn(ILP.getYearMonthCycle(), ""+ControlData.clp_cbc_objective, ILP._noteFile_cbc_obj);
+		
+		String xa_int = "";
+		String cbc_int = "";
+		if (sds.cycIntDvMap != null) {
+			ArrayList<String> intDVs = new ArrayList<String>(sds.cycIntDvMap.get(ControlData.currCycleIndex));
+			for (String v :sds.allIntDv) {
+				if (intDVs.contains(v)){
+					xa_int  += " "+ Math.round(ControlData.xasolver.getColumnActivity(v));
+					if (Error.getTotalError()==0) {
+						cbc_int += " "+ Math.round(CbcSolver.varDoubleMap.get(v));
+					} else {
+						cbc_int += " ?";
+					}
+				} else {
+					xa_int  += "  ";
+					cbc_int += "  ";
+				}
+			}
+		}
+		
+		// write solve name
+		cbc_int +=  "  "+CbcSolver.solveName;
+		xa_int  +=  "  "+CbcSolver.solveName;
+		
+		if (Error.getTotalError() == 0) {
+			if (recordLP) {
+				CbcSolver.reloadAndWriteLp("_watch_diff", true);
+			}
+			
+			double diff = ControlData.clp_cbc_objective - ControlData.xasolver.getObjective();
+			if (Math.abs(diff) > CbcSolver.record_if_obj_diff) {
+				CbcSolver.reloadAndWriteLp("_obj"+Math.round(diff), true);
+			}
+			if (Math.abs(diff) > CbcSolver.log_if_obj_diff) {
+				xa_int += "  obj: " + String.format("%16.3f", diff);
+				cbc_int += "  obj: " + String.format("%16.3f", diff);
+				if (diff>CbcSolver.maxObjDiff){
+					CbcSolver.maxObjDiff = diff;
+					CbcSolver.maxObjDiff_id = ILP.getYearMonthCycle();
+				} else if(diff<CbcSolver.maxObjDiff_minus){
+					CbcSolver.maxObjDiff_minus = diff;
+					CbcSolver.maxObjDiff_minus_id = ILP.getYearMonthCycle();										
+				}
+			}
+		}
+		ILP.writeNoteLn(ILP.getYearMonthCycle(), ""+ xa_int, ILP._noteFile_xa_int);
+		ILP.writeNoteLn(ILP.getYearMonthCycle(), ""+ cbc_int, ILP._noteFile_cbc_int);		
 	}
 	
 	public static void main(String argv[]) {
@@ -1438,7 +1497,46 @@ public class CbcSolver {
 		solveName="cal";
 		jCbc.setIntegerTolerance(model, integerT);
 		//jCbc.callCbc("-log 0 -preprocess off -presolve off -cutsOnOff off -primalT 1e-4 -integerT 1e-7 -solve", model);
-		jCbc.callCbc("-log 0 -preprocess off -presolve on -cutsOnOff on -primalT 1e-5 -integerT 1e-8 -solve", model);
+		//jCbc.callCbc("-log 0 -preprocess off -presolve on -cutsOnOff on -primalT 1e-5 -integerT 1e-8 -solve", model);
+		jCbc.callCbc("-log 0 -preprocess off -presolve on -cutsOnOff on -primalT "+solve_2_primalT_relax+" -integerT "+integerT+" -solve", model);
+	}
+
+	public static void logIntCheck(StudyDataSet sds){
+			
+			String cbc_int = "";
+			
+			// write solve name
+			cbc_int +=  ","+CbcSolver.solveName;
+			
+			// write solve time
+			cbc_int +=  ","+String.format("%8.2f",ControlData.solverTime_cbc_this);
+			
+			if (sds.cycIntDvMap != null && sds.cycIntDvMap.containsKey(ControlData.currCycleIndex)) {
+				ArrayList<String> intDVs = new ArrayList<String>(sds.cycIntDvMap.get(ControlData.currCycleIndex));
+				Boolean int_violation = false;
+				for (String v : sds.allIntDv) {
+					if (intDVs.contains(v)){
+						//xa_int  += " "+ Math.round(ControlData.xasolver.getColumnActivity(v));
+						if (Error.getTotalError()==0) {
+							//cbc_int += " "+ Math.round(CbcSolver.varDoubleMap.get(v));
+							double x = CbcSolver.varDoubleMap.get(v);
+							cbc_int += ","+ x;
+							if   (Math.abs( Math.round(x)-x)>1E-7) {int_violation=true;}
+							
+						} else {
+							cbc_int += ",?";
+							int_violation=null;
+						}
+					} else {
+						//xa_int  += "  ";
+						cbc_int += ",";
+					}
+				}
+				cbc_int = "," + int_violation + cbc_int;
+			}
+	
+			ILP.writeNoteLn(ILP.getYearMonthCycle(), ""+ cbc_int, ILP._noteFile_cbc_int_log);					
+		
 	}
 
 }

@@ -133,7 +133,9 @@ public class ILP {
 				
 			} else if (CbcSolver.logObj && ControlData.solverName.equalsIgnoreCase("Cbc")){
 				_noteFile_cbc_obj = Tools.openFile(_ilpDir.getAbsolutePath(), "Note_cbc_obj.log");
-			} else if (CbcSolver.intLog && ControlData.solverName.equalsIgnoreCase("Cbc")){
+			} 
+			
+			if (CbcSolver.intLog && ControlData.solverName.equalsIgnoreCase("Cbc")){
 				_noteFile_cbc_int_log = Tools.openFile(_ilpDir.getAbsolutePath(), "Note_cbc_int_check.csv");
 				if (ControlData.currStudyDataSet.cycIntDvMap!=null) {
 					ILP.writeNote("cyc,int_violation,solver,time,", _noteFile_cbc_int_log);
@@ -146,6 +148,7 @@ public class ILP {
 					//ILP.writeNote("\r\n", _noteFile_xa_int);
 				}
 			}
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -175,7 +178,7 @@ public class ILP {
 		}
 	}
 
-	private static void setMaximumFractionDigits() {
+	public static void setMaximumFractionDigits() {
 		
 		df = new DecimalFormat();
 		//df.setMinimumFractionDigits(2);
@@ -199,6 +202,24 @@ public class ILP {
 
 	public static void writeIlp() {
 		
+//		Set<String> dvar_inConstraint = findDvarInConstraint();
+//		Set<String> dvar_weighted = findWeightedDvar();
+//		//Set<String> dvar_unWeighted = findUnWeightedDvarInConstraint(dvar_inConstraint, dvar_weighted);
+//		
+//		dvar_effective = new HashSet<String>();
+//		dvar_effective.addAll(dvar_weighted);
+//		dvar_effective.addAll(dvar_inConstraint);
+		
+		findDvarEffective();
+		//if (ILP.loggingMPModel) writeMPModelFile();
+		if (ILP.loggingLpSolve) writeLpSolveFile();
+		if (ILP.loggingCplexLp) writeCplexLpFile();
+		if (ILP.loggingAmpl)    writeAmplFile();
+		
+	}
+
+	public static void findDvarEffective(){
+		
 		Set<String> dvar_inConstraint = findDvarInConstraint();
 		Set<String> dvar_weighted = findWeightedDvar();
 		//Set<String> dvar_unWeighted = findUnWeightedDvarInConstraint(dvar_inConstraint, dvar_weighted);
@@ -207,13 +228,8 @@ public class ILP {
 		dvar_effective.addAll(dvar_weighted);
 		dvar_effective.addAll(dvar_inConstraint);
 		
-		//if (ILP.loggingMPModel) writeMPModelFile();
-		if (ILP.loggingLpSolve) writeLpSolveFile();
-		if (ILP.loggingCplexLp) writeCplexLpFile();
-		if (ILP.loggingAmpl)    writeAmplFile();
-		
 	}
-
+	
 	public static void writeObjValue_XA() {
 		
 		double objValue = ControlData.xasolver.getObjective();
@@ -495,6 +511,32 @@ public class ILP {
 			e1.printStackTrace();
 		}
 	}
+	public static void setSvarFile(){
+		
+		String svarFileName = getYearMonthCycle()+ ".svar";		
+		
+		try {
+			//_svarDir = new File(_ilpDir, "svar");
+			_svarFile = Tools.openFile(_svarDir.getAbsolutePath(), svarFileName);
+		}
+		catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	public static void setDvarFile(String append){
+		
+		String dvarFileName = getYearMonthCycle()+ ".dvar_"+append;
+		
+		try {
+			
+			_dvarFile = Tools.openFile(_dvarDir.getAbsolutePath(), dvarFileName);
+		}
+		catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}	
 	
 	private static void setCplexLpFile() {
 		
@@ -1015,6 +1057,10 @@ public class ILP {
 			if (loggingVariableValueRound) v = Math.round(v);
 			if (loggingVariableValueRound10) {v = Math.round(v/10)*10;}
 			// TODO: improve speed
+//			System.out.println("svarFile:"+svarFile.toString());
+//			System.out.println("svName:"+svName);
+//			System.out.println("v:"+v);
+//			System.out.println("df:"+df.toString());
 			if (v!=0) {
 				svarFile.print(svName + ":  " + String.format("%15s", df.format(v)) +"\n"  );
 			} else {
