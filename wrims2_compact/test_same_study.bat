@@ -8,8 +8,8 @@ start /wait %wrims2%  %study%\cbc.config
 
 start /wait %wrims2%  %study%\tolerance.config
 
-start /wait %wrims2%  %study%\cbcdebug_cbc.config
+start /wait %wrims2%  %study%\solveCompare_base_cbc.config
 
-start /wait %wrims2%  %study%\cbcdebug_xa.config
+start /wait %wrims2%  %study%\solveCompare_base_xa.config
 
 
