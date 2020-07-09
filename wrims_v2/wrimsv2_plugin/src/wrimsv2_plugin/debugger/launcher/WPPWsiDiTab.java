@@ -23,8 +23,11 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.datatools.connectivity.IConnectionProfile;
 import org.eclipse.datatools.connectivity.ProfileManager;
 import org.eclipse.datatools.connectivity.drivers.jdbc.IJDBCConnectionProfileConstants;
+import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunchConfiguration;
+import org.eclipse.debug.core.ILaunchConfigurationType;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
+import org.eclipse.debug.core.ILaunchManager;
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -113,6 +116,12 @@ public class WPPWsiDiTab extends AbstractLaunchConfigurationTab {
 				final IWorkbench workbench=PlatformUI.getWorkbench();
 				workbench.getDisplay().asyncExec(new Runnable(){
 					public void run(){
+						performApply((ILaunchConfigurationWorkingCopy) launchConfig);
+						try {
+							((ILaunchConfigurationWorkingCopy)launchConfig).doSave();
+						} catch (CoreException e) {
+							WPPException.handleException(e);
+						}
 						wsidigenerator();
 					}
 				});
@@ -332,7 +341,9 @@ public class WPPWsiDiTab extends AbstractLaunchConfigurationTab {
 	            	  writer.write("        studyDvName=r\""+dvarPath+"\"\n");
 	              }else if (count==29){
 	            	  writer.write("        lookupName=r\""+lookupPath+"\"\n");
-	              }else{
+	              }else if (count==30){
+	            	  writer.write("        launchName=r\""+launchConfig.getFile().getLocation().toFile().getAbsolutePath()+"\"\n");
+	         	  }else{
 	                  writer.append(line+"\n");
 	              }
 	         }
