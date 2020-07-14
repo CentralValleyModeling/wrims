@@ -31,6 +31,7 @@ public class WsiDiBatchRunCmd {
 	private String dvNamesLine="";
 	private String lookupNamesLine="";
 	private String engineNamesLine="";
+	private String launchNamesLine="";
 	
 	public WsiDiBatchRunCmd(String[] args){
 		processArgs(args);
@@ -105,6 +106,8 @@ public class WsiDiBatchRunCmd {
 	            	  writer.write(lookupNamesLine);
 	              }else if (count==31){
 	            	  writer.write(engineNamesLine);
+	              }else if (count==32){
+	            	  writer.write(launchNamesLine);
 	              }else{
 	                  writer.append(line+"\n");
 	              }
@@ -145,6 +148,8 @@ public class WsiDiBatchRunCmd {
 	            	  writer.write(lookupNamesLine);
 	              }else if (count==31){
 	            	  writer.write(engineNamesLine);
+	              }else if (count==32){
+	            	  writer.write(launchNamesLine);
 	              }else{
 	                  writer.append(line+"\n");
 	              }
@@ -170,6 +175,7 @@ public class WsiDiBatchRunCmd {
 		dvNamesLine =   "        studyDvNames=[";
 		lookupNamesLine="        lookupNames=[";
 		engineNamesLine="        engineNames=[";
+		launchNamesLine="        launchNames=[";
 		
 		for (int i=0; i<launchPathList.size(); i++){
 			String lfp=launchPathList.get(i);
@@ -181,16 +187,19 @@ public class WsiDiBatchRunCmd {
 					dvNamesLine=dvNamesLine+"r\""+brp.dvFileFullPath+"\"";
 					lookupNamesLine=lookupNamesLine+"r\""+brp.lookupFullPath+"\"";
 					engineNamesLine=engineNamesLine+"r\""+brp.engineFileFullPath+"\"";
+					launchNamesLine=launchNamesLine+"r\""+lfp+"\""; 
 				}else{
 					dvNamesLine=dvNamesLine+",r\""+brp.dvFileFullPath+"\"";
 					lookupNamesLine=lookupNamesLine+",r\""+brp.lookupFullPath+"\"";
 					engineNamesLine=engineNamesLine+",r\""+brp.engineFileFullPath+"\"";
+					launchNamesLine=launchNamesLine+",r\""+lfp+"\"";
 				}
 			}
 		}
 		dvNamesLine=dvNamesLine+"]\n";
 		lookupNamesLine=lookupNamesLine+"]\n";
 		engineNamesLine=engineNamesLine+"]\n";
+		launchNamesLine=launchNamesLine+"]\n";
 	}
 	
 	public void processArgs(String[] args){

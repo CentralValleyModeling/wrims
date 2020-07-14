@@ -61,6 +61,7 @@ public class WPPBatchRunDialog extends Dialog {
 	private String dvNamesLine="";
 	private String lookupNamesLine="";
 	private String engineNamesLine="";
+	private String launchNamesLine="";
 	
 	public WPPBatchRunDialog(Shell parentShell) {
 		super(parentShell, SWT.MIN);
@@ -583,6 +584,8 @@ public class WPPBatchRunDialog extends Dialog {
 	            	  writer.write(lookupNamesLine);
 	              }else if (count==31){
 	            	  writer.write(engineNamesLine);
+	              }else if (count==32){
+	            	  writer.write(launchNamesLine);
 	              }else{
 	                  writer.append(line+"\n");
 	              }
@@ -623,6 +626,8 @@ public class WPPBatchRunDialog extends Dialog {
 	            	  writer.write(lookupNamesLine);
 	              }else if (count==31){
 	            	  writer.write(engineNamesLine);
+	              }else if (count==32){
+	            	  writer.write(launchNamesLine);
 	              }else{
 	                  writer.append(line+"\n");
 	              }
@@ -648,6 +653,7 @@ public class WPPBatchRunDialog extends Dialog {
 		dvNamesLine =   "        studyDvNames=[";
 		lookupNamesLine="        lookupNames=[";
 		engineNamesLine="        engineNames=[";
+		launchNamesLine="        launchNames=[";
 		
 		for (int i=0; i<launchPathList.size(); i++){
 			String lfp=launchPathList.get(i);
@@ -659,16 +665,19 @@ public class WPPBatchRunDialog extends Dialog {
 					dvNamesLine=dvNamesLine+"r\""+brp.dvFileFullPath+"\"";
 					lookupNamesLine=lookupNamesLine+"r\""+brp.lookupFullPath+"\"";
 					engineNamesLine=engineNamesLine+"r\""+brp.engineFileFullPath+"\"";
+					launchNamesLine=launchNamesLine+"r\""+lfp+"\""; 
 				}else{
 					dvNamesLine=dvNamesLine+",r\""+brp.dvFileFullPath+"\"";
 					lookupNamesLine=lookupNamesLine+",r\""+brp.lookupFullPath+"\"";
 					engineNamesLine=engineNamesLine+",r\""+brp.engineFileFullPath+"\"";
+					launchNamesLine=launchNamesLine+",r\""+lfp+"\"";
 				}
 			}
 		}
 		dvNamesLine=dvNamesLine+"]\n";
 		lookupNamesLine=lookupNamesLine+"]\n";
 		engineNamesLine=engineNamesLine+"]\n";
+		launchNamesLine=launchNamesLine+"]\n";
 	}
 	
 	public void procBatchRunFileNames(String fn){
