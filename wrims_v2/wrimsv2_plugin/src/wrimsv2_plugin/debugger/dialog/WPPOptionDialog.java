@@ -151,6 +151,8 @@ public class WPPOptionDialog extends Dialog {
 		logCombo = new Combo(group, SWT.SINGLE|SWT.BORDER);
 		logCombo.add("None");
 		logCombo.add("Log");
+		logCombo.add("xa_cbc");
+		logCombo.add("cbc_xa");
 		
 		if (DebugCorePlugin.solver.equals("CBC")){
 			solverCombo.select(0);
@@ -179,6 +181,10 @@ public class WPPOptionDialog extends Dialog {
 			logCombo.select(0);
 		}else if (DebugCorePlugin.log.equals("Log")){
 			logCombo.select(1);
+		}else if (DebugCorePlugin.log.equals("xa_cbc")){
+			logCombo.select(2);
+		}else if (DebugCorePlugin.log.equals("cbc_xa")){
+			logCombo.select(3);
 		}
 		logCombo.setLayoutData(gridData);
 		

@@ -2269,7 +2269,7 @@ public class DebugInterface {
 				ControlData.solverName="XALOG";
 				ILP.initializeIlp();
 				System.out.println("Log file turn on");
-			}
+			}		
 		}else if(solverName.equals("LPSolve")){
 			ControlData.solverName="LPSolve";
 			ILP.loggingLpSolve=true;
@@ -2309,11 +2309,29 @@ public class DebugInterface {
 			if (log.equals("None")){
 				ILP.logging=false;
 				ILP.loggingVariableValue=false;
-				System.out.println("Log file turn off");
+				ControlData.cbc_debug_routeXA = false;
+				ControlData.cbc_debug_routeCbc = false;
+				System.out.println("Log file turned off");
 			}else if (log.equals("Log")){
 				ILP.logging=true;
 				ILP.loggingVariableValue=true;
-				System.out.println("Log file turn on");
+				ControlData.cbc_debug_routeXA = false;
+				ControlData.cbc_debug_routeCbc = false;
+				System.out.println("Log file turned on");
+			}else if (log.equals("xa_cbc")){
+				ILP.logging=true;
+				ILP.loggingVariableValue=true;
+				ControlData.cbc_debug_routeXA = false;	
+				ControlData.cbc_debug_routeCbc = true;
+				new InitialXASolver();
+				System.out.println("CBC route turned on");
+			}else if (log.equals("cbc_xa")){
+				ILP.logging=true;
+				ILP.loggingVariableValue=true;
+				ControlData.cbc_debug_routeXA = true;
+				ControlData.cbc_debug_routeCbc = false;
+				new InitialXASolver();
+				System.out.println("XA route turned on");
 			}
 			if (ControlData.useCbcWarmStart || ControlData.cbc_debug_routeCbc || ControlData.cbc_debug_routeXA){
 				if (ControlData.solverName.equalsIgnoreCase("Cbc")  || ControlData.solverName.equalsIgnoreCase("Cbc1")){
