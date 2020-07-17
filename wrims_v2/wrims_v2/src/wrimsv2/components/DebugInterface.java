@@ -587,6 +587,60 @@ public class DebugInterface {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}else if (request.startsWith("cbcTolerancePrimal:")){
+			String[] requestParts=request.split(":");
+			CbcSolver.solve_2_primalT = Double.parseDouble(requestParts[1]);
+			try {
+				sendRequest(request+" set");
+				System.out.println(request+" set");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else if (request.startsWith("cbcTolerancePrimalRelax:")){
+			String[] requestParts=request.split(":");
+			CbcSolver.solve_2_primalT_relax = Double.parseDouble(requestParts[1]);
+			try {
+				sendRequest(request+" set");
+				System.out.println(request+" set");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else if (request.startsWith("cbcToleranceWarmPrimal:")){
+			String[] requestParts=request.split(":");
+			CbcSolver.solve_whs_primalT = Double.parseDouble(requestParts[1]);
+			try {
+				sendRequest(request+" set");
+				System.out.println(request+" set");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else if (request.startsWith("cbcToleranceInteger:")){
+			String[] requestParts=request.split(":");
+			CbcSolver.integerT = Double.parseDouble(requestParts[1]);
+			try {
+				sendRequest(request+" set");
+				System.out.println(request+" set");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else if (request.startsWith("cbcToleranceIntegerCheck:")){
+			String[] requestParts=request.split(":");
+			CbcSolver.integerT_check = Double.parseDouble(requestParts[1]);
+			try {
+				sendRequest(request+" set");
+				System.out.println(request+" set");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else if (request.startsWith("cbcToleranceZero:")){
+			String[] requestParts=request.split(":");
+			ControlData.zeroTolerance = Double.parseDouble(requestParts[1]);
+			try {
+				sendRequest(request+" set");
+				System.out.println(request+" set");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

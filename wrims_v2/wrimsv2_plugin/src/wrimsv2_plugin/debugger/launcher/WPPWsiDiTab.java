@@ -52,6 +52,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 
+import wrimsv2_plugin.debugger.core.CBCSetting;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.dialog.WPPDssToSqlDialog;
 import wrimsv2_plugin.debugger.exception.WPPException;
@@ -288,6 +289,16 @@ public class WPPWsiDiTab extends AbstractLaunchConfigurationTab {
 			//	out.println("LpSolveConfigFile         callite.lpsolve");
 			//	out.println("LpSolveNumberOfRetries    2");				
 			//}	
+			
+			if (CBCSetting.changeSetting){
+				out.println("cbcTolerancePrimal        "+CBCSetting.cbcTolerancePrimal);
+				out.println("cbcTolerancePrimalRelax   "+CBCSetting.cbcTolerancePrimalRelax);
+				out.println("cbcToleranceWarmPrimal    "+CBCSetting.cbcToleranceWarmPrimal);
+				out.println("cbcToleranceInteger       "+CBCSetting.cbcToleranceInteger);
+				out.println("cbcToleranceIntegerCheck  "+CBCSetting.cbcToleranceIntegerCheck);
+				out.println("cbcToleranceZero          "+CBCSetting.cbcToleranceZero);
+			}
+			
 			out.close();
 			configFilePath= new File(studyDir, configName).getAbsolutePath();
 		} catch (Exception e) {

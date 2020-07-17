@@ -25,6 +25,7 @@ import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.model.IDebugTarget;
 import org.eclipse.debug.core.model.IProcess;
 
+import wrimsv2_plugin.debugger.core.CBCSetting;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.msr.MSRDataTransferBR;
 import wrimsv2_plugin.debugger.msr.MSRProcRunBR;
@@ -601,6 +602,15 @@ public class BatchRunProcess {
 			}
 			if (launchType==1 || (ms>1 && afterFirstRound)){
 				out.println("prefixinittodvarfile  "+configMap.get("prefixinittodvarfile"));
+			}
+			
+			if (CBCSetting.changeSetting){
+				out.println("cbcTolerancePrimal        "+CBCSetting.cbcTolerancePrimal);
+				out.println("cbcTolerancePrimalRelax   "+CBCSetting.cbcTolerancePrimalRelax);
+				out.println("cbcToleranceWarmPrimal    "+CBCSetting.cbcToleranceWarmPrimal);
+				out.println("cbcToleranceInteger       "+CBCSetting.cbcToleranceInteger);
+				out.println("cbcToleranceIntegerCheck  "+CBCSetting.cbcToleranceIntegerCheck);
+				out.println("cbcToleranceZero          "+CBCSetting.cbcToleranceZero);
 			}
 			
 			out.close();

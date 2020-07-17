@@ -288,6 +288,8 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static boolean outputAllCycles=true;
 	public static String outputCycles="\'\'";
 	
+	public static String devPass = "ModelingisNo1";
+	
 	/**
 	 * The constructor.
 	 */
