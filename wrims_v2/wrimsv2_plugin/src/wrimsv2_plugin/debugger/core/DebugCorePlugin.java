@@ -280,7 +280,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static String repNote="";
 	public static String repAssumption="";
 	public static String repModeler="";
-	public static String repFontSize="9";
+	public static String repFontSize="8";
 	public static String reportFileName="";
 	
 	public static String xmx="4096";

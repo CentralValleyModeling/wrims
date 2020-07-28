@@ -3,6 +3,8 @@ package wrimsv2_plugin.reporttool;
 import gov.ca.dsm2.input.parser.InputTable;
 import gov.ca.dsm2.input.parser.Parser;
 import gov.ca.dsm2.input.parser.Tables;
+import hec.heclib.util.HecTime;
+import hec.io.TimeSeriesContainer;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -11,6 +13,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -299,6 +302,12 @@ public class Report {
 							+ pathMap.var_name.replace("\"", ""), series_name,
 							"Allocation (%)", "Probability",
 							PlotType.EXCEEDANCE);
+				} else if (pathMap.report_type.equals("month_avg")){
+					generatePlot(Utils.buildMonthlyAverages(refAlt, refBase, tw),
+							dataIndex, "Monthly Average "
+									+ pathMap.var_name.replace("\"", ""),
+							series_name, data_type + "(" + data_units + ")",
+							"Time", PlotType.TIME_SERIES);
 				}
 			}
 		}
