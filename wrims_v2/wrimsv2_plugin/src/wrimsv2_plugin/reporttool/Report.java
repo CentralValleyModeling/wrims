@@ -260,7 +260,7 @@ public class Report {
 			if (pathMap.units.equals("CFS2TAF")) {
 				TSMath.cfs2taf((RegularTimeSeries) refBase.getData());
 				TSMath.cfs2taf((RegularTimeSeries) refAlt.getData());
-			} else if (pathMap.units.equals("TAF2CFS")) {
+			} else if (pathMap.units.equals("TAF2CFS") || pathMap.units.equals("CFS")) {
 				TSMath.taf2cfs((RegularTimeSeries) refBase.getData());
 				TSMath.taf2cfs((RegularTimeSeries) refAlt.getData());
 			}
@@ -380,16 +380,27 @@ public class Report {
 			for (TimeWindow tw : timewindows) {
 				double avgBase = 0, avgAlt = 0;
 				if (refAlt != null) {
-					avgAlt = Utils.avg(Utils.cfs2taf((RegularTimeSeries) refAlt
+					if (pathMap.units.equals("CFS")|| pathMap.units.equals("TAF2CFS")){
+						avgAlt = Utils.avg(Utils.taf2cfs((RegularTimeSeries) refAlt
+							.getData()), tw)/12.0;
+					}else{
+						avgAlt = Utils.avg(Utils.cfs2taf((RegularTimeSeries) refAlt
 							.getData()), tw);
+					}
 					rowData.add(formatDoubleValue(avgAlt));
 				} else {
 					rowData.add("");
 				}
 				if (refBase != null) {
-					avgBase = Utils
+					if (pathMap.units.equals("CFS")|| pathMap.units.equals("TAF2CFS")){
+						avgBase = Utils
+								.avg(Utils.taf2cfs((RegularTimeSeries) refBase
+										.getData()), tw)/12.0;
+					}else{
+						avgBase = Utils
 							.avg(Utils.cfs2taf((RegularTimeSeries) refBase
 									.getData()), tw);
+					}
 					rowData.add(formatDoubleValue(avgBase));
 				} else {
 					rowData.add("");
