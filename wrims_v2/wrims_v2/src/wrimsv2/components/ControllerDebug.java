@@ -428,7 +428,7 @@ public class ControllerDebug extends Thread {
 							}
 						}
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
-						if (CbcSolver.intLog) {
+						if (CbcSolver.intLog && ControlData.solverName.equalsIgnoreCase("CBC")) {
 							CbcSolver.logIntCheck(sds);	
 						}
 						if (ControlData.solverName.equalsIgnoreCase("CBC")){CbcSolver.resetModel();}

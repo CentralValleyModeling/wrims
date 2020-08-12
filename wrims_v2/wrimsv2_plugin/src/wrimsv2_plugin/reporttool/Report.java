@@ -257,10 +257,10 @@ public class Report {
 				continue;
 			}
 			String[] series_name = new String[] { scalars.get("NAME_ALT"), scalars.get("NAME_BASE") };
-			if (pathMap.units.equals("CFS2TAF")) {
+			if (pathMap.units.equalsIgnoreCase("CFS2TAF")) {
 				TSMath.cfs2taf((RegularTimeSeries) refBase.getData());
 				TSMath.cfs2taf((RegularTimeSeries) refAlt.getData());
-			} else if (pathMap.units.equals("TAF2CFS") || pathMap.units.equals("CFS")) {
+			} else if (pathMap.units.equalsIgnoreCase("TAF2CFS") || pathMap.units.equalsIgnoreCase("CFS")) {
 				TSMath.taf2cfs((RegularTimeSeries) refBase.getData());
 				TSMath.taf2cfs((RegularTimeSeries) refAlt.getData());
 			}
@@ -380,7 +380,7 @@ public class Report {
 			for (TimeWindow tw : timewindows) {
 				double avgBase = 0, avgAlt = 0;
 				if (refAlt != null) {
-					if (pathMap.units.equals("CFS")|| pathMap.units.equals("TAF2CFS")){
+					if (pathMap.units.equalsIgnoreCase("CFS")|| pathMap.units.equalsIgnoreCase("TAF2CFS")){
 						avgAlt = Utils.avg(Utils.taf2cfs((RegularTimeSeries) refAlt
 							.getData()), tw)/12.0;
 					}else{
@@ -392,7 +392,7 @@ public class Report {
 					rowData.add("");
 				}
 				if (refBase != null) {
-					if (pathMap.units.equals("CFS")|| pathMap.units.equals("TAF2CFS")){
+					if (pathMap.units.equalsIgnoreCase("CFS")|| pathMap.units.equalsIgnoreCase("TAF2CFS")){
 						avgBase = Utils
 								.avg(Utils.taf2cfs((RegularTimeSeries) refBase
 										.getData()), tw)/12.0;
