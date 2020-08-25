@@ -84,7 +84,7 @@ options {
 
 wreslFile
 @after{ mObj = $t.modelObj;}
-	: ('{' t=mt '}') | t=mt ; 
+	: ('{' t=mt '}') | ( t=mt EOF ); 
 
 wreslMain
 scope { StudyTemp sty;} 
@@ -96,7 +96,7 @@ scope { StudyTemp sty;}
 	( seq=sequence { $wreslMain::sty.seqList.add($seq.id); $wreslMain::sty.seqMap.put($seq.id,$seq.seqObj);  }    )+ 
 	( g=group      { $wreslMain::sty.modelList.add($g.id); $wreslMain::sty.modelMap.put($g.id, $g.modelObj);  }    )*
 	( m=model      { $wreslMain::sty.modelList.add($m.id); $wreslMain::sty.modelMap.put($m.id, $m.modelObj);  }    )+ 
-	;
+	EOF ;
 
 local_deprecated
   : '[' LOCAL ']' ;
