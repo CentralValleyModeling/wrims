@@ -280,13 +280,15 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static String repNote="";
 	public static String repAssumption="";
 	public static String repModeler="";
-	public static String repFontSize="9";
+	public static String repFontSize="8";
 	public static String reportFileName="";
 	
 	public static String xmx="4096";
 	public static boolean outputCycleToDss=false;
 	public static boolean outputAllCycles=true;
 	public static String outputCycles="\'\'";
+	
+	public static String devPass = "ModelingisNo1";
 	
 	/**
 	 * The constructor.

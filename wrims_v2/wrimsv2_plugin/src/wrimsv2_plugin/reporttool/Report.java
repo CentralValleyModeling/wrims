@@ -3,6 +3,8 @@ package wrimsv2_plugin.reporttool;
 import gov.ca.dsm2.input.parser.InputTable;
 import gov.ca.dsm2.input.parser.Parser;
 import gov.ca.dsm2.input.parser.Tables;
+import hec.heclib.util.HecTime;
+import hec.io.TimeSeriesContainer;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -11,6 +13,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -254,10 +257,10 @@ public class Report {
 				continue;
 			}
 			String[] series_name = new String[] { scalars.get("NAME_ALT"), scalars.get("NAME_BASE") };
-			if (pathMap.units.equals("CFS2TAF")) {
+			if (pathMap.units.equalsIgnoreCase("CFS2TAF")) {
 				TSMath.cfs2taf((RegularTimeSeries) refBase.getData());
 				TSMath.cfs2taf((RegularTimeSeries) refAlt.getData());
-			} else if (pathMap.units.equals("TAF2CFS")) {
+			} else if (pathMap.units.equalsIgnoreCase("TAF2CFS") || pathMap.units.equalsIgnoreCase("CFS")) {
 				TSMath.taf2cfs((RegularTimeSeries) refBase.getData());
 				TSMath.taf2cfs((RegularTimeSeries) refAlt.getData());
 			}
@@ -299,6 +302,12 @@ public class Report {
 							+ pathMap.var_name.replace("\"", ""), series_name,
 							"Allocation (%)", "Probability",
 							PlotType.EXCEEDANCE);
+				} else if (pathMap.report_type.equals("month_avg")){
+					generatePlot(Utils.buildMonthlyAverages(refAlt, refBase, tw),
+							dataIndex, "Monthly Average "
+									+ pathMap.var_name.replace("\"", ""),
+							series_name, data_type + "(" + data_units + ")",
+							"Time", PlotType.TIME_SERIES);
 				}
 			}
 		}
@@ -371,16 +380,27 @@ public class Report {
 			for (TimeWindow tw : timewindows) {
 				double avgBase = 0, avgAlt = 0;
 				if (refAlt != null) {
-					avgAlt = Utils.avg(Utils.cfs2taf((RegularTimeSeries) refAlt
+					if (pathMap.units.equalsIgnoreCase("CFS")|| pathMap.units.equalsIgnoreCase("TAF2CFS")){
+						avgAlt = Utils.avg(Utils.taf2cfs((RegularTimeSeries) refAlt
+							.getData()), tw)/12.0;
+					}else{
+						avgAlt = Utils.avg(Utils.cfs2taf((RegularTimeSeries) refAlt
 							.getData()), tw);
+					}
 					rowData.add(formatDoubleValue(avgAlt));
 				} else {
 					rowData.add("");
 				}
 				if (refBase != null) {
-					avgBase = Utils
+					if (pathMap.units.equalsIgnoreCase("CFS")|| pathMap.units.equalsIgnoreCase("TAF2CFS")){
+						avgBase = Utils
+								.avg(Utils.taf2cfs((RegularTimeSeries) refBase
+										.getData()), tw)/12.0;
+					}else{
+						avgBase = Utils
 							.avg(Utils.cfs2taf((RegularTimeSeries) refBase
 									.getData()), tw);
+					}
 					rowData.add(formatDoubleValue(avgBase));
 				} else {
 					rowData.add("");

@@ -9,7 +9,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Date;
 import java.util.Set;
@@ -238,6 +240,9 @@ public class ControllerDebug extends Thread {
 	public void runModelSolvers(StudyDataSet sds){
 		
 		ILP.getIlpDir();
+		ILP.setVarDir();
+		ILP.createNoteFile();
+		ILP.setMaximumFractionDigits();
 		ILP.initializeIlp();
 		
 		ArrayList<String> modelList=sds.getModelList();
@@ -251,6 +256,7 @@ public class ControllerDebug extends Thread {
 			}
 		}else if (ControlData.solverName.equalsIgnoreCase("CBC")){
 			CbcSolver.init(false, sds);
+			if (ControlData.cbc_debug_routeXA || ControlData.cbc_debug_routeCbc) {new InitialXASolver();}
 		}else if (ControlData.solverName.equalsIgnoreCase("Gurobi")){
 			GurobiSolver.initialize();
 		}
@@ -326,7 +332,16 @@ public class ControllerDebug extends Thread {
 								ILP.writeDvarValue_XA();
 							}
 				        }else if (ControlData.solverName.equalsIgnoreCase("CBC")){
-				        	if (ILP.logging && isSelectedCycleOutput) {
+				        	HashSet<String> originalDvarKeys=null;
+				        	if (ControlData.cbc_debug_routeCbc || ControlData.cbc_debug_routeXA) {
+								originalDvarKeys = new LinkedHashSet<String>(SolverData.getDvarMap().keySet());
+//								ILP.getIlpDir();
+//								ILP.setVarDir();
+								ILP.setSvarFile();
+//								ILP.setMaximumFractionDigits();
+								// write svar
+								ILP.writeSvarValue();
+							}else if (ILP.logging && isSelectedCycleOutput) {
 				        		ILP.setIlpFile();
 				        		ILP.writeIlp();
 				        		if (ILP.loggingVariableValue){
@@ -334,8 +349,30 @@ public class ControllerDebug extends Thread {
 				        			ILP.writeSvarValue();
 				        		}
 				        	}
+				        	
+				        	if (ControlData.cbc_debug_routeCbc) {
+								new XASolver();
+								SolverData.getDvarMap().keySet().retainAll(originalDvarKeys);
+								if (Error.error_solving.size() > 0) {
+									String msg = "XA solving error.";
+									ILP.writeNoteLn("", msg);
+									System.out.println("" + msg);
+									Error.writeErrorLog();
+									Error.error_solving.clear();
+								}
+								
+							}
+				        	
 							CbcSolver.newProblem();
-							if (Error.error_solving.size()<1) {
+							
+							if (ControlData.cbc_debug_routeXA) {
+								SolverData.getDvarMap().keySet().retainAll(originalDvarKeys);
+								new XASolver();
+							}
+							
+							if (ControlData.cbc_debug_routeXA ||ControlData.cbc_debug_routeCbc ) {										
+								CbcSolver.logCbcDebug(sds);
+							}else if (Error.error_solving.size()<1) {
 				            	if (ILP.logging && isSelectedCycleOutput) {
 				            		ILP.writeObjValue_Clp0_Cbc0();
 				            		if (ILP.loggingVariableValue) ILP.writeDvarValue_Clp0_Cbc0(CbcSolver.varDoubleMap);
@@ -391,6 +428,9 @@ public class ControllerDebug extends Thread {
 							}
 						}
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
+						if (CbcSolver.intLog && ControlData.solverName.equalsIgnoreCase("CBC")) {
+							CbcSolver.logIntCheck(sds);	
+						}
 						if (ControlData.solverName.equalsIgnoreCase("CBC")){CbcSolver.resetModel();}
 						pauseForDebug(modelIndex);
 						if (Error.error_evaluation.size()>=1) noError=false;

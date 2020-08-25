@@ -1,12 +1,17 @@
 package wrimsv2_plugin.reporttool;
 
 import wrimsv2_plugin.reporttool.Report.PathnameMap;
+import wrimsv2_plugin.tools.TimeOperation;
+import hec.heclib.util.HecTime;
+import hec.io.TimeSeriesContainer;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.List;
 import java.util.TimeZone;
 
 import vista.db.dss.DSSUtil;
@@ -359,4 +364,79 @@ public class Utils {
 
 	}
 
+	public static ArrayList<double[]> buildMonthlyAverages(DataReference ref1, DataReference ref2, TimeWindow tw) {
+		ArrayList<double[]> dlist = new ArrayList<double[]>();
+		if ((ref1 == null) && (ref2 == null)) {
+			return dlist;
+		}
+		TimeSeries data1 = (TimeSeries) ref1.getData();
+		TimeSeries data2 = (TimeSeries) ref2.getData();
+		if (tw != null) {
+			data1 = data1.createSlice(tw);
+			data2 = data2.createSlice(tw);
+		}
+		
+		int[] size1=new int[12];
+		int[] size2=new int[12];
+		double[] avg1=new double[12];
+		double[] avg2=new double[12];
+		for (int i=0; i<12; i++){
+			size1[i]=0;
+			size2[i]=0;
+			avg1[i]=0.0;
+			avg2[i]=0.0;
+		}
+		
+		Date date=new Date();
+		MultiIterator iterator = buildMultiIterator(new TimeSeries[] { data1, data2 }, Constants.DEFAULT_FLAG_FILTER);
+		while (!iterator.atEnd()) {
+			DataSetElement e = iterator.getElement();
+			date = convertToDate(TimeFactory.getInstance().createTime(e.getXString()));
+			int index=date.getMonth();
+			size1[index]=size1[index]+1;
+			size2[index]=size2[index]+1;
+			avg1[index]=avg1[index]+e.getX(1);
+			avg2[index]=avg2[index]+e.getX(2);
+			iterator.advance();
+		}
+		
+		for (int i=9; i<12; i++){
+			Date dataDate=new Date();
+			int year=date.getYear()-1;
+			dataDate.setYear(year);
+			dataDate.setMonth(i);
+			dataDate.setDate(TimeOperation.numberOfDays(i+1, 1900+year));
+			if (size1[i]==0){
+				avg1[i]=0.0;
+			}else{
+				avg1[i]=avg1[i]/size1[i];
+			}
+			if (size2[i]==0){
+				avg2[i]=0.0;
+			}else{
+				avg2[i]=avg2[i]/size2[i];
+			}
+			dlist.add(new double[] { dataDate.getTime(), avg1[i], avg2[i] });
+		}
+		
+		for (int i=0; i<9; i++){
+			Date dataDate=new Date();
+			int year=date.getYear();
+			dataDate.setYear(year);
+			dataDate.setMonth(i);
+			dataDate.setDate(TimeOperation.numberOfDays(i+1, 1900+year));
+			if (size1[i]==0){
+				avg1[i]=0.0;
+			}else{
+				avg1[i]=avg1[i]/size1[i];
+			}
+			if (size2[i]==0){
+				avg2[i]=0.0;
+			}else{
+				avg2[i]=avg2[i]/size2[i];
+			}
+			dlist.add(new double[] { dataDate.getTime(), avg1[i], avg2[i] });
+		}
+		return dlist;
+	}
 }

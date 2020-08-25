@@ -13,16 +13,20 @@ import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.console.IConsoleConstants;
 import org.eclipse.ui.internal.Workbench;
 
+import wrimsv2_plugin.debugger.core.CBCSetting;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.core.SettingPref;
 import wrimsv2_plugin.debugger.exception.WPPException;
@@ -36,6 +40,25 @@ public class WPPOptionDialog extends Dialog {
 	private Button buttonAllCycles;
 	private Button buttonSelectedCycles;
 	private Text textSelectedCycles;
+	private Text txtcbcTolerancePrimal;
+	private Text txtcbcTolerancePrimalRelax;
+	private Text txtcbcToleranceWarmPrimal;
+	private Text txtcbcToleranceInteger;
+	private Text txtcbcToleranceIntegerCheck;
+	private Text txtcbcToleranceZero;
+	private Text txtDevPass;
+	private double pvcbcTolerancePrimal;
+	private double pvcbcTolerancePrimalRelax;
+	private double pvcbcToleranceWarmPrimal;
+	private double pvcbcToleranceInteger;
+	private double pvcbcToleranceIntegerCheck;
+	private double pvcbcToleranceZero;
+	private double vcbcTolerancePrimal;
+	private double vcbcTolerancePrimalRelax;
+	private double vcbcToleranceWarmPrimal;
+	private double vcbcToleranceInteger;
+	private double vcbcToleranceIntegerCheck;
+	private double vcbcToleranceZero;
 
 	public WPPOptionDialog(Shell parent) {
 		super(parent, SWT.MIN);
@@ -46,7 +69,7 @@ public class WPPOptionDialog extends Dialog {
 		Shell shell=new Shell(getParent(), getStyle());
 		shell.setText(getText());
 		createContents(shell);
-		shell.setSize(450, 350);
+		shell.setSize(550, 400);
 		shell.setLocation(450, 300);
 		//shell.pack();
 		shell.open();
@@ -63,15 +86,19 @@ public class WPPOptionDialog extends Dialog {
 		
 		final TabFolder tabFolder = new TabFolder(shell, SWT.BORDER);
 
-	    TabItem generalTab = new TabItem(tabFolder, SWT.NULL);
+	    TabItem generalTab = new TabItem(tabFolder, SWT.BORDER);
 	    generalTab.setText("General");
 	    createGeneralTab(tabFolder, generalTab);
 	    
-	    TabItem cycleTab = new TabItem(tabFolder, SWT.NULL);
+	    TabItem cycleTab = new TabItem(tabFolder, SWT.BORDER);
 	    cycleTab.setText("Cycles");
 	    createCycleTab(tabFolder, cycleTab);
 	    
-	    tabFolder.setSize(400, 300);
+	    TabItem cbcTab = new TabItem(tabFolder, SWT.BORDER);
+	    cbcTab.setText("CBC");
+	    createCBCTab(tabFolder, cbcTab);
+	    
+	    tabFolder.setSize(500, 350);
 	    tabFolder.setLayoutData(gridData);
 		
 		gridData=new GridData(GridData.HORIZONTAL_ALIGN_CENTER);
@@ -81,6 +108,11 @@ public class WPPOptionDialog extends Dialog {
 		ok.setText("OK");
 		ok.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent event){
+				int iAssignCBCSetting=assignCBCSetting();
+				if (iAssignCBCSetting==0){
+					showDevPassFail();
+					return;
+				}
 				DebugCorePlugin.xmx=textMemory.getText();
 				DebugCorePlugin.solver=solverCombo.getText();
 				DebugCorePlugin.log=logCombo.getText();
@@ -102,6 +134,33 @@ public class WPPOptionDialog extends Dialog {
 							DebugCorePlugin.target.sendRequest("OutputAllCyclesOff");
 						}
 						DebugCorePlugin.target.sendRequest("SelectedCycleOutput:"+DebugCorePlugin.outputCycles.replace(" ", ""));
+					
+						if (iAssignCBCSetting==1 || iAssignCBCSetting==3){
+							if (vcbcTolerancePrimal!=pvcbcTolerancePrimal){
+								String cbcSetting = "cbcTolerancePrimal:"+CBCSetting.cbcTolerancePrimal;
+								DebugCorePlugin.target.sendRequest(cbcSetting.replace(" ", ""));
+							}
+							if (vcbcTolerancePrimalRelax!=pvcbcTolerancePrimalRelax){
+								String cbcSetting = "cbcTolerancePrimalRelax:"+CBCSetting.cbcTolerancePrimalRelax;
+								DebugCorePlugin.target.sendRequest(cbcSetting.replace(" ", ""));
+							}
+							if (vcbcToleranceWarmPrimal != pvcbcToleranceWarmPrimal){
+								String cbcSetting = "cbcToleranceWarmPrimal:"+CBCSetting.cbcToleranceWarmPrimal;
+								DebugCorePlugin.target.sendRequest(cbcSetting.replace(" ", ""));
+							}
+							if (vcbcToleranceInteger != pvcbcToleranceInteger){
+								String cbcSetting = "cbcToleranceInteger:"+CBCSetting.cbcToleranceInteger;
+								DebugCorePlugin.target.sendRequest(cbcSetting.replace(" ", ""));
+							}
+							if (vcbcToleranceIntegerCheck != pvcbcToleranceIntegerCheck){
+								String cbcSetting = "cbcToleranceIntegerCheck:"+CBCSetting.cbcToleranceIntegerCheck;
+								DebugCorePlugin.target.sendRequest(cbcSetting.replace(" ", ""));
+							}
+							if (vcbcToleranceZero != pvcbcToleranceZero){
+								String cbcSetting = "cbcToleranceZero:"+CBCSetting.cbcToleranceZero;
+								DebugCorePlugin.target.sendRequest(cbcSetting.replace(" ", ""));
+							}
+						}
 					} catch (DebugException e) {
 						WPPException.handleException(e);
 					}
@@ -134,7 +193,7 @@ public class WPPOptionDialog extends Dialog {
 		layout.marginHeight=15;
 		group.setLayout(layout);
 		
-		GridData gridData=new GridData(GridData.FILL_BOTH);
+		GridData gridData=new GridData(GridData.FILL_HORIZONTAL);
 		gridData.horizontalSpan=1;
 		
 		Label label1 = new Label(group, SWT.NONE);
@@ -151,6 +210,8 @@ public class WPPOptionDialog extends Dialog {
 		logCombo = new Combo(group, SWT.SINGLE|SWT.BORDER);
 		logCombo.add("None");
 		logCombo.add("Log");
+		logCombo.add("xa_cbc");
+		logCombo.add("cbc_xa");
 		
 		if (DebugCorePlugin.solver.equals("CBC")){
 			solverCombo.select(0);
@@ -179,6 +240,10 @@ public class WPPOptionDialog extends Dialog {
 			logCombo.select(0);
 		}else if (DebugCorePlugin.log.equals("Log")){
 			logCombo.select(1);
+		}else if (DebugCorePlugin.log.equals("xa_cbc")){
+			logCombo.select(2);
+		}else if (DebugCorePlugin.log.equals("cbc_xa")){
+			logCombo.select(3);
 		}
 		logCombo.setLayoutData(gridData);
 		
@@ -235,6 +300,94 @@ public class WPPOptionDialog extends Dialog {
 		cycleTab.setControl(group);
 	}
 	
+	public void createCBCTab(TabFolder tabFolder, TabItem cbcTab){		
+		
+		Group group = new Group(tabFolder, SWT.NONE);
+		
+		GridLayout layout=new GridLayout(2, false);
+		layout.marginWidth=20;
+		layout.marginHeight=15;
+		group.setLayout(layout);
+		
+		GridData gridData=new GridData(GridData.FILL_HORIZONTAL);
+		gridData.horizontalSpan=1;
+		
+		Label label1 = new Label(group, SWT.NONE);
+		label1.setLayoutData(gridData);
+		label1.setText("Tolerance Primal:");
+		txtcbcTolerancePrimal=new Text(group, SWT.BORDER);
+		txtcbcTolerancePrimal.setLayoutData(gridData);
+		txtcbcTolerancePrimal.setText(CBCSetting.cbcTolerancePrimal);
+		
+		Label label2 = new Label(group, SWT.NONE);
+		label2.setLayoutData(gridData);
+		label2.setText("Tolerance Primal Relax:");
+		txtcbcTolerancePrimalRelax=new Text(group, SWT.BORDER);
+		txtcbcTolerancePrimalRelax.setLayoutData(gridData);
+		txtcbcTolerancePrimalRelax.setText(CBCSetting.cbcTolerancePrimalRelax);
+		
+		Label label3 = new Label(group, SWT.NONE);
+		label3.setLayoutData(gridData);
+		label3.setText("Tolerance Warm Primal:");		
+		txtcbcToleranceWarmPrimal=new Text(group, SWT.BORDER);
+		txtcbcToleranceWarmPrimal.setLayoutData(gridData);
+		txtcbcToleranceWarmPrimal.setText(CBCSetting.cbcToleranceWarmPrimal);
+		
+		Label label4 = new Label(group, SWT.NONE);
+		label4.setLayoutData(gridData);
+		label4.setText("Tolerance Integer:");		
+		txtcbcToleranceInteger=new Text(group, SWT.BORDER);
+		txtcbcToleranceInteger.setLayoutData(gridData);
+		txtcbcToleranceInteger.setText(CBCSetting.cbcToleranceInteger);
+		
+		Label label5 = new Label(group, SWT.NONE);
+		label5.setLayoutData(gridData);
+		label5.setText("Tolerance Integer Check:");		
+		txtcbcToleranceIntegerCheck=new Text(group, SWT.BORDER);
+		txtcbcToleranceIntegerCheck.setLayoutData(gridData);
+		txtcbcToleranceIntegerCheck.setText(CBCSetting.cbcToleranceIntegerCheck);
+		
+		Label label6 = new Label(group, SWT.NONE);
+		label6.setLayoutData(gridData);
+		label6.setText("Tolerance Zero:");		
+		txtcbcToleranceZero=new Text(group, SWT.BORDER);
+		txtcbcToleranceZero.setLayoutData(gridData);
+		txtcbcToleranceZero.setText(CBCSetting.cbcToleranceZero);
+
+		Label label7 = new Label(group, SWT.NONE);
+		label7.setLayoutData(gridData);
+		label7.setText("Developer Pass Code:");		
+		txtDevPass=new Text(group, SWT.BORDER);
+		txtDevPass.setLayoutData(gridData);
+		txtDevPass.setText("");
+		
+		Button butDefault = new Button(group, SWT.BORDER);
+		butDefault.setLayoutData(gridData);
+		butDefault.setText("Default");
+		butDefault.addSelectionListener(new SelectionAdapter(){
+			public void widgetSelected(SelectionEvent event){
+				txtcbcTolerancePrimal.setText(CBCSetting.cbcTolerancePrimalDefault);
+				txtcbcTolerancePrimalRelax.setText(CBCSetting.cbcTolerancePrimalRelaxDefault);
+				txtcbcToleranceWarmPrimal.setText(CBCSetting.cbcToleranceWarmPrimalDefault);
+				txtcbcToleranceInteger.setText(CBCSetting.cbcToleranceIntegerDefault);
+				txtcbcToleranceIntegerCheck.setText(CBCSetting.cbcToleranceIntegerCheckDefault);
+				txtcbcToleranceZero.setText(CBCSetting.cbcToleranceZeroDefault);
+			}
+		});
+		
+		Label label8 = new Label(group, SWT.NONE);
+		label8.setLayoutData(gridData);
+		label8.setText("");
+		
+		Label label9 = new Label(group, SWT.NONE);
+		GridData gridData2=new GridData(GridData.FILL_HORIZONTAL);
+		gridData2.horizontalSpan=2;
+		label9.setLayoutData(gridData2);
+		label9.setText("*When WRIMS 2 GUI restarts, CBC tolerances return to default values.");
+		
+		cbcTab.setControl(group);
+	}
+	
 	public void showSolverStatus(){
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() {
@@ -253,6 +406,76 @@ public class WPPOptionDialog extends Dialog {
 				} catch (PartInitException e) {
 					WPPException.handleException(e);
 				} 
+			}
+		});
+	}
+	
+	public int assignCBCSetting(){
+		vcbcTolerancePrimal      = Double.parseDouble(txtcbcTolerancePrimal.getText());
+		vcbcTolerancePrimalRelax = Double.parseDouble(txtcbcTolerancePrimalRelax.getText());
+		vcbcToleranceWarmPrimal  = Double.parseDouble(txtcbcToleranceWarmPrimal.getText());
+		vcbcToleranceInteger     = Double.parseDouble(txtcbcToleranceInteger.getText());
+		vcbcToleranceIntegerCheck= Double.parseDouble(txtcbcToleranceIntegerCheck.getText());
+		vcbcToleranceZero        = Double.parseDouble(txtcbcToleranceZero.getText());
+		
+		pvcbcTolerancePrimal      = Double.parseDouble(CBCSetting.cbcTolerancePrimal);
+		pvcbcTolerancePrimalRelax = Double.parseDouble(CBCSetting.cbcTolerancePrimalRelax);
+		pvcbcToleranceWarmPrimal  = Double.parseDouble(CBCSetting.cbcToleranceWarmPrimal);
+		pvcbcToleranceInteger     = Double.parseDouble(CBCSetting.cbcToleranceInteger);
+		pvcbcToleranceIntegerCheck= Double.parseDouble(CBCSetting.cbcToleranceIntegerCheck);
+		pvcbcToleranceZero        = Double.parseDouble(CBCSetting.cbcToleranceZero);
+		
+		if (vcbcTolerancePrimal==CBCSetting.dvcbcTolerancePrimal &&
+			vcbcTolerancePrimalRelax==CBCSetting.dvcbcTolerancePrimalRelax &&	
+			vcbcToleranceWarmPrimal == CBCSetting.dvcbcToleranceWarmPrimal &&
+			vcbcToleranceInteger == CBCSetting.dvcbcToleranceInteger &&
+			vcbcToleranceIntegerCheck == CBCSetting.dvcbcToleranceIntegerCheck &&
+			vcbcToleranceZero == CBCSetting.dvcbcToleranceZero){
+			
+			CBCSetting.cbcTolerancePrimal=CBCSetting.cbcTolerancePrimalDefault;
+			CBCSetting.cbcTolerancePrimalRelax=CBCSetting.cbcTolerancePrimalRelaxDefault;
+			CBCSetting.cbcToleranceWarmPrimal=CBCSetting.cbcToleranceWarmPrimalDefault;
+			CBCSetting.cbcToleranceInteger=CBCSetting.cbcToleranceIntegerDefault;
+			CBCSetting.cbcToleranceIntegerCheck=CBCSetting.cbcToleranceIntegerCheckDefault;
+			CBCSetting.cbcToleranceZero=CBCSetting.cbcToleranceZeroDefault;
+			
+			CBCSetting.changeSetting=false;
+			return 1;
+		}
+		
+		if (vcbcTolerancePrimal==pvcbcTolerancePrimal &&
+			vcbcTolerancePrimalRelax==pvcbcTolerancePrimalRelax &&	
+			vcbcToleranceWarmPrimal == pvcbcToleranceWarmPrimal &&
+			vcbcToleranceInteger == pvcbcToleranceInteger &&
+			vcbcToleranceIntegerCheck == pvcbcToleranceIntegerCheck &&
+			vcbcToleranceZero == pvcbcToleranceZero){
+			CBCSetting.changeSetting=true;
+			return 2;
+		}
+		
+		if (txtDevPass.getText().equals(DebugCorePlugin.devPass)){
+			CBCSetting.cbcTolerancePrimal      = txtcbcTolerancePrimal.getText();
+			CBCSetting.cbcTolerancePrimalRelax = txtcbcTolerancePrimalRelax.getText();
+			CBCSetting.cbcToleranceWarmPrimal  = txtcbcToleranceWarmPrimal.getText();
+			CBCSetting.cbcToleranceInteger     = txtcbcToleranceInteger.getText();
+			CBCSetting.cbcToleranceIntegerCheck=  txtcbcToleranceIntegerCheck.getText();
+			CBCSetting.cbcToleranceZero        = txtcbcToleranceZero.getText();
+			CBCSetting.changeSetting=true;
+			return 3;
+		}else{
+			return 0;
+		}
+	}
+	
+	public void showDevPassFail(){
+		final IWorkbench workbench=PlatformUI.getWorkbench();
+		workbench.getDisplay().asyncExec(new Runnable(){
+			public void run(){
+				Shell shell=workbench.getActiveWorkbenchWindow().getShell();
+				MessageBox messageBox = new MessageBox(shell, SWT.ICON_WARNING);
+				messageBox.setText("Warning");
+				messageBox.setMessage("Developer Pass Code is wrong! Please set the CBC tolenrances to the default values.");
+				messageBox.open();
 			}
 		});
 	}

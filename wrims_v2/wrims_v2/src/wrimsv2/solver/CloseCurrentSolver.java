@@ -11,6 +11,7 @@ public class CloseCurrentSolver {
 			GurobiSolver.dispose();
 		}else if (currentSolver.equalsIgnoreCase("Cbc")){
 			CbcSolver.close();
+			if (ControlData.cbc_debug_routeXA || ControlData.cbc_debug_routeCbc) {ControlData.xasolver.close();}
 		}
 	}
 }

@@ -23,8 +23,11 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.datatools.connectivity.IConnectionProfile;
 import org.eclipse.datatools.connectivity.ProfileManager;
 import org.eclipse.datatools.connectivity.drivers.jdbc.IJDBCConnectionProfileConstants;
+import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunchConfiguration;
+import org.eclipse.debug.core.ILaunchConfigurationType;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
+import org.eclipse.debug.core.ILaunchManager;
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -49,6 +52,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 
+import wrimsv2_plugin.debugger.core.CBCSetting;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.dialog.WPPDssToSqlDialog;
 import wrimsv2_plugin.debugger.exception.WPPException;
@@ -113,6 +117,12 @@ public class WPPWsiDiTab extends AbstractLaunchConfigurationTab {
 				final IWorkbench workbench=PlatformUI.getWorkbench();
 				workbench.getDisplay().asyncExec(new Runnable(){
 					public void run(){
+						performApply((ILaunchConfigurationWorkingCopy) launchConfig);
+						try {
+							((ILaunchConfigurationWorkingCopy)launchConfig).doSave();
+						} catch (CoreException e) {
+							WPPException.handleException(e);
+						}
 						wsidigenerator();
 					}
 				});
@@ -279,6 +289,16 @@ public class WPPWsiDiTab extends AbstractLaunchConfigurationTab {
 			//	out.println("LpSolveConfigFile         callite.lpsolve");
 			//	out.println("LpSolveNumberOfRetries    2");				
 			//}	
+			
+			if (CBCSetting.changeSetting){
+				out.println("cbcTolerancePrimal        "+CBCSetting.cbcTolerancePrimal);
+				out.println("cbcTolerancePrimalRelax   "+CBCSetting.cbcTolerancePrimalRelax);
+				out.println("cbcToleranceWarmPrimal    "+CBCSetting.cbcToleranceWarmPrimal);
+				out.println("cbcToleranceInteger       "+CBCSetting.cbcToleranceInteger);
+				out.println("cbcToleranceIntegerCheck  "+CBCSetting.cbcToleranceIntegerCheck);
+				out.println("cbcToleranceZero          "+CBCSetting.cbcToleranceZero);
+			}
+			
 			out.close();
 			configFilePath= new File(studyDir, configName).getAbsolutePath();
 		} catch (Exception e) {
@@ -332,7 +352,9 @@ public class WPPWsiDiTab extends AbstractLaunchConfigurationTab {
 	            	  writer.write("        studyDvName=r\""+dvarPath+"\"\n");
 	              }else if (count==29){
 	            	  writer.write("        lookupName=r\""+lookupPath+"\"\n");
-	              }else{
+	              }else if (count==30){
+	            	  writer.write("        launchName=r\""+launchConfig.getFile().getLocation().toFile().getAbsolutePath()+"\"\n");
+	         	  }else{
 	                  writer.append(line+"\n");
 	              }
 	         }
