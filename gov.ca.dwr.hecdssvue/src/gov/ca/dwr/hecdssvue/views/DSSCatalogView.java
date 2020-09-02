@@ -329,6 +329,7 @@ public class DSSCatalogView extends AbstractDSSView {
 										StatusManager.LOG);
 							}
 						}
+						DssPluginCore.initWYTDss=true;
 					}
 				}
 			}

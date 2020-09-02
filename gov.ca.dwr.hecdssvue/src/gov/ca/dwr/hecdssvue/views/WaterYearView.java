@@ -2,6 +2,11 @@ package gov.ca.dwr.hecdssvue.views;
 
 import gov.ca.dwr.hecdssvue.DssPluginCore;
 import gov.ca.dwr.hecdssvue.components.ShowSelected;
+import hec.heclib.dss.CondensedReference;
+import hec.heclib.dss.HecDss;
+import hec.heclib.util.HecTime;
+import hec.io.DataContainer;
+import hec.io.TimeSeriesContainer;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -25,6 +30,8 @@ import org.eclipse.ui.part.ViewPart;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
+//import wrimsv2_plugin.tools.DssOperations;
+import wrimsv2_plugin.tools.DssOperations;
 
 public class WaterYearView extends ViewPart {
 
@@ -39,9 +46,12 @@ public class WaterYearView extends ViewPart {
 	
 	public static final String ID = "gov.ca.dwr.hecdssvue.views.WaterYearView";
 	
+	private boolean fromDSS=true;
+	
 	@Override
 	public void createPartControl(Composite parent) {
 		initialWaterYearMap();
+		DssPluginCore.initWYTDss=false;
 		area = new Composite(parent, SWT.NONE);
 		area.setLayout(new GridLayout(40, true));
 		
@@ -258,6 +268,14 @@ public class WaterYearView extends ViewPart {
 	}
 	
 	public void initialWaterYearMap(){
+		if (fromDSS){
+			initialWaterYearMapFromDSS();
+		}else{
+			initialWaterYearMapFromTable();
+		}
+	}
+	
+	public void initialWaterYearMapFromTable(){
 		int[][] lookups=readInLookups("wytypes.table");
 		for (int i=0; i<lookups.length; i++){
 			int wateryear=lookups[i][0];
@@ -338,9 +356,78 @@ public class WaterYearView extends ViewPart {
 		return lookups;
 	}
 
+	public void initialWaterYearMapFromDSS(){
+		if (DssPluginCore.dssArray.size()==0) return;
+		HecDss dss = DssPluginCore.dssArray.get(0);
+		if (dss == null) return;
+		Vector<CondensedReference> dvVector = dss.getCondensedCatalog();
+		String sacn=DssOperations.matchPathName(dvVector, "WYT_SAC_", "WATERYEARTYPE", "1MON");
+		try {
+			DataContainer dc = dss.get(sacn);
+			sacIndex=procWaterYearTypeFromDSS(dc);	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String sjrn=DssOperations.matchPathName(dvVector, "WYT_SJR_", "WATERYEARTYPE", "1MON");
+		try {
+			DataContainer dc = dss.get(sjrn);
+			sjrIndex=procWaterYearTypeFromDSS(dc);	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String shstan=DssOperations.matchPathName(dvVector, "WYT_SHASTA_CVP_", "WATERYEARTYPE", "1MON");
+		try {
+			DataContainer dc = dss.get(shstan);
+			shastaIndex=procWaterYearTypeFromDSS(dc);	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String feathern=DssOperations.matchPathName(dvVector, "WYT_FEATHER_", "WATERYEARTYPE", "1MON");
+		try {
+			DataContainer dc = dss.get(feathern);
+			featherIndex=procWaterYearTypeFromDSS(dc);	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public HashMap<Integer, ArrayList<Integer>> procWaterYearTypeFromDSS(DataContainer dc){
+		HashMap<Integer, ArrayList<Integer>>wyt= new HashMap<Integer, ArrayList<Integer>>();
+		double[] values = ((TimeSeriesContainer)dc).values;
+		int startTime = ((TimeSeriesContainer)dc).startTime;
+		HecTime hecTime = new HecTime();
+		hecTime.set(startTime);
+		int month=hecTime.month();
+		int year=hecTime.year();
+		for (int i=0; i<values.length; i++){
+			if (month==9){
+				Long wytl=new Long(Math.round(values[i]));
+				int wyti=wytl.intValue();
+				if (wyt.containsKey(wyti)){
+					wyt.get(wyti).add(year);
+				}else{
+					ArrayList<Integer> wytArray=new ArrayList<Integer>();
+					wytArray.add(year);
+					wyt.put(wyti, wytArray);
+				}
+			}
+			month++;
+			if (month>=13){
+				year++;
+				month=1;
+			}
+		}
+		return wyt;
+	}
+	
+	
 	@Override
 	public void setFocus() {
-		area.setFocus();		
+		area.setFocus();
+		if (DssPluginCore.initWYTDss && fromDSS){
+			initialWaterYearMapFromDSS();
+			DssPluginCore.initWYTDss=false;
+		}
 	}
 
 }

@@ -418,6 +418,7 @@ public class DSSFileView extends ViewPart {
 					success=false;
 				}
 			}
+			DssPluginCore.initWYTDss=true;
 		}
 		if (errorFiles.endsWith(",")){
 			errorFiles=errorFiles.substring(0, errorFiles.length()-1);

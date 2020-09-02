@@ -112,4 +112,6 @@ public class DssPluginCore {
 	
 	public static String lastCopiedDssFolder="c:\\";
 	public static MonthlyTablePanel mtp;
+	
+	public static boolean initWYTDss=true;
 }
