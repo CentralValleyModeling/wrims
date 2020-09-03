@@ -19,6 +19,7 @@ import java.util.Vector;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -41,6 +42,9 @@ public class WaterYearView extends ViewPart {
 	private HashMap<Integer, ArrayList<Integer>> featherIndex= new HashMap<Integer, ArrayList<Integer>>();
 	
 	private Button[][] index= new Button[4][5];
+	
+	private Button fromFirstDss;
+	private Button defaultTable;
 	
 	private Composite area;
 	
@@ -117,9 +121,28 @@ public class WaterYearView extends ViewPart {
 		index[2][2].setText("Dry (3)");
 		index[2][2].setLayoutData(gd);
 		
-		Label blank1=new Label(area, SWT.NONE);
-		blank1.setText("");
-		blank1.setLayoutData(gd);
+		fromFirstDss=new Button(area, SWT.RADIO);
+		fromFirstDss.setText("Upon 1st Selected DSS");
+		fromFirstDss.setLayoutData(gd);
+		fromFirstDss.setSelection(true);
+		fromFirstDss.addSelectionListener(new SelectionListener(){
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				fromFirstDss.setSelection(true);
+				defaultTable.setSelection(false);
+				initialWaterYearMapFromDSS();
+				DssPluginCore.initWYTDss=false;
+				wateryearFilter();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 		
 		index[0][3] = new Button(area, SWT.CHECK);
 		index[0][3].setText("Dry (D 4)");
@@ -133,9 +156,27 @@ public class WaterYearView extends ViewPart {
 		index[2][3].setText("Critial (4)");
 		index[2][3].setLayoutData(gd);
 		
-		Label blank2=new Label(area, SWT.NONE);
-		blank2.setText("");
-		blank2.setLayoutData(gd);
+		defaultTable=new Button(area, SWT.RADIO);
+		defaultTable.setText("Upon Default Table");
+		defaultTable.setLayoutData(gd);
+		defaultTable.setSelection(false);
+		defaultTable.addSelectionListener(new SelectionListener(){
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				defaultTable.setSelection(true);
+				fromFirstDss.setSelection(false);
+				initialWaterYearMapFromTable();
+				wateryearFilter();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 		
 		index[0][4] = new Button(area, SWT.CHECK);
 		index[0][4].setText("Critical (C 5)");
@@ -145,9 +186,9 @@ public class WaterYearView extends ViewPart {
 		index[1][4].setText("Critical (C 5)");
 		index[1][4].setLayoutData(gd);
 		
-		Label blank3=new Label(area, SWT.NONE);
-		blank3.setText("");
-		blank3.setLayoutData(gd);
+		Label blank1=new Label(area, SWT.NONE);
+		blank1.setText("");
+		blank1.setLayoutData(gd);
 		
 		Button clearAll=new Button(area, SWT.PUSH);
 		clearAll.setText("Clear All");
@@ -276,6 +317,10 @@ public class WaterYearView extends ViewPart {
 	}
 	
 	public void initialWaterYearMapFromTable(){
+		sacIndex= new HashMap<Integer, ArrayList<Integer>>();
+		sjrIndex= new HashMap<Integer, ArrayList<Integer>>();
+		shastaIndex= new HashMap<Integer, ArrayList<Integer>>();
+		featherIndex= new HashMap<Integer, ArrayList<Integer>>();
 		int[][] lookups=readInLookups("wytypes.table");
 		for (int i=0; i<lookups.length; i++){
 			int wateryear=lookups[i][0];
