@@ -84,7 +84,7 @@ options {
 
 wreslFile
 @after{ mObj = $t.modelObj;}
-	: ('{' t=mt '}') | ( t=mt EOF ); 
+	: ('{' t=mt '}' EOF ) | ( t=mt EOF ); 
 
 wreslMain
 scope { StudyTemp sty;} 
@@ -1057,7 +1057,7 @@ QUOTE : '\'' .*  '\'' ;
 
 ML_COMMENT : '/*' .* '*/' {skip();}; 
 
-SL_COMMENT : ('#'|'!') ~('\r'|'\n')*  '\r'? ( '\n' | EOF ) {skip();};  //{$channel=HIDDEN;} ;
+SL_COMMENT : ('#'|'!') ~('\r'|'\n')*  {skip();};  //{$channel=HIDDEN;} ;
 
 AND : '&&' | '.and.' | '.AND.' ;
 OR  : '||' | '.or.' | '.OR.' ;
