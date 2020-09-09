@@ -357,7 +357,7 @@ public class DebugInterface {
 				ControlData.writer.closeDSSFile();
 				terminateCode=1;
 			}
-			System.out.println("terminated");
+			System.out.println("Terminated");
 			try {
 				sendRequest("terminated");
 			} catch (IOException e) {

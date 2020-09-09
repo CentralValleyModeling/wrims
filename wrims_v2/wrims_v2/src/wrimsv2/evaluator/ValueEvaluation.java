@@ -124,6 +124,10 @@ public class ValueEvaluation {
 			return new IntDouble(id0.getData(),id0.isInt(), ident, 0);
 		}else if (ControlData.isPostProcessing && ControlData.currAliasMap.containsKey(ident)){
 			IntDouble id0=ControlData.currAliasMap.get(ident).getData();
+			if (id0==null) {
+				Error.addEvaluationError(ident+" is not defined before it is used.");
+				return new IntDouble (1.0, false, ident, 0);
+			}
 			return new IntDouble(id0.getData(),id0.isInt(), ident, 0);
 		}
 		if (ControlData.sumIndex.size()>0){

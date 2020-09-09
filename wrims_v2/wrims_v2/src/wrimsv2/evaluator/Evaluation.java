@@ -160,6 +160,12 @@ public class Evaluation {
 		}else if (ControlData.isPostProcessing && ControlData.currAliasMap.containsKey(ident)){
 			EvalExpression ee=new EvalExpression();
 			IntDouble id0 = ControlData.currAliasMap.get(ident).getData();
+			if (id0==null) {
+				Error.addEvaluationError(ident+" is not defined before it is used.");
+				IntDouble id1=new IntDouble(1.0, false, ident, 0);
+				ee.setValue(id1);
+				return ee;
+			}
 			IntDouble id1 = new IntDouble(id0.getData(), id0.isInt(), ident, 0);
 			ee.setValue(id1);
 			return ee;

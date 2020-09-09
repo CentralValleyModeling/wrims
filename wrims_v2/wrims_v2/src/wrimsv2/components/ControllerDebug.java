@@ -553,7 +553,7 @@ public class ControllerDebug extends Thread {
 			try {
 				int cycle=ControlData.currCycleIndex+1;
 				di.sendEvent("suspended!"+ControlData.currYear+"#"+ControlData.currMonth+"#"+ControlData.currDay+"#"+cycle);
-				System.out.println("error! paused");
+				System.out.println("Error! Paused");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
