@@ -191,7 +191,7 @@ public class DssOperation {
 			units=alias.units;
 		}
 		
-		DataSet ds=getDataForInitial(ControlData.partA,name,partC,"",ControlData.partE, ControlData.initPartF);
+		DataSet ds=getDataForInitial(regularExp(ControlData.partA),regularExp(name),regularExp(partC),"",regularExp(ControlData.partE), regularExp(ControlData.initPartF));
 		if (ds==null){
 			Error.addEvaluationError("Intial data of "+name+" in dss file doesn't exist." );
 			return false;
