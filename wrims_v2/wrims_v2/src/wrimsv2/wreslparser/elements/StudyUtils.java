@@ -138,7 +138,7 @@ public class StudyUtils {
 		LogUtils.closeLogFile();
 
 		if (total_errors==0){
-		if (ControlData.useCbcWarmStart || ControlData.cbc_debug_routeCbc || ControlData.cbc_debug_routeXA){
+		if (ControlData.useCbcWarmStart || ControlData.cbcCheckIntErr || ControlData.cbc_debug_routeCbc || ControlData.cbc_debug_routeXA){
 			if (ControlData.solverName.equalsIgnoreCase("Cbc")  || ControlData.solverName.equalsIgnoreCase("Cbc1")){
 				
 				Warmstart.collectIntegerDV_2(sds);			

@@ -332,7 +332,23 @@ public class ConfigUtils {
 		}
 		System.out.println("watchT: "+ControlData.watchList_tolerance);
 		
-		// CbcWarmStart // default is true
+		// CbcLogNativeLp // default is false
+		k = "cbclognativelp";
+		if (configMap.keySet().contains(k)){
+			
+			String s = configMap.get(k);
+			
+			if (s.equalsIgnoreCase("yes") || s.equalsIgnoreCase("true")){
+				ControlData.cbcLogNativeLp = true;	
+			} else {
+				ControlData.cbcLogNativeLp = false;	
+			}
+		}else{
+			ControlData.cbcLogNativeLp = false;
+		}
+		System.out.println("CbcLogNativeLp: "+ControlData.cbcLogNativeLp);
+		
+		// CbcWarmStart // default is false
 		k = "cbcwarmstart";
 		if (configMap.keySet().contains(k)){
 			
@@ -343,10 +359,10 @@ public class ConfigUtils {
 			} else if (s.equalsIgnoreCase("no") || s.equalsIgnoreCase("false")){
 				ControlData.useCbcWarmStart = false;	
 			} else {
-				ControlData.useCbcWarmStart = true;	
+				ControlData.useCbcWarmStart = false;	
 			}
 		}else{
-			ControlData.useCbcWarmStart = true;
+			ControlData.useCbcWarmStart = false;
 		}
 		System.out.println("CbcWarmStart: "+ControlData.useCbcWarmStart);
 		

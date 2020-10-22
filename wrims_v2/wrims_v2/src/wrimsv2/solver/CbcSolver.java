@@ -220,6 +220,7 @@ public class CbcSolver {
 
 			setDVars();
 			setConstraints();
+			if (ControlData.cbcLogNativeLp) {writeCbcLp("native", false);}
 
 		}
 		long endT_creation = System.currentTimeMillis();	

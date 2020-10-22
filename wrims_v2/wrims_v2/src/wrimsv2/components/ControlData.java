@@ -121,7 +121,9 @@ public class ControlData {
 	public static double adTime=0;	
 	public static boolean useCplexLpString=false;
 	public static boolean saveCplexLpStringToFile=false;
-	public static boolean useCbcWarmStart=true;
+	public static boolean useCbcWarmStart=false;
+	public static boolean cbcCheckIntErr=true;	
+	public static boolean cbcLogNativeLp=false;
 	public static boolean writeCbcSolvingTime=false;
 	//public static Map<Integer,LinkedHashSet<String>> cycIntDvMap;
 	//public static LinkedHashSet<String> allIntDv;
