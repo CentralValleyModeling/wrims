@@ -438,11 +438,14 @@ public class DebugInterface {
 				StudyDataSet sds;
 				try {
 					sds = controllerDebug.parse();
-					ControlData.currStudyDataSet=sds;
-					controllerDebug.totalCycles = sds.getModelList().size();
-					sendEvent("totalcycle#"+controllerDebug.totalCycles);
 					if (StudyParser.total_errors==0){
+						ControlData.currStudyDataSet=sds;
+						controllerDebug.totalCycles = sds.getModelList().size();
+						sendEvent("totalcycle#"+controllerDebug.totalCycles);
 						new PreEvaluator(sds);
+					}else{
+						System.out.println("The change of your code has errors.");
+						sendEvent("terminate");
 					}
 				} catch (RecognitionException e) {
 					// TODO Auto-generated catch block
