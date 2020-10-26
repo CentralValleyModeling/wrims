@@ -28,6 +28,7 @@ import wrimsv2.wreslplus.elements.VarCycleIndex;
 public class StudyParser{
 	
   public static int total_errors = 0;
+  public static ArrayList<String> error_summary;
   public static int total_warnings = 0;
   private static Map<String, Map<String, String>> cycleVarTypeMap;
   private static Set<String> allValidCycleNames;
@@ -38,6 +39,7 @@ public class StudyParser{
 
   public static void reset(){  
 	  total_errors = 0;
+	  error_summary = new ArrayList<String>();
 	  total_warnings = 0;
 	  cycleVarTypeMap = null;
 	  allValidCycleNames = null; 

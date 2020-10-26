@@ -345,7 +345,18 @@ public class ErrorCheck {
 			m.itemList = removeDuplicates(m.itemList);
 		
 			for (String s: itemDup){
-				LogUtils.errMsg("Item ["+s+"] redefined in file ["+ m.absPath +"].");
+				String item = "Item";
+				int line = 0;
+				if (m.dvList.contains(s)) {line = m.dvMap.get(s).line;item="dvar";}
+				else if (m.svList.contains(s)) {line = m.svMap.get(s).line;item="svar";}
+				else if (m.tsList.contains(s)) {line = m.tsMap.get(s).line;item="timeseries";}
+				else if (m.glList.contains(s)) {line = m.glMap.get(s).line;item="goal";}
+				else if (m.asList.contains(s)) {line = m.asMap.get(s).line;item="alias";}
+				else if (m.exList.contains(s)) {line = m.exMap.get(s).line;item="external";}
+				//else if (m.incFileIDList.contains(s)) {line = -1;item="include file";}
+				//LogUtils.errMsg("Item ["+s+"] redefined in file ["+ m.absPath +"].");
+				String msg = item+" ["+s+"] redefined";
+				LogUtils.errMsgLocation(m.absPath, line, msg);
 			}
 		}
 		

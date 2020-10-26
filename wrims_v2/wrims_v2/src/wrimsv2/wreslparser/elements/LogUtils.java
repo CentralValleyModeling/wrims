@@ -16,7 +16,7 @@ import wrimsv2.components.ControlData;
 
 public class LogUtils {
 
-	private static PrintWriter _logFile;
+	public static PrintWriter _logFile;
 	
 	public static void closeLogFile(){
 		
@@ -288,8 +288,8 @@ public class LogUtils {
 	public static void errMsgLocation(String filePath, int lineNumber, String msg){
 		
 		 StudyParser.total_errors++;
-
-		if (ControlData.showWreslLog) System.err.println( "("+filePath+":"+lineNumber+") "+msg );
+		 StudyParser.error_summary.add("# Error: ("+filePath+":"+lineNumber+") "+msg );
+		if (ControlData.showWreslLog) System.err.println( "# Error: ("+filePath+":"+lineNumber+") "+msg );
 		 _logFile.println("# Error: " + "("+filePath+":"+lineNumber+") "+msg );
 		 _logFile.flush();
 		

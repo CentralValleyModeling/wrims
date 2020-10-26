@@ -189,6 +189,15 @@ public class Workflow {
 		if (StudyParser.total_errors>0) {
 			
 			LogUtils.parsingSummaryMsg("Wresl+ parsing stopped", StudyParser.total_errors);
+			if (ControlData.showWreslLog) {
+				for (String e:StudyParser.error_summary){
+					System.err.println( e);
+				}
+			}
+			for (String e:StudyParser.error_summary){
+				 LogUtils._logFile.println(e);
+			}
+			LogUtils._logFile.flush();
 			
 			return null;
 		}

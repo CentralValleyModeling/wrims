@@ -89,26 +89,31 @@ public class ToLowerCase {
 	public static void convert (ModelTemp j){
 		
 		for (String key : j.svList) {
+			if (!j.svMap.keySet().contains(key)) continue;
 			SvarTemp o = svar(j.svMap.get(key));
 			j.svMap.remove(key);
 			j.svMap.put( key.toLowerCase(), o);
 		}
 		for (String key : j.dvList) {
+			if (!j.dvMap.keySet().contains(key)) continue;
 			DvarTemp o = dvar(j.dvMap.get(key));
 			j.dvMap.remove(key);
 			j.dvMap.put( key.toLowerCase(), o);
 		}
 		for (String key : j.tsList) {
+			if (!j.tsMap.keySet().contains(key)) continue;
 			TimeseriesTemp o = timeseries(j.tsMap.get(key));
 			j.tsMap.remove(key);
 			j.tsMap.put( key.toLowerCase(), o);
 		}
 		for (String key : j.exList) {
+			if (!j.exMap.keySet().contains(key)) continue;
 			ExternalTemp o = external(j.exMap.get(key));
 			j.exMap.remove(key);
 			j.exMap.put( key.toLowerCase(), o);
 		}
 		for (String key : j.glList) {
+			if (!j.glMap.keySet().contains(key)) continue;
 			GoalTemp o = goal(j.glMap.get(key));
 			j.glMap.remove(key);
 			j.glMap.put( key.toLowerCase(), o);
@@ -124,6 +129,7 @@ public class ToLowerCase {
 //			j.ssWeightMap_hasCase.put( key.toLowerCase(), o);
 //		}
 		for (String key : j.asList) {	
+			if (!j.asMap.keySet().contains(key)) continue;
 			AliasTemp o = alias(j.asMap.get(key));
 			j.asMap.remove(key);
 			j.asMap.put( key.toLowerCase(), o);
@@ -134,12 +140,14 @@ public class ToLowerCase {
 			j.wTableObjList.add(i, o);
 		}
 		for (String key : j.incFileIDList) {	
+			if (!j.incFileMap.keySet().contains(key)) continue;
 			IncFileTemp o = incFile(j.incFileMap.get(key));
 			j.incFileMap.remove(key);
 			j.incFileMap.put( key.toLowerCase(), o);
 		}	
 
 		for (String key : j.ifIncItemGroupIDList) {	
+			if (!j.ifIncItemGroupMap.keySet().contains(key)) continue;
 			IfIncItemGroup o = ifIncFileGroup(j.ifIncItemGroupMap.get(key));
 			j.ifIncItemGroupMap.remove(key);
 			j.ifIncItemGroupMap.put( key.toLowerCase(), o);
