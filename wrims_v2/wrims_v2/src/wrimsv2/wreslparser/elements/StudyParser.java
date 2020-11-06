@@ -428,6 +428,7 @@ public class StudyParser{
     LogUtils.importantMsg("Finished converting aliases.");
     LogUtils.criticalMsg("============================================");    
     LogUtils.criticalMsg("Wresl Parsing complete. ");
+    if (total_warnings>0) LogUtils.criticalMsg("Total warnings in the study: "+ total_warnings);
     if (total_errors>0) LogUtils.criticalMsg("Total errors in the study: "+ total_errors);
     LogUtils.criticalMsg("============================================");  
     
@@ -652,7 +653,10 @@ public class StudyParser{
 			  
 			  //Set<String> undefinedVar = new HashSet<String>(dep);
 			  //undefinedVar.removeAll(ds.asSet);
-			  LogUtils.errMsg(ds.svMap.get(svName).fromWresl + " variable names used before definition: "+dep+" in Svar named ["+svName+"]"   );
+			  
+			  //allows recursive svar definition for future array
+			  LogUtils.warningMsg(ds.svMap.get(svName).fromWresl + " variable names used before definition: "+dep+" in Svar named ["+svName+"]"   );
+			  //LogUtils.errMsg(ds.svMap.get(svName).fromWresl + " variable names used before definition: "+dep+" in Svar named ["+svName+"]"   );
 			  
 		  }
 	  }

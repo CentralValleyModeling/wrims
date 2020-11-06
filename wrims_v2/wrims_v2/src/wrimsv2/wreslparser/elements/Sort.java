@@ -93,9 +93,10 @@ public class Sort {
 		
 		// var depend on unknowns
 		if (varDependentMap.keySet().size()>0) {
-		
-			LogUtils.errMsg("Variables with unknown dependants: "+ varDependentMap.keySet()); 
-		
+			
+			//allows recursive svar definition for future array
+			//LogUtils.errMsg("Variables with unknown dependants: "+ varDependentMap.keySet()); 
+		    LogUtils.warningMsg("Variables with unknown dependants: "+ varDependentMap.keySet());
 			if (Param.debug){
 				for (String key:varDependentMap.keySet() ){
 					LogUtils.warningMsg("Variables type of "+ key +": "+ varTypeMap.get(key)); 
