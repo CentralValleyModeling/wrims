@@ -275,7 +275,7 @@ public class Report {
 							"Time", PlotType.TIME_SERIES);
 				} else if (pathMap.report_type.startsWith("exceedance")) {
 					generatePlot(Utils.buildExceedanceArray(refAlt, refBase,
-							pathMap.var_category.equalsIgnoreCase("S_SEPT"), tw), dataIndex,
+							getMonth(pathMap.var_category), tw), dataIndex,
 							Utils.getExceedancePlotTitle(pathMap), series_name,
 							data_type + "(" + data_units + ")",
 							"Percent at or above", PlotType.EXCEEDANCE);
@@ -286,7 +286,7 @@ public class Report {
 							series_name, data_type + "(" + data_units + ")",
 							"Time", PlotType.TIME_SERIES);
 					generatePlot(Utils.buildExceedanceArray(refAlt, refBase,
-							pathMap.var_category.equalsIgnoreCase("S_SEPT"), tw), dataIndex,
+							getMonth(pathMap.var_category), tw), dataIndex,
 							Utils.getExceedancePlotTitle(pathMap), series_name,
 							data_type + "(" + data_units + ")",
 							"Percent at or above", PlotType.EXCEEDANCE);
@@ -298,7 +298,7 @@ public class Report {
 							"Time", PlotType.TIME_SERIES);
 				} else if (pathMap.report_type.equals("alloc")) {
 					generatePlot(Utils.buildExceedanceArray(refAlt, refBase,
-							true, tw), dataIndex, "Exceedance "
+							9, tw), dataIndex, "Exceedance "
 							+ pathMap.var_name.replace("\"", ""), series_name,
 							"Allocation (%)", "Probability",
 							PlotType.EXCEEDANCE);
@@ -481,5 +481,36 @@ public class Report {
 
 	public String getOutputFile() {
 		return scalars.get("OUTFILE");
+	}
+	
+	public int getMonth(String var_category){
+		if (var_category.equalsIgnoreCase("S_Jan")){
+			return 1;
+		}else if (var_category.equalsIgnoreCase("S_Feb")){
+			return 2;
+		}else if (var_category.equalsIgnoreCase("S_Mar")){
+			return 3;
+		}else if (var_category.equalsIgnoreCase("S_Apr")){
+			return 4;
+		}else if (var_category.equalsIgnoreCase("S_May")){
+			return 5;
+		}else if (var_category.equalsIgnoreCase("S_Jun")){
+			return 6;
+		}else if (var_category.equalsIgnoreCase("S_Jul")){
+			return 7;
+		}else if (var_category.equalsIgnoreCase("S_Aug")){
+			return 8;
+		}else if (var_category.equalsIgnoreCase("S_Sep")){
+			return 9;
+		}else if (var_category.equalsIgnoreCase("S_Sept")){
+			return 9;
+		}else if (var_category.equalsIgnoreCase("S_Oct")){
+			return 10;
+		}else if (var_category.equalsIgnoreCase("S_Nov")){
+			return 11;
+		}else if (var_category.equalsIgnoreCase("S_Dec")){
+			return 12;
+		}
+		return 0;
 	}
 }

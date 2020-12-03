@@ -206,8 +206,32 @@ public class Utils {
 
 	public static String getExceedancePlotTitle(PathnameMap path_map) {
 		String title = "Exceedance " + path_map.var_name.replace("\"", "");
-		if (path_map.var_category.equals("S_SEPT")) {
+		if (path_map.var_category.equalsIgnoreCase("S_Jan")) {
+			title = title + " (Jan)";
+		}else if (path_map.var_category.equalsIgnoreCase("S_Feb")) {
+			title = title + " (Feb)";
+		}else if (path_map.var_category.equalsIgnoreCase("S_Mar")) {
+			title = title + " (Mar)";
+		}else if (path_map.var_category.equalsIgnoreCase("S_Apr")) {
+			title = title + " (Apr)";
+		}else if (path_map.var_category.equalsIgnoreCase("S_May")) {
+			title = title + " (May)";
+		}else if (path_map.var_category.equalsIgnoreCase("S_Jun")) {
+			title = title + " (Jun)";
+		}else if (path_map.var_category.equalsIgnoreCase("S_Jul")) {
+			title = title + " (Jul)";
+		}else if (path_map.var_category.equalsIgnoreCase("S_Aug")) {
+			title = title + " (Aug)";
+		}else if (path_map.var_category.equalsIgnoreCase("S_Sep")) {
+			title = title + " (Sep)";
+		}else if (path_map.var_category.equalsIgnoreCase("S_SEPT")) {
 			title = title + " (Sept)";
+		}else if (path_map.var_category.equalsIgnoreCase("S_Oct")) {
+			title = title + " (Oct)";
+		}else if (path_map.var_category.equalsIgnoreCase("S_Nov")) {
+			title = title + " (Nov)";
+		}else if (path_map.var_category.equalsIgnoreCase("S_Dec")) {
+			title = title + " (Dec)";
 		}
 		return title;
 	}
@@ -250,7 +274,7 @@ public class Utils {
 		return dlist;
 	}
 
-	public static ArrayList<Double> sort(DataReference ref, boolean end_of_sept, TimeWindow tw) {
+	public static ArrayList<Double> sort(DataReference ref, int end, TimeWindow tw) {
 		TimeSeries data = (TimeSeries) ref.getData();
 		if (tw != null) {
 			data = data.createSlice(tw);
@@ -258,8 +282,52 @@ public class Utils {
 		ArrayList<Double> dx = new ArrayList<Double>();
 		ElementFilterIterator iter = new ElementFilterIterator(data.getIterator(), Constants.DEFAULT_FLAG_FILTER);
 		while (!iter.atEnd()) {
-			if (end_of_sept) {
+			if (end==1) {
+				if (iter.getElement().getXString().indexOf("31JAN") >= 0) {
+					dx.add(iter.getElement().getY());
+				}
+			}else if (end==2) {
+				if (iter.getElement().getXString().indexOf("28FEB") >= 0 || iter.getElement().getXString().indexOf("29FEB") >= 0) {
+					dx.add(iter.getElement().getY());
+				}
+			}else if (end==3) {
+				if (iter.getElement().getXString().indexOf("31MAR") >= 0) {
+					dx.add(iter.getElement().getY());
+				}
+			}else if (end==4) {
+				if (iter.getElement().getXString().indexOf("30APR") >= 0) {
+					dx.add(iter.getElement().getY());
+				}
+			}else if (end==5) {
+				if (iter.getElement().getXString().indexOf("31MAY") >= 0) {
+					dx.add(iter.getElement().getY());
+				}
+			}else if (end==6) {
+				if (iter.getElement().getXString().indexOf("30JUN") >= 0) {
+					dx.add(iter.getElement().getY());
+				}
+			}else if (end==7) {
+				if (iter.getElement().getXString().indexOf("31JUL") >= 0) {
+					dx.add(iter.getElement().getY());
+				}
+			}else if (end==8) {
+				if (iter.getElement().getXString().indexOf("31AUG") >= 0) {
+					dx.add(iter.getElement().getY());
+				}
+			}else if (end==9) {
 				if (iter.getElement().getXString().indexOf("30SEP") >= 0) {
+					dx.add(iter.getElement().getY());
+				}
+			}else if (end==10) {
+				if (iter.getElement().getXString().indexOf("31OCT") >= 0) {
+					dx.add(iter.getElement().getY());
+				}
+			}else if (end==11) {
+				if (iter.getElement().getXString().indexOf("30NOV") >= 0) {
+					dx.add(iter.getElement().getY());
+				}
+			}else if (end==12) {
+				if (iter.getElement().getXString().indexOf("31DEC") >= 0) {
 					dx.add(iter.getElement().getY());
 				}
 			} else {
@@ -271,10 +339,10 @@ public class Utils {
 		return dx;
 	}
 
-	public static ArrayList<double[]> buildExceedanceArray(DataReference ref1, DataReference ref2, boolean end_of_sept,
+	public static ArrayList<double[]> buildExceedanceArray(DataReference ref1, DataReference ref2, int end_of_month,
 	        TimeWindow tw) {
-		ArrayList<Double> x1 = sort(ref1, end_of_sept, tw);
-		ArrayList<Double> x2 = sort(ref2, end_of_sept, tw);
+		ArrayList<Double> x1 = sort(ref1, end_of_month, tw);
+		ArrayList<Double> x2 = sort(ref2, end_of_month, tw);
 		ArrayList<double[]> darray = new ArrayList<double[]>();
 		int i = 0;
 		int n = Math.round(Math.min(x1.size(), x2.size()));
