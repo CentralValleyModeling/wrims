@@ -72,9 +72,10 @@ public class CbcSolver {
 	private static final double solve_3_primalT =  1e-9;
 	//public static final double solve_3_primalT_relax =  1e-7;
 	public static double solve_whs_primalT =  1e-9;      // can read from config cbcToleranceWarmPrimal
-	public static final Integer cutoff_n =  12;
+	//public static final Integer cutoff_n =  12;
 	public static double integerT =  1e-9;               // can read from config cbcToleranceInteger
 	public static double integerT_check = 1e-8;          // can read from config cbcToleranceIntegerCheck
+	public static final double cbcWriteLpEpsilon = 1e-15; 	
 	public static String cbcLibName = "jCbc";
 	
 	private static String modelName;
@@ -897,9 +898,9 @@ public class CbcSolver {
 		status2 = jCbc.secondaryStatus(model);
 
 		if (status != 0 || status2 != 0) {
-			//note_msg(jCbc.getModelName(solver), " Solve_"+solveName+" infeasible. Use solve_2 with primalT="+solve_2_primalT_relax);
+			note_msg(jCbc.getModelName(solver), " Solve_"+solveName+" infeasible. Use solve_2 with primalT="+solve_2_primalT_relax);
 			reloadProblem();
-			solve_2(solve_2_primalT_relax);	
+			solve_2(solve_2_primalT_relax, "2R_");	
 			status = jCbc.status(model);
 			status2 = jCbc.secondaryStatus(model);
 		}	
@@ -1287,11 +1288,11 @@ public class CbcSolver {
 		String label = modelName + "_" + solveName + "_" + nameAppend;
 		String oPath = new File(ILP.getIlpDir().getAbsoluteFile(), label).getAbsolutePath();
 		reloadProblem();
-		jCbc.writeLp1(model, oPath, 1e-14, 14);
+		jCbc.writeLp1(model, oPath, cbcWriteLpEpsilon, 14);
 		//jCbc.writeMps(model, oPath);
 		if(logMps){jCbc.writeMps1(model, oPath+".mps", 1, 2);}
 		
-		//logIntVars(label);
+		logIntVars(label);
 
 	}
 	
@@ -1300,11 +1301,11 @@ public class CbcSolver {
 		String label = modelName + "_" + solveName + "_" + nameAppend;
 		String oPath = new File(ILP.getIlpDir().getAbsoluteFile(), label).getAbsolutePath();
 		//reloadProblem();
-		jCbc.writeLp1(model, oPath, 1e-14, 14);
+		jCbc.writeLp1(model, oPath, cbcWriteLpEpsilon, 14);
 		//jCbc.writeMps(model, oPath);
 		if(logMps){jCbc.writeMps1(model, oPath+".mps", 1, 2);}
 		
-		//logIntVars(label);
+		logIntVars(label);
 
 	}
 	
@@ -1477,11 +1478,11 @@ public class CbcSolver {
 	}
 	
 	private static void solve_2() {
-		solve_2(solve_2_primalT);
+		solve_2(solve_2_primalT, "2__");
 	}
 	
-	private static void solve_2(double priT) {
-		solveName="2__";
+	private static void solve_2(double priT, String solvName) {
+		solveName=solvName;
 		jCbc.setPrimalTolerance(model, priT);
 		jCbc.setIntegerTolerance(model, integerT);
 		jCbc.solve_2(model, solver, 0);
