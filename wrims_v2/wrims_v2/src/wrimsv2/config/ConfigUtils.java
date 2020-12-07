@@ -473,7 +473,7 @@ public class ConfigUtils {
 //		System.out.println("XASort: "+ControlData.xaSort);
 		
 		
-		// CbcTolerancePrimal // default is 1e-8
+		// CbcTolerancePrimal // default is 1e-9
 		k = "cbctoleranceprimal";
 		if (configMap.keySet().contains(k)){
 			
@@ -488,7 +488,7 @@ public class ConfigUtils {
 		}
 		System.out.println("CbcTolerancePrimal: "+CbcSolver.solve_2_primalT);
 
-		// CbcTolerancePrimalRelax // default is 1e-6
+		// CbcTolerancePrimalRelax // default is 1e-7
 		k = "cbctoleranceprimalrelax";
 		if (configMap.keySet().contains(k)){
 			

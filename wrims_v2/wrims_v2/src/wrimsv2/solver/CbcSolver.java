@@ -66,8 +66,8 @@ public class CbcSolver {
 	
 	private static  double maxValue = 1e28; //Double.POSITIVE_INFINITY;
 	//public static final double zeroTolerence =  1e-10;
-	public static double solve_2_primalT =  1e-8;        // can read from config cbcTolerancePrimal
-	public static double solve_2_primalT_relax =  1e-6;  // can read from config cbcTolerancePrimalRelax
+	public static double solve_2_primalT =  1e-9;        // can read from config cbcTolerancePrimal
+	public static double solve_2_primalT_relax =  1e-7;  // can read from config cbcTolerancePrimalRelax
 	//public static final double solve_2_primalT_relax_most =  1e-4;
 	private static final double solve_3_primalT =  1e-9;
 	//public static final double solve_3_primalT_relax =  1e-7;
