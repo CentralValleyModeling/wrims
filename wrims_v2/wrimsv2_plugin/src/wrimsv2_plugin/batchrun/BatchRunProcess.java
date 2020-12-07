@@ -604,6 +604,7 @@ public class BatchRunProcess {
 				out.println("prefixinittodvarfile  "+configMap.get("prefixinittodvarfile"));
 			}
 			
+			CBCSetting.changeSetting=true;
 			if (CBCSetting.changeSetting){
 				out.println("cbcTolerancePrimal        "+CBCSetting.cbcTolerancePrimal);
 				out.println("cbcTolerancePrimalRelax   "+CBCSetting.cbcTolerancePrimalRelax);

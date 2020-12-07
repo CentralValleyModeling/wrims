@@ -290,6 +290,7 @@ public class WPPWsiDiTab extends AbstractLaunchConfigurationTab {
 			//	out.println("LpSolveNumberOfRetries    2");				
 			//}	
 			
+			CBCSetting.changeSetting = true;
 			if (CBCSetting.changeSetting){
 				out.println("cbcTolerancePrimal        "+CBCSetting.cbcTolerancePrimal);
 				out.println("cbcTolerancePrimalRelax   "+CBCSetting.cbcTolerancePrimalRelax);

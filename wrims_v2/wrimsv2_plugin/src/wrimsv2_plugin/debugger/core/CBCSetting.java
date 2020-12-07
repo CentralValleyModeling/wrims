@@ -1,8 +1,8 @@
 package wrimsv2_plugin.debugger.core;
 
 public class CBCSetting {
-	public static String cbcTolerancePrimalDefault      = "1e-8";
-	public static String cbcTolerancePrimalRelaxDefault = "1e-6";
+	public static String cbcTolerancePrimalDefault      = "1e-9";
+	public static String cbcTolerancePrimalRelaxDefault = "1e-7";
 	public static String cbcToleranceWarmPrimalDefault  = "1e-9";
 	public static String cbcToleranceIntegerDefault     = "1e-9";
 	public static String cbcToleranceIntegerCheckDefault= "1e-8";

@@ -61,7 +61,7 @@ public class WPPOptionDialog extends Dialog {
 	private double vcbcToleranceZero;
 
 	public WPPOptionDialog(Shell parent) {
-		super(parent, SWT.MIN);
+		super(parent, SWT.MIN|SWT.RESIZE);
 		setText("Option");
 	}
 
@@ -69,7 +69,7 @@ public class WPPOptionDialog extends Dialog {
 		Shell shell=new Shell(getParent(), getStyle());
 		shell.setText(getText());
 		createContents(shell);
-		shell.setSize(550, 400);
+		shell.setSize(550, 500);
 		shell.setLocation(450, 300);
 		//shell.pack();
 		shell.open();
@@ -113,6 +113,7 @@ public class WPPOptionDialog extends Dialog {
 					showDevPassFail();
 					return;
 				}
+				SettingPref.saveCBCSetting();
 				DebugCorePlugin.xmx=textMemory.getText();
 				DebugCorePlugin.solver=solverCombo.getText();
 				DebugCorePlugin.log=logCombo.getText();
@@ -379,11 +380,13 @@ public class WPPOptionDialog extends Dialog {
 		label8.setLayoutData(gridData);
 		label8.setText("");
 		
+		/*
 		Label label9 = new Label(group, SWT.NONE);
 		GridData gridData2=new GridData(GridData.FILL_HORIZONTAL);
 		gridData2.horizontalSpan=2;
 		label9.setLayoutData(gridData2);
 		label9.setText("*When WRIMS 2 GUI restarts, CBC tolerances return to default values.");
+		*/
 		
 		cbcTab.setControl(group);
 	}
