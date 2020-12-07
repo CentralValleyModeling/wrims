@@ -704,6 +704,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 				out.println("prefixinittodvarfile  "+configMap.get("prefixinittodvarfile"));
 			}
 			
+			CBCSetting.changeSetting = true;
 			if (CBCSetting.changeSetting){
 				out.println("cbcTolerancePrimal        "+CBCSetting.cbcTolerancePrimal);
 				out.println("cbcTolerancePrimalRelax   "+CBCSetting.cbcTolerancePrimalRelax);

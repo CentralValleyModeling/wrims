@@ -43,6 +43,8 @@ public class DebuggerStartUp implements IStartup {
 	@Override
 	public void earlyStartup() {
 		SettingPref.load();
+		SettingPref.loadCBCDefault();
+		SettingPref.loadCBCSetting();
 		enableRunMenu();
 		initialStudyData();
 		DataProcess.initialVariableValueAlt();

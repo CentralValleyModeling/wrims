@@ -11,6 +11,8 @@ import java.io.PrintWriter;
 
 public class SettingPref {
 	private static String settingPrefFile="setting.prf";
+	private static String cbcSettingPrefFile="CBCSetting.prf";
+	private static String cbcSettingDefaultFile="CBCSettingDefault.prf";
 	
 	public static void load(){
 		try {
@@ -67,6 +69,120 @@ public class SettingPref {
 			out.println(DebugCorePlugin.outputCycleToDss);
 			out.println(DebugCorePlugin.outputAllCycles);
 			out.println(DebugCorePlugin.outputCycles);
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void loadCBCDefault(){
+		try {
+			File file = new File(DebugCorePlugin.dataDir, cbcSettingDefaultFile);
+			if (file.exists()){
+				FileInputStream fs = new FileInputStream(file.getAbsolutePath());
+				BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+			    String line = br.readLine();
+			    while (line !=null){
+			    	line.replace(" ", "");
+			    	String[] parts = line.split(":");
+			    	if (parts.length>=2){
+			    		String pn=parts[0].trim();
+			    		String pv=parts[1].trim();
+			    		if (pn.equalsIgnoreCase("cbcTolerancePrimal")){
+			    			CBCSetting.cbcTolerancePrimalDefault      = pv;
+			    		}else if (pn.equalsIgnoreCase("cbcTolerancePrimalRelax")){			
+			    			CBCSetting.cbcTolerancePrimalRelaxDefault = pv;
+			    		}else if (pn.equalsIgnoreCase("cbcToleranceWarmPrimal")){
+			    			CBCSetting.cbcToleranceWarmPrimalDefault  = pv;
+			    		}else if (pn.equalsIgnoreCase("cbcToleranceInteger")){	
+			    			CBCSetting.cbcToleranceIntegerDefault     = pv;
+			    		}else if (pn.equalsIgnoreCase("cbcToleranceIntegerCheck")){
+			    			CBCSetting.cbcToleranceIntegerCheckDefault= pv;
+			    		}else if (pn.equalsIgnoreCase("cbcToleranceZero")){
+			    			CBCSetting.cbcToleranceZeroDefault        = pv;
+			    		}
+			    	}
+			    	line=br.readLine();
+			    }
+				br.close();
+				CBCSetting.dvcbcTolerancePrimal      = Double.parseDouble(CBCSetting.cbcTolerancePrimalDefault);
+				CBCSetting.dvcbcTolerancePrimalRelax = Double.parseDouble(CBCSetting.cbcTolerancePrimalRelaxDefault);
+				CBCSetting.dvcbcToleranceWarmPrimal  = Double.parseDouble(CBCSetting.cbcToleranceWarmPrimalDefault);
+				CBCSetting.dvcbcToleranceInteger     = Double.parseDouble(CBCSetting.cbcToleranceIntegerDefault);
+				CBCSetting.dvcbcToleranceIntegerCheck= Double.parseDouble(CBCSetting.cbcToleranceIntegerCheckDefault);
+				CBCSetting.dvcbcToleranceZero        = Double.parseDouble(CBCSetting.cbcToleranceZeroDefault);
+			}
+		}catch(Exception e){		
+		}
+	}
+	
+	public static void loadCBCSetting(){
+		try {
+			File file = new File(DebugCorePlugin.dataDir, cbcSettingPrefFile);
+			if (file.exists()){
+				FileInputStream fs = new FileInputStream(file.getAbsolutePath());
+				BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+			    String line = br.readLine();
+			    while (line !=null){
+			    	line.replace(" ", "");
+			    	String[] parts = line.split(":");
+			    	if (parts.length>=2){
+			    		String pn=parts[0].trim();
+			    		String pv=parts[1].trim();
+			    		if (pn.equalsIgnoreCase("cbcTolerancePrimal")){
+			    			CBCSetting.cbcTolerancePrimal      = pv;
+			    		}else if (pn.equalsIgnoreCase("cbcTolerancePrimalRelax")){			
+			    			CBCSetting.cbcTolerancePrimalRelax = pv;
+			    		}else if (pn.equalsIgnoreCase("cbcToleranceWarmPrimal")){
+			    			CBCSetting.cbcToleranceWarmPrimal  = pv;
+			    		}else if (pn.equalsIgnoreCase("cbcToleranceInteger")){	
+			    			CBCSetting.cbcToleranceInteger     = pv;
+			    		}else if (pn.equalsIgnoreCase("cbcToleranceIntegerCheck")){
+			    			CBCSetting.cbcToleranceIntegerCheck= pv;
+			    		}else if (pn.equalsIgnoreCase("cbcToleranceZero")){
+			    			CBCSetting.cbcToleranceZero        = pv;
+			    		}
+			    	}
+			    	line=br.readLine();
+			    }
+				br.close();
+			}
+		}catch(Exception e){		
+		}
+		
+		double vcbcTolerancePrimal = Double.parseDouble(CBCSetting.cbcTolerancePrimal);
+		double vcbcTolerancePrimalRelax = Double.parseDouble(CBCSetting.cbcTolerancePrimalRelax);	
+		double vcbcToleranceWarmPrimal=Double.parseDouble(CBCSetting.cbcToleranceWarmPrimal);
+		double vcbcToleranceInteger=Double.parseDouble(CBCSetting.cbcToleranceInteger);
+		double vcbcToleranceIntegerCheck=Double.parseDouble(CBCSetting.cbcToleranceIntegerCheck);
+		double vcbcToleranceZero=Double.parseDouble(CBCSetting.cbcToleranceZero);
+		
+		if (vcbcTolerancePrimal==CBCSetting.dvcbcTolerancePrimal &&
+			vcbcTolerancePrimalRelax==CBCSetting.dvcbcTolerancePrimalRelax &&	
+			vcbcToleranceWarmPrimal == CBCSetting.dvcbcToleranceWarmPrimal &&
+			vcbcToleranceInteger == CBCSetting.dvcbcToleranceInteger &&
+			vcbcToleranceIntegerCheck == CBCSetting.dvcbcToleranceIntegerCheck &&
+			vcbcToleranceZero == CBCSetting.dvcbcToleranceZero){
+				CBCSetting.changeSetting=false;
+		}else{
+				CBCSetting.changeSetting=true;
+		}
+	}
+	
+	public static void saveCBCSetting(){
+		try {
+			File file = new File(DebugCorePlugin.dataDir, cbcSettingPrefFile);
+			if (!file.exists()){
+				file.createNewFile();
+			}
+			FileWriter fw = new FileWriter(file.getAbsolutePath());
+			PrintWriter out = new PrintWriter(fw);
+			out.println("cbcTolerancePrimal: "+CBCSetting.cbcTolerancePrimal);
+			out.println("cbcTolerancePrimalRelax: "+CBCSetting.cbcTolerancePrimalRelax);
+			out.println("cbcToleranceWarmPrimal: "+CBCSetting.cbcToleranceWarmPrimal);
+			out.println("cbcToleranceInteger: "+CBCSetting.cbcToleranceInteger);
+			out.println("cbcToleranceIntegerCheck: "+CBCSetting.cbcToleranceIntegerCheck);
+			out.println("cbcToleranceZero: "+CBCSetting.cbcToleranceZero);
 			out.close();
 		} catch (IOException e) {
 			e.printStackTrace();
