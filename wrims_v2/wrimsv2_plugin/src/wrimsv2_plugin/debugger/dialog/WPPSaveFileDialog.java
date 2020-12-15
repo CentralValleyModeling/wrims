@@ -29,7 +29,7 @@ public class WPPSaveFileDialog extends Dialog {
 	private	String fileName="";
 	
 	public WPPSaveFileDialog(Shell parentShell, int flag) {
-		super(parentShell, SWT.MIN);
+		super(parentShell, SWT.MIN|SWT.RESIZE);
 		this.flag=flag;
 		setText("Save To DSS");
 	}

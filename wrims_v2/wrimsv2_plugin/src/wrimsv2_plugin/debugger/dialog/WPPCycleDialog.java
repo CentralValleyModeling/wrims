@@ -36,7 +36,7 @@ public class WPPCycleDialog extends Dialog {
 	private String input;
 	
 	public WPPCycleDialog(Shell parent, int row, int col, TableItem item, Table table, String varName) {
-		super(parent, SWT.MIN);
+		super(parent, SWT.MIN|SWT.RESIZE);
 		this.row=row;
 		this.col=col;
 		this.item=item;

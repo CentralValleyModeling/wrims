@@ -255,16 +255,20 @@ public class WaterYearView extends ViewPart {
 		ArrayList<Integer> selectedWaterYear=new ArrayList<Integer>();
 		for (int i=0; i<5; i++){
 			if (index[0][i].getSelection()){
-				DssPluginCore.isAllWaterYear=false;
-				selectedWaterYear.addAll(sacIndex.get(i+1));
-				isFirstSet=false;
+				if (sacIndex.size()>0 && sacIndex.containsKey(i+1)){
+					DssPluginCore.isAllWaterYear=false;
+					selectedWaterYear.addAll(sacIndex.get(i+1));
+					isFirstSet=false;
+				}
 			}
 		}
 		ArrayList<Integer> selectedSJRWaterYear=new ArrayList<Integer>();
 		for (int i=0; i<5; i++){
 			if (index[1][i].getSelection()){
-				DssPluginCore.isAllWaterYear=false;
-				selectedSJRWaterYear.addAll(sjrIndex.get(i+1));
+				if (sjrIndex.size()>0 && sjrIndex.containsKey(i+1)){
+					DssPluginCore.isAllWaterYear=false;
+					selectedSJRWaterYear.addAll(sjrIndex.get(i+1));
+				}
 			}
 		}
 		if (selectedSJRWaterYear.size()==0){
@@ -277,8 +281,10 @@ public class WaterYearView extends ViewPart {
 		ArrayList<Integer> selectedShastaWaterYear=new ArrayList<Integer>();
 		for (int i=0; i<4; i++){
 			if (index[2][i].getSelection()){
-				DssPluginCore.isAllWaterYear=false;
-				selectedShastaWaterYear.addAll(shastaIndex.get(i+1));
+				if (shastaIndex.size()>0 && shastaIndex.containsKey(i+1)){
+					DssPluginCore.isAllWaterYear=false;
+					selectedShastaWaterYear.addAll(shastaIndex.get(i+1));
+				}
 			}
 		}
 		if (selectedShastaWaterYear.size()==0){
@@ -291,8 +297,10 @@ public class WaterYearView extends ViewPart {
 		ArrayList<Integer> selectedFeatherWaterYear=new ArrayList<Integer>();
 		for (int i=0; i<2; i++){
 			if (index[3][i].getSelection()){
-				DssPluginCore.isAllWaterYear=false;
-				selectedFeatherWaterYear.addAll(featherIndex.get(i));
+				if (featherIndex.size()>0 && featherIndex.containsKey(i)){
+					DssPluginCore.isAllWaterYear=false;
+					selectedFeatherWaterYear.addAll(featherIndex.get(i));
+				}
 			}
 		}
 		if (selectedFeatherWaterYear.size()==0){
@@ -407,32 +415,83 @@ public class WaterYearView extends ViewPart {
 		if (dss == null) return;
 		Vector<CondensedReference> dvVector = dss.getCondensedCatalog();
 		String sacn=DssOperations.matchPathName(dvVector, "WYT_SAC_", "WATERYEARTYPE", "1MON");
-		try {
-			DataContainer dc = dss.get(sacn);
-			sacIndex=procWaterYearTypeFromDSS(dc);	
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (sacn!=null){
+			try {
+				DataContainer dc = dss.get(sacn);
+				sacIndex=procWaterYearTypeFromDSS(dc);	
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else{
+			sacn=DssOperations.matchPathName(dvVector, "WYT_SAC_DV", "INDEX", "1MON");
+			if (sacn!=null){
+				try {
+					DataContainer dc = dss.get(sacn);
+					sacIndex=procWaterYearTypeFromDSS(dc);	
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
+		
 		String sjrn=DssOperations.matchPathName(dvVector, "WYT_SJR_", "WATERYEARTYPE", "1MON");
-		try {
-			DataContainer dc = dss.get(sjrn);
-			sjrIndex=procWaterYearTypeFromDSS(dc);	
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (sjrn!=null){
+			try {
+				DataContainer dc = dss.get(sjrn);
+				sjrIndex=procWaterYearTypeFromDSS(dc);	
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else{
+			sjrn=DssOperations.matchPathName(dvVector, "WYT_SJR_DV", "INDEX", "1MON");
+			if (sjrn!=null){
+				try {
+					DataContainer dc = dss.get(sjrn);
+					sjrIndex=procWaterYearTypeFromDSS(dc);	
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
+		
 		String shstan=DssOperations.matchPathName(dvVector, "WYT_SHASTA_CVP_", "WATERYEARTYPE", "1MON");
-		try {
-			DataContainer dc = dss.get(shstan);
-			shastaIndex=procWaterYearTypeFromDSS(dc);	
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (shstan!=null){
+			try {
+				DataContainer dc = dss.get(shstan);
+				shastaIndex=procWaterYearTypeFromDSS(dc);	
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else{
+			shstan=DssOperations.matchPathName(dvVector, "WYT_SHAS_DV", "INDEX", "1MON");
+			if (shstan!=null){
+				try {
+					DataContainer dc = dss.get(shstan);
+					shastaIndex=procWaterYearTypeFromDSS(dc);	
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
+		
 		String feathern=DssOperations.matchPathName(dvVector, "WYT_FEATHER_", "WATERYEARTYPE", "1MON");
-		try {
-			DataContainer dc = dss.get(feathern);
-			featherIndex=procWaterYearTypeFromDSS(dc);	
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (feathern!=null){
+			try {
+				DataContainer dc = dss.get(feathern);
+				featherIndex=procWaterYearTypeFromDSS(dc);	
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else{
+			feathern=DssOperations.matchPathName(dvVector, "WYT_FEATHER_DV", "INDEX", "1MON");
+			if (feathern!=null){
+				try {
+					DataContainer dc = dss.get(feathern);
+					featherIndex=procWaterYearTypeFromDSS(dc);	
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 	
@@ -445,7 +504,7 @@ public class WaterYearView extends ViewPart {
 		int month=hecTime.month();
 		int year=hecTime.year();
 		for (int i=0; i<values.length; i++){
-			if (month==9){
+			if (month==5){
 				Long wytl=new Long(Math.round(values[i]));
 				int wyti=wytl.intValue();
 				if (wyt.containsKey(wyti)){

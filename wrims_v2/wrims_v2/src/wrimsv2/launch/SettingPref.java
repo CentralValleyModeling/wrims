@@ -10,9 +10,11 @@ import java.io.LineNumberReader;
 import java.io.PrintWriter;
 
 import wrimsv2.components.ControlData;
+import wrimsv2.solver.CbcSolver;
 
 public class SettingPref {
 	private static String settingPrefFile="setting.prf";
+	private static String cbcSettingPrefFile="CBCSetting.prf";
 	
 	public static void load(String dataDir){
 		try {
@@ -26,7 +28,6 @@ public class SettingPref {
 			}
 			FileInputStream fs = new FileInputStream(file.getAbsolutePath());
 			BufferedReader br = new BufferedReader(new InputStreamReader(fs));
-		    LineNumberReader reader = new LineNumberReader(br);
 		    ControlData.solverName=br.readLine().toLowerCase();
 		    String xmx=br.readLine();
 		    String strOutputCycleToDss = br.readLine();
@@ -51,5 +52,40 @@ public class SettingPref {
 			e.printStackTrace();
 		}
 		return;
+	}
+	
+	public static void loadCBCSetting(String dataDir){
+		try {
+			File file = new File(dataDir, cbcSettingPrefFile);
+			if (file.exists()){
+				FileInputStream fs = new FileInputStream(file.getAbsolutePath());
+				BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+			    String line = br.readLine();
+			    while (line !=null){
+			    	line.replace(" ", "");
+			    	String[] parts = line.split(":");
+			    	if (parts.length>=2){
+			    		String pn=parts[0].trim();
+			    		String pv=parts[1].trim();
+			    		if (pn.equalsIgnoreCase("cbcTolerancePrimal")){
+			    			CbcSolver.solve_2_primalT       = Double.parseDouble(pv);
+			    		}else if (pn.equalsIgnoreCase("cbcTolerancePrimalRelax")){			
+			    			CbcSolver.solve_2_primalT_relax = Double.parseDouble(pv);
+			    		}else if (pn.equalsIgnoreCase("cbcToleranceWarmPrimal")){
+			    			CbcSolver.solve_whs_primalT     = Double.parseDouble(pv);
+			    		}else if (pn.equalsIgnoreCase("cbcToleranceInteger")){	
+			    			CbcSolver.integerT              = Double.parseDouble(pv);
+			    		}else if (pn.equalsIgnoreCase("cbcToleranceIntegerCheck")){
+			    			CbcSolver.integerT_check        = Double.parseDouble(pv);
+			    		}else if (pn.equalsIgnoreCase("cbcToleranceZero")){
+			    			ControlData.zeroTolerance        = Double.parseDouble(pv);
+			    		}
+			    	}
+			    	line=br.readLine();
+			    }
+				br.close();
+			}
+		}catch(Exception e){		
+		}
 	}
 }

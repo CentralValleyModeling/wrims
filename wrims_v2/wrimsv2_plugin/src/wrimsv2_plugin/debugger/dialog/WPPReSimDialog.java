@@ -30,7 +30,7 @@ public class WPPReSimDialog extends Dialog {
 	
 	
 	public WPPReSimDialog(Shell parent) {
-		super(parent, SWT.MIN);
+		super(parent, SWT.MIN|SWT.RESIZE);
 		setText("Re-Simulation");
 	}
 

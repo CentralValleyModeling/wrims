@@ -34,7 +34,7 @@ public class WPPWeightDialog extends Dialog {
 	private boolean firstAlt=false;
 	
 	public WPPWeightDialog(Shell parent) {
-		super(parent, SWT.MIN);
+		super(parent, SWT.MIN|SWT.RESIZE);
 		setText("Weighted Variables");
 	}
 	

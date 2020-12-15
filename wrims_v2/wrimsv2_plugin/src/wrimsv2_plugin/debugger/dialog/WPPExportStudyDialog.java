@@ -46,7 +46,7 @@ public class WPPExportStudyDialog extends Dialog {
 	private IFile selFile;
 	
 	public WPPExportStudyDialog(Shell parentShell, String selFilePath, IFile ifile) {
-		super(parentShell, SWT.MIN);
+		super(parentShell, SWT.MIN|SWT.RESIZE);
 		this.selFilePath=selFilePath;
 		this.selFile=ifile;
 		setText("Export Study");

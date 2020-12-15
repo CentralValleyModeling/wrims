@@ -64,7 +64,7 @@ public class WPPBatchRunDialog extends Dialog {
 	private String launchNamesLine="";
 	
 	public WPPBatchRunDialog(Shell parentShell) {
-		super(parentShell, SWT.MIN);
+		super(parentShell, SWT.MIN|SWT.RESIZE);
 		setText("Batch Run");
 	}
 

@@ -31,7 +31,7 @@ public class WPPVarGoalSearchDialog extends Dialog {
 	private IViewPart view;
 	
 	public WPPVarGoalSearchDialog(Shell parent, IViewPart view) {
-		super(parent, SWT.MIN);
+		super(parent, SWT.MIN|SWT.RESIZE);
 		this.view=view;
 		setText("Search");
 	}

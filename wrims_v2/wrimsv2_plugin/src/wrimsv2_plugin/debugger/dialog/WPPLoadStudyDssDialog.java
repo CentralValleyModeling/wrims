@@ -52,7 +52,7 @@ public class WPPLoadStudyDssDialog extends Dialog {
 	private DropTarget[] studyFolderDt = new DropTarget[4];
 	
 	public WPPLoadStudyDssDialog(Shell parentShell) {
-		super(parentShell, SWT.MIN);
+		super(parentShell, SWT.MIN|SWT.RESIZE);
 		setText("Load Alt DV/SV or Study");
 	}
 

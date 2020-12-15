@@ -41,7 +41,7 @@ public class WPPLoadZipFileDialog extends Dialog {
 	private boolean projectExist;
 	
 	public WPPLoadZipFileDialog(Shell parentShell) {
-		super(parentShell, SWT.MIN);
+		super(parentShell, SWT.MIN|SWT.RESIZE);
 		setText("Load Zip File");
 	}
 

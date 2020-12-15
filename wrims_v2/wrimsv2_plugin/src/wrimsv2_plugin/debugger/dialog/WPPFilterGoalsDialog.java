@@ -40,7 +40,7 @@ public class WPPFilterGoalsDialog extends Dialog {
 	private boolean doFilter=false;
 	
 	public WPPFilterGoalsDialog(Shell parentShell) {
-		super(parentShell, SWT.MIN);
+		super(parentShell, SWT.MIN|SWT.RESIZE);
 		setText("Filter Goals");
 	}
 

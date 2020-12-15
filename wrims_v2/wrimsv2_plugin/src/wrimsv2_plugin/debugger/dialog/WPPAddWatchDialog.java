@@ -53,7 +53,7 @@ public class WPPAddWatchDialog extends Dialog {
 	private IViewPart view;
 	
 	public WPPAddWatchDialog(Shell parentShell, IViewPart view) {
-		super(parentShell, SWT.MIN);
+		super(parentShell, SWT.MIN|SWT.RESIZE);
 		this.view=view;
 		setText("Add Watched Variables");
 	}

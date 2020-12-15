@@ -44,7 +44,7 @@ public class WPPDSSHDF5ConversionDialog extends Dialog {
 	private boolean projectExist;
 	
 	public WPPDSSHDF5ConversionDialog(Shell parentShell) {
-		super(parentShell, SWT.MIN);
+		super(parentShell, SWT.MIN|SWT.RESIZE);
 		setText("DSS HDF5 Conversion");
 	}
 

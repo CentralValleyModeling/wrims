@@ -37,7 +37,7 @@ public class WPPDisplayFilterGoalsDialog extends Dialog {
 	private ArrayList<String> goalKeys=new ArrayList<String>();
 	
 	public WPPDisplayFilterGoalsDialog(Shell parent, ArrayList<String> filterGoalNames, Map<String, FilterGoal> filterGoals) {
-		super(parent, SWT.MIN);
+		super(parent, SWT.MIN|SWT.RESIZE);
 		this.filterGoalNames=filterGoalNames;
 		this.filterGoals=filterGoals;
 		setText("Filtered Goals");

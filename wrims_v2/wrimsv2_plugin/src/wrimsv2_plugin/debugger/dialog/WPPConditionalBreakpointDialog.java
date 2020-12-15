@@ -48,7 +48,7 @@ import wrimsv2_plugin.tools.SearchTable;
 public class WPPConditionalBreakpointDialog extends Dialog {
 	
 	public WPPConditionalBreakpointDialog(Shell parent) {
-		super(parent, SWT.MIN);
+		super(parent, SWT.MIN|SWT.RESIZE);
 		setText("Conditional Breakpoint");
 	}
 

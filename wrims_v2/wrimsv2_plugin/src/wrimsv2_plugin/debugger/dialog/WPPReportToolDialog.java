@@ -40,7 +40,7 @@ public class WPPReportToolDialog extends Dialog {
 	private Text reportFileText;
 
 	public WPPReportToolDialog(Shell parentShell) {
-		super(parentShell, SWT.MIN);
+		super(parentShell, SWT.MIN|SWT.RESIZE);
 		setText("Report Tool");
 	}
 

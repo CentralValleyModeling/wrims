@@ -436,6 +436,7 @@ public class LaunchConfiguration {
 		try {
 			String dataDir = new File(w2dir).getCanonicalPath()+"\\data";
 			SettingPref.load(dataDir);
+			SettingPref.loadCBCSetting(dataDir);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return;

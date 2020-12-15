@@ -48,7 +48,7 @@ import wrimsv2_plugin.tools.FileProcess;
 public class WPPCycleWreslDialog extends Dialog {
 	
 	public WPPCycleWreslDialog(Shell parent) {
-		super(parent, SWT.MIN);
+		super(parent, SWT.MIN|SWT.RESIZE);
 		setText("WRESL Files in A Cycle");
 	}
 	
