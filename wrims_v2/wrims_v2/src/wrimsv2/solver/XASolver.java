@@ -44,6 +44,8 @@ public class XASolver {
 		setDVars();
 		setWeights();
 		
+		int ci=ControlData.currCycleIndex+1;
+		if (ControlData.showRunTimeMessage) System.out.println("XA Solver: Solving "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+" Cycle "+ci+" ["+ControlData.currCycleName+"]");
 		ControlData.xasolver.solveWithInfeasibleAnalysis("Output console:");
 		
 		modelStatus=ControlData.xasolver.getModelStatus();
@@ -75,6 +77,8 @@ public class XASolver {
 	}
 	
 	public void setDVars(){
+		if (ControlData.showRunTimeMessage) System.out.println("XA Solver: Setting dvars");
+		
 		Map<String, Dvar> dvarMap = SolverData.getDvarMap();
 		for (int i=0; i<=1; i++){
 			ArrayList<String> dvarCollection;
@@ -101,6 +105,8 @@ public class XASolver {
 	}
 
 	public void setWeights(){
+		if (ControlData.showRunTimeMessage) System.out.println("XA Solver: Setting weights");
+		
 		Map<String, WeightElement> weightMap = SolverData.getWeightMap();
 		for (int i=0; i<=1; i++){
 			ArrayList<String> weightCollection;
@@ -127,6 +133,8 @@ public class XASolver {
 	}
 	
 	private void setConstraints() {
+		if (ControlData.showRunTimeMessage) System.out.println("XA Solver: Setting constraints");
+		
 		Map<String, EvalConstraint> constraintMap = SolverData.getConstraintDataMap();
 		Map<String, Dvar> dvarMap=SolverData.getDvarMap();
 		for (int i=0; i<=1; i++){
@@ -167,6 +175,8 @@ public class XASolver {
 	}
 	
 	public void assignDvar(){
+		if (ControlData.showRunTimeMessage) System.out.println("XA Solver: Assigning dvars\' values");
+		
 		Map<String, Map<String, IntDouble>> varCycleValueMap=ControlData.currStudyDataSet.getVarCycleValueMap();
 		Map<String, Map<String, IntDouble>> varTimeArrayCycleValueMap=ControlData.currStudyDataSet.getVarTimeArrayCycleValueMap();
 		Set<String> dvarUsedByLaterCycle = ControlData.currModelDataSet.dvarUsedByLaterCycle;

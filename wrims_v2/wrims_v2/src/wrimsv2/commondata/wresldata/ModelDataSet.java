@@ -154,7 +154,7 @@ public class ModelDataSet implements Serializable {
 		wtTimeArrayList = new ArrayList<String>();
 		for (String wtName: wtList){
 			ControlData.currEvalName=wtName;
-			//System.out.println("Process weight "+wtName);
+			if (ControlData.showRunTimeMessage) System.out.println("Processing weight "+wtName);
 			WeightElement wt=wtMap.get(wtName);
 			ValueEvaluatorParser evaluator=wt.weightParser;
 			ControlData.timeArrayIndex=0;
@@ -199,7 +199,7 @@ public class ModelDataSet implements Serializable {
 		ControlData.currEvalTypeIndex=7;
 		for (String wtSlackSurplusName: usedWtSlackSurplusDvList){
 			ControlData.currEvalName=wtSlackSurplusName;
-			//System.out.println("Process weight "+wtName);
+			if (ControlData.showRunTimeMessage) System.out.println("Processing weight "+wtSlackSurplusName);
 			WeightElement wtSlackSurplus=wtSlackSurplusMap.get(wtSlackSurplusName);
 			ValueEvaluatorParser evaluator=wtSlackSurplus.weightParser;
 			ControlData.timeArrayIndex=0;
@@ -248,7 +248,7 @@ public class ModelDataSet implements Serializable {
 		String model=ControlData.currCycleName;
 		for (String svName: svList){
 			ControlData.currEvalName=svName;
-			//System.out.println("Process svar "+svName);
+			if (ControlData.showRunTimeMessage) System.out.println("Processing svar "+svName);
 			Svar svar=svMap.get(svName);
 			ArrayList<ValueEvaluatorParser> caseConditions=svar.caseConditionParsers;
 			ControlData.timeArrayIndex=0;
@@ -398,7 +398,7 @@ public class ModelDataSet implements Serializable {
 		ControlData.currEvalTypeIndex=5;
 		for (String tsName:tsList){
 			ControlData.currEvalName=tsName;
-			//System.out.println("process timeseries "+tsName);
+			if (ControlData.showRunTimeMessage) System.out.println("Processing timeseries "+tsName);
 			Timeseries ts=tsMap.get(tsName);
 			ts.setData(new IntDouble(Evaluation.timeseries(tsName),false));
 		}
@@ -420,7 +420,7 @@ public class ModelDataSet implements Serializable {
 		ArrayList<String> dvarTimeArrayCycleIndexList = sds.getDvarTimeArrayCycleIndexList();
 		for (String dvName: dvList){
 			ControlData.currEvalName=dvName;
-			//System.out.println("Process dvar "+dvName);
+			if (ControlData.showRunTimeMessage) System.out.println("Processing dvar "+dvName);
 			Dvar dvar=dvMap.get(dvName);
 			
 			ValueEvaluatorParser evaluator=dvar.lowerBoundParser;
@@ -502,7 +502,7 @@ public class ModelDataSet implements Serializable {
 		gTimeArrayList = new ArrayList<String>();
 		for (String goalName: gList){
 			ControlData.currEvalName=goalName;
-			//System.out.println("Process constraint "+goalName);
+			if (ControlData.showRunTimeMessage) System.out.println("Processing constraint "+goalName);
 			Goal goal=gMap.get(goalName);
 			ArrayList<ValueEvaluatorParser> caseConditions=goal.caseConditionParsers;
 			
@@ -612,7 +612,7 @@ public class ModelDataSet implements Serializable {
 		String model=ControlData.currCycleName;
 		for (String asName: asList){
 			ControlData.currEvalName=asName;
-			//System.out.println("Process alias "+asName);
+			if (ControlData.showRunTimeMessage) System.out.println("Processing alias "+asName);
 			Alias alias=asMap.get(asName);
 			
 			ValueEvaluatorParser evaluator = alias.expressionParser;

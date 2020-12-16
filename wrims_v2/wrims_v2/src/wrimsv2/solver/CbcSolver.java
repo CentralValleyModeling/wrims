@@ -449,6 +449,8 @@ public class CbcSolver {
 	}
 	
 	private static void setConstraints() {
+		if (ControlData.showRunTimeMessage) System.out.println("CBC Solver: Setting constraints");
+		
 		Map<String, EvalConstraint> constraintMap = SolverData.getConstraintDataMap();
 		
 		int rowCounter=0; // row index
@@ -730,7 +732,8 @@ public class CbcSolver {
 	}
     
 	private static void setDVars() {
-				
+		if (ControlData.showRunTimeMessage) System.out.println("CBC Solver: Setting dvars");
+		
 		Map<String, WeightElement> wm1  = SolverData.getWeightMap();
 		
 		for (int i=0; i<dvBiMap.size(); i++){
@@ -762,6 +765,8 @@ public class CbcSolver {
 	}
 	
 	public static int[] solve(){
+		int ci=ControlData.currCycleIndex+1;
+		if (ControlData.showRunTimeMessage) System.out.println("CBC Solver: Solving "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+" Cycle "+ci+" ["+ControlData.currCycleName+"]");
 		
 		int status=-99;
 		int status2=-99;
@@ -1134,7 +1139,8 @@ public class CbcSolver {
 	}
 
 	private static void collectDvar() {
-
+		if (ControlData.showRunTimeMessage) System.out.println("CBC Solver: Collecting dvars");
+		
 		int ColumnSize = jCbc.getNumCols(model);
 		varDoubleMap = new LinkedHashMap<String, Double>();
 				
@@ -1162,6 +1168,7 @@ public class CbcSolver {
 	}
 	
 	private static void assignDvar() {
+		if (ControlData.showRunTimeMessage) System.out.println("CBC Solver: Assigning dvars\' values");
 		
 		Map<String, Map<String, IntDouble>> varCycleValueMap=ControlData.currStudyDataSet.getVarCycleValueMap();
 		Map<String, Map<String, IntDouble>> varTimeArrayCycleValueMap=ControlData.currStudyDataSet.getVarTimeArrayCycleValueMap();
