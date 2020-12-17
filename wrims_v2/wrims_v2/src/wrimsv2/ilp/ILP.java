@@ -104,6 +104,7 @@ public class ILP {
 		try {
 			_noteFile = Tools.openFile(_ilpDir.getAbsolutePath(), "Note_"+ControlData.dateTimeAppend+".log");
 			writeNoteLn("wrims2 revision:", new BuildProps().getVN());
+			writeNoteLn("jCbc dll name:", CbcSolver.cbcLibName);
 			if (ControlData.cbc_debug_routeXA || ControlData.cbc_debug_routeCbc) {
 				_noteFile_xa_obj = Tools.openFile(_ilpDir.getAbsolutePath(), "Note_xa_obj.log");
 				_noteFile_cbc_obj = Tools.openFile(_ilpDir.getAbsolutePath(), "Note_cbc_obj.log");

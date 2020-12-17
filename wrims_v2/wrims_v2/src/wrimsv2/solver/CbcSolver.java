@@ -76,7 +76,7 @@ public class CbcSolver {
 	public static double integerT =  1e-9;               // can read from config cbcToleranceInteger
 	public static double integerT_check = 1e-8;          // can read from config cbcToleranceIntegerCheck
 	public static final double cbcWriteLpEpsilon = 1e-15; 	
-	public static String cbcLibName = "jCbc";
+	public static String cbcLibName = "jCbc_v2.10";
 	
 	private static String modelName;
 	
@@ -1428,7 +1428,7 @@ public class CbcSolver {
 	
 	public static void main(String argv[]) {
 
-		System.loadLibrary("jCbc"); 
+		System.loadLibrary(cbcLibName); 
 
 		SWIGTYPE_p_OsiClpSolverInterface solver = jCbc.new_jOsiClpSolverInterface(); 
 		SWIGTYPE_p_CbcModel model = jCbc.new_jCbcModel();
