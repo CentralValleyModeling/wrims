@@ -113,7 +113,7 @@ public class Error {
 	    File ilpDir = new File(ilpRootDir, StudyUtils.configFileName); 
 	    PrintWriter errorLogFile;
 	    try {
-			errorLogFile = Tools.openFile(ilpDir.getAbsolutePath(), "Error.log");
+			errorLogFile = Tools.openFile(ilpDir.getAbsolutePath(), "Error_"+ControlData.dateTimeAppend+".log");
 			
 			errorLogFile.println("==================");
 			if (ControlData.currEvalTypeIndex!=8){

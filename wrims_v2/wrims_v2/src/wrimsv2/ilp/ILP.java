@@ -9,11 +9,14 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -99,7 +102,7 @@ public class ILP {
 	
 	public static void createNoteFile() {
 		try {
-			_noteFile = Tools.openFile(_ilpDir.getAbsolutePath(), "Note.log");
+			_noteFile = Tools.openFile(_ilpDir.getAbsolutePath(), "Note_"+ControlData.dateTimeAppend+".log");
 			writeNoteLn("wrims2 revision:", new BuildProps().getVN());
 			if (ControlData.cbc_debug_routeXA || ControlData.cbc_debug_routeCbc) {
 				_noteFile_xa_obj = Tools.openFile(_ilpDir.getAbsolutePath(), "Note_xa_obj.log");
@@ -136,7 +139,8 @@ public class ILP {
 			} 
 			
 			if (CbcSolver.intLog && ControlData.solverName.equalsIgnoreCase("Cbc")){
-				_noteFile_cbc_int_log = Tools.openFile(_ilpDir.getAbsolutePath(), "Note_cbc_int_check.csv");
+
+				_noteFile_cbc_int_log = Tools.openFile(_ilpDir.getAbsolutePath(), "Note_cbc_int_check_"+ControlData.dateTimeAppend+".csv");
 				if (ControlData.currStudyDataSet.cycIntDvMap!=null) {
 					ILP.writeNote("cyc,int_violation,solver,time,", _noteFile_cbc_int_log);
 					//ILP.writeNote("cyc ", _noteFile_xa_int);

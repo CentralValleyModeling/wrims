@@ -17,10 +17,13 @@ import wrimsv2.external.ExternalFunction;
 import wrimsv2.solver.ortools.OrToolsSolver;
 
 import java.sql.Connection;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Stack;
 
@@ -155,6 +158,10 @@ public class ControlData {
 	public static boolean isSimOutput = true;
 	
 	public static boolean enableProgressLog = false;
+	
+	public static LocalDateTime ldt = LocalDateTime.now();
+	public static String dateTimeAppend = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm", Locale.ENGLISH).format(ldt);
+
 	
 	public ControlData(){
 	}
