@@ -89,6 +89,7 @@ public class CbcSolver {
 	
 	private static boolean saveWarm=false;
 	private static boolean useWarm=false;
+	private static final boolean saveIntVars=true;
 	//private static boolean delWarm=false;
 
 	private static LinkedHashMap<String, Integer> dvIntMap;
@@ -1144,17 +1145,17 @@ public class CbcSolver {
 		int ColumnSize = jCbc.getNumCols(model);
 		varDoubleMap = new LinkedHashMap<String, Double>();
 				
-		if (saveWarm||useWarm) {
-			int ii = ControlData.currCycleIndex + 1;
+		if (saveWarm||useWarm||saveIntVars) {
+			//int ii = ControlData.currCycleIndex + 1;
 			//System.out.println(ii + ": save warm");
 
 
-			int k = 0;
+			//int k = 0;
 			for (int j = 0; j < ColumnSize; j++){
 				 varDoubleMap.put(jCbc.getColName(model,j), jCbc.jarray_double_getitem(jCbc.getColSolution(solver),j));
 				 if (jCbc.isInteger(solver,j)==1) {
 					dvIntMap.put(jCbc.getColName(solver,j), (int)Math.round(jCbc.jarray_double_getitem(jCbc.getColSolution(solver),j)));
-				 	k++; 
+				 	//k++; 
 				 }
 			}
 		} else {
