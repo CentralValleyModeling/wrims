@@ -67,6 +67,6 @@ set PATH=%ExternalDir%;%JarDir2%;%libDir%;%SupportDll%
 
 
 
-%javahome%/java -Xms4096m -Xss1024K -Djava.library.path=%PATH% %CLASSPATH% wrimsv2.components.IncFileCollector %wreslFilePath% z:\incFileCollect\cs3 ""
+%javahome%/java -Xms4096m -Xss1024K -Djava.library.path=%PATH% %CLASSPATH% wrimsv2.components.IncFileCollector %wreslFilePath% d:\incFileCollect\cs3 ""
 
 pause
