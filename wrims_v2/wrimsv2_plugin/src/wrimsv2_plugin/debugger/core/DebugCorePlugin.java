@@ -287,6 +287,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static boolean outputCycleToDss=false;
 	public static boolean outputAllCycles=true;
 	public static String outputCycles="\'\'";
+	public static boolean showRunTimeMessage=false;
 	
 	public static String devPass = "ModelingisNo1";
 	

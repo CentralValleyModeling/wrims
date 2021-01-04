@@ -21,6 +21,7 @@ import org.eclipse.jface.viewers.TableTreeViewer;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableTree;
 import org.eclipse.swt.custom.TableTreeItem;
@@ -44,6 +45,8 @@ import wrimsv2_plugin.tools.SetSelectionInTable;
 
 public class WPPAllGoalView extends AbstractDebugView implements ISelectionListener { 
 	private IValue[] goalStack=null;
+	private ViewLabelProvider vlp;
+	static public boolean isAscending=true;
 	
 	public class ViewLabelProvider implements ITableLabelProvider {
 
@@ -171,11 +174,27 @@ public class WPPAllGoalView extends AbstractDebugView implements ISelectionListe
 		
 	}
 	
+	class WPPComparator extends ViewerComparator{
+		@Override
+		public int compare(Viewer viewer, Object e1, Object e2) {
+			String s1 = vlp.getColumnText(e1, 0);
+			String s2 = vlp.getColumnText(e2, 0);
+			int c =s1.compareTo(s2);
+			if (isAscending){
+				return c;
+			}else{
+				return -c;
+			}
+		}
+	}
+	
 	@Override
 	protected Viewer createViewer(Composite parent) {
 		TableViewer viewer = new TableViewer(parent);
-		viewer.setLabelProvider(new ViewLabelProvider());
+		vlp=new ViewLabelProvider();
+		viewer.setLabelProvider(vlp);
 		viewer.setContentProvider(new ViewContentProvider());
+		viewer.setComparator(new WPPComparator());
 		getSite().getWorkbenchWindow().getSelectionService().addSelectionListener(IDebugUIConstants.ID_DEBUG_VIEW, this);
 		getSite().setSelectionProvider(viewer);
 		Table table = viewer.getTable();
@@ -193,6 +212,8 @@ public class WPPAllGoalView extends AbstractDebugView implements ISelectionListe
 
 	    TableCopyListener tcl=new TableCopyListener(table);
 	    table.addKeyListener(tcl);
+	    
+	    UpdateView.addNameSortListener(table, this);
 	    
 	    // Pack the window
 	    parent.pack();

@@ -138,7 +138,7 @@ public class WPPMSTab extends AbstractLaunchConfigurationTab {
 		gd.horizontalSpan = 4;
 		label1.setLayoutData(gd);
 		
-		fixedDurationText=new Text(comp, SWT.RIGHT);
+		fixedDurationText=new Text(comp, SWT.RIGHT|SWT.BORDER);
 		gd = new GridData(GridData.BEGINNING);
 		gd.horizontalSpan = 3;
 		gd.widthHint=50;

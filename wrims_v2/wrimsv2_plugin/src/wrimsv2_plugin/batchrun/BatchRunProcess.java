@@ -518,6 +518,12 @@ public class BatchRunProcess {
 			
 			configMap.put("selectedcycleoutput", DebugCorePlugin.outputCycles.replace(" ", ""));
 			
+			if (DebugCorePlugin.showRunTimeMessage){
+				configMap.put("showruntimemessage", "yes");
+			}else{
+				configMap.put("showruntimemessage", "no");
+			}
+			
 			String configName = launchFilePath +".config";
 			File f = new File(configName);
 			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(f)));
@@ -593,6 +599,7 @@ public class BatchRunProcess {
 			out.println("OutputCycleDatatoDss "+configMap.get("OutputCycleDatatoDss".toLowerCase()));
 			out.println("OutputAllCycleData "+configMap.get("OutputAllCycleData".toLowerCase()));
 			out.println("SelectedCycleOutput "+configMap.get("SelectedCycleOutput".toLowerCase()));
+			out.println("ShowRunTimeMessage "+configMap.get("ShowRunTimeMessage".toLowerCase()));
 			
 			if (DebugCorePlugin.solver.equalsIgnoreCase("LpSolve")) {
 				
