@@ -545,7 +545,9 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			configMap.put("ShowWreslLog".toLowerCase(), "No");			
 			if (DebugCorePlugin.solver.equals("XA") && DebugCorePlugin.log.equals("Log")){
 				configMap.put("Solver".toLowerCase(), DebugCorePlugin.solver+"LOG");
-			}else{
+			}else if (DebugCorePlugin.solver.toUpperCase().startsWith("CBC")){
+				configMap.put("Solver".toLowerCase(), "CBC");
+			}else {
 				configMap.put("Solver".toLowerCase(), DebugCorePlugin.solver);
 			}
 				
@@ -555,7 +557,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 					configMap.put("IlpLogFormat".toLowerCase(), "CplexLp");
 				}else if (DebugCorePlugin.solver.equals("LPSolve")){
 					configMap.put("IlpLogFormat".toLowerCase(), "LpSolve");
-				}else if (DebugCorePlugin.solver.equals("CBC")){
+				}else if (DebugCorePlugin.solver.toUpperCase().startsWith("CBC")){
 					configMap.put("IlpLogFormat".toLowerCase(), "CplexLp");
 				}
 				configMap.put("IlpLogVarValue".toLowerCase(), "Yes");
@@ -641,6 +643,11 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 				out.println("MainFile           "+new File(mainFileAbsPath).getParentFile()+File.separator+new File(configName).getName()+".par");
 			}
 			out.println("Solver             "+configMap.get("solver".toLowerCase()));
+			if (DebugCorePlugin.solver.equalsIgnoreCase("CBC2.10")){
+				out.println("cbclibname         jCbc_v2.10");
+			}else if (DebugCorePlugin.solver.equalsIgnoreCase("CBC")){
+				out.println("cbclibname         jCbc");
+			}
 			if (DebugCorePlugin.log.equals("xa_cbc") || DebugCorePlugin.log.equals("cbc_xa")){
 				out.println("solvecompare       "+configMap.get("solvecompare".toLowerCase()));
 			}

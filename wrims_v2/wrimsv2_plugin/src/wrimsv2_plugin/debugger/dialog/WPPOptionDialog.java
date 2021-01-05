@@ -70,7 +70,7 @@ public class WPPOptionDialog extends Dialog {
 		Shell shell=new Shell(getParent(), getStyle());
 		shell.setText(getText());
 		createContents(shell);
-		shell.setSize(550, 500);
+		shell.setSize(650, 500);
 		shell.setLocation(450, 300);
 		//shell.pack();
 		shell.open();
@@ -99,7 +99,7 @@ public class WPPOptionDialog extends Dialog {
 	    cbcTab.setText("CBC");
 	    createCBCTab(tabFolder, cbcTab);
 	    
-	    tabFolder.setSize(500, 350);
+	    tabFolder.setSize(600, 350);
 	    tabFolder.setLayoutData(gridData);
 		
 		gridData=new GridData(GridData.HORIZONTAL_ALIGN_CENTER);
@@ -205,6 +205,7 @@ public class WPPOptionDialog extends Dialog {
 		
 		solverCombo = new Combo(group, SWT.BORDER);
 		solverCombo.add("CBC");
+		solverCombo.add("CBC2.10");
 		solverCombo.add("XA");
 		//solverCombo.add("LPSolve");
 		
@@ -219,9 +220,9 @@ public class WPPOptionDialog extends Dialog {
 		
 		if (DebugCorePlugin.solver.equals("CBC")){
 			solverCombo.select(0);
-		}else if (DebugCorePlugin.solver.equals("XA")){
+		}else if (DebugCorePlugin.solver.equals("CBC2.10")){
 			solverCombo.select(1);
-		}else if (DebugCorePlugin.solver.equals("LPSolve")){
+		}else if (DebugCorePlugin.solver.equals("XA")){
 			solverCombo.select(2);
 		}
 		solverCombo.setLayoutData(gridData);

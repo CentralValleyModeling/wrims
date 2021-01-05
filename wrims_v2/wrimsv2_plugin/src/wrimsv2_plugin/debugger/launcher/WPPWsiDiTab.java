@@ -208,7 +208,15 @@ public class WPPWsiDiTab extends AbstractLaunchConfigurationTab {
 			out.println("");
 			
 			out.println("MainFile           "+mainFileAbsPath.toLowerCase());
-			out.println("Solver             "+DebugCorePlugin.solver.toLowerCase());
+			if (DebugCorePlugin.solver.equalsIgnoreCase("CBC2.10")){
+				out.println("Solver            cbc");
+				out.println("cbclibname        jCbc_v2.10");
+			}else if (DebugCorePlugin.solver.equalsIgnoreCase("CBC")){
+				out.println("Solver            cbc");
+				out.println("cbclibname        jCbc");
+			}else{
+				out.println("Solver             "+DebugCorePlugin.solver.toLowerCase());
+			}
 			String dvarFile = mainTab.fDvarFileText.getText();
 			if (new File(dvarFile).isAbsolute()){
 				//String wsidiDvarPath=getWsiDiDvarFilePath(dvarFile);
