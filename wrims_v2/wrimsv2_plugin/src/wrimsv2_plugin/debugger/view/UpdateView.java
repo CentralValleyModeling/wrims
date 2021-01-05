@@ -1,15 +1,24 @@
 package wrimsv2_plugin.debugger.view;
 
 import java.lang.reflect.InvocationTargetException;
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.debug.core.DebugException;
+import org.eclipse.debug.ui.AbstractDebugView;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbench;
@@ -28,7 +37,7 @@ import wrimsv2_plugin.tools.FileProcess;
 import wrimsv2_plugin.tools.VariableProperty;
 
 public class UpdateView {
-	
+		
 	public static void updateVarMonitor(String event){
 		final String dataString=event.replaceFirst("updateVarMonitor!","");
 		final IWorkbench workbench=PlatformUI.getWorkbench();
@@ -416,5 +425,32 @@ public class UpdateView {
 		}
 		if (watchItemsString.endsWith("#")) watchItemsString.substring(0, watchItemsString.length()-1);
 		return watchItemsString;
+	}
+	
+	public static void addNameSortListener(final Table table, final AbstractDebugView view){
+	    Listener nameSortListener = new Listener() {  
+            
+			@Override
+			public void handleEvent(Event e) {
+				 if (view instanceof WPPAllGoalView){
+					 ((WPPAllGoalView)view).isAscending=!((WPPAllGoalView)view).isAscending;
+					 ((WPPAllGoalView)view).updateView();
+				 }else if (view instanceof WPPAllVariableView){
+					 ((WPPAllVariableView)view).isAscending=!((WPPAllVariableView)view).isAscending;
+					 ((WPPAllVariableView)view).updateView();
+				 }else if (view instanceof WPPGoalView){
+					 ((WPPGoalView)view).isAscending=!((WPPGoalView)view).isAscending;
+					 ((WPPGoalView)view).updateView();
+				 }else if (view instanceof WPPVariableView){
+					 ((WPPVariableView)view).isAscending=!((WPPVariableView)view).isAscending;
+					 ((WPPVariableView)view).updateView();
+				 }else if (view instanceof WPPWatchView){
+					 ((WPPWatchView)view).isAscending=!((WPPWatchView)view).isAscending;
+					 ((WPPWatchView)view).updateView();
+				 }
+			}
+	    };  
+	    
+	    table.getColumn(0).addListener(SWT.Selection, nameSortListener);
 	}
 }

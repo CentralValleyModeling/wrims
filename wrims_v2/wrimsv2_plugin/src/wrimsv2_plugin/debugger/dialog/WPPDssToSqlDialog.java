@@ -43,7 +43,7 @@ public class WPPDssToSqlDialog extends Dialog {
 	private ILaunchConfiguration configuration;
 	
 	public WPPDssToSqlDialog(Shell parentShell, String databaseURL, String sqlGroup, String ovOption, String ovFile, ILaunchConfiguration configuration) {
-		super(parentShell, SWT.APPLICATION_MODAL|SWT.RESIZE);
+		super(parentShell, SWT.MIN|SWT.RESIZE);
 		this.databaseURL=databaseURL;
 		this.sqlGroup=sqlGroup;
 		this.ovOption=ovOption;

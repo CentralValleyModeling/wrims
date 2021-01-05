@@ -540,6 +540,28 @@ public class DebugInterface {
 			}
 			if (!ControlData.outputAllCycles) System.out.println("Cycles "+ControlData.selectedCycleOutput.replace("\'", "")+" are selected");
 			setSelectedOutputCycles();
+		}else if(request.startsWith("ShowRunTimeMessage:")){
+			int index=request.indexOf(":");
+			String showRunTimeMessage=request.substring(index+1);
+			if (showRunTimeMessage.equalsIgnoreCase("True")){
+				ControlData.showRunTimeMessage=true;
+				try {
+					sendRequest("Run time messages shown");
+					System.out.println("Run time messages shown");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}else{
+				ControlData.showRunTimeMessage=false;
+				try {
+					sendRequest("Run time messages disabled");
+					System.out.println("Run time messages disabled");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}else if (request.startsWith("savesvdss:")){
 			int index=request.indexOf(":");
 			String fileName=request.substring(index+1);

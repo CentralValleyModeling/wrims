@@ -26,6 +26,7 @@ import org.eclipse.jface.viewers.TableTreeViewer;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableTree;
 import org.eclipse.swt.custom.TableTreeItem;
@@ -47,6 +48,8 @@ import wrimsv2_plugin.debugger.listener.TableCopyListener;
 import wrimsv2_plugin.debugger.model.IWPPEventListener;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
 import wrimsv2_plugin.debugger.model.WPPValue;
+import wrimsv2_plugin.debugger.view.WPPAllGoalView.ViewLabelProvider;
+import wrimsv2_plugin.debugger.view.WPPAllVariableView.WPPComparator;
 import wrimsv2_plugin.tools.ProcImage;
 import wrimsv2_plugin.tools.ProcWatchItem;
 import wrimsv2_plugin.tools.SearchTable;
@@ -54,6 +57,8 @@ import wrimsv2_plugin.tools.SetSelectionInTable;
 
 public class WPPWatchView extends AbstractDebugView implements ISelectionListener { 
 	private IValue[] dataStack=null;
+	private ViewLabelProvider vlp;
+	static public boolean isAscending=true;
 	
 	public class ViewLabelProvider implements ITableLabelProvider {
 
@@ -185,6 +190,20 @@ public class WPPWatchView extends AbstractDebugView implements ISelectionListene
 		
 	}
 	
+	class WPPComparator extends ViewerComparator{
+		@Override
+		public int compare(Viewer viewer, Object e1, Object e2) {
+			String s1 = vlp.getColumnText(e1, 0);
+			String s2 = vlp.getColumnText(e2, 0);
+			int c =s1.compareTo(s2);
+			if (isAscending){
+				return c;
+			}else{
+				return -c;
+			}
+		}
+	}
+	
 	@Override
 	protected Viewer createViewer(Composite parent) {
 		final IWorkbench workbench=PlatformUI.getWorkbench();
@@ -195,8 +214,10 @@ public class WPPWatchView extends AbstractDebugView implements ISelectionListene
 		});
 		
 		TableViewer viewer = new TableViewer(parent);
-		viewer.setLabelProvider(new ViewLabelProvider());
+		vlp=new ViewLabelProvider();
+		viewer.setLabelProvider(vlp);
 		viewer.setContentProvider(new ViewContentProvider());
+		viewer.setComparator(new WPPComparator());
 		getSite().setSelectionProvider(viewer);
 		Table table = viewer.getTable();
 	    new TableColumn(table, SWT.LEFT).setText("Variable/Goal");
@@ -213,6 +234,8 @@ public class WPPWatchView extends AbstractDebugView implements ISelectionListene
 	    
 	    TableCopyListener tcl=new TableCopyListener(table);
 	    table.addKeyListener(tcl);
+	    
+	    UpdateView.addNameSortListener(table, this);
 
 	    setInitialWatchVariables(table);
 	    

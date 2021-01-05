@@ -861,6 +861,14 @@ public class ConfigUtils {
 		ControlData.selectedCycleOutput = configMap.get("selectedcycleoutput");
 		System.out.println("SelectedOutputCycles:    " + ControlData.selectedCycleOutput);
 		
+		String showRunTimeMessage = configMap.get("showruntimemessage");
+		if (showRunTimeMessage.equalsIgnoreCase("yes") || showRunTimeMessage.equalsIgnoreCase("true")){
+			ControlData.showRunTimeMessage=true;
+		}else{
+			ControlData.showRunTimeMessage=false;
+		}
+		System.out.println("ShowRunTimeMessage:    " + ControlData.showRunTimeMessage);
+		
 		//if (Error.getTotalError()<1) readParameter(configFile);
 		
 //		if (Error.getTotalError()<1 && paramMap.size()>0) { 
@@ -1126,6 +1134,7 @@ public class ConfigUtils {
 		configMap.put("OutputCycleDataToDss".toLowerCase(), "No");
 		configMap.put("outputAllCycleData".toLowerCase(), "yes");
 		configMap.put("SelectedCycleOutput".toLowerCase(), "\'\'");
+		configMap.put("ShowRunTimeMessage".toLowerCase(), "No");
 		configMap.put("svarfile2".toLowerCase(), "");
 		configMap.put("AllRestartFiles".toLowerCase(), "No");
 		configMap.put("NumberRestartFiles".toLowerCase(), "12");

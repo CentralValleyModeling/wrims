@@ -284,6 +284,12 @@ public class WPPWsiDiTab extends AbstractLaunchConfigurationTab {
 			}
 			
 			out.println("selectedcycleoutput "+DebugCorePlugin.outputCycles.replace(" ", ""));
+				
+			if (DebugCorePlugin.showRunTimeMessage){
+				out.println("showruntimemessage yes");
+			}else{
+				out.println("showruntimemessage no");
+			}
 			
 			//if (DebugCorePlugin.solver.equalsIgnoreCase("LpSolve")) {
 			//	out.println("LpSolveConfigFile         callite.lpsolve");

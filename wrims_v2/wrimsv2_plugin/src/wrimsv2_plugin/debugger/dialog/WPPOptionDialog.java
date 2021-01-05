@@ -39,6 +39,7 @@ public class WPPOptionDialog extends Dialog {
 	protected Button buttonCycleDss;
 	private Button buttonAllCycles;
 	private Button buttonSelectedCycles;
+	private Button buttonRTMessage;
 	private Text textSelectedCycles;
 	private Text txtcbcTolerancePrimal;
 	private Text txtcbcTolerancePrimalRelax;
@@ -121,6 +122,7 @@ public class WPPOptionDialog extends Dialog {
 				DebugCorePlugin.outputAllCycles=buttonAllCycles.getSelection();
 				DebugCorePlugin.outputCycles="\'"+textSelectedCycles.getText()+"\'";
 				SettingPref.save();
+				DebugCorePlugin.showRunTimeMessage=buttonRTMessage.getSelection();
 				if (DebugCorePlugin.isDebugging){
 					try {
 						DebugCorePlugin.target.sendRequest("solveroption:"+DebugCorePlugin.solver+":"+DebugCorePlugin.log);
@@ -135,7 +137,8 @@ public class WPPOptionDialog extends Dialog {
 							DebugCorePlugin.target.sendRequest("OutputAllCyclesOff");
 						}
 						DebugCorePlugin.target.sendRequest("SelectedCycleOutput:"+DebugCorePlugin.outputCycles.replace(" ", ""));
-					
+						DebugCorePlugin.target.sendRequest("ShowRunTimeMessage:"+DebugCorePlugin.showRunTimeMessage);
+						
 						if (iAssignCBCSetting==1 || iAssignCBCSetting==3){
 							if (vcbcTolerancePrimal!=pvcbcTolerancePrimal){
 								String cbcSetting = "cbcTolerancePrimal:"+CBCSetting.cbcTolerancePrimal;
@@ -261,6 +264,13 @@ public class WPPOptionDialog extends Dialog {
 		buttonCycleDss =  new Button(group, SWT.CHECK);
 		buttonCycleDss.setSelection(DebugCorePlugin.outputCycleToDss);
 		buttonCycleDss.setLayoutData(gridData);
+		
+		Label label5 =  new Label(group, SWT.NONE);
+		label5.setText("Show run time message to locate blowout and freeze");
+		
+		buttonRTMessage =  new Button(group, SWT.CHECK);
+		buttonRTMessage.setSelection(DebugCorePlugin.showRunTimeMessage);
+		buttonRTMessage.setLayoutData(gridData);
 		
 		generalTab.setControl(group);
 	}

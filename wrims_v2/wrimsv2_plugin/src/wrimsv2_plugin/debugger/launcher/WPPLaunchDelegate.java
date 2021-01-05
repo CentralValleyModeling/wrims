@@ -609,6 +609,12 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			
 			configMap.put("selectedcycleoutput", DebugCorePlugin.outputCycles.replace(" ", ""));
 			
+			if (DebugCorePlugin.showRunTimeMessage){
+				configMap.put("showruntimemessage", "yes");
+			}else{
+				configMap.put("showruntimemessage", "no");
+			}
+			
 			String studyDir = new File(mainFileAbsPath).getParentFile().getParentFile().getAbsolutePath();
 			String configName = "__study.config";
 			File f = new File(studyDir, configName);
@@ -693,6 +699,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			out.println("OutputCycleDatatoDss "+configMap.get("OutputCycleDatatoDss".toLowerCase()));
 			out.println("OutputAllCycleData "+configMap.get("OutputAllCycleData".toLowerCase()));
 			out.println("SelectedCycleOutput "+configMap.get("SelectedCycleOutput".toLowerCase()));
+			out.println("ShowRunTimeMessage "+configMap.get("ShowRunTimeMessage".toLowerCase()));
 			
 			if (DebugCorePlugin.solver.equalsIgnoreCase("LpSolve")) {
 				

@@ -56,7 +56,7 @@ public class WPPPATab extends AbstractLaunchConfigurationTab {
 		gd1.horizontalSpan = 1;
 		label1.setLayoutData(gd1);
 		
-		paStartIntervalText=new Text(comp, SWT.RIGHT);
+		paStartIntervalText=new Text(comp, SWT.RIGHT|SWT.BORDER);
 		gd1 = new GridData(GridData.BEGINNING);
 		gd1.horizontalSpan = 1;
 		gd1.widthHint=50;
@@ -76,7 +76,7 @@ public class WPPPATab extends AbstractLaunchConfigurationTab {
 		gd1.horizontalSpan = 1;
 		label2.setLayoutData(gd1);
 		
-		paDurationText=new Text(comp, SWT.RIGHT);
+		paDurationText=new Text(comp, SWT.RIGHT|SWT.BORDER);
 		gd1 = new GridData(GridData.BEGINNING);
 		gd1.horizontalSpan = 1;
 		gd1.widthHint=50;
