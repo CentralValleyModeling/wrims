@@ -58,7 +58,7 @@ public class CbcSolver {
 	private static LinkedHashMap<String, double[]> iisConstraintElementMap;
 	private static ArrayList<String> iisSlacks;
 	//private static ArrayList<String> iisDvarList;
-	private static final double iisWeight = 3000;
+	public static double cbcHintRelaxPenalty = 10000;
 	
 	private static  Map<String, Dvar> dvarMap;
 	private static BiMap<Integer, String> dvBiMap;
@@ -77,7 +77,7 @@ public class CbcSolver {
 	public static double integerT_check = 1e-8;          // can read from config cbcToleranceIntegerCheck
 	public static final double cbcWriteLpEpsilon = 1e-15; 	
 	public static String cbcLibName = "jCbc_v2.10";
-	
+	public static int cbcHintTimeMax = 10; // can read from config CbcHintTimeMax
 	private static String modelName;
 	
 	private static Map<String, WeightElement> wm2; 
@@ -220,8 +220,8 @@ public class CbcSolver {
 
 			modelObject = jCbc.new_jCoinModel();
 
-			setDVars();
-			setConstraints();
+			setDVars(ControlData.cbcLogNativeLp);
+			setConstraints(ControlData.cbcLogNativeLp);
 			if (ControlData.cbcLogNativeLp) {writeCbcLp("native", false);}
 
 		}
@@ -250,22 +250,27 @@ public class CbcSolver {
 			if (CbcSolver.logObj){
 				ILP.writeNoteLn(ILP.getYearMonthCycle(), ""+ControlData.clp_cbc_objective, ILP._noteFile_cbc_obj);
 			}
-			long beginT_cd = System.currentTimeMillis();	
+			long beginT_cd = System.currentTimeMillis();
+			varDoubleMap = new LinkedHashMap<String, Double>();
+			dvIntMap = new LinkedHashMap<String, Integer>();
 			collectDvar(); 
-			
+			boolean intErr = false;
 			// check integer violation
 			for (String k:dvIntMap.keySet()){
 				//System.out.println(k);
 				if (varDoubleMap.containsKey(k)){
 					double v = varDoubleMap.get(k);
 					if (Math.abs(v-Math.round(v))>integerT_check){
-						reloadAndWriteLp("_infeasible", true);
-						Error.addSolvingError("Infeasible solution.");// Integer "+k+": "+v);
+						intErr = true;
+						System.out.println("int violation:::"+k+":"+v);
+
 						//iis();
-						break;
-					}
+						//break;
+					} //else {System.out.println("int ::::::::::"+k+":"+v); }
 				}
 			}
+			if (intErr){reloadAndWriteLp("_infeasible_intViolation", true, true);
+			Error.addSolvingError("Infeasible solution.");}
 			
 			
 			long beginT_ad = System.currentTimeMillis();	
@@ -294,7 +299,7 @@ public class CbcSolver {
 		return jCbc.getObjValue(model)*-1;
 	}
 
-	private static void reloadProblem() {
+	private static void reloadProblem(boolean isNoteCbc) {
 
 
 		// restore original state
@@ -325,8 +330,8 @@ public class CbcSolver {
 		jCbc.assignSolver(model,solver); 
 		modelObject = jCbc.new_jCoinModel();
 
-		setDVars();
-		setConstraints();
+		setDVars(isNoteCbc);
+		setConstraints(isNoteCbc);
 		jCbc.setModelName(solver, modelName);
 		
 	}
@@ -357,7 +362,7 @@ public class CbcSolver {
 		jCbc.assignSolver(model,solver); 
 		modelObject = jCbc.new_jCoinModel();
 
-		setDVars();
+		setDVars(false);
 		setConstraintsSkip(skipThisConstraint);
 		jCbc.setModelName(solver, modelName);
 		
@@ -449,11 +454,11 @@ public class CbcSolver {
 		}
 	}
 	
-	private static void setConstraints() {
+	private static void setConstraints(boolean isNoteCbc) {
 		if (ControlData.showRunTimeMessage) System.out.println("CBC Solver: Setting constraints");
 		
 		Map<String, EvalConstraint> constraintMap = SolverData.getConstraintDataMap();
-		
+		String c =""; String c2=""; String c3="";
 		int rowCounter=0; // row index
 		for (int i=0; i<=1; i++){
 			ArrayList<String> constraintCollection;
@@ -527,12 +532,19 @@ public class CbcSolver {
 				}
 
 				jCbc.addRow(modelObject,multMap.keySet().size(), index, elements, GT, LT, constraintName);
+				
+				
+			    if (isNoteCbc) {
+			    			
+					    	c = c + constraintName +","+GT+","+LT+","+multMap.keySet().size()+","+Arrays.toString(index)+","+Arrays.toString(elements)+"\n"; 					 
+			    }
 				rowCounter++; 
 				
 			}
 		}
 		
 		 jCbc.addRows(solver,modelObject);
+		 if (isNoteCbc) Tools.quickLog(modelName+"_"+solveName+".rows", c);
 	}
 	
 	private static void setConstraintsSkip(String skipThisConstraint) {
@@ -713,7 +725,7 @@ public class CbcSolver {
 				j++;				
 				iisSlackMap.put(z, constraintName);
 				//iisC
-				jCbc.addCol(modelObject, 0, maxValue, iisWeight, iisNameP, false); 
+				jCbc.addCol(modelObject, 0, maxValue, cbcHintRelaxPenalty, iisNameP, false); 
 				
 				dvBiMap.put(z+1, iisNameN);
 				dvBiMapInverse.put(iisNameN, z+1);
@@ -721,7 +733,7 @@ public class CbcSolver {
 				elements[j] = -coef;
 				j++;				
 				iisSlackMap.put(z+1, constraintName);
-				jCbc.addCol(modelObject, 0, maxValue, iisWeight, iisNameN, false); 
+				jCbc.addCol(modelObject, 0, maxValue, cbcHintRelaxPenalty, iisNameN, false); 
 				
 				
 				jCbc.addRow(modelObject,multMap.keySet().size()+2, index, elements, GT, LT, constraintName);
@@ -732,11 +744,11 @@ public class CbcSolver {
 		 jCbc.addRows(solver,modelObject);
 	}
     
-	private static void setDVars() {
+	private static void setDVars(boolean isNoteCbc) {
 		if (ControlData.showRunTimeMessage) System.out.println("CBC Solver: Setting dvars");
 		
 		Map<String, WeightElement> wm1  = SolverData.getWeightMap();
-		
+		String c="";
 		for (int i=0; i<dvBiMap.size(); i++){
 			String dvName = dvBiMap.get(i);
 			Dvar dvObj = dvarMap.get(dvName);
@@ -748,8 +760,15 @@ public class CbcSolver {
 			}
 			//System.out.println("weight of: "+dvName+"="+w);
 		    jCbc.addCol(modelObject , dvObj.lowerBoundValue.doubleValue(), dvObj.upperBoundValue.doubleValue(), w, dvName, dvObj.integer==Param.yes ); 
-			
+		    if (isNoteCbc) {
+		   // if (Objects.equals(modelName, "1951_02_c36")) {
+		    	int isInt=0;
+		    	if (dvObj.integer==Param.yes) isInt=1;
+		    	c = c + isInt+","+dvName+","+w+","+dvObj.lowerBoundValue.doubleValue()+","+dvObj.upperBoundValue.doubleValue()+"\n"; 
+		    
+		    }
 		}
+		if (isNoteCbc) Tools.quickLog(modelName+"_"+solveName+".cols", c);
 		
 	}
 	
@@ -877,7 +896,7 @@ public class CbcSolver {
 			if (status != 0 || status2 != 0) {
 				
 				//note_msg(jCbc.getModelName(solver), " Warmstart infeasible");
-				reloadProblem();	
+				reloadProblem(true);	
 				if (warm_2nd_solvFunc == solv2){
 					//note_msg(jCbc.getModelName(solver), " Use solve_2");
 					solve_2();
@@ -905,7 +924,7 @@ public class CbcSolver {
 
 		if (status != 0 || status2 != 0) {
 			note_msg(jCbc.getModelName(solver), " Solve_"+solveName+" infeasible. Use solve_2 with primalT="+solve_2_primalT_relax);
-			reloadProblem();
+			reloadProblem(false);
 			solve_2(solve_2_primalT_relax, "2R_");	
 			status = jCbc.status(model);
 			status2 = jCbc.secondaryStatus(model);
@@ -920,9 +939,17 @@ public class CbcSolver {
 //		}	
 		
 //		if (status != 0 || status2 != 0) {
-//			//note_msg(jCbc.getModelName(solver), " Solve_"+solveName+" infeasible. Use callCbc.");
-//			reloadProblem();
+//			note_msg(jCbc.getModelName(solver), " Solve_"+solveName+" infeasible. Use callCbc -primalT 1e-9 -integerT 1e-9 ");
+//			reloadProblem(false);
 //			callCbc();	
+//			status = jCbc.status(model);
+//			status2 = jCbc.secondaryStatus(model);
+//		}	
+		
+//		if (status != 0 || status2 != 0) {
+//			note_msg(jCbc.getModelName(solver), " Solve_"+solveName+" infeasible. Use callCbc -primalT 1e-7 -integerT 1e-9 ");
+//			reloadProblem(false);
+//			callCbc_R();	
 //			status = jCbc.status(model);
 //			status2 = jCbc.secondaryStatus(model);
 //		}	
@@ -939,7 +966,7 @@ public class CbcSolver {
 		
 		if (status != 0 || status2 != 0) {
 			//System.out.println("hello");
-			reloadAndWriteLp("_infeasible", true);
+			reloadAndWriteLp("_infeasible", true, true);
 			getSolverInformation(status, status2);
 			iis();
 		}
@@ -971,7 +998,7 @@ public class CbcSolver {
 		Set<String> ss = new HashSet<String>();
 		
 		long ts = Calendar.getInstance().getTimeInMillis();
-		long c1=0;long c2=0;int tr=0;int t_max=60;
+		long c1=0;long c2=0;int tr=0;int t_max=CbcSolver.cbcHintTimeMax;
 		
 		while (aa.size()<iisPossibleConstraintMap.size()){
 			
@@ -979,7 +1006,7 @@ public class CbcSolver {
 			tr =(int) (c1-ts)/1000;
 			if (tr>t_max) {
 				System.out.println("\nAnalysis stopped due to time limit exceeded.");
-				return;}
+				break;}
 			
 			System.out.print(".");
 			bb = new HashSet<String>(iisPossibleConstraintMap.keySet());
@@ -1000,7 +1027,7 @@ public class CbcSolver {
 			tr =(int) (c2-ts)/1000;
 			if (tr>t_max) {
 				System.out.println("\nAnalysis stopped due to time limit exceeded.");
-				return;}
+				break;}
 			System.out.print(".");
 			success = iisSolve(false, iisPossibleConstraintMap.keySet());
 		}
@@ -1144,6 +1171,7 @@ public class CbcSolver {
 		
 		int ColumnSize = jCbc.getNumCols(model);
 		varDoubleMap = new LinkedHashMap<String, Double>();
+		dvIntMap = new LinkedHashMap<String, Integer>();
 				
 		if (saveWarm||useWarm||saveIntVars) {
 			//int ii = ControlData.currCycleIndex + 1;
@@ -1154,7 +1182,7 @@ public class CbcSolver {
 			for (int j = 0; j < ColumnSize; j++){
 				 varDoubleMap.put(jCbc.getColName(model,j), jCbc.jarray_double_getitem(jCbc.getColSolution(solver),j));
 				 if (jCbc.isInteger(solver,j)==1) {
-					dvIntMap.put(jCbc.getColName(solver,j), (int)Math.round(jCbc.jarray_double_getitem(jCbc.getColSolution(solver),j)));
+					dvIntMap.put(jCbc.getColName(model,j), (int)Math.round(jCbc.jarray_double_getitem(jCbc.getColSolution(solver),j)));
 				 	//k++; 
 				 }
 			}
@@ -1291,11 +1319,11 @@ public class CbcSolver {
 
 	}
 	
-	public static void reloadAndWriteLp(String nameAppend, boolean logMps) {
+	public static void reloadAndWriteLp(String nameAppend, boolean logMps, boolean logCbc) {
 		
 		String label = modelName + "_" + solveName + "_" + nameAppend;
 		String oPath = new File(ILP.getIlpDir().getAbsoluteFile(), label).getAbsolutePath();
-		reloadProblem();
+		reloadProblem(logCbc);
 		jCbc.writeLp1(model, oPath, cbcWriteLpEpsilon, 14);
 		//jCbc.writeMps(model, oPath);
 		if(logMps){jCbc.writeMps1(model, oPath+".mps", 1, 2);}
@@ -1403,12 +1431,12 @@ public class CbcSolver {
 		
 		if (Error.getTotalError() == 0) {
 			if (recordLP) {
-				CbcSolver.reloadAndWriteLp("_watch_diff", true);
+				CbcSolver.reloadAndWriteLp("_watch_diff", true, true);
 			}
 			
 			double diff = ControlData.clp_cbc_objective - ControlData.xasolver.getObjective();
 			if (Math.abs(diff) > CbcSolver.record_if_obj_diff) {
-				CbcSolver.reloadAndWriteLp("_obj"+Math.round(diff), true);
+				CbcSolver.reloadAndWriteLp("_obj"+Math.round(diff), true, true);
 			}
 			if (Math.abs(diff) > CbcSolver.log_if_obj_diff) {
 				xa_int += "  obj: " + String.format("%16.3f", diff);
@@ -1504,13 +1532,19 @@ public class CbcSolver {
 	}
 	
 	private static void callCbc() {
-		solveName="cal";
-		jCbc.setIntegerTolerance(model, integerT);
+		solveName="c__";
+		//jCbc.setIntegerTolerance(model, integerT);
 		//jCbc.callCbc("-log 0 -preprocess off -presolve off -cutsOnOff off -primalT 1e-4 -integerT 1e-7 -solve", model);
 		//jCbc.callCbc("-log 0 -preprocess off -presolve on -cutsOnOff on -primalT 1e-5 -integerT 1e-8 -solve", model);
-		jCbc.callCbc("-log 0 -preprocess off -presolve on -cutsOnOff on -primalT "+solve_2_primalT_relax+" -integerT "+integerT+" -solve", model);
+		//jCbc.callCbc("-log 0 -preprocess off -presolve on -cutsOnOff on -primalT "+solve_2_primalT_relax+" -integerT "+integerT+" -solve", model);
+		jCbc.callCbc("-log 0 -primalT 1e-9 -integerT 1e-9 -solve", model);
 	}
 
+	private static void callCbc_R() {
+		solveName="cR_";
+		jCbc.callCbc("-log 0 -primalT 1e-7 -integerT 1e-9 -solve", model);
+	}
+	
 	public static void logIntCheck(StudyDataSet sds){
 			
 			String cbc_int = "";

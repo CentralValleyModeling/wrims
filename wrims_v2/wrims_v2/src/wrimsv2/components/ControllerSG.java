@@ -534,12 +534,12 @@ public class ControllerSG {
 							
 							if (Error.getTotalError() == 0) {
 								if (recordLP) {
-									CbcSolver.reloadAndWriteLp("_watch_diff", true);
+									CbcSolver.reloadAndWriteLp("_watch_diff", true, false);
 								}
 								
 								double diff = ControlData.clp_cbc_objective - ControlData.xasolver.getObjective();
 								if (Math.abs(diff) > CbcSolver.record_if_obj_diff) {
-									CbcSolver.reloadAndWriteLp("_obj"+Math.round(diff), true);
+									CbcSolver.reloadAndWriteLp("_obj"+Math.round(diff), true, false);
 								}
 								if (Math.abs(diff) > CbcSolver.log_if_obj_diff) {
 									xa_int += "  obj: " + String.format("%16.3f", diff);

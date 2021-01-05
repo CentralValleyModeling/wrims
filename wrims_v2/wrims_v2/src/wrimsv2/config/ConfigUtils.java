@@ -471,7 +471,37 @@ public class ConfigUtils {
 //			}
 //		}
 //		System.out.println("XASort: "+ControlData.xaSort);
+
+		// CbcHintTimeMax // default is 10 sec
+		k = "cbchinttimemax";
+		if (configMap.keySet().contains(k)){
+			
+			String s = configMap.get(k);			
+			
+			try {
+				CbcSolver.cbcHintTimeMax = Integer.parseInt(s);
+			} catch (NumberFormatException e) {
+				System.out.println("CbcHintTimeMax: Error reading config value");
+			}
+			
+		}
+		System.out.println("CbcHintTimeMax: "+CbcSolver.cbcHintTimeMax);
 		
+		// CbcHintRelaxPenalty // default is 10000
+		k = "cbchintrelaxpenalty";
+		if (configMap.keySet().contains(k)){
+			
+			String s = configMap.get(k);			
+			
+			try {
+				CbcSolver.cbcHintRelaxPenalty = Double.parseDouble(s);
+			} catch (NumberFormatException e) {
+				System.out.println("CbcHintRelaxPenalty: Error reading config value");
+			}
+			
+		}
+		System.out.println("CbcHintRelaxPenalty: "+CbcSolver.cbcHintRelaxPenalty);
+
 		
 		// CbcTolerancePrimal // default is 1e-9
 		k = "cbctoleranceprimal";
