@@ -58,7 +58,7 @@ public class CbcSolver {
 	private static LinkedHashMap<String, double[]> iisConstraintElementMap;
 	private static ArrayList<String> iisSlacks;
 	//private static ArrayList<String> iisDvarList;
-	public static double cbcHintRelaxPenalty = 10000;
+	public static double cbcHintRelaxPenalty = 9000;
 	
 	private static  Map<String, Dvar> dvarMap;
 	private static BiMap<Integer, String> dvBiMap;
@@ -262,15 +262,12 @@ public class CbcSolver {
 					double v = varDoubleMap.get(k);
 					if (Math.abs(v-Math.round(v))>integerT_check){
 						intErr = true;
-						System.out.println("int violation:::"+k+":"+v);
-
-						//iis();
-						//break;
-					} //else {System.out.println("int ::::::::::"+k+":"+v); }
+						Error.addSolvingError("int violation:::"+k+":"+v);
+					} 
 				}
 			}
-			if (intErr){reloadAndWriteLp("_infeasible_intViolation", true, true);
-			Error.addSolvingError("Infeasible solution.");}
+			if (intErr){reloadAndWriteLp("_intViolation", true, true);
+			Error.addSolvingError("Integer Violation! Please contact developers for this issue.");}
 			
 			
 			long beginT_ad = System.currentTimeMillis();	
@@ -923,7 +920,7 @@ public class CbcSolver {
 		status2 = jCbc.secondaryStatus(model);
 
 		if (status != 0 || status2 != 0) {
-			note_msg(jCbc.getModelName(solver), " Solve_"+solveName+" infeasible. Use solve_2 with primalT="+solve_2_primalT_relax);
+			note_msg(" Solve_"+solveName+" infeasible. Use solve_2 with primalT="+solve_2_primalT_relax);
 			reloadProblem(false);
 			solve_2(solve_2_primalT_relax, "2R_");	
 			status = jCbc.status(model);
@@ -988,75 +985,53 @@ public class CbcSolver {
 		boolean success = iisSolve(true, new HashSet());
 
 		if (!success) {
+			ILP.writeNoteLn(" Error in infeasibility analysis");
 			return;
 		} else {
-			System.out.print("Finding constraints that cause infeasibility");
+			System.out.print("Finding constraints that cause infeasibility\r\n");
 		}
 		
-		Set<String> aa = new HashSet<String>();
-		Set<String> bb = new HashSet<String>(); 
-		Set<String> ss = new HashSet<String>();
-		
+		//TODO: to fine-tuning these hints.
 		long ts = Calendar.getInstance().getTimeInMillis();
-		long c1=0;long c2=0;int tr=0;int t_max=CbcSolver.cbcHintTimeMax;
-		
-		while (aa.size()<iisPossibleConstraintMap.size()){
-			
-			c1 = Calendar.getInstance().getTimeInMillis();
-			tr =(int) (c1-ts)/1000;
-			if (tr>t_max) {
-				System.out.println("\nAnalysis stopped due to time limit exceeded.");
-				break;}
-			
-			System.out.print(".");
-			bb = new HashSet<String>(iisPossibleConstraintMap.keySet());
-			bb.removeAll(aa);
-		    aa = new HashSet<String>(iisPossibleConstraintMap.keySet());   
-		    
-			for (String s : bb) {
-				ss = new HashSet<String>();
-				ss.add(s);
-				success = iisSolve(false, ss);
-			}
-			
-		}
-		System.out.print(" ");
-		while (success){
-			
-			c2 = Calendar.getInstance().getTimeInMillis();
-			tr =(int) (c2-ts)/1000;
-			if (tr>t_max) {
-				System.out.println("\nAnalysis stopped due to time limit exceeded.");
-				break;}
-			System.out.print(".");
-			success = iisSolve(false, iisPossibleConstraintMap.keySet());
-		}
-		System.out.print(" ");
+		int tr=0;int t_max=CbcSolver.cbcHintTimeMax;
+
 		for (String c : iisPossibleConstraintMap.keySet()){
+			tr =(int) (Calendar.getInstance().getTimeInMillis()-ts)/1000;
+			if (tr>t_max) {
+				ILP.writeNoteLn("\r\nAnalysis2 stopped due to time limit exceeded.");
+				break;}
 			if(iisSolveConfirm(c)){
-				System.out.print(".");
 				iisConfirmConstraint.add(c);
 			}
 		}
-		System.out.println("");
-		
-		Set<String> iisReport;
 		
 		if (iisConfirmConstraint.size()>0) {
-			iisReport = iisConfirmConstraint;
-		} else {
-			iisReport = iisPossibleConstraintMap.keySet();
+			
+			String errString = "Each of the following constraints can cause infeasibility:";
+	
+			for (String c : iisConfirmConstraint){
+					errString += "\r\n" + iisPossibleConstraintMap.get(c) ;
+			}
+			Error.addSolvingError(errString);
+			for (String c : iisConfirmConstraint){
+				Error.addInfeasibleHint(c, iisPossibleConstraintMap.get(c));
+			}
+		}
+		Map<String, String> iisPossibleConstraintMap2 = new LinkedHashMap<String, String>(iisPossibleConstraintMap);
+		iisPossibleConstraintMap2.keySet().removeAll(iisConfirmConstraint);
+		if (iisPossibleConstraintMap2.keySet().size()>0) {
+			
+			String errString = "The following constraints might cause infeasibility:";
+	
+			for (String c : iisPossibleConstraintMap2.keySet()){
+					errString += "\r\n"+ iisPossibleConstraintMap2.get(c) ;
+			}
+			Error.addSolvingError(errString);
+			for (String c : iisPossibleConstraintMap2.keySet()){
+				Error.addInfeasibleHint(c, iisPossibleConstraintMap2.get(c));
+			}
 		}
 		
-		String errString = "One or more of the following constraints might cause infeasibility:\r\n";
-
-		for (String c : iisReport){
-				errString += iisPossibleConstraintMap.get(c) + "\r\n";
-		}
-		Error.addSolvingError(errString);
-		for (String c : iisReport){
-			Error.addInfeasibleHint(c, iisPossibleConstraintMap.get(c));
-		}
 		System.out.println("Check \"Error.log\" under the folder \"=ILP=\" for more information.");
 		System.out.println();
 
@@ -1066,9 +1041,7 @@ public class CbcSolver {
 		boolean success = false;
 
 		reloadProblemConfirm(skipThisConstraint);
-		//jCbc.writeLp1(model, "confirm", 1e-14, 14);
-		solve_3();
-		//jCbc.callCbc("-log 0 -preprocess off -presolve off -cutsOnOff off -integerT 1e-9 -solve", model);
+		solve_2();
 		int s = jCbc.status(model);
 		int s2 = jCbc.secondaryStatus(model);
 
@@ -1085,29 +1058,15 @@ public class CbcSolver {
 		boolean success = false;
 
 		loadProblemIIS(isFirstTimeRun, enforceThisConstraint);
-		//iisTriedConstraintSet.add(enforceThisConstraint);
-		//jCbc.writeLp1(model, "iis", 1e-14, 14);
+
 		solve_2();
 		int s = jCbc.status(model);
 		int s2 = jCbc.secondaryStatus(model);
-//		System.out.println("s: " + s);
-//		System.out.println("s2: " + s2);
-		// System.out.println(iisDvarMap);
-		// scan iis dvar solution
-
-		// for (int j = 0; j < jCbc.getNumCols(model); j++){
-		// System.out.println(jCbc.getColName(model,j)+"::"+jCbc.jarray_double_getitem(jCbc.getColSolution(solver),j));
-		//
-		// }
 
 		if (s == 0 && s2 == 0) {
-//			System.out.println("A set the following constraints might cause infeasibility:");
-//			System.out.println("============================================================");
 			for (int j : iisSlackMap.keySet()) {
 				String name = iisSlackMap.get(j);
 				String name2 = jCbc.getColName(model, j);
-				// System.out.println(name);
-				// System.out.println(jCbc.getColName(model,j));
 				// check if name matches
 				if (!name2.substring(0, name2.length() - 2).equalsIgnoreCase(name)) {
 					System.out.println("@@ " + jCbc.getColName(model, j));
@@ -1150,14 +1109,13 @@ public class CbcSolver {
 						show += " " + Tools.noZerofmt(iisConstraintRHSMap.get(name));
 						iisPossibleConstraintMap.put(name, show);
 						//System.out.println(show);
-						
+						//Error.addSolvingError(show);
+						//Error.addInfeasibleHint(name, iisPossibleConstraintMap.get(name));				
 
 					}
 				}
 
 			}
-			//System.out.println("============================================================");
-
 			success = true;
 		} else {
 			success = false;
@@ -1329,6 +1287,15 @@ public class CbcSolver {
 		if(logMps){jCbc.writeMps1(model, oPath+".mps", 1, 2);}
 		
 		logIntVars(label);
+		
+		ILP.writeNoteLn("CbcTolerancePrimal: "+CbcSolver.solve_2_primalT);
+		ILP.writeNoteLn("CbcTolerancePrimalRelax: "+CbcSolver.solve_2_primalT_relax);
+		ILP.writeNoteLn("CbcToleranceInteger: "+CbcSolver.integerT);
+		ILP.writeNoteLn("CbcToleranceIntegercheck: "+CbcSolver.integerT_check);	
+		ILP.writeNoteLn("CbcToleranceWarmPrimal: "+CbcSolver.solve_whs_primalT);
+		ILP.writeNoteLn("CbcToleranceZero: "+ControlData.zeroTolerance);
+		ILP.writeNoteLn("CbcHintTimeMax: "+CbcSolver.cbcHintTimeMax);
+		ILP.writeNoteLn("CbcHintRelaxPenalty: "+CbcSolver.cbcHintRelaxPenalty);
 
 	}
 	
@@ -1508,7 +1475,7 @@ public class CbcSolver {
 
 	}
 	
-	private static void note_msg(String modelName2, String msg) {
+	private static void note_msg(String msg) {
 		ILP.writeNoteLn(jCbc.getModelName(solver), msg);
 		System.out.println(jCbc.getModelName(solver)+ msg);
 	}

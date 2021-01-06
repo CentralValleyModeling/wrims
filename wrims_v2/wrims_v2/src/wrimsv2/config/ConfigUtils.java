@@ -487,7 +487,7 @@ public class ConfigUtils {
 		}
 		System.out.println("CbcHintTimeMax: "+CbcSolver.cbcHintTimeMax);
 		
-		// CbcHintRelaxPenalty // default is 10000
+		// CbcHintRelaxPenalty // default is 9000
 		k = "cbchintrelaxpenalty";
 		if (configMap.keySet().contains(k)){
 			
