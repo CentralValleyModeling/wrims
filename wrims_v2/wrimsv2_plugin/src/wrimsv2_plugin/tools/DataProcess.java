@@ -254,4 +254,8 @@ public class DataProcess {
 		}
 	}
 	
+	public static int doubleStringtoInt(String ds){
+		Long l=Math.round(Double.parseDouble(ds));
+		return	l.intValue();
+	}
 }

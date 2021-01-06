@@ -666,6 +666,24 @@ public class DebugInterface {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}else if (request.startsWith("cbcHintRelaxPenalty:")){
+			String[] requestParts=request.split(":");
+			CbcSolver.cbcHintRelaxPenalty = Double.parseDouble(requestParts[1]);
+			try {
+				sendRequest(request+" set");
+				System.out.println(request+" set");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else if (request.startsWith("cbcHintTimeMax:")){
+			String[] requestParts=request.split(":");
+			CbcSolver.cbcHintTimeMax = Integer.parseInt(requestParts[1]);
+			try {
+				sendRequest(request+" set");
+				System.out.println(request+" set");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

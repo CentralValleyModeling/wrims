@@ -7,6 +7,8 @@ public class CBCSetting {
 	public static String cbcToleranceIntegerDefault     = "1e-9";
 	public static String cbcToleranceIntegerCheckDefault= "1e-8";
 	public static String cbcToleranceZeroDefault        = "1e-11";
+	public static String cbcHintRelaxPenaltyDefault     = "9000";
+	public static String cbcHintTimeMaxDefault          = "10";
 	
 	public static String cbcTolerancePrimal      = cbcTolerancePrimalDefault;
 	public static String cbcTolerancePrimalRelax = cbcTolerancePrimalRelaxDefault;
@@ -14,6 +16,8 @@ public class CBCSetting {
 	public static String cbcToleranceInteger     = cbcToleranceIntegerDefault;
 	public static String cbcToleranceIntegerCheck= cbcToleranceIntegerCheckDefault;
 	public static String cbcToleranceZero        = cbcToleranceZeroDefault;
+	public static String cbcHintRelaxPenalty     = cbcHintRelaxPenaltyDefault;
+	public static String cbcHintTimeMax          = cbcHintTimeMaxDefault;
 	
 	public static double dvcbcTolerancePrimal      = Double.parseDouble(cbcTolerancePrimalDefault);
 	public static double dvcbcTolerancePrimalRelax = Double.parseDouble(cbcTolerancePrimalRelaxDefault);
@@ -21,6 +25,8 @@ public class CBCSetting {
 	public static double dvcbcToleranceInteger     = Double.parseDouble(cbcToleranceIntegerDefault);
 	public static double dvcbcToleranceIntegerCheck= Double.parseDouble(cbcToleranceIntegerCheckDefault);
 	public static double dvcbcToleranceZero        = Double.parseDouble(cbcToleranceZeroDefault);
+	public static double dvcbcHintRelaxPenalty     = Double.parseDouble(cbcHintRelaxPenaltyDefault);
+	public static double dvcbcHintTimeMax          = Double.parseDouble(cbcHintTimeMaxDefault);	
 	
 	public static boolean changeSetting=false;
 }

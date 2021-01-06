@@ -48,6 +48,7 @@ import wrimsv2_plugin.debugger.pa.PAProcDV;
 import wrimsv2_plugin.debugger.pa.PAProcInit;
 import wrimsv2_plugin.debugger.pa.PAProcRun;
 import wrimsv2_plugin.sensitivity.SensitivityRun;
+import wrimsv2_plugin.tools.DataProcess;
 import wrimsv2_plugin.tools.Encryption;
 import wrimsv2_plugin.tools.FileProcess;
 import wrimsv2_plugin.tools.TimeOperation;
@@ -728,6 +729,8 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 				out.println("cbcToleranceIntegerCheck  "+CBCSetting.cbcToleranceIntegerCheck);
 				out.println("cbcToleranceZero          "+CBCSetting.cbcToleranceZero);
 			}
+			out.println("cbcHintRelaxPenalty       "+CBCSetting.cbcHintRelaxPenalty);
+			out.println("cbcHintTimeMax            "+DataProcess.doubleStringtoInt(CBCSetting.cbcHintTimeMax));
 			
 			out.close();
 		

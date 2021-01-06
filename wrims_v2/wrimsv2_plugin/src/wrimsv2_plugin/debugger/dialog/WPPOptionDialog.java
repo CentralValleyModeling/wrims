@@ -35,6 +35,7 @@ import wrimsv2_plugin.debugger.core.CBCSetting;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.core.SettingPref;
 import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.tools.DataProcess;
 
 public class WPPOptionDialog extends Dialog {
 	
@@ -53,18 +54,24 @@ public class WPPOptionDialog extends Dialog {
 	private Text txtcbcToleranceIntegerCheck;
 	private Text txtcbcToleranceZero;
 	private Text txtDevPass;
+	private Text txtcbcHintRelaxPenalty;
+	private Text txtcbcHintTimeMax;
 	private double pvcbcTolerancePrimal;
 	private double pvcbcTolerancePrimalRelax;
 	private double pvcbcToleranceWarmPrimal;
 	private double pvcbcToleranceInteger;
 	private double pvcbcToleranceIntegerCheck;
 	private double pvcbcToleranceZero;
+	private double pvcbcHintRelaxPenalty;
+	private double pvcbcHintTimeMax;
 	private double vcbcTolerancePrimal;
 	private double vcbcTolerancePrimalRelax;
 	private double vcbcToleranceWarmPrimal;
 	private double vcbcToleranceInteger;
 	private double vcbcToleranceIntegerCheck;
 	private double vcbcToleranceZero;
+	private double vcbcHintRelaxPenalty;
+	private double vcbcHintTimeMax;
 	private int prevSel;
 
 	public WPPOptionDialog(Shell parent) {
@@ -104,6 +111,10 @@ public class WPPOptionDialog extends Dialog {
 	    TabItem cbcTab = new TabItem(tabFolder, SWT.BORDER);
 	    cbcTab.setText("CBC");
 	    createCBCTab(tabFolder, cbcTab);
+	  
+	    TabItem ifsTab = new TabItem(tabFolder, SWT.BORDER);
+	    ifsTab.setText("Infeasibility Check");
+	    createInfeasibleTab(tabFolder, ifsTab);
 	    
 	    tabFolder.setSize(600, 350);
 	    tabFolder.setLayoutData(gridData);
@@ -120,6 +131,7 @@ public class WPPOptionDialog extends Dialog {
 					showDevPassFail();
 					return;
 				}
+				assignIfsSetting();
 				SettingPref.saveCBCSetting();
 				DebugCorePlugin.xmx=textMemory.getText();
 				DebugCorePlugin.solver=solverCombo.getText();
@@ -171,6 +183,15 @@ public class WPPOptionDialog extends Dialog {
 								String cbcSetting = "cbcToleranceZero:"+CBCSetting.cbcToleranceZero;
 								DebugCorePlugin.target.sendRequest(cbcSetting.replace(" ", ""));
 							}
+						}
+						
+						if (vcbcHintRelaxPenalty != pvcbcHintRelaxPenalty){
+							String cbcSetting = "cbcHintRelaxPenalty:"+CBCSetting.cbcHintRelaxPenalty;
+							DebugCorePlugin.target.sendRequest(cbcSetting.replace(" ", ""));
+						}
+						if (vcbcHintTimeMax != pvcbcHintTimeMax){
+							String cbcSetting = "cbcHintTimeMax:"+DataProcess.doubleStringtoInt(CBCSetting.cbcHintTimeMax);
+							DebugCorePlugin.target.sendRequest(cbcSetting.replace(" ", ""));
 						}
 					} catch (DebugException e) {
 						WPPException.handleException(e);
@@ -429,6 +450,45 @@ public class WPPOptionDialog extends Dialog {
 		cbcTab.setControl(group);
 	}
 	
+	public void createInfeasibleTab(TabFolder tabFolder, TabItem ifsTab){		
+		
+		Group group = new Group(tabFolder, SWT.NONE);
+		
+		GridLayout layout=new GridLayout(2, false);
+		layout.marginWidth=20;
+		layout.marginHeight=15;
+		group.setLayout(layout);
+		
+		GridData gridData=new GridData(GridData.FILL_HORIZONTAL);
+		gridData.horizontalSpan=1;
+		
+		Label label1 = new Label(group, SWT.NONE);
+		label1.setLayoutData(gridData);
+		label1.setText("Infeasibility Hint Relax Penalty:");
+		txtcbcHintRelaxPenalty=new Text(group, SWT.BORDER);
+		txtcbcHintRelaxPenalty.setLayoutData(gridData);
+		txtcbcHintRelaxPenalty.setText(CBCSetting.cbcHintRelaxPenalty);
+		
+		Label label2 = new Label(group, SWT.NONE);
+		label2.setLayoutData(gridData);
+		label2.setText("Max Time for Infeasibility Hint Finding:");
+		txtcbcHintTimeMax=new Text(group, SWT.BORDER);
+		txtcbcHintTimeMax.setLayoutData(gridData);
+		txtcbcHintTimeMax.setText(CBCSetting.cbcHintTimeMax);
+	
+		Button butDefault = new Button(group, SWT.BORDER);
+		butDefault.setLayoutData(gridData);
+		butDefault.setText("Default");
+		butDefault.addSelectionListener(new SelectionAdapter(){
+			public void widgetSelected(SelectionEvent event){
+				txtcbcHintRelaxPenalty.setText(CBCSetting.cbcHintRelaxPenaltyDefault);
+				txtcbcHintTimeMax.setText(CBCSetting.cbcHintTimeMaxDefault);
+			}
+		});
+		
+		ifsTab.setControl(group);
+	}
+	
 	public void showSolverStatus(){
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() {
@@ -506,6 +566,17 @@ public class WPPOptionDialog extends Dialog {
 		}else{
 			return 0;
 		}
+	}
+	
+	public void assignIfsSetting(){
+		pvcbcHintRelaxPenalty      = Double.parseDouble(CBCSetting.cbcHintRelaxPenalty);
+		pvcbcHintTimeMax = Double.parseDouble(CBCSetting.cbcHintTimeMax);
+		
+		CBCSetting.cbcHintRelaxPenalty = txtcbcHintRelaxPenalty.getText();
+		CBCSetting.cbcHintTimeMax = txtcbcHintTimeMax.getText();
+		
+		vcbcHintRelaxPenalty      = Double.parseDouble(CBCSetting.cbcHintRelaxPenalty);
+		vcbcHintTimeMax = Double.parseDouble(CBCSetting.cbcHintTimeMax);
 	}
 	
 	public void showDevPassFail(){

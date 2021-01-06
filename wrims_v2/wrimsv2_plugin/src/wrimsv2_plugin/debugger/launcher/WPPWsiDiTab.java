@@ -56,6 +56,7 @@ import wrimsv2_plugin.debugger.core.CBCSetting;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.dialog.WPPDssToSqlDialog;
 import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.tools.DataProcess;
 import wrimsv2_plugin.tools.Encryption;
 import wrimsv2_plugin.tools.FileProcess;
 import wrimsv2_plugin.tools.TimeOperation;
@@ -313,6 +314,8 @@ public class WPPWsiDiTab extends AbstractLaunchConfigurationTab {
 				out.println("cbcToleranceIntegerCheck  "+CBCSetting.cbcToleranceIntegerCheck);
 				out.println("cbcToleranceZero          "+CBCSetting.cbcToleranceZero);
 			}
+			out.println("cbcHintRelaxPenalty       "+CBCSetting.cbcHintRelaxPenalty);
+			out.println("cbcHintTimeMax            "+DataProcess.doubleStringtoInt(CBCSetting.cbcHintTimeMax));
 			
 			out.close();
 			configFilePath= new File(studyDir, configName).getAbsolutePath();

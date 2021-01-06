@@ -100,6 +100,10 @@ public class SettingPref {
 			    			CBCSetting.cbcToleranceIntegerCheckDefault= pv;
 			    		}else if (pn.equalsIgnoreCase("cbcToleranceZero")){
 			    			CBCSetting.cbcToleranceZeroDefault        = pv;
+			    		}else if (pn.equalsIgnoreCase("cbcHintRelaxPenalty")){
+			    			CBCSetting.cbcHintRelaxPenaltyDefault     = pv;
+			    		}else if (pn.equalsIgnoreCase("cbcHintTimeMax")){
+			    			CBCSetting.cbcHintTimeMaxDefault          = pv;
 			    		}
 			    	}
 			    	line=br.readLine();
@@ -111,6 +115,8 @@ public class SettingPref {
 				CBCSetting.dvcbcToleranceInteger     = Double.parseDouble(CBCSetting.cbcToleranceIntegerDefault);
 				CBCSetting.dvcbcToleranceIntegerCheck= Double.parseDouble(CBCSetting.cbcToleranceIntegerCheckDefault);
 				CBCSetting.dvcbcToleranceZero        = Double.parseDouble(CBCSetting.cbcToleranceZeroDefault);
+				CBCSetting.dvcbcHintRelaxPenalty     = Double.parseDouble(CBCSetting.cbcHintRelaxPenaltyDefault);
+				CBCSetting.dvcbcHintTimeMax          = Double.parseDouble(CBCSetting.cbcHintTimeMaxDefault);
 			}
 		}catch(Exception e){		
 		}
@@ -141,6 +147,10 @@ public class SettingPref {
 			    			CBCSetting.cbcToleranceIntegerCheck= pv;
 			    		}else if (pn.equalsIgnoreCase("cbcToleranceZero")){
 			    			CBCSetting.cbcToleranceZero        = pv;
+			    		}else if (pn.equalsIgnoreCase("cbcHintRelaxPenalty")){
+			    			CBCSetting.cbcHintRelaxPenalty     = pv;
+			    		}else if (pn.equalsIgnoreCase("cbcHintTimeMax")){
+			    			CBCSetting.cbcHintTimeMax          = pv;
 			    		}
 			    	}
 			    	line=br.readLine();
@@ -183,6 +193,8 @@ public class SettingPref {
 			out.println("cbcToleranceInteger: "+CBCSetting.cbcToleranceInteger);
 			out.println("cbcToleranceIntegerCheck: "+CBCSetting.cbcToleranceIntegerCheck);
 			out.println("cbcToleranceZero: "+CBCSetting.cbcToleranceZero);
+			out.println("cbcHintRelaxPenalty: "+CBCSetting.cbcHintRelaxPenalty);
+			out.println("cbcHintTimeMax: "+CBCSetting.cbcHintTimeMax);
 			out.close();
 		} catch (IOException e) {
 			e.printStackTrace();
