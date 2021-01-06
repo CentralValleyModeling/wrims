@@ -3,8 +3,13 @@ package wrimsv2_plugin.debugger.dialog;
 
 import org.eclipse.debug.core.DebugException;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -60,6 +65,7 @@ public class WPPOptionDialog extends Dialog {
 	private double vcbcToleranceInteger;
 	private double vcbcToleranceIntegerCheck;
 	private double vcbcToleranceZero;
+	private int prevSel;
 
 	public WPPOptionDialog(Shell parent) {
 		super(parent, SWT.MIN|SWT.RESIZE);
@@ -126,6 +132,7 @@ public class WPPOptionDialog extends Dialog {
 				if (DebugCorePlugin.isDebugging){
 					try {
 						DebugCorePlugin.target.sendRequest("solveroption:"+DebugCorePlugin.solver+":"+DebugCorePlugin.log);
+						checkCbcUsed();
 						if (DebugCorePlugin.outputCycleToDss) {
 							DebugCorePlugin.target.sendRequest("OutputCycleDataToDssOn");
 						}else{
@@ -225,7 +232,27 @@ public class WPPOptionDialog extends Dialog {
 		}else if (DebugCorePlugin.solver.equals("XA")){
 			solverCombo.select(2);
 		}
+		prevSel=solverCombo.getSelectionIndex();
 		solverCombo.setLayoutData(gridData);
+		solverCombo.addModifyListener(new ModifyListener(){
+
+			@Override
+			public void modifyText(ModifyEvent e) {
+				if (DebugCorePlugin.isDebugging){
+					String solverName = solverCombo.getText();
+					if (solverName.equalsIgnoreCase("CBC") && DebugCorePlugin.cbc210Used){
+						showNoSwitchWarning("CBC");
+						solverCombo.select(prevSel);
+					}else if (solverName.equalsIgnoreCase("CBC2.10") && DebugCorePlugin.cbcUsed){
+						showNoSwitchWarning("CBC2.10");
+						solverCombo.select(prevSel);
+					}else{
+						prevSel=solverCombo.getSelectionIndex();
+					}
+				}
+			}
+			
+		});
 		
 		if (DebugCorePlugin.target==null){
 			solverCombo.setEnabled(true);
@@ -492,5 +519,35 @@ public class WPPOptionDialog extends Dialog {
 				messageBox.open();
 			}
 		});
+	}
+	
+	public void showNoSwitchWarning(final String solverName){
+		final IWorkbench workbench=PlatformUI.getWorkbench();
+		workbench.getDisplay().asyncExec(new Runnable(){
+			public void run(){
+				String solverNameVer;
+				if (solverName.equalsIgnoreCase("CBC")){
+					solverNameVer="CBC2.9.8";
+				}else{
+					solverNameVer=solverName;
+				}
+				Shell shell=workbench.getActiveWorkbenchWindow().getShell();
+				MessageBox messageBox = new MessageBox(shell, SWT.ICON_WARNING);
+				messageBox.setText("Warning");
+				messageBox.setMessage("During debugging, you can only switch solvers between CBC and XA but not between different versions of CBC."
+						+" You have used "+solverNameVer+". You can switch between different versions of CBC when your run is terminated.");
+				messageBox.open();
+			}
+		});
+	}
+	
+	public void checkCbcUsed(){
+		if (DebugCorePlugin.solver.equalsIgnoreCase("CBC")){
+			DebugCorePlugin.cbcUsed=true;
+			DebugCorePlugin.cbc210Used=false;
+		}else if (DebugCorePlugin.solver.equalsIgnoreCase("CBC2.10")){
+			DebugCorePlugin.cbcUsed=false;
+			DebugCorePlugin.cbc210Used=true;
+		}
 	}
 }

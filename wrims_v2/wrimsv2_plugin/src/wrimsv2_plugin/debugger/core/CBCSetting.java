@@ -23,5 +23,4 @@ public class CBCSetting {
 	public static double dvcbcToleranceZero        = Double.parseDouble(cbcToleranceZeroDefault);
 	
 	public static boolean changeSetting=false;
-
 }

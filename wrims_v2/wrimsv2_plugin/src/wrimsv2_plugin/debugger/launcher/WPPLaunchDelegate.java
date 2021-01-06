@@ -94,6 +94,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 	 */
 	@Override
 	public void launch(ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException{		
+		checkCbcUsed();
 		String chr = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_CALSIMHYDRORUN, "0");
 		if (chr.equals("1")){
 			CalSimHydro ch = new CalSimHydro();
@@ -771,7 +772,20 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			i++;
 		}
 	}
-		
+	
+	public void checkCbcUsed(){
+		if (DebugCorePlugin.solver.equalsIgnoreCase("CBC")){
+			DebugCorePlugin.cbcUsed=true;
+			DebugCorePlugin.cbc210Used=false;
+		}else if (DebugCorePlugin.solver.equalsIgnoreCase("CBC2.10")){
+			DebugCorePlugin.cbcUsed=false;
+			DebugCorePlugin.cbc210Used=true;
+		}else{
+			DebugCorePlugin.cbcUsed=false;
+			DebugCorePlugin.cbc210Used=false;
+		}
+	}
+	
 	/**
 	 * Throws an exception with a new status containing the given
 	 * message and optional exception.

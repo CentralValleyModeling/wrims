@@ -290,6 +290,8 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static boolean showRunTimeMessage=false;
 	
 	public static String devPass = "ModelingisNo1";
+	public static boolean cbcUsed=true;
+	public static boolean cbc210Used=false;
 	
 	/**
 	 * The constructor.

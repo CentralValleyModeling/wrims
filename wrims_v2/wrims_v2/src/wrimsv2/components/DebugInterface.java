@@ -2380,7 +2380,12 @@ public class DebugInterface {
 			ILP.getIlpDir();
 			ILP.initializeIlp();
 			GurobiSolver.initialize();
-		}else if (solverName.equals("CBC")){
+		}else if (solverName.startsWith("CBC")){
+			if (solverName.equalsIgnoreCase("CBC2.10")){
+				CbcSolver.cbcLibName="jCbc_v2.10";
+			}else{
+				CbcSolver.cbcLibName="jCbc";
+			}
 			ControlData.solverName="CBC";
 			ILP.loggingLpSolve=false;
 			ILP.loggingCplexLp=true;
