@@ -748,9 +748,18 @@ public class ILP {
 		outFile.flush();
 	}
 
-	public static void writeNoteLn(String msg) {		
+	public static void writeNoteLn(String msg, boolean printToScreen, boolean isErr) {		
 		
 		writeNoteLn(msg, _noteFile);
+		if (printToScreen) {
+			if (isErr) { System.err.println(msg);}
+			else {System.out.println(msg);};
+		}
+	}
+	
+	public static void writeNoteLn(String msg) {		
+		
+		writeNoteLn(msg, false, false);
 	}
 	
 	public static void writeNoteLn(String msg, String noteStr) {		

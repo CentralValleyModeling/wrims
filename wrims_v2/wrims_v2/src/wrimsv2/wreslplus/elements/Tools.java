@@ -23,7 +23,10 @@ import java.util.StringTokenizer;
 
 import com.google.common.collect.HashBasedTable;
 
+import wrimsv2.commondata.wresldata.Goal;
+import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.Param;
+import wrimsv2.components.ControlData;
 import wrimsv2.components.FilePaths;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.StudyUtils;
@@ -570,5 +573,15 @@ public class Tools {
 		        return String.format("%d",(long)d);
 		    else
 		        return String.format("%s",d);
+		}
+		
+		public static String findGoalLocation(String goalName){
+			ModelDataSet mds = ControlData.currModelDataSet;
+			String sourceLocation = "";
+			if (mds.gMap.containsKey(goalName)){
+				Goal goal=mds.gMap.get(goalName);
+				sourceLocation="("+goal.fromWresl+":"+goal.line+")";
+			}
+			return sourceLocation;
 		}
 }

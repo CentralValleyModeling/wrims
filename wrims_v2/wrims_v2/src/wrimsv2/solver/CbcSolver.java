@@ -49,7 +49,9 @@ public class CbcSolver {
 	private static SWIGTYPE_p_CoinModel modelObject; 
 
 	private static Map<String, String> iisPossibleConstraintMap;
+	private static Map<String, String> iisPossibleConstraintMap_cumulative;
 	private static Set<String> iisConfirmConstraint;
+	private static Set<String> onlySearchTheseConstraints;
 	//private static LinkedHashSet<String> iisReport;
 	private static LinkedHashMap<Integer, String> iisSlackMap;
 	private static LinkedHashMap<String, String> iisConstraintSignMap;
@@ -359,7 +361,7 @@ public class CbcSolver {
 		jCbc.assignSolver(model,solver); 
 		modelObject = jCbc.new_jCoinModel();
 
-		setDVars(false);
+		setDVarsIIS();
 		setConstraintsSkip(skipThisConstraint);
 		jCbc.setModelName(solver, modelName);
 		
@@ -710,9 +712,14 @@ public class CbcSolver {
 				String iisNameN = constraintName + "_n";
 				
 				double coef = 1;
+								
+				if (onlySearchTheseConstraints!=null && onlySearchTheseConstraints.size()>0) {
+					coef = 0;
+					if (onlySearchTheseConstraints.contains(constraintName)){ coef = 1; }
+				}
 				
-				if (enforceThisConstraint.contains(constraintName)){ coef = 0; }
-				
+				if (enforceThisConstraint.contains(constraintName)){ coef = 0; }	
+					
 				int z = dvBiMap.size();
 				
 				dvBiMap.put(z, iisNameP);
@@ -980,26 +987,41 @@ public class CbcSolver {
 		iisConstraintRHSMap = new LinkedHashMap<String, Double>();
 		iisSlacks = new ArrayList<String>();
 		iisPossibleConstraintMap = new LinkedHashMap<String, String>();
+		iisPossibleConstraintMap_cumulative = new LinkedHashMap<String, String>();
 		iisConfirmConstraint = new LinkedHashSet<String>();
 
-		boolean success = iisSolve(true, new HashSet());
-
-		if (!success) {
-			ILP.writeNoteLn(" Error in infeasibility analysis");
-			return;
-		} else {
-			System.out.print("Finding constraints that cause infeasibility\r\n");
-		}
-		
-		//TODO: to fine-tuning these hints.
+		boolean isFirstTimeRun = true;
+		boolean success = true;
 		long ts = Calendar.getInstance().getTimeInMillis();
 		int tr=0;int t_max=CbcSolver.cbcHintTimeMax;
-
-		for (String c : iisPossibleConstraintMap.keySet()){
+		
+		while (success) {
+			
 			tr =(int) (Calendar.getInstance().getTimeInMillis()-ts)/1000;
 			if (tr>t_max) {
-				ILP.writeNoteLn("\r\nAnalysis2 stopped due to time limit exceeded.");
+				ILP.writeNoteLn("\r\nInfeasibility analysis stopped due to time limit exceeded.", true, false);
 				break;}
+			
+		iisPossibleConstraintMap_cumulative.putAll(iisPossibleConstraintMap);
+		iisPossibleConstraintMap.clear();
+		iisConfirmConstraint.clear();
+		success = iisSolve(isFirstTimeRun, iisPossibleConstraintMap_cumulative.keySet());
+		//isFirstTimeRun=false;
+		
+		if (!success) {
+			ILP.writeNoteLn("Infeasibility analysis ended.", true, true);
+			return;
+		} else {
+			//System.out.print("Finding constraints that cause infeasibility\r\n");
+			ILP.writeNoteLn("Finding constraints that cause infeasibility...", true, false);
+		}
+		
+
+		for (String c : iisPossibleConstraintMap.keySet()){
+//			tr =(int) (Calendar.getInstance().getTimeInMillis()-ts)/1000;
+//			if (tr>t_max) {
+//				ILP.writeNoteLn("\r\nInfeasibility analysis stopped due to time limit exceeded.", true, false);
+//				break iisMainLoop;}
 			if(iisSolveConfirm(c)){
 				iisConfirmConstraint.add(c);
 			}
@@ -1007,33 +1029,35 @@ public class CbcSolver {
 		
 		if (iisConfirmConstraint.size()>0) {
 			
-			String errString = "Each of the following constraints can cause infeasibility:";
+//			String errString = ""; //"Each of the following constraints can cause infeasibility:";
 	
 			for (String c : iisConfirmConstraint){
-					errString += "\r\n" + iisPossibleConstraintMap.get(c) ;
+//					errString += iisPossibleConstraintMap.get(c) ;
+					ILP.writeNoteLn(Tools.findGoalLocation(c)+" "+iisPossibleConstraintMap.get(c),true,true);
 			}
-			Error.addSolvingError(errString);
-			for (String c : iisConfirmConstraint){
-				Error.addInfeasibleHint(c, iisPossibleConstraintMap.get(c));
-			}
+//			Error.addSolvingError(errString);
+//			for (String c : iisConfirmConstraint){
+//				Error.addInfeasibleHint(c, iisPossibleConstraintMap.get(c));
+//			}
+
 		}
-		Map<String, String> iisPossibleConstraintMap2 = new LinkedHashMap<String, String>(iisPossibleConstraintMap);
-		iisPossibleConstraintMap2.keySet().removeAll(iisConfirmConstraint);
-		if (iisPossibleConstraintMap2.keySet().size()>0) {
-			
-			String errString = "The following constraints might cause infeasibility:";
-	
-			for (String c : iisPossibleConstraintMap2.keySet()){
-					errString += "\r\n"+ iisPossibleConstraintMap2.get(c) ;
-			}
-			Error.addSolvingError(errString);
-			for (String c : iisPossibleConstraintMap2.keySet()){
-				Error.addInfeasibleHint(c, iisPossibleConstraintMap2.get(c));
-			}
+//		Map<String, String> iisPossibleConstraintMap2 = new LinkedHashMap<String, String>(iisPossibleConstraintMap);
+//		iisPossibleConstraintMap2.keySet().removeAll(iisConfirmConstraint);
+//		if (iisPossibleConstraintMap2.keySet().size()>0) {
+//			
+//			String errString = "The following constraints might cause infeasibility:";
+//	
+//			for (String c : iisPossibleConstraintMap2.keySet()){
+//					errString += "\r\n"+ iisPossibleConstraintMap2.get(c) ;
+//			}
+//			Error.addSolvingError(errString);
+//			for (String c : iisPossibleConstraintMap2.keySet()){
+//				Error.addInfeasibleHint(c, iisPossibleConstraintMap2.get(c));
+//			}
+//		}
 		}
-		
-		System.out.println("Check \"Error.log\" under the folder \"=ILP=\" for more information.");
-		System.out.println();
+		//System.out.println("Check \"Note.log\" under the folder \"=ILP=\" for more information.");
+//		System.out.println();
 
 	}
 
@@ -1041,7 +1065,8 @@ public class CbcSolver {
 		boolean success = false;
 
 		reloadProblemConfirm(skipThisConstraint);
-		solve_2();
+		//writeCbcLp("iisSolveConfirm", false);
+		solve_3();
 		int s = jCbc.status(model);
 		int s2 = jCbc.secondaryStatus(model);
 
@@ -1058,7 +1083,8 @@ public class CbcSolver {
 		boolean success = false;
 
 		loadProblemIIS(isFirstTimeRun, enforceThisConstraint);
-
+		//writeCbcLp("iisSolve", false);
+		
 		solve_2();
 		int s = jCbc.status(model);
 		int s2 = jCbc.secondaryStatus(model);
@@ -1074,9 +1100,6 @@ public class CbcSolver {
 				} else {
 					// check if solution not zero
 					if (jCbc.jarray_double_getitem(jCbc.getColSolution(solver), j) > 0) {
-						//iisFinalConstraintSet.add(name);
-						//iisToTryConstraintSet.add(name);
-						//System.out.println(jCbc.getColName(model, j) + ":" + jCbc.jarray_double_getitem(jCbc.getColSolution(solver), j));
 						// print this constraint
 						int[] index = iisConstraintIndexMap.get(name);
 						double[] coeff = iisConstraintElementMap.get(name);
@@ -1108,10 +1131,6 @@ public class CbcSolver {
 						show += " " + iisConstraintSignMap.get(name);
 						show += " " + Tools.noZerofmt(iisConstraintRHSMap.get(name));
 						iisPossibleConstraintMap.put(name, show);
-						//System.out.println(show);
-						//Error.addSolvingError(show);
-						//Error.addInfeasibleHint(name, iisPossibleConstraintMap.get(name));				
-
 					}
 				}
 
