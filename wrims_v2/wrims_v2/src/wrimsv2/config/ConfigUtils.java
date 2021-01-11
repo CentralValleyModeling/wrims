@@ -472,7 +472,7 @@ public class ConfigUtils {
 //		}
 //		System.out.println("XASort: "+ControlData.xaSort);
 
-		// CbcHintTimeMax // default is 10 sec
+		// CbcHintTimeMax // default is 100 sec
 		k = "cbchinttimemax";
 		if (configMap.keySet().contains(k)){
 			

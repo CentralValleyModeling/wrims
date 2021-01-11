@@ -8,7 +8,7 @@ public class CBCSetting {
 	public static String cbcToleranceIntegerCheckDefault= "1e-8";
 	public static String cbcToleranceZeroDefault        = "1e-11";
 	public static String cbcHintRelaxPenaltyDefault     = "9000";
-	public static String cbcHintTimeMaxDefault          = "10";
+	public static String cbcHintTimeMaxDefault          = "100";
 	
 	public static String cbcTolerancePrimal      = cbcTolerancePrimalDefault;
 	public static String cbcTolerancePrimalRelax = cbcTolerancePrimalRelaxDefault;

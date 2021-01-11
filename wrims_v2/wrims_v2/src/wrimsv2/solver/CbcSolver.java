@@ -79,7 +79,7 @@ public class CbcSolver {
 	public static double integerT_check = 1e-8;          // can read from config cbcToleranceIntegerCheck
 	public static final double cbcWriteLpEpsilon = 1e-15; 	
 	public static String cbcLibName = "jCbc_v2.10";
-	public static int cbcHintTimeMax = 10; // can read from config CbcHintTimeMax
+	public static int cbcHintTimeMax = 100; // can read from config CbcHintTimeMax
 	private static String modelName;
 	
 	private static Map<String, WeightElement> wm2; 
@@ -993,72 +993,52 @@ public class CbcSolver {
 		boolean isFirstTimeRun = true;
 		boolean success = true;
 		long ts = Calendar.getInstance().getTimeInMillis();
-		int tr=0;int t_max=CbcSolver.cbcHintTimeMax;
+		int tr=0;
+		boolean isConflictFound = false;
 		
 		while (success) {
 			
 			tr =(int) (Calendar.getInstance().getTimeInMillis()-ts)/1000;
-			if (tr>t_max) {
-				ILP.writeNoteLn("\r\nInfeasibility analysis stopped due to time limit exceeded.", true, false);
+			if (tr>CbcSolver.cbcHintTimeMax) {
+				ILP.writeNoteLn("\r\nInfeasibility analysis stopped due to time limit exceeded.", true, true);
 				break;}
 			
-		iisPossibleConstraintMap_cumulative.putAll(iisPossibleConstraintMap);
-		iisPossibleConstraintMap.clear();
-		iisConfirmConstraint.clear();
-		success = iisSolve(isFirstTimeRun, iisPossibleConstraintMap_cumulative.keySet());
-		//isFirstTimeRun=false;
-		
-		if (!success) {
-			ILP.writeNoteLn("Infeasibility analysis ended.", true, true);
-			return;
-		} else {
-			//System.out.print("Finding constraints that cause infeasibility\r\n");
-			ILP.writeNoteLn("Finding constraints that cause infeasibility...", true, false);
-		}
-		
-
-		for (String c : iisPossibleConstraintMap.keySet()){
-//			tr =(int) (Calendar.getInstance().getTimeInMillis()-ts)/1000;
-//			if (tr>t_max) {
-//				ILP.writeNoteLn("\r\nInfeasibility analysis stopped due to time limit exceeded.", true, false);
-//				break iisMainLoop;}
-			if(iisSolveConfirm(c)){
-				iisConfirmConstraint.add(c);
-			}
-		}
-		
-		if (iisConfirmConstraint.size()>0) {
+			iisPossibleConstraintMap_cumulative.putAll(iisPossibleConstraintMap);
+			iisPossibleConstraintMap.clear();
+			iisConfirmConstraint.clear();
+			success = iisSolve(isFirstTimeRun, iisPossibleConstraintMap_cumulative.keySet());
+			//isFirstTimeRun=false;
 			
-//			String errString = ""; //"Each of the following constraints can cause infeasibility:";
-	
-			for (String c : iisConfirmConstraint){
-//					errString += iisPossibleConstraintMap.get(c) ;
-					ILP.writeNoteLn(Tools.findGoalLocation(c)+" "+iisPossibleConstraintMap.get(c),true,true);
+			if (!success) {
+				ILP.writeNoteLn("Infeasibility analysis ended.", true, false);
+				if (iisPossibleConstraintMap_cumulative.size()>0) {
+					if (!isConflictFound) {
+						// output unconfirmed hints
+						ILP.writeNoteLn("The following constraints might cause infeasibility.", true, false);
+						for (String c: iisPossibleConstraintMap_cumulative.keySet()){
+							ILP.writeNoteLn(Tools.findGoalLocation(c)+" "+iisPossibleConstraintMap_cumulative.get(c),true,true);
+						}
+					}	
+				}
+				return;
+			} else {
+				ILP.writeNoteLn("Finding constraints that cause infeasibility...", true, false);
 			}
-//			Error.addSolvingError(errString);
-//			for (String c : iisConfirmConstraint){
-//				Error.addInfeasibleHint(c, iisPossibleConstraintMap.get(c));
-//			}
-
+			
+	
+			for (String c : iisPossibleConstraintMap.keySet()){
+				if(iisSolveConfirm(c)){
+					isConflictFound = true;
+					iisConfirmConstraint.add(c);
+				}
+			}
+			
+			if (iisConfirmConstraint.size()>0) {
+				for (String c : iisConfirmConstraint){
+						ILP.writeNoteLn(Tools.findGoalLocation(c)+" "+iisPossibleConstraintMap.get(c),true,true);
+				}
+			}
 		}
-//		Map<String, String> iisPossibleConstraintMap2 = new LinkedHashMap<String, String>(iisPossibleConstraintMap);
-//		iisPossibleConstraintMap2.keySet().removeAll(iisConfirmConstraint);
-//		if (iisPossibleConstraintMap2.keySet().size()>0) {
-//			
-//			String errString = "The following constraints might cause infeasibility:";
-//	
-//			for (String c : iisPossibleConstraintMap2.keySet()){
-//					errString += "\r\n"+ iisPossibleConstraintMap2.get(c) ;
-//			}
-//			Error.addSolvingError(errString);
-//			for (String c : iisPossibleConstraintMap2.keySet()){
-//				Error.addInfeasibleHint(c, iisPossibleConstraintMap2.get(c));
-//			}
-//		}
-		}
-		//System.out.println("Check \"Note.log\" under the folder \"=ILP=\" for more information.");
-//		System.out.println();
-
 	}
 
 	private static boolean iisSolveConfirm(String skipThisConstraint) {
