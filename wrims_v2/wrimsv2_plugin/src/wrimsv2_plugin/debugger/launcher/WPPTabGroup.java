@@ -27,6 +27,7 @@ public class WPPTabGroup extends AbstractLaunchConfigurationTabGroup {
 	private WPPWsiDiTab wsidiTab;
 	private WPPPATab paTab;
 	private WPPMSTab msTab;
+	private WPPInfeasibilityCheckTab infeasibilityCheckTab;
 	private WPPSQLTab sqlTab;
 	private WPPSensitivityTab sensitivityTab;
 	private SourceLookupTab sourceLookupTab;
@@ -42,6 +43,7 @@ public class WPPTabGroup extends AbstractLaunchConfigurationTabGroup {
 		wsidiTab=new WPPWsiDiTab(mainTab);
 		paTab=new WPPPATab();
 		msTab=new WPPMSTab();
+		infeasibilityCheckTab=new WPPInfeasibilityCheckTab();
 		sqlTab=new WPPSQLTab();
 		sensitivityTab = new WPPSensitivityTab();
 		sourceLookupTab=new SourceLookupTab();
@@ -53,6 +55,7 @@ public class WPPTabGroup extends AbstractLaunchConfigurationTabGroup {
 				wsidiTab,
 				paTab,
 				msTab,
+				infeasibilityCheckTab,
 				sqlTab,
 				sensitivityTab,
 				sourceLookupTab,

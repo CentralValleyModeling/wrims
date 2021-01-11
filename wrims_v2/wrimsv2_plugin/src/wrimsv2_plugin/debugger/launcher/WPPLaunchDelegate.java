@@ -732,6 +732,10 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			out.println("cbcHintRelaxPenalty       "+CBCSetting.cbcHintRelaxPenalty);
 			out.println("cbcHintTimeMax            "+DataProcess.doubleStringtoInt(CBCSetting.cbcHintTimeMax));
 			
+			if (DebugCorePlugin.isIfsSelFile){
+				out.println("isIflSelFile              yes");
+			}
+			
 			out.close();
 		
 			configFilePath= new File(studyDir, configName).getAbsolutePath();

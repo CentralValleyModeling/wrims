@@ -233,6 +233,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static final String ATTR_WPP_ALLRESTARTFILES=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_ALLRESTARTFILES";
 	public static final String ATTR_WPP_NUMBERRESTARTFILES=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_NUMBERRESTARTFILES";
 	public static final String ATTR_WPP_WSIDIOFFSET=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_WSIDIOFFSET";
+	public static final String ATTR_WPP_IFSSELFILE=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_IFSSELFILE";
 	
 	public static final String lineSep=System.getProperty("line.separator");
 	public static final String tab="\t";
@@ -292,6 +293,8 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static String devPass = "ModelingisNo1";
 	public static boolean cbcUsed=true;
 	public static boolean cbc210Used=false;
+	
+	public static boolean isIfsSelFile=false;
 	
 	/**
 	 * The constructor.

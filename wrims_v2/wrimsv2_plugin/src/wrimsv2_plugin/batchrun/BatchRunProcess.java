@@ -631,6 +631,10 @@ public class BatchRunProcess {
 			out.println("cbcHintRelaxPenalty       "+CBCSetting.cbcHintRelaxPenalty);
 			out.println("cbcHintTimeMax            "+DataProcess.doubleStringtoInt(CBCSetting.cbcHintTimeMax));
 			
+			if (DebugCorePlugin.isIfsSelFile){
+				out.println("isIflSelFile              yes");
+			}
+			
 			out.close();
 		
 			configFilePath= new File(configName).getAbsolutePath();
