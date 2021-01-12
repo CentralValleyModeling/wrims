@@ -233,7 +233,9 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static final String ATTR_WPP_ALLRESTARTFILES=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_ALLRESTARTFILES";
 	public static final String ATTR_WPP_NUMBERRESTARTFILES=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_NUMBERRESTARTFILES";
 	public static final String ATTR_WPP_WSIDIOFFSET=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_WSIDIOFFSET";
-	public static final String ATTR_WPP_IFSSELFILE=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_IFSSELFILE";
+	public static final String ATTR_WPP_IFSSELFILE=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_IS_IFS_SELECT_FILES";
+	public static final String ATTR_WPP_NUMBERIFSSELFILES=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_NUMBER_IFS_SELECT_FILES";
+	public static final String ATTR_WPP_IFSSELFILENAME=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_IFS_SELECT_FILE_NAME";
 	
 	public static final String lineSep=System.getProperty("line.separator");
 	public static final String tab="\t";

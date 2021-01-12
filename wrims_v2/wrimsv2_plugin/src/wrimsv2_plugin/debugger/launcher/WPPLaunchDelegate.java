@@ -619,7 +619,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 				configMap.put("showruntimemessage", "no");
 			}
 			
-			String studyDir = new File(mainFileAbsPath).getParentFile().getParentFile().getAbsolutePath();
+			String studyDir = configuration.getFile().getLocation().toFile().getParentFile().getAbsolutePath();
 			String configName = "__study.config";
 			File f = new File(studyDir, configName);
 			File dir = new File(f.getParent());

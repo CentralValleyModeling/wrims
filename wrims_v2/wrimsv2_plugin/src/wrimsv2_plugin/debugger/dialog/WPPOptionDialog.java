@@ -113,7 +113,7 @@ public class WPPOptionDialog extends Dialog {
 	    createCBCTab(tabFolder, cbcTab);
 	  
 	    TabItem ifsTab = new TabItem(tabFolder, SWT.BORDER);
-	    ifsTab.setText("Infeasibility Check");
+	    ifsTab.setText("Infeasibility Analysis");
 	    createInfeasibleTab(tabFolder, ifsTab);
 	    
 	    tabFolder.setSize(600, 350);
