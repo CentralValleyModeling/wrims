@@ -89,6 +89,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 	private int sri=1;
 	private String allRestartFiles;
 	private String numberRestartFiles;
+	private String ifsIsSelFile;
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.ILaunchConfigurationDelegate#launch(org.eclipse.debug.core.ILaunchConfiguration, java.lang.String, org.eclipse.debug.core.ILaunch, org.eclipse.core.runtime.IProgressMonitor)
@@ -468,6 +469,8 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			ovOption=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_OVOPTION, "0");
 			ovFile=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_OVFILE, "");
 			
+			ifsIsSelFile=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_IFSISSELFILE, "no");
+			
 			String mainFileAbsPath;
 			if (new File(mainFile).isAbsolute()){
 				mainFileAbsPath = mainFile;
@@ -619,6 +622,8 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 				configMap.put("showruntimemessage", "no");
 			}
 			
+			configMap.put("ifsisselfile", ifsIsSelFile);
+			
 			String studyDir = configuration.getFile().getLocation().toFile().getParentFile().getAbsolutePath();
 			String configName = "__study.config";
 			File f = new File(studyDir, configName);
@@ -732,8 +737,12 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			out.println("cbcHintRelaxPenalty       "+CBCSetting.cbcHintRelaxPenalty);
 			out.println("cbcHintTimeMax            "+DataProcess.doubleStringtoInt(CBCSetting.cbcHintTimeMax));
 			
-			if (DebugCorePlugin.isIfsSelFile){
-				out.println("isIflSelFile              yes");
+			String ifsIsSelFileStr=configMap.get("ifsisselfile");
+			out.println("IfsIsSelFile              "+ifsIsSelFileStr);
+			if (ifsIsSelFileStr.equalsIgnoreCase("no")){
+				DebugCorePlugin.isIfsSelFile=false;
+			}else{
+				DebugCorePlugin.isIfsSelFile=true;
 			}
 			
 			out.close();
@@ -744,8 +753,29 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			e.printStackTrace();
 		}
 
+		generateIfsFile(configFilePath, configuration);
+	
 		return configFilePath;
 			
+	}
+	
+	public void generateIfsFile(String configFilePath, ILaunchConfiguration configuration){
+		try {
+			DebugCorePlugin.ifsFilePath=configFilePath+".ifs";
+			File f = new File(DebugCorePlugin.ifsFilePath);
+			f.createNewFile();
+			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(f)));
+			int size = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_IFSNUMBERSELFILES, 0);
+			for (int i=0; i<size; i++){
+				String relativePath=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_IFSSELFILENAME+i, "");
+				out.println(relativePath);
+			}
+			out.close();
+		} catch (CoreException e) {
+			WPPException.handleException(e);
+		} catch (IOException e) {
+			WPPException.handleException(e);
+		}
 	}
 	
 	public void generateDatabaseUserProfileFile(String mainFileAbsPath){

@@ -27,6 +27,7 @@ import org.eclipse.debug.core.model.IProcess;
 
 import wrimsv2_plugin.debugger.core.CBCSetting;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.msr.MSRDataTransferBR;
 import wrimsv2_plugin.debugger.msr.MSRProcRunBR;
 import wrimsv2_plugin.debugger.msr.MSRUtil;
@@ -112,6 +113,7 @@ public class BatchRunProcess {
 	public String lookupFullPath;
 	private String allRestartFiles;
 	private String numberRestartFiles;
+	private String ifsIsSelFile;
 		
 	public void launch(LaunchConfigInfo configuration, String launchFilePath) throws CoreException {		
 		
@@ -383,6 +385,8 @@ public class BatchRunProcess {
 		ovOption=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_OVOPTION, "0");
 		ovFile=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_OVFILE, "");
 		
+		ifsIsSelFile=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_IFSISSELFILE, "no");
+		
 		String mainFileAbsPath;
 		if (new File(mainFile).isAbsolute()){
 			mainFileAbsPath = mainFile;
@@ -527,6 +531,8 @@ public class BatchRunProcess {
 				configMap.put("showruntimemessage", "no");
 			}
 			
+			configMap.put("ifsisselfile", ifsIsSelFile);
+			
 			String configName = launchFilePath +".config";
 			File f = new File(configName);
 			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(f)));
@@ -631,9 +637,7 @@ public class BatchRunProcess {
 			out.println("cbcHintRelaxPenalty       "+CBCSetting.cbcHintRelaxPenalty);
 			out.println("cbcHintTimeMax            "+DataProcess.doubleStringtoInt(CBCSetting.cbcHintTimeMax));
 			
-			if (DebugCorePlugin.isIfsSelFile){
-				out.println("isIflSelFile              yes");
-			}
+			out.println("IfsIsSelFile              "+configMap.get("ifsisselfile"));
 			
 			out.close();
 		
@@ -643,8 +647,27 @@ public class BatchRunProcess {
 			e.printStackTrace();
 		}
 
+		generateIfsFile(configFilePath, configuration);
+		
 		return configFilePath;
 			
+	}
+	
+	public void generateIfsFile(String configFilePath, LaunchConfigInfo configuration){
+		try {
+			String ifsFilePath = configFilePath+".ifs";
+			File f = new File(ifsFilePath);
+			f.createNewFile();
+			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(f)));
+			int size = configuration.getIntAttribute(DebugCorePlugin.ATTR_WPP_IFSNUMBERSELFILES, 0);
+			for (int i=0; i<size; i++){
+				String relativePath=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_IFSSELFILENAME+i, "");
+				out.println(relativePath);
+			}
+			out.close();
+		} catch (IOException e) {
+			WPPException.handleException(e);
+		}
 	}
 	
 	public void generateDatabaseUserProfileFile(String launchFilePath){

@@ -317,9 +317,7 @@ public class WPPWsiDiTab extends AbstractLaunchConfigurationTab {
 			out.println("cbcHintRelaxPenalty       "+CBCSetting.cbcHintRelaxPenalty);
 			out.println("cbcHintTimeMax            "+DataProcess.doubleStringtoInt(CBCSetting.cbcHintTimeMax));
 			
-			if (DebugCorePlugin.isIfsSelFile){
-				out.println("isIflSelFile              yes");
-			}
+			out.println("IfsIsSelFile              "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_IFSISSELFILE, "no"));
 			
 			out.close();
 			configFilePath= new File(studyDir, configName).getAbsolutePath();
@@ -327,7 +325,28 @@ public class WPPWsiDiTab extends AbstractLaunchConfigurationTab {
 			e.printStackTrace();
 		}
 
+		generateIfsFile(configFilePath);
+		
 		return configFilePath;
+	}
+	
+	public void generateIfsFile(String configFilePath){
+		try {
+			String ifsFilePath = configFilePath+".ifs";
+			File f = new File(ifsFilePath);
+			f.createNewFile();
+			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(f)));
+			int size = launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_IFSNUMBERSELFILES, 0);
+			for (int i=0; i<size; i++){
+				String relativePath=launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_IFSSELFILENAME+i, "");
+				out.println(relativePath);
+			}
+			out.close();
+		} catch (CoreException e) {
+			WPPException.handleException(e);
+		} catch (IOException e) {
+			WPPException.handleException(e);
+		}
 	}
 	
 	public void generateBatch(PrintWriter out, String configFilePath){

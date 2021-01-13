@@ -45,6 +45,7 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -75,6 +76,9 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 	private Button importButt;
 	private Button deleteButt;
 	private Button deleteAllButt;
+	private Button insertFileButt;
+	private Button insertFolderButt;
+	private String prevFilterPath="";
 	
 	public WPPInfeasibilityTab(){
 		
@@ -88,7 +92,7 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 		setControl(comp);
 		GridLayout topLayout = new GridLayout();
 		topLayout.verticalSpacing = 0;
-		topLayout.numColumns = 7;
+		topLayout.numColumns = 8;
 		comp.setLayout(topLayout);
 		comp.setFont(font);
 		
@@ -98,7 +102,7 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 	    group1.setText("&Select WRESL files for Infeasibility Analysis:");
 	    group1.setLayout(topLayout);
 	    GridData gd = new GridData(GridData.BEGINNING);
-		gd.horizontalSpan = 7;
+		gd.horizontalSpan = 8;
 		group1.setLayoutData(gd);
 		
 		noSelButt = new Button(group1, SWT.RADIO);
@@ -143,10 +147,18 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 		
 		list = new List(comp, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.horizontalSpan = 7;
+		gd.horizontalSpan = 8;
+		gd.heightHint=200;
 		list.setLayoutData(gd);
-		list.setSize(600, 400);
+		//list.setSize(600, 400);
 
+		importButt = new Button(comp, SWT.NONE);;
+	    importButt.setText("Import");
+		importButt.setFont(font);
+	    gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 1;
+		importButt.setLayoutData(gd);
+		
 	    fileButt = new Button(comp, SWT.NONE);
 	    fileButt.setText("Add Files");
 		fileButt.setFont(font);
@@ -159,8 +171,10 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 			public void widgetSelected(SelectionEvent e) {
 				FileDialog dialog = new FileDialog(getShell(), SWT.OPEN|SWT.MULTI);
 				dialog.setFilterExtensions(new String [] {"*.wresl"});
+				dialog.setFilterPath(prevFilterPath);
 				dialog.open();
 				String filterPath=dialog.getFilterPath();
+				prevFilterPath=filterPath;
 				String[] absPaths = dialog.getFileNames();
 				for (int i=0; i<absPaths.length; i++){
 					String absPath=filterPath+"\\"+absPaths[i];
@@ -187,13 +201,103 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 	    gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 1;
 		folderButt.setLayoutData(gd);
+		folderButt.addSelectionListener(new SelectionListener(){
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				DirectoryDialog dialog = new DirectoryDialog(getShell(), SWT.OPEN|SWT.MULTI);
+				dialog.setFilterPath(prevFilterPath);
+				String absPath = dialog.open();
+				prevFilterPath=dialog.getFilterPath();
+				String relativePath="";
+				if (absPath!=null && !absPath.equals("")){
+					relativePath=makeRelativePath(launchPath, absPath);
+				}
+				list.add(relativePath);	
+				updateLaunchConfigurationDialog();	
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 		
-		importButt = new Button(comp, SWT.NONE);;
-	    importButt.setText("Import");
-		importButt.setFont(font);
+		insertFileButt = new Button(comp, SWT.NONE);
+		insertFileButt.setText("Insert Files");
+		insertFileButt.setFont(font);
 	    gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 1;
-		importButt.setLayoutData(gd);
+		insertFileButt.setLayoutData(gd);
+		insertFileButt.addSelectionListener(new SelectionListener(){
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				FileDialog dialog = new FileDialog(getShell(), SWT.OPEN|SWT.MULTI);
+				dialog.setFilterExtensions(new String [] {"*.wresl"});
+				dialog.setFilterPath(prevFilterPath);
+				dialog.open();
+				String filterPath=dialog.getFilterPath();
+				prevFilterPath=filterPath;
+				String[] absPaths = dialog.getFileNames();
+				for (int i=0; i<absPaths.length; i++){
+					String absPath=filterPath+"\\"+absPaths[i];
+					String relativePath="";
+					if (!absPath.equals("")){
+						relativePath=makeRelativePath(launchPath, absPath);
+					}
+					int index=list.getSelectionIndex();
+					if (index<0){
+						index=0;
+					}
+					list.add(relativePath, index);
+				}
+				updateLaunchConfigurationDialog();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		insertFolderButt = new Button(comp, SWT.NONE);;
+		insertFolderButt.setText("Insert Folder");
+		insertFolderButt.setFont(font);
+	    gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 1;
+		insertFolderButt.setLayoutData(gd);
+		insertFolderButt.addSelectionListener(new SelectionListener(){
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				DirectoryDialog dialog = new DirectoryDialog(getShell(), SWT.OPEN|SWT.MULTI);
+				dialog.setFilterPath(prevFilterPath);
+				String absPath = dialog.open();
+				prevFilterPath = dialog.getFilterPath();
+				String relativePath="";
+				if (absPath!=null && !absPath.equals("")){
+					relativePath=makeRelativePath(launchPath, absPath);
+				}
+				int index=list.getSelectionIndex();
+				if (index<0){
+					index=0;
+				}
+				list.add(relativePath, index);	
+				updateLaunchConfigurationDialog();	
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 
 		deleteButt = new Button(comp, SWT.NONE);;
 	    deleteButt.setText("Delete");
@@ -252,15 +356,15 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 		launchPath=launchConfig.getFile().getLocation().toFile().getAbsolutePath();
 		
 		try {
-			String isSelFiles = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_IFSSELFILE, "No");
-			if (isSelFiles.equalsIgnoreCase("No")){
+			String isSelFiles = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_IFSISSELFILE, "no");
+			if (isSelFiles.equalsIgnoreCase("no")){
 				noSelButt.setSelection(true);
 			}else{
 				selButt.setSelection(true);
 			}
 			
 			list.removeAll();
-			int numberSelFiles=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_NUMBERIFSSELFILES, 0);
+			int numberSelFiles=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_IFSNUMBERSELFILES, 0);
 			for (int i=0; i<numberSelFiles; i++){
 				String relativePath=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_IFSSELFILENAME+i, "");
 				list.add(relativePath);
@@ -273,15 +377,13 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 	@Override
 	public void performApply(ILaunchConfigurationWorkingCopy configuration) {
 		if (noSelButt.getSelection()){
-			configuration.setAttribute(DebugCorePlugin.ATTR_WPP_IFSSELFILE, "No");
-			DebugCorePlugin.isIfsSelFile=false;
+			configuration.setAttribute(DebugCorePlugin.ATTR_WPP_IFSISSELFILE, "no");
 		}else{
-			configuration.setAttribute(DebugCorePlugin.ATTR_WPP_IFSSELFILE, "Yes");
-			DebugCorePlugin.isIfsSelFile=true;
+			configuration.setAttribute(DebugCorePlugin.ATTR_WPP_IFSISSELFILE, "yes");
 		}
 		
 		int numberSelFiles=list.getItemCount();
-		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_NUMBERIFSSELFILES, numberSelFiles);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_IFSNUMBERSELFILES, numberSelFiles);
 		
 		for (int i=0; i<numberSelFiles; i++){
 			String relativePath=list.getItem(i);
