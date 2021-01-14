@@ -299,6 +299,8 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static boolean isIfsSelFile=false;
 	public static String ifsFilePath;
 	
+	public static boolean isRunning=false;
+	
 	/**
 	 * The constructor.
 	 */

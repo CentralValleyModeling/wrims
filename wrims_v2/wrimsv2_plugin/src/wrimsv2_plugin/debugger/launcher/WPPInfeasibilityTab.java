@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -55,6 +56,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 
+import wrimsv2_plugin.batchrun.LaunchConfigInfo;
 import wrimsv2_plugin.debugger.core.CBCSetting;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.dialog.WPPDssToSqlDialog;
@@ -158,6 +160,27 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 	    gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 1;
 		importButt.setLayoutData(gd);
+		importButt.addSelectionListener(new SelectionListener(){
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				FileDialog dialog = new FileDialog(getShell(), SWT.OPEN);
+				dialog.setFilterExtensions(new String [] {"*.ifs;*.launch"});
+				dialog.setFilterPath(prevFilterPath);
+				String ifsFilePath = dialog.open();
+				if (ifsFilePath != null){
+					importIfsFile(ifsFilePath);	
+					updateLaunchConfigurationDialog();
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 		
 	    fileButt = new Button(comp, SWT.NONE);
 	    fileButt.setText("Add Files");
@@ -445,5 +468,38 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
        relativePath.append(relativeDirectories[relativeDirectories.length - 1]);
 
        return relativePath.toString();
+	}
+	
+	public void importIfsFile(String filePath){
+		filePath=filePath.toLowerCase();
+		if (filePath.endsWith(".ifs")){
+			list.removeAll();
+			File file = new File(filePath);
+			if (file.exists()){
+				FileInputStream fs;
+				try {
+					fs = new FileInputStream(filePath);
+					BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+				    String line = br.readLine();
+				    while (line !=null){
+				    	list.add(line);
+				    	line = br.readLine();
+				    }
+				    br.close();
+				    fs.close();
+				} catch (FileNotFoundException e) {
+					WPPException.handleException(e);
+				} catch (IOException e) {
+					WPPException.handleException(e);
+				}
+			}
+		}else if (filePath.endsWith(".launch")){
+			list.removeAll();
+			LaunchConfigInfo config = new LaunchConfigInfo(filePath);
+			int size=config.getIntAttribute(DebugCorePlugin.ATTR_WPP_IFSNUMBERSELFILES,0);
+			for (int i=0; i<size; i++){
+				list.add(config.getStringAttribute(DebugCorePlugin.ATTR_WPP_IFSSELFILENAME+i, ""));
+			}
+		}
 	}
 }

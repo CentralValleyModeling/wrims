@@ -1,6 +1,10 @@
 package wrimsv2_plugin.debugger.dialog;
 
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+
 import org.eclipse.debug.core.DebugException;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -485,6 +489,43 @@ public class WPPOptionDialog extends Dialog {
 				txtcbcHintTimeMax.setText(CBCSetting.cbcHintTimeMaxDefault);
 			}
 		});
+	
+		Label label3 = new Label(group, SWT.NONE);
+		label3.setLayoutData(gridData);
+		label3.setText("");
+		
+		Label label4 = new Label(group, SWT.NONE);
+		label4.setLayoutData(gridData);
+		label4.setText("Edit Selected WRESL Files for Infeasibility Analysis");
+		
+		Button butEditIfs = new Button(group, SWT.BORDER);
+		butEditIfs.setLayoutData(gridData);
+		butEditIfs.setText("Edit");
+		butEditIfs.addSelectionListener(new SelectionAdapter(){
+			public void widgetSelected(SelectionEvent event){
+				if (DebugCorePlugin.isDebugging || DebugCorePlugin.isRunning){
+					if (DebugCorePlugin.ifsFilePath==null){
+						showNoEditIfsFiles();
+					}else{
+						File f = new File(DebugCorePlugin.ifsFilePath);
+						if (!f.exists()){
+							try {
+								f.createNewFile();
+							} catch (IOException e) {
+								WPPException.handleException(e);
+							}
+						}
+						try {
+							Desktop.getDesktop().open(f);
+						} catch (IOException e) {
+							WPPException.handleException(e);
+						}
+					}
+				}else{
+					showNoEditIfsFiles();
+				}
+			}
+		});
 		
 		ifsTab.setControl(group);
 	}
@@ -577,6 +618,20 @@ public class WPPOptionDialog extends Dialog {
 		
 		vcbcHintRelaxPenalty      = Double.parseDouble(CBCSetting.cbcHintRelaxPenalty);
 		vcbcHintTimeMax = Double.parseDouble(CBCSetting.cbcHintTimeMax);
+	}
+	
+	public void showNoEditIfsFiles(){
+		final IWorkbench workbench=PlatformUI.getWorkbench();
+		workbench.getDisplay().asyncExec(new Runnable(){
+			public void run(){
+				Shell shell=workbench.getActiveWorkbenchWindow().getShell();
+				MessageBox messageBox = new MessageBox(shell, SWT.ICON_WARNING);
+				messageBox.setText("Warning");
+				messageBox.setMessage("You can edit this file under debug mode or run mode here. Before or after the run time, "+
+				"please edit in the \"Infeasibility\" tab of the Launch Configuration.");
+				messageBox.open();
+			}
+		});
 	}
 	
 	public void showDevPassFail(){

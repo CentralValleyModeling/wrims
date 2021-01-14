@@ -96,6 +96,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 	 */
 	@Override
 	public void launch(ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException{		
+		DebugCorePlugin.isRunning=true;
 		checkCbcUsed();
 		String chr = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_CALSIMHYDRORUN, "0");
 		if (chr.equals("1")){
@@ -112,6 +113,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			isSensitivity=false;
 			singleLaunch(configuration, mode, launch, monitor);
 		}
+		DebugCorePlugin.isRunning=false;
 	}
 	
 	public void sensitivityLaunch(ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException{		
