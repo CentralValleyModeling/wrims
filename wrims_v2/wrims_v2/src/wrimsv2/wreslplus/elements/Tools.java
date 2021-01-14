@@ -350,17 +350,22 @@ public class Tools {
 		return in.readLine();
 	}
 
-	public static PrintWriter openFile(String dirPath, String fileName) throws IOException {
+	public static PrintWriter openFile(String dirPath, String fileName, boolean isAppend) throws IOException {
 
 		File f = new File(dirPath, fileName);
 		File dir = new File(f.getParent());
 		dir.mkdirs();
 		f.createNewFile();
 
-		return new PrintWriter(new BufferedWriter(new FileWriter(f)));
+		return new PrintWriter(new BufferedWriter(new FileWriter(f, isAppend)));
+
 	}
 
+	public static PrintWriter openFile(String dirPath, String fileName) throws IOException {
 
+		return openFile(dirPath, fileName, false);
+
+	}
 
 	public static boolean deleteDir(String dirString) {
 		File dir = new File(dirString);
@@ -552,13 +557,13 @@ public class Tools {
 
 	    return out;
 	  }
-		public static void quickLog(String fn, String x) {
+		public static void quickLog(String fn, String x, boolean isAppend) {
 
 		    File ilpRootDir = new File(FilePaths.mainDirectory, "=ILP=");  
 		    File ilpDir = new File(ilpRootDir, StudyUtils.configFileName); 
 
 			try {
-				PrintWriter quickLogFile = Tools.openFile(ilpDir.getAbsolutePath(), fn);
+				PrintWriter quickLogFile = Tools.openFile(ilpDir.getAbsolutePath(), fn, isAppend);
 				quickLogFile.println(x);
 				quickLogFile.close();
 			} catch (IOException e) {
@@ -566,7 +571,11 @@ public class Tools {
 			}
 
 		}
-
+		
+		public static void quickLog(String fn, String x) {
+			quickLog(fn, x, false);
+		}
+		
 		public static String noZerofmt(double d)
 		{
 		    if(d == (long) d)

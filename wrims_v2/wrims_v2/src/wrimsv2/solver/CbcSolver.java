@@ -457,7 +457,7 @@ public class CbcSolver {
 		if (ControlData.showRunTimeMessage) System.out.println("CBC Solver: Setting constraints");
 		
 		Map<String, EvalConstraint> constraintMap = SolverData.getConstraintDataMap();
-		String c =""; String c2=""; String c3="";
+		String c="quicklog version 1.0\n";
 		int rowCounter=0; // row index
 		for (int i=0; i<=1; i++){
 			ArrayList<String> constraintCollection;
@@ -518,7 +518,7 @@ public class CbcSolver {
 						dvBiMap.put(sizeDv, multName);
 						dvBiMapInverse.put(multName, sizeDv);
 						
-						addConditionalSlackSurplusToDvarMap(dvarMap, multName);
+						addConditionalSlackSurplusToDvarMap(dvarMap, multName, isNoteCbc);
 					
 					}					
 					
@@ -606,7 +606,7 @@ public class CbcSolver {
 						dvBiMap.put(sizeDv, multName);
 						dvBiMapInverse.put(multName, sizeDv);
 						
-						addConditionalSlackSurplusToDvarMap(dvarMap, multName);
+						addConditionalSlackSurplusToDvarMap(dvarMap, multName, false);
 					
 					}					
 					
@@ -687,7 +687,7 @@ public class CbcSolver {
 						dvBiMap.put(sizeDv, multName);
 						dvBiMapInverse.put(multName, sizeDv);
 						
-						addConditionalSlackSurplusToDvarMap(dvarMap, multName);
+						addConditionalSlackSurplusToDvarMap(dvarMap, multName, false);
 					
 					}					
 					
@@ -752,7 +752,7 @@ public class CbcSolver {
 		if (ControlData.showRunTimeMessage) System.out.println("CBC Solver: Setting dvars");
 		
 		Map<String, WeightElement> wm1  = SolverData.getWeightMap();
-		String c="";
+		String c="quicklog version 1.0\n";
 		for (int i=0; i<dvBiMap.size(); i++){
 			String dvName = dvBiMap.get(i);
 			Dvar dvObj = dvarMap.get(dvName);
@@ -765,7 +765,7 @@ public class CbcSolver {
 			//System.out.println("weight of: "+dvName+"="+w);
 		    jCbc.addCol(modelObject , dvObj.lowerBoundValue.doubleValue(), dvObj.upperBoundValue.doubleValue(), w, dvName, dvObj.integer==Param.yes ); 
 		    if (isNoteCbc) {
-		   // if (Objects.equals(modelName, "1951_02_c36")) {
+
 		    	int isInt=0;
 		    	if (dvObj.integer==Param.yes) isInt=1;
 		    	c = c + isInt+","+dvName+","+w+","+dvObj.lowerBoundValue.doubleValue()+","+dvObj.upperBoundValue.doubleValue()+"\n"; 
@@ -1260,8 +1260,8 @@ public class CbcSolver {
 		}
 	}
 	
-	public static void addConditionalSlackSurplusToDvarMap(Map<String, Dvar> dvarMap, String dvName){
-		
+	public static void addConditionalSlackSurplusToDvarMap(Map<String, Dvar> dvarMap, String dvName, boolean isNoteCbc){
+		String c="";
 		Dvar dvar=new Dvar();
 		dvar.upperBoundValue = maxValue;
 		dvar.lowerBoundValue = 0.0;
@@ -1273,6 +1273,14 @@ public class CbcSolver {
 		}
 		//System.out.println(dvName+":"+w);
 		jCbc.addCol(modelObject , 0, maxValue, w, dvName, dvar.integer==Param.yes ); 
+	    if (isNoteCbc) {
+
+	    	int isInt=0;
+	    	if (dvar.integer==Param.yes) isInt=1;
+	    	c = isInt+","+dvName+","+w+",0,"+maxValue; 
+	    	Tools.quickLog(modelName+"_"+solveName+".cols", c, true);
+	    }
+	
 
 	}
 	
