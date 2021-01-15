@@ -51,7 +51,11 @@ public class CbcSolver {
 	private static Map<String, String> iisPossibleConstraintMap;
 	private static Map<String, String> iisPossibleConstraintMap_cumulative;
 	private static Set<String> iisConfirmConstraint;
-	private static Set<String> onlySearchTheseConstraints;
+	public static Set<String> prioritizeSearchTheseConstraints;
+	private static boolean hasPriorityConstraints = false; // will be assigned to true if above set is not empty.
+	private static Set<String> _pstc;
+	private static int total_relaxed_constraints = 0;
+	
 	//private static LinkedHashSet<String> iisReport;
 	private static LinkedHashMap<Integer, String> iisSlackMap;
 	private static LinkedHashMap<String, String> iisConstraintSignMap;
@@ -78,7 +82,7 @@ public class CbcSolver {
 	public static double integerT =  1e-9;               // can read from config cbcToleranceInteger
 	public static double integerT_check = 1e-8;          // can read from config cbcToleranceIntegerCheck
 	public static final double cbcWriteLpEpsilon = 1e-15; 	
-	public static String cbcLibName = "jCbc_v2.10";
+	public static String cbcLibName = "jCbc";
 	public static int cbcHintTimeMax = 100; // can read from config CbcHintTimeMax
 	private static String modelName;
 	
@@ -631,7 +635,7 @@ public class CbcSolver {
 	private static void setConstraintsIIS(boolean firstTimeRun, Set<String> enforceThisConstraint) {
 		
 		Map<String, EvalConstraint> constraintMap = SolverData.getConstraintDataMap();
-		
+		int total=0;
 		for (int i=0; i<=1; i++){
 			ArrayList<String> constraintCollection;
 			if (i==0){
@@ -643,7 +647,7 @@ public class CbcSolver {
 			Iterator<String> constraintIterator = constraintCollection.iterator();
 		
 			
-			while(constraintIterator.hasNext()){        
+			while(constraintIterator.hasNext()){        total++;
 				
 				double GT=-999;
 				double LT= 999;
@@ -668,7 +672,7 @@ public class CbcSolver {
 				}
 				else {
 					// error!!
-					System.out.println("error in CbcSolver!");
+					ILP.writeNoteLn("Error in CbcSolver constraint processing!",true,true);
 				}
 			
 				HashMap<String, IntDouble> multMap = ec.getEvalExpression().getMultiplier();
@@ -712,10 +716,10 @@ public class CbcSolver {
 				String iisNameN = constraintName + "_n";
 				
 				double coef = 1;
-								
-				if (onlySearchTheseConstraints!=null && onlySearchTheseConstraints.size()>0) {
+
+				if (hasPriorityConstraints && _pstc.size()>0) {
 					coef = 0;
-					if (onlySearchTheseConstraints.contains(constraintName)){ coef = 1; }
+					if (_pstc.contains(constraintName)){ coef = 1; }
 				}
 				
 				if (enforceThisConstraint.contains(constraintName)){ coef = 0; }	
@@ -745,7 +749,7 @@ public class CbcSolver {
 			}
 		}
 		
-		 jCbc.addRows(solver,modelObject);
+		 jCbc.addRows(solver,modelObject); total_relaxed_constraints = total;
 	}
     
 	private static void setDVars(boolean isNoteCbc) {
@@ -981,6 +985,11 @@ public class CbcSolver {
 	
 	
 	private static void iis() {
+		// test
+		// final String[] SET_VALUES = new String[]{ "from_omr_np", "compare_omr_p"  };
+		// prioritizeSearchTheseConstraints = new LinkedHashSet<String>(Arrays.asList(SET_VALUES));
+		// end test
+int pp=0;
 		iisConstraintIndexMap = new LinkedHashMap<String, int[]>();
 		iisConstraintElementMap = new LinkedHashMap<String, double[]>();
 		iisConstraintSignMap = new LinkedHashMap<String, String>();
@@ -989,6 +998,12 @@ public class CbcSolver {
 		iisPossibleConstraintMap = new LinkedHashMap<String, String>();
 		iisPossibleConstraintMap_cumulative = new LinkedHashMap<String, String>();
 		iisConfirmConstraint = new LinkedHashSet<String>();
+		
+		if (prioritizeSearchTheseConstraints!=null && prioritizeSearchTheseConstraints.size()>0) {
+			hasPriorityConstraints = true;
+			_pstc = new LinkedHashSet<String>(prioritizeSearchTheseConstraints);
+		}
+	
 
 		boolean isFirstTimeRun = true;
 		boolean success = true;
@@ -1004,12 +1019,29 @@ public class CbcSolver {
 				break;}
 			
 			iisPossibleConstraintMap_cumulative.putAll(iisPossibleConstraintMap);
+
+			if (hasPriorityConstraints) {				
+				_pstc.removeAll(iisConfirmConstraint);
+				if (_pstc.size()<1) {hasPriorityConstraints = false;}
+				}
 			iisPossibleConstraintMap.clear();
 			iisConfirmConstraint.clear();
+//					System.out.println(hasPriorityConstraints);
+//					System.out.println(_pstc);					
 			success = iisSolve(isFirstTimeRun, iisPossibleConstraintMap_cumulative.keySet());
 			//isFirstTimeRun=false;
 			
-			if (!success) {
+			if (hasPriorityConstraints) {
+				if (!success || iisPossibleConstraintMap.size()<1){
+					ILP.writeNoteLn("End priority search.",true,false);
+					hasPriorityConstraints = false;
+					_pstc = null;
+					success = true;
+					continue;
+				}
+			}
+				
+			if (!success || iisPossibleConstraintMap.size()<1) {
 				ILP.writeNoteLn("Infeasibility analysis ended.", true, false);
 				if (iisPossibleConstraintMap_cumulative.size()>0) {
 					if (!isConflictFound) {
@@ -1023,13 +1055,16 @@ public class CbcSolver {
 				return;
 			} else {
 				ILP.writeNoteLn("Finding constraints that cause infeasibility...", true, false);
+//				System.out.println("iisPossibleConstraintMap_cumulative.size():"+iisPossibleConstraintMap_cumulative.size());
+//				System.out.println("iisPossibleConstraintMap.size():"+iisPossibleConstraintMap.size());
+//				System.out.println("total_relaxed:"+total_relaxed_constraints);
 			}
 			
 	
 			for (String c : iisPossibleConstraintMap.keySet()){
 				if(iisSolveConfirm(c)){
 					isConflictFound = true;
-					iisConfirmConstraint.add(c);
+					//iisConfirmConstraint.add(c); pp++; ILP.writeNoteLn("found:"+pp,true,true);
 				}
 			}
 			
@@ -1038,6 +1073,20 @@ public class CbcSolver {
 						ILP.writeNoteLn(Tools.findGoalLocation(c)+" "+iisPossibleConstraintMap.get(c),true,true);
 				}
 			}
+//			// test
+//			if (iisPossibleConstraintMap.keySet().size()>0) {
+//				ILP.writeNoteLn("\n@@all_relaxed_contraints:\n");
+//				for (String c :  iisPossibleConstraintMap.keySet()){
+//					ILP.writeNoteLn(iisPossibleConstraintMap.get(c),true,true);
+//				}
+//				ILP.writeNoteLn("",false,false);
+//				for (String c :  iisPossibleConstraintMap.keySet()){
+//					ILP.writeNoteLn(Tools.findGoalLocation(c)+" "+iisPossibleConstraintMap.get(c),true,true);
+//				}	
+//				ILP.writeNoteLn("",false,false);
+//			}
+//			// end test
+			
 		}
 	}
 
