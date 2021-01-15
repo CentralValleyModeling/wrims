@@ -88,6 +88,10 @@ public class SettingPref {
 			    			CbcSolver.integerT_check        = Double.parseDouble(pv);
 			    		}else if (pn.equalsIgnoreCase("cbcToleranceZero")){
 			    			ControlData.zeroTolerance        = Double.parseDouble(pv);
+			    		}else if (pn.equalsIgnoreCase("cbcHintRelaxPenalty")){
+			    			CbcSolver.cbcHintRelaxPenalty     = Double.parseDouble(pv);
+			    		}else if (pn.equalsIgnoreCase("cbcHintTimeMax")){
+			    			CbcSolver.cbcHintTimeMax          = Integer.parseInt(pv);
 			    		}
 			    	}
 			    	line=br.readLine();

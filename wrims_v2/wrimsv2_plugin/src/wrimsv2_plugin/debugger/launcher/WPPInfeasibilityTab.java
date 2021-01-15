@@ -31,6 +31,7 @@ import org.eclipse.debug.core.ILaunchConfigurationType;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.core.ILaunchManager;
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
+import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -81,6 +82,11 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 	private Button insertFileButt;
 	private Button insertFolderButt;
 	private String prevFilterPath="";
+	private Button constraintButt;
+	
+	private final String cPref="c: ";
+	private final String fPref="f: ";
+	private Button insertConstraintButt;
 	
 	public WPPInfeasibilityTab(){
 		
@@ -94,19 +100,20 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 		setControl(comp);
 		GridLayout topLayout = new GridLayout();
 		topLayout.verticalSpacing = 0;
-		topLayout.numColumns = 8;
+		topLayout.numColumns = 9;
 		comp.setLayout(topLayout);
 		comp.setFont(font);
 		
 		createVerticalSpacer(comp, 3);
 		
 		Group group1 = new Group(comp, SWT.SHADOW_IN);
-	    group1.setText("&Select WRESL files for Infeasibility Analysis:");
+	    group1.setText("&Select WRESL files or Constraints for Infeasibility Analysis:");
 	    group1.setLayout(topLayout);
 	    GridData gd = new GridData(GridData.BEGINNING);
-		gd.horizontalSpan = 8;
+		gd.horizontalSpan = 9;
 		group1.setLayoutData(gd);
 		
+		/*
 		noSelButt = new Button(group1, SWT.RADIO);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 1;
@@ -146,10 +153,11 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 				
 			}
 		});
+		*/
 		
 		list = new List(comp, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.horizontalSpan = 8;
+		gd.horizontalSpan = 9;
 		gd.heightHint=200;
 		list.setLayoutData(gd);
 		//list.setSize(600, 400);
@@ -205,7 +213,7 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 					if (!absPath.equals("")){
 						relativePath=makeRelativePath(launchPath, absPath);
 					}
-					list.add(relativePath);
+					list.add(fPref+relativePath);
 				}
 				updateLaunchConfigurationDialog();
 			}
@@ -236,7 +244,32 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 				if (absPath!=null && !absPath.equals("")){
 					relativePath=makeRelativePath(launchPath, absPath);
 				}
-				list.add(relativePath);	
+				list.add(fPref+relativePath);	
+				updateLaunchConfigurationDialog();	
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		constraintButt = new Button(comp, SWT.NONE);;
+		constraintButt.setText("Add Constraint");
+		constraintButt.setFont(font);
+	    gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 1;
+		constraintButt.setLayoutData(gd);
+		constraintButt.addSelectionListener(new SelectionListener(){
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				InputDialog id = new InputDialog(getShell(), "Add Constraint", "Please add constraint name:", null, null);
+				id.open();
+				String cn=id.getValue();
+				if (cn !=null && !cn.equals("")) list.add(cPref+cn);	
 				updateLaunchConfigurationDialog();	
 			}
 
@@ -275,7 +308,7 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 					if (index<0){
 						index=0;
 					}
-					list.add(relativePath, index);
+					list.add(fPref+relativePath, index);
 				}
 				updateLaunchConfigurationDialog();
 			}
@@ -310,7 +343,36 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 				if (index<0){
 					index=0;
 				}
-				list.add(relativePath, index);	
+				list.add(fPref+relativePath, index);	
+				updateLaunchConfigurationDialog();	
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		insertConstraintButt = new Button(comp, SWT.NONE);;
+		insertConstraintButt.setText("Insert Constraint");
+		insertConstraintButt.setFont(font);
+	    gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 1;
+		insertConstraintButt.setLayoutData(gd);
+		insertConstraintButt.addSelectionListener(new SelectionListener(){
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				InputDialog id = new InputDialog(getShell(), "Insert Constraint", "Please insert constraint name:", null, null);
+				id.open();
+				String cn=id.getValue();
+				int index=list.getSelectionIndex();
+				if (index<0){
+					index=0;
+				}
+				if (cn !=null && !cn.equals("")) list.add(cPref+cn, index);	
 				updateLaunchConfigurationDialog();	
 			}
 
@@ -379,17 +441,19 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 		launchPath=launchConfig.getFile().getLocation().toFile().getAbsolutePath();
 		
 		try {
-			String isSelFiles = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_IFSISSELFILE, "no");
-			if (isSelFiles.equalsIgnoreCase("no")){
+			/*
+			String isSelEntries = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_IFSISSELENTRY, "no");
+			if (isSelEntries.equalsIgnoreCase("no")){
 				noSelButt.setSelection(true);
 			}else{
 				selButt.setSelection(true);
 			}
+			*/
 			
 			list.removeAll();
-			int numberSelFiles=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_IFSNUMBERSELFILES, 0);
+			int numberSelFiles=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_IFSNUMBERSELENTRIES, 0);
 			for (int i=0; i<numberSelFiles; i++){
-				String relativePath=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_IFSSELFILENAME+i, "");
+				String relativePath=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_IFSSELENTRYNAME+i, "");
 				list.add(relativePath);
 			}
 		} catch (CoreException e) {
@@ -399,18 +463,20 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 
 	@Override
 	public void performApply(ILaunchConfigurationWorkingCopy configuration) {
+		/*
 		if (noSelButt.getSelection()){
-			configuration.setAttribute(DebugCorePlugin.ATTR_WPP_IFSISSELFILE, "no");
+			configuration.setAttribute(DebugCorePlugin.ATTR_WPP_IFSISSELENTRY, "no");
 		}else{
-			configuration.setAttribute(DebugCorePlugin.ATTR_WPP_IFSISSELFILE, "yes");
+			configuration.setAttribute(DebugCorePlugin.ATTR_WPP_IFSISSELENTRY, "yes");
 		}
+		*/
 		
 		int numberSelFiles=list.getItemCount();
-		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_IFSNUMBERSELFILES, numberSelFiles);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_IFSNUMBERSELENTRIES, numberSelFiles);
 		
 		for (int i=0; i<numberSelFiles; i++){
 			String relativePath=list.getItem(i);
-			configuration.setAttribute(DebugCorePlugin.ATTR_WPP_IFSSELFILENAME+i, relativePath);			
+			configuration.setAttribute(DebugCorePlugin.ATTR_WPP_IFSSELENTRYNAME+i, relativePath);			
 		}
 	}
 
@@ -496,9 +562,9 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 		}else if (filePath.endsWith(".launch")){
 			list.removeAll();
 			LaunchConfigInfo config = new LaunchConfigInfo(filePath);
-			int size=config.getIntAttribute(DebugCorePlugin.ATTR_WPP_IFSNUMBERSELFILES,0);
+			int size=config.getIntAttribute(DebugCorePlugin.ATTR_WPP_IFSNUMBERSELENTRIES,0);
 			for (int i=0; i<size; i++){
-				list.add(config.getStringAttribute(DebugCorePlugin.ATTR_WPP_IFSSELFILENAME+i, ""));
+				list.add(config.getStringAttribute(DebugCorePlugin.ATTR_WPP_IFSSELENTRYNAME+i, ""));
 			}
 		}
 	}

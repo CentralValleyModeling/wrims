@@ -317,7 +317,7 @@ public class WPPWsiDiTab extends AbstractLaunchConfigurationTab {
 			out.println("cbcHintRelaxPenalty       "+CBCSetting.cbcHintRelaxPenalty);
 			out.println("cbcHintTimeMax            "+DataProcess.doubleStringtoInt(CBCSetting.cbcHintTimeMax));
 			
-			out.println("IfsIsSelFile              "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_IFSISSELFILE, "no"));
+			out.println("IfsIsSelFile              "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_IFSISSELENTRY, "yes"));
 			
 			out.close();
 			configFilePath= new File(studyDir, configName).getAbsolutePath();
@@ -336,9 +336,9 @@ public class WPPWsiDiTab extends AbstractLaunchConfigurationTab {
 			File f = new File(ifsFilePath);
 			f.createNewFile();
 			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(f)));
-			int size = launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_IFSNUMBERSELFILES, 0);
+			int size = launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_IFSNUMBERSELENTRIES, 0);
 			for (int i=0; i<size; i++){
-				String relativePath=launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_IFSSELFILENAME+i, "");
+				String relativePath=launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_IFSSELENTRYNAME+i, "");
 				out.println(relativePath);
 			}
 			out.close();

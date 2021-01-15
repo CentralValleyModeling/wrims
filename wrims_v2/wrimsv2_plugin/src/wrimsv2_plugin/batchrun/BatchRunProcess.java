@@ -385,7 +385,7 @@ public class BatchRunProcess {
 		ovOption=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_OVOPTION, "0");
 		ovFile=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_OVFILE, "");
 		
-		ifsIsSelFile=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_IFSISSELFILE, "no");
+		ifsIsSelFile=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_IFSISSELENTRY, "yes");
 		
 		String mainFileAbsPath;
 		if (new File(mainFile).isAbsolute()){
@@ -659,9 +659,9 @@ public class BatchRunProcess {
 			File f = new File(ifsFilePath);
 			f.createNewFile();
 			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(f)));
-			int size = configuration.getIntAttribute(DebugCorePlugin.ATTR_WPP_IFSNUMBERSELFILES, 0);
+			int size = configuration.getIntAttribute(DebugCorePlugin.ATTR_WPP_IFSNUMBERSELENTRIES, 0);
 			for (int i=0; i<size; i++){
-				String relativePath=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_IFSSELFILENAME+i, "");
+				String relativePath=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_IFSSELENTRYNAME+i, "");
 				out.println(relativePath);
 			}
 			out.close();

@@ -233,9 +233,9 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static final String ATTR_WPP_ALLRESTARTFILES=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_ALLRESTARTFILES";
 	public static final String ATTR_WPP_NUMBERRESTARTFILES=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_NUMBERRESTARTFILES";
 	public static final String ATTR_WPP_WSIDIOFFSET=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_WSIDIOFFSET";
-	public static final String ATTR_WPP_IFSISSELFILE=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_IFS_IS_SELECT_FILES";
-	public static final String ATTR_WPP_IFSNUMBERSELFILES=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_IFS_NUMBER_SELECT_FILES";
-	public static final String ATTR_WPP_IFSSELFILENAME=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_IFS_SELECT_FILE_NAME";
+	public static final String ATTR_WPP_IFSISSELENTRY=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_IFS_IS_SELECT_ENTRY";
+	public static final String ATTR_WPP_IFSNUMBERSELENTRIES=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_IFS_NUMBER_SELECT_ENTRIES";
+	public static final String ATTR_WPP_IFSSELENTRYNAME=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_IFS_SELECT_ENTRY_NAME";
 	
 	public static final String lineSep=System.getProperty("line.separator");
 	public static final String tab="\t";
@@ -296,7 +296,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static boolean cbcUsed=true;
 	public static boolean cbc210Used=false;
 	
-	public static boolean isIfsSelFile=false;
+	public static boolean isIfsSelFile=true;
 	public static String ifsFilePath;
 	
 	public static boolean isRunning=false;

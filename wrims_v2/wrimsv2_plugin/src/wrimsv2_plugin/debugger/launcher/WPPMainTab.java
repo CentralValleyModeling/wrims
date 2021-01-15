@@ -723,12 +723,6 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		}
 	}
 	
-	public String procRelativePath(String path){
-		String absPath=launchConfig.getFile().getLocation().toFile().getParentFile().getAbsolutePath();
-		absPath=absPath+"\\"+path;
-		return absPath;
-	}
-	
 	protected void browseFiles(Text fileLocationText) {
 		FileDialog dlg =new FileDialog(getShell(),SWT.OPEN);
 		fileLocationText.setText(dlg.open());
