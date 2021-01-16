@@ -33,6 +33,7 @@ import wrimsv2.evaluator.DataTimeSeries;
 import wrimsv2.evaluator.DssOperation;
 import wrimsv2.evaluator.EvalConstraint;
 import wrimsv2.ilp.ILP;
+import wrimsv2.tools.InfeasibilityAnalysis;
 import wrimsv2.wreslplus.elements.Tools;
 
 import com.google.common.collect.BiMap;
@@ -999,6 +1000,8 @@ int pp=0;
 		iisPossibleConstraintMap_cumulative = new LinkedHashMap<String, String>();
 		iisConfirmConstraint = new LinkedHashSet<String>();
 		
+		InfeasibilityAnalysis.procIfsFile();
+		prioritizeSearchTheseConstraints=InfeasibilityAnalysis.constraintSet;
 		if (prioritizeSearchTheseConstraints!=null && prioritizeSearchTheseConstraints.size()>0) {
 			hasPriorityConstraints = true;
 			_pstc = new LinkedHashSet<String>(prioritizeSearchTheseConstraints);

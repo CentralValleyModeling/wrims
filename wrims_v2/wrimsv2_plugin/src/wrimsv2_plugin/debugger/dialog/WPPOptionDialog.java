@@ -494,16 +494,21 @@ public class WPPOptionDialog extends Dialog {
 		label3.setLayoutData(gridData);
 		label3.setText("");
 		
-		Label label4 = new Label(group, SWT.NONE);
+		Label label4 = new Label(group, SWT.NONE|SWT.WRAP);
+		gridData = new GridData(GridData.FILL_HORIZONTAL, SWT.TOP, true, false);
+		gridData.horizontalSpan=2;
 		label4.setLayoutData(gridData);
-		label4.setText("Edit Selected WRESL Files for Infeasibility Analysis");
+		label4.setText("Please go to \"Infeasibility\" tab of the Launch Configuration to edit selected WRESL files or constraints for infeasibility analysis. "+
+		"You can edit the list before or during the debug or run mode there.");
 		
+		/*
 		Button butEditIfs = new Button(group, SWT.BORDER);
 		butEditIfs.setLayoutData(gridData);
 		butEditIfs.setText("Edit");
 		butEditIfs.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent event){
-				if (DebugCorePlugin.isDebugging || DebugCorePlugin.isRunning){
+				if (DebugCorePlugin.isRunning){
+					
 					if (DebugCorePlugin.ifsFilePath==null){
 						showNoEditIfsFiles();
 					}else{
@@ -521,11 +526,23 @@ public class WPPOptionDialog extends Dialog {
 							WPPException.handleException(e);
 						}
 					}
+					
+					final IWorkbench workbench=PlatformUI.getWorkbench();
+					workbench.getDisplay().asyncExec(new Runnable(){
+						public void run(){
+							try {
+								workbench.getActiveWorkbenchWindow().getActivePage().showView(DebugCorePlugin.ID_WPP_INFEASIBILITY_VIEW);
+							} catch (PartInitException e) {
+								WPPException.handleException(e);
+							}
+						}
+					});
 				}else{
-					showNoEditIfsFiles();
+					showNoEditIfsFile();
 				}
 			}
 		});
+		*/
 		
 		ifsTab.setControl(group);
 	}
@@ -620,14 +637,14 @@ public class WPPOptionDialog extends Dialog {
 		vcbcHintTimeMax = Double.parseDouble(CBCSetting.cbcHintTimeMax);
 	}
 	
-	public void showNoEditIfsFiles(){
+	public void showNoEditIfsFile(){
 		final IWorkbench workbench=PlatformUI.getWorkbench();
 		workbench.getDisplay().asyncExec(new Runnable(){
 			public void run(){
 				Shell shell=workbench.getActiveWorkbenchWindow().getShell();
 				MessageBox messageBox = new MessageBox(shell, SWT.ICON_WARNING);
 				messageBox.setText("Warning");
-				messageBox.setMessage("You can edit this file under debug mode or run mode here. Before or after the run time, "+
+				messageBox.setMessage("You can edit this list under debug mode or run mode here. Before or after the run time, "+
 				"please edit in the \"Infeasibility\" tab of the Launch Configuration.");
 				messageBox.open();
 			}

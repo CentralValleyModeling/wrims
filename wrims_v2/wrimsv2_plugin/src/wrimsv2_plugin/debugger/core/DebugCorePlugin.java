@@ -16,6 +16,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
+import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.model.IValue;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -152,6 +153,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static final String ID_WPP_FILEINCEXPLORE_VIEW = "wpp.fileincexploreview";
 	public static final String ID_WPP_CALSIMHYDRO_VIEW = "wpp.calsimhydroview";
 	public static final String ID_WPP_EXCEPTION_VIEW = "wpp.exceptionview";
+	public static final String ID_WPP_INFEASIBILITY_VIEW = "wpp.infeasibilityview";
 	public static final String ID_WPP_EDITOR="wpp.editor";
 	public static final String ID_WPP_RESUMEMENU="wpp.resume";
 	public static final String ID_WPP_TERMINATEMENU="wpp.terminate";
@@ -300,6 +302,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static String ifsFilePath;
 	
 	public static boolean isRunning=false;
+	public static ILaunchConfiguration launchConfig;
 	
 	/**
 	 * The constructor.

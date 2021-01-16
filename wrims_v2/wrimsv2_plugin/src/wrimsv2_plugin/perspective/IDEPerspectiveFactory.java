@@ -28,6 +28,7 @@ public class IDEPerspectiveFactory implements IPerspectiveFactory {
 		bf.addView(DebugCorePlugin.ID_WPP_VARIABLEMONITOR_VIEW);
 		bf.addView(DebugCorePlugin.ID_WPP_EXCEPTION_VIEW);
 		bf.addView(DebugCorePlugin.ID_WPP_CALSIMHYDRO_VIEW);
+		//bf.addView(DebugCorePlugin.ID_WPP_INFEASIBILITY_VIEW);
 		IFolderLayout rf = layout.createFolder("right", IPageLayout.RIGHT, 0.75f, editorArea);
 		rf.addView(DebugCorePlugin.ID_WPP_VARIABLE_VIEW); 
 		rf.addView(DebugCorePlugin.ID_WPP_GOAL_VIEW);

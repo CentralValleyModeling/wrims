@@ -97,6 +97,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 	@Override
 	public void launch(ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException{		
 		DebugCorePlugin.isRunning=true;
+		DebugCorePlugin.launchConfig=configuration;
 		checkCbcUsed();
 		String chr = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_CALSIMHYDRORUN, "0");
 		if (chr.equals("1")){
