@@ -81,7 +81,6 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 	private Button deleteAllButt;
 	private Button insertFileButt;
 	private Button insertFolderButt;
-	private String prevFilterPath="";
 	private Button constraintButt;
 	private Button insertConstraintButt;
 	
@@ -193,7 +192,7 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 			public void widgetSelected(SelectionEvent e) {
 				FileDialog dialog = new FileDialog(getShell(), SWT.OPEN);
 				dialog.setFilterExtensions(new String [] {"*.ifs;*.launch"});
-				dialog.setFilterPath(prevFilterPath);
+				dialog.setFilterPath(DebugCorePlugin.prevIfsFilterPath);
 				String ifsFilePath = dialog.open();
 				if (ifsFilePath != null){
 					importIfsFile(ifsFilePath);	
@@ -221,10 +220,10 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 			public void widgetSelected(SelectionEvent e) {
 				FileDialog dialog = new FileDialog(getShell(), SWT.OPEN|SWT.MULTI);
 				dialog.setFilterExtensions(new String [] {"*.wresl"});
-				dialog.setFilterPath(prevFilterPath);
+				dialog.setFilterPath(DebugCorePlugin.prevIfsFilterPath);
 				dialog.open();
 				String filterPath=dialog.getFilterPath();
-				prevFilterPath=filterPath;
+				DebugCorePlugin.prevIfsFilterPath=filterPath;
 				String[] absPaths = dialog.getFileNames();
 				for (int i=0; i<absPaths.length; i++){
 					String absPath=filterPath+"\\"+absPaths[i];
@@ -256,15 +255,15 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				DirectoryDialog dialog = new DirectoryDialog(getShell(), SWT.OPEN|SWT.MULTI);
-				dialog.setFilterPath(prevFilterPath);
+				dialog.setFilterPath(DebugCorePlugin.prevIfsFilterPath);
 				String absPath = dialog.open();
-				prevFilterPath=dialog.getFilterPath();
+				DebugCorePlugin.prevIfsFilterPath=dialog.getFilterPath();
 				String relativePath="";
 				if (absPath!=null && !absPath.equals("")){
 					relativePath=makeRelativePath(launchPath, absPath);
-				}
-				list.add(fPref+relativePath);	
-				updateLaunchConfigurationDialog();	
+					list.add(fPref+relativePath);	
+					updateLaunchConfigurationDialog();
+				}	
 			}
 
 			@Override
@@ -288,8 +287,10 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 				InputDialog id = new InputDialog(getShell(), "Add Constraint", "Please add constraint name:", null, null);
 				id.open();
 				String cn=id.getValue();
-				if (cn !=null && !cn.equals("")) list.add(cPref+cn);	
-				updateLaunchConfigurationDialog();	
+				if (cn !=null && !cn.equals("")) {
+					list.add(cPref+cn);
+					updateLaunchConfigurationDialog();
+				}	
 			}
 
 			@Override
@@ -312,10 +313,10 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 			public void widgetSelected(SelectionEvent e) {
 				FileDialog dialog = new FileDialog(getShell(), SWT.OPEN|SWT.MULTI);
 				dialog.setFilterExtensions(new String [] {"*.wresl"});
-				dialog.setFilterPath(prevFilterPath);
+				dialog.setFilterPath(DebugCorePlugin.prevIfsFilterPath);
 				dialog.open();
 				String filterPath=dialog.getFilterPath();
-				prevFilterPath=filterPath;
+				DebugCorePlugin.prevIfsFilterPath=filterPath;
 				String[] absPaths = dialog.getFileNames();
 				for (int i=0; i<absPaths.length; i++){
 					String absPath=filterPath+"\\"+absPaths[i];
@@ -351,19 +352,19 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				DirectoryDialog dialog = new DirectoryDialog(getShell(), SWT.OPEN|SWT.MULTI);
-				dialog.setFilterPath(prevFilterPath);
+				dialog.setFilterPath(DebugCorePlugin.prevIfsFilterPath);
 				String absPath = dialog.open();
-				prevFilterPath = dialog.getFilterPath();
+				DebugCorePlugin.prevIfsFilterPath = dialog.getFilterPath();
 				String relativePath="";
 				if (absPath!=null && !absPath.equals("")){
 					relativePath=makeRelativePath(launchPath, absPath);
+					int index=list.getSelectionIndex();
+					if (index<0){
+						index=0;
+					}
+					list.add(fPref+relativePath, index);	
+					updateLaunchConfigurationDialog();	
 				}
-				int index=list.getSelectionIndex();
-				if (index<0){
-					index=0;
-				}
-				list.add(fPref+relativePath, index);	
-				updateLaunchConfigurationDialog();	
 			}
 
 			@Override
@@ -391,8 +392,10 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 				if (index<0){
 					index=0;
 				}
-				if (cn !=null && !cn.equals("")) list.add(cPref+cn, index);	
-				updateLaunchConfigurationDialog();	
+				if (cn !=null && !cn.equals("")) {
+					list.add(cPref+cn, index);
+					updateLaunchConfigurationDialog();
+				}	
 			}
 
 			@Override

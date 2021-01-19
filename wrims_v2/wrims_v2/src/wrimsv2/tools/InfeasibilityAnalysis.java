@@ -30,10 +30,11 @@ public class InfeasibilityAnalysis {
 	private final static String wExt=".wresl";
 	private final static String cPref="c: ";
 	private final static String fPref="f: ";
+	public static LinkedHashSet<String> constraintSetMixedCases = new LinkedHashSet<String>();
 	public static LinkedHashSet<String> constraintSet = new LinkedHashSet<String>();
 	
 	public static void procIfsFile(){
-		constraintSet = new LinkedHashSet<String>();
+		constraintSetMixedCases = new LinkedHashSet<String>();
 		
 		String ifsFilePath=StudyUtils.configFilePath+ifsExt;
 		File ifsFile = new File(ifsFilePath);
@@ -41,16 +42,18 @@ public class InfeasibilityAnalysis {
 			return;
 		}
 		
-		String folderPath=new File(ifsFilePath).getParentFile().getAbsolutePath();
+		String folderPath=new File(ifsFilePath).getParentFile().getAbsolutePath().toLowerCase();
 		Map<String, ModelDataSet> mdsm = ControlData.currStudyDataSet.getModelDataSetMap();
+		ModelDataSet mds = mdsm.get(ControlData.currCycleName);
 		try {
 			FileInputStream fs = new FileInputStream(ifsFilePath);
 			BufferedReader br = new BufferedReader(new InputStreamReader(fs));
-		    String line = br.readLine().toLowerCase();
+		    String line = br.readLine();
 		    while (line !=null){
+		    	line=line.toLowerCase();
 		    	if (!line.equals("")){
 		    		if (line.startsWith(cPref)){
-		    			constraintSet.add(line.substring(3));
+		    			constraintSetMixedCases.add(line.substring(3));
 		    		}else if (line.startsWith(fPref)){
 		    			String path = line.substring(3);
 		    			String absPath;
@@ -62,16 +65,16 @@ public class InfeasibilityAnalysis {
 		    			LinkedHashSet<String> fpSet = new LinkedHashSet<String>();
 		    			File f = new File(absPath);
 		    			if (f.isDirectory()){
-		    				fpSet.addAll(procFolderToFiles(absPath, mdsm));
+		    				fpSet.addAll(procFolderToFiles(absPath, mds));
 		    			}else if (f.isFile()){
-		    				if (absPath.endsWith(wExt) && isStudyInclFile(absPath, mdsm)){
+		    				if (absPath.endsWith(wExt) && isStudyInclFile(absPath, mds)){
 		    					fpSet.add(absPath);
 		    				}
 		    			}
 		    			procIfsSelFiles(fpSet);
 		    		}
 		    	}
-		    	line = br.readLine().toLowerCase();
+		    	line = br.readLine();
 		    }
 		    br.close();
 		    fs.close();
@@ -80,6 +83,7 @@ public class InfeasibilityAnalysis {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		convertToLowerCase();
 		return;
 	}
 	
@@ -94,17 +98,17 @@ public class InfeasibilityAnalysis {
 				ArrayList<String> modelList = studyTemp.modelList;
 				for (String model: modelList){
 					ModelTemp modelTemp = modelMap.get(model);
-					constraintSet.addAll(modelTemp.glList);
+					constraintSetMixedCases.addAll(modelTemp.glList);
 				}
 			}else if (StudyUtils.useWreslPlus){
 				ModelTemp modelTemp = ParserUtils.parseWreslFile(fp);	
-				constraintSet.addAll(modelTemp.glList);
+				constraintSetMixedCases.addAll(modelTemp.glList);
 			}else{
 				WreslTreeWalker walker;
 				try {
 					walker = FileParser.parseOneFileForDebug(fp);
 					SimulationDataSet fileDataSet = walker.thisFileDataSet;	
-					constraintSet.addAll(fileDataSet.gList);
+					constraintSetMixedCases.addAll(fileDataSet.gList);
 				} catch (RecognitionException e) {
 					e.printStackTrace();
 				}
@@ -117,7 +121,7 @@ public class InfeasibilityAnalysis {
 		return absPath;
 	}
 	
-	public static LinkedHashSet<String> procFolderToFiles(String absPath, Map<String, ModelDataSet> mdsm){
+	public static LinkedHashSet<String> procFolderToFiles(String absPath, ModelDataSet mds){
 		LinkedHashSet<String> subFpSet = new LinkedHashSet<String>();
 		File[] files = new File(absPath).listFiles(); 
 
@@ -125,7 +129,7 @@ public class InfeasibilityAnalysis {
 			for (File file : files) {
 				if (file.isFile()) {
 					String fp = file.getAbsolutePath().toLowerCase();
-					if (fp.endsWith(wExt) && isStudyInclFile(fp, mdsm)){
+					if (fp.endsWith(wExt) && isStudyInclFile(fp, mds)){
 						subFpSet.add(fp);
 					}
 				}
@@ -134,19 +138,23 @@ public class InfeasibilityAnalysis {
 		return subFpSet;
 	}
 	
-	public static boolean isStudyInclFile(String fp, Map<String, ModelDataSet> mdsm){
+	public static boolean isStudyInclFile(String fp, ModelDataSet mds){
 		boolean isIncluded=false;	
-		Set<String> mns=mdsm.keySet();
-		for (String mn: mns){
-			ModelDataSet mds=mdsm.get(mn);
-			ArrayList<String> ifl = mds.incFileList;
-			for (int i=0; i<ifl.size(); i++){
-				String ifp = ifl.get(i).toLowerCase();
-				if (fp.equals(ifp)){
-					isIncluded=true;
-				}
+		ArrayList<String> ifl = mds.incFileList;
+		for (int i=0; i<ifl.size(); i++){
+			String ifp = ifl.get(i).toLowerCase();
+			if (fp.equals(ifp)){
+				isIncluded=true;
 			}
 		}
 		return isIncluded;
+	}
+	
+	public static void convertToLowerCase(){
+		constraintSet = new LinkedHashSet<String>();
+		Iterator<String> it = constraintSetMixedCases.iterator();
+		while (it.hasNext()){
+			constraintSet.add(it.next().toLowerCase());
+		}
 	}
 }

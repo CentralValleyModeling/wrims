@@ -300,6 +300,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	
 	public static boolean isIfsSelFile=true;
 	public static String ifsFilePath;
+	public static String prevIfsFilterPath="";
 	
 	public static boolean isRunning=false;
 	public static ILaunchConfiguration launchConfig;
