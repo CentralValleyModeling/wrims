@@ -317,7 +317,7 @@ public class WPPWsiDiTab extends AbstractLaunchConfigurationTab {
 			out.println("cbcHintRelaxPenalty       "+CBCSetting.cbcHintRelaxPenalty);
 			out.println("cbcHintTimeMax            "+DataProcess.doubleStringtoInt(CBCSetting.cbcHintTimeMax));
 			
-			out.println("IfsIsSelFile              "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_IFSISSELENTRY, "yes"));
+			//out.println("IfsIsSelFile              "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_IFSISSELENTRY, "yes"));
 			
 			out.close();
 			configFilePath= new File(studyDir, configName).getAbsolutePath();

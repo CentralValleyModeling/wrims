@@ -52,6 +52,7 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
@@ -61,7 +62,9 @@ import wrimsv2_plugin.batchrun.LaunchConfigInfo;
 import wrimsv2_plugin.debugger.core.CBCSetting;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.dialog.WPPDssToSqlDialog;
+import wrimsv2_plugin.debugger.dialog.WPPReSimDialog;
 import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.debugger.toolbaritem.HandlePauseResumeButton;
 import wrimsv2_plugin.tools.DataProcess;
 import wrimsv2_plugin.tools.Encryption;
 import wrimsv2_plugin.tools.FileProcess;
@@ -83,6 +86,9 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 	private Button insertFolderButt;
 	private Button constraintButt;
 	private Button insertConstraintButt;
+	private Button upButt;
+	private Button downButt;
+	private Button resimButt;
 	
 	private final String cPref="c: ";
 	private final String fPref="f: ";
@@ -99,7 +105,7 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 		setControl(comp);
 		GridLayout topLayout = new GridLayout();
 		topLayout.verticalSpacing = 0;
-		topLayout.numColumns = 9;
+		topLayout.numColumns = 11;
 		comp.setLayout(topLayout);
 		comp.setFont(font);
 		
@@ -109,19 +115,19 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 	    Label1.setText("Select WRESL files or Constraints for Infeasibility Analysis: ");
 	    //Label1.setLayout(topLayout);
 	    GridData gd = new GridData(GridData.BEGINNING, SWT.TOP, true, false);
-		gd.horizontalSpan = 9;
+		gd.horizontalSpan = 11;
 		Label1.setLayoutData(gd);
 		
 		Label Label2 = new Label(comp, SWT.NONE|SWT.WRAP);
 	    Label2.setText("(you can edit the list before or during the debug and run mode; please click \"Apply\" button to save the changes)");
 	    gd = new GridData(GridData.BEGINNING, SWT.TOP, true, false);
-		gd.horizontalSpan = 9;
+		gd.horizontalSpan = 11;
 		Label2.setLayoutData(gd);
 		
 		Label Label3 = new Label(comp, SWT.NONE|SWT.WRAP);
 	    Label3.setText("Relative paths relative to the launch file are used in the list.");
 	    gd = new GridData(GridData.BEGINNING, SWT.TOP, true, false);
-		gd.horizontalSpan = 9;
+		gd.horizontalSpan = 11;
 		Label3.setLayoutData(gd);
 		
 		/*
@@ -175,7 +181,7 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 		
 		list = new List(comp, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.horizontalSpan = 9;
+		gd.horizontalSpan = 11;
 		gd.heightHint=200;
 		list.setLayoutData(gd);
 		//list.setSize(600, 400);
@@ -450,6 +456,91 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 			}
 			
 		});
+		
+		upButt = new Button(comp, SWT.NONE);;
+	    upButt.setText("Move Up");
+		upButt.setFont(font);
+	    gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 1;
+		upButt.setLayoutData(gd);
+		upButt.addSelectionListener(new SelectionListener(){
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				int index = list.getSelectionIndex();
+				if (index>0){
+					String sel=list.getItem(index);
+					list.setItem(index, list.getItem(index-1));
+					list.setItem(index-1, sel);
+					list.deselectAll();
+					list.select(index-1);
+					updateLaunchConfigurationDialog();
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		downButt = new Button(comp, SWT.NONE);;
+	    downButt.setText("Move Down");
+		downButt.setFont(font);
+	    gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 1;
+		downButt.setLayoutData(gd);
+		downButt.addSelectionListener(new SelectionListener(){
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				int index = list.getSelectionIndex();
+				if (index>=0 && index<list.getItemCount()-1){
+					String sel=list.getItem(index);
+					list.setItem(index, list.getItem(index+1));
+					list.setItem(index+1, sel);
+					list.deselectAll();
+					list.select(index+1);
+					updateLaunchConfigurationDialog();
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		resimButt = new Button(comp, SWT.NONE);;
+		resimButt.setText("Re-simulation");
+		resimButt.setFont(font);
+	    gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 1;
+		resimButt.setLayoutData(gd);
+		resimButt.addSelectionListener(new SelectionListener(){
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (HandlePauseResumeButton.status==3){
+					WPPReSimDialog dialog= new WPPReSimDialog(getShell());
+					dialog.openDialog();	
+				}else{
+					showNoResimWarning();
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});		
+		
 	}
 	
 	@Override
@@ -611,5 +702,18 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 		} catch (IOException e) {
 			WPPException.handleException(e);
 		}
+	}
+	
+	public void showNoResimWarning(){
+		final IWorkbench workbench=PlatformUI.getWorkbench();
+		workbench.getDisplay().asyncExec(new Runnable(){
+			public void run(){
+				Shell shell=workbench.getActiveWorkbenchWindow().getShell();
+				MessageBox messageBox = new MessageBox(shell, SWT.ICON_WARNING);
+				messageBox.setText("Warning");
+				messageBox.setMessage("You need first pause your model during the debug mode before you can run re-simulation.");
+				messageBox.open();
+			}
+		});
 	}
 }

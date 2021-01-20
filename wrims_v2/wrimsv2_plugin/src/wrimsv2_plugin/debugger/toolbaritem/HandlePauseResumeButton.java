@@ -16,7 +16,10 @@ import org.eclipse.ui.internal.Workbench;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 
 public class HandlePauseResumeButton {
+	public static int status=0;
+	
 	public static void procPauseResumeToolbarItem(final int flag){
+		status=flag;
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() { 
 				IWorkbenchPage page = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage();

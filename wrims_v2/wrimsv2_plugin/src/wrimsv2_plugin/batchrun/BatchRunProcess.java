@@ -637,7 +637,7 @@ public class BatchRunProcess {
 			out.println("cbcHintRelaxPenalty       "+CBCSetting.cbcHintRelaxPenalty);
 			out.println("cbcHintTimeMax            "+DataProcess.doubleStringtoInt(CBCSetting.cbcHintTimeMax));
 			
-			out.println("IfsIsSelFile              "+configMap.get("ifsisselfile"));
+			//out.println("IfsIsSelFile              "+configMap.get("ifsisselfile"));
 			
 			out.close();
 		

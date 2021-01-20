@@ -740,6 +740,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			out.println("cbcHintRelaxPenalty       "+CBCSetting.cbcHintRelaxPenalty);
 			out.println("cbcHintTimeMax            "+DataProcess.doubleStringtoInt(CBCSetting.cbcHintTimeMax));
 			
+			/*
 			String ifsIsSelFileStr=configMap.get("ifsisselfile");
 			out.println("IfsIsSelFile              "+ifsIsSelFileStr);
 			if (ifsIsSelFileStr.equalsIgnoreCase("no")){
@@ -747,6 +748,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			}else{
 				DebugCorePlugin.isIfsSelFile=true;
 			}
+			*/
 			
 			out.close();
 		
