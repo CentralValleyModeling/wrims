@@ -869,10 +869,13 @@ public class CbcSolver {
 			
 		} else if (solvFunc == solvFull){
 			
-		if (useWarm || saveWarm) {
-			int ii = ControlData.currCycleIndex+1;
-			//System.out.println(ii+": use warm");
-			
+		Set<String> a=ControlData.currStudyDataSet.cycIntDvMap.get(ControlData.currCycleIndex);
+		a.retainAll(dvIntMap.keySet());
+		if ((useWarm || saveWarm) && a.size()>2) {
+//			int ii = ControlData.currCycleIndex+1;
+//			System.out.println(ii+": useWarm:"+useWarm);
+//			System.out.println(ii+": saveWarm:"+saveWarm);		
+//			System.out.println(ii+":dvIntMap size: "+dvIntMap.size());
 			if (warmArrayExist) {
 
 				jCbc.delete_jarray_int(values);
@@ -890,6 +893,13 @@ public class CbcSolver {
 			int k=0;
 			for (String dvN: ControlData.currStudyDataSet.cycIntDvMap.get(ControlData.currCycleIndex)){
 				jCbc.jarray_string_setitem(names,k,dvN);
+//				System.out.println("values:"+values);
+//				System.out.println("k:"+k);
+//				System.out.println("dvN:"+dvN);
+//				System.out.println("dvIntMap.keySet():"+dvIntMap.keySet());
+//				for (String x:dvIntMap.keySet()) {
+//					System.out.println(x+":"+dvIntMap.get(x));
+//				}
 				jCbc.jarray_int_setitem(values,k,dvIntMap.get(dvN));
 				k++;
 			}
@@ -1192,7 +1202,7 @@ int pp=0;
 				 varDoubleMap.put(jCbc.getColName(model,j), jCbc.jarray_double_getitem(jCbc.getColSolution(solver),j));
 				 if (jCbc.isInteger(solver,j)==1) {
 					dvIntMap.put(jCbc.getColName(model,j), (int)Math.round(jCbc.jarray_double_getitem(jCbc.getColSolution(solver),j)));
-				 	//k++; 
+					// System.out.println(jCbc.getColName(model,j)+":"+jCbc.jarray_double_getitem(jCbc.getColSolution(solver),j));				 	//k++; 
 				 }
 			}
 		} else {
