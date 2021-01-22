@@ -132,6 +132,9 @@ public class InfeasibilityAnalysis {
 					if (fp.endsWith(wExt) && isStudyInclFile(fp, mds)){
 						subFpSet.add(fp);
 					}
+				}else if (file.isDirectory()){
+					String fp = file.getAbsolutePath().toLowerCase();
+					subFpSet.addAll(procFolderToFiles(fp, mds));
 				}
 			}
 		}

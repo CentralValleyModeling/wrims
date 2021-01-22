@@ -19,12 +19,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Properties;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.datatools.connectivity.IConnectionProfile;
 import org.eclipse.datatools.connectivity.ProfileManager;
 import org.eclipse.datatools.connectivity.drivers.jdbc.IJDBCConnectionProfileConstants;
+import org.eclipse.debug.core.DebugException;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationType;
@@ -64,6 +66,8 @@ import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.dialog.WPPDssToSqlDialog;
 import wrimsv2_plugin.debugger.dialog.WPPReSimDialog;
 import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.debugger.menuitem.EnableMenus;
+import wrimsv2_plugin.debugger.toolbaritem.EnableButtons;
 import wrimsv2_plugin.debugger.toolbaritem.HandlePauseResumeButton;
 import wrimsv2_plugin.tools.DataProcess;
 import wrimsv2_plugin.tools.Encryption;
@@ -89,6 +93,8 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 	private Button upButt;
 	private Button downButt;
 	private Button resimButt;
+	private Button resumeButt;
+	private Button pauseButt;
 	
 	private final String cPref="c: ";
 	private final String fPref="f: ";
@@ -529,7 +535,7 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 					WPPReSimDialog dialog= new WPPReSimDialog(getShell());
 					dialog.openDialog();	
 				}else{
-					showNoResimWarning();
+					showWarning(0);
 				}
 			}
 
@@ -541,6 +547,74 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 			
 		});		
 		
+		resumeButt = new Button(comp, SWT.NONE);;
+		resumeButt.setText("Resume");
+		resumeButt.setFont(font);
+	    gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 1;
+		resumeButt.setLayoutData(gd);
+		resumeButt.addSelectionListener(new SelectionListener(){
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (HandlePauseResumeButton.status==3){
+					try {
+						if (DebugCorePlugin.isDebugging){
+							if (DebugCorePlugin.target.isSuspended()){
+								DebugCorePlugin.debugSet.updateDebugTimeSet();
+								DebugCorePlugin.target.resume();
+								enableRunMenu(1);
+							}
+						}
+					} catch (DebugException ex) {
+						WPPException.handleException(ex);
+					}	
+				}else{
+					showWarning(1);
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});	
+		
+		pauseButt = new Button(comp, SWT.NONE);;
+		pauseButt.setText("Pause");
+		pauseButt.setFont(font);
+	    gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 1;
+		pauseButt.setLayoutData(gd);
+		pauseButt.addSelectionListener(new SelectionListener(){
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (HandlePauseResumeButton.status==1){
+					try {
+						if (DebugCorePlugin.isDebugging){
+							if (!DebugCorePlugin.target.isSuspended()){
+								DebugCorePlugin.target.pause();
+								enableRunMenu(3);
+							}
+						}
+					} catch (DebugException ex) {
+						WPPException.handleException(ex);
+					}
+				}else{
+					showWarning(2);
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});	
 	}
 	
 	@Override
@@ -704,16 +778,61 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 		}
 	}
 	
-	public void showNoResimWarning(){
+	public void showWarning(final int flag){
 		final IWorkbench workbench=PlatformUI.getWorkbench();
 		workbench.getDisplay().asyncExec(new Runnable(){
 			public void run(){
+				String proc="run re-simulation";
+				if (flag==0){
+					proc="run re-simulation";
+				}else if (flag==1){
+					proc="rusume your simulatoin";
+				}else if (flag==2){
+					proc="pause your simulatoin";
+				}
 				Shell shell=workbench.getActiveWorkbenchWindow().getShell();
 				MessageBox messageBox = new MessageBox(shell, SWT.ICON_WARNING);
 				messageBox.setText("Warning");
-				messageBox.setMessage("You need first pause your model during the debug mode before you can run re-simulation.");
+				if (flag==0 || flag==1){
+					messageBox.setMessage("You need first pause your model during the debug mode before you can "+proc+".");
+				}else{
+					messageBox.setMessage("You need first run your model under the debug mode before you can "+proc+".");
+				}
 				messageBox.open();
 			}
 		});
+	}
+	
+	public void enableRunMenu(int flag){
+		HandlePauseResumeButton.procPauseResumeToolbarItem(flag);
+		HashMap<String, Boolean> enableMenuMap=new HashMap<String, Boolean>();
+		HashMap<String, Boolean> enableButtonMap=new HashMap<String, Boolean>();
+		if (flag==3){
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_TERMINATEMENU, true);
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_PAUSEMENU, false);
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_SUSPENDMENU, false);
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_RESUMEMENU, true);
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_RESIMMENU, true);
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, true);
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEP, true);
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_SAVETODVFILE, true);
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_SAVETOSVFILE, true);
+			enableButtonMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLEBUTTON, true);
+			enableButtonMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEPBUTTON, true);
+		}else{
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_TERMINATEMENU, true);
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_PAUSEMENU, true);
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_SUSPENDMENU, true);
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_RESUMEMENU, false);
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_RESIMMENU, false);
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, true);
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEP, true);
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_SAVETODVFILE, false);
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_SAVETOSVFILE, false);
+			enableButtonMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLEBUTTON, true);
+			enableButtonMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEPBUTTON, true);
+		}
+		new EnableMenus(enableMenuMap);
+		new EnableButtons(enableButtonMap);
 	}
 }
