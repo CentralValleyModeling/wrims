@@ -1077,7 +1077,7 @@ int pp=0;
 			for (String c : iisPossibleConstraintMap.keySet()){
 				if(iisSolveConfirm(c)){
 					isConflictFound = true;
-					//iisConfirmConstraint.add(c); pp++; ILP.writeNoteLn("found:"+pp,true,true);
+					iisConfirmConstraint.add(c); //pp++; ILP.writeNoteLn("found:"+pp,true,true);
 				}
 			}
 			
