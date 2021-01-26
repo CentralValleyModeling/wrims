@@ -388,7 +388,7 @@ public class ConfigUtils {
 		}
 		System.out.println("CbcSolveFunction: "+CbcSolver.solvFunc);
 		
-		// CbcLibName // default is ?
+		// CbcLibName // default is jCbc_v2.9.8.1
 		k = "cbclibname";
 		if (configMap.keySet().contains(k)){
 			

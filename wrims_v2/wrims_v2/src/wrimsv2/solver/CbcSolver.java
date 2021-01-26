@@ -10,6 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Set;
 
 import org.coinor.cbc.SWIGTYPE_p_std__string;
@@ -83,7 +84,7 @@ public class CbcSolver {
 	public static double integerT =  1e-9;               // can read from config cbcToleranceInteger
 	public static double integerT_check = 1e-8;          // can read from config cbcToleranceIntegerCheck
 	public static final double cbcWriteLpEpsilon = 1e-15; 	
-	public static String cbcLibName = "jCbc";
+	public static String cbcLibName = "jCbc_v2.9.8.1";
 	public static int cbcHintTimeMax = 100; // can read from config CbcHintTimeMax
 	private static String modelName;
 	
@@ -276,6 +277,27 @@ public class CbcSolver {
 			if (intErr){reloadAndWriteLp("_intViolation", true, true);
 			Error.addSolvingError("Integer Violation! Please contact developers for this issue.");}
 			
+			boolean lowerboundErr = false;			
+			// check dv lowerbound violation (only for lowerbound =0)
+			double t = solve_2_primalT;
+			if (Objects.equals(solveName,"whs"))      { t = solve_whs_primalT; }
+			else if (Objects.equals(solveName,"2R_")) { t = solve_2_primalT_relax; } 
+			
+			Map<String, Dvar> dMap = SolverData.getDvarMap();
+			for (String k:dMap.keySet()){
+				if (varDoubleMap.containsKey(k)){
+					Dvar d = dMap.get(k);
+					double v = varDoubleMap.get(k);
+				
+					if (d.lowerBoundValue.doubleValue() == 0 &&  v<-t){
+						lowerboundErr = true;
+						Error.addSolvingError("lowerbound violation:::"+k+":"+v);
+					} 
+				}
+			}
+			if (lowerboundErr){reloadAndWriteLp("_lbViolation", true, true);
+			Error.addSolvingError("Lowerbound Violation! Please contact developers for this issue.");}
+
 			
 			long beginT_ad = System.currentTimeMillis();	
 			if (!ControlData.cbc_debug_routeXA) assignDvar();
@@ -973,6 +995,60 @@ public class CbcSolver {
 //			status2 = jCbc.secondaryStatus(model);
 //		}	
 		
+		
+		////// check for violation and re-solve with v2.10a
+		int Err_int = 0; int Err_lb = 0;		
+			if (status == 0 && status2 == 0) {
+
+				int ColumnSize = jCbc.getNumCols(model);
+				SWIGTYPE_p_double v_ary = jCbc.getColSolution(solver);
+				Map<String, Dvar> dMap = SolverData.getDvarMap();
+				double t = solve_2_primalT;
+				if (Objects.equals(solveName,"whs"))      { t = solve_whs_primalT; }
+				else if (Objects.equals(solveName,"2R_")) { t = solve_2_primalT_relax; } 
+				
+				for (int j = 0; j < ColumnSize; j++){
+					 //varDoubleMap.put(jCbc.getColName(model,j), jCbc.jarray_double_getitem(jCbc.getColSolution(solver),j));
+					double v = jCbc.jarray_double_getitem(v_ary,j);
+					String k = jCbc.getColName(model,j);
+					
+					if (jCbc.isInteger(solver,j)==1) {	 	
+						if (Math.abs(v-Math.round(v))>integerT){	
+							Err_int = 1; 
+							ILP.writeNoteLn(modelName+":"+" Solve_"+solveName+":intViolation:::"+k+":"+v, true, false);
+							reloadAndWriteLp("_intViolation", true); 
+							break;
+						} 
+					} 
+					else {
+		
+						Dvar d = dMap.get(k);												
+						if (d.lowerBoundValue.doubleValue() == 0 &&  v<-t){
+							Err_lb = 1;
+							ILP.writeNoteLn(modelName+":"+" Solve_"+solveName+":lbViolation:::"+k+":"+v, true, false);
+							reloadAndWriteLp("_lbViolation", true); 
+							break;
+						} 						
+						
+					}					 
+						 
+				}					
+				
+			}
+			
+			if (Err_int>0 || Err_lb>0){
+			
+				// TODO: make sure callCbc version the last number >= 1 otherwise there are violations!!!!!
+				boolean isDllReload = false;
+				note_msg(" Solve_"+solveName+" has violations. Use callCbc");
+
+				reloadProblem(false);
+				callCbc();	
+				status = jCbc.status(model);
+				status2 = jCbc.secondaryStatus(model);
+
+			}	
+		
 		}
 	  
 		
@@ -1057,6 +1133,7 @@ int pp=0;
 			if (!success || iisPossibleConstraintMap.size()<1) {
 				ILP.writeNoteLn("Infeasibility analysis ended.", true, false);
 				if (iisPossibleConstraintMap_cumulative.size()>0) {
+					//if (true) {
 					if (!isConflictFound) {
 						// output unconfirmed hints
 						ILP.writeNoteLn("The following constraints might cause infeasibility.", true, false);
@@ -1365,6 +1442,17 @@ int pp=0;
 		ILP.writeNoteLn("CbcToleranceZero: "+ControlData.zeroTolerance);
 		ILP.writeNoteLn("CbcHintTimeMax: "+CbcSolver.cbcHintTimeMax);
 		ILP.writeNoteLn("CbcHintRelaxPenalty: "+CbcSolver.cbcHintRelaxPenalty);
+
+	}
+	
+	public static void reloadAndWriteLp(String nameAppend, boolean logCbc) {
+		
+		String label = modelName + "_" + solveName + "_" + nameAppend;
+		String oPath = new File(ILP.getIlpDir().getAbsoluteFile(), label).getAbsolutePath();
+		reloadProblem(logCbc);
+		jCbc.writeLp1(model, oPath, cbcWriteLpEpsilon, 14);
+		
+		logIntVars(label);
 
 	}
 	

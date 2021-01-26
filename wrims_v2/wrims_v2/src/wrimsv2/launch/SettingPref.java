@@ -21,7 +21,7 @@ public class SettingPref {
 			File file = new File(dataDir, settingPrefFile);
 			if (!file.exists()){
 				ControlData.solverName="cbc";
-				CbcSolver.cbcLibName = "jCbc";
+				CbcSolver.cbcLibName = "jCbc_v2.9.8.1";
 				ControlData.isOutputCycle=false;
 				ControlData.outputAllCycles=true;
 				ControlData.selectedCycleOutput="\'\'";
@@ -35,7 +35,7 @@ public class SettingPref {
 		    	CbcSolver.cbcLibName = "jCbc_v2.10";
 		    }else if (ControlData.solverName.equalsIgnoreCase("CBC")){
 		    	ControlData.solverName="cbc";
-		    	CbcSolver.cbcLibName = "jCbc";
+		    	CbcSolver.cbcLibName = "jCbc_v2.9.8.1";
 		    }
 		    String xmx=br.readLine();
 		    String strOutputCycleToDss = br.readLine();
@@ -54,7 +54,7 @@ public class SettingPref {
 		} catch (Exception e) {
 			e.printStackTrace();
 			ControlData.solverName="cbc";
-			CbcSolver.cbcLibName = "jCbc";
+			CbcSolver.cbcLibName = "jCbc_v2.9.8.1";
 			ControlData.isOutputCycle=false;
 			ControlData.outputAllCycles=true;
 			ControlData.selectedCycleOutput="\'\'";
