@@ -279,9 +279,9 @@ public class CbcSolver {
 			
 			boolean lowerboundErr = false;			
 			// check dv lowerbound violation (only for lowerbound =0)
-			double t = solve_2_primalT;
-			if (Objects.equals(solveName,"whs"))      { t = solve_whs_primalT; }
-			else if (Objects.equals(solveName,"2R_")) { t = solve_2_primalT_relax; } 
+			double t = solve_2_primalT_relax; //solve_2_primalT;
+//			if (Objects.equals(solveName,"whs"))      { t = solve_whs_primalT; }
+//			else if (Objects.equals(solveName,"2R_")) { t = solve_2_primalT_relax; } 
 			
 			Map<String, Dvar> dMap = SolverData.getDvarMap();
 			for (String k:dMap.keySet()){
@@ -1003,9 +1003,9 @@ public class CbcSolver {
 				int ColumnSize = jCbc.getNumCols(model);
 				SWIGTYPE_p_double v_ary = jCbc.getColSolution(solver);
 				Map<String, Dvar> dMap = SolverData.getDvarMap();
-				double t = solve_2_primalT;
-				if (Objects.equals(solveName,"whs"))      { t = solve_whs_primalT; }
-				else if (Objects.equals(solveName,"2R_")) { t = solve_2_primalT_relax; } 
+				double t = solve_2_primalT_relax; //solve_2_primalT;
+				//if (Objects.equals(solveName,"whs"))      { t = solve_whs_primalT; }
+				//else if (Objects.equals(solveName,"2R_")) { t = solve_2_primalT_relax; } 
 				
 				for (int j = 0; j < ColumnSize; j++){
 					 //varDoubleMap.put(jCbc.getColName(model,j), jCbc.jarray_double_getitem(jCbc.getColSolution(solver),j));
