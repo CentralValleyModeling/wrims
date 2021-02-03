@@ -279,7 +279,7 @@ public class CbcSolver {
 			
 			boolean lowerboundErr = false;			
 			// check dv lowerbound violation (only for lowerbound =0)
-			double t = solve_2_primalT_relax; //solve_2_primalT;
+			double t = solve_2_primalT_relax*10; //solve_2_primalT;
 //			if (Objects.equals(solveName,"whs"))      { t = solve_whs_primalT; }
 //			else if (Objects.equals(solveName,"2R_")) { t = solve_2_primalT_relax; } 
 			
@@ -1003,7 +1003,7 @@ public class CbcSolver {
 				int ColumnSize = jCbc.getNumCols(model);
 				SWIGTYPE_p_double v_ary = jCbc.getColSolution(solver);
 				Map<String, Dvar> dMap = SolverData.getDvarMap();
-				double t = solve_2_primalT_relax; //solve_2_primalT;
+				double t = solve_2_primalT_relax *10; //solve_2_primalT;
 				//if (Objects.equals(solveName,"whs"))      { t = solve_whs_primalT; }
 				//else if (Objects.equals(solveName,"2R_")) { t = solve_2_primalT_relax; } 
 				
@@ -1013,11 +1013,11 @@ public class CbcSolver {
 					String k = jCbc.getColName(model,j);
 					
 					if (jCbc.isInteger(solver,j)==1) {	 	
-						if (Math.abs(v-Math.round(v))>integerT){	
+						if (Math.abs(v-Math.round(v))>integerT_check){	
 							Err_int = 1; 
 							ILP.writeNoteLn(modelName+":"+" Solve_"+solveName+":intViolation:::"+k+":"+v, true, false);
-							reloadAndWriteLp("_intViolation", true); 
-							break;
+							//reloadAndWriteLp("_intViolation", true); 
+							//break;
 						} 
 					} 
 					else {
@@ -1026,8 +1026,8 @@ public class CbcSolver {
 						if (d.lowerBoundValue.doubleValue() == 0 &&  v<-t){
 							Err_lb = 1;
 							ILP.writeNoteLn(modelName+":"+" Solve_"+solveName+":lbViolation:::"+k+":"+v, true, false);
-							reloadAndWriteLp("_lbViolation", true); 
-							break;
+							//reloadAndWriteLp("_lbViolation", true); 
+							//break;
 						} 						
 						
 					}					 
@@ -1037,6 +1037,10 @@ public class CbcSolver {
 			}
 			
 			if (Err_int>0 || Err_lb>0){
+				
+				
+				reloadAndWriteLp("_lbViolation", true); 
+				
 			
 				// TODO: make sure callCbc version the last number >= 1 otherwise there are violations!!!!!
 				boolean isDllReload = false;
