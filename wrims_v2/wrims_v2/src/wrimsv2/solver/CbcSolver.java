@@ -83,6 +83,7 @@ public class CbcSolver {
 	//public static final Integer cutoff_n =  12;
 	public static double integerT =  1e-9;               // can read from config cbcToleranceInteger
 	public static double integerT_check = 1e-8;          // can read from config cbcToleranceIntegerCheck
+	public static Double lowerBoundZero_check = null;
 	public static final double cbcWriteLpEpsilon = 1e-15; 	
 	public static String cbcLibName = "jCbc_v2.9.8.1";
 	public static int cbcHintTimeMax = 100; // can read from config CbcHintTimeMax
@@ -155,7 +156,8 @@ public class CbcSolver {
 		System.loadLibrary(cbcLibName);
 		ILP.getIlpDir();
 		ILP.createNoteFile();
-		
+		lowerBoundZero_check = Math.max(solve_2_primalT_relax*10, 1e-6);
+		ILP.writeNoteLn("lowerBoundZero_check ="+lowerBoundZero_check,false,false);
 		//if (ControlData.useCbcWarmStart || ControlData.cbc_debug_routeCbc || ControlData.cbc_debug_routeXA){
 			dvIntMap = new LinkedHashMap<String, Integer>();
 			for (String d: sds.allIntDv){
@@ -279,9 +281,6 @@ public class CbcSolver {
 			
 			boolean lowerboundErr = false;			
 			// check dv lowerbound violation (only for lowerbound =0)
-			double t = solve_2_primalT_relax*10; //solve_2_primalT;
-//			if (Objects.equals(solveName,"whs"))      { t = solve_whs_primalT; }
-//			else if (Objects.equals(solveName,"2R_")) { t = solve_2_primalT_relax; } 
 			
 			Map<String, Dvar> dMap = SolverData.getDvarMap();
 			for (String k:dMap.keySet()){
@@ -289,7 +288,7 @@ public class CbcSolver {
 					Dvar d = dMap.get(k);
 					double v = varDoubleMap.get(k);
 				
-					if (d.lowerBoundValue.doubleValue() == 0 &&  v<-t){
+					if (d.lowerBoundValue.doubleValue() == 0 &&  v<-lowerBoundZero_check){
 						lowerboundErr = true;
 						Error.addSolvingError("lowerbound violation:::"+k+":"+v);
 					} 
@@ -1003,9 +1002,6 @@ public class CbcSolver {
 				int ColumnSize = jCbc.getNumCols(model);
 				SWIGTYPE_p_double v_ary = jCbc.getColSolution(solver);
 				Map<String, Dvar> dMap = SolverData.getDvarMap();
-				double t = solve_2_primalT_relax *10; //solve_2_primalT;
-				//if (Objects.equals(solveName,"whs"))      { t = solve_whs_primalT; }
-				//else if (Objects.equals(solveName,"2R_")) { t = solve_2_primalT_relax; } 
 				
 				for (int j = 0; j < ColumnSize; j++){
 					 //varDoubleMap.put(jCbc.getColName(model,j), jCbc.jarray_double_getitem(jCbc.getColSolution(solver),j));
@@ -1023,7 +1019,7 @@ public class CbcSolver {
 					else {
 		
 						Dvar d = dMap.get(k);												
-						if (d.lowerBoundValue.doubleValue() == 0 &&  v<-t){
+						if (d.lowerBoundValue.doubleValue() == 0 &&  v<-lowerBoundZero_check){
 							Err_lb = 1;
 							ILP.writeNoteLn(modelName+":"+" Solve_"+solveName+":lbViolation:::"+k+":"+v, true, false);
 							//reloadAndWriteLp("_lbViolation", true); 
@@ -1208,7 +1204,8 @@ int pp=0;
 		loadProblemIIS(isFirstTimeRun, enforceThisConstraint);
 		//writeCbcLp("iisSolve", false);
 		
-		solve_2();
+		//solve_2();
+		callCbc();
 		int s = jCbc.status(model);
 		int s2 = jCbc.secondaryStatus(model);
 
