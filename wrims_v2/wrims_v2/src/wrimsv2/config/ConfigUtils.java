@@ -442,6 +442,26 @@ public class ConfigUtils {
 		}
 		System.out.println("CbcToleranceIntegercheck: "+CbcSolver.integerT_check);		
 		
+		// CbcSolutionRounding  default is true
+		k = "cbcsolutionrounding";
+		if (configMap.keySet().contains(k)){
+			
+			String s = configMap.get(k);
+			
+			if (s.equalsIgnoreCase("yes") || s.equalsIgnoreCase("true")){
+				CbcSolver.cbcSolutionRounding = true;	
+			} else if (s.equalsIgnoreCase("no") || s.equalsIgnoreCase("false")){
+				CbcSolver.cbcSolutionRounding = false;	
+			} else {
+				CbcSolver.cbcSolutionRounding = true;	
+			}
+		}else{
+			CbcSolver.cbcSolutionRounding = true;
+		}
+		System.out.println("CbcSolutionRounding: "+CbcSolver.cbcSolutionRounding);		
+
+		
+		
 //		// XAIntegerT
 //		k = "xaintegert";
 //		if (configMap.keySet().contains(k)){

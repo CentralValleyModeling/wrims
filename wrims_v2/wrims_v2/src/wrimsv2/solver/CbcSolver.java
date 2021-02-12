@@ -87,6 +87,7 @@ public class CbcSolver {
 	public static final double cbcWriteLpEpsilon = 1e-15; 	
 	public static String cbcLibName = "jCbc_v2.9.8.1";
 	public static int cbcHintTimeMax = 100; // can read from config CbcHintTimeMax
+	public static boolean cbcSolutionRounding = true;
 	private static String modelName;
 	
 	private static Map<String, WeightElement> wm2; 
@@ -273,7 +274,9 @@ public class CbcSolver {
 					if (Math.abs(v-Math.round(v))>integerT_check){
 						intErr = true;
 						Error.addSolvingError("int violation:::"+k+":"+v);
-					} 
+					} else if (cbcSolutionRounding){
+						varDoubleMap.put(k, (double)Math.round(v));
+					}
 				}
 			}
 			if (intErr){reloadAndWriteLp("_intViolation", true, true);
@@ -287,11 +290,14 @@ public class CbcSolver {
 				if (varDoubleMap.containsKey(k)){
 					Dvar d = dMap.get(k);
 					double v = varDoubleMap.get(k);
-				
-					if (d.lowerBoundValue.doubleValue() == 0 &&  v<-lowerBoundZero_check){
-						lowerboundErr = true;
-						Error.addSolvingError("lowerbound violation:::"+k+":"+v);
-					} 
+					if (d.lowerBoundValue.doubleValue() == 0){
+						if (v<-lowerBoundZero_check){
+							lowerboundErr = true;
+							Error.addSolvingError("lowerbound violation:::"+k+":"+v);
+						} else if (cbcSolutionRounding && v<0){
+							varDoubleMap.put(k, 0.0);
+						}
+					}
 				}
 			}
 			if (lowerboundErr){reloadAndWriteLp("_lbViolation", true, true);
@@ -305,18 +311,12 @@ public class CbcSolver {
 			ControlData.adTime += (endT_ad-beginT_ad)/1000.;
 		}
 		
-//		if (time_second > 4.0) {
-//
-//			reloadAndWriteLp("stuck_"+Math.round(time_second),true);
-//			
-//			ILP.writeNoteLn(modelName, " time(sec): "+time_second);
-//			System.out.println(modelName+": "+time_second);
-//			next_possible_stuck=true;
-//			
-//		} else {
-//			
-//			next_possible_stuck=false;
-//		}
+		if (time_second > 10.0) {
+
+			reloadAndWriteLp("stuck_"+Math.round(time_second),true);			
+			ILP.writeNoteLn(modelName, " time(sec): "+time_second);
+
+		}
 		
 	}
 	
@@ -1443,7 +1443,7 @@ int pp=0;
 		ILP.writeNoteLn("CbcToleranceZero: "+ControlData.zeroTolerance);
 		ILP.writeNoteLn("CbcHintTimeMax: "+CbcSolver.cbcHintTimeMax);
 		ILP.writeNoteLn("CbcHintRelaxPenalty: "+CbcSolver.cbcHintRelaxPenalty);
-
+		ILP.writeNoteLn("CbcSolutionRounding: "+CbcSolver.cbcSolutionRounding);
 	}
 	
 	public static void reloadAndWriteLp(String nameAppend, boolean logCbc) {
