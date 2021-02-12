@@ -2399,11 +2399,13 @@ public class DebugInterface {
 			ILP.initializeIlp();
 			GurobiSolver.initialize();
 		}else if (solverName.startsWith("CBC")){
-			if (solverName.equalsIgnoreCase("CBC2.10")){
+			if (solverName.equalsIgnoreCase("CBC2.9.8")){
+				CbcSolver.cbcLibName="jCbc";
+			}else if (solverName.equalsIgnoreCase("CBC2.10")){
 				CbcSolver.cbcLibName="jCbc_v2.10";
 			}else{
 				CbcSolver.cbcLibName="jCbc_v2.9.8.1";
-			}
+			} 
 			ControlData.solverName="CBC";
 			ILP.loggingLpSolve=false;
 			ILP.loggingCplexLp=true;

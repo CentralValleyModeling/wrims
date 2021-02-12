@@ -555,9 +555,11 @@ public class BatchRunProcess {
 				out.println("MainFile           "+new File(mainFileAbsPath).getParentFile()+File.separator+new File(configName).getName()+".par");
 			}
 			out.println("Solver             "+configMap.get("solver".toLowerCase()));
-			if (DebugCorePlugin.solver.equalsIgnoreCase("CBC2.10")){
+			if (DebugCorePlugin.solver.equalsIgnoreCase("CBC")){
+				//out.println("cbclibname         jCbc_v2.9.8.1");
+			}else if (DebugCorePlugin.solver.equalsIgnoreCase("CBC2.10")){
 				out.println("cbclibname         jCbc_v2.10");
-			}else if (DebugCorePlugin.solver.equalsIgnoreCase("CBC")){
+			}else if (DebugCorePlugin.solver.equalsIgnoreCase("CBC2.9.8")){
 				out.println("cbclibname         jCbc");
 			}
 			if (DebugCorePlugin.log.equals("xa_cbc") || DebugCorePlugin.log.equals("cbc_xa")){

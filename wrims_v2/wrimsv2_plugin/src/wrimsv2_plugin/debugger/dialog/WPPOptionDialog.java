@@ -237,8 +237,9 @@ public class WPPOptionDialog extends Dialog {
 		
 		solverCombo = new Combo(group, SWT.BORDER);
 		solverCombo.add("CBC");
-		solverCombo.add("CBC2.10");
 		solverCombo.add("XA");
+		solverCombo.add("CBC2.10");
+		solverCombo.add("CBC2.9.8");
 		//solverCombo.add("LPSolve");
 		
 		Label label2 =  new Label(group, SWT.NONE);
@@ -252,10 +253,12 @@ public class WPPOptionDialog extends Dialog {
 		
 		if (DebugCorePlugin.solver.equals("CBC")){
 			solverCombo.select(0);
-		}else if (DebugCorePlugin.solver.equals("CBC2.10")){
-			solverCombo.select(1);
 		}else if (DebugCorePlugin.solver.equals("XA")){
+			solverCombo.select(1);
+		}else if (DebugCorePlugin.solver.equals("CBC2.10")){
 			solverCombo.select(2);
+		}else if (DebugCorePlugin.solver.equals("CBC2.9.8")){
+			solverCombo.select(3);
 		}
 		prevSel=solverCombo.getSelectionIndex();
 		solverCombo.setLayoutData(gridData);
@@ -265,11 +268,14 @@ public class WPPOptionDialog extends Dialog {
 			public void modifyText(ModifyEvent e) {
 				if (DebugCorePlugin.isDebugging){
 					String solverName = solverCombo.getText();
-					if (solverName.equalsIgnoreCase("CBC") && DebugCorePlugin.cbc210Used){
+					if (solverName.equalsIgnoreCase("CBC") && (DebugCorePlugin.cbc210Used || DebugCorePlugin.cbc298Used)){
 						showNoSwitchWarning("CBC");
 						solverCombo.select(prevSel);
-					}else if (solverName.equalsIgnoreCase("CBC2.10") && DebugCorePlugin.cbcUsed){
+					}else if (solverName.equalsIgnoreCase("CBC2.10") && (DebugCorePlugin.cbcUsed || DebugCorePlugin.cbc298Used)){
 						showNoSwitchWarning("CBC2.10");
+						solverCombo.select(prevSel);
+					}else if (solverName.equalsIgnoreCase("CBC2.9.8") && (DebugCorePlugin.cbcUsed || DebugCorePlugin.cbc210Used)){
+						showNoSwitchWarning("CBC2.9.8");
 						solverCombo.select(prevSel);
 					}else{
 						prevSel=solverCombo.getSelectionIndex();
@@ -670,7 +676,7 @@ public class WPPOptionDialog extends Dialog {
 			public void run(){
 				String solverNameVer;
 				if (solverName.equalsIgnoreCase("CBC")){
-					solverNameVer="CBC2.9.8";
+					solverNameVer="CBC2.9.8.1";
 				}else{
 					solverNameVer=solverName;
 				}
@@ -688,9 +694,15 @@ public class WPPOptionDialog extends Dialog {
 		if (DebugCorePlugin.solver.equalsIgnoreCase("CBC")){
 			DebugCorePlugin.cbcUsed=true;
 			DebugCorePlugin.cbc210Used=false;
+			DebugCorePlugin.cbc298Used=false;
 		}else if (DebugCorePlugin.solver.equalsIgnoreCase("CBC2.10")){
 			DebugCorePlugin.cbcUsed=false;
 			DebugCorePlugin.cbc210Used=true;
+			DebugCorePlugin.cbc298Used=false;
+		}else if (DebugCorePlugin.solver.equalsIgnoreCase("CBC2.9.8")){
+			DebugCorePlugin.cbcUsed=false;
+			DebugCorePlugin.cbc210Used=false;
+			DebugCorePlugin.cbc298Used=true;
 		}
 	}
 }

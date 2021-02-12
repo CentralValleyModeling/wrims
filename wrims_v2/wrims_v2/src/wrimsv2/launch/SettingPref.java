@@ -30,7 +30,10 @@ public class SettingPref {
 			FileInputStream fs = new FileInputStream(file.getAbsolutePath());
 			BufferedReader br = new BufferedReader(new InputStreamReader(fs));
 		    ControlData.solverName=br.readLine().toLowerCase();
-		    if (ControlData.solverName.equalsIgnoreCase("CBC2.10")){
+		    if (ControlData.solverName.equalsIgnoreCase("CBC2.9.8")){
+		    	ControlData.solverName="cbc";
+		    	CbcSolver.cbcLibName = "jCbc";
+		    }else if (ControlData.solverName.equalsIgnoreCase("CBC2.10")){
 		    	ControlData.solverName="cbc";
 		    	CbcSolver.cbcLibName = "jCbc_v2.10";
 		    }else if (ControlData.solverName.equalsIgnoreCase("CBC")){

@@ -209,10 +209,13 @@ public class WPPWsiDiTab extends AbstractLaunchConfigurationTab {
 			out.println("");
 			
 			out.println("MainFile           "+mainFileAbsPath.toLowerCase());
-			if (DebugCorePlugin.solver.equalsIgnoreCase("CBC2.10")){
+			if (DebugCorePlugin.solver.equalsIgnoreCase("CBC")){
+				out.println("Solver            cbc");
+				//out.println("cbclibname        jCbc_2.9.8.1");
+			}else if (DebugCorePlugin.solver.equalsIgnoreCase("CBC2.10")){
 				out.println("Solver            cbc");
 				out.println("cbclibname        jCbc_v2.10");
-			}else if (DebugCorePlugin.solver.equalsIgnoreCase("CBC")){
+			}else if (DebugCorePlugin.solver.equalsIgnoreCase("CBC2.9.8")){
 				out.println("Solver            cbc");
 				out.println("cbclibname        jCbc");
 			}else{

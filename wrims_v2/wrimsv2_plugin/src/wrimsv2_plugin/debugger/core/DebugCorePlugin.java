@@ -297,6 +297,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static String devPass = "ModelingisNo1";
 	public static boolean cbcUsed=true;
 	public static boolean cbc210Used=false;
+	public static boolean cbc298Used=false;
 	
 	public static boolean isIfsSelFile=true;
 	public static String ifsFilePath;
