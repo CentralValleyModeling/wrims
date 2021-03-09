@@ -88,6 +88,7 @@ public class CbcSolver {
 	public static String cbcLibName = "jCbc_v2.9.8.1";
 	public static int cbcHintTimeMax = 100; // can read from config CbcHintTimeMax
 	public static boolean cbcSolutionRounding = true;
+	public static boolean cbcViolationRetry = true;
 	private static String modelName;
 	
 	private static Map<String, WeightElement> wm2; 
@@ -1033,22 +1034,16 @@ public class CbcSolver {
 			}
 			
 			if (Err_int>0 || Err_lb>0){
-				
-				
+								
 				reloadAndWriteLp("_lbViolation", true); 
-				
-			
-				// TODO: make sure callCbc version the last number >= 1 otherwise there are violations!!!!!
-				boolean isDllReload = false;
-				note_msg(" Solve_"+solveName+" has violations. Use callCbc");
-
-				reloadProblem(false);
-				callCbc();	
-				status = jCbc.status(model);
-				status2 = jCbc.secondaryStatus(model);
-
+				if (cbcViolationRetry) {
+					note_msg(" Solve_"+solveName+" has violations. Use callCbc");
+					reloadProblem(false);
+					callCbc();	
+					status = jCbc.status(model);
+					status2 = jCbc.secondaryStatus(model);
+				}
 			}	
-		
 		}
 	  
 		

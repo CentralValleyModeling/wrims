@@ -460,6 +460,23 @@ public class ConfigUtils {
 		}
 		System.out.println("CbcSolutionRounding: "+CbcSolver.cbcSolutionRounding);		
 
+		// CbcViolationRetry  default is true
+		k = "cbcviolationretry";
+		if (configMap.keySet().contains(k)){
+			
+			String s = configMap.get(k);
+			
+			if (s.equalsIgnoreCase("yes") || s.equalsIgnoreCase("true")){
+				CbcSolver.cbcViolationRetry = true;	
+			} else if (s.equalsIgnoreCase("no") || s.equalsIgnoreCase("false")){
+				CbcSolver.cbcViolationRetry = false;	
+			} else {
+				CbcSolver.cbcViolationRetry = true;	
+			}
+		}else{
+			CbcSolver.cbcViolationRetry = true;
+		}
+		System.out.println("CbcViolationRetry: "+CbcSolver.cbcViolationRetry);		
 		
 		
 //		// XAIntegerT
