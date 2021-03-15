@@ -72,7 +72,7 @@ public class ILP {
 	private static final String ampl_comment_Symbol = "#";
 	private static final String cplexLp_comment_Symbol = "\\";
 	private static DecimalFormat df;
-	public static int maximumFractionDigits = 8;
+	public static int maximumFractionDigits = 16;
 	public static boolean loggingVariableValue = false;
 	public static boolean loggingVariableValueRound = false;
 	public static boolean loggingVariableValueRound10 = false;
@@ -848,12 +848,12 @@ public class ILP {
 			}
 			try{
 				if (v!=0){
-					dvarFile.print(dvName + ":  " + String.format("%15s", df.format(v)) +"\n"  );
+					dvarFile.print(dvName + ":  " + String.format("%23s", df.format(v)) +"\n"  );
 				} else {
-					dvarFile.print(dvName + ":  " + String.format("%15s", "0") +"\n"  );
+					dvarFile.print(dvName + ":  " + String.format("%23s", "0") +"\n"  );
 				}
 			} catch (Exception e) {
-				dvarFile.print(dvName + ":  " + String.format("%15s", v) +"\n"  );
+				dvarFile.print(dvName + ":  " + String.format("%23s", v) +"\n"  );
 			}
 		}
 		dvarFile.println();
@@ -867,12 +867,12 @@ public class ILP {
 			}
 			try{
 				if (v!=0){
-					dvarFile.print(dvName + ":  " + String.format("%15s", df.format(v)) +"\n"  );
+					dvarFile.print(dvName + ":  " + String.format("%23s", df.format(v)) +"\n"  );
 				} else {
-					dvarFile.print(dvName + ":  " + String.format("%15s", "0") +"\n"  );
+					dvarFile.print(dvName + ":  " + String.format("%23s", "0") +"\n"  );
 				}
 			} catch (Exception e) {
-				dvarFile.print(dvName + ":  " + String.format("%15s", v) +"\n"  );
+				dvarFile.print(dvName + ":  " + String.format("%23s", v) +"\n"  );
 			}
 		}
 	}
@@ -937,9 +937,9 @@ public class ILP {
 				}
 				// TODO: improve speed
 				if (v!=0) {
-					dvarFile.print(dvName + ":  " + String.format("%15s", df.format(v)) +"\n"  );		
+					dvarFile.print(dvName + ":  " + String.format("%23s", df.format(v)) +"\n"  );		
 				} else {
-					dvarFile.print(dvName + ":  " + String.format("%15s", "0") +"\n"  );				
+					dvarFile.print(dvName + ":  " + String.format("%23s", "0") +"\n"  );				
 				}
 
 			} catch (Exception e) {
@@ -958,9 +958,9 @@ public class ILP {
 				}
 				// TODO: improve speed
 				if (v!=0) {
-					dvarFile.print(dvName + ":  " + String.format("%15s", df.format(v)) +"\n"  );				
+					dvarFile.print(dvName + ":  " + String.format("%23s", df.format(v)) +"\n"  );				
 				} else {
-					dvarFile.print(dvName + ":  " + String.format("%15s", "0") +"\n"  );				
+					dvarFile.print(dvName + ":  " + String.format("%23s", "0") +"\n"  );				
 				}
 				
 			} catch (Exception e) {
@@ -1076,9 +1076,9 @@ public class ILP {
 //			System.out.println("v:"+v);
 //			System.out.println("df:"+df.toString());
 			if (v!=0) {
-				svarFile.print(svName + ":  " + String.format("%15s", df.format(v)) +"\n"  );
+				svarFile.print(svName + ":  " + String.format("%23s", df.format(v)) +"\n"  );
 			} else {
-				svarFile.print(svName + ":  " + String.format("%15s", "0") +"\n" );
+				svarFile.print(svName + ":  " + String.format("%23s", "0") +"\n" );
 			}
 			
 			
