@@ -85,7 +85,7 @@ public class CbcSolver {
 	public static double integerT_check = 1e-8;          // can read from config cbcToleranceIntegerCheck
 	public static Double lowerBoundZero_check = null;
 	public static final double cbcWriteLpEpsilon = 1e-15; 	
-	public static String cbcLibName = "jCbc_v2.9.8.1";
+	public static String cbcLibName = "jCbc";
 	public static int cbcHintTimeMax = 100; // can read from config CbcHintTimeMax
 	public static boolean cbcSolutionRounding = true;
 	public static boolean cbcViolationRetry = true;
@@ -160,6 +160,8 @@ public class CbcSolver {
 		ILP.createNoteFile();
 		lowerBoundZero_check = Math.max(solve_2_primalT_relax*10, 1e-6);
 		ILP.writeNoteLn("lowerBoundZero_check ="+lowerBoundZero_check,false,false);
+		String jCbc_version = jCbc.getVersion();
+		ILP.writeNoteLn("jCbc version:", jCbc_version);
 		//if (ControlData.useCbcWarmStart || ControlData.cbc_debug_routeCbc || ControlData.cbc_debug_routeXA){
 			dvIntMap = new LinkedHashMap<String, Integer>();
 			for (String d: sds.allIntDv){
