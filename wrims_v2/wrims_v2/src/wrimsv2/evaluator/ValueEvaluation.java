@@ -16,6 +16,7 @@ import wrimsv2.components.FilePaths;
 import wrimsv2.components.IntDouble;
 import wrimsv2.external.*;
 import wrimsv2.hdf5.HDF5Reader;
+import wrimsv2.solver.CbcSolver;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,10 +50,18 @@ public class ValueEvaluation {
 		double value2=id2.getData().doubleValue();
 		
 		if (relation.equals("==")) {
-			if (value1==value2){
-				return true;
+			if (ControlData.solverName.equalsIgnoreCase("Cbc") && CbcSolver.cbcSolutionRounding){
+				if (value1>=value2-ControlData.relationTolerance && value1<=value2+ControlData.relationTolerance){
+					return true;
+				}else{
+					return false;
+				}
 			}else{
-				return false;
+				if (value1==value2){
+					return true;
+				}else{
+					return false;
+				}
 			}
 		}else if (relation.equals(">")){
 			if (value1>value2){
@@ -67,16 +76,32 @@ public class ValueEvaluation {
 				return false;
 			}
 		}else if (relation.equals(">=")){
-			if (value1>=value2){
-				return true;
+			if (ControlData.solverName.equalsIgnoreCase("Cbc") && CbcSolver.cbcSolutionRounding){
+				if (value1>=value2-ControlData.relationTolerance){
+					return true;
+				}else{
+					return false;
+				}
 			}else{
-				return false;
+				if (value1>=value2){
+					return true;
+				}else{
+					return false;
+				}
 			}
 		}else{
-			if (value1<=value2){
-				return true;
+			if (ControlData.solverName.equalsIgnoreCase("Cbc") && CbcSolver.cbcSolutionRounding){
+				if (value1<=value2+ControlData.relationTolerance){
+					return true;
+				}else{
+					return false;
+				}
 			}else{
-				return false;
+				if (value1<=value2){
+					return true;
+				}else{
+					return false;
+				}
 			}
 		}
 	}

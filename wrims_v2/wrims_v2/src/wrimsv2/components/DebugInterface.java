@@ -624,6 +624,7 @@ public class DebugInterface {
 		}else if (request.startsWith("cbcTolerancePrimalRelax:")){
 			String[] requestParts=request.split(":");
 			CbcSolver.solve_2_primalT_relax = Double.parseDouble(requestParts[1]);
+			ControlData.relationTolerance = Math.max(CbcSolver.solve_2_primalT_relax*10, 1e-6);
 			try {
 				sendRequest(request+" set");
 				System.out.println(request+" set");

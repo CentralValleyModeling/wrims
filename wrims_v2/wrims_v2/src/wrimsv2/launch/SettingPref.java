@@ -83,6 +83,7 @@ public class SettingPref {
 			    			CbcSolver.solve_2_primalT       = Double.parseDouble(pv);
 			    		}else if (pn.equalsIgnoreCase("cbcTolerancePrimalRelax")){			
 			    			CbcSolver.solve_2_primalT_relax = Double.parseDouble(pv);
+			    			ControlData.relationTolerance = Math.max(CbcSolver.solve_2_primalT_relax*10, 1e-6);
 			    		}else if (pn.equalsIgnoreCase("cbcToleranceWarmPrimal")){
 			    			CbcSolver.solve_whs_primalT     = Double.parseDouble(pv);
 			    		}else if (pn.equalsIgnoreCase("cbcToleranceInteger")){	

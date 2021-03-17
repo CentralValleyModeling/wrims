@@ -568,7 +568,8 @@ public class ConfigUtils {
 			}
 			
 		}
-		System.out.println("CbcTolerancePrimalRelax: "+CbcSolver.solve_2_primalT_relax);		
+		System.out.println("CbcTolerancePrimalRelax: "+CbcSolver.solve_2_primalT_relax);
+		ControlData.relationTolerance = Math.max(CbcSolver.solve_2_primalT_relax*10, 1e-6);
 		
 		// CbcSolveWhsPrimalT // default is 1e-9
 		k = "cbctolerancewarmprimal";
