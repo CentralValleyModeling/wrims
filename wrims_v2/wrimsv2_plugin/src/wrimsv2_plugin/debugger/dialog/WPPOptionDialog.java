@@ -238,8 +238,8 @@ public class WPPOptionDialog extends Dialog {
 		solverCombo = new Combo(group, SWT.BORDER);
 		solverCombo.add("CBC");
 		solverCombo.add("XA");
-		solverCombo.add("CBC2.10");
-		solverCombo.add("CBC2.9.8");
+		//solverCombo.add("CBC2.10");
+		//solverCombo.add("CBC2.9.8");
 		//solverCombo.add("LPSolve");
 		
 		Label label2 =  new Label(group, SWT.NONE);
@@ -676,7 +676,7 @@ public class WPPOptionDialog extends Dialog {
 			public void run(){
 				String solverNameVer;
 				if (solverName.equalsIgnoreCase("CBC")){
-					solverNameVer="CBC2.9.8.1";
+					solverNameVer="CBC";
 				}else{
 					solverNameVer=solverName;
 				}

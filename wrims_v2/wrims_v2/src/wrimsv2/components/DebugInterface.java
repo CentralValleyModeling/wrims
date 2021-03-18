@@ -2405,7 +2405,7 @@ public class DebugInterface {
 			}else if (solverName.equalsIgnoreCase("CBC2.10")){
 				CbcSolver.cbcLibName="jCbc_v2.10";
 			}else{
-				CbcSolver.cbcLibName="jCbc_v2.9.8.1";
+				CbcSolver.cbcLibName="jCbc";
 			} 
 			ControlData.solverName="CBC";
 			ILP.loggingLpSolve=false;
