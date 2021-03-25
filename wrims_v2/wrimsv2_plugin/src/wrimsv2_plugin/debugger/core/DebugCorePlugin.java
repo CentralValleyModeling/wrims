@@ -84,6 +84,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static Map<Integer, Integer> variableAltColIndex=new HashMap<Integer, Integer>();;
 	public static Map<Integer, Integer> watchAltColIndex=new HashMap<Integer, Integer>();;
 	public static String dataDir="data";
+	public final static String watchFile = "watch.prf"; 
 	
 	public static ArrayList<String[]> varDetailTimeseries= new ArrayList<String[]>();
 	public static ArrayList<String[]> varDetailFuture= new ArrayList<String[]>();

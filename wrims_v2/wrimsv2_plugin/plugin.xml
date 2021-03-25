@@ -169,15 +169,33 @@
   <viewContribution 
       id="org.eclipse.ui.articles.action.contribution.view" 
    targetID="wpp.watchview">
-	<action
-         id="wpp.addwatch" 
-         label="Add Watch"
-         icon="icons\add_icon.png" 
-         tooltip="add watch"
+   	  <action
+         id="wpp.exportwatch" 
+         label="Export Watch Variables"
+         icon="icons\export_icon.png" 
+         tooltip="Export Watch Variables"
          toolbarPath="group1"
-         class="wrimsv2_plugin.debugger.toolbaritem.AddWatch"
+         class="wrimsv2_plugin.debugger.toolbaritem.ExportWatch"
          enablesFor="*">
       </action> 
+      <action
+         id="wpp.importwatch" 
+         label="Import Watch Variables"
+         icon="icons\import_icon.png" 
+         tooltip="Import Watch Variables"
+         toolbarPath="group1"
+         class="wrimsv2_plugin.debugger.toolbaritem.ImportWatch"
+         enablesFor="*">
+      </action>
+      <action
+         id="wpp.deleteallwatch" 
+         label="Delete All Watch"
+         icon="icons\deleteall_icon.png" 
+         tooltip="delete all watch"
+         toolbarPath="group1"
+         class="wrimsv2_plugin.debugger.toolbaritem.DeleteAllWatch"
+         enablesFor="*">
+      </action>  
       <action
          id="wpp.deletewatch" 
          label="Delete Watch"
@@ -188,12 +206,12 @@
          enablesFor="*">
       </action> 
       <action
-         id="wpp.deleteallwatch" 
-         label="Delete All Watch"
-         icon="icons\deleteall_icon.png" 
-         tooltip="delete all watch"
+         id="wpp.addwatch" 
+         label="Add Watch"
+         icon="icons\add_icon.png" 
+         tooltip="add watch"
          toolbarPath="group1"
-         class="wrimsv2_plugin.debugger.toolbaritem.DeleteAllWatch"
+         class="wrimsv2_plugin.debugger.toolbaritem.AddWatch"
          enablesFor="*">
       </action> 
    </viewContribution> 

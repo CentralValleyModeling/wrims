@@ -14,12 +14,11 @@ import java.util.ArrayList;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 
 public class ProcWatchItem {
-	private final static String watchFile = "watch.prf"; 
 	
 	public static ArrayList<String> getLastWatchItems(){
 		ArrayList<String> watchItems=new ArrayList<String> ();
 		try {
-			File file = new File(DebugCorePlugin.dataDir, watchFile);
+			File file = new File(DebugCorePlugin.dataDir, DebugCorePlugin.watchFile);
 			if (!file.exists()){
 				file.createNewFile();
 			}
@@ -30,6 +29,8 @@ public class ProcWatchItem {
 		    while((line = br.readLine())!=null){
 		       	watchItems.add(line);
 		    }
+		    br.close();
+		    fs.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -38,7 +39,7 @@ public class ProcWatchItem {
 	
 	public static void saveWatchItems(ArrayList<String> watchItems){
 		try {
-			File file = new File(DebugCorePlugin.dataDir, watchFile);
+			File file = new File(DebugCorePlugin.dataDir, DebugCorePlugin.watchFile);
 			if (!file.exists()){
 				file.createNewFile();
 			}
