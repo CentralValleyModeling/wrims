@@ -21,8 +21,6 @@ public class Functiongenfrcstrunofftables extends ExternalFunction{
 	ArrayList<Double> frcst_sac_list=new ArrayList<Double>();
 	private ArrayList<ArrayList<Double>> frcst_amr_arr=new ArrayList<ArrayList<Double>>();
 	ArrayList<Double> frcst_amr_list=new ArrayList<Double>();
-	private ArrayList<ArrayList<Double>> frcst_nmi_arr=new ArrayList<ArrayList<Double>>();
-	ArrayList<Double> frcst_nmi_list=new ArrayList<Double>();
 
 	public Functiongenfrcstrunofftables(){
 
@@ -31,24 +29,22 @@ public class Functiongenfrcstrunofftables extends ExternalFunction{
 	public void execute(Stack stack) {
 
 		//values in reverse order:
-		Object param4 = stack.pop();
 		Object param3 = stack.pop();
 		Object param2 = stack.pop();
 		Object param1 = stack.pop();
 
 		//cast params to correct types:
-		double frcst_nmi =((Number) param4).doubleValue();
 		double frcst_amr = ((Number) param3).doubleValue();
 		double frcst_sac  = ((Number) param2).doubleValue();
 		double frcst_fea = ((Number) param1).doubleValue();
 
-		formTables(frcst_fea, frcst_sac, frcst_amr, frcst_nmi);
+		formTables(frcst_fea, frcst_sac, frcst_amr);
 
 		// push the result on the Stack
 		stack.push(1.0);
 	}
 
-	public void formTables(double frcst_fea, double frcst_sac, double frcst_amr, double frcst_nmi){
+	public void formTables(double frcst_fea, double frcst_sac, double frcst_amr){
 
 	    if (ControlData.currMonth==1){
 	    	wYears.add(TimeOperation.waterYearValue());
@@ -75,19 +71,12 @@ public class Functiongenfrcstrunofftables extends ExternalFunction{
 	    	frcst_amr_list.add(frcst_amr);
 	    }
 
-	    if (ControlData.currMonth==2){
-	    	frcst_nmi_list=new ArrayList<Double>();
-	    	frcst_nmi_list.add(frcst_nmi);
-	    	frcst_nmi_arr.add(frcst_nmi_list);
-	    }else if (ControlData.currMonth>=3 && ControlData.currMonth<=5){
-	    	frcst_nmi_list.add(frcst_nmi);
-	    }	
+			
 
 		if (ControlData.currYear==ControlData.endYear && ControlData.currMonth==ControlData.endMonth){
 			writeTable("feather_runoff_forecast", 1, 5, frcst_fea_arr);
 			writeTable("sacramento_runoff_forecast", 2, 5, frcst_sac_arr);
 			writeTable("american_runoff_forecast", 2, 9, frcst_amr_arr);
-			writeTable("Stanislaus_frcst_nmi", 2, 5, frcst_nmi_arr);
 		}
 	}
 
