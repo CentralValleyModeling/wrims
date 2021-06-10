@@ -906,6 +906,7 @@ mathFunc_simple
   |  ACOS '(' expr_add_simple ')' 
   |  ATAN '(' expr_add_simple ')' 
   |  ACOT '(' expr_add_simple ')' 
+  |  exceedFunc  
   ;
   
 unitFunc_simple
@@ -1037,6 +1038,7 @@ mathFunc
   |  ACOS '(' expr_add ')' 
   |  ATAN '(' expr_add ')' 
   |  ACOT '(' expr_add ')' 
+  |  exceedFunc
   ;
   
 unitFunc
@@ -1044,6 +1046,12 @@ unitFunc
   
 multiInputFunc
   : ( MIN | MAX ) '(' expr_add ( ',' expr_add )* ')' ;
+  
+//exceedance(FOLSM_INFLOW, 0.9,ALL/OCT,1921,OCT,31,2015,SEP,30)  
+exceedFunc
+  : EXCEEDANCE '(' varID ',' number_p ',' varID ',' integer_p ',' varID ',' integer ',' integer_p ',' varID ',' integer ')'   
+  ;
+  
 //
 //// reserved ID
 //DaysIn: 'daysin';
@@ -1160,6 +1168,7 @@ ASIN : 'asin' | 'ASIN' ;
 ACOS : 'acos' | 'ACOS' ;
 ATAN : 'atan' | 'ATAN' ;
 ACOT : 'acot' | 'ACOT' ;
+EXCEEDANCE : 'exceedance' | 'EXCEEDANCE' ;
 CFS_TAF : 'cfs_taf' | 'CFS_TAF' ;
 TAF_CFS : 'taf_cfs' | 'TAF_CFS' ;
 
