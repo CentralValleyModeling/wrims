@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Properties;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.datatools.connectivity.IConnectionProfile;
 import org.eclipse.datatools.connectivity.ProfileManager;
@@ -625,9 +626,11 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 	@Override
 	public void initializeFrom(ILaunchConfiguration configuration) {
 		launchConfig=configuration;
-		launchPath=launchConfig.getFile().getLocation().toFile().getAbsolutePath();
+		IFile f = launchConfig.getFile();
+		if (f != null){
+			launchPath=f.getLocation().toFile().getAbsolutePath();
 		
-		try {
+			try {
 			/*
 			String isSelEntries = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_IFSISSELENTRY, "no");
 			if (isSelEntries.equalsIgnoreCase("no")){
@@ -637,14 +640,15 @@ public class WPPInfeasibilityTab extends AbstractLaunchConfigurationTab {
 			}
 			*/
 			
-			list.removeAll();
-			int numberSelFiles=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_IFSNUMBERSELENTRIES, 0);
-			for (int i=0; i<numberSelFiles; i++){
-				String relativePath=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_IFSSELENTRYNAME+i, "");
-				list.add(relativePath);
+				list.removeAll();
+				int numberSelFiles=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_IFSNUMBERSELENTRIES, 0);
+				for (int i=0; i<numberSelFiles; i++){
+					String relativePath=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_IFSSELENTRYNAME+i, "");
+					list.add(relativePath);
+				}
+			} catch (CoreException e) {
+				WPPException.handleException(e);
 			}
-		} catch (CoreException e) {
-			WPPException.handleException(e);
 		}
 	}
 

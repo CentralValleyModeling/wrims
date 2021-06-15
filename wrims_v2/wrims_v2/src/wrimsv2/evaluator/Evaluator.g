@@ -99,7 +99,8 @@ func returns[EvalExpression ee]:
   (asin_func{ee=$asin_func.ee;})|
   (acos_func{ee=$acos_func.ee;})|
   (atan_func{ee=$atan_func.ee;})|
-  (acot_func{ee=$acot_func.ee;})
+  (acot_func{ee=$acot_func.ee;})|
+  (exceedFunc{ee=$exceedFunc.ee;}) 
   ;
 
 round_func returns[EvalExpression ee]
@@ -215,6 +216,12 @@ acot_func returns[EvalExpression ee]
     ee=Evaluation.acot($e.ee);
   }
   ;
+
+exceedFunc returns[EvalExpression ee]
+  : EXCEEDANCE '(' var=IDENT ';' exc=term ';' (mon=MONTH_CONST|mon=ALL) ';' sy=INTEGER ';' sm=MONTH_CONST ';' sd=INTEGER ';' ey=INTEGER ';' em=MONTH_CONST ';' ed=INTEGER ')' {
+    ee=Evaluation.exceedence($var.text, $exc.ee, $mon.text, $sy.text, $sm.text, $sd.text, $ey.text, $em.text, $ed.text);
+  }  
+  ;
   
 range_func returns [boolean result]
   : RANGE '(' MONTH ';' m1=MONTH_CONST ';' m2=MONTH_CONST ')' {Evaluation.range($m1.text, $m2.text);};
@@ -234,7 +241,7 @@ partC: 	(IDENT|IDENT1|usedKeywords) ('-' (IDENT|IDENT1|usedKeywords))*;
 usedKeywords: YEAR|MONTH|MONTH_CONST|DAY|PASTMONTH|RANGE|TAFCFS|DAYSIN|DAYSINTIMESTEP|SUM|MAX|MIN|INT|REAL|ABS|EXP|LOG|LOG10|POW|MOD|ROUND|SELECT|FROM|GIVEN|USE|WHERE
 |CONSTRAIN|ALWAYS|NAME|DVAR|CYCLE|FILE|  CONDITION|INCLUDE|LOWERBOUND|UPPERBOUND|INTEGERTYPE|UNITS|CONVERTUNITS|TYPE|OUTPUT
 |CASE|ORDER|EXPRESSION|LHSGTRHS|LHSLTRHS|WEIGHT|FUNCTION|FROM_WRESL_FILE|UPPERUNBOUNDED|LOWERUNBOUNDED|AND|OR|NOT
-|SIN|COS|TAN|COT|ASIN|ACOS|ATAN|ACOT;
+|SIN|COS|TAN|COT|ASIN|ACOS|ATAN|ACOT|EXCEEDANCE|ALL;
 
 tableSQL returns [EvalExpression ee] @init{String table=null; String select=null; String use=null; HashMap<String, Number> given=null; HashMap<String, Number> where=null;}
 	: SELECT ((i1=IDENT{select=$i1.text;})|(u1=usedKeywords{select=$u1.text;})) FROM i2=IDENT{table=$i2.text;} 
@@ -448,6 +455,7 @@ YEAR: 'wateryear';
 MONTH: 'month';
 DAY: 'day';
 MONTH_CONST: 'jan'|'feb'|'mar'|'apr'|'may'|'jun'|'jul'|'aug'|'sep'|'oct'|'nov'|'dec';
+ALL: 'all';
 PASTMONTH: 'prevjan'|'prevfeb'|'prevmar'|'prevapr'|'prevmay'|'prevjun'|'prevjul'|'prevaug'|'prevsep'|'prevoct'|'prevnov'|'prevdec';
 RANGE: 'range';
 
@@ -481,6 +489,7 @@ ASIN : 'asin';
 ACOS : 'acos';
 ATAN : 'atan';
 ACOT : 'acot';
+EXCEEDANCE : 'exceedance';
 
 SELECT: 'select';
 FROM: 'from';

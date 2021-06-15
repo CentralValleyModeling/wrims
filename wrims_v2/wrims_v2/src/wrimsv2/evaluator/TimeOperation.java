@@ -264,4 +264,40 @@ public class TimeOperation {
 			return diff;
 		}
 	}
+	
+	public static Date addOneMonth(Date date){
+		int month=date.getMonth()+1;
+		int year=date.getYear();
+		if (month>11){
+			month=month-12;
+			year=year+1;
+		}
+		int day=TimeOperation.numberOfDays(month+1, year+1900);
+		Date newDate = new Date(year, month, day);
+		return newDate;
+	}
+	
+	public static Date addOneDay(Date date){
+		long newTime=date.getTime()+1 * 24 * 60 * 60 * 1000l;
+		Date newDate = new Date (newTime);
+		return newDate;
+	}
+	
+	public static Date backOneMonth(Date date){
+		int month=date.getMonth()-1;
+		int year=date.getYear();
+		if (month<0){
+			month=month+12;
+			year=year-1;
+		}
+		int day=TimeOperation.numberOfDays(month+1, year+1900);
+		Date newDate = new Date(year, month, day);
+		return newDate;
+	}
+	
+	public static Date backOneDay(Date date){
+		long newTime=date.getTime()-1 * 24 * 60 * 60 * 1000l;
+		Date newDate = new Date (newTime);
+		return newDate;
+	}
 }

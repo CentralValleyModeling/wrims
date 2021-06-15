@@ -18,6 +18,7 @@ import wrimsv2.external.*;
 import wrimsv2.hdf5.HDF5Reader;
 import wrimsv2.solver.CbcSolver;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
@@ -672,7 +673,7 @@ public class ValueEvaluation {
 		if (index>=0){
 			DssDataSetFixLength dds=DataTimeSeries.dvAliasTSCycles.get(ci).get(entryNameTS);
 			if (dds==null){
-				Error.addEvaluationError(ident + " at timestep " +indexValue+" of No. "+ci+" cycle doesn't have value");
+				Error.addEvaluationError(ident + " at timestep " +indexValue+" of No. "+ci+" cycle doesn't have value.");
 				return 1.0;
 			}
 			double[] data=dds.getData();
@@ -1093,6 +1094,42 @@ public class ValueEvaluation {
 		}
 		double radians = Math.atan(1.0/value);
 		return new IntDouble(Math.toDegrees(radians), false);		
+	}
+	
+	public static IntDouble exceedence(String tsName, IntDouble exc_id, String selMon, String syStr, String smStr, String sdStr, String eyStr, String emStr, String edStr){
+		String entryNameTS=DssOperation.entryNameTS(tsName, ControlData.timeStep);
+		if (DataTimeSeries.svTS.containsKey(entryNameTS)){
+			DssDataSet dds = DataTimeSeries.svTS.get(entryNameTS);
+			int sy = Integer.parseInt(syStr);
+			int sd = Integer.parseInt(sdStr);
+			int ey = Integer.parseInt(eyStr);
+			int ed = Integer.parseInt(edStr);
+			int sm = TimeOperation.monthValue(smStr);
+			int em = TimeOperation.monthValue(emStr);
+			double exc = exc_id.getData().doubleValue();
+			
+			if (exc<=0.0 || exc>1.0){
+				Error.addEvaluationError("Exceedence level must be >0.0 and <=1.0");
+				return new IntDouble (1.0, false);
+			}
+			
+			Date selSd;
+			Date selEd;
+			if (ControlData.timeStep.equals("1MON")){
+				selSd=new Date(sy-1900, sm-1, TimeOperation.numberOfDays(sm, sy));
+				selEd=new Date(ey-1900, em-1, TimeOperation.numberOfDays(em, ey));
+			}else{
+				selSd=new Date(sy-1900, sm-1, sd);
+				selEd=new Date(ey-1900, em-1, ed);
+			}
+			
+			ArrayList<Double> optedData=dds.getTimeseriesDataWithOptions(selMon, selSd, selEd);
+			double value=DssDataSet.getExceedence(optedData, exc);
+			return new IntDouble(value, false);
+		}else{
+			Error.addEvaluationError(tsName+" is not a timeseries variable used in the Exceendence funciton for the time step of "+ControlData.timeStep+".");
+			return new IntDouble (1.0, false);
+		}	
 	}
 	
 	public static IntDouble daysIn(){

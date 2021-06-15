@@ -62,7 +62,7 @@ public class CsvOperation {
 					String kindName=formKindName(origKindName);
 					double[] data = dds.getData();
 					if (timestep.equals("1DAY")){
-						if (!ControlData.isSimOutput) date=backOneDay(date);
+						if (!ControlData.isSimOutput) date=TimeOperation.backOneDay(date);
 						for (int i=0; i<data.length; i++){
 							double value = data[i];
 							if (value != -901.0 && value !=-902.0){
@@ -74,10 +74,10 @@ public class CsvOperation {
 									bw.write(line);
 								}
 							}
-							date=addOneDay(date);
+							date=TimeOperation.addOneDay(date);
 						}
 					}else{
-						if (!ControlData.isSimOutput) date=backOneMonth(date);
+						if (!ControlData.isSimOutput) date=TimeOperation.backOneMonth(date);
 						for (int i=0; i<data.length; i++){
 							double value = data[i];
 							if (value != -901.0 && value !=-902.0){
@@ -89,7 +89,7 @@ public class CsvOperation {
 									bw.write(line);
 								}
 							}
-							date=addOneMonth(date);
+							date=TimeOperation.addOneMonth(date);
 						}
 					}
 				}
@@ -121,24 +121,24 @@ public class CsvOperation {
 					String kindName=formKindName(origKindName);
 					ArrayList<Double> data = dds.getData();
 					if (timestep.equals("1DAY")){
-						date=backOneDay(date);
+						date=TimeOperation.backOneDay(date);
 						for (int i=0; i<data.size(); i++){
 							double value = data.get(i);
 							if (value != -901.0 && value !=-902.0){
 								line = scenarioIndex+",1DAY,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+ convertValue(value, units, convertToUnits, date, timestep) +"\n";
 								bw.write(line);
 							}
-							date=addOneDay(date);
+							date=TimeOperation.addOneDay(date);
 						}
 					}else{
-						date=backOneMonth(date);
+						date=TimeOperation.backOneMonth(date);
 						for (int i=0; i<data.size(); i++){
 							double value = data.get(i);
 							if (value != -901.0 && value !=-902.0){
 								line = scenarioIndex+",1MON,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+convertValue(value, units, convertToUnits, date, timestep)+"\n";
 								bw.write(line);
 							}
-							date=addOneMonth(date);
+							date=TimeOperation.addOneMonth(date);
 						}
 					}
 				}
@@ -171,24 +171,24 @@ public class CsvOperation {
 						String kindName=formKindName(origKindName);
 						ArrayList<Double> data = dds.getData();
 						if (timestep.equals("1DAY")){
-							date=backOneDay(date);
+							date=TimeOperation.backOneDay(date);
 							for (int i=0; i<data.size(); i++){
 								double value = data.get(i);
 								if (value != -901.0 && value !=-902.0){
 									line = scenarioIndex+",1DAY,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+convertValue(value, units, convertToUnits, date, timestep)+"\n";
 									bw.write(line);
 								}
-								date=addOneDay(date);
+								date=TimeOperation.addOneDay(date);
 							}
 						}else{
-							date=backOneMonth(date);
+							date=TimeOperation.backOneMonth(date);
 							for (int i=0; i<data.size(); i++){
 								double value = data.get(i);
 								if (value != -901.0 && value !=-902.0){
 									line = scenarioIndex+",1MON,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+convertValue(value, units, convertToUnits, date, timestep)+"\n";
 									bw.write(line);
 								}
-								date=addOneMonth(date);
+								date=TimeOperation.addOneMonth(date);
 							}
 						}
 					}
@@ -222,24 +222,24 @@ public class CsvOperation {
 						String kindName=formKindName(origKindName);
 						ArrayList<Double> data = dds.getData();
 						if (timestep.equals("1DAY")){
-							date=backOneDay(date);
+							date=TimeOperation.backOneDay(date);
 							for (int i=0; i<data.size(); i++){
 								double value = data.get(i);
 								if (value != -901.0 && value !=-902.0){
 									line = scenarioIndex+",1DAY,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+convertValue(value, units, convertToUnits, date, timestep)+"\n";
 									bw.write(line);
 								}
-								date=addOneDay(date);
+								date=TimeOperation.addOneDay(date);
 							}
 						}else{
-							date=backOneMonth(date);
+							date=TimeOperation.backOneMonth(date);
 							for (int i=0; i<data.size(); i++){
 								double value = data.get(i);
 								if (value != -901.0 && value !=-902.0){
 									line = scenarioIndex+",1MON,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+convertValue(value, units, convertToUnits, date, timestep)+"\n";
 									bw.write(line);
 								}
-								date=addOneMonth(date);
+								date=TimeOperation.addOneMonth(date);
 							}
 						}
 					}
@@ -342,41 +342,5 @@ public class CsvOperation {
 		int month=date.getMonth()+1;
 		int day = date.getDate();
 		return year+"-"+TimeOperation.monthNameNumeric(month)+"-"+TimeOperation.dayName(day)+" 00:00:00";
-	}
-	
-	public Date addOneMonth(Date date){
-		int month=date.getMonth()+1;
-		int year=date.getYear();
-		if (month>11){
-			month=month-12;
-			year=year+1;
-		}
-		int day=TimeOperation.numberOfDays(month+1, year+1900);
-		Date newDate = new Date(year, month, day);
-		return newDate;
-	}
-	
-	public Date addOneDay(Date date){
-		long newTime=date.getTime()+1 * 24 * 60 * 60 * 1000l;
-		Date newDate = new Date (newTime);
-		return newDate;
-	}
-	
-	public Date backOneMonth(Date date){
-		int month=date.getMonth()-1;
-		int year=date.getYear();
-		if (month<0){
-			month=month+12;
-			year=year-1;
-		}
-		int day=TimeOperation.numberOfDays(month+1, year+1900);
-		Date newDate = new Date(year, month, day);
-		return newDate;
-	}
-	
-	public Date backOneDay(Date date){
-		long newTime=date.getTime()-1 * 24 * 60 * 60 * 1000l;
-		Date newDate = new Date (newTime);
-		return newDate;
 	}
 }
