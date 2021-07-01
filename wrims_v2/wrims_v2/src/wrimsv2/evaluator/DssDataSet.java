@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 
 import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
@@ -18,6 +19,7 @@ public class DssDataSet {
 	private Date startTime;
 	private boolean fromDssFile=false;
 	private int studyStartIndex=-1;
+	private static HashMap<Double, Date> selDataMap=new HashMap<Double, Date>();
 	
 	public void setData(ArrayList<Double> data){
 		this.data=data;
@@ -95,10 +97,16 @@ public class DssDataSet {
 	
 	public ArrayList<Double> getTimeseriesDataWithOptions(String selMon, Date selSd, Date selEd){
 		ArrayList<Double> selData=new ArrayList<Double>();
-		int selMonVal=TimeOperation.monthValue(selMon);
-		if (selMonVal==12 && !selMon.equalsIgnoreCase("all") && !selMon.equalsIgnoreCase("dec")){
-			Error.addEvaluationError("Selected month in the exceedence function should be Jan,..., Dec or All");
-			return selData;
+		selDataMap=new HashMap<Double, Date>();
+		String m1="all";
+		String m2="all";
+		double sum=0;
+		if (selMon.length()==3){
+			m1=selMon;
+			m2=selMon;		
+		}else{
+			m1=selMon.substring(0, 3);
+			m2=selMon.substring(3);
 		}
 		Date dataDate = startTime;
 		if (timeStep.equals("1MON")){
@@ -106,6 +114,7 @@ public class DssDataSet {
 		}else{
 			dataDate=TimeOperation.backOneDay(dataDate);
 		}
+		Date entryDate=dataDate;
 		for (int i=0; i<data.size(); i++){
 			if (dataDate.after(selEd)){
 				return selData;
@@ -118,8 +127,17 @@ public class DssDataSet {
 			}else{
 				if (selMon.equalsIgnoreCase("all")){
 					selData.add(data.get(i));
-				}else if (dataDate.getMonth()+1==selMonVal){
-					selData.add(data.get(i));
+					selDataMap.put(sum, dataDate);
+				}else if (TimeOperation.range(dataDate.getMonth()+1, m1, m2)){
+					if (TimeOperation.range(dataDate.getMonth()+1, m1, m1)){
+						sum=0;
+						entryDate=dataDate;
+					}
+					sum=sum+data.get(i);
+					if (TimeOperation.range(dataDate.getMonth()+1, m2, m2)){
+						selData.add(sum);
+						selDataMap.put(sum, entryDate);
+					}
 				}
 				if (timeStep.equals("1MON")){
 					dataDate=TimeOperation.addOneMonth(dataDate);
@@ -131,10 +149,10 @@ public class DssDataSet {
 		return selData;	
 	}
 	
-	public static double getExceedence(ArrayList<Double> optedData, double exc) {
+	public static double getExceedance(ArrayList<Double> optedData, double exc) {
 		int size = optedData.size();
 		if (size==0){
-			Error.addEvaluationError("The data in the specified time period and selected month(s) from the timeseries doesn't exist in the Exceedence function.");
+			Error.addEvaluationError("The data in the specified time period and selected month(s) from the timeseries doesn't exist in the Exceedance function.");
 			return 1.0;
 		}
 		Double[] values =optedData.toArray(new Double[size]);
@@ -152,5 +170,32 @@ public class DssDataSet {
 			double value=values[0]-(1.0-excIndex)*(values[1]-values[0]);
 			return value;
 		}
+	}
+	
+	public static int getExceedance_tsi(ArrayList<Double> optedData, double exc) {
+		int size = optedData.size();
+		if (size==0){
+			Error.addEvaluationError("The data in the specified time period and selected month(s) from the timeseries doesn't exist in the Exceedance function.");
+			return 0;
+		}
+		Double[] values =optedData.toArray(new Double[size]);
+		Arrays.sort(values);
+		double excIndex = (1.0-exc)*size;
+		int index=(int)Math.round(excIndex)-1;
+		if (index<0) index=0;
+		Date dataDate=selDataMap.get(values[index]);
+		int dataYear=dataDate.getYear()+1900;
+		int dataMonth=dataDate.getMonth()+1;
+		int dataDay = dataDate.getDate();
+		if (ControlData.timeStep.equals("1MON")){
+			return (dataYear-ControlData.currYear)*12+(dataMonth-ControlData.currMonth);
+		}else{
+			Date currDate=new Date (ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
+			long dataTime=dataDate.getTime();
+			long currTime=currDate.getTime();
+			double tsi=(dataTime-currTime)/(24*60*60*1000l);
+			return (int)tsi;
+		}
+		
 	}
 }

@@ -906,7 +906,8 @@ mathFunc_simple
   |  ACOS '(' expr_add_simple ')' 
   |  ATAN '(' expr_add_simple ')' 
   |  ACOT '(' expr_add_simple ')' 
-  |  exceedFunc  
+  |  exceedFunc
+  |  exceedtsiFunc  
   ;
   
 unitFunc_simple
@@ -1039,6 +1040,7 @@ mathFunc
   |  ATAN '(' expr_add ')' 
   |  ACOT '(' expr_add ')' 
   |  exceedFunc
+  |  exceedtsiFunc
   ;
   
 unitFunc
@@ -1050,6 +1052,10 @@ multiInputFunc
 //exceedance(FOLSM_INFLOW, 0.9,ALL/OCT,1921,OCT,31,2015,SEP,30)  
 exceedFunc
   : EXCEEDANCE '(' varID ',' number_p ',' varID ',' integer_p ',' varID ',' integer ',' integer_p ',' varID ',' integer ')'   
+  ;
+  
+exceedtsiFunc
+  : EXCEEDANCE_TSI '(' varID ',' number_p ',' varID ',' integer_p ',' varID ',' integer ',' integer_p ',' varID ',' integer ')'   
   ;
   
 //
@@ -1169,6 +1175,7 @@ ACOS : 'acos' | 'ACOS' ;
 ATAN : 'atan' | 'ATAN' ;
 ACOT : 'acot' | 'ACOT' ;
 EXCEEDANCE : 'exceedance' | 'EXCEEDANCE' ;
+EXCEEDANCE_TSI : 'exceedance_tsi' | 'EXCEEDANCE_TSI' ;
 CFS_TAF : 'cfs_taf' | 'CFS_TAF' ;
 TAF_CFS : 'taf_cfs' | 'TAF_CFS' ;
 

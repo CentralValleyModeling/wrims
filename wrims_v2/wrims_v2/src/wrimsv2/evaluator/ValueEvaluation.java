@@ -108,22 +108,7 @@ public class ValueEvaluation {
 	}
 	
 	public static boolean range(String m1, String m2){
-		int mon1=TimeOperation.monthValue(m1);
-		int mon2=TimeOperation.monthValue(m2);
-		
-		if (mon1<=mon2){
-			if (ControlData.currMonth>=mon1 && ControlData.currMonth<=mon2){
-				return true;
-			}else{
-				return false;
-			}
-		}else{
-			if (ControlData.currMonth>=mon1 || ControlData.currMonth<=mon2){
-				return true;
-			}else{
-				return false;
-			}
-		}
+		return TimeOperation.range(ControlData.currMonth, m1, m2);
 	}
 	
 	public static boolean relationStatementSeries(boolean r1, boolean r2, String s){
@@ -1096,7 +1081,7 @@ public class ValueEvaluation {
 		return new IntDouble(Math.toDegrees(radians), false);		
 	}
 	
-	public static IntDouble exceedence(String tsName, IntDouble exc_id, String selMon, String syStr, String smStr, String sdStr, String eyStr, String emStr, String edStr){
+	public static IntDouble exceedance(String tsName, IntDouble exc_id, String selMon, String syStr, String smStr, String sdStr, String eyStr, String emStr, String edStr){
 		String entryNameTS=DssOperation.entryNameTS(tsName, ControlData.timeStep);
 		if (DataTimeSeries.svTS.containsKey(entryNameTS)){
 			DssDataSet dds = DataTimeSeries.svTS.get(entryNameTS);
@@ -1109,7 +1094,7 @@ public class ValueEvaluation {
 			double exc = exc_id.getData().doubleValue();
 			
 			if (exc<=0.0 || exc>1.0){
-				Error.addEvaluationError("Exceedence level must be >0.0 and <=1.0");
+				Error.addEvaluationError("Exceedance level must be >0.0 and <=1.0");
 				return new IntDouble (1.0, false);
 			}
 			
@@ -1124,11 +1109,47 @@ public class ValueEvaluation {
 			}
 			
 			ArrayList<Double> optedData=dds.getTimeseriesDataWithOptions(selMon, selSd, selEd);
-			double value=DssDataSet.getExceedence(optedData, exc);
+			double value=DssDataSet.getExceedance(optedData, exc);
 			return new IntDouble(value, false);
 		}else{
-			Error.addEvaluationError(tsName+" is not a timeseries variable used in the Exceendence funciton for the time step of "+ControlData.timeStep+".");
+			Error.addEvaluationError(tsName+" is not a timeseries variable used in the Exceendance funciton for the time step of "+ControlData.timeStep+".");
 			return new IntDouble (1.0, false);
+		}	
+	}
+	
+	public static IntDouble exceedance_tsi(String tsName, IntDouble exc_id, String selMon, String syStr, String smStr, String sdStr, String eyStr, String emStr, String edStr){
+		String entryNameTS=DssOperation.entryNameTS(tsName, ControlData.timeStep);
+		if (DataTimeSeries.svTS.containsKey(entryNameTS)){
+			DssDataSet dds = DataTimeSeries.svTS.get(entryNameTS);
+			int sy = Integer.parseInt(syStr);
+			int sd = Integer.parseInt(sdStr);
+			int ey = Integer.parseInt(eyStr);
+			int ed = Integer.parseInt(edStr);
+			int sm = TimeOperation.monthValue(smStr);
+			int em = TimeOperation.monthValue(emStr);
+			double exc = exc_id.getData().doubleValue();
+			
+			if (exc<=0.0 || exc>1.0){
+				Error.addEvaluationError("Exceedance level must be >0.0 and <=1.0");
+				return new IntDouble (0, true);
+			}
+			
+			Date selSd;
+			Date selEd;
+			if (ControlData.timeStep.equals("1MON")){
+				selSd=new Date(sy-1900, sm-1, TimeOperation.numberOfDays(sm, sy));
+				selEd=new Date(ey-1900, em-1, TimeOperation.numberOfDays(em, ey));
+			}else{
+				selSd=new Date(sy-1900, sm-1, sd);
+				selEd=new Date(ey-1900, em-1, ed);
+			}
+			
+			ArrayList<Double> optedData=dds.getTimeseriesDataWithOptions(selMon, selSd, selEd);
+			int tsi=DssDataSet.getExceedance_tsi(optedData, exc);
+			return new IntDouble(tsi, true);
+		}else{
+			Error.addEvaluationError(tsName+" is not a timeseries variable used in the Exceendance_TSI funciton for the time step of "+ControlData.timeStep+".");
+			return new IntDouble (0, true);
 		}	
 	}
 	

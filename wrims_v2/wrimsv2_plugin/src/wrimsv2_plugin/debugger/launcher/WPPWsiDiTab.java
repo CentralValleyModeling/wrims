@@ -355,7 +355,8 @@ public class WPPWsiDiTab extends AbstractLaunchConfigurationTab {
 	public void generateBatch(PrintWriter out, String configFilePath){
 		String freeXA;
 		try {
-			freeXA = launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_FREEXA, "no");
+			//freeXA = launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_FREEXA, "no");
+			freeXA="no";
 			String jarXA;
 			if (freeXA.equalsIgnoreCase("yes")){
 				jarXA="CalLiteV16.jar";

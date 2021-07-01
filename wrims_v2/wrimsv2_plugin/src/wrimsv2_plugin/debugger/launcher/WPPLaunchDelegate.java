@@ -457,7 +457,8 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			}
 			
 			wreslPlus=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_WRESLPLUS, "no");
-			freeXA=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_FREEXA, "no");
+			//freeXA=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_FREEXA, "no");
+			freeXA="no";
 			if (freeXA.equalsIgnoreCase("yes")){
 				jarXA="CalLiteV16.jar";
 			}else{

@@ -300,4 +300,23 @@ public class TimeOperation {
 		Date newDate = new Date (newTime);
 		return newDate;
 	}
+	
+	public static boolean range(int dataMonth, String m1, String m2){
+		int mon1=TimeOperation.monthValue(m1);
+		int mon2=TimeOperation.monthValue(m2);
+		
+		if (mon1<=mon2){
+			if (dataMonth>=mon1 && dataMonth<=mon2){
+				return true;
+			}else{
+				return false;
+			}
+		}else{
+			if (dataMonth>=mon1 || dataMonth<=mon2){
+				return true;
+			}else{
+				return false;
+			}
+		}
+	}
 }

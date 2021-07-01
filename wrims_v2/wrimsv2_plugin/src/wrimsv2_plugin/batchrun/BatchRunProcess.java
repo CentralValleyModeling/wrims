@@ -370,7 +370,8 @@ public class BatchRunProcess {
 		}
 		
 		wreslPlus=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_WRESLPLUS, "no");
-		freeXA=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_FREEXA, "no");
+		//freeXA=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_FREEXA, "no");
+		freeXA="no";
 		if (freeXA.equalsIgnoreCase("yes")){
 			jarXA="CalLiteV16.jar";
 		}else{
