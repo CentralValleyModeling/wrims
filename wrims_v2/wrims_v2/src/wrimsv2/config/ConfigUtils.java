@@ -348,6 +348,24 @@ public class ConfigUtils {
 		}
 		System.out.println("CbcLogNativeLp: "+ControlData.cbcLogNativeLp);
 		
+		// Cbc2021 // default is false. If set to true warmstart is true.
+		k = "cbc2021";
+		if (configMap.keySet().contains(k)){
+			
+			String s = configMap.get(k);
+			
+			if (s.equalsIgnoreCase("yes") || s.equalsIgnoreCase("true")){
+				CbcSolver.usejCbc2021 = true;	
+			} else if (s.equalsIgnoreCase("no") || s.equalsIgnoreCase("false")){
+				CbcSolver.usejCbc2021 = false;	
+			} else {
+				CbcSolver.usejCbc2021 = false;	
+			}
+		}else{
+			CbcSolver.usejCbc2021 = false;
+		}
+		System.out.println("Cbc2021: "+CbcSolver.usejCbc2021);
+		
 		// CbcWarmStart // default is false
 		k = "cbcwarmstart";
 		if (configMap.keySet().contains(k)){
@@ -363,6 +381,10 @@ public class ConfigUtils {
 			}
 		}else{
 			ControlData.useCbcWarmStart = false;
+		}
+		// overwrite warmstart if cbc2021 is true
+		if (CbcSolver.usejCbc2021) { 
+			ControlData.useCbcWarmStart = true;
 		}
 		System.out.println("CbcWarmStart: "+ControlData.useCbcWarmStart);
 		
