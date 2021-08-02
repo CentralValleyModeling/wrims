@@ -449,6 +449,21 @@ public class ConfigUtils {
 		}
 		System.out.println("CbcToleranceInteger: "+CbcSolver.integerT);
 
+		// CbcLowerBoundZeroCheck default max(solve_2_primalT_relax*10, 1e-6)
+		k = "cbclowerboundzerocheck";
+		if (configMap.keySet().contains(k)){
+			
+			String s = configMap.get(k);			
+			
+			try {
+				CbcSolver.lowerBoundZero_check = Double.parseDouble(s);
+			} catch (NumberFormatException e) {
+				System.out.println("CbcLowerBoundZeroCheck: Error reading config value");
+			}
+			
+		}
+		System.out.println("CbcLowerBoundZeroCheck: "+CbcSolver.lowerBoundZero_check);		
+
 		// CbcToleranceIntegerCheck default 1e-8
 		k = "cbctoleranceintegercheck";
 		if (configMap.keySet().contains(k)){
@@ -462,7 +477,7 @@ public class ConfigUtils {
 			}
 			
 		}
-		System.out.println("CbcToleranceIntegercheck: "+CbcSolver.integerT_check);		
+		System.out.println("CbcToleranceIntegercheck: "+CbcSolver.integerT_check);			
 		
 		// CbcSolutionRounding  default is true
 		k = "cbcsolutionrounding";
