@@ -10,6 +10,7 @@ import hec.io.TimeSeriesContainer;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Vector;
 
 import org.apache.commons.io.FileDeleteStrategy;
@@ -88,12 +89,32 @@ public class PAProcInit {
 		}
 		Vector<String> paPathList = paInitDss.getPathnameList();
 		Collections.sort(paPathList, Collections.reverseOrder());
-		for (int i=0; i<paPathList.size(); i++){
+		int size = paPathList.size();
+		int sYear=DebugCorePlugin.startYear;
+		for (int i=0; i<size; i++){
+			String path = paPathList.get(i);
+			try {
+				TimeSeriesContainer firstDc = (TimeSeriesContainer)paInitDss.get(path);
+				long st=firstDc.startTime;
+				long stms=st*60000;
+				long l1970=1440l * 25568l * 60000l;
+				long ststd=stms-l1970;
+				int sYear1=new Date(ststd).getYear()+1900;
+				if (sYear1<sYear){
+					sYear=sYear1;
+				}
+			} catch (Exception e1) {
+				WPPException.handleException(e1);
+			}
+		}
+		for (int i=0; i<size; i++){
 			String path = paPathList.get(i);
 			try {
 				TimeSeriesContainer dc = (TimeSeriesContainer)paInitDss.get(path);
 				TimeSeriesMath tm = new TimeSeriesMath(dc);
-				HecMath newTm = tm.shiftInTime(DebugCorePlugin.paStartInterval+"MON");
+				int dsy = DebugCorePlugin.paStartYear-(DebugCorePlugin.startYear-sYear);
+				TimeSeriesMath tm1 = (TimeSeriesMath) tm.extractTimeSeriesDataForTimeSpecification("YEAR", dsy+"-"+DebugCorePlugin.paStartYear, true, 0, false);
+				HecMath newTm = tm1.shiftInTime(DebugCorePlugin.paStartInterval+"MON");
 				paInitDss.write(newTm);
 			} catch (Exception e) {
 				WPPException.handleException(e);
