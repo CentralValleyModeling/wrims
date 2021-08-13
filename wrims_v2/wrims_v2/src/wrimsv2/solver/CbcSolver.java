@@ -159,9 +159,18 @@ public class CbcSolver {
 		System.loadLibrary(cbcLibName);
 		ILP.getIlpDir();
 		ILP.createNoteFile();
-		lowerBoundZero_check = Math.max(solve_2_primalT_relax*10, 1e-6);
+		
+		if (lowerBoundZero_check == null) {
+			lowerBoundZero_check = Math.max(solve_2_primalT_relax*10, 1e-6);
+		}
+
 		ILP.writeNoteLn("lowerBoundZero_check ="+lowerBoundZero_check,false,false);
-		String jCbc_version = jCbc.getVersion();
+		String jCbc_version ="";
+		if(usejCbc2021){
+			jCbc_version = jCbc.getAlphaVersion();
+		} else {
+			jCbc_version = jCbc.getVersion();
+		}
 		ILP.writeNoteLn("jCbc version:", jCbc_version);
 		//if (ControlData.useCbcWarmStart || ControlData.cbc_debug_routeCbc || ControlData.cbc_debug_routeXA){
 			dvIntMap = new LinkedHashMap<String, Integer>();
