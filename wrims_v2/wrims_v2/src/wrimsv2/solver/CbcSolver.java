@@ -105,6 +105,9 @@ public class CbcSolver {
 	//private static boolean delWarm=false;
 
 	private static LinkedHashMap<String, Integer> dvIntMap;
+	private static LinkedHashMap<String, Integer> dvIntMap2021;
+	private static ArrayList<String> dvIntPredict;
+	private static int intVarSize = -99;
 	
 	private static SWIGTYPE_p_std__string names;
 	private static SWIGTYPE_p_int values;
@@ -154,6 +157,7 @@ public class CbcSolver {
 	private CbcSolver(){}
 	
 	public static void init(boolean useLpFile, StudyDataSet sds){
+		dvIntMap2021 = new LinkedHashMap<String, Integer>();
 		//useLpFile=false;
 		CbcSolver.useLpFile = useLpFile;
 		System.loadLibrary(cbcLibName);
@@ -194,6 +198,7 @@ public class CbcSolver {
 	
 	public static void newProblem(){
 		//System.out.println(" current cycle: "+ControlData.currCycleIndex);
+		dvIntPredict = new ArrayList<String>();
 		if (ControlData.useCbcWarmStart) {
 			if (ControlData.cycWarmStart!=null){
 				if (ControlData.cycWarmStart.contains(ControlData.currCycleIndex)) {
@@ -244,7 +249,11 @@ public class CbcSolver {
 
 			modelObject = jCbc.new_jCoinModel();
 
-			setDVars(ControlData.cbcLogNativeLp);
+			if (usejCbc2021 && false) { 
+				setDVars2021(ControlData.cbcLogNativeLp);
+			} else {           
+				setDVars(ControlData.cbcLogNativeLp); 
+			}
 			setConstraints(ControlData.cbcLogNativeLp);
 			if (ControlData.cbcLogNativeLp) {writeCbcLp("native", false);}
 
@@ -820,6 +829,44 @@ public class CbcSolver {
 		
 	}
 	
+	private static void setDVars2021(boolean isNoteCbc) {
+		if (ControlData.showRunTimeMessage) System.out.println("CBC Solver: Setting dvars");
+		int intSize = 0;
+		Map<String, WeightElement> wm1  = SolverData.getWeightMap();
+		String c="quicklog version 1.0\n";
+		for (int i=0; i<dvBiMap.size(); i++){
+			String dvName = dvBiMap.get(i);
+			Dvar dvObj = dvarMap.get(dvName);
+			
+			double w = 0;
+			if (wm1.keySet().contains(dvName)){
+				w = -wm1.get(dvName).getValue();
+			
+			}
+			double lb=9; double ub=-9; boolean isInteger=(dvObj.integer==Param.yes);
+			if (isInteger) {intSize = intSize+1;}
+			if (isInteger && dvIntMap2021.containsKey(dvName)){
+				dvIntPredict.add(dvName);
+				lb = dvIntMap2021.get(dvName);ub=lb;
+			} else {
+				lb = dvObj.lowerBoundValue.doubleValue();
+				ub = dvObj.upperBoundValue.doubleValue();
+			}
+
+		    jCbc.addCol(modelObject , lb, ub, w, dvName, isInteger ); 
+		    if (isNoteCbc) {
+
+		    	int isInt=0;
+		    	if (isInteger) isInt=1;
+		    	c = c + isInt+","+dvName+","+w+","+lb+","+ub+"\n"; 
+		    
+		    }
+		}
+		if (isNoteCbc) Tools.quickLog(modelName+"_"+solveName+".cols", c);
+		intVarSize = intSize;
+		
+	}
+	
 	private static void setDVarsIIS() {
 		
 		for (int i=0; i<dvBiMap.size(); i++){
@@ -1085,79 +1132,27 @@ public class CbcSolver {
 	
 	public static int[] solve_jCbc2021(){
 			int ci=ControlData.currCycleIndex+1;
-			if (ControlData.showRunTimeMessage) System.out.println("CBC Solver: Solving "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+" Cycle "+ci+" ["+ControlData.currCycleName+"]");
+			if (ControlData.showRunTimeMessage) System.out.println("CBC Solver2021: Solving "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+" Cycle "+ci+" ["+ControlData.currCycleName+"]");
 			
 			int status=-99;
 			int status2=-99;
 			
 			long beginT = System.currentTimeMillis();
 		    	
-			if (solvFunc == solvU){
-				//solveName="U__";
-				int ret = 0;
-				if (useWarm || saveWarm) {
-					int ii = ControlData.currCycleIndex + 1;
-					//System.out.println(ii + ": use warm");
-	
-					if (warmArrayExist) {
-	
-						jCbc.delete_jarray_int(values);
-						jCbc.delete_jarray_string(names);
-						intSolSize = 0;
-						values = null;
-						names = null;
-						warmArrayExist = false;
-					}
-	
-					intSolSize = ControlData.currStudyDataSet.cycIntDvMap.get(ControlData.currCycleIndex).size();
-					names = jCbc.new_jarray_string(intSolSize);
-					values = jCbc.new_jarray_int(intSolSize);
-					warmArrayExist = true;
-					int k = 0;
-					for (String dvN : ControlData.currStudyDataSet.cycIntDvMap.get(ControlData.currCycleIndex)) {
-						jCbc.jarray_string_setitem(names, k, dvN);
-						jCbc.jarray_int_setitem(values, k, dvIntMap.get(dvN));
-						k++;
-					}
-	
-					ret = jCbc.solve_unified(model, solver, names, values, intSolSize, 0);
-					
-				} else {
-					//intSolSize = 0;
-					ret = jCbc.solve_unified(model, solver, null, null, 0, 0);
-				}
-	
-				//jCbc.setIntegerTolerance(model, integerT);
-				//writeCbcLp("", true);
-				//int ret = jCbc.solve_unified(model, solver, names, values, intSolSize, 0);
-				solveName=solve_u_ret.get(ret);
-				status = jCbc.status(model);
-				status2 = jCbc.secondaryStatus(model);
-			
-			} else if (solvFunc == solv2){
-				solveName="2__";
-				jCbc.setPrimalTolerance(model, solve_2_primalT);
-				jCbc.setIntegerTolerance(model, integerT);
-				jCbc.solve_2(model, solver, 0);	
-				status = jCbc.status(model);
-				status2 = jCbc.secondaryStatus(model);
-				
-			} else if (solvFunc == solv3){
-				solveName="3__";
-				jCbc.setPrimalTolerance(model, solve_3_primalT);
-				jCbc.setIntegerTolerance(model, integerT);
-				jCbc.solve_3(model, solver, 0);		
-				status = jCbc.status(model);
-				status2 = jCbc.secondaryStatus(model);
-				
-			} else if (solvFunc == solvCallCbc){
-				solveName="cal";
-				jCbc.setIntegerTolerance(model, integerT);
-				jCbc.callCbc("-log 0 -solve", model);
-				status = jCbc.status(model);
-				status2 = jCbc.secondaryStatus(model);
-				
-			} else if (solvFunc == solvFull){
+//			if (dvIntPredict.size()>6 && dvIntPredict.size()>intVarSize-2){
+//				
+//				callCbc("cp_");	
+//				status = jCbc.status(model);
+//				status2 = jCbc.secondaryStatus(model);
+//				isViolated = violationCheck(model, modelName, solveName);									
+//				
+//				if (status != 0 || status2 != 0) {
+//					note_msg(" Solve_"+solveName+" infeasible.");
+//
+//				}
+//				
+//			}
+
 				
 			Set<String> a=ControlData.currStudyDataSet.cycIntDvMap.get(ControlData.currCycleIndex);
 			a.retainAll(dvIntMap.keySet());
@@ -1193,40 +1188,42 @@ public class CbcSolver {
 					jCbc.jarray_int_setitem(values,k,dvIntMap.get(dvN));
 					k++;
 				}
-				
+			
 				solveName="whs";
 				jCbc.setPrimalTolerance(model, solve_whs_primalT);
 				jCbc.setIntegerTolerance(model, integerT);
-				jCbc.solve_whs(model,solver,names,values,intSolSize,0);
-							
+				jCbc.solve_whs(model,solver,names,values,intSolSize,0);					
 				status = jCbc.status(model);
-				status2 = jCbc.secondaryStatus(model);		
+				status2 = jCbc.secondaryStatus(model);	
 				
-				if (status != 0 || status2 != 0) {
-					
-					//note_msg(jCbc.getModelName(solver), " Warmstart infeasible");
+				if (status != 0 || status2 != 0 ) {				
+					note_msg(" Solve_"+solveName+" infeasible");
 					reloadProblem(false);	
-					solve_2();
-	
-				} else if(violationCheck(model, modelName, solveName)) {
-					reloadProblem(true);	
-					solve_2();
+					solve_2();	
+					status = jCbc.status(model);
+					status2 = jCbc.secondaryStatus(model);	
+				} else if (violationCheck(model, modelName, solveName)) {
+					reloadProblem(true);
+					solve_2();	
+					status = jCbc.status(model);
+					status2 = jCbc.secondaryStatus(model);	
 				}
+
 				
 			} else {
-				
 					solve_2();
+					status = jCbc.status(model);
+					status2 = jCbc.secondaryStatus(model);	
 			}
 	
-			status = jCbc.status(model);
-			status2 = jCbc.secondaryStatus(model);
-	
+
+			
 			if (status != 0 || status2 != 0 ) {
 				note_msg(" Solve_"+solveName+" infeasible. Use solve_2 with primalT="+solve_2_primalT_relax);
 				reloadProblem(false);
 				solve_2(solve_2_primalT_relax, "2R_");	
 				status = jCbc.status(model);
-				status2 = jCbc.secondaryStatus(model);			
+				status2 = jCbc.secondaryStatus(model);	
 			}// don't use solve2R if solve2 has violation
 	
 			if (status != 0 || status2 != 0 ) {
@@ -1234,12 +1231,12 @@ public class CbcSolver {
 				reloadProblem(false);
 				callCbc();	
 				status = jCbc.status(model);
-				status2 = jCbc.secondaryStatus(model);
-			} else if(violationCheck(model, modelName, solveName)) {
-				reloadProblem(true);	
-				callCbc();		
+				status2 = jCbc.secondaryStatus(model);	
+			} else if (violationCheck(model, modelName, solveName)) {
+				reloadProblem(true);
+				callCbc();	
 				status = jCbc.status(model);
-				status2 = jCbc.secondaryStatus(model);
+				status2 = jCbc.secondaryStatus(model);	
 			}
 			
 			if (status != 0 || status2 != 0 ) {
@@ -1252,7 +1249,7 @@ public class CbcSolver {
 	
 					
 				
-			}
+//			}
 			
 	  
 			
@@ -1503,7 +1500,7 @@ int pp=0;
 		varDoubleMap = new LinkedHashMap<String, Double>();
 		dvIntMap = new LinkedHashMap<String, Integer>();
 				
-		if (saveWarm||useWarm||saveIntVars) {
+//		if (saveWarm||useWarm||saveIntVars) {
 			//int ii = ControlData.currCycleIndex + 1;
 			//System.out.println(ii + ": save warm");
 
@@ -1515,13 +1512,14 @@ int pp=0;
 					dvIntMap.put(jCbc.getColName(model,j), (int)Math.round(jCbc.jarray_double_getitem(jCbc.getColSolution(model),j))); 
 				 }
 			}
-		} else {
-
-			for (int j = 0; j < ColumnSize; j++){
-				varDoubleMap.put(jCbc.getColName(model,j), jCbc.jarray_double_getitem(jCbc.getColSolution(model),j));
-	
-			}
-		}
+			dvIntMap2021.putAll(dvIntMap);
+//		} else {
+//
+//			for (int j = 0; j < ColumnSize; j++){
+//				varDoubleMap.put(jCbc.getColName(model,j), jCbc.jarray_double_getitem(jCbc.getColSolution(model),j));
+//	
+//			}
+//		}
 
 	}
 	
@@ -1889,7 +1887,11 @@ int pp=0;
 	}
 	
 	private static void callCbc() {
-		solveName="c__";
+		callCbc("c__");
+	}
+	
+	private static void callCbc(String solvName) {
+		solveName=solvName;
 		//jCbc.setIntegerTolerance(model, integerT);
 		//jCbc.callCbc("-log 0 -preprocess off -presolve off -cutsOnOff off -primalT 1e-4 -integerT 1e-7 -solve", model);
 		//jCbc.callCbc("-log 0 -preprocess off -presolve on -cutsOnOff on -primalT 1e-5 -integerT 1e-8 -solve", model);
