@@ -622,6 +622,36 @@ public class ConfigUtils {
 			
 		}
 		System.out.println("CbcToleranceWarmPrimal: "+CbcSolver.solve_whs_primalT);
+
+		// CbcLogStartDate // default is 999900
+		k = "cbclogstartdate";
+		if (configMap.keySet().contains(k)){
+			
+			String s = configMap.get(k);			
+			
+			try {
+				CbcSolver.cbcLogStartDate = Integer.parseInt(s);
+			} catch (NumberFormatException e) {
+				System.out.println("CbcLogStartDate: Error reading config value");
+			}
+			
+		}
+		System.out.println("CbcLogStartDate: "+CbcSolver.cbcLogStartDate);
+
+		// CbcLogStopDate // default is 999900
+		k = "cbclogstopdate";
+		if (configMap.keySet().contains(k)){
+			
+			String s = configMap.get(k);			
+			
+			try {
+				CbcSolver.cbcLogStopDate = Integer.parseInt(s);
+			} catch (NumberFormatException e) {
+				System.out.println("CbcLogStopDate: Error reading config value");
+			}
+			
+		}
+		System.out.println("CbcLogStopDate: "+CbcSolver.cbcLogStopDate);
 		
 		// LogIfObjDiff
 		k = "logifobjdiff";

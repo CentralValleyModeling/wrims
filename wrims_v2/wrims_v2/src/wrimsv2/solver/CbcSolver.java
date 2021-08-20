@@ -90,6 +90,8 @@ public class CbcSolver {
 	public static boolean usejCbc2021 = false;
 	public static boolean cbcSolutionRounding = true;
 	public static boolean cbcViolationRetry = true;
+	public static int cbcLogStartDate = 999900;
+	public static int cbcLogStopDate  = 999900;	
 	private static String modelName;
 	
 	private static Map<String, WeightElement> wm2; 
@@ -249,13 +251,16 @@ public class CbcSolver {
 
 			modelObject = jCbc.new_jCoinModel();
 
+			int currDate = ControlData.currYear*100 +ControlData.currMonth;
+			boolean isLogging = cbcLogStartDate <= currDate && currDate <=cbcLogStopDate;
+			
 			if (usejCbc2021 && false) { 
 				setDVars2021(ControlData.cbcLogNativeLp);
 			} else {           
-				setDVars(ControlData.cbcLogNativeLp); 
+				setDVars(ControlData.cbcLogNativeLp||isLogging); 
 			}
-			setConstraints(ControlData.cbcLogNativeLp);
-			if (ControlData.cbcLogNativeLp) {writeCbcLp("native", false);}
+			setConstraints(ControlData.cbcLogNativeLp||isLogging);
+			if (ControlData.cbcLogNativeLp||isLogging) {writeCbcLp("native", false);}
 
 		}
 		long endT_creation = System.currentTimeMillis();	
