@@ -107,14 +107,17 @@ public class PAProcInit {
 				WPPException.handleException(e1);
 			}
 		}
+		int dsy = DebugCorePlugin.paStartYear-(DebugCorePlugin.startYear-sYear);
+		String startTime=TimeOperation.createStartTime(dsy, 1, 1, "1DAY");
+		String endTime=TimeOperation.createEndTime(DebugCorePlugin.paStartYear, DebugCorePlugin.paStartMonth, DebugCorePlugin.paStartDay, "1DAY");
+		paInitDss.setTimeWindow(startTime, endTime);
 		for (int i=0; i<size; i++){
 			String path = paPathList.get(i);
 			try {
 				TimeSeriesContainer dc = (TimeSeriesContainer)paInitDss.get(path);
 				TimeSeriesMath tm = new TimeSeriesMath(dc);
-				int dsy = DebugCorePlugin.paStartYear-(DebugCorePlugin.startYear-sYear);
-				TimeSeriesMath tm1 = (TimeSeriesMath) tm.extractTimeSeriesDataForTimeSpecification("YEAR", dsy+"-"+DebugCorePlugin.paStartYear, true, 0, false);
-				HecMath newTm = tm1.shiftInTime(DebugCorePlugin.paStartInterval+"MON");
+				//TimeSeriesMath tm1 = (TimeSeriesMath) tm.extractTimeSeriesDataForTimeSpecification("YEAR", dsy+"-"+DebugCorePlugin.paStartYear, true, 0, false);
+				HecMath newTm = tm.shiftInTime(DebugCorePlugin.paStartInterval+"MON");
 				paInitDss.write(newTm);
 			} catch (Exception e) {
 				WPPException.handleException(e);
