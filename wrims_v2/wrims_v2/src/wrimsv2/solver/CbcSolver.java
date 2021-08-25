@@ -86,8 +86,10 @@ public class CbcSolver {
 	public static Double lowerBoundZero_check = null;
 	public static final double cbcWriteLpEpsilon = 1e-15; 	
 	public static String cbcLibName = "jCbc";
+	public static String cbcVersion = "None";
 	public static int cbcHintTimeMax = 100; // can read from config CbcHintTimeMax
 	public static boolean usejCbc2021 = false;
+	public static boolean cbcViolationCheck = true;
 	public static boolean cbcSolutionRounding = true;
 	public static boolean cbcViolationRetry = true;
 	public static int cbcLogStartDate = 999900;
@@ -162,22 +164,19 @@ public class CbcSolver {
 		dvIntMap2021 = new LinkedHashMap<String, Integer>();
 		//useLpFile=false;
 		CbcSolver.useLpFile = useLpFile;
-		System.loadLibrary(cbcLibName);
+		//System.loadLibrary(cbcLibName);
 		ILP.getIlpDir();
 		ILP.createNoteFile();
 		
 		if (lowerBoundZero_check == null) {
 			lowerBoundZero_check = Math.max(solve_2_primalT_relax*10, 1e-6);
 		}
-
+		ILP.writeNoteLn("cbcViolationCheck ="+cbcViolationCheck,false,false);
 		ILP.writeNoteLn("lowerBoundZero_check ="+lowerBoundZero_check,false,false);
-		String jCbc_version ="";
-		if(usejCbc2021){
-			jCbc_version = jCbc.getAlphaVersion();
-		} else {
-			jCbc_version = jCbc.getVersion();
-		}
-		ILP.writeNoteLn("jCbc version:", jCbc_version);
+		ILP.writeNoteLn("cbcSolutionRounding ="+cbcSolutionRounding,false,false);
+		ILP.writeNoteLn("cbc2021 ="+usejCbc2021,false,false);
+		ILP.writeNoteLn("jCbc version:", cbcVersion);
+
 		//if (ControlData.useCbcWarmStart || ControlData.cbc_debug_routeCbc || ControlData.cbc_debug_routeXA){
 			dvIntMap = new LinkedHashMap<String, Integer>();
 			for (String d: sds.allIntDv){
@@ -226,7 +225,9 @@ public class CbcSolver {
 		model = jCbc.new_jCbcModel();
 		solver = jCbc.new_jOsiClpSolverInterface(); //this is our LP solver!
 		jCbc.assignSolver(model,solver); // Assign the solver to CbcModel
-		
+		int currDate = ControlData.currYear*100 +ControlData.currMonth;
+		boolean isLogging = cbcLogStartDate <= currDate && currDate <=cbcLogStopDate;
+
 		if (useLpFile) {
 					
 			jCbc.readLp(solver, ILP.cplexLpFilePath);
@@ -251,8 +252,6 @@ public class CbcSolver {
 
 			modelObject = jCbc.new_jCoinModel();
 
-			int currDate = ControlData.currYear*100 +ControlData.currMonth;
-			boolean isLogging = cbcLogStartDate <= currDate && currDate <=cbcLogStopDate;
 			
 			if (usejCbc2021 && false) { 
 				setDVars2021(ControlData.cbcLogNativeLp);
@@ -299,6 +298,7 @@ public class CbcSolver {
 			if (usejCbc2021) {collectDvar2021();} else {collectDvar();} 
 			boolean intErr = false;
 			// check integer violation
+			if (cbcViolationCheck) {
 			for (String k:dvIntMap.keySet()){
 				//System.out.println(k);
 				if (varDoubleMap.containsKey(k)){
@@ -334,7 +334,13 @@ public class CbcSolver {
 			}
 			if (lowerboundErr){reloadAndWriteLp("_lbViolation", true, true);
 			Error.addSolvingError("Lowerbound Violation! Please contact developers for this issue.");}
-
+			}
+			if (isLogging) {
+				ILP.setVarFile();
+				ILP.writeSvarValue();
+				ILP.findDvarEffective();
+				ILP.writeDvarValue_Clp0_Cbc0(varDoubleMap);			
+			}
 			
 			long beginT_ad = System.currentTimeMillis();	
 			if (!ControlData.cbc_debug_routeXA) assignDvar();
@@ -1202,7 +1208,7 @@ public class CbcSolver {
 				status2 = jCbc.secondaryStatus(model);	
 				
 				if (status != 0 || status2 != 0 ) {				
-					note_msg(" Solve_"+solveName+" infeasible");
+					//note_msg(" Solve_"+solveName+" infeasible");
 					reloadProblem(false);	
 					solve_2();	
 					status = jCbc.status(model);
@@ -1237,11 +1243,17 @@ public class CbcSolver {
 				callCbc();	
 				status = jCbc.status(model);
 				status2 = jCbc.secondaryStatus(model);	
+				if (status==0 && status2==0){
+					status2 = jCbc.Y2(model,solver);
+				}
 			} else if (violationCheck(model, modelName, solveName)) {
 				reloadProblem(true);
 				callCbc();	
 				status = jCbc.status(model);
 				status2 = jCbc.secondaryStatus(model);	
+				if (status==0 && status2==0){
+					status2 = jCbc.Y2(model,solver);
+				}
 			}
 			
 			if (status != 0 || status2 != 0 ) {
@@ -1250,6 +1262,9 @@ public class CbcSolver {
 				callCbc_R();	
 				status = jCbc.status(model);
 				status2 = jCbc.secondaryStatus(model);
+				if (status==0 && status2==0){
+					status2 = jCbc.Y2(model,solver);
+				}
 			} // Don't use callCbcR if callCbc has violation
 	
 					
@@ -1266,7 +1281,7 @@ public class CbcSolver {
 			if (ControlData.writeCbcSolvingTime) ILP.writeNoteLn(jCbc.getModelName(solver), " "+ time_second);
 			
 			if (status != 0 || status2 != 0) {
-				//System.out.println("hello");
+
 				reloadAndWriteLp("_infeasible", true, true);
 				getSolverInformation(status, status2);
 				iis();
@@ -1949,6 +1964,7 @@ int pp=0;
 	
 	public static boolean violationCheck(SWIGTYPE_p_CbcModel model, String modelName, String solveName) {
 		boolean violation = false;
+		if (!cbcViolationCheck) {return false;}
 		int ColumnSize = jCbc.getNumCols(model);
 		SWIGTYPE_p_double v_ary = jCbc.getColSolution(model);
 		Map<String, Dvar> dMap = SolverData.getDvarMap();

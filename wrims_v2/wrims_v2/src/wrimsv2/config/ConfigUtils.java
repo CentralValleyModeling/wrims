@@ -11,6 +11,7 @@ import java.util.Set;
 
 import org.antlr.runtime.RecognitionException;
 import org.apache.commons.io.FilenameUtils;
+import org.coinor.cbc.jCbc;
 
 import wrimsv2.components.BuildProps;
 import wrimsv2.components.ControlData;
@@ -103,7 +104,7 @@ public class ConfigUtils {
 	}
 
 	private static void loadConfig(String configFile) {
-
+		
 		//StudyUtils.config_errors = 0; // reset
 		String k=null;
 
@@ -145,6 +146,16 @@ public class ConfigUtils {
 
 		// FilePaths.mainDirectory = configMap.get("maindir");
 		System.out.println("MainFile:       "+FilePaths.fullMainPath);
+		
+		// CbcLibName // default is jCbc and it's not used for version selection
+		k = "cbclibname";
+		if (configMap.keySet().contains(k)){
+			
+			CbcSolver.cbcLibName = configMap.get(k);
+		}
+		// need to know jCbc version to determine solving options 
+		System.loadLibrary(CbcSolver.cbcLibName);
+		System.out.println("CbcLibName: "+CbcSolver.cbcLibName);
 		
 		try {
 			
@@ -248,6 +259,18 @@ public class ConfigUtils {
 		if (!Arrays.asList(solvers).contains(ControlData.solverName.toLowerCase())){
 			Error.addConfigError("Solver name not recognized: "+ControlData.solverName);
 			Error.writeErrorLog();
+		 } else if (ControlData.solverName.toLowerCase().contains("cbc")) {
+			 CbcSolver.cbcVersion = jCbc.getVersion();
+			 System.out.println("CbcVersion: "+CbcSolver.cbcVersion);
+			 if (CbcSolver.cbcVersion.contains("2.9.9")) {
+				 CbcSolver.usejCbc2021 = true; 
+				 CbcSolver.cbcViolationCheck = false; // can overwrite
+				 ControlData.useCbcWarmStart = true; //  cannot overwrite
+			 } else {
+				 CbcSolver.cbcViolationCheck = true; // can overwrite
+				 ControlData.useCbcWarmStart = false; //  cannot overwrite
+			 }
+			 System.out.println("Cbc2021: "+CbcSolver.usejCbc2021);
 		 }
 		
 		// SendAliasToDvar default is false
@@ -348,24 +371,6 @@ public class ConfigUtils {
 		}
 		System.out.println("CbcLogNativeLp: "+ControlData.cbcLogNativeLp);
 		
-		// Cbc2021 // default is false. If set to true warmstart is true.
-		k = "cbc2021";
-		if (configMap.keySet().contains(k)){
-			
-			String s = configMap.get(k);
-			
-			if (s.equalsIgnoreCase("yes") || s.equalsIgnoreCase("true")){
-				CbcSolver.usejCbc2021 = true;	
-			} else if (s.equalsIgnoreCase("no") || s.equalsIgnoreCase("false")){
-				CbcSolver.usejCbc2021 = false;	
-			} else {
-				CbcSolver.usejCbc2021 = false;	
-			}
-		}else{
-			CbcSolver.usejCbc2021 = false;
-		}
-		System.out.println("Cbc2021: "+CbcSolver.usejCbc2021);
-		
 		// CbcWarmStart // default is false
 		k = "cbcwarmstart";
 		if (configMap.keySet().contains(k)){
@@ -376,17 +381,29 @@ public class ConfigUtils {
 				ControlData.useCbcWarmStart = true;	
 			} else if (s.equalsIgnoreCase("no") || s.equalsIgnoreCase("false")){
 				ControlData.useCbcWarmStart = false;	
-			} else {
-				ControlData.useCbcWarmStart = false;	
-			}
-		}else{
-			ControlData.useCbcWarmStart = false;
+			} 
 		}
-		// overwrite warmstart if cbc2021 is true
+		// warmstart is true if cbc2021 is true
 		if (CbcSolver.usejCbc2021) { 
 			ControlData.useCbcWarmStart = true;
 		}
 		System.out.println("CbcWarmStart: "+ControlData.useCbcWarmStart);
+		
+		// CbcViolationCheck  default {cbc2021:false, otherwise:true}
+		k = "cbcviolationcheck";
+		if (configMap.keySet().contains(k)){
+			
+			String s = configMap.get(k);
+			
+			if (s.equalsIgnoreCase("yes") || s.equalsIgnoreCase("true")){
+				CbcSolver.cbcViolationCheck = true;	
+			} else if (s.equalsIgnoreCase("no") || s.equalsIgnoreCase("false")){
+				CbcSolver.cbcViolationCheck = false;	
+			} 
+			
+		}
+		System.out.println("CbcViolationCheck: "+CbcSolver.cbcViolationCheck);		
+
 		
 		// CbcSolveFunction // default is SolveFull
 		k = "cbcsolvefunction";
@@ -409,15 +426,7 @@ public class ConfigUtils {
 			CbcSolver.solvFunc=CbcSolver.solvFull;	
 		}
 		System.out.println("CbcSolveFunction: "+CbcSolver.solvFunc);
-		
-		// CbcLibName // default is jCbc and it's not used for version selection
-		k = "cbclibname";
-		if (configMap.keySet().contains(k)){
-			
-			CbcSolver.cbcLibName = configMap.get(k);
-		}
-		System.out.println("CbcLibName: "+CbcSolver.cbcLibName);
-		
+				
 		// CbcToleranceZero // default is 1e-11 ControlData.zeroTolerance
 		k = "cbctolerancezero";
 		if (configMap.keySet().contains(k)){
