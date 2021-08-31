@@ -1405,7 +1405,8 @@ int pp=0;
 
 		reloadProblemConfirm(skipThisConstraint);
 		//writeCbcLp("iisSolveConfirm", false);
-		solve_3();
+		//solve_3();
+		callCbc();
 		int s = jCbc.status(model);
 		int s2 = jCbc.secondaryStatus(model);
 
