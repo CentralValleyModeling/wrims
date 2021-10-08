@@ -354,6 +354,22 @@ public class ConfigUtils {
 			
 		}
 		System.out.println("watchT: "+ControlData.watchList_tolerance);
+
+		// CbcObjLog // default is true
+		k = "cbcobjlog";
+		if (configMap.keySet().contains(k)){
+			
+			String s = configMap.get(k);
+			
+			if (s.equalsIgnoreCase("yes") || s.equalsIgnoreCase("true")){
+				CbcSolver.logObj = true;	
+			} else {
+				CbcSolver.logObj = false;	
+			}
+		}else{
+			CbcSolver.logObj = true;
+		}
+		System.out.println("CbcObjLog: "+CbcSolver.logObj);		
 		
 		// CbcLogNativeLp // default is false
 		k = "cbclognativelp";

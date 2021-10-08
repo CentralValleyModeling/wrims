@@ -134,7 +134,7 @@ public class CbcSolver {
 	private static HashSet originalDvarKeys=null;
 	
 	public static String solveName="";
-	public static boolean logObj=false;
+	public static boolean logObj=true;
 	public static boolean intLog=true;
 	public static boolean intViolation=false;
 	
@@ -352,7 +352,7 @@ public class CbcSolver {
 		if (time_second > 10.0) {
 
 			reloadAndWriteLp("stuck_"+Math.round(time_second),true);			
-			ILP.writeNoteLn(modelName, " time(sec): "+time_second);
+			ILP.writeNoteLn(modelName, " "+solveName+" time(sec): "+time_second);
 
 		}
 		
