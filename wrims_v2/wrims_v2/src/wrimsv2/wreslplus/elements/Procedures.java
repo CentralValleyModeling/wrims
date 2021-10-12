@@ -317,7 +317,7 @@ public class Procedures {
 		}
 		
 		// TODO: provide option for sending all alias to goal and dvar
-		// so that non-unique solution analysis can be work with alias vars
+		// so that non-unique solution analysis can work with alias vars
 		for (String aKey : seqObj.asMap.keySet()) {
 
 			if (allDepInGoals.contains(aKey)) {

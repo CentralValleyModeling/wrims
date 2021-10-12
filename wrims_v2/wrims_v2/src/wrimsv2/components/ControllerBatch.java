@@ -1479,6 +1479,8 @@ public class ControllerBatch {
 						
 						if (ControlData.cbc_debug_routeXA ||ControlData.cbc_debug_routeCbc ) {										
 							CbcSolver.logCbcDebug(sds);
+						} else if (ControlData.watchList!=null) {
+							CbcSolver.logCbcWatchList(sds);
 						}
 						
 						CbcSolver.resetModel();

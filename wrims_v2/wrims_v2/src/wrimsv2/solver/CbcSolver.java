@@ -1734,6 +1734,36 @@ int pp=0;
 			}
 		}	
 	}
+
+	public static void logCbcWatchList(StudyDataSet sds){
+				
+		// write watch var values
+		boolean recordLP = false;
+		boolean recordVar = false;
+		double wa_cbc = 0;
+		double wa_xa  = 0;
+		if (ControlData.watchList != null) {
+			String wa_cbc_str = "";
+			String wa_xa_str = "";
+			for (String s : ControlData.watchList) {
+				if (ControlData.currModelDataSet.dvList.contains(s)){
+				
+					//System.out.println(s);
+					wa_cbc = CbcSolver.varDoubleMap.get(s);
+
+					wa_cbc_str += String.format("%14.3f", wa_cbc) + "  ";
+
+					
+
+				}
+			}
+			ILP.writeNoteLn(ILP.getYearMonthCycle(), wa_cbc_str, ILP._watchFile_cbc);
+			
+		}
+		
+	
+	}
+	
 	
 	public static void logCbcDebug(StudyDataSet sds){
 			

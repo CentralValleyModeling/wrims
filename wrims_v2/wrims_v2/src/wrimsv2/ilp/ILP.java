@@ -137,7 +137,13 @@ public class ILP {
 				
 			} else if (CbcSolver.logObj && ControlData.solverName.equalsIgnoreCase("Cbc")){
 				_noteFile_cbc_obj = Tools.openFile(_ilpDir.getAbsolutePath(), "Note_cbc_obj.log");
-			} 
+				_watchFile_cbc = Tools.openFile(_ilpDir.getAbsolutePath(), "Watch_CBC.log");
+				ILP.writeNote( "time  ", _watchFile_cbc);
+				for (String s:ControlData.watchList) {
+					ILP.writeNote( s+"  ", _watchFile_cbc);
+				}
+				ILP.writeNote("\r\n", _watchFile_cbc);
+			}  
 			
 			if (CbcSolver.intLog && ControlData.solverName.equalsIgnoreCase("Cbc")){
 
