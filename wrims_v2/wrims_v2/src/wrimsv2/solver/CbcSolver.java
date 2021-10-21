@@ -94,6 +94,8 @@ public class CbcSolver {
 	public static boolean cbcViolationRetry = true;
 	public static int cbcLogStartDate = 999900;
 	public static int cbcLogStopDate  = 999900;	
+	public static boolean debugObjDiff = false;
+	public static double  debugObjDiff_tolerance = 1E5;
 	private static String modelName;
 	
 	private static Map<String, WeightElement> wm2; 
@@ -354,6 +356,27 @@ public class CbcSolver {
 			reloadAndWriteLp("stuck_"+Math.round(time_second),true);			
 			ILP.writeNoteLn(modelName, " "+solveName+" time(sec): "+time_second);
 
+		}
+		
+		if (debugObjDiff){
+			Double thisObj = ControlData.clp_cbc_objective;
+			reloadProblem(false);
+			callCbc(solveName);	
+			if ( jCbc.status(model)==0 && jCbc.secondaryStatus(model)==0){
+				Double cbcObj = getObjValue();
+				if ( Math.abs(thisObj-cbcObj)>debugObjDiff_tolerance ) {
+					reloadProblem(false);
+					jCbc.callCbc("-log 0 -primalT 1e-7 -integerT 1e-9 -solve", model);
+					if ( jCbc.status(model)==0 && jCbc.secondaryStatus(model)==0) {
+						Double rObj = getObjValue();
+						if ( Math.abs(thisObj-rObj)>debugObjDiff_tolerance ) {
+							int ap = (int) Math.round(Math.abs(thisObj-rObj)/debugObjDiff_tolerance);
+							reloadAndWriteLp("objErr_"+ap+"_",true);
+						}
+					}
+				}
+				
+			}
 		}
 		
 	}

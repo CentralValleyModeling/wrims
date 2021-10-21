@@ -355,6 +355,22 @@ public class ConfigUtils {
 		}
 		System.out.println("watchT: "+ControlData.watchList_tolerance);
 
+		// CbcDebugObjDiff // default is false
+		k = "cbcdebugobjdiff";
+		if (configMap.keySet().contains(k)){
+			
+			String s = configMap.get(k);
+			
+			if (s.equalsIgnoreCase("yes") || s.equalsIgnoreCase("true")){
+				CbcSolver.debugObjDiff = true;	
+			} else {
+				CbcSolver.debugObjDiff = false;	
+			}
+		}else{
+			CbcSolver.debugObjDiff = false;	
+		}
+		System.out.println("CbcDebugObjDiff: "+CbcSolver.debugObjDiff);			
+		
 		// CbcObjLog // default is true
 		k = "cbcobjlog";
 		if (configMap.keySet().contains(k)){

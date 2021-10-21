@@ -135,7 +135,7 @@ public class ControlData {
 	public static ArrayList<Integer> cycWarmUse;
 	public static boolean cbc_debug_routeXA=false; //use xa solution	
 	public static boolean cbc_debug_routeCbc=false;	// use cbc solution
-	public static String[] watchList;
+	public static String[] watchList={};
 	public static double watchList_tolerance = 1e99;
 	public static double zeroTolerance =  1e-11;  // can read from config cbcToleranceZero
 	public static double relationTolerance;
