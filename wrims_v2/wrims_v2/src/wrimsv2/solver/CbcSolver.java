@@ -96,6 +96,11 @@ public class CbcSolver {
 	public static int cbcLogStopDate  = 999900;	
 	public static boolean debugObjDiff = false;
 	public static double  debugObjDiff_tolerance = 1E5;
+	public static boolean debugDeviation = false;
+	public static double  debugDeviationMin = 200;
+	public static double  debugDeviationWeightMin = 5E5;	
+	public static double  debugDeviationWeightMultiply = 100;
+	public static boolean  debugDeviationFindMissing = false;
 	private static String modelName;
 	
 	private static Map<String, WeightElement> wm2; 
@@ -258,9 +263,9 @@ public class CbcSolver {
 			if (usejCbc2021 && false) { 
 				setDVars2021(ControlData.cbcLogNativeLp);
 			} else {           
-				setDVars(ControlData.cbcLogNativeLp||isLogging); 
+				setDVars(ControlData.cbcLogNativeLp||isLogging, ""); 
 			}
-			setConstraints(ControlData.cbcLogNativeLp||isLogging);
+			setConstraints(ControlData.cbcLogNativeLp||isLogging, "");
 			if (ControlData.cbcLogNativeLp||isLogging) {writeCbcLp("native", false);}
 
 		}
@@ -360,12 +365,12 @@ public class CbcSolver {
 		
 		if (debugObjDiff){
 			Double thisObj = ControlData.clp_cbc_objective;
-			reloadProblem(false);
+			reloadProblem(false, "");
 			callCbc(solveName);	
 			if ( jCbc.status(model)==0 && jCbc.secondaryStatus(model)==0){
 				Double cbcObj = getObjValue();
 				if ( Math.abs(thisObj-cbcObj)>debugObjDiff_tolerance ) {
-					reloadProblem(false);
+					reloadProblem(false, "");
 					jCbc.callCbc("-log 0 -primalT 1e-7 -integerT 1e-9 -solve", model);
 					if ( jCbc.status(model)==0 && jCbc.secondaryStatus(model)==0) {
 						Double rObj = getObjValue();
@@ -379,13 +384,135 @@ public class CbcSolver {
 			}
 		}
 		
+		// debug whs deviation
+		if (debugDeviation && solveName=="whs"){
+
+			// check watchlist for goal name, convert to slack surplus, 
+			// if one exceed then
+			// increase penalty see if obj value change
+			// if not then logging
+			Map<String, WeightElement> wm1  = SolverData.getWeightMap();
+			Map<String, WeightElement> wm2  = SolverData.getWeightSlackSurplusMap();
+			Map<String, WeightElement> wm1_ori = new HashMap<String, WeightElement>();
+			Map<String, WeightElement> wm2_ori = new HashMap<String, WeightElement>();
+			boolean firstWrite = true;
+			
+			String missing = "";
+
+			boolean itemExist = false;
+			if (debugDeviationFindMissing) {
+				missing = ControlData.watchList[0];
+				if (varDoubleMap.keySet().contains(missing)){
+					note_msg(missing+": "+varDoubleMap.get(missing));
+					if (wm1.keySet().contains(missing)){
+						note_msg(missing+": weight1: "+wm1.get(missing).getValue());}
+					else if (wm2.keySet().contains(missing)){
+						note_msg(missing+": weight2: "+wm2.get(missing).getValue());}
+					else { note_msg("weight not found");}
+					
+					itemExist = true;
+					
+				} 
+			}
+			
+			searchloop: for (String dN: varDoubleMap.keySet()){
+				if (debugDeviationFindMissing){ 
+					if (dN.equalsIgnoreCase(missing)) {note_msg(missing+": is found.");}
+				}
+				int whichMap=0;
+				double w=0;
+				double v=0;
+				if (dN.startsWith("slack_") || dN.startsWith("surplus_") ) {
+					v = varDoubleMap.get(dN);	
+					if (debugDeviationFindMissing && dN.equalsIgnoreCase(missing)) {
+						note_msg(missing+": is slack or surplus.");
+						note_msg(missing+": "+varDoubleMap.get(missing));	
+					}
+				}	
+			
+				if (v>debugDeviationMin){
+									
+					if (debugDeviationFindMissing && dN.equalsIgnoreCase(missing)) {
+						note_msg(missing+": is deviated.");
+					}
+					
+					if (wm1.keySet().contains(dN)){ 
+						w = wm1.get(dN).getValue();
+						whichMap =1;						
+					}
+					else if (wm2.keySet().contains(dN)){ 
+						w = wm2.get(dN).getValue();
+						whichMap =2;						
+					}				
+							
+					if (Math.abs(w)>debugDeviationWeightMin){
+						if (debugDeviationFindMissing && dN.equalsIgnoreCase(missing)) {
+							note_msg(missing+": is weighted more than min.");
+						}
+						// write potential issue for once
+						if (firstWrite){
+							reloadAndWriteLp("deviation_warning",true);
+							note_msg("deviation warning: "+dN);
+							firstWrite = false;
+						}
+						// load original weight, backup original weight, change weight
+						if (!wm1_ori.isEmpty()) { wm1.putAll(wm1_ori);}
+						if (!wm2_ori.isEmpty()) { wm2.putAll(wm2_ori);}
+						
+						WeightElement nwe = new WeightElement();
+						nwe.setValue(w*debugDeviationWeightMultiply);						
+						
+						if (whichMap==1){
+							wm1_ori.put(dN, wm1.get(dN));
+							wm1.put(dN, nwe);
+						} else if (whichMap==2){
+							wm2_ori.put(dN, wm2.get(dN));
+							wm2.put(dN, nwe);
+						}
+					
+						//reloadProblem(false);
+						reloadAndWriteLp("deviation_testing_"+dN,true);
+						//solveName="whs";
+						jCbc.setPrimalTolerance(model, solve_whs_primalT);
+						jCbc.setIntegerTolerance(model, integerT);
+						jCbc.solve_whs(model,solver,names,values,intSolSize,0);					
+						int status = jCbc.status(model);
+						int status2 = jCbc.secondaryStatus(model);	
+						
+						if (status==0 && status2 ==0){					
+							LinkedHashMap<String, Double> solution = collectDvar2021_simple();
+							double newV = solution.get(dN);
+							if (debugDeviationFindMissing && dN.equalsIgnoreCase(missing)){
+								note_msg(missing+": testing feasible, newV: "+newV);
+							} 			
+							if ( Math.abs(newV-v)<2.0){
+								reloadAndWriteLp("deviation_error_"+dN,true);
+								note_msg("deviation error: "+dN);
+								break searchloop;
+							}
+							
+						} else {
+							if (debugDeviationFindMissing && dN.equalsIgnoreCase(missing)){
+								note_msg(missing+": testing infeasible");
+							} 
+							note_msg("deviation test infeasible");
+						}
+						
+					}				
+					
+				}			
+				
+			}
+				
+		}
+		
 	}
 	
 	public static double getObjValue(){
 		return jCbc.getObjValue(model)*-1;
 	}
 
-	private static void reloadProblem(boolean isNoteCbc) {
+	private static void reloadProblem(boolean isNoteCbc, String append) {
 
 
 		// restore original state
@@ -416,8 +543,8 @@ public class CbcSolver {
 		jCbc.assignSolver(model,solver); 
 		modelObject = jCbc.new_jCoinModel();
 
-		setDVars(isNoteCbc);
-		setConstraints(isNoteCbc);
+		setDVars(isNoteCbc, append);
+		setConstraints(isNoteCbc, append);
 		jCbc.setModelName(solver, modelName);
 		
 	}
@@ -540,7 +667,7 @@ public class CbcSolver {
 		}
 	}
 	
-	private static void setConstraints(boolean isNoteCbc) {
+	private static void setConstraints(boolean isNoteCbc, String append) {
 		if (ControlData.showRunTimeMessage) System.out.println("CBC Solver: Setting constraints");
 		
 		Map<String, EvalConstraint> constraintMap = SolverData.getConstraintDataMap();
@@ -605,7 +732,7 @@ public class CbcSolver {
 						dvBiMap.put(sizeDv, multName);
 						dvBiMapInverse.put(multName, sizeDv);
 						
-						addConditionalSlackSurplusToDvarMap(dvarMap, multName, isNoteCbc);
+						addConditionalSlackSurplusToDvarMap(dvarMap, multName, isNoteCbc, append);
 					
 					}					
 					
@@ -630,7 +757,7 @@ public class CbcSolver {
 		}
 		
 		 jCbc.addRows(solver,modelObject);
-		 if (isNoteCbc) Tools.quickLog(modelName+"_"+solveName+".rows", c);
+		 if (isNoteCbc) Tools.quickLog(modelName+"_"+solveName+"_"+append+".rows", c);
 	}
 	
 	private static void setConstraintsSkip(String skipThisConstraint) {
@@ -693,7 +820,7 @@ public class CbcSolver {
 						dvBiMap.put(sizeDv, multName);
 						dvBiMapInverse.put(multName, sizeDv);
 						
-						addConditionalSlackSurplusToDvarMap(dvarMap, multName, false);
+						addConditionalSlackSurplusToDvarMap(dvarMap, multName, false, "");
 					
 					}					
 					
@@ -774,7 +901,7 @@ public class CbcSolver {
 						dvBiMap.put(sizeDv, multName);
 						dvBiMapInverse.put(multName, sizeDv);
 						
-						addConditionalSlackSurplusToDvarMap(dvarMap, multName, false);
+						addConditionalSlackSurplusToDvarMap(dvarMap, multName, false, "");
 					
 					}					
 					
@@ -835,7 +962,7 @@ public class CbcSolver {
 		 jCbc.addRows(solver,modelObject); total_relaxed_constraints = total;
 	}
     
-	private static void setDVars(boolean isNoteCbc) {
+	private static void setDVars(boolean isNoteCbc, String append) {
 		if (ControlData.showRunTimeMessage) System.out.println("CBC Solver: Setting dvars");
 		
 		Map<String, WeightElement> wm1  = SolverData.getWeightMap();
@@ -859,7 +986,7 @@ public class CbcSolver {
 		    
 		    }
 		}
-		if (isNoteCbc) Tools.quickLog(modelName+"_"+solveName+".cols", c);
+		if (isNoteCbc) Tools.quickLog(modelName+"_"+solveName+"_"+append+".cols", c);
 		
 	}
 	
@@ -875,6 +1002,15 @@ public class CbcSolver {
 			double w = 0;
 			if (wm1.keySet().contains(dvName)){
 				w = -wm1.get(dvName).getValue();
+//				if (Math.abs(w)==0) {
+//					w=0;
+//				} else if (Math.abs(w)>1E5) {
+//					double de = Math.abs(w)-1E5;
+//					w=Math.signum(w)*(1E5+de/1000);
+//				} else if (Math.abs(w)<0.1) {
+//					double de = 0.1-Math.abs(w);
+//					w=Math.signum(w)*(0.1-de/10);
+//				}
 			
 			}
 			double lb=9; double ub=-9; boolean isInteger=(dvObj.integer==Param.yes);
@@ -1035,7 +1171,7 @@ public class CbcSolver {
 				if (status != 0 || status2 != 0) {
 					
 					//note_msg(jCbc.getModelName(solver), " Warmstart infeasible");
-					reloadProblem(true);	
+					reloadProblem(true, "");	
 					if (warm_2nd_solvFunc == solv2){
 						//note_msg(jCbc.getModelName(solver), " Use solve_2");
 						solve_2();
@@ -1063,7 +1199,7 @@ public class CbcSolver {
 	
 			if (status != 0 || status2 != 0) {
 				note_msg(" Solve_"+solveName+" infeasible. Use solve_2 with primalT="+solve_2_primalT_relax);
-				reloadProblem(false);
+				reloadProblem(false, "");
 				solve_2(solve_2_primalT_relax, "2R_");	
 				status = jCbc.status(model);
 				status2 = jCbc.secondaryStatus(model);
@@ -1136,7 +1272,7 @@ public class CbcSolver {
 					reloadAndWriteLp("_lbViolation", true); 
 					if (cbcViolationRetry) {
 						note_msg(" Solve_"+solveName+" has violations. Use callCbc");
-						reloadProblem(false);
+						reloadProblem(false, "");
 						callCbc();	
 						status = jCbc.status(model);
 						status2 = jCbc.secondaryStatus(model);
@@ -1232,12 +1368,12 @@ public class CbcSolver {
 				
 				if (status != 0 || status2 != 0 ) {				
 					//note_msg(" Solve_"+solveName+" infeasible");
-					reloadProblem(false);	
+					reloadProblem(false, "");	
 					solve_2();	
 					status = jCbc.status(model);
 					status2 = jCbc.secondaryStatus(model);	
 				} else if (violationCheck(model, modelName, solveName)) {
-					reloadProblem(true);
+					reloadProblem(true, "");
 					solve_2();	
 					status = jCbc.status(model);
 					status2 = jCbc.secondaryStatus(model);	
@@ -1254,7 +1390,7 @@ public class CbcSolver {
 			
 			if (status != 0 || status2 != 0 ) {
 				note_msg(" Solve_"+solveName+" infeasible. Use solve_2 with primalT="+solve_2_primalT_relax);
-				reloadProblem(false);
+				reloadProblem(false, "");
 				solve_2(solve_2_primalT_relax, "2R_");	
 				status = jCbc.status(model);
 				status2 = jCbc.secondaryStatus(model);	
@@ -1262,7 +1398,7 @@ public class CbcSolver {
 	
 			if (status != 0 || status2 != 0 ) {
 				note_msg(jCbc.getModelName(solver)+" Solve_"+solveName+" infeasible. Use callCbc -primalT 1e-9 -integerT 1e-9 ");
-				reloadProblem(false);
+				reloadProblem(false, "");
 				callCbc();	
 				status = jCbc.status(model);
 				status2 = jCbc.secondaryStatus(model);	
@@ -1270,7 +1406,7 @@ public class CbcSolver {
 					status2 = jCbc.Y2(model,solver);
 				}
 			} else if (violationCheck(model, modelName, solveName)) {
-				reloadProblem(true);
+				reloadProblem(true, "");
 				callCbc();	
 				status = jCbc.status(model);
 				status2 = jCbc.secondaryStatus(model);	
@@ -1281,7 +1417,7 @@ public class CbcSolver {
 			
 			if (status != 0 || status2 != 0 ) {
 				note_msg(jCbc.getModelName(solver)+" Solve_"+solveName+" infeasible. Use callCbc -primalT 1e-7 -integerT 1e-9 ");
-				reloadProblem(false);
+				reloadProblem(false, "");
 				callCbc_R();	
 				status = jCbc.status(model);
 				status2 = jCbc.secondaryStatus(model);
@@ -1567,6 +1703,19 @@ int pp=0;
 
 	}
 	
+	private static LinkedHashMap<String, Double> collectDvar2021_simple() {
+
+		int ColumnSize = jCbc.getNumCols(model);
+		LinkedHashMap<String, Double> vMap = new LinkedHashMap<String, Double>();
+		
+		for (int j = 0; j < ColumnSize; j++){
+			 vMap.put(jCbc.getColName(model,j), jCbc.jarray_double_getitem(jCbc.getColSolution(model),j));
+
+		}
+		return vMap;
+	
+	}
+
 	private static void assignDvar() {
 		if (ControlData.showRunTimeMessage) System.out.println("CBC Solver: Assigning dvars\' values");
 		
@@ -1674,7 +1823,7 @@ int pp=0;
 		}
 	}
 	
-	public static void addConditionalSlackSurplusToDvarMap(Map<String, Dvar> dvarMap, String dvName, boolean isNoteCbc){
+	public static void addConditionalSlackSurplusToDvarMap(Map<String, Dvar> dvarMap, String dvName, boolean isNoteCbc, String append){
 		String c="";
 		Dvar dvar=new Dvar();
 		dvar.upperBoundValue = maxValue;
@@ -1692,7 +1841,7 @@ int pp=0;
 	    	int isInt=0;
 	    	if (dvar.integer==Param.yes) isInt=1;
 	    	c = isInt+","+dvName+","+w+",0,"+maxValue; 
-	    	Tools.quickLog(modelName+"_"+solveName+".cols", c, true);
+	    	Tools.quickLog(modelName+"_"+solveName+"_"+append+".cols", c, true);
 	    }
 	
 
@@ -1702,7 +1851,7 @@ int pp=0;
 		
 		String label = modelName + "_" + solveName + "_" + nameAppend;
 		String oPath = new File(ILP.getIlpDir().getAbsoluteFile(), label).getAbsolutePath();
-		reloadProblem(logCbc);
+		reloadProblem(logCbc, nameAppend);
 		jCbc.writeLp1(model, oPath, cbcWriteLpEpsilon, 14);
 		//jCbc.writeMps(model, oPath);
 		if(logMps){jCbc.writeMps1(model, oPath+".mps", 1, 2);}
@@ -1724,7 +1873,7 @@ int pp=0;
 		
 		String label = modelName + "_" + solveName + "_" + nameAppend;
 		String oPath = new File(ILP.getIlpDir().getAbsoluteFile(), label).getAbsolutePath();
-		reloadProblem(logCbc);
+		reloadProblem(logCbc, nameAppend);
 		jCbc.writeLp1(model, oPath, cbcWriteLpEpsilon, 14);
 		
 		logIntVars(label);

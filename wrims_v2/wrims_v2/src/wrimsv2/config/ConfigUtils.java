@@ -725,6 +725,30 @@ public class ConfigUtils {
 		System.out.println("RecordIfObjDiff: "+CbcSolver.record_if_obj_diff);
 		
 		
+		k = "CbcDebugDeviation"; //default is false
+		CbcSolver.debugDeviation = readBoolean(configMap, k, false);
+		System.out.println(k+": "+CbcSolver.debugDeviation);
+		
+		if (CbcSolver.debugDeviation){
+			
+			k = "CbcDebugDeviationMin"; // default is 200
+			CbcSolver.debugDeviationMin = readDouble(configMap, k, 200);
+			System.out.println(k+": "+CbcSolver.debugDeviationMin);
+		
+			k = "CbcDebugDeviationWeightMin"; // default is 5E5
+			CbcSolver.debugDeviationWeightMin = readDouble(configMap, k, 5E5);
+			System.out.println(k+": "+CbcSolver.debugDeviationWeightMin);
+			
+			k = "CbcDebugDeviationWeightMultiply"; // default is 100
+			CbcSolver.debugDeviationWeightMultiply = readDouble(configMap, k, 100);
+			System.out.println(k+": "+CbcSolver.debugDeviationWeightMultiply);
+			
+			k = "CbcDebugDeviationFindMissing"; //default is false
+			CbcSolver.debugDeviationFindMissing = readBoolean(configMap, k, false);
+			System.out.println(k+": "+CbcSolver.debugDeviationFindMissing);
+		
+		}
+		
 		// Warm2ndSolveFunction // default is Solve2
 		k = "warm2ndsolvefunction";
 		if (configMap.keySet().contains(k)){
@@ -1383,6 +1407,35 @@ public class ConfigUtils {
 			
 			return parser.dependants;
 		
+	}
+	
+	private static boolean readBoolean(Map<String, String> cM, String name, boolean defaultV){
+		
+		String l = name.toLowerCase();
+		if (cM.keySet().contains(l)) {		
+			String s = cM.get(l);
+			if (s.equalsIgnoreCase("yes") || s.equalsIgnoreCase("true")){
+				return true;	
+			} else if (s.equalsIgnoreCase("no") || s.equalsIgnoreCase("false")){
+				return false;	
+			}
+		}		
+		return defaultV;
+	}
+	
+	private static double readDouble(Map<String, String> cM, String name, double defaultV){
+		
+		double returnV = defaultV;
+		String l = name.toLowerCase();
+		if (cM.keySet().contains(l)){
+			String s = cM.get(l);			
+			try {
+				returnV = Double.parseDouble(s);
+			} catch (NumberFormatException e) {
+				System.out.println(name+": Error reading config value");
+			}
+		}	
+		return returnV;
 	}
 
 	// private static void loadConfig2(String loadFile) throws IOException {
