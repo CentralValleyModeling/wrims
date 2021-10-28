@@ -251,7 +251,7 @@ public class DssOperation {
     }
 	
 	public static void writeInitDvarAliasToDSS() {	
-		System.out.println("write initial data for dvar and alias to dv dss");
+		System.out.println("writing initial data for dvar and alias to dv dss");
 		Set initSet=DataTimeSeries.dvAliasInit.keySet();
 		Iterator iterator = initSet.iterator();
 		while(iterator.hasNext()){
@@ -278,10 +278,11 @@ public class DssOperation {
 			ControlData.writer.storeTimeSeriesData(pathName, startJulmin, ds,
 				storeFlags);
 		}
+		System.out.println("initial data for dvar and alias written to dv dss");
 	}
 	
 	public static void writeDVAliasToDSS() {
-		System.out.println("write dvar and alias to dv dss");
+		System.out.println("writing dvar and alias to dv dss");
 		Set dvAliasSet=DataTimeSeries.dvAliasTS.keySet();
 		Iterator iterator = dvAliasSet.iterator();
 		while(iterator.hasNext()){
@@ -304,6 +305,7 @@ public class DssOperation {
 		}
 		
 		if (ControlData.isOutputCycle) writeDVAliasCycleDataToDSS();
+		System.out.println("dvar and alias written to dv dss");
 	}
 	
 	public static void writeDVAliasCycleDataToDSS() {

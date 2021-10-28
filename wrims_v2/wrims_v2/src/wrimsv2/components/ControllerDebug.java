@@ -372,6 +372,8 @@ public class ControllerDebug extends Thread {
 							
 							if (ControlData.cbc_debug_routeXA ||ControlData.cbc_debug_routeCbc ) {										
 								CbcSolver.logCbcDebug(sds);
+							}else if (ControlData.watchList!=null) {
+								CbcSolver.logCbcWatchList(sds);
 							}else if (Error.error_solving.size()<1) {
 				            	if (ILP.logging && isSelectedCycleOutput) {
 				            		ILP.writeObjValue_Clp0_Cbc0();
