@@ -98,9 +98,10 @@ public class CbcSolver {
 	public static double  debugObjDiff_tolerance = 1E5;
 	public static boolean debugDeviation = false;
 	public static double  debugDeviationMin = 200;
-	public static double  debugDeviationWeightMin = 5E5;	
+	public static double  debugDeviationWeightMin = 99000;	
 	public static double  debugDeviationWeightMultiply = 100;
 	public static boolean  debugDeviationFindMissing = false;
+	public static boolean  debugDeviationWriteWarning = false;
 	private static String modelName;
 	
 	private static Map<String, WeightElement> wm2; 
@@ -450,7 +451,7 @@ public class CbcSolver {
 							note_msg(missing+": is weighted more than min.");
 						}
 						// write potential issue for once
-						if (firstWrite){
+						if (firstWrite && debugDeviationWriteWarning){
 							reloadAndWriteLp("deviation_warning",true);
 							note_msg("deviation warning: "+dN);
 							firstWrite = false;
@@ -470,8 +471,8 @@ public class CbcSolver {
 							wm2.put(dN, nwe);
 						}
 					
-						//reloadProblem(false);
-						reloadAndWriteLp("deviation_testing_"+dN,true);
+						reloadProblem(false,"");
+						//reloadAndWriteLp("deviation_testing_"+dN,true);
 						//solveName="whs";
 						jCbc.setPrimalTolerance(model, solve_whs_primalT);
 						jCbc.setIntegerTolerance(model, integerT);
@@ -479,21 +480,40 @@ public class CbcSolver {
 						int status = jCbc.status(model);
 						int status2 = jCbc.secondaryStatus(model);	
 						
-						if (status==0 && status2 ==0){					
+						if (status==0 && status2 ==0){		
+							//Double tObj = getObjValue();
 							LinkedHashMap<String, Double> solution = collectDvar2021_simple();
 							double newV = solution.get(dN);
 							if (debugDeviationFindMissing && dN.equalsIgnoreCase(missing)){
-								note_msg(missing+": testing feasible, newV: "+newV);
+								note_msg(missing+": test feasible, newV: "+newV);
 							} 			
-							if ( Math.abs(newV-v)<2.0){
-								reloadAndWriteLp("deviation_error_"+dN,true);
-								note_msg("deviation error: "+dN);
-								break searchloop;
+							if ( Math.abs(newV-v)<2.0){			
+								// make sure deviation				
+								reloadProblem(false,"");
+								callCbc(solveName);	
+								if ( jCbc.status(model)==0 && jCbc.secondaryStatus(model)==0){
+									//Double tCbcObj = getObjValue();
+									LinkedHashMap<String, Double> tCbcsolution = collectDvar2021_simple();
+									double newtCbcV = tCbcsolution.get(dN);
+									
+									if (  Math.abs(newtCbcV)<1.0 ) {
+										reloadAndWriteLp("deviation_error_("+dN+")",true);
+										note_msg("deviation error: "+dN);
+										break searchloop;
+									}
+									
+								} else {
+									if (debugDeviationFindMissing && dN.equalsIgnoreCase(missing)){
+										note_msg(missing+": test Cbc infeasible");
+									} 
+									note_msg("deviation test Cbc infeasible");
+								}
+								
 							}
 							
 						} else {
 							if (debugDeviationFindMissing && dN.equalsIgnoreCase(missing)){
-								note_msg(missing+": testing infeasible");
+								note_msg(missing+": test infeasible");
 							} 
 							note_msg("deviation test infeasible");
 						}
