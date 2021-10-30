@@ -507,6 +507,7 @@ public class CbcSolver {
 										note_msg(missing+": test Cbc infeasible");
 									} 
 									note_msg("deviation test Cbc infeasible");
+									reloadAndWriteLp("deviation_test_Cbc_infeasible_("+dN+")",true);
 								}
 								
 							}
@@ -516,6 +517,7 @@ public class CbcSolver {
 								note_msg(missing+": test infeasible");
 							} 
 							note_msg("deviation test infeasible");
+							reloadAndWriteLp("deviation_test_infeasible_("+dN+")",true);
 						}
 						
 					}				
