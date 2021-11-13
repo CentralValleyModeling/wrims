@@ -322,7 +322,10 @@ public class Procedures {
 
 			if (allDepInGoals.contains(aKey)) {
 
-				AliasTemp a = seqObj.asMap.get(aKey);
+			AliasTemp a = seqObj.asMap.get(aKey);
+			//System.out.println(aKey+":"+a.noSolver);
+			if (!a.noSolver){ 
+			
 				a.isMovedToDvar = true;
 
 				// add to dvar
@@ -365,6 +368,7 @@ public class Procedures {
 				seqObj.glList_fromAlias.add(g.id.toLowerCase());
 				//seqObj.glList.add(g.id.toLowerCase());
 				seqObj.glMap.put(g.id.toLowerCase(), g);
+			}
 
 			}
 

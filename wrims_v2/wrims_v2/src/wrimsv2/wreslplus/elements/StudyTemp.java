@@ -14,7 +14,7 @@ import com.google.common.collect.HashBasedTable;
 public class StudyTemp implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	
+	public boolean isSort = true;
 	public String runDir = null;
 	public String absPath = null;
 	public String relativePath = null;

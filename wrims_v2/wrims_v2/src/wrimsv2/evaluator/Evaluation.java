@@ -21,6 +21,7 @@ import wrimsv2.solver.CbcSolver;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.ArrayList;
 import java.util.Set;
@@ -699,7 +700,7 @@ public class Evaluation {
 			if (idValue<0){
 				value=dvarAliasTimeSeries(ident,idValue);
 			}else if (idValue==0){
-				HashMap<String, IntDouble> multiplier = new HashMap<String, IntDouble>();
+				LinkedHashMap<String, IntDouble> multiplier = new LinkedHashMap<String, IntDouble>();
 				multiplier.put(ident, new IntDouble(1, true));
 				EvalExpression eeResult=new EvalExpression();
 				eeResult.setMultiplier(multiplier);
@@ -707,7 +708,7 @@ public class Evaluation {
 			}else{
 				String futDvName=ident+"__fut__"+idValue;
 				if (SolverData.getDvarMap().containsKey(futDvName)){
-					HashMap<String, IntDouble> multiplier = new HashMap<String, IntDouble>();
+					LinkedHashMap<String, IntDouble> multiplier = new LinkedHashMap<String, IntDouble>();
 					multiplier.put(futDvName, new IntDouble(1, true));
 					EvalExpression eeResult=new EvalExpression();
 					eeResult.setMultiplier(multiplier);
@@ -720,14 +721,14 @@ public class Evaluation {
 			}
 		}else if (ControlData.currDvSlackSurplusMap.containsKey(ident)){
 			if (idValue==0){
-				HashMap<String, IntDouble> multiplier = new HashMap<String, IntDouble>();
+				LinkedHashMap<String, IntDouble> multiplier = new LinkedHashMap<String, IntDouble>();
 				multiplier.put(ident, new IntDouble(1, true));
 				EvalExpression eeResult=new EvalExpression();
 				eeResult.setMultiplier(multiplier);
 				return eeResult;
 			}else if (idValue>0){
 				String futDvSlackSurplusName=ident+"__fut__"+idValue;
-				HashMap<String, IntDouble> multiplier = new HashMap<String, IntDouble>();
+				LinkedHashMap<String, IntDouble> multiplier = new LinkedHashMap<String, IntDouble>();
 				multiplier.put(futDvSlackSurplusName, new IntDouble(1, true));
 				EvalExpression eeResult=new EvalExpression();
 				eeResult.setMultiplier(multiplier);

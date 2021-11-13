@@ -107,11 +107,14 @@ initial
 @after{  isParameter=false; }
   : 
   Initial '{' 
+    config*
     (
         ( c=constant  {$wreslMain::sty.parameterList.add($c.id); $wreslMain::sty.parameterConstList.add($c.id); $wreslMain::sty.parameterMap.put($c.id, $c.ptObj);} ) 
       | ( s=svar_initial {$wreslMain::sty.parameterList.add($s.id); $wreslMain::sty.parameterMap.put($s.id, $s.svObj);} )
     )+ 
   '}';
+
+config : CONFIG SORTING '{' VALUE (TRUE | (FALSE {$wreslMain::sty.isSort=false;}))'}' ;
 
 constant returns[String id, SvarTemp ptObj]
 @init{  $ptObj = new SvarTemp();
@@ -543,13 +546,14 @@ scope { AliasTemp as_;}
 	: alias_new | alias_old
  	;
 
-alias_old : DEFINE{line=$DEFINE.line;}  (local_deprecated)? (aliasArray|aliasTimeArray)? aliasID '{' ALIAS  aliasExpresion  aliasKind?  aliasUnits?  '}' ;
-alias_new : ALIAS{line=$ALIAS.line;} (aliasArray|aliasTimeArray)? aliasID '{' aliasExpresion  aliasKind?  aliasUnits? '}' ;
+alias_old : DEFINE{line=$DEFINE.line;}  (local_deprecated)? (aliasArray|aliasTimeArray)? aliasID '{' ALIAS  aliasExpresion  aliasKind?  aliasUnits? aliasNoSolver? '}' ;
+alias_new : ALIAS{line=$ALIAS.line;} (aliasArray|aliasTimeArray)? aliasID '{' aliasExpresion  aliasKind?  aliasUnits? aliasNoSolver? '}' ;
 
 aliasExpresion : e=expr_add {$alias::as_.expression=$e.text;}; 
 aliasID : i=ID {$alias::as_.id=$i.text;}; 
 aliasUnits: UNITS s=QUOTE {$alias::as_.units=Tools.strip($s.text);};
 aliasKind:  KIND s=QUOTE {$alias::as_.kind=Tools.strip($s.text);};
+aliasNoSolver : NoSolver {$alias::as_.noSolver=true;};
 
 aliasArray :     '[' d=( INT | ID ) ']'  {$alias::as_.arraySize=$d.text; };
 aliasTimeArray : '(' d=( INT | ID ) ')'  {$alias::as_.timeArraySize=$d.text; };
@@ -1107,7 +1111,10 @@ DeviationTolerance : 'deviationtolerance' | 'DEVIATIONTOLERANCE' | 'DeviationTol
 WEIGHT : 'weight' | 'WEIGHT' | 'Weight' ;
 //ITEM    : 'item' | 'ITEM' | 'Item' ;
 
-CONFIG : 'config' ;
+CONFIG : 'config' | 'CONFIG' | 'Config';
+SORTING : 'sorting' | 'SORTING' | 'Sorting' ;
+TRUE : 'true' | 'TRUE' | 'True' ;
+FALSE : 'false' | 'FALSE' | 'False' ; 
 LABEL : 'label' ;
 NAME : 'name' ;
 
@@ -1137,6 +1144,7 @@ TEMPLATE : 'template' ;
 SUM : 'sum' | 'SUM' | 'Sum';
 KIND : 'kind' | 'KIND' | 'Kind';
 UNITS : 'units' | 'UNITS' | 'Units' ;
+NoSolver : 'NoSolver' | 'Nosolver' | 'NOSOLVER' | 'nosolver' | 'noSolver';
 CONVERT : 'convert' | 'CONVERT' |'Convert' ;
 UPPER : 'upper' | 'UPPER' | 'Upper';
 LOWER : 'lower' | 'LOWER' | 'Lower';

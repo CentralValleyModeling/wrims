@@ -23,6 +23,7 @@ public class Alias implements Serializable {
 	public Set<String> dependants;
 	public Set<String> neededVarInCycleSet;
 	public boolean needVarFromEarlierCycle;
+	public boolean noSolver;
 		
 	// default is zero
 	public String timeArraySize;
@@ -41,6 +42,7 @@ public class Alias implements Serializable {
 		data = null;
 		neededVarInCycleSet = new HashSet<String>();
 		needVarFromEarlierCycle = false;
+		noSolver = false;
 		
 		timeArraySize = "0"; // default has no future time array		
 	}

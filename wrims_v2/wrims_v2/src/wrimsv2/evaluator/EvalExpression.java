@@ -1,6 +1,7 @@
 package wrimsv2.evaluator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Set;
 
 import wrimsv2.components.ControlData;
@@ -8,16 +9,16 @@ import wrimsv2.components.IntDouble;
 
 public class EvalExpression {
 	private IntDouble intDouble;
-	private HashMap<String, IntDouble> multiplier;
+	private LinkedHashMap<String, IntDouble> multiplier;
 	
 	public EvalExpression(){
 		intDouble=new IntDouble(0, true);
-		multiplier = new HashMap<String, IntDouble>();
+		multiplier = new LinkedHashMap<String, IntDouble>();
 	}
 	
 	public EvalExpression(IntDouble id){
 		intDouble=id;
-		multiplier = new HashMap<String, IntDouble>();
+		multiplier = new LinkedHashMap<String, IntDouble>();
 	}
 	
 	public IntDouble getValue(){
@@ -32,7 +33,7 @@ public class EvalExpression {
 		return multiplier;
 	}
 	
-	public void setMultiplier(HashMap<String, IntDouble> multiplier){
+	public void setMultiplier(LinkedHashMap<String, IntDouble> multiplier){
 		this.multiplier=multiplier;
 	}
 	
@@ -51,8 +52,8 @@ public class EvalExpression {
 		return evalExpression;
 	}
 	
-	public HashMap<String, IntDouble> copyOfMultiplier(){
-		HashMap<String, IntDouble> newMultiplier=new HashMap<String, IntDouble>();
+	public LinkedHashMap<String, IntDouble> copyOfMultiplier(){
+		LinkedHashMap<String, IntDouble> newMultiplier=new LinkedHashMap<String, IntDouble>();
 		Set multCollection = multiplier.keySet();
 		Iterator multIterator = multCollection.iterator();
 		

@@ -372,6 +372,7 @@ public class ToLowerCase {
 		o.expression = d.expression.toLowerCase();
 		o.kind = d.kind.toLowerCase();
 		o.units = d.units.toLowerCase();
+		o.noSolver = d.noSolver;
 		o.condition = d.condition.toLowerCase();
 		o.dependants = Tools.allToLowerCase(d.dependants);
 		o.neededVarInCycleSet = Tools.allToLowerCase(d.neededVarInCycleSet);
