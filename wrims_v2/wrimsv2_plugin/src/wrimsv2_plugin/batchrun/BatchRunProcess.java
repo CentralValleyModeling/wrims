@@ -27,6 +27,7 @@ import org.eclipse.debug.core.model.IProcess;
 
 import wrimsv2_plugin.debugger.core.CBCSetting;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+import wrimsv2_plugin.debugger.dialog.ConfigTab;
 import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.msr.MSRDataTransferBR;
 import wrimsv2_plugin.debugger.msr.MSRProcRunBR;
@@ -641,6 +642,8 @@ public class BatchRunProcess {
 			out.println("cbcHintTimeMax            "+DataProcess.doubleStringtoInt(CBCSetting.cbcHintTimeMax));
 			
 			//out.println("IfsIsSelFile              "+configMap.get("ifsisselfile"));
+			
+			ConfigTab.writeConfigSetting(out);
 			
 			out.close();
 		

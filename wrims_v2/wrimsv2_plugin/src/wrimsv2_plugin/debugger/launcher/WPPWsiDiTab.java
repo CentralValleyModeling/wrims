@@ -54,6 +54,7 @@ import org.eclipse.ui.PlatformUI;
 
 import wrimsv2_plugin.debugger.core.CBCSetting;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+import wrimsv2_plugin.debugger.dialog.ConfigTab;
 import wrimsv2_plugin.debugger.dialog.WPPDssToSqlDialog;
 import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.tools.DataProcess;
@@ -321,6 +322,8 @@ public class WPPWsiDiTab extends AbstractLaunchConfigurationTab {
 			out.println("cbcHintTimeMax            "+DataProcess.doubleStringtoInt(CBCSetting.cbcHintTimeMax));
 			
 			//out.println("IfsIsSelFile              "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_IFSISSELENTRY, "yes"));
+			
+			ConfigTab.writeConfigSetting(out);
 			
 			out.close();
 			configFilePath= new File(studyDir, configName).getAbsolutePath();
