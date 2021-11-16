@@ -2,7 +2,9 @@ package wrimsv2.wreslplus.elements.procedures;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
@@ -120,10 +122,10 @@ public class ProcParameter {
 	
 	
 	
-	private static Map<String, Svar> convertParamMapToSvarMap(
+	private static LinkedHashMap<String, Svar> convertParamMapToSvarMap(
 			Map<String, SvarTemp> simpleMap) {
 		
-		Map<String, Svar> pm = new HashMap<String, Svar>();
+		LinkedHashMap<String, Svar> pm = new LinkedHashMap<String, Svar>();
 		
 		for (String key: simpleMap.keySet()){
 			

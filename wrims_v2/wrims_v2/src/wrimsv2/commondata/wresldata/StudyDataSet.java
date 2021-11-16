@@ -3,6 +3,7 @@ package wrimsv2.commondata.wresldata;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ public class StudyDataSet implements Serializable {
 	private String absMainFilePath;
 	
 	private ArrayList<String> parameterList = new ArrayList<String>();
-	private Map<String, Svar> parameterMap = new HashMap<String, Svar>(); 
+	private LinkedHashMap<String, Svar> parameterMap = new LinkedHashMap<String, Svar>(); 
 	
 	private ArrayList<String> modelList = new ArrayList<String>();
 	private ArrayList<String> modelConditionList = new ArrayList<String>();
@@ -50,11 +51,11 @@ public class StudyDataSet implements Serializable {
 		this.parameterList = parameterList;
 	}
 	
-	public Map<String, Svar> getParameterMap() {
-		return new HashMap<String, Svar>(parameterMap);
+	public LinkedHashMap<String, Svar> getParameterMap() {
+		return new LinkedHashMap<String, Svar>(parameterMap);
 	}
 	
-	public void setParameterMap(Map<String, Svar> parameterMap) {
+	public void setParameterMap(LinkedHashMap<String, Svar> parameterMap) {
 		this.parameterMap = parameterMap;
 	}
 	

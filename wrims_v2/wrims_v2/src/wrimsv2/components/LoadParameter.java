@@ -2,6 +2,7 @@ package wrimsv2.components;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.antlr.runtime.ANTLRStringStream;
@@ -122,10 +123,10 @@ public class LoadParameter {
 	
 	
 	
-	private static Map<String, Svar> convertParamMapToSvarMap(
+	private static LinkedHashMap<String, Svar> convertParamMapToSvarMap(
 			Map<String, Svar> simpleMap) {
 		
-		Map<String, Svar> pm = new HashMap<String, Svar>();
+		LinkedHashMap<String, Svar> pm = new LinkedHashMap<String, Svar>();
 		
 		for (String key: simpleMap.keySet()){
 			

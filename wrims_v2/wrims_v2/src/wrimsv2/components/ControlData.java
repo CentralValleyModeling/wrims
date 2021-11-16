@@ -22,6 +22,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Locale;
 import java.util.Map;
@@ -35,7 +36,7 @@ public class ControlData {
 	public static ArrayList<Integer> currTimeStep;
 	public static StudyDataSet currStudyDataSet=new StudyDataSet();
 	public static ModelDataSet currModelDataSet=new ModelDataSet();
-	public static Map<String, Svar> parameterMap=new HashMap<String, Svar>();
+	public static LinkedHashMap<String, Svar> parameterMap=new LinkedHashMap<String, Svar>();
 	public static Map<String, Svar> currSvMap=new HashMap<String, Svar>() ;
 	public static Map<String, Svar> currSvFutMap=new HashMap<String, Svar>() ;
 	public static Map<String, Timeseries> currTsMap=new HashMap<String, Timeseries>();

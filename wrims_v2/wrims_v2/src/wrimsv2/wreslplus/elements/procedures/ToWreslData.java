@@ -122,10 +122,10 @@ public class ToWreslData {
 
 	}	
 	
-	private static Map<String, Svar> convertParameterMap(
+	private static LinkedHashMap<String, Svar> convertParameterMap(
 			Map<String, String> simpleMap) {
 		
-		Map<String, Svar> pm = new HashMap<String, Svar>();
+		LinkedHashMap<String, Svar> pm = new LinkedHashMap<String, Svar>();
 		
 		for (String key: simpleMap.keySet()){
 			
