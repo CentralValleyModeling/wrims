@@ -107,14 +107,14 @@ initial
 @after{  isParameter=false; }
   : 
   Initial '{' 
-    config*
+    //config*
     (
         ( c=constant  {$wreslMain::sty.parameterList.add($c.id); $wreslMain::sty.parameterConstList.add($c.id); $wreslMain::sty.parameterMap.put($c.id, $c.ptObj);} ) 
       | ( s=svar_initial {$wreslMain::sty.parameterList.add($s.id); $wreslMain::sty.parameterMap.put($s.id, $s.svObj);} )
     )+ 
   '}';
 
-config : CONFIG SORTING '{' VALUE (TRUE | (FALSE {$wreslMain::sty.isSort=false;}))'}' ;
+//config : CONFIG SORTING '{' VALUE (TRUE | (FALSE {$wreslMain::sty.isSort=false;}))'}' ;
 
 constant returns[String id, SvarTemp ptObj]
 @init{  $ptObj = new SvarTemp();

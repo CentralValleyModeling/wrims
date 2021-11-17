@@ -155,20 +155,20 @@ public class ToWreslData {
 		// TODO: give pre-sorted var list
 
 		o.dvSlackSurplusList = new ArrayList<String>(seq.ssList_hasCase);
-		if (st.isSort) Collections.sort(o.dvSlackSurplusList,String.CASE_INSENSITIVE_ORDER);
+		if (ControlData.isNameSorting) Collections.sort(o.dvSlackSurplusList,String.CASE_INSENSITIVE_ORDER);
 
 		o.wtSlackSurplusList = new ArrayList<String>(seq.ssList_hasCase);
-		if (st.isSort) Collections.sort(o.wtSlackSurplusList,String.CASE_INSENSITIVE_ORDER);
+		if (ControlData.isNameSorting) Collections.sort(o.wtSlackSurplusList,String.CASE_INSENSITIVE_ORDER);
 	
 		o.dvList = new ArrayList<String>(seq.dvList);
 		o.dvList.addAll(seq.dvList_fromAlias);
 		o.dvList_deviationSlackSurplus.addAll(seq.dvList_deviationSlackSurplus);
 		o.deviationSlackSurplus_toleranceMap.putAll(seq.deviationSlackSurplus_toleranceMap);
 		//o.dvList.addAll(seq.ssList_noCase);
-		if (st.isSort) Collections.sort(o.dvList,String.CASE_INSENSITIVE_ORDER);
+		if (ControlData.isNameSorting) Collections.sort(o.dvList,String.CASE_INSENSITIVE_ORDER);
 		
 		o.tsList = new ArrayList<String>(seq.tsList);
-		if (st.isSort) Collections.sort(o.tsList,String.CASE_INSENSITIVE_ORDER);
+		if (ControlData.isNameSorting) Collections.sort(o.tsList,String.CASE_INSENSITIVE_ORDER);
 		
 		// don't sort svList. order matters in evaluator
 		o.svList = new ArrayList<String>(seq.svIncFileList_post);
@@ -178,7 +178,7 @@ public class ToWreslData {
 
 		o.gList = new ArrayList<String>(seq.glList);
 		o.gList.addAll(seq.glList_fromAlias);
-		if (st.isSort) Collections.sort(o.gList,String.CASE_INSENSITIVE_ORDER);
+		if (ControlData.isNameSorting) Collections.sort(o.gList,String.CASE_INSENSITIVE_ORDER);
 		
 
 		// don't sort exList. order matters in evaluator		
@@ -190,7 +190,7 @@ public class ToWreslData {
 
 		o.wtList = new ArrayList<String>(seq.wvList);
 		o.wtList.addAll(seq.ssList_noCase);
-		if (st.isSort) Collections.sort(o.wtList,String.CASE_INSENSITIVE_ORDER);
+		if (ControlData.isNameSorting) Collections.sort(o.wtList,String.CASE_INSENSITIVE_ORDER);
 		
 		o.incFileList = new ArrayList<String>(seq.incFileAbsPathList_post);
 	

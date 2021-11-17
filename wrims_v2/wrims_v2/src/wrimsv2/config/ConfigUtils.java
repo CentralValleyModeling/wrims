@@ -1039,6 +1039,11 @@ public class ConfigUtils {
 		}
 		System.out.println("ShowRunTimeMessage:    " + ControlData.showRunTimeMessage);
 		
+		k = "NameSorting"; //default is false
+		ControlData.isNameSorting = readBoolean(configMap, k, false);
+		System.out.println(k+": "+ControlData.isNameSorting);
+		
+		
 		//if (Error.getTotalError()<1) readParameter(configFile);
 		
 //		if (Error.getTotalError()<1 && paramMap.size()>0) { 

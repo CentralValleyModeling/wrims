@@ -129,6 +129,7 @@ public class ControlData {
 	public static boolean cbcCheckIntErr=true;	
 	public static boolean cbcLogNativeLp=false;
 	public static boolean writeCbcSolvingTime=false;
+	public static boolean isNameSorting = false;
 	//public static Map<Integer,LinkedHashSet<String>> cycIntDvMap;
 	//public static LinkedHashSet<String> allIntDv;
 	public static ArrayList<Integer> cycWarmStart;
