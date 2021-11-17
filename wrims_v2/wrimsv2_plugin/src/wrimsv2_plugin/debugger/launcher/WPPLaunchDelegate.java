@@ -627,6 +627,12 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 				configMap.put("showruntimemessage", "no");
 			}
 			
+			if (DebugCorePlugin.printGWFuncCalls){
+				configMap.put("printgwfunccalls", "yes");
+			}else{
+				configMap.put("printgwfunccalls", "no");
+			}
+			
 			configMap.put("ifsisselfile", ifsIsSelFile);
 			
 			String studyDir = configuration.getFile().getLocation().toFile().getParentFile().getAbsolutePath();
@@ -721,6 +727,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			out.println("OutputAllCycleData "+configMap.get("OutputAllCycleData".toLowerCase()));
 			out.println("SelectedCycleOutput "+configMap.get("SelectedCycleOutput".toLowerCase()));
 			out.println("ShowRunTimeMessage "+configMap.get("ShowRunTimeMessage".toLowerCase()));
+			out.println("PrintGWFuncCalls   "+configMap.get("PrintGWFuncCalls".toLowerCase()));
 			
 			if (DebugCorePlugin.solver.equalsIgnoreCase("LpSolve")) {
 				

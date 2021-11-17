@@ -1039,6 +1039,14 @@ public class ConfigUtils {
 		}
 		System.out.println("ShowRunTimeMessage:    " + ControlData.showRunTimeMessage);
 		
+		String printGWFuncCalls = configMap.get("printgwfunccalls");
+		if (printGWFuncCalls.equalsIgnoreCase("yes") || printGWFuncCalls.equalsIgnoreCase("true")){
+			ControlData.printGWFuncCalls=true;
+		}else{
+			ControlData.printGWFuncCalls=false;
+		}
+		System.out.println("PrintGWFuncCalls:    " + ControlData.printGWFuncCalls);
+		
 		k = "NameSorting"; //default is false
 		ControlData.isNameSorting = readBoolean(configMap, k, false);
 		System.out.println(k+": "+ControlData.isNameSorting);

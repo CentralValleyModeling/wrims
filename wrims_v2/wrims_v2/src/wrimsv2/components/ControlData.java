@@ -165,6 +165,7 @@ public class ControlData {
 	public static LocalDateTime ldt = LocalDateTime.now();
 	public static String dateTimeAppend = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm", Locale.ENGLISH).format(ldt);
 
+	public static boolean printGWFuncCalls=false;
 	
 	public ControlData(){
 	}

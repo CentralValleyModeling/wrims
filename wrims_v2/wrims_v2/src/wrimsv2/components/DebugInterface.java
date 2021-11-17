@@ -562,6 +562,28 @@ public class DebugInterface {
 					e.printStackTrace();
 				}
 			}
+		}else if(request.startsWith("PrintGWFuncCalls:")){
+			int index=request.indexOf(":");
+			String printGWFuncCalls=request.substring(index+1);
+			if (printGWFuncCalls.equalsIgnoreCase("True")){
+				ControlData.printGWFuncCalls=true;
+				try {
+					sendRequest("Print groundwater function calls on");
+					System.out.println("Print groundwater function calls on");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}else{
+				ControlData.printGWFuncCalls=false;
+				try {
+					sendRequest("Print groundwater function calls off");
+					System.out.println("Print groundwater function calls off");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}else if (request.startsWith("savesvdss:")){
 			int index=request.indexOf(":");
 			String fileName=request.substring(index+1);
