@@ -533,6 +533,12 @@ public class BatchRunProcess {
 				configMap.put("showruntimemessage", "no");
 			}
 			
+			if (DebugCorePlugin.printGWFuncCalls){
+				configMap.put("printgwfunccalls", "yes");
+			}else{
+				configMap.put("printgwfunccalls", "no");
+			}
+			
 			configMap.put("ifsisselfile", ifsIsSelFile);
 			
 			String configName = launchFilePath +".config";
@@ -618,6 +624,7 @@ public class BatchRunProcess {
 			out.println("OutputAllCycleData "+configMap.get("OutputAllCycleData".toLowerCase()));
 			out.println("SelectedCycleOutput "+configMap.get("SelectedCycleOutput".toLowerCase()));
 			out.println("ShowRunTimeMessage "+configMap.get("ShowRunTimeMessage".toLowerCase()));
+			out.println("PrintGWFuncCalls   "+configMap.get("PrintGWFuncCalls".toLowerCase()));
 			
 			if (DebugCorePlugin.solver.equalsIgnoreCase("LpSolve")) {
 				

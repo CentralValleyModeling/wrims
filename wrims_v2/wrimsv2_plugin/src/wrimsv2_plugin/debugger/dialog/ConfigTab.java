@@ -353,6 +353,9 @@ public class ConfigTab extends TabItem {
 		configList.add("watch");
 		configMap.put("watch", new String[]{""});
 		
+		configList.add("NameSorting");
+		configMap.put("NameSorting", new String[]{"false", "true"});
+		
 		Collections.sort(configList, String.CASE_INSENSITIVE_ORDER);
 	}
 }

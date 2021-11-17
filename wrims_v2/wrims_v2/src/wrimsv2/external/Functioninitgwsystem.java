@@ -52,11 +52,16 @@ public class Functioninitgwsystem extends ExternalFunction{
 		}else{
 			iNRestartFiles=ControlData.numberRestartFiles;
 		}
+
+		int iPrintFuncCalls=0;
+		if (ControlData.printGWFuncCalls){
+			iPrintFuncCalls=1;
+		}
 		
-		float result = initgwsystem(cGWPath,iLenGWPath,cOutPath,iLenOutPath,cTimeStep,iNTimeSteps,iSimBeginMonth,iSimBeginYear,iSimMode,iNRestartFiles,iResimulate);
+		float result = initgwsystem(cGWPath,iLenGWPath,cOutPath,iLenOutPath,cTimeStep,iNTimeSteps,iSimBeginMonth,iSimBeginYear,iSimMode,iNRestartFiles,iResimulate, iPrintFuncCalls);
 		// push the result on the Stack
 		stack.push(new Float(result));
 	}
 
-	public native float initgwsystem(String cGWPath, int iLenGWPath,String cOutPath, int iLenOutPath, String cTimeStep, int iNTimeSteps, int iSimBeginMonth, int iSimBeginYear, int iSimMode, int iNRestartFiles, int iResimulate);
+	public native float initgwsystem(String cGWPath, int iLenGWPath,String cOutPath, int iLenOutPath, String cTimeStep, int iNTimeSteps, int iSimBeginMonth, int iSimBeginYear, int iSimMode, int iNRestartFiles, int iResimulate, int iPrintFuncCalls);
 }

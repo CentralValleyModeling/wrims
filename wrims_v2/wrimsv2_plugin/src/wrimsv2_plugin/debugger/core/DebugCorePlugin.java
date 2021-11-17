@@ -294,6 +294,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static boolean outputAllCycles=true;
 	public static String outputCycles="\'\'";
 	public static boolean showRunTimeMessage=false;
+	public static boolean printGWFuncCalls=false;
 	
 	public static String devPass = "ModelingisNo1";
 	public static boolean cbcUsed=true;

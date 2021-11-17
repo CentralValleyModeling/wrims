@@ -304,6 +304,12 @@ public class WPPWsiDiTab extends AbstractLaunchConfigurationTab {
 				out.println("showruntimemessage no");
 			}
 			
+			if (DebugCorePlugin.printGWFuncCalls){
+				out.println("printgwfunccalls yes");
+			}else{
+				out.println("printgwfunccalls no");
+			}
+			
 			//if (DebugCorePlugin.solver.equalsIgnoreCase("LpSolve")) {
 			//	out.println("LpSolveConfigFile         callite.lpsolve");
 			//	out.println("LpSolveNumberOfRetries    2");				
