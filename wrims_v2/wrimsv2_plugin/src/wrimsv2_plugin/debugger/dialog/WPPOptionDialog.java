@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.eclipse.debug.core.DebugException;
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -18,9 +19,9 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
@@ -77,6 +78,7 @@ public class WPPOptionDialog extends Dialog {
 	private double vcbcHintRelaxPenalty;
 	private double vcbcHintTimeMax;
 	private int prevSel;
+	private ConfigTab configTab;
 
 	public WPPOptionDialog(Shell parent) {
 		super(parent, SWT.MIN|SWT.RESIZE);
@@ -119,6 +121,9 @@ public class WPPOptionDialog extends Dialog {
 	    TabItem ifsTab = new TabItem(tabFolder, SWT.BORDER);
 	    ifsTab.setText("Infeasibility Analysis");
 	    createInfeasibleTab(tabFolder, ifsTab);
+	    
+	    configTab = new ConfigTab(tabFolder, SWT.BORDER);
+	    configTab.setText("Configurations");
 	    
 	    tabFolder.setSize(600, 350);
 	    tabFolder.setLayoutData(gridData);
@@ -202,6 +207,7 @@ public class WPPOptionDialog extends Dialog {
 					}
 				}
 				showSolverStatus();
+				configTab.saveConfigPref();
 				shell.close();
 			}
 		});
@@ -222,30 +228,30 @@ public class WPPOptionDialog extends Dialog {
 	
 	public void createGeneralTab(TabFolder tabFolder, TabItem generalTab){		
 		
-		Group group = new Group(tabFolder, SWT.NONE);
+		Composite composite = new Composite(tabFolder, SWT.NONE);
 		
 		GridLayout layout=new GridLayout(2, false);
 		layout.marginWidth=20;
 		layout.marginHeight=15;
-		group.setLayout(layout);
+		composite.setLayout(layout);
 		
 		GridData gridData=new GridData(GridData.FILL_HORIZONTAL);
 		gridData.horizontalSpan=1;
 		
-		Label label1 = new Label(group, SWT.NONE);
+		Label label1 = new Label(composite, SWT.NONE);
 		label1.setText("Solver:");
 		
-		solverCombo = new Combo(group, SWT.BORDER);
+		solverCombo = new Combo(composite, SWT.BORDER);
 		solverCombo.add("CBC");
 		solverCombo.add("XA");
 		//solverCombo.add("CBC2.10");
 		//solverCombo.add("CBC2.9.8");
 		//solverCombo.add("LPSolve");
 		
-		Label label2 =  new Label(group, SWT.NONE);
+		Label label2 =  new Label(composite, SWT.NONE);
 		label2.setText("Log:");
 		
-		logCombo = new Combo(group, SWT.SINGLE|SWT.BORDER);
+		logCombo = new Combo(composite, SWT.SINGLE|SWT.BORDER);
 		logCombo.add("None");
 		logCombo.add("Log");
 		logCombo.add("xa_cbc");
@@ -310,48 +316,48 @@ public class WPPOptionDialog extends Dialog {
 		}
 		logCombo.setLayoutData(gridData);
 		
-		Label label3 =  new Label(group, SWT.NONE);
+		Label label3 =  new Label(composite, SWT.NONE);
 		label3.setText("Allocated Memory (mb):");
 		
-		textMemory =  new Text(group, SWT.BORDER);
+		textMemory =  new Text(composite, SWT.BORDER);
 		textMemory.setText(DebugCorePlugin.xmx);
 		textMemory.setLayoutData(gridData);
 		
-		Label label4 =  new Label(group, SWT.NONE);
+		Label label4 =  new Label(composite, SWT.NONE);
 		label4.setText("Output Cycle Data to DSS");
 		
-		buttonCycleDss =  new Button(group, SWT.CHECK);
+		buttonCycleDss =  new Button(composite, SWT.CHECK);
 		buttonCycleDss.setSelection(DebugCorePlugin.outputCycleToDss);
 		buttonCycleDss.setLayoutData(gridData);
 		
-		Label label5 =  new Label(group, SWT.NONE);
+		Label label5 =  new Label(composite, SWT.NONE);
 		label5.setText("Show run time message to locate blowout and freeze");
 		
-		buttonRTMessage =  new Button(group, SWT.CHECK);
+		buttonRTMessage =  new Button(composite, SWT.CHECK);
 		buttonRTMessage.setSelection(DebugCorePlugin.showRunTimeMessage);
 		buttonRTMessage.setLayoutData(gridData);
 		
-		generalTab.setControl(group);
+		generalTab.setControl(composite);
 	}
 	
 	public void createCycleTab(TabFolder tabFolder, TabItem cycleTab){		
 		
-		Group group = new Group(tabFolder, SWT.NONE);
+		Composite composite = new Composite(tabFolder, SWT.NONE);
 		
 		GridLayout layout=new GridLayout(2, false);
 		layout.marginWidth=20;
 		layout.marginHeight=25;
-		group.setLayout(layout);
+		composite.setLayout(layout);
 		
 		GridData gridData=new GridData(GridData.BEGINNING);
 		gridData.horizontalSpan=2;
 		
-		buttonAllCycles =  new Button(group, SWT.RADIO);
+		buttonAllCycles =  new Button(composite, SWT.RADIO);
 		buttonAllCycles.setText("All cycles");
 		buttonAllCycles.setSelection(DebugCorePlugin.outputAllCycles);
 		buttonAllCycles.setLayoutData(gridData);
 		
-		buttonSelectedCycles =  new Button(group, SWT.RADIO);
+		buttonSelectedCycles =  new Button(composite, SWT.RADIO);
 		buttonSelectedCycles.setText("Selected cycles");
 		buttonSelectedCycles.setSelection(!DebugCorePlugin.outputAllCycles);
 		buttonSelectedCycles.setLayoutData(gridData);
@@ -359,79 +365,79 @@ public class WPPOptionDialog extends Dialog {
 		GridData gridData1 = new GridData(GridData.FILL_HORIZONTAL);
 		gridData1.horizontalSpan=2;
 		
-		textSelectedCycles = new Text (group, SWT.SINGLE | SWT.BORDER | SWT.H_SCROLL);
+		textSelectedCycles = new Text (composite, SWT.SINGLE | SWT.BORDER | SWT.H_SCROLL);
 		textSelectedCycles.setText(DebugCorePlugin.outputCycles.replace("\'", ""));
 		textSelectedCycles.setLayoutData(gridData1);
 		
-		Label labelSelectedCycles = new Label(group, SWT.NONE);
+		Label labelSelectedCycles = new Label(composite, SWT.NONE);
 		labelSelectedCycles.setText("*Selected cycles to output, e.g. 1, 2, 4, 6, 10");
 		labelSelectedCycles.setLayoutData(gridData);
 		
-		cycleTab.setControl(group);
+		cycleTab.setControl(composite);
 	}
 	
 	public void createCBCTab(TabFolder tabFolder, TabItem cbcTab){		
 		
-		Group group = new Group(tabFolder, SWT.NONE);
+		Composite composite = new Composite(tabFolder, SWT.NONE);
 		
 		GridLayout layout=new GridLayout(2, false);
 		layout.marginWidth=20;
 		layout.marginHeight=15;
-		group.setLayout(layout);
+		composite.setLayout(layout);
 		
 		GridData gridData=new GridData(GridData.FILL_HORIZONTAL);
 		gridData.horizontalSpan=1;
 		
-		Label label1 = new Label(group, SWT.NONE);
+		Label label1 = new Label(composite, SWT.NONE);
 		label1.setLayoutData(gridData);
 		label1.setText("Tolerance Primal:");
-		txtcbcTolerancePrimal=new Text(group, SWT.BORDER);
+		txtcbcTolerancePrimal=new Text(composite, SWT.BORDER);
 		txtcbcTolerancePrimal.setLayoutData(gridData);
 		txtcbcTolerancePrimal.setText(CBCSetting.cbcTolerancePrimal);
 		
-		Label label2 = new Label(group, SWT.NONE);
+		Label label2 = new Label(composite, SWT.NONE);
 		label2.setLayoutData(gridData);
 		label2.setText("Tolerance Primal Relax:");
-		txtcbcTolerancePrimalRelax=new Text(group, SWT.BORDER);
+		txtcbcTolerancePrimalRelax=new Text(composite, SWT.BORDER);
 		txtcbcTolerancePrimalRelax.setLayoutData(gridData);
 		txtcbcTolerancePrimalRelax.setText(CBCSetting.cbcTolerancePrimalRelax);
 		
-		Label label3 = new Label(group, SWT.NONE);
+		Label label3 = new Label(composite, SWT.NONE);
 		label3.setLayoutData(gridData);
 		label3.setText("Tolerance Warm Primal:");		
-		txtcbcToleranceWarmPrimal=new Text(group, SWT.BORDER);
+		txtcbcToleranceWarmPrimal=new Text(composite, SWT.BORDER);
 		txtcbcToleranceWarmPrimal.setLayoutData(gridData);
 		txtcbcToleranceWarmPrimal.setText(CBCSetting.cbcToleranceWarmPrimal);
 		
-		Label label4 = new Label(group, SWT.NONE);
+		Label label4 = new Label(composite, SWT.NONE);
 		label4.setLayoutData(gridData);
 		label4.setText("Tolerance Integer:");		
-		txtcbcToleranceInteger=new Text(group, SWT.BORDER);
+		txtcbcToleranceInteger=new Text(composite, SWT.BORDER);
 		txtcbcToleranceInteger.setLayoutData(gridData);
 		txtcbcToleranceInteger.setText(CBCSetting.cbcToleranceInteger);
 		
-		Label label5 = new Label(group, SWT.NONE);
+		Label label5 = new Label(composite, SWT.NONE);
 		label5.setLayoutData(gridData);
 		label5.setText("Tolerance Integer Check:");		
-		txtcbcToleranceIntegerCheck=new Text(group, SWT.BORDER);
+		txtcbcToleranceIntegerCheck=new Text(composite, SWT.BORDER);
 		txtcbcToleranceIntegerCheck.setLayoutData(gridData);
 		txtcbcToleranceIntegerCheck.setText(CBCSetting.cbcToleranceIntegerCheck);
 		
-		Label label6 = new Label(group, SWT.NONE);
+		Label label6 = new Label(composite, SWT.NONE);
 		label6.setLayoutData(gridData);
 		label6.setText("Tolerance Zero:");		
-		txtcbcToleranceZero=new Text(group, SWT.BORDER);
+		txtcbcToleranceZero=new Text(composite, SWT.BORDER);
 		txtcbcToleranceZero.setLayoutData(gridData);
 		txtcbcToleranceZero.setText(CBCSetting.cbcToleranceZero);
 
-		Label label7 = new Label(group, SWT.NONE);
+		Label label7 = new Label(composite, SWT.NONE);
 		label7.setLayoutData(gridData);
 		label7.setText("Developer Pass Code:");		
-		txtDevPass=new Text(group, SWT.BORDER);
+		txtDevPass=new Text(composite, SWT.BORDER);
 		txtDevPass.setLayoutData(gridData);
 		txtDevPass.setText("");
 		
-		Button butDefault = new Button(group, SWT.BORDER);
+		Button butDefault = new Button(composite, SWT.BORDER);
 		butDefault.setLayoutData(gridData);
 		butDefault.setText("Default");
 		butDefault.addSelectionListener(new SelectionAdapter(){
@@ -445,48 +451,48 @@ public class WPPOptionDialog extends Dialog {
 			}
 		});
 		
-		Label label8 = new Label(group, SWT.NONE);
+		Label label8 = new Label(composite, SWT.NONE);
 		label8.setLayoutData(gridData);
 		label8.setText("");
 		
 		/*
-		Label label9 = new Label(group, SWT.NONE);
+		Label label9 = new Label(composite, SWT.NONE);
 		GridData gridData2=new GridData(GridData.FILL_HORIZONTAL);
 		gridData2.horizontalSpan=2;
 		label9.setLayoutData(gridData2);
 		label9.setText("*When WRIMS 2 GUI restarts, CBC tolerances return to default values.");
 		*/
 		
-		cbcTab.setControl(group);
+		cbcTab.setControl(composite);
 	}
 	
 	public void createInfeasibleTab(TabFolder tabFolder, TabItem ifsTab){		
 		
-		Group group = new Group(tabFolder, SWT.NONE);
+		Composite composite = new Composite(tabFolder, SWT.NONE);
 		
 		GridLayout layout=new GridLayout(2, false);
 		layout.marginWidth=20;
 		layout.marginHeight=15;
-		group.setLayout(layout);
+		composite.setLayout(layout);
 		
 		GridData gridData=new GridData(GridData.FILL_HORIZONTAL);
 		gridData.horizontalSpan=1;
 		
-		Label label1 = new Label(group, SWT.NONE);
+		Label label1 = new Label(composite, SWT.NONE);
 		label1.setLayoutData(gridData);
 		label1.setText("Infeasibility Hint Relax Penalty:");
-		txtcbcHintRelaxPenalty=new Text(group, SWT.BORDER);
+		txtcbcHintRelaxPenalty=new Text(composite, SWT.BORDER);
 		txtcbcHintRelaxPenalty.setLayoutData(gridData);
 		txtcbcHintRelaxPenalty.setText(CBCSetting.cbcHintRelaxPenalty);
 		
-		Label label2 = new Label(group, SWT.NONE);
+		Label label2 = new Label(composite, SWT.NONE);
 		label2.setLayoutData(gridData);
 		label2.setText("Max Time for Infeasibility Hint Finding:");
-		txtcbcHintTimeMax=new Text(group, SWT.BORDER);
+		txtcbcHintTimeMax=new Text(composite, SWT.BORDER);
 		txtcbcHintTimeMax.setLayoutData(gridData);
 		txtcbcHintTimeMax.setText(CBCSetting.cbcHintTimeMax);
 	
-		Button butDefault = new Button(group, SWT.BORDER);
+		Button butDefault = new Button(composite, SWT.BORDER);
 		butDefault.setLayoutData(gridData);
 		butDefault.setText("Default");
 		butDefault.addSelectionListener(new SelectionAdapter(){
@@ -496,11 +502,11 @@ public class WPPOptionDialog extends Dialog {
 			}
 		});
 	
-		Label label3 = new Label(group, SWT.NONE);
+		Label label3 = new Label(composite, SWT.NONE);
 		label3.setLayoutData(gridData);
 		label3.setText("");
 		
-		Label label4 = new Label(group, SWT.NONE|SWT.WRAP);
+		Label label4 = new Label(composite, SWT.NONE|SWT.WRAP);
 		gridData = new GridData(GridData.FILL_HORIZONTAL, SWT.TOP, true, false);
 		gridData.horizontalSpan=2;
 		label4.setLayoutData(gridData);
@@ -508,7 +514,7 @@ public class WPPOptionDialog extends Dialog {
 		"You can edit the list before or during the debug or run mode there.");
 		
 		/*
-		Button butEditIfs = new Button(group, SWT.BORDER);
+		Button butEditIfs = new Button(composite, SWT.BORDER);
 		butEditIfs.setLayoutData(gridData);
 		butEditIfs.setText("Edit");
 		butEditIfs.addSelectionListener(new SelectionAdapter(){
@@ -550,7 +556,7 @@ public class WPPOptionDialog extends Dialog {
 		});
 		*/
 		
-		ifsTab.setControl(group);
+		ifsTab.setControl(composite);
 	}
 	
 	public void showSolverStatus(){

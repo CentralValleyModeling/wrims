@@ -39,6 +39,7 @@ import org.eclipse.debug.core.model.LaunchConfigurationDelegate;
 import wrimsv2_plugin.calsimhydro.CalSimHydro;
 import wrimsv2_plugin.debugger.core.CBCSetting;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+import wrimsv2_plugin.debugger.dialog.ConfigTab;
 import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
 import wrimsv2_plugin.debugger.msr.MSRDataTransfer;
@@ -752,6 +753,8 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 				DebugCorePlugin.isIfsSelFile=true;
 			}
 			*/
+			
+			ConfigTab.writeConfigSetting(out);
 			
 			out.close();
 		

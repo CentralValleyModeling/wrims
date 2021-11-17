@@ -9,6 +9,8 @@ import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.io.PrintWriter;
 
+import wrimsv2_plugin.debugger.exception.WPPException;
+
 public class SettingPref {
 	private static String settingPrefFile="setting.prf";
 	private static String cbcSettingPrefFile="CBCSetting.prf";
@@ -71,7 +73,7 @@ public class SettingPref {
 			out.println(DebugCorePlugin.outputCycles);
 			out.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			WPPException.handleException(e);
 		}
 	}
 	
@@ -196,8 +198,9 @@ public class SettingPref {
 			out.println("cbcHintRelaxPenalty: "+CBCSetting.cbcHintRelaxPenalty);
 			out.println("cbcHintTimeMax: "+CBCSetting.cbcHintTimeMax);
 			out.close();
+			fw.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			WPPException.handleException(e);
 		}
 	}
 }
