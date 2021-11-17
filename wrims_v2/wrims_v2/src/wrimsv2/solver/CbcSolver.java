@@ -70,6 +70,7 @@ public class CbcSolver {
 	
 	private static  Map<String, Dvar> dvarMap;
 	private static BiMap<Integer, String> dvBiMap;
+	private static ArrayList<String> dvBiMapArray;
 	private static BiMap<String, Integer> dvBiMapInverse;
 	
 	private static  double maxValue = 1e28; //Double.POSITIVE_INFINITY;
@@ -195,7 +196,7 @@ public class CbcSolver {
 		names_dummy = jCbc.new_jarray_string(0); 
 		values_dummy = jCbc.new_jarray_int(0); 
 		
-		if (!useLpFile) dvBiMap = HashBiMap.create();
+		if (!useLpFile) {dvBiMap = HashBiMap.create(); dvBiMapArray = new ArrayList<String>();}
 		
 		//solver = jCbc.new_jOsiClpSolverInterface(); //this is our LP solver!
 	
@@ -246,10 +247,12 @@ public class CbcSolver {
 			int sizeB = ControlData.currModelDataSet.dvTimeArrayList.size();
 
 			for (int i=0; i<sizeA; i++){
-				dvBiMap.put(i,ControlData.currModelDataSet.dvList.get(i));				
+				dvBiMap.put(i,ControlData.currModelDataSet.dvList.get(i));
+				dvBiMapArray.add(ControlData.currModelDataSet.dvList.get(i));	
 			}
 			for (int i=0; i<sizeB; i++){
-				dvBiMap.put(i+sizeA,ControlData.currModelDataSet.dvTimeArrayList.get(i));				
+				dvBiMap.put(i+sizeA,ControlData.currModelDataSet.dvTimeArrayList.get(i));
+				dvBiMapArray.add(ControlData.currModelDataSet.dvTimeArrayList.get(i));
 			}
 			dvBiMapInverse = dvBiMap.inverse();
 			
@@ -541,12 +544,14 @@ public class CbcSolver {
 		SolverData.getDvarMap().keySet().retainAll(originalDvarKeys);
 		int sizeA = ControlData.currModelDataSet.dvList.size();
 		int sizeB = ControlData.currModelDataSet.dvTimeArrayList.size();
-		dvBiMap.clear();
+		dvBiMap.clear(); dvBiMapArray = new ArrayList<String>();
 		for (int i=0; i<sizeA; i++){
-			dvBiMap.put(i,ControlData.currModelDataSet.dvList.get(i));				
+			dvBiMap.put(i,ControlData.currModelDataSet.dvList.get(i));	
+			dvBiMapArray.add(i,ControlData.currModelDataSet.dvList.get(i));	
 		}
 		for (int i=0; i<sizeB; i++){
-			dvBiMap.put(i+sizeA,ControlData.currModelDataSet.dvTimeArrayList.get(i));				
+			dvBiMap.put(i+sizeA,ControlData.currModelDataSet.dvTimeArrayList.get(i));	
+			dvBiMapArray.add(ControlData.currModelDataSet.dvTimeArrayList.get(i));	
 		}
 		dvBiMapInverse = dvBiMap.inverse();
 		
@@ -612,7 +617,7 @@ public class CbcSolver {
 		int sizeB = ControlData.currModelDataSet.dvTimeArrayList.size();
 		dvBiMap.clear();
 		for (int i=0; i<sizeA; i++){
-			dvBiMap.put(i,ControlData.currModelDataSet.dvList.get(i));				
+			dvBiMap.put(i,ControlData.currModelDataSet.dvList.get(i));
 		}
 		for (int i=0; i<sizeB; i++){
 			dvBiMap.put(i+sizeA,ControlData.currModelDataSet.dvTimeArrayList.get(i));				
@@ -648,6 +653,7 @@ public class CbcSolver {
 		if (!useLpFile) {
 			jCbc.delete_jCoinModel(modelObject);
 			dvBiMap.clear();
+			dvBiMapArray = new ArrayList<String>();
 			dvBiMapInverse.clear();
 		}
 
@@ -752,6 +758,7 @@ public class CbcSolver {
 					if (!dvarMap.containsKey(multName)){ 
 						int sizeDv = dvBiMap.size();
 						dvBiMap.put(sizeDv, multName);
+						dvBiMapArray.add(multName);
 						dvBiMapInverse.put(multName, sizeDv);
 						
 						addConditionalSlackSurplusToDvarMap(dvarMap, multName, isNoteCbc, append);
@@ -990,7 +997,7 @@ public class CbcSolver {
 		Map<String, WeightElement> wm1  = SolverData.getWeightMap();
 		String c="quicklog version 1.0\n";
 		for (int i=0; i<dvBiMap.size(); i++){
-			String dvName = dvBiMap.get(i);
+			String dvName = dvBiMapArray.get(i);
 			Dvar dvObj = dvarMap.get(dvName);
 			
 			double w = 0;
@@ -1018,7 +1025,7 @@ public class CbcSolver {
 		Map<String, WeightElement> wm1  = SolverData.getWeightMap();
 		String c="quicklog version 1.0\n";
 		for (int i=0; i<dvBiMap.size(); i++){
-			String dvName = dvBiMap.get(i);
+			String dvName = dvBiMapArray.get(i);
 			Dvar dvObj = dvarMap.get(dvName);
 			
 			double w = 0;
