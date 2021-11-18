@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -18,7 +19,7 @@ public class IfIncItemGroup implements Serializable {
 	public ArrayList<HashMap<String, IncFileTemp>> inc_files_map_list;
 	public ArrayList<HashMap<String, SvarTemp>> inc_svar_map_list;
 	public ArrayList<HashMap<String, DvarTemp>> inc_dvar_map_list;
-	public ArrayList<HashMap<String, AliasTemp>> inc_alias_map_list;
+	public ArrayList<LinkedHashMap<String, AliasTemp>> inc_alias_map_list;
 	public ArrayList<HashMap<String, TimeseriesTemp>> inc_timeseries_map_list;
 	public ArrayList<HashMap<String, GoalTemp>> inc_goalSimple_map_list;
 	public ArrayList<HashMap<String, GoalTemp>> inc_goalComplex_map_list;
@@ -33,7 +34,7 @@ public class IfIncItemGroup implements Serializable {
 		inc_files_map_list = new ArrayList<HashMap<String,IncFileTemp>>();
 		inc_svar_map_list =  new ArrayList<HashMap<String,SvarTemp>>();
 		inc_dvar_map_list = new ArrayList<HashMap<String,DvarTemp>>();
-		inc_alias_map_list = new ArrayList<HashMap<String,AliasTemp>>();
+		inc_alias_map_list = new ArrayList<LinkedHashMap<String,AliasTemp>>();
 		inc_timeseries_map_list = new ArrayList<HashMap<String,TimeseriesTemp>>();
 		inc_goalSimple_map_list = new ArrayList<HashMap<String,GoalTemp>>();
 		inc_goalComplex_map_list = new ArrayList<HashMap<String,GoalTemp>>();

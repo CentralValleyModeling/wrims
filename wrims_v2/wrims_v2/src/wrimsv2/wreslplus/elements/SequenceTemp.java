@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -27,6 +28,8 @@ public class SequenceTemp implements Serializable {
 	public ArrayList<String>  svIncFileList_post;   // copied from included model 
 	public ArrayList<String>  asIncFileList_post;   // copied from included model 
 	public ArrayList<String>  exIncFileList_post;   // copied from included model 
+	public ArrayList<String>  dvIncFileList_post;   // copied from included model 
+	public ArrayList<String>  glIncFileList_post;   // copied from included model 
 	public ArrayList<String> incFileAbsPathList_post;  // copied from included model  
 	public ArrayList<String> incFileRelativePathList_post; // copied from included model  
 	// does not reflect user's input order
@@ -47,7 +50,7 @@ public class SequenceTemp implements Serializable {
 	
 	public Map<String,SvarTemp> svMap;
 	public Map<String,DvarTemp> dvMap;
-	public Map<String,AliasTemp> asMap;		
+	public LinkedHashMap<String,AliasTemp> asMap;		
 	public Map<String,GoalTemp> glMap;		
 	public Map<String,ExternalTemp> exMap;	
 	
@@ -95,7 +98,7 @@ public class SequenceTemp implements Serializable {
 		tsMap = new HashMap<String, TimeseriesTemp>();
 		svMap = new HashMap<String, SvarTemp>();
 		dvMap = new HashMap<String, DvarTemp>();
-		asMap = new HashMap<String, AliasTemp>();
+		asMap = new LinkedHashMap<String, AliasTemp>();
 		glMap = new HashMap<String, GoalTemp>();
 		exMap = new HashMap<String, ExternalTemp>();
 		

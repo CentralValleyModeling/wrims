@@ -57,6 +57,20 @@ public class ProcVarIncFile {
 		mt.exIncFileList.removeAll(mt.dvList);
 		mt.exIncFileList.removeAll(mt.glList);
 		mt.exIncFileList.removeAll(mt.asList);
+	
+		mt.dvIncFileList = new ArrayList<String>(mt.itemList);
+		mt.dvIncFileList.removeAll(mt.tsList);
+		mt.dvIncFileList.removeAll(mt.svList);
+		mt.dvIncFileList.removeAll(mt.exList);
+		mt.dvIncFileList.removeAll(mt.glList);
+		mt.dvIncFileList.removeAll(mt.asList);
+
+		mt.glIncFileList = new ArrayList<String>(mt.itemList);
+		mt.glIncFileList.removeAll(mt.tsList);
+		mt.glIncFileList.removeAll(mt.svList);
+		mt.glIncFileList.removeAll(mt.exList);
+		mt.glIncFileList.removeAll(mt.dvList);
+		mt.glIncFileList.removeAll(mt.asList);
 		
 		for (String f : mt.incFileMap.keySet()){
 			
@@ -68,6 +82,12 @@ public class ProcVarIncFile {
 			
 			index = mt.exIncFileList.indexOf(f);
 			mt.exIncFileList.set(index, mt.incFileMap.get(f).pathRelativeToRunDir);
+			
+			index = mt.dvIncFileList.indexOf(f);
+			mt.dvIncFileList.set(index, mt.incFileMap.get(f).pathRelativeToRunDir);
+
+			index = mt.glIncFileList.indexOf(f);
+			mt.glIncFileList.set(index, mt.incFileMap.get(f).pathRelativeToRunDir);
 		}
 		
 		mt.svIncFileList_post = new ArrayList<String>(mt.svIncFileList);
@@ -75,6 +95,10 @@ public class ProcVarIncFile {
 		mt.asIncFileList_post = new ArrayList<String>(mt.asIncFileList);
 		
 		mt.exIncFileList_post = new ArrayList<String>(mt.exIncFileList);
+		
+		mt.dvIncFileList_post = new ArrayList<String>(mt.dvIncFileList);
+		
+		mt.glIncFileList_post = new ArrayList<String>(mt.glIncFileList);
 		
 	}
 

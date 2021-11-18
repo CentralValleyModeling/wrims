@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Set;
 
 import org.antlr.runtime.ANTLRStringStream;
@@ -72,7 +73,7 @@ public class ProcIfIncItemGroup {
 				HashMap<String, IncFileTemp> incFMap = gObj.inc_files_map_list.get(indexOfFirstTrue);
 				HashMap<String, SvarTemp> svarMap = gObj.inc_svar_map_list.get(indexOfFirstTrue);
 				HashMap<String, DvarTemp> dvarMap = gObj.inc_dvar_map_list.get(indexOfFirstTrue);
-				HashMap<String, AliasTemp> aliasMap = gObj.inc_alias_map_list.get(indexOfFirstTrue);	
+				LinkedHashMap<String, AliasTemp> aliasMap = gObj.inc_alias_map_list.get(indexOfFirstTrue);	
 				HashMap<String, TimeseriesTemp> timeseriesMap = gObj.inc_timeseries_map_list.get(indexOfFirstTrue);	
 				HashMap<String, GoalTemp> goalSimpleMap = gObj.inc_goalSimple_map_list.get(indexOfFirstTrue);
 				HashMap<String, GoalTemp> goalComplexMap = gObj.inc_goalComplex_map_list.get(indexOfFirstTrue);

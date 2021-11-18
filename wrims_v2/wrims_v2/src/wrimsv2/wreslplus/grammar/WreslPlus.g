@@ -11,6 +11,7 @@ options {
   package wrimsv2.wreslplus.grammar;
   import wrimsv2.wreslparser.elements.LogUtils; 
   import java.util.HashMap;
+  import java.util.LinkedHashMap;
   import java.util.Set;
   import java.util.HashSet;
   import java.util.LinkedHashSet;
@@ -235,7 +236,7 @@ scope { IfIncItemGroup incg_;
         HashMap<String, IncFileTemp> _incfmap;
         HashMap<String, SvarTemp> _incSvarMap;
         HashMap<String, DvarTemp> _incDvarMap;
-        HashMap<String, AliasTemp> _incAliasMap;
+        LinkedHashMap<String, AliasTemp> _incAliasMap;
         HashMap<String, TimeseriesTemp> _incTimeseriesMap;
         HashMap<String, GoalTemp> _incGoalSimpleMap;
         HashMap<String, GoalTemp> _incGoalComplexMap;
@@ -289,7 +290,7 @@ include_item_group
        $if_inc_items::_incfmap = new HashMap<String, IncFileTemp>();
        $if_inc_items::_incSvarMap = new HashMap<String, SvarTemp>();
        $if_inc_items::_incDvarMap = new HashMap<String, DvarTemp>();
-       $if_inc_items::_incAliasMap = new HashMap<String, AliasTemp>();
+       $if_inc_items::_incAliasMap = new LinkedHashMap<String, AliasTemp>();
        $if_inc_items::_incTimeseriesMap = new HashMap<String, TimeseriesTemp>(); 
        $if_inc_items::_incGoalSimpleMap = new HashMap<String, GoalTemp>();              
        $if_inc_items::_incGoalComplexMap = new HashMap<String, GoalTemp>(); 

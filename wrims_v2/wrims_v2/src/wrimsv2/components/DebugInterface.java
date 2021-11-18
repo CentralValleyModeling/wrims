@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -1074,7 +1075,7 @@ public class DebugInterface {
 					varList.addAll(dependants);
 				}
 			
-				ArrayList<HashMap<String, AliasTemp>> inc_alias_map_list = ifIncItemGroup.inc_alias_map_list;
+				ArrayList<LinkedHashMap<String, AliasTemp>> inc_alias_map_list = ifIncItemGroup.inc_alias_map_list;
 				HashMap<String, AliasTemp> inc_alias_map = inc_alias_map_list.get(j);
 				Set<String> aliasNames = inc_alias_map.keySet();
 				varList.addAll(aliasNames);

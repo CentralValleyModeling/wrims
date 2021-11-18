@@ -160,7 +160,7 @@ public class ToWreslData {
 		o.wtSlackSurplusList = new ArrayList<String>(seq.ssList_hasCase);
 		if (ControlData.isNameSorting) Collections.sort(o.wtSlackSurplusList,String.CASE_INSENSITIVE_ORDER);
 	
-		o.dvList = new ArrayList<String>(seq.dvList);
+		o.dvList = new ArrayList<String>(seq.dvIncFileList_post);
 		o.dvList.addAll(seq.dvList_fromAlias);
 		o.dvList_deviationSlackSurplus.addAll(seq.dvList_deviationSlackSurplus);
 		o.deviationSlackSurplus_toleranceMap.putAll(seq.deviationSlackSurplus_toleranceMap);
@@ -176,7 +176,7 @@ public class ToWreslData {
 		//System.out.println("ToWreslData => m.svList"+m.svList);
 		//o.svList = new ArrayList<String>(m.svList);
 
-		o.gList = new ArrayList<String>(seq.glList);
+		o.gList = new ArrayList<String>(seq.glIncFileList_post);
 		o.gList.addAll(seq.glList_fromAlias);
 		if (ControlData.isNameSorting) Collections.sort(o.gList,String.CASE_INSENSITIVE_ORDER);
 		

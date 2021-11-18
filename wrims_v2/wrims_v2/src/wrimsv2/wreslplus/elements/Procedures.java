@@ -79,6 +79,8 @@ public class Procedures {
 			seqObj.svIncFileList_post = seqModelObj.svIncFileList_post;
 			seqObj.asIncFileList_post = seqModelObj.asIncFileList_post;
 			seqObj.exIncFileList_post = seqModelObj.exIncFileList_post;
+			seqObj.dvIncFileList_post = seqModelObj.dvIncFileList_post;
+			seqObj.glIncFileList_post = seqModelObj.glIncFileList_post;
 			seqObj.incFileAbsPathList_post = seqModelObj.incFileAbsPathList_post;
 			seqObj.incFileRelativePathList_post = seqModelObj.incFileRelativePathList_post;
 			
@@ -542,7 +544,31 @@ public class Procedures {
 						m.exIncFileList_post.addAll(index, includedModel.exIncFileList_post);
 
 					}
-	
+
+					// process dv
+					index =m.dvIncFileList_post.indexOf(includedFile);
+					
+					if (index > -1) {
+						
+						m.dvIncFileList_post.remove(index);
+						ModelTemp includedModel = st.fileModelDataTable.get(includedFile,
+								st.fileModelNameMap.get(includedFile).get(0));
+						m.dvIncFileList_post.addAll(index, includedModel.dvIncFileList_post);
+
+					}
+					
+					// process gl
+					index =m.glIncFileList_post.indexOf(includedFile);
+					
+					if (index > -1) {
+						
+						m.glIncFileList_post.remove(index);
+						ModelTemp includedModel = st.fileModelDataTable.get(includedFile,
+								st.fileModelNameMap.get(includedFile).get(0));
+						m.glIncFileList_post.addAll(index, includedModel.glIncFileList_post);
+
+					}
+					
 				}
 			}
 		}
@@ -602,6 +628,29 @@ public class Procedures {
 					m.exIncFileList_post.addAll(index, includedModel.exIncFileList_post);
 				}
 				
+				// process dv
+				index = m.dvIncFileList_post.indexOf(includedFile);
+				
+				if (index > -1) {
+
+					String modelName = st.fileModelNameMap.get(includedFile).get(0);
+
+					ModelTemp includedModel = st.fileModelDataTable.get(includedFile, modelName);
+					m.dvIncFileList_post.remove(index);
+					m.dvIncFileList_post.addAll(index, includedModel.dvIncFileList_post);
+				}
+				
+				// process gl
+				index = m.glIncFileList_post.indexOf(includedFile);
+				
+				if (index > -1) {
+
+					String modelName = st.fileModelNameMap.get(includedFile).get(0);
+
+					ModelTemp includedModel = st.fileModelDataTable.get(includedFile, modelName);
+					m.glIncFileList_post.remove(index);
+					m.glIncFileList_post.addAll(index, includedModel.glIncFileList_post);
+				}
 			}		
 		}
 	}

@@ -30,6 +30,12 @@ public class ModelTemp implements Serializable {
 	public ArrayList<String>  exIncFileList;   // processed 
 	public ArrayList<String>  exIncFileList_post;   // post processed 
 	
+	public ArrayList<String>  dvIncFileList;   // processed 
+	public ArrayList<String>  dvIncFileList_post;   // post processed 
+
+	public ArrayList<String>  glIncFileList;   // processed 
+	public ArrayList<String>  glIncFileList_post;   // post processed 	
+	
 	//<svName, relativePath, operationName>
 	//public ArrayList<Triplet<String,String,String>>  t_svList;   // processed 
 	//public ArrayList<Triplet<String,String,String>>  t_svList_post;   // post processed 
@@ -54,7 +60,7 @@ public class ModelTemp implements Serializable {
 	public ArrayList<String>  asList_backup;  // backup raw lowercased
 	public ArrayList<String>  asList;
 	//public ArrayList<String>  asList_reduced; // added after processed
-	public Map<String,AliasTemp> asMap;		
+	public LinkedHashMap<String,AliasTemp> asMap;		
 	public ArrayList<String>  svList;
 	public Map<String,SvarTemp> svMap;
 	public ArrayList<String>  dvList;
@@ -97,6 +103,8 @@ public class ModelTemp implements Serializable {
 		svIncFileList_post = new ArrayList<String>();
 		asIncFileList_post = new ArrayList<String>();
 		exIncFileList_post = new ArrayList<String>();
+		dvIncFileList_post = new ArrayList<String>();
+		glIncFileList_post = new ArrayList<String>();
 		incFileIDList = new ArrayList<String>();
 		incFileRelativePathList = new ArrayList<String>();
 		incFileRelativePathList_post = new ArrayList<String>();

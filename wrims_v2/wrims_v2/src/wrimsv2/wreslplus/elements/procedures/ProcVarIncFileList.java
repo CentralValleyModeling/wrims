@@ -60,11 +60,27 @@ public class ProcVarIncFileList {
 		mt.exIncFileList.removeAll(mt.glList);
 		mt.exIncFileList.removeAll(mt.asList);
 		
+		mt.dvIncFileList = new ArrayList<String>(mt.itemList);
+		mt.dvIncFileList.removeAll(mt.tsList);
+		mt.dvIncFileList.removeAll(mt.svList);
+		mt.dvIncFileList.removeAll(mt.exList);
+		mt.dvIncFileList.removeAll(mt.glList);
+		mt.dvIncFileList.removeAll(mt.asList);
+	
+		mt.glIncFileList = new ArrayList<String>(mt.itemList);
+		mt.glIncFileList.removeAll(mt.tsList);
+		mt.glIncFileList.removeAll(mt.svList);
+		mt.glIncFileList.removeAll(mt.exList);
+		mt.glIncFileList.removeAll(mt.dvList);
+		mt.glIncFileList.removeAll(mt.asList);
+		
 		for (String f : mt.incFileMap.keySet()){
 			
 			int index_1;
 			int index_2;
 			int index_3;
+			int index_4;
+			int index_5;
 			
 			
 			// f is a include model
@@ -77,6 +93,8 @@ public class ProcVarIncFileList {
 				index_1 = mt.svIncFileList.indexOf(model_label);
 				index_2 = mt.asIncFileList.indexOf(model_label);
 				index_3 = mt.exIncFileList.indexOf(model_label);
+				index_4 = mt.dvIncFileList.indexOf(model_label);
+				index_5 = mt.glIncFileList.indexOf(model_label);
 				
 				mt.svIncFileList.remove(index_1);	
 				mt.svIncFileList.addAll(index_1, st.modelMap.get(f).svIncFileList_post);	
@@ -85,8 +103,13 @@ public class ProcVarIncFileList {
 				mt.asIncFileList.addAll(index_2, st.modelMap.get(f).asIncFileList_post);
 
 				mt.exIncFileList.remove(index_3);
-				mt.exIncFileList.addAll(index_3, st.modelMap.get(f).exIncFileList_post);	
+				mt.exIncFileList.addAll(index_3, st.modelMap.get(f).exIncFileList_post);
 				
+				mt.dvIncFileList.remove(index_4);
+				mt.dvIncFileList.addAll(index_4, st.modelMap.get(f).dvIncFileList_post);
+				
+				mt.glIncFileList.remove(index_5);
+				mt.glIncFileList.addAll(index_5, st.modelMap.get(f).glIncFileList_post);
 				//System.out.println("# after:"+mt.svIncFileList);
 				
 			} 
@@ -97,17 +120,23 @@ public class ProcVarIncFileList {
 				index_1 = mt.svIncFileList.indexOf(f);
 				index_2 = mt.asIncFileList.indexOf(f);
 				index_3 = mt.exIncFileList.indexOf(f);
+				index_4 = mt.dvIncFileList.indexOf(f);
+				index_5 = mt.glIncFileList.indexOf(f);
 
 				mt.svIncFileList.set(index_1, mt.incFileMap.get(f).pathRelativeToRunDir);			
 				mt.asIncFileList.set(index_2, mt.incFileMap.get(f).pathRelativeToRunDir);
 				mt.exIncFileList.set(index_3, mt.incFileMap.get(f).pathRelativeToRunDir);
-			
+				mt.dvIncFileList.set(index_4, mt.incFileMap.get(f).pathRelativeToRunDir);
+				mt.glIncFileList.set(index_5, mt.incFileMap.get(f).pathRelativeToRunDir);
+				
 			}
 		}
 		
 		mt.svIncFileList_post = new ArrayList<String>(mt.svIncFileList);	
 		mt.asIncFileList_post = new ArrayList<String>(mt.asIncFileList);
 		mt.exIncFileList_post = new ArrayList<String>(mt.exIncFileList);
+		mt.dvIncFileList_post = new ArrayList<String>(mt.dvIncFileList);
+		mt.glIncFileList_post = new ArrayList<String>(mt.glIncFileList);
 		
 	}
 	
