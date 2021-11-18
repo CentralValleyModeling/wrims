@@ -1321,6 +1321,8 @@ public class ConfigUtils {
 		configMap.put("svarfile2".toLowerCase(), "");
 		configMap.put("AllRestartFiles".toLowerCase(), "No");
 		configMap.put("NumberRestartFiles".toLowerCase(), "12");
+		configMap.put("PrintGWfuncCalls".toLowerCase(), "No");
+		configMap.put("NameSorting".toLowerCase(), "No");
 		return configMap;
 
 	}
