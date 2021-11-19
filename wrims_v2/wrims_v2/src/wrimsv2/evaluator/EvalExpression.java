@@ -29,7 +29,7 @@ public class EvalExpression {
 		this.intDouble=intDouble;
 	}
 	
-	public HashMap<String, IntDouble> getMultiplier(){
+	public LinkedHashMap<String, IntDouble> getMultiplier(){
 		return multiplier;
 	}
 	

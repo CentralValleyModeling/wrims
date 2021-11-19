@@ -744,7 +744,7 @@ public class CbcSolver {
 					System.out.println("error in CbcSolver!");
 				}
 			
-				HashMap<String, IntDouble> multMap = ec.getEvalExpression().getMultiplier();
+				LinkedHashMap<String, IntDouble> multMap = ec.getEvalExpression().getMultiplier();
 				Set multCollection = multMap.keySet();
 				Iterator multIterator = multCollection.iterator();				
 				

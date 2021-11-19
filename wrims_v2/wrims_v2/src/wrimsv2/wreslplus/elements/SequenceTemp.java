@@ -51,7 +51,7 @@ public class SequenceTemp implements Serializable {
 	public Map<String,SvarTemp> svMap;
 	public Map<String,DvarTemp> dvMap;
 	public LinkedHashMap<String,AliasTemp> asMap;		
-	public Map<String,GoalTemp> glMap;		
+	public LinkedHashMap<String,GoalTemp> glMap;		
 	public Map<String,ExternalTemp> exMap;	
 	
 	
@@ -99,7 +99,7 @@ public class SequenceTemp implements Serializable {
 		svMap = new HashMap<String, SvarTemp>();
 		dvMap = new HashMap<String, DvarTemp>();
 		asMap = new LinkedHashMap<String, AliasTemp>();
-		glMap = new HashMap<String, GoalTemp>();
+		glMap = new LinkedHashMap<String, GoalTemp>();
 		exMap = new HashMap<String, ExternalTemp>();
 		
 		ssMap_hasCase = new HashMap<String, DvarTemp>();
