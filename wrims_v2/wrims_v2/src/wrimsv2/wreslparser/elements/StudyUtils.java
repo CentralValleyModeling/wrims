@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.Properties;
 
 
+
 import org.antlr.runtime.RecognitionException;
 import org.apache.commons.io.FilenameUtils;
 
@@ -23,6 +24,7 @@ import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.components.BuildProps;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.FilePaths;
+import wrimsv2.evaluator.WeightEval;
 import wrimsv2.tools.Warmstart;
 import wrimsv2.wreslplus.elements.StudyTemp;
 import wrimsv2.wreslplus.elements.VarCycleIndex;
@@ -59,8 +61,9 @@ public class StudyUtils {
 	public static StudyDataSet compileStudy(String inMainWreslPath) throws IOException {
 		
 		StudyUtils.compileOnly = true;
-		return checkStudy(inMainWreslPath);
-
+		StudyDataSet sds = checkStudy(inMainWreslPath);
+		WeightEval.procWt(sds);
+		return sds;
 	}	
 	
 	public static StudyDataSet checkStudy(String inMainWreslPath) throws IOException {

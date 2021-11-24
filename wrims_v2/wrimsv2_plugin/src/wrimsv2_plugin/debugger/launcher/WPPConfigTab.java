@@ -35,6 +35,7 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 	private Button restartFilesButton;
 	private Button allRestartFilesButton;
 	private Text restartFilesText;
+	private Button compButton;
 	
 	@Override
 	public void createControl(Composite parent) {
@@ -238,6 +239,31 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 			}
 			
 		});
+		
+		Label compLabel = new Label(comp, SWT.NONE);
+		compLabel.setText("Compile Only:");
+		gd = new GridData(GridData.BEGINNING);
+		gd.horizontalSpan=2;
+		compLabel.setLayoutData(gd);
+		compLabel.setFont(font);
+		
+		compButton = new Button(comp, SWT.CHECK);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 1;
+		compButton.setLayoutData(gd);
+		compButton.setFont(font);
+		compButton.addSelectionListener(new SelectionListener(){
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				updateLaunchConfigurationDialog();	
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				updateLaunchConfigurationDialog();			
+			}
+		});
 	}
 
 	@Override
@@ -246,6 +272,7 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_ALLOWSVTSINIT, "no");
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_ALLRESTARTFILES, "no");
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_NUMBERRESTARTFILES, "12");
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_COMPILEONLY, "no");
 	}
 
 	@Override
@@ -307,6 +334,18 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 		} catch (CoreException e) {
 			WPPException.handleException(e);
 		}
+		
+		String compileOnly = null;
+		try {
+			compileOnly = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_COMPILEONLY, "no");
+			if (compileOnly.equalsIgnoreCase("yes")){
+				compButton.setSelection(true);
+			}else{
+				compButton.setSelection(false);
+			}
+		} catch (CoreException e) {
+			WPPException.handleException(e);
+		}
 	}
 
 	@Override
@@ -345,6 +384,14 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 		
 		String numberRestartFiles=restartFilesText.getText();
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_NUMBERRESTARTFILES, numberRestartFiles);
+		
+		String compileOnly="no";
+		if (compButton.getSelection()){
+			compileOnly="yes";
+		}else{
+			compileOnly="no";
+		}
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_COMPILEONLY, compileOnly);
 	}
 
 	@Override

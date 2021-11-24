@@ -93,7 +93,14 @@ public class ConfigUtils {
 			StudyUtils.compileOnly = true;
 			FilePaths.setMainFilePaths(argsMap.get("-mainwresl"));
 
-		} else {
+		} else if (argsMap.keySet().contains("-mainwreslplus")) {
+
+			System.out.println("Compiling main wresl file: "+argsMap.get("-mainwreslplus"));
+			StudyUtils.compileOnly = true;
+			StudyUtils.useWreslPlus=true;
+			FilePaths.setMainFilePaths(argsMap.get("-mainwreslplus"));
+
+		}else {
 			System.out.println("Example: ");
 			System.out.println("-config=\"D:\\test\\example.config\"");
 //			System.out.println("Example: ");
