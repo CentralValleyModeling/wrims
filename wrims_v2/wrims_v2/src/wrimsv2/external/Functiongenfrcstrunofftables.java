@@ -54,7 +54,7 @@ public class Functiongenfrcstrunofftables extends ExternalFunction{
 	    }else if (ControlData.currMonth>=2 && ControlData.currMonth<=5){
 	    	frcst_fea_list.add(frcst_fea);
 	    }
-	    
+
 	    if (ControlData.currMonth==2){
 	    	frcst_sac_list=new ArrayList<Double>();
 	    	frcst_sac_list.add(frcst_sac);
@@ -62,7 +62,7 @@ public class Functiongenfrcstrunofftables extends ExternalFunction{
 	    }else if (ControlData.currMonth>=3 && ControlData.currMonth<=5){
 	    	frcst_sac_list.add(frcst_sac);
 	    }
-		
+
 	    if (ControlData.currMonth==2){
 	    	frcst_amr_list=new ArrayList<Double>();
 	    	frcst_amr_list.add(frcst_amr);
@@ -71,7 +71,7 @@ public class Functiongenfrcstrunofftables extends ExternalFunction{
 	    	frcst_amr_list.add(frcst_amr);
 	    }
 
-			
+
 
 		if (ControlData.currYear==ControlData.endYear && ControlData.currMonth==ControlData.endMonth){
 			writeTable("feather_runoff_forecast", 1, 5, frcst_fea_arr);
@@ -82,7 +82,7 @@ public class Functiongenfrcstrunofftables extends ExternalFunction{
 
 	public void writeTable(String tableName, int startMonth, int endMonth, ArrayList<ArrayList<Double>> frcst_arr){
 		String fullPath=FilePaths.mainDirectory+"lookup"+File.separator+"gen"+File.separator+tableName+".table";
-		
+
 		try{
 			File tableFile = new File(fullPath);
 			File tableFolder=tableFile.getParentFile();
@@ -97,7 +97,7 @@ public class Functiongenfrcstrunofftables extends ExternalFunction{
 				line=line+"\t"+TimeOperation.monthName(i);
 			}
 			out.println(line);
-			
+
 			for (int i=0; i<frcst_arr.size(); i++){
 				line=wYears.get(i).toString();
 				ArrayList<Double> frcst_list = frcst_arr.get(i);
@@ -107,6 +107,7 @@ public class Functiongenfrcstrunofftables extends ExternalFunction{
 				out.println(line);
 			}
 			out.close();
+			fw.close();
 		} catch (IOException e){
 			e.printStackTrace();
 		}
