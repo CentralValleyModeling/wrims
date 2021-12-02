@@ -63,6 +63,7 @@ public class ILP {
 	public static PrintWriter _noteFile_xa_obj;
 	public static PrintWriter _noteFile_xa_int;
 	public static PrintWriter _noteFile_cbc_obj;
+	public static PrintWriter _noteFile_cbc_time;
 	public static PrintWriter _noteFile_cbc_int;
 	public static PrintWriter _noteFile_cbc_int_log;
 	public static PrintWriter _watchFile_xa;
@@ -108,6 +109,7 @@ public class ILP {
 			if (ControlData.cbc_debug_routeXA || ControlData.cbc_debug_routeCbc) {
 				_noteFile_xa_obj = Tools.openFile(_ilpDir.getAbsolutePath(), "Note_xa_obj.log");
 				_noteFile_cbc_obj = Tools.openFile(_ilpDir.getAbsolutePath(), "Note_cbc_obj.log");
+				_noteFile_cbc_time = Tools.openFile(_ilpDir.getAbsolutePath(), "Note_cbc_time.log");
 				_noteFile_xa_int = Tools.openFile(_ilpDir.getAbsolutePath(), "Note_xa_int.log");
 				_noteFile_cbc_int = Tools.openFile(_ilpDir.getAbsolutePath(), "Note_cbc_int.log");
 				
@@ -137,6 +139,7 @@ public class ILP {
 				
 			} else if (CbcSolver.logObj && ControlData.solverName.equalsIgnoreCase("Cbc")){
 				_noteFile_cbc_obj = Tools.openFile(_ilpDir.getAbsolutePath(), "Note_cbc_obj.log");
+				_noteFile_cbc_time = Tools.openFile(_ilpDir.getAbsolutePath(), "Note_cbc_time.log");
 				_watchFile_cbc = Tools.openFile(_ilpDir.getAbsolutePath(), "Watch_CBC.log");
 				ILP.writeNote( "time  ", _watchFile_cbc);
 				for (String s:ControlData.watchList) {
@@ -149,7 +152,7 @@ public class ILP {
 
 				_noteFile_cbc_int_log = Tools.openFile(_ilpDir.getAbsolutePath(), "Note_cbc_int_check_"+ControlData.dateTimeAppend+".csv");
 				if (ControlData.currStudyDataSet.cycIntDvMap!=null) {
-					ILP.writeNote("cyc,int_violation,solver,time,", _noteFile_cbc_int_log);
+					ILP.writeNote("cyc,int_violation,solver,", _noteFile_cbc_int_log);
 					//ILP.writeNote("cyc ", _noteFile_xa_int);
 					for (String s:ControlData.currStudyDataSet.allIntDv ){
 						ILP.writeNote( s+",", _noteFile_cbc_int_log);

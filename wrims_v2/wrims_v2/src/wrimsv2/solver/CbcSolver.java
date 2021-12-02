@@ -302,6 +302,7 @@ public class CbcSolver {
 			
 			if (CbcSolver.logObj){
 				ILP.writeNoteLn(ILP.getYearMonthCycle(), ""+ControlData.clp_cbc_objective, ILP._noteFile_cbc_obj);
+				ILP.writeNoteLn(ILP.getYearMonthCycle(), ""+CbcSolver.solveName+","+String.format("%8.2f",ControlData.solverTime_cbc_this), ILP._noteFile_cbc_time);			
 			}
 			long beginT_cd = System.currentTimeMillis();
 			varDoubleMap = new LinkedHashMap<String, Double>();
@@ -2164,7 +2165,7 @@ int pp=0;
 			cbc_int +=  ","+CbcSolver.solveName;
 			
 			// write solve time
-			cbc_int +=  ","+String.format("%8.2f",ControlData.solverTime_cbc_this);
+			//cbc_int +=  ","+String.format("%8.2f",ControlData.solverTime_cbc_this);
 			
 			if (sds.cycIntDvMap != null && sds.cycIntDvMap.containsKey(ControlData.currCycleIndex)) {
 				ArrayList<String> intDVs = new ArrayList<String>(sds.cycIntDvMap.get(ControlData.currCycleIndex));
