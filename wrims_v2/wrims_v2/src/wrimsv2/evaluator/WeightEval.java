@@ -23,6 +23,7 @@ import wrimsv2.components.Error;
 import wrimsv2.components.FilePaths;
 import wrimsv2.components.IntDouble;
 import wrimsv2.components.PreRunModel;
+import wrimsv2.ilp.ILP;
 import wrimsv2.solver.CbcSolver;
 import wrimsv2.solver.InitialXASolver;
 import wrimsv2.solver.XASolver;
@@ -37,10 +38,14 @@ public class WeightEval {
 	private static ArrayList<Integer> minCa=new ArrayList<Integer>();
 	private static ArrayList<Integer> maxCa=new ArrayList<Integer>();
 	private static String fstr = "WeightTable.csv";
+	private static String farstr = "WeightTableAR.csv";
 	
 	private static ArrayList<String> wList=new ArrayList<String>();
 	private static HashMap<String, LinkedHashMap<Integer, ArrayList<Double>>> wMap= new HashMap<String, LinkedHashMap<Integer, ArrayList<Double>>>();
 	private static ArrayList<String> variedwList=new ArrayList<String>();
+	
+	private static ArrayList<String> wListAR=new ArrayList<String>();
+	private static Map<String, WeightElement> wMapAR=new HashMap<String, WeightElement>(); 
 	
 	public static void procWt(StudyDataSet sds){
 		ControlData.currStudyDataSet=sds;
@@ -372,6 +377,8 @@ public class WeightEval {
 					}
 				}
 			}
+			out.close();
+			fw.close();
 		}catch (Exception e){
 			e.printStackTrace();
 		}
@@ -394,6 +401,62 @@ public class WeightEval {
 		for (int i=0; i<minwva.size(); i++){
 			System.out.println("The minimum weight is "+minwva.get(i)+" with a value of "+minw+" and appear in Cycle "+minCa.get(i)+".");
 			System.out.println("The minimum weight source code location is at "+minPa.get(i)+" .");
+		}
+	}
+	
+	public static void collectWtRT(String name, WeightElement wt){
+		if (!wListAR.contains(name)){
+			wListAR.add(name);
+			wMapAR.put(name, wt);
+		}
+		double aValue=Math.abs(wt.getValue());
+		if (wt.max<0){
+			int ci=ControlData.currCycleIndex+1;
+			wt.max=aValue;
+			wt.maxTC=ControlData.currYear+"-"+ControlData.currMonth+"-"+ControlData.currDay+"-C"+ci;
+		}else{
+			if (wt.max<aValue){
+				int ci=ControlData.currCycleIndex+1;
+				wt.max=aValue;
+				wt.maxTC=ControlData.currYear+"-"+ControlData.currMonth+"-"+ControlData.currDay+"-C"+ci;
+			}
+		}
+		if (wt.min<0){
+			int ci=ControlData.currCycleIndex+1;
+			wt.min=aValue;
+			wt.minTC=ControlData.currYear+"-"+ControlData.currMonth+"-"+ControlData.currDay+"-C"+ci;
+		}else{
+			if (wt.min>aValue){
+				int ci=ControlData.currCycleIndex+1;
+				wt.min=aValue;
+				wt.minTC=ControlData.currYear+"-"+ControlData.currMonth+"-"+ControlData.currDay+"-C"+ci;
+			}
+		}
+	}
+	
+	public static void outputWtTableAR(){
+		try {
+			File file = new File(ILP.getIlpDir(), farstr);
+			if (!file.exists()){
+				file.createNewFile();
+			}
+			FileWriter fw = new FileWriter(file.getAbsolutePath());
+			PrintWriter out = new PrintWriter(fw);
+		
+			Collections.sort(wListAR);
+		
+			out.println("Name"+","+"Min-Weight"+","+"Timestep-Cycle"+","+"Max-Weight"+","+"Timestep-Cycle");
+			for (int i=0; i<wListAR.size(); i++){
+				String wtName = wListAR.get(i);
+				if (wMapAR.containsKey(wtName)){
+					WeightElement wt = wMapAR.get(wtName);
+					out.println(wtName+","+wt.min+","+wt.minTC+","+wt.max+","+wt.maxTC);
+				}
+			}
+			out.close();
+			fw.close();
+		}catch (Exception e){
+			e.printStackTrace();
 		}
 	}
 }

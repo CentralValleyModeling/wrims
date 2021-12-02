@@ -24,6 +24,7 @@ import wrimsv2.evaluator.CsvOperation;
 import wrimsv2.evaluator.DssOperation;
 import wrimsv2.evaluator.PreEvaluator;
 import wrimsv2.evaluator.ValueEvaluatorParser;
+import wrimsv2.evaluator.WeightEval;
 import wrimsv2.hdf5.HDF5Writer;
 import wrimsv2.ilp.ILP;
 import wrimsv2.launch.LaunchConfiguration;
@@ -259,6 +260,8 @@ public class ControllerBatch {
 			Error.writeErrorLog();
 		}
 
+		WeightEval.outputWtTableAR();
+		
 		if (Error.getTotalError()>0){
 			System.out.println("=================Run ends with errors====");
 			System.exit(1);

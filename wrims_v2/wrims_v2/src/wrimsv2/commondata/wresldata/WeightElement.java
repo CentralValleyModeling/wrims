@@ -19,6 +19,10 @@ public class WeightElement implements Serializable {
 	public String timeArraySize;
 	public ValueEvaluatorParser timeArraySizeParser;
 	
+	public double min=-1;
+	public double max=-1;
+	public String minTC="";
+	public String maxTC="";
 	
 	public WeightElement(){
 		weight = Param.undefined;

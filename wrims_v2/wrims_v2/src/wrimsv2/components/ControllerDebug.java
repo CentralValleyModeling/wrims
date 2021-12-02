@@ -54,6 +54,7 @@ import wrimsv2.evaluator.TimeOperation;
 import wrimsv2.evaluator.ValueEvaluation;
 import wrimsv2.evaluator.ValueEvaluatorLexer;
 import wrimsv2.evaluator.ValueEvaluatorParser;
+import wrimsv2.evaluator.WeightEval;
 import wrimsv2.external.LoadAllDll;
 import wrimsv2.hdf5.HDF5Writer;
 import wrimsv2.ilp.ILP;
@@ -499,6 +500,8 @@ public class ControllerDebug extends Thread {
 			CsvOperation co = new CsvOperation();
 			co.ouputCSV(FilePaths.fullCsvPath, 0);
 		}
+		
+		WeightEval.outputWtTableAR();
 	}
 	
 	public void prepareInitialTimeStep(){

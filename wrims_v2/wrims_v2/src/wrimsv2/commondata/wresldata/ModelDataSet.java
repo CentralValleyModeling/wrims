@@ -18,6 +18,7 @@ import wrimsv2.evaluator.Evaluation;
 import wrimsv2.evaluator.EvaluatorParser;
 import wrimsv2.evaluator.ValueEvaluatorLexer;
 import wrimsv2.evaluator.ValueEvaluatorParser;
+import wrimsv2.evaluator.WeightEval;
 
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
@@ -161,6 +162,7 @@ public class ModelDataSet implements Serializable {
 			try {
 				evaluator.evaluator();
 				wt.setValue(evaluator.evalValue.getData().doubleValue());
+				WeightEval.collectWtRT(wtName, wt);
 			} catch (RecognitionException e) {
 				Error.addEvaluationError("weight definition has error");
 				wt.setValue(0.0);
@@ -175,6 +177,7 @@ public class ModelDataSet implements Serializable {
 				try {
 					evaluator.evaluator();
 					newWt.setValue(evaluator.evalValue.getData().doubleValue());
+					WeightEval.collectWtRT(newWtName, newWt);
 				} catch (RecognitionException e) {
 					Error.addEvaluationError("time array weight definition "+newWtName+" has error");
 					newWt.setValue(0.0);
@@ -206,6 +209,7 @@ public class ModelDataSet implements Serializable {
 			try {
 				evaluator.evaluator();
 				wtSlackSurplus.setValue(evaluator.evalValue.getData().doubleValue());
+				WeightEval.collectWtRT(wtSlackSurplusName, wtSlackSurplus);
 			} catch (RecognitionException e) {
 				Error.addEvaluationError("slack surplus weight definition has error");
 				wtSlackSurplus.setValue(0.0);
@@ -220,6 +224,7 @@ public class ModelDataSet implements Serializable {
 				try {
 					evaluator.evaluator();
 					newWtSlackSurplus.setValue(evaluator.evalValue.getData().doubleValue());
+					WeightEval.collectWtRT(newWtSlackSurplusName, newWtSlackSurplus);
 				} catch (RecognitionException e) {
 					Error.addEvaluationError("time array slack surplus weight definition "+newWtSlackSurplusName+" has error");
 					newWtSlackSurplus.setValue(0.0);
