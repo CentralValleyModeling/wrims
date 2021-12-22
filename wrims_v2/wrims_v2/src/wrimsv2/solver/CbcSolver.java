@@ -90,13 +90,16 @@ public class CbcSolver {
 	public static String cbcVersion = "None";
 	public static int cbcHintTimeMax = 100; // can read from config CbcHintTimeMax
 	public static boolean usejCbc2021 = false;
+	public static boolean usejCbc2021a = false;
 	public static boolean cbcViolationCheck = true;
 	public static boolean cbcSolutionRounding = true;
 	public static boolean cbcViolationRetry = true;
 	public static int cbcLogStartDate = 999900;
 	public static int cbcLogStopDate  = 999900;	
+	private static boolean isLogging = false;
 	public static boolean debugObjDiff = false;
 	public static double  debugObjDiff_tolerance = 1E5;
+	public static boolean whsScaling = false;
 	public static boolean debugDeviation = false;
 	public static double  debugDeviationMin = 200;
 	public static double  debugDeviationWeightMin = 99000;	
@@ -184,8 +187,10 @@ public class CbcSolver {
 		ILP.writeNoteLn("lowerBoundZero_check ="+lowerBoundZero_check,false,false);
 		ILP.writeNoteLn("cbcSolutionRounding ="+cbcSolutionRounding,false,false);
 		ILP.writeNoteLn("cbc2021 ="+usejCbc2021,false,false);
+		ILP.writeNoteLn("cbc2021a ="+usejCbc2021a,false,false);
 		ILP.writeNoteLn("jCbc version:", cbcVersion);
-
+		jCbc.setScaling(CbcSolver.whsScaling);
+		ILP.writeNoteLn("cbcWhsScaling ="+CbcSolver.whsScaling,false,false);
 		//if (ControlData.useCbcWarmStart || ControlData.cbc_debug_routeCbc || ControlData.cbc_debug_routeXA){
 			dvIntMap = new LinkedHashMap<String, Integer>();
 			for (String d: sds.allIntDv){
@@ -197,7 +202,7 @@ public class CbcSolver {
 		values_dummy = jCbc.new_jarray_int(0); 
 		
 		if (!useLpFile) {dvBiMap = HashBiMap.create(); dvBiMapArray = new ArrayList<String>();}
-		
+
 		//solver = jCbc.new_jOsiClpSolverInterface(); //this is our LP solver!
 	
 	}
@@ -235,7 +240,7 @@ public class CbcSolver {
 		solver = jCbc.new_jOsiClpSolverInterface(); //this is our LP solver!
 		jCbc.assignSolver(model,solver); // Assign the solver to CbcModel
 		int currDate = ControlData.currYear*100 +ControlData.currMonth;
-		boolean isLogging = cbcLogStartDate <= currDate && currDate <=cbcLogStopDate;
+		isLogging = cbcLogStartDate <= currDate && currDate <=cbcLogStopDate;
 
 		if (useLpFile) {
 					
@@ -270,7 +275,7 @@ public class CbcSolver {
 				setDVars(ControlData.cbcLogNativeLp||isLogging, ""); 
 			}
 			setConstraints(ControlData.cbcLogNativeLp||isLogging, "");
-			if (ControlData.cbcLogNativeLp||isLogging) {writeCbcLp("native", false);}
+			if (ControlData.cbcLogNativeLp||isLogging) {writeCbcLp("", false);}
 
 		}
 		long endT_creation = System.currentTimeMillis();	
@@ -286,11 +291,13 @@ public class CbcSolver {
 //		} 
 		//jCbc.writeLp1(model, "test", 1e-14, 14);
 		long beginT = System.currentTimeMillis();
-		int[] modelStatus =null;
-		if(usejCbc2021){
-			modelStatus = solve_jCbc2021();
+		//int[] modelStatus =null;
+		if(usejCbc2021a){
+			solve_jCbc2021a();
+		} else if(usejCbc2021){
+			solve_jCbc2021();
 		} else {
-			modelStatus = solve();
+			solve();
 		}
 		long endT = System.currentTimeMillis();
 		
@@ -555,7 +562,7 @@ public class CbcSolver {
 			dvBiMapArray.add(ControlData.currModelDataSet.dvTimeArrayList.get(i));	
 		}
 		dvBiMapInverse = dvBiMap.inverse();
-		
+				
 		
 		
 		// clean up
@@ -1397,12 +1404,13 @@ public class CbcSolver {
 				status2 = jCbc.secondaryStatus(model);	
 				
 				if (status != 0 || status2 != 0 ) {				
-					//note_msg(" Solve_"+solveName+" infeasible");
+					if (isLogging) { note_msg(" Solve_"+solveName+" infeasible."); }
 					reloadProblem(false, "");	
 					solve_2();	
 					status = jCbc.status(model);
 					status2 = jCbc.secondaryStatus(model);	
 				} else if (violationCheck(model, modelName, solveName)) {
+					if (isLogging) { note_msg(" Solve_"+solveName+" tolerance violation."); }
 					reloadProblem(true, "");
 					solve_2();	
 					status = jCbc.status(model);
@@ -1433,7 +1441,7 @@ public class CbcSolver {
 				status = jCbc.status(model);
 				status2 = jCbc.secondaryStatus(model);	
 				if (status==0 && status2==0){
-					status2 = jCbc.Y2(model,solver);
+					status2 = jCbc.Y2_simple(model,solver);
 				}
 			} else if (violationCheck(model, modelName, solveName)) {
 				reloadProblem(true, "");
@@ -1441,7 +1449,7 @@ public class CbcSolver {
 				status = jCbc.status(model);
 				status2 = jCbc.secondaryStatus(model);	
 				if (status==0 && status2==0){
-					status2 = jCbc.Y2(model,solver);
+					status2 = jCbc.Y2_simple(model,solver);
 				}
 			}
 			
@@ -1452,7 +1460,7 @@ public class CbcSolver {
 				status = jCbc.status(model);
 				status2 = jCbc.secondaryStatus(model);
 				if (status==0 && status2==0){
-					status2 = jCbc.Y2(model,solver);
+					status2 = jCbc.Y2_simple(model,solver);
 				}
 			} // Don't use callCbcR if callCbc has violation
 	
@@ -1932,7 +1940,7 @@ int pp=0;
 				for (String dvN : ControlData.currStudyDataSet.cycIntDvMap.get(ControlData.currCycleIndex)) {
 					c = c + dvN + "," + dvIntMap.get(dvN) + "\n";
 				}
-				Tools.quickLog(label + "_intVars", c);
+				Tools.quickLog(label + ".intVars", c);
 			}
 		}	
 	}
@@ -2121,15 +2129,19 @@ int pp=0;
 		System.out.println(jCbc.getModelName(solver)+ msg);
 	}
 	
-	private static void solve_2() {
-		solve_2(solve_2_primalT, "2__");
+	private static int solve_2() {
+		int r = -99;
+		r = solve_2(solve_2_primalT, "2__");
+		return r;
 	}
 	
-	private static void solve_2(double priT, String solvName) {
+	private static int solve_2(double priT, String solvName) {
+		int r = -99;
 		solveName=solvName;
 		jCbc.setPrimalTolerance(model, priT);
 		jCbc.setIntegerTolerance(model, integerT);
-		jCbc.solve_2(model, solver, 0);
+		r = jCbc.solve_2(model, solver, 0);
+		return r;
 	}
 	
 	private static void solve_3() {
@@ -2227,5 +2239,153 @@ int pp=0;
 		return violation;					
 		
 	}
+
+	public static int[] solve_jCbc2021a(){
+				int ci=ControlData.currCycleIndex+1;
+				if (ControlData.showRunTimeMessage) System.out.println("CBC Solver2021a: Solving "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+" Cycle "+ci+" ["+ControlData.currCycleName+"]");
+				
+				//int status=-99;
+				//int status2=-99;
+				int rv = -99;
+				
+				long beginT = System.currentTimeMillis();
+	
+					
+				Set<String> a=ControlData.currStudyDataSet.cycIntDvMap.get(ControlData.currCycleIndex);
+				a.retainAll(dvIntMap.keySet());
+				if ((useWarm || saveWarm) && a.size()>2) {
+		//			int ii = ControlData.currCycleIndex+1;
+		//			System.out.println(ii+": useWarm:"+useWarm);
+		//			System.out.println(ii+": saveWarm:"+saveWarm);		
+		//			System.out.println(ii+":dvIntMap size: "+dvIntMap.size());
+					if (warmArrayExist) {
+		
+						jCbc.delete_jarray_int(values);
+						jCbc.delete_jarray_string(names);
+						intSolSize = 0;
+						values = null;
+						names = null;
+						warmArrayExist = false;
+					}			
+					
+					intSolSize = ControlData.currStudyDataSet.cycIntDvMap.get(ControlData.currCycleIndex).size();
+					names = jCbc.new_jarray_string(intSolSize);
+					values = jCbc.new_jarray_int(intSolSize);
+					warmArrayExist = true;
+					int k=0;
+					for (String dvN: ControlData.currStudyDataSet.cycIntDvMap.get(ControlData.currCycleIndex)){
+						jCbc.jarray_string_setitem(names,k,dvN);
+						jCbc.jarray_int_setitem(values,k,dvIntMap.get(dvN));
+						k++;
+					}
+				
+					solveName="whs";
+					jCbc.setPrimalTolerance(model, solve_whs_primalT);
+					jCbc.setIntegerTolerance(model, integerT);
+					rv=jCbc.solve_whs(model,solver,names,values,intSolSize,0);					
+					//status = jCbc.status(model);
+					//status2 = jCbc.secondaryStatus(model);	
+					if (rv==91 || rv==92) {
+						note_msg(" Solve_"+solveName+" exception:"+rv+".");
+						reloadProblem(true, "exception"+rv);
+						rv=jCbc.solve_whs(model,solver,names,values,intSolSize,0);	
+					}
+					if (rv==91 || rv==92) {
+						note_msg(" Solve_"+solveName+" exception:"+rv+".");
+						reloadProblem(true, "exception"+rv);
+						rv=jCbc.solve_whs(model,solver,names,values,intSolSize,0);	
+					}
+					if (rv==91 || rv==92) {
+						note_msg(" Solve_"+solveName+" exception:"+rv+".");
+						reloadProblem(true, "exception"+rv);
+						rv=jCbc.solve_whs(model,solver,names,values,intSolSize,0);	
+						if (rv==91 || rv==92) {
+							note_msg(" Solve_"+solveName+" exception:"+rv+". Continue.");
+						}
+					}
+					if (rv!=0) {				
+						if (isLogging) { note_msg(" Solve_"+solveName+" infeasible."); }
+						reloadProblem(false, "");	
+						rv=solve_2();	
+					} 
+	
+					
+				} else {
+						rv=solve_2();	
+				}
+		
+	
+				if (rv==91 || rv==92) {
+					note_msg(" Solve_"+solveName+" exception:"+rv+".");
+					reloadProblem(true, "exception"+rv);
+					rv=solve_2();	
+					if (rv==91 || rv==92) {
+						note_msg(" Solve_"+solveName+" exception:"+rv+". Continue.");
+					}
+				}
+				if (rv!= 0 ) {
+					note_msg(" Solve_"+solveName+" infeasible. Use solve_2 with primalT="+solve_2_primalT_relax);
+					reloadProblem(false, "");
+					rv=solve_2(solve_2_primalT_relax, "2R_");	
+				}
+		
+				if (rv==91 || rv==92) {
+					note_msg(" Solve_"+solveName+" exception:"+rv+".");
+					reloadProblem(true, "exception"+rv);
+					rv=solve_2(solve_2_primalT_relax, "2R_");	
+					if (rv==91 || rv==92) {
+						note_msg(" Solve_"+solveName+" exception:"+rv+". Continue.");
+					}
+				}
+				// for callCbc only
+				int status=rv;
+				int status2=rv;
+				
+				if (rv!= 0 ) {
+					note_msg(jCbc.getModelName(solver)+" Solve_"+solveName+" infeasible. Use callCbc -primalT 1e-9 -integerT 1e-9 ");
+					reloadProblem(false, "");
+					callCbc();	
+					status = jCbc.status(model);
+					status2 = jCbc.secondaryStatus(model);	
+					if (status==0 && status2==0){
+						status2 = jCbc.Y2_simple(model,solver);
+					}
+				} 
+				
+				if (status != 0 || status2 != 0 ) {
+					note_msg(jCbc.getModelName(solver)+" Solve_"+solveName+" infeasible. Use callCbc -primalT 1e-7 -integerT 1e-9 ");
+					reloadProblem(false, "");
+					callCbc_R();	
+					status = jCbc.status(model);
+					status2 = jCbc.secondaryStatus(model);
+					if (status==0 && status2==0){
+						status2 = jCbc.Y2_simple(model,solver);
+					}
+				} 
+		
+				//TODO: need to integrate callCbc status with whs and solve2 return value
+			
+					
+	//			}
+				
+		  
+				
+				long endT = System.currentTimeMillis();
+		
+				double time_second = (endT - beginT) / 1000.;
+				ControlData.solverTime_cbc += time_second;
+				ControlData.solverTime_cbc_this = time_second;
+				if (ControlData.writeCbcSolvingTime) ILP.writeNoteLn(jCbc.getModelName(solver), " "+ time_second);
+				
+				if (status != 0 || status2 != 0) {
+	
+					reloadAndWriteLp("_infeasible", true, true);
+					getSolverInformation(status, status2);
+					iis();
+				}
+		
+				return new int[]{status, status2};
+			    	
+			}
 	
 }

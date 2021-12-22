@@ -271,6 +271,9 @@ public class ConfigUtils {
 			 System.out.println("CbcVersion: "+CbcSolver.cbcVersion);
 			 if (CbcSolver.cbcVersion.contains("2.9.9")) {
 				 CbcSolver.usejCbc2021 = true; 
+				 if (CbcSolver.cbcVersion.contains("2.9.9.2")) {
+					 CbcSolver.usejCbc2021a = true;
+				 }
 				 CbcSolver.cbcViolationCheck = false; // can overwrite
 				 ControlData.useCbcWarmStart = true; //  cannot overwrite
 			 } else {
@@ -278,6 +281,7 @@ public class ConfigUtils {
 				 ControlData.useCbcWarmStart = false; //  cannot overwrite
 			 }
 			 System.out.println("Cbc2021: "+CbcSolver.usejCbc2021);
+			 System.out.println("Cbc2021a: "+CbcSolver.usejCbc2021a);
 		 }
 		
 		// SendAliasToDvar default is false
@@ -730,7 +734,10 @@ public class ConfigUtils {
 			
 		}
 		System.out.println("RecordIfObjDiff: "+CbcSolver.record_if_obj_diff);
-		
+
+		k = "CbcWhsScaling"; //default is false
+		CbcSolver.whsScaling = readBoolean(configMap, k, false);
+		System.out.println(k+": "+CbcSolver.whsScaling);
 		
 		k = "CbcDebugDeviation"; //default is false
 		CbcSolver.debugDeviation = readBoolean(configMap, k, false);
