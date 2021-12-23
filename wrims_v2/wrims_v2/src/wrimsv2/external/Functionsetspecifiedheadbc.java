@@ -22,12 +22,12 @@ public class Functionsetspecifiedheadbc extends ExternalFunction{
 		int Layer = ((Number) param2).intValue();
 		int Node = ((Number) param1).intValue();
 
-		int result = setspecifiedheadbc(Node, Layer, Head);
+		float result = setspecifiedheadbc(Node, Layer, Head);
 
 		// push the result on the Stack
-		stack.push(new Integer(result));
+		stack.push(new Float(result));
 
 	}
 
-	public native int setspecifiedheadbc(int Node, int Layer, float Head);
+	public native float setspecifiedheadbc(int Node, int Layer, float Head);
 }

@@ -48,7 +48,7 @@ public class Functioninitgwsystem extends ExternalFunction{
 
 		int iNRestartFiles=12;
 		if (ControlData.allRestartFiles){
-			iNRestartFiles=0;
+			iNRestartFiles=-1;
 		}else{
 			iNRestartFiles=ControlData.numberRestartFiles;
 		}

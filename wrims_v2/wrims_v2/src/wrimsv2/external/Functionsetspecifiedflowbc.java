@@ -22,11 +22,12 @@ public class Functionsetspecifiedflowbc extends ExternalFunction{
 		int Layer = ((Number) param2).intValue();
 		int Node = ((Number) param1).intValue();
 
-		int result = setspecifiedflowbc(Node, Layer, Flow);
+		float result = setspecifiedflowbc(Node, Layer, Flow);
 
 		// push the result on the Stack
-		stack.push(new Integer(result));
+		stack.push(new Float(result));
+
 	}
 
-	public native int setspecifiedflowbc(int Node, int Layer, float Flow);
+	public native float setspecifiedflowbc(int Node, int Layer, float Flow);
 }
