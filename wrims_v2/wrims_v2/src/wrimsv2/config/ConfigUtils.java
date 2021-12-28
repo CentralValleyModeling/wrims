@@ -735,9 +735,13 @@ public class ConfigUtils {
 		}
 		System.out.println("RecordIfObjDiff: "+CbcSolver.record_if_obj_diff);
 
-		k = "CbcWhsScaling"; //default is false
-		CbcSolver.whsScaling = readBoolean(configMap, k, false);
+		k = "CbcWhsScaling"; //default is true
+		CbcSolver.whsScaling = readBoolean(configMap, k, true);
 		System.out.println(k+": "+CbcSolver.whsScaling);
+
+		k = "CbcWhsSafe"; //default is false
+		CbcSolver.whsSafe = readBoolean(configMap, k, false);
+		System.out.println(k+": "+CbcSolver.whsSafe);
 		
 		k = "CbcDebugDeviation"; //default is false
 		CbcSolver.debugDeviation = readBoolean(configMap, k, false);

@@ -99,7 +99,7 @@ public class ControllerBatch {
 				int runPeriod=(int) (endTimeInMillis-startTimeInMillis);
 				System.out.println("=================Run Time is "+runPeriod/60000+"min"+Math.round((runPeriod/60000.0-runPeriod/60000)*60)+"sec====");
 				ILP.writeNoteLn("Total time", "(sec): "+                        Math.round(runPeriod/1000.0));
-				
+				ILP.writeNoteLn("Total time", "(min): "+                        Math.round(runPeriod/1000.0/60));				
 			} else {
 				System.out.println("=================Run ends with errors=================");
 				System.exit(1);

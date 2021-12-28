@@ -99,7 +99,8 @@ public class CbcSolver {
 	private static boolean isLogging = false;
 	public static boolean debugObjDiff = false;
 	public static double  debugObjDiff_tolerance = 1E5;
-	public static boolean whsScaling = false;
+	public static boolean whsScaling = true;
+	public static boolean whsSafe = false;
 	public static boolean debugDeviation = false;
 	public static double  debugDeviationMin = 200;
 	public static double  debugDeviationWeightMin = 99000;	
@@ -189,8 +190,10 @@ public class CbcSolver {
 		ILP.writeNoteLn("cbc2021 ="+usejCbc2021,false,false);
 		ILP.writeNoteLn("cbc2021a ="+usejCbc2021a,false,false);
 		ILP.writeNoteLn("jCbc version:", cbcVersion);
-		jCbc.setScaling(CbcSolver.whsScaling);
+		jCbc.setWhsScaling(CbcSolver.whsScaling);
+		jCbc.setWhsSafe(CbcSolver.whsSafe);
 		ILP.writeNoteLn("cbcWhsScaling ="+CbcSolver.whsScaling,false,false);
+		ILP.writeNoteLn("cbcWhsSafe ="+CbcSolver.whsSafe,false,false);
 		//if (ControlData.useCbcWarmStart || ControlData.cbc_debug_routeCbc || ControlData.cbc_debug_routeXA){
 			dvIntMap = new LinkedHashMap<String, Integer>();
 			for (String d: sds.allIntDv){
@@ -2285,83 +2288,65 @@ int pp=0;
 					rv=jCbc.solve_whs(model,solver,names,values,intSolSize,0);					
 					//status = jCbc.status(model);
 					//status2 = jCbc.secondaryStatus(model);	
-					if (rv==91 || rv==92) {
-						note_msg(" Solve_"+solveName+" exception:"+rv+".");
-						reloadProblem(true, "exception"+rv);
-						rv=jCbc.solve_whs(model,solver,names,values,intSolSize,0);	
-					}
-					if (rv==91 || rv==92) {
-						note_msg(" Solve_"+solveName+" exception:"+rv+".");
-						reloadProblem(true, "exception"+rv);
-						rv=jCbc.solve_whs(model,solver,names,values,intSolSize,0);	
-					}
-					if (rv==91 || rv==92) {
-						note_msg(" Solve_"+solveName+" exception:"+rv+".");
-						reloadProblem(true, "exception"+rv);
-						rv=jCbc.solve_whs(model,solver,names,values,intSolSize,0);	
+					if (rv!=0){
 						if (rv==91 || rv==92) {
-							note_msg(" Solve_"+solveName+" exception:"+rv+". Continue.");
-						}
+							note_msg(" Solve_"+solveName+" exception:"+rv+". Use callCbc.");
+							reloadProblem(true, "exception"+rv);
+						} else {
+							//note_msg(" Solve_"+solveName+" infeasible. Use callCbc.");
+							reloadProblem(false, "");
+						} 
+						solveName="c__";
+		                rv = jCbc.callCbcJ("-log 0 -primalT 1e-9 -integerT 1e-9 -solve", model, solver);
+						//if (rv==0) { rv = jCbc.Y2_simple(model,solver); }
 					}
-					if (rv!=0) {				
-						if (isLogging) { note_msg(" Solve_"+solveName+" infeasible."); }
-						reloadProblem(false, "");	
-						rv=solve_2();	
-					} 
+
+//					if (rv==91 || rv==92) {
+//						note_msg(" Solve_"+solveName+" exception:"+rv+".");
+//						reloadProblem(true, "exception"+rv);
+//						rv=jCbc.solve_whs(model,solver,names,values,intSolSize,0);	
+//					}
+//					if (rv==91 || rv==92) {
+//						note_msg(" Solve_"+solveName+" exception:"+rv+".");
+//						reloadProblem(true, "exception"+rv);
+//						rv=jCbc.solve_whs(model,solver,names,values,intSolSize,0);	
+//						if (rv==91 || rv==92) {
+//							note_msg(" Solve_"+solveName+" exception:"+rv+". Continue.");
+//						}
+//					}
+//					if (rv!=0) {				
+//						if (isLogging) { note_msg(" Solve_"+solveName+" infeasible."); }
+//						reloadProblem(false, "");	
+//						rv=solve_2();	
+//					} 
 	
 					
 				} else {
-						rv=solve_2();	
+					
+					solveName="c__";
+	                rv = jCbc.callCbcJ("-log 0 -primalT 1e-9 -integerT 1e-9 -solve", model, solver);
+					//if (rv==0) { rv = jCbc.Y2_simple(model,solver); }
 				}
-		
-	
-				if (rv==91 || rv==92) {
-					note_msg(" Solve_"+solveName+" exception:"+rv+".");
-					reloadProblem(true, "exception"+rv);
-					rv=solve_2();	
-					if (rv==91 || rv==92) {
-						note_msg(" Solve_"+solveName+" exception:"+rv+". Continue.");
-					}
-				}
-				if (rv!= 0 ) {
-					note_msg(" Solve_"+solveName+" infeasible. Use solve_2 with primalT="+solve_2_primalT_relax);
-					reloadProblem(false, "");
-					rv=solve_2(solve_2_primalT_relax, "2R_");	
-				}
-		
-				if (rv==91 || rv==92) {
-					note_msg(" Solve_"+solveName+" exception:"+rv+".");
-					reloadProblem(true, "exception"+rv);
-					rv=solve_2(solve_2_primalT_relax, "2R_");	
-					if (rv==91 || rv==92) {
-						note_msg(" Solve_"+solveName+" exception:"+rv+". Continue.");
-					}
-				}
+					
 				// for callCbc only
 				int status=rv;
 				int status2=rv;
-				
-				if (rv!= 0 ) {
-					note_msg(jCbc.getModelName(solver)+" Solve_"+solveName+" infeasible. Use callCbc -primalT 1e-9 -integerT 1e-9 ");
-					reloadProblem(false, "");
-					callCbc();	
-					status = jCbc.status(model);
-					status2 = jCbc.secondaryStatus(model);	
-					if (status==0 && status2==0){
-						status2 = jCbc.Y2_simple(model,solver);
-					}
-				} 
-				
-				if (status != 0 || status2 != 0 ) {
-					note_msg(jCbc.getModelName(solver)+" Solve_"+solveName+" infeasible. Use callCbc -primalT 1e-7 -integerT 1e-9 ");
-					reloadProblem(false, "");
-					callCbc_R();	
+				if (rv!=0){
+					if (rv==91 || rv==92) {
+						note_msg(" Solve_"+solveName+" exception:"+rv+". Use callCbcR.");
+						reloadProblem(true, "exception"+rv);
+					} else {
+						note_msg(" Solve_"+solveName+" infeasible. Use callCbcR.");
+						reloadProblem(false, "");
+					} 
+	                solveName="cR_";
+	                rv=jCbc.callCbcJ("-log 0 -primalT 1e-7 -integerT 1e-9 -solve", model, solver);
 					status = jCbc.status(model);
 					status2 = jCbc.secondaryStatus(model);
-					if (status==0 && status2==0){
-						status2 = jCbc.Y2_simple(model,solver);
-					}
-				} 
+					//if (rv==0) { status2 = jCbc.Y2_simple(model,solver); }
+				}
+				
+
 		
 				//TODO: need to integrate callCbc status with whs and solve2 return value
 			
