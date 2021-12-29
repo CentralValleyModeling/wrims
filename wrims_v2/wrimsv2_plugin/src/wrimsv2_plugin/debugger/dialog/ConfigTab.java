@@ -356,6 +356,12 @@ public class ConfigTab extends TabItem {
 		configList.add("NameSorting");
 		configMap.put("NameSorting", new String[]{"false", "true"});
 		
+		configList.add("CbcWhsScaling");
+		configMap.put("CbcWhsScaling", new String[]{"true", "false"});
+		
+		configList.add("CbcWhsSafe");
+		configMap.put("CbcWhsSafe", new String[]{"false", "true"});
+		
 		Collections.sort(configList, String.CASE_INSENSITIVE_ORDER);
 	}
 }
