@@ -190,8 +190,10 @@ public class CbcSolver {
 		ILP.writeNoteLn("cbc2021 ="+usejCbc2021,false,false);
 		ILP.writeNoteLn("cbc2021a ="+usejCbc2021a,false,false);
 		ILP.writeNoteLn("jCbc version:", cbcVersion);
-		jCbc.setWhsScaling(CbcSolver.whsScaling);
-		jCbc.setWhsSafe(CbcSolver.whsSafe);
+		if (usejCbc2021a) { 
+			jCbc.setWhsScaling(CbcSolver.whsScaling);
+			jCbc.setWhsSafe(CbcSolver.whsSafe); 
+		}
 		ILP.writeNoteLn("cbcWhsScaling ="+CbcSolver.whsScaling,false,false);
 		ILP.writeNoteLn("cbcWhsSafe ="+CbcSolver.whsSafe,false,false);
 		//if (ControlData.useCbcWarmStart || ControlData.cbc_debug_routeCbc || ControlData.cbc_debug_routeXA){
@@ -1606,7 +1608,11 @@ int pp=0;
 		reloadProblemConfirm(skipThisConstraint);
 		//writeCbcLp("iisSolveConfirm", false);
 		//solve_3();
-		callCbc();
+		if (CbcSolver.usejCbc2021a) {
+			jCbc.callCbcJ("-log 0 -primalT 1e-9 -integerT 1e-9 -solve", model, solver);
+		} else {
+			callCbc();
+		}
 		int s = jCbc.status(model);
 		int s2 = jCbc.secondaryStatus(model);
 
@@ -1626,7 +1632,11 @@ int pp=0;
 		//writeCbcLp("iisSolve", false);
 		
 		//solve_2();
-		callCbc();
+		if (CbcSolver.usejCbc2021a) {
+			jCbc.callCbcJ("-log 0 -primalT 1e-9 -integerT 1e-9 -solve", model, solver);
+		} else {
+			callCbc();
+		}
 		int s = jCbc.status(model);
 		int s2 = jCbc.secondaryStatus(model);
 
