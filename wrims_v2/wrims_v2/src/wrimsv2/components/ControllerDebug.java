@@ -262,6 +262,12 @@ public class ControllerDebug extends Thread {
 			GurobiSolver.initialize();
 		}
 		
+		if (ControlData.writeInitToDVOutput){
+			DssOperation.writeInitDvarAliasToDSS();
+		}
+		
+		TimeOperation.initOutputDate(ControlData.yearOutputSection);
+		
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
 		VariableTimeStep.initialCurrTimeStep(modelList);
@@ -464,6 +470,9 @@ public class ControllerDebug extends Thread {
 				}
 				modelIndex=modelIndex+1;
 			}
+			if (ControlData.yearOutputSection>0){
+				TimeOperation.setOutputDate(ControlData.yearOutputSection);
+			}
 			updateVarMonitor();
 			if (ControlData.resimDate){
 				ControlData.resimDate=false;
@@ -480,10 +489,7 @@ public class ControllerDebug extends Thread {
 		}
 		new CloseCurrentSolver(ControlData.solverName);
 		
-		if (ControlData.writeInitToDVOutput){
-			DssOperation.writeInitDvarAliasToDSS();
-		}
-		DssOperation.writeDVAliasToDSS();
+		if (ControlData.yearOutputSection==-1) DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();

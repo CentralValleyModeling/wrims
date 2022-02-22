@@ -167,6 +167,12 @@ public class ControlData {
 
 	public static boolean printGWFuncCalls=false;
 	
+	public static int yearOutputSection=-1;
+	public static int monOutputInit=-1;
+	public static int outputYear;
+	public static int outputMonth;
+	public static int outputDay;
+	
 	public ControlData(){
 	}
 	

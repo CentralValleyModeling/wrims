@@ -23,6 +23,7 @@ import wrimsv2.evaluator.AssignPastCycleVariable;
 import wrimsv2.evaluator.CsvOperation;
 import wrimsv2.evaluator.DssOperation;
 import wrimsv2.evaluator.PreEvaluator;
+import wrimsv2.evaluator.TimeOperation;
 import wrimsv2.evaluator.ValueEvaluatorParser;
 import wrimsv2.evaluator.WeightEval;
 import wrimsv2.hdf5.HDF5Writer;
@@ -278,6 +279,12 @@ public class ControllerBatch {
 			System.out.println("Model run exits due to error.");
 			System.exit(1);
 		}
+		if (ControlData.writeInitToDVOutput){
+			DssOperation.writeInitDvarAliasToDSS();
+		}
+		
+		TimeOperation.initOutputDate(ControlData.yearOutputSection);
+		
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
 		VariableTimeStep.initialCurrTimeStep(modelList);
@@ -383,6 +390,9 @@ public class ControllerBatch {
 				}
 				i=i+1;
 			}
+			if (ControlData.yearOutputSection>0){
+				TimeOperation.setOutputDate(ControlData.yearOutputSection);
+			}
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
 			try{
@@ -406,10 +416,7 @@ public class ControllerBatch {
 			}
 		}
 		ControlData.xasolver.close();
-		if (ControlData.writeInitToDVOutput){
-			DssOperation.writeInitDvarAliasToDSS();
-		}
-		DssOperation.writeDVAliasToDSS();
+		if (ControlData.yearOutputSection==-1) DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
@@ -504,6 +511,12 @@ public class ControllerBatch {
 			Error.addConfigError("Solver name not recognized: "+ControlData.solverName);
 			Error.writeErrorLog();
 		}
+		
+		if (ControlData.writeInitToDVOutput){
+			DssOperation.writeInitDvarAliasToDSS();
+		}
+		
+		TimeOperation.initOutputDate(ControlData.yearOutputSection);
 		
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
@@ -751,6 +764,9 @@ public class ControllerBatch {
 				}
 				i=i+1;
 			}
+			if (ControlData.yearOutputSection>0){
+				TimeOperation.setOutputDate(ControlData.yearOutputSection);
+			}
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
 		}
@@ -768,10 +784,7 @@ public class ControllerBatch {
 			ControlData.xasolver.close();
 		}
 		
-		if (ControlData.writeInitToDVOutput){
-			DssOperation.writeInitDvarAliasToDSS();
-		}
-		DssOperation.writeDVAliasToDSS();
+		if (ControlData.yearOutputSection==-1) DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
@@ -802,6 +815,12 @@ public class ControllerBatch {
 		
 		ILP.initializeIlp();
 		GurobiSolver.initialize();
+		
+		if (ControlData.writeInitToDVOutput){
+			DssOperation.writeInitDvarAliasToDSS();
+		}
+		
+		TimeOperation.initOutputDate(ControlData.yearOutputSection);
 		
 		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
 
@@ -918,15 +937,15 @@ public class ControllerBatch {
 				}
 				i=i+1;
 			}
+			if (ControlData.yearOutputSection>0){
+				TimeOperation.setOutputDate(ControlData.yearOutputSection);
+			}
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
 		}
 		GurobiSolver.dispose();
 		
-		if (ControlData.writeInitToDVOutput){
-			DssOperation.writeInitDvarAliasToDSS();
-		}
-		DssOperation.writeDVAliasToDSS();
+		if (ControlData.yearOutputSection==-1) DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
@@ -1366,6 +1385,13 @@ public class ControllerBatch {
 			System.out.println("Model run exits due to error.");
 			System.exit(1);
 		}
+		
+		if (ControlData.writeInitToDVOutput){
+			DssOperation.writeInitDvarAliasToDSS();
+		}
+		
+		TimeOperation.initOutputDate(ControlData.yearOutputSection);
+		
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
 		VariableTimeStep.initialCurrTimeStep(modelList);
@@ -1515,6 +1541,9 @@ public class ControllerBatch {
 				}
 				i=i+1;
 			}
+			if (ControlData.yearOutputSection>0){
+				TimeOperation.setOutputDate(ControlData.yearOutputSection);
+			}
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
 			try{
@@ -1539,10 +1568,7 @@ public class ControllerBatch {
 		}
 		CbcSolver.close(); if (ControlData.cbc_debug_routeXA || ControlData.cbc_debug_routeCbc) {ControlData.xasolver.close();}
 		
-		if (ControlData.writeInitToDVOutput){
-			DssOperation.writeInitDvarAliasToDSS();
-		}
-		DssOperation.writeDVAliasToDSS();
+		if (ControlData.yearOutputSection==-1) DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();

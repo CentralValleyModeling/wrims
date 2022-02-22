@@ -319,4 +319,24 @@ public class TimeOperation {
 			}
 		}
 	}
+	
+	public static void initOutputDate(int year){
+		ControlData.outputYear=ControlData.startYear+year;
+		ControlData.outputMonth=ControlData.startMonth-1;
+		if (ControlData.outputMonth==0){
+			ControlData.outputYear=ControlData.outputYear-1;
+			ControlData.outputMonth=12;
+		}
+		ControlData.outputDay=numberOfDays(ControlData.outputMonth, ControlData.outputYear);
+	}
+	
+	public static void setOutputDate(int year){
+		ControlData.outputYear=ControlData.outputYear+year;
+		ControlData.outputMonth=ControlData.outputMonth-1;
+		if (ControlData.outputMonth==0){
+			ControlData.outputYear=ControlData.outputYear-1;
+			ControlData.outputMonth=12;
+		}
+		ControlData.outputDay=numberOfDays(ControlData.outputMonth, ControlData.outputYear);
+	}
 }
