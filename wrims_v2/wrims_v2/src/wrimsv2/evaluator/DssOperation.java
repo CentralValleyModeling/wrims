@@ -297,7 +297,7 @@ public class DssOperation {
 			dd._yValues = values;
 			boolean storeFlags = false;
 			String pathName="/"+ControlData.partA+"/"+DssOperation.getTSName(dvAliasName)+"/"+ddsfl.getKind()+"//"+ddsfl.getTimeStep()+"/"+ControlData.svDvPartF+"/";
-			Date startDate=ddsfl.getStartTime();
+			Date startDate=new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay);
 			String startDateStr=TimeOperation.dssTimeEndDay(startDate.getYear()+1900, startDate.getMonth()+1, startDate.getDate());
 			long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
 			ControlData.writer.storeTimeSeriesData(pathName, startJulmin, dd,
@@ -330,7 +330,7 @@ public class DssOperation {
 					dd._yValues = values;
 					boolean storeFlags = false;
 					String pathName="/"+ControlData.partA+"_Cycle"+cycleI+"/"+DssOperation.getTSName(dvAliasName)+"/"+ddsfl.getKind()+"//"+ddsfl.getTimeStep()+"/"+ControlData.svDvPartF+"/";
-					Date startDate=ddsfl.getStartTime();
+					Date startDate=new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay);
 					String startDateStr=TimeOperation.dssTimeEndDay(startDate.getYear()+1900, startDate.getMonth()+1, startDate.getDate());
 					long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
 					ControlData.writer.storeTimeSeriesData(pathName, startJulmin, dd,
@@ -515,7 +515,7 @@ public class DssOperation {
 			dd._yValues = modValues;
 			boolean storeFlags = false;
 			String pathName="/"+ControlData.partA+"/"+DssOperation.getTSName(dvAliasName)+"/"+ddsfl.getKind()+"//"+timestep+"/"+ControlData.svDvPartF+"/";
-			Date startDate=ddsfl.getStartTime();
+			Date startDate=new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay);
 			String startDateStr=TimeOperation.dssTimeEndDay(startDate.getYear()+1900, startDate.getMonth()+1, startDate.getDate());
 			long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
 			writer.storeTimeSeriesData(pathName, startJulmin, dd,
@@ -569,7 +569,8 @@ public class DssOperation {
 					boolean storeFlags = false;
 					String pathName="/"+ControlData.partA+"_Cycle"+cycleI+"/"+DssOperation.getTSName(dvAliasName)+"/"+ddsfl.getKind()+"//"+timestep+"/"+ControlData.svDvPartF+"/";
 					//Date startDate=ddsfl.getStartTime();
-					String startDateStr=TimeOperation.dssTimeEndDay(ControlData.cycleDataStartYear, ControlData.cycleDataStartMonth, ControlData.cycleDataStartDay);
+					Date startDate=new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay);
+					String startDateStr=TimeOperation.dssTimeEndDay(startDate.getYear()+1900, startDate.getMonth()+1, startDate.getDate());
 					long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
 					writer.storeTimeSeriesData(pathName, startJulmin, dd,
 								storeFlags);
@@ -660,6 +661,61 @@ public class DssOperation {
 			long endTime=endDate.getTime();
 			double timestep=(endTime-startTime)/(24*60*60*1000l);
 			return (int)timestep;
+		}
+	}
+	
+	public static void shiftData(){
+		Date prevOutputDate=new Date(ControlData.prevOutputYear-1900, ControlData.prevOutputMonth-1, ControlData.prevOutputDay);
+		Date memStartDate=new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay);
+		Date outputDate=new Date(ControlData.outputYear-1900, ControlData.outputMonth-1, ControlData.outputDay);
+		shiftDvAliasData(prevOutputDate, memStartDate, outputDate);
+		shiftDvAliasCycleData(prevOutputDate, memStartDate, outputDate);
+	}
+	
+	public static void shiftDvAliasData(Date prevOutputDate, Date memStartDate, Date outputDate){
+		Set dvAliasSet=DataTimeSeries.dvAliasTS.keySet();
+		Iterator iterator = dvAliasSet.iterator();
+		while(iterator.hasNext()){
+			String dvAliasName=(String)iterator.next();
+			DssDataSetFixLength ddsfl=DataTimeSeries.dvAliasTS.get(dvAliasName);
+			double[] values=ddsfl.getData();
+			String timestep=ddsfl.getTimeStep();
+			int nTimeStep1 = TimeOperation.getNumberOfTimestep(prevOutputDate, memStartDate, timestep);
+			int nTimeStep2 = TimeOperation.getNumberOfTimestep(prevOutputDate, outputDate, timestep);
+			int size = nTimeStep2-nTimeStep1;
+			double[] values1=new double[size];
+			for (int i=0; i<size; i++){
+				values1[i]=values[i+nTimeStep1];
+			}
+			ddsfl.setData(values1);
+		}
+	}
+	
+	public static void shiftDvAliasCycleData(Date prevOutputDate, Date memStartDate, Date outputDate){
+		int totalCycleNumber=ControlData.currStudyDataSet.getModelList().size();
+		
+		for (int i=0; i<totalCycleNumber; i++){
+			int cycleI=i+1;
+			String strCycleI=cycleI+"";
+			if (General.isSelectedCycleOutput(strCycleI)){
+				HashMap<String, DssDataSetFixLength> dvAliasTSCycle = DataTimeSeries.dvAliasTSCycles.get(i);
+				Set dvAliasSet=dvAliasTSCycle.keySet();
+				Iterator iterator = dvAliasSet.iterator();
+				while(iterator.hasNext()){
+					String dvAliasName=(String)iterator.next();
+					DssDataSetFixLength ddsfl=dvAliasTSCycle.get(dvAliasName);
+					double[] values=ddsfl.getData();
+					String timestep=ddsfl.getTimeStep();
+					int nTimeStep1 = TimeOperation.getNumberOfTimestep(prevOutputDate, memStartDate, timestep);
+					int nTimeStep2 = TimeOperation.getNumberOfTimestep(prevOutputDate, outputDate, timestep);
+					int size = nTimeStep2-nTimeStep1;
+					double[] values1=new double[size];
+					for (int j=0; j<size; j++){
+						values1[j]=values[j+nTimeStep1];
+					}
+					ddsfl.setData(values1);
+				}
+			}
 		}
 	}
 }

@@ -331,6 +331,10 @@ public class TimeOperation {
 	}
 	
 	public static void setOutputDate(int year){
+		ControlData.prevOutputYear=ControlData.outputYear;
+		ControlData.prevOutputMonth=ControlData.outputMonth;
+		ControlData.prevOutputDay=ControlData.outputDay;
+		
 		ControlData.outputYear=ControlData.outputYear+year;
 		ControlData.outputMonth=ControlData.outputMonth-1;
 		if (ControlData.outputMonth==0){
@@ -339,4 +343,23 @@ public class TimeOperation {
 		}
 		ControlData.outputDay=numberOfDays(ControlData.outputMonth, ControlData.outputYear);
 	}
+	
+	public static void initMemDate(int month){
+		ControlData.memStartYear=ControlData.startYear;
+		ControlData.memStartMonth=ControlData.startMonth;
+		ControlData.memStartDay=ControlData.startDay;
+	}
+	
+	public static void setMemDate(int month){
+		int years = month / 12; 
+		int remainingMonths = month % 12;
+		ControlData.memStartYear=ControlData.outputYear-years;
+		ControlData.memStartMonth=ControlData.outputMonth-remainingMonths;
+		if (ControlData.memStartMonth<=0){
+			ControlData.memStartYear=ControlData.memStartYear-1;
+			ControlData.memStartMonth=ControlData.memStartMonth+12;
+		}
+		ControlData.memStartDay=Math.min(numberOfDays(ControlData.memStartMonth, ControlData.memStartYear), ControlData.memStartDay);
+	}
+	
 }

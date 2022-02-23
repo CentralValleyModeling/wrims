@@ -284,6 +284,7 @@ public class ControllerBatch {
 		}
 		
 		TimeOperation.initOutputDate(ControlData.yearOutputSection);
+		TimeOperation.initMemDate(ControlData.monMemSection);
 		
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
@@ -392,6 +393,7 @@ public class ControllerBatch {
 			}
 			if (ControlData.yearOutputSection>0){
 				TimeOperation.setOutputDate(ControlData.yearOutputSection);
+				TimeOperation.setMemDate(ControlData.monMemSection);
 			}
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
@@ -517,6 +519,7 @@ public class ControllerBatch {
 		}
 		
 		TimeOperation.initOutputDate(ControlData.yearOutputSection);
+		TimeOperation.initMemDate(ControlData.monMemSection);
 		
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
@@ -766,6 +769,7 @@ public class ControllerBatch {
 			}
 			if (ControlData.yearOutputSection>0){
 				TimeOperation.setOutputDate(ControlData.yearOutputSection);
+				TimeOperation.setMemDate(ControlData.monMemSection);
 			}
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
@@ -821,6 +825,7 @@ public class ControllerBatch {
 		}
 		
 		TimeOperation.initOutputDate(ControlData.yearOutputSection);
+		TimeOperation.initMemDate(ControlData.monMemSection);
 		
 		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
 
@@ -939,6 +944,7 @@ public class ControllerBatch {
 			}
 			if (ControlData.yearOutputSection>0){
 				TimeOperation.setOutputDate(ControlData.yearOutputSection);
+				TimeOperation.setMemDate(ControlData.monMemSection);
 			}
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
@@ -1391,6 +1397,7 @@ public class ControllerBatch {
 		}
 		
 		TimeOperation.initOutputDate(ControlData.yearOutputSection);
+		TimeOperation.initMemDate(ControlData.monMemSection);
 		
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
@@ -1543,6 +1550,7 @@ public class ControllerBatch {
 			}
 			if (ControlData.yearOutputSection>0){
 				TimeOperation.setOutputDate(ControlData.yearOutputSection);
+				TimeOperation.setMemDate(ControlData.monMemSection);
 			}
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);

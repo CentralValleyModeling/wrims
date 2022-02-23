@@ -267,6 +267,7 @@ public class ControllerDebug extends Thread {
 		}
 		
 		TimeOperation.initOutputDate(ControlData.yearOutputSection);
+		TimeOperation.initMemDate(ControlData.monMemSection);
 		
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
@@ -472,6 +473,7 @@ public class ControllerDebug extends Thread {
 			}
 			if (ControlData.yearOutputSection>0){
 				TimeOperation.setOutputDate(ControlData.yearOutputSection);
+				TimeOperation.setMemDate(ControlData.monMemSection);
 			}
 			updateVarMonitor();
 			if (ControlData.resimDate){

@@ -168,10 +168,16 @@ public class ControlData {
 	public static boolean printGWFuncCalls=false;
 	
 	public static int yearOutputSection=-1;
-	public static int monOutputInit=-1;
+	public static int monMemSection=-1;
 	public static int outputYear;
 	public static int outputMonth;
 	public static int outputDay;
+	public static int memStartYear;
+	public static int memStartMonth;
+	public static int memStartDay;
+	public static int prevOutputYear;
+	public static int prevOutputMonth;
+	public static int prevOutputDay;
 	
 	public ControlData(){
 	}
