@@ -93,6 +93,9 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 	private String numberRestartFiles;
 	private String ifsIsSelFile;
 	private String compileOnly;
+	private String dssEndOutput;
+	private String yearSectionOutput;
+	private String monMemSection;
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.ILaunchConfigurationDelegate#launch(org.eclipse.debug.core.ILaunchConfiguration, java.lang.String, org.eclipse.debug.core.ILaunch, org.eclipse.core.runtime.IProgressMonitor)
@@ -471,6 +474,9 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			allRestartFiles=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ALLRESTARTFILES, "no");
 			numberRestartFiles=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_NUMBERRESTARTFILES, "12");
 			compileOnly = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_COMPILEONLY, "no");
+			dssEndOutput = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_DSSENDOUTPUT, "yes");
+			yearSectionOutput = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_YEARSECTIONOUTPUT, "10");
+			monMemSection = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_MONMEMSECTION, "24");
 			
 			databaseURL=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_DATABASEURL, "none");
 			sqlGroup=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SQLGROUP, "calsim");
@@ -598,6 +604,11 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			configMap.put("AllowSvTsInit".toLowerCase(), allowSvTsInit);
 			configMap.put("AllRestartFiles".toLowerCase(), allRestartFiles);
 			configMap.put("NumberRestartFiles".toLowerCase(), numberRestartFiles);
+			
+			if (!dssEndOutput.equalsIgnoreCase("yes")){
+				configMap.put("YearOutputSection".toLowerCase(), yearSectionOutput);
+				configMap.put("MonthMemSection".toLowerCase(), monMemSection);
+			}
 			
 			configMap.put("DatabaseURL".toLowerCase(), databaseURL);
 			configMap.put("SQLGroup".toLowerCase(), sqlGroup);
@@ -738,6 +749,11 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			out.println("SelectedCycleOutput "+configMap.get("SelectedCycleOutput".toLowerCase()));
 			out.println("ShowRunTimeMessage "+configMap.get("ShowRunTimeMessage".toLowerCase()));
 			out.println("PrintGWFuncCalls   "+configMap.get("PrintGWFuncCalls".toLowerCase()));
+			
+			if (!dssEndOutput.equalsIgnoreCase("yes")){
+				out.println("YearOutputSection  "+configMap.get("YearOutputSection".toLowerCase()));
+				out.println("MonthMemorySection "+configMap.get("MonthMemSection".toLowerCase()));
+			}
 			
 			if (DebugCorePlugin.solver.equalsIgnoreCase("LpSolve")) {
 				

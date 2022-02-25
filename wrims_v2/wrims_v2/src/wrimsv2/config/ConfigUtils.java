@@ -1069,6 +1069,13 @@ public class ConfigUtils {
 		ControlData.isNameSorting = readBoolean(configMap, k, false);
 		System.out.println(k+": "+ControlData.isNameSorting);
 		
+		k = "YearOutputSection";
+		ControlData.yearOutputSection = (int)Math.round(readDouble(configMap, k, -1));
+		System.out.println(k+": "+ControlData.yearOutputSection);
+		
+		k = "MonthMemorySection";
+		ControlData.monMemSection = (int)Math.round(readDouble(configMap, k, -1));
+		System.out.println(k+": "+ControlData.monMemSection);
 		
 		//if (Error.getTotalError()<1) readParameter(configFile);
 		
@@ -1341,6 +1348,8 @@ public class ConfigUtils {
 		configMap.put("NumberRestartFiles".toLowerCase(), "12");
 		configMap.put("PrintGWfuncCalls".toLowerCase(), "No");
 		configMap.put("NameSorting".toLowerCase(), "No");
+		configMap.put("YearOutputSection".toLowerCase(), "-1");
+		configMap.put("MonthMemorySection".toLowerCase(), "-1");
 		return configMap;
 
 	}

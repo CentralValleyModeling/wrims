@@ -665,14 +665,14 @@ public class DssOperation {
 	}
 	
 	public static void shiftData(){
-		Date prevOutputDate=new Date(ControlData.prevOutputYear-1900, ControlData.prevOutputMonth-1, ControlData.prevOutputDay);
+		Date prevMemDate=new Date(ControlData.prevMemYear-1900, ControlData.prevMemMonth-1, ControlData.prevMemDay);
 		Date memStartDate=new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay);
 		Date outputDate=new Date(ControlData.outputYear-1900, ControlData.outputMonth-1, ControlData.outputDay);
-		shiftDvAliasData(prevOutputDate, memStartDate, outputDate);
-		shiftDvAliasCycleData(prevOutputDate, memStartDate, outputDate);
+		shiftDvAliasData(prevMemDate, memStartDate, outputDate);
+		shiftDvAliasCycleData(prevMemDate, memStartDate, outputDate);
 	}
 	
-	public static void shiftDvAliasData(Date prevOutputDate, Date memStartDate, Date outputDate){
+	public static void shiftDvAliasData(Date prevMemDate, Date memStartDate, Date outputDate){
 		Set dvAliasSet=DataTimeSeries.dvAliasTS.keySet();
 		Iterator iterator = dvAliasSet.iterator();
 		while(iterator.hasNext()){
@@ -680,8 +680,8 @@ public class DssOperation {
 			DssDataSetFixLength ddsfl=DataTimeSeries.dvAliasTS.get(dvAliasName);
 			double[] values=ddsfl.getData();
 			String timestep=ddsfl.getTimeStep();
-			int nTimeStep1 = TimeOperation.getNumberOfTimestep(prevOutputDate, memStartDate, timestep);
-			int nTimeStep2 = TimeOperation.getNumberOfTimestep(prevOutputDate, outputDate, timestep);
+			int nTimeStep1 = TimeOperation.getNumberOfTimestep(prevMemDate, memStartDate, timestep);
+			int nTimeStep2 = TimeOperation.getNumberOfTimestep(prevMemDate, outputDate, timestep);
 			int size = nTimeStep2-nTimeStep1;
 			double[] values1=new double[size];
 			for (int i=0; i<size; i++){
@@ -691,7 +691,7 @@ public class DssOperation {
 		}
 	}
 	
-	public static void shiftDvAliasCycleData(Date prevOutputDate, Date memStartDate, Date outputDate){
+	public static void shiftDvAliasCycleData(Date prevMemDate, Date memStartDate, Date outputDate){
 		int totalCycleNumber=ControlData.currStudyDataSet.getModelList().size();
 		
 		for (int i=0; i<totalCycleNumber; i++){
@@ -706,8 +706,8 @@ public class DssOperation {
 					DssDataSetFixLength ddsfl=dvAliasTSCycle.get(dvAliasName);
 					double[] values=ddsfl.getData();
 					String timestep=ddsfl.getTimeStep();
-					int nTimeStep1 = TimeOperation.getNumberOfTimestep(prevOutputDate, memStartDate, timestep);
-					int nTimeStep2 = TimeOperation.getNumberOfTimestep(prevOutputDate, outputDate, timestep);
+					int nTimeStep1 = TimeOperation.getNumberOfTimestep(prevMemDate, memStartDate, timestep);
+					int nTimeStep2 = TimeOperation.getNumberOfTimestep(prevMemDate, outputDate, timestep);
 					int size = nTimeStep2-nTimeStep1;
 					double[] values1=new double[size];
 					for (int j=0; j<size; j++){

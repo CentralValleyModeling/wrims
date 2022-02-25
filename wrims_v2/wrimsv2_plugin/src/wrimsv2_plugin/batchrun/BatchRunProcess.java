@@ -115,6 +115,9 @@ public class BatchRunProcess {
 	private String allRestartFiles;
 	private String numberRestartFiles;
 	private String ifsIsSelFile;
+	private String dssEndOutput;
+	private String yearSectionOutput;
+	private String monMemSection;
 		
 	public void launch(LaunchConfigInfo configuration, String launchFilePath) throws CoreException {		
 		
@@ -381,6 +384,9 @@ public class BatchRunProcess {
 		allowSvTsInit=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_ALLOWSVTSINIT, "no");
 		allRestartFiles=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_ALLRESTARTFILES, "no");
 		numberRestartFiles=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_NUMBERRESTARTFILES, "12");
+		dssEndOutput = configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_DSSENDOUTPUT, "yes");
+		yearSectionOutput = configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_YEARSECTIONOUTPUT, "10");
+		monMemSection = configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_MONMEMSECTION, "24");
 		
 		databaseURL=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_DATABASEURL, "none");
 		sqlGroup=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_SQLGROUP, "calsim");
@@ -495,6 +501,11 @@ public class BatchRunProcess {
 			configMap.put("AllowSvTsInit".toLowerCase(), allowSvTsInit);
 			configMap.put("AllRestartFiles".toLowerCase(), allRestartFiles);
 			configMap.put("NumberRestartFiles".toLowerCase(), numberRestartFiles);
+	
+			if (!dssEndOutput.equalsIgnoreCase("yes")){
+				configMap.put("YearOutputSection".toLowerCase(), yearSectionOutput);
+				configMap.put("MonthMemSection".toLowerCase(), monMemSection);
+			}
 			
 			configMap.put("DatabaseURL".toLowerCase(), databaseURL);
 			configMap.put("SQLGroup".toLowerCase(), sqlGroup);
@@ -625,6 +636,11 @@ public class BatchRunProcess {
 			out.println("SelectedCycleOutput "+configMap.get("SelectedCycleOutput".toLowerCase()));
 			out.println("ShowRunTimeMessage "+configMap.get("ShowRunTimeMessage".toLowerCase()));
 			out.println("PrintGWFuncCalls   "+configMap.get("PrintGWFuncCalls".toLowerCase()));
+			
+			if (!dssEndOutput.equalsIgnoreCase("yes")){
+				out.println("YearOutputSection  "+configMap.get("YearOutputSection".toLowerCase()));
+				out.println("MonthMemorySection "+configMap.get("MonthMemSection".toLowerCase()));
+			}
 			
 			if (DebugCorePlugin.solver.equalsIgnoreCase("LpSolve")) {
 				

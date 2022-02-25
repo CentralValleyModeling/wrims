@@ -310,6 +310,12 @@ public class WPPWsiDiTab extends AbstractLaunchConfigurationTab {
 				out.println("printgwfunccalls no");
 			}
 			
+			String dssEndOutput = launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_DSSENDOUTPUT, "yes");
+			if (!dssEndOutput.equalsIgnoreCase("yes")){
+				out.println("YearOutputSection  "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_YEARSECTIONOUTPUT, "10"));
+				out.println("MonthMemorySection "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_MONMEMSECTION, "24"));
+			}
+			
 			//if (DebugCorePlugin.solver.equalsIgnoreCase("LpSolve")) {
 			//	out.println("LpSolveConfigFile         callite.lpsolve");
 			//	out.println("LpSolveNumberOfRetries    2");				

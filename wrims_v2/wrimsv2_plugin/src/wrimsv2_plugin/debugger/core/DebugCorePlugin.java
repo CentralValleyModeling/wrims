@@ -240,6 +240,10 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static final String ATTR_WPP_IFSNUMBERSELENTRIES=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_IFS_NUMBER_SELECT_ENTRIES";
 	public static final String ATTR_WPP_IFSSELENTRYNAME=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_IFS_SELECT_ENTRY_NAME";
 	public static final String ATTR_WPP_COMPILEONLY=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_COMPILEONLY";
+	public static final String ATTR_WPP_DSSENDOUTPUT=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_DSSENDOUTPUT";
+	public static final String ATTR_WPP_YEARSECTIONOUTPUT=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_YEARSECTIONOUTPUT";
+	public static final String ATTR_WPP_MONMEMSECTION=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_MONMEMSECTION";	
+	
 	
 	public static final String lineSep=System.getProperty("line.separator");
 	public static final String tab="\t";

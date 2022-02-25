@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -279,9 +280,6 @@ public class ControllerBatch {
 			System.out.println("Model run exits due to error.");
 			System.exit(1);
 		}
-		if (ControlData.writeInitToDVOutput){
-			DssOperation.writeInitDvarAliasToDSS();
-		}
 		
 		TimeOperation.initOutputDate(ControlData.yearOutputSection);
 		TimeOperation.initMemDate(ControlData.monMemSection);
@@ -391,9 +389,13 @@ public class ControllerBatch {
 				}
 				i=i+1;
 			}
-			if (ControlData.yearOutputSection>0){
-				TimeOperation.setOutputDate(ControlData.yearOutputSection);
+			Date date1= new Date(ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
+			Date date2= new Date(ControlData.outputYear-1900, ControlData.outputMonth-1, ControlData.outputDay);
+			if (ControlData.yearOutputSection>0 && date1.after(date2)){
 				TimeOperation.setMemDate(ControlData.monMemSection);
+				DssOperation.writeDVAliasToDSS();
+				DssOperation.shiftData();
+				TimeOperation.setOutputDate(ControlData.yearOutputSection);
 			}
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
@@ -418,7 +420,11 @@ public class ControllerBatch {
 			}
 		}
 		ControlData.xasolver.close();
-		if (ControlData.yearOutputSection==-1) DssOperation.writeDVAliasToDSS();
+		
+		if (ControlData.writeInitToDVOutput){
+			DssOperation.writeInitDvarAliasToDSS();
+		}
+		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
@@ -512,10 +518,6 @@ public class ControllerBatch {
 		} else {
 			Error.addConfigError("Solver name not recognized: "+ControlData.solverName);
 			Error.writeErrorLog();
-		}
-		
-		if (ControlData.writeInitToDVOutput){
-			DssOperation.writeInitDvarAliasToDSS();
 		}
 		
 		TimeOperation.initOutputDate(ControlData.yearOutputSection);
@@ -767,9 +769,13 @@ public class ControllerBatch {
 				}
 				i=i+1;
 			}
-			if (ControlData.yearOutputSection>0){
-				TimeOperation.setOutputDate(ControlData.yearOutputSection);
+			Date date1= new Date(ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
+			Date date2= new Date(ControlData.outputYear-1900, ControlData.outputMonth-1, ControlData.outputDay);
+			if (ControlData.yearOutputSection>0 && date1.after(date2)){
 				TimeOperation.setMemDate(ControlData.monMemSection);
+				DssOperation.writeDVAliasToDSS();
+				DssOperation.shiftData();
+				TimeOperation.setOutputDate(ControlData.yearOutputSection);
 			}
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
@@ -788,7 +794,10 @@ public class ControllerBatch {
 			ControlData.xasolver.close();
 		}
 		
-		if (ControlData.yearOutputSection==-1) DssOperation.writeDVAliasToDSS();
+		if (ControlData.writeInitToDVOutput){
+			DssOperation.writeInitDvarAliasToDSS();
+		}
+		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
@@ -819,10 +828,6 @@ public class ControllerBatch {
 		
 		ILP.initializeIlp();
 		GurobiSolver.initialize();
-		
-		if (ControlData.writeInitToDVOutput){
-			DssOperation.writeInitDvarAliasToDSS();
-		}
 		
 		TimeOperation.initOutputDate(ControlData.yearOutputSection);
 		TimeOperation.initMemDate(ControlData.monMemSection);
@@ -942,16 +947,23 @@ public class ControllerBatch {
 				}
 				i=i+1;
 			}
-			if (ControlData.yearOutputSection>0){
-				TimeOperation.setOutputDate(ControlData.yearOutputSection);
+			Date date1= new Date(ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
+			Date date2= new Date(ControlData.outputYear-1900, ControlData.outputMonth-1, ControlData.outputDay);
+			if (ControlData.yearOutputSection>0 && date1.after(date2)){
 				TimeOperation.setMemDate(ControlData.monMemSection);
+				DssOperation.writeDVAliasToDSS();
+				DssOperation.shiftData();
+				TimeOperation.setOutputDate(ControlData.yearOutputSection);
 			}
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
 		}
 		GurobiSolver.dispose();
 		
-		if (ControlData.yearOutputSection==-1) DssOperation.writeDVAliasToDSS();
+		if (ControlData.writeInitToDVOutput){
+			DssOperation.writeInitDvarAliasToDSS();
+		}
+		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
@@ -1392,10 +1404,6 @@ public class ControllerBatch {
 			System.exit(1);
 		}
 		
-		if (ControlData.writeInitToDVOutput){
-			DssOperation.writeInitDvarAliasToDSS();
-		}
-		
 		TimeOperation.initOutputDate(ControlData.yearOutputSection);
 		TimeOperation.initMemDate(ControlData.monMemSection);
 		
@@ -1548,9 +1556,13 @@ public class ControllerBatch {
 				}
 				i=i+1;
 			}
-			if (ControlData.yearOutputSection>0){
-				TimeOperation.setOutputDate(ControlData.yearOutputSection);
+			Date date1= new Date(ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
+			Date date2= new Date(ControlData.outputYear-1900, ControlData.outputMonth-1, ControlData.outputDay);
+			if (ControlData.yearOutputSection>0 && date1.after(date2)){
 				TimeOperation.setMemDate(ControlData.monMemSection);
+				DssOperation.writeDVAliasToDSS();
+				DssOperation.shiftData();
+				TimeOperation.setOutputDate(ControlData.yearOutputSection);
 			}
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
@@ -1576,7 +1588,10 @@ public class ControllerBatch {
 		}
 		CbcSolver.close(); if (ControlData.cbc_debug_routeXA || ControlData.cbc_debug_routeCbc) {ControlData.xasolver.close();}
 		
-		if (ControlData.yearOutputSection==-1) DssOperation.writeDVAliasToDSS();
+		if (ControlData.writeInitToDVOutput){
+			DssOperation.writeInitDvarAliasToDSS();
+		}
+		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();

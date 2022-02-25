@@ -36,6 +36,10 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 	private Button allRestartFilesButton;
 	private Text restartFilesText;
 	private Button compButton;
+	private Button dssEndOutputButton;
+	private Button dssSectionOutputButton;
+	private Text yearSectionText;
+	private Text memSectionText;
 	
 	@Override
 	public void createControl(Composite parent) {
@@ -249,7 +253,7 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 		
 		compButton = new Button(comp, SWT.CHECK);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.horizontalSpan = 1;
+		gd.horizontalSpan = 4;
 		compButton.setLayoutData(gd);
 		compButton.setFont(font);
 		compButton.addSelectionListener(new SelectionListener(){
@@ -264,6 +268,105 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 				updateLaunchConfigurationDialog();			
 			}
 		});
+		
+		dssEndOutputButton = new Button(comp, SWT.RADIO);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 6;
+		dssEndOutputButton.setLayoutData(gd);
+		dssEndOutputButton.setFont(font);
+		dssEndOutputButton.setEnabled(true);
+		dssEndOutputButton.setText("Dss Output at the End");
+		dssEndOutputButton.addSelectionListener(new SelectionListener(){
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				dssEndOutputButton.setSelection(true);
+				dssSectionOutputButton.setSelection(false);
+				updateLaunchConfigurationDialog();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				dssEndOutputButton.setSelection(true);
+				dssSectionOutputButton.setSelection(false);
+				updateLaunchConfigurationDialog();				
+			}
+			
+		});
+		
+		dssSectionOutputButton = new Button(comp, SWT.RADIO);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 1;
+		dssSectionOutputButton.setLayoutData(gd);
+		dssSectionOutputButton.setFont(font);
+		dssSectionOutputButton.setEnabled(true);
+		dssSectionOutputButton.setText("Dss Output at Every Number of Years");
+		dssSectionOutputButton.addSelectionListener(new SelectionListener(){
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				dssSectionOutputButton.setSelection(true);
+				dssEndOutputButton.setSelection(false);
+				updateLaunchConfigurationDialog();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				dssEndOutputButton.setSelection(true);
+				dssSectionOutputButton.setSelection(false);
+				updateLaunchConfigurationDialog();				
+			}
+			
+		});
+			
+		yearSectionText = new Text(comp, SWT.SINGLE | SWT.BORDER);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 1;
+		yearSectionText.setLayoutData(gd);
+		yearSectionText.setFont(font);
+		yearSectionText.addModifyListener(new ModifyListener(){
+
+			@Override
+			public void modifyText(ModifyEvent e) {
+				updateLaunchConfigurationDialog();
+			}
+			
+		});
+		
+		Label yearSectionOutputLabel = new Label(comp, SWT.NONE);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 1;
+		yearSectionOutputLabel.setLayoutData(gd);
+		yearSectionOutputLabel.setFont(font);
+		yearSectionOutputLabel.setText("Years");
+		
+		Label memSectionLabel = new Label(comp, SWT.NONE);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 1;
+		memSectionLabel.setLayoutData(gd);
+		memSectionLabel.setFont(font);
+		memSectionLabel.setText("Keep Number of Months Data in Memory");
+		
+		memSectionText = new Text(comp, SWT.SINGLE | SWT.BORDER);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 1;
+		memSectionText.setLayoutData(gd);
+		memSectionText.setFont(font);
+		memSectionText.addModifyListener(new ModifyListener(){
+
+			@Override
+			public void modifyText(ModifyEvent e) {
+				updateLaunchConfigurationDialog();
+			}
+			
+		});
+		
+		Label memMonSectionOutputLabel = new Label(comp, SWT.NONE);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 1;
+		memMonSectionOutputLabel.setLayoutData(gd);
+		memMonSectionOutputLabel.setFont(font);
+		memMonSectionOutputLabel.setText("Months");
 	}
 
 	@Override
@@ -273,6 +376,9 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_ALLRESTARTFILES, "no");
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_NUMBERRESTARTFILES, "12");
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_COMPILEONLY, "no");
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_DSSENDOUTPUT, "yes");
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_YEARSECTIONOUTPUT, "10");
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_MONMEMSECTION, "24");
 	}
 
 	@Override
@@ -346,6 +452,36 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 		} catch (CoreException e) {
 			WPPException.handleException(e);
 		}
+		
+		String dssEndOutput = null;
+		try {
+			dssEndOutput = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_DSSENDOUTPUT, "yes");
+			if (dssEndOutput.equalsIgnoreCase("yes")){
+				dssEndOutputButton.setSelection(true);
+				dssSectionOutputButton.setSelection(false);
+			}else{
+				dssEndOutputButton.setSelection(false);
+				dssSectionOutputButton.setSelection(true);
+			}
+		} catch (CoreException e) {
+			WPPException.handleException(e);
+		}
+		
+		String yearSectionOutput = null;
+		try {
+			yearSectionOutput = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_YEARSECTIONOUTPUT, "10");
+			yearSectionText.setText(yearSectionOutput);
+		} catch (CoreException e) {
+			WPPException.handleException(e);
+		}
+		
+		String monMemSection  = null;
+		try {
+			monMemSection = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_MONMEMSECTION, "24");
+			memSectionText.setText(monMemSection);
+		} catch (CoreException e) {
+			WPPException.handleException(e);
+		}
 	}
 
 	@Override
@@ -392,6 +528,22 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 			compileOnly="no";
 		}
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_COMPILEONLY, compileOnly);
+		
+		String dssEndOutput = "yes";
+		if (dssEndOutputButton.getSelection()){
+			dssEndOutput = "yes";
+		}else{
+			dssEndOutput = "no";
+		}
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_DSSENDOUTPUT, dssEndOutput);
+
+		
+		String yearSectionOutput = yearSectionText.getText();
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_YEARSECTIONOUTPUT, yearSectionOutput);
+			
+		
+		String monMemSection  = memSectionText.getText();
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_MONMEMSECTION, monMemSection);
 	}
 
 	@Override
