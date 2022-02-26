@@ -680,14 +680,15 @@ public class DssOperation {
 			DssDataSetFixLength ddsfl=DataTimeSeries.dvAliasTS.get(dvAliasName);
 			double[] values=ddsfl.getData();
 			String timestep=ddsfl.getTimeStep();
-			int nTimeStep1 = TimeOperation.getNumberOfTimestep(prevMemDate, memStartDate, timestep);
-			int nTimeStep2 = TimeOperation.getNumberOfTimestep(prevMemDate, outputDate, timestep);
-			int size = nTimeStep2-nTimeStep1;
-			double[] values1=new double[size];
+			int nTimeStep1 = TimeOperation.getNumberOfTimestep(prevMemDate, memStartDate, timestep)-1;
+			int nTimeStep2 = TimeOperation.getNumberOfTimestep(prevMemDate, outputDate, timestep)-1;
+			int size = nTimeStep2-nTimeStep1+1;
+			double[] values1=new double[values.length];
 			for (int i=0; i<size; i++){
 				values1[i]=values[i+nTimeStep1];
 			}
 			ddsfl.setData(values1);
+			ddsfl.setStartTime(memStartDate);
 		}
 	}
 	
@@ -706,14 +707,15 @@ public class DssOperation {
 					DssDataSetFixLength ddsfl=dvAliasTSCycle.get(dvAliasName);
 					double[] values=ddsfl.getData();
 					String timestep=ddsfl.getTimeStep();
-					int nTimeStep1 = TimeOperation.getNumberOfTimestep(prevMemDate, memStartDate, timestep);
-					int nTimeStep2 = TimeOperation.getNumberOfTimestep(prevMemDate, outputDate, timestep);
-					int size = nTimeStep2-nTimeStep1;
-					double[] values1=new double[size];
+					int nTimeStep1 = TimeOperation.getNumberOfTimestep(prevMemDate, memStartDate, timestep)-1;
+					int nTimeStep2 = TimeOperation.getNumberOfTimestep(prevMemDate, outputDate, timestep)-1;
+					int size = nTimeStep2-nTimeStep1+1;
+					double[] values1=new double[values.length];
 					for (int j=0; j<size; j++){
 						values1[j]=values[j+nTimeStep1];
 					}
 					ddsfl.setData(values1);
+					ddsfl.setStartTime(memStartDate);
 				}
 			}
 		}

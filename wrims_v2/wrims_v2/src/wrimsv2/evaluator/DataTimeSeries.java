@@ -1,6 +1,7 @@
 package wrimsv2.evaluator;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import wrimsv2.commondata.wresldata.Dvar;
@@ -37,16 +38,20 @@ public class DataTimeSeries {
 			dds.setData(data);
 			dds.setTimeStep(ControlData.partE);
 			if (dds.getTimeStep().equals("1MON")){
-				dds.setStartTime(ControlData.monthlyStartTime);
+				dds.setStartTime(new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay));
 			}else{
-				dds.setStartTime(ControlData.dailyStartTime);
+				dds.setStartTime(new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay));
 			}
 			dds.setUnits(dvar.units);
 			dds.setKind(dvar.kind);
 			dvAliasTS.put(entryNameTS,dds);
 		}
-		double[] dataList=dvAliasTS.get(entryNameTS).getData();
-		int index=ControlData.currTimeStep.get(ControlData.currCycleIndex)+offset;
+		DssDataSetFixLength ddsfl = dvAliasTS.get(entryNameTS);
+		double[] dataList=ddsfl.getData();
+		//dataList[ControlData.currTimeStep.get(ControlData.currCycleIndex)]=id.getData().doubleValue();
+		Date memStartDate = ddsfl.getStartTime();
+		Date currDate =  new Date(ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
+		int index=TimeOperation.getNumberOfTimestep(memStartDate, currDate, ddsfl.getTimeStep())-1+offset;
 		if (index<dataList.length)	dataList[index]=value;
 		
 		//if (ControlData.outputCycleToDss){
@@ -58,17 +63,16 @@ public class DataTimeSeries {
 			dds1.setData(data1);
 			dds1.setTimeStep(ControlData.partE);
 			if (dds1.getTimeStep().equals("1MON")){
-				dds1.setStartTime(ControlData.monthlyStartTime);
+				dds1.setStartTime(new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay));
 			}else{
-				dds1.setStartTime(ControlData.dailyStartTime);
+				dds1.setStartTime(new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay));
 			}
 			dds1.setUnits(dvar.units);
 			dds1.setKind(dvar.kind);
 			dvAliasTSCycle.put(entryNameTS,dds1);
 		}
 		double[] dataList1=dvAliasTSCycle.get(entryNameTS).getData();
-		int index1=ControlData.currTimeStep.get(ControlData.currCycleIndex)+offset;
-		if (index1<dataList1.length) dataList1[index1]=value;
+		if (index<dataList1.length) dataList1[index]=value;
 		//}
 	}
 }
