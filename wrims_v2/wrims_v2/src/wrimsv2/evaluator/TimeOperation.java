@@ -321,17 +321,30 @@ public class TimeOperation {
 	}
 	
 	public static void initOutputDate(int year){
-		ControlData.outputYear=ControlData.startYear+year;
-		ControlData.outputMonth=ControlData.startMonth-1;
-		if (ControlData.outputMonth==0){
-			ControlData.outputYear=ControlData.outputYear-1;
-			ControlData.outputMonth=12;
+		ControlData.outputYear=(ControlData.startYear/year+1)*year;
+		ControlData.outputMonth=12;
+		ControlData.outputDay=31;
+		
+		ControlData.prevOutputYear=ControlData.startYear;
+		ControlData.prevOutputMonth=ControlData.startMonth-1;
+		if (ControlData.prevOutputMonth==0){
+			ControlData.prevOutputYear=ControlData.prevOutputYear-1;
+			ControlData.prevOutputMonth=12;
 		}
-		ControlData.outputDay=numberOfDays(ControlData.outputMonth, ControlData.outputYear);
+		ControlData.prevOutputDay=TimeOperation.numberOfDays(ControlData.prevOutputMonth, ControlData.prevOutputYear);
+		ControlData.prevOutputDate=new Date(ControlData.prevOutputYear-1900, ControlData.prevOutputMonth-1, ControlData.prevOutputDay);
 	}
 	
 	public static void setOutputDate(int year){
+		ControlData.prevOutputYear=ControlData.outputYear;
+		ControlData.prevOutputMonth=ControlData.outputMonth;
+		ControlData.prevOutputDay=ControlData.outputDay;
+		
 		ControlData.outputYear=ControlData.outputYear+year;
+		ControlData.outputMonth=12;
+		ControlData.outputDay=31;
+		
+		ControlData.prevOutputDate=new Date(ControlData.prevOutputYear-1900, ControlData.prevOutputMonth-1, ControlData.prevOutputDay);
 	}
 	
 	public static void initMemDate(int month){
@@ -342,6 +355,9 @@ public class TimeOperation {
 		ControlData.prevMemYear=ControlData.memStartYear;
 		ControlData.prevMemMonth=ControlData.memStartMonth;
 		ControlData.prevMemDay=ControlData.memStartDay;
+		
+		ControlData.prevMemDate=new Date(ControlData.prevMemYear-1900, ControlData.prevMemMonth-1, ControlData.prevMemDay);
+		ControlData.memStartDate=new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay);
 	}
 	
 	public static void setMemDate(int month){
@@ -356,8 +372,14 @@ public class TimeOperation {
 		if (ControlData.memStartMonth<=0){
 			ControlData.memStartYear=ControlData.memStartYear-1;
 			ControlData.memStartMonth=ControlData.memStartMonth+12;
+		}else if (ControlData.memStartMonth>12){
+			ControlData.memStartYear=ControlData.memStartYear+1;
+			ControlData.memStartMonth=ControlData.memStartMonth-12;			
 		}
-		ControlData.memStartDay=Math.min(numberOfDays(ControlData.memStartMonth, ControlData.memStartYear), ControlData.memStartDay);
+		ControlData.memStartDay=numberOfDays(ControlData.memStartMonth, ControlData.memStartYear);
+
+		ControlData.prevMemDate=new Date(ControlData.prevMemYear-1900, ControlData.prevMemMonth-1, ControlData.prevMemDay);
+		ControlData.memStartDate=new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay);
 	}
 	
 }

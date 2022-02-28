@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import com.esotericsoftware.kryo.util.IdentityMap.Values;
 import com.google.common.primitives.Doubles;
 
 public class DssOperation {
@@ -289,15 +290,29 @@ public class DssOperation {
 			String dvAliasName=(String)iterator.next();
 			DssDataSetFixLength ddsfl=DataTimeSeries.dvAliasTS.get(dvAliasName);
 			double[] values=ddsfl.getData();
+			String timestep=ddsfl.getTimeStep();
+			int size = values.length;
+			int nTimestep = TimeOperation.getNumberOfTimestep(ControlData.memStartDate, ControlData.prevOutputDate, timestep);
+			if (nTimestep<0) nTimestep=0;
+			double[] values1=new double[size-nTimestep];
+			int size1=values1.length;
+			for (int i=0; i<size1; i++){
+				values1[i]=values[i+nTimestep];
+			}
+			Date startDate;
+			if (timestep.equals("1MON")){
+				startDate=TimeOperation.addOneMonth(ControlData.prevOutputDate);
+			}else{
+				startDate=TimeOperation.addOneDay(ControlData.prevOutputDate);
+			}
 			DSSData dd = new DSSData();
 			dd._dataType=DSSUtil.REGULAR_TIME_SERIES;
 			dd._yType="PER-AVER";
-			dd._numberRead=values.length;
+			dd._numberRead=size1;
 			dd._yUnits=ddsfl.getUnits().toUpperCase();
-			dd._yValues = values;
+			dd._yValues = values1;
 			boolean storeFlags = false;
 			String pathName="/"+ControlData.partA+"/"+DssOperation.getTSName(dvAliasName)+"/"+ddsfl.getKind()+"//"+ddsfl.getTimeStep()+"/"+ControlData.svDvPartF+"/";
-			Date startDate=new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay);
 			String startDateStr=TimeOperation.dssTimeEndDay(startDate.getYear()+1900, startDate.getMonth()+1, startDate.getDate());
 			long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
 			ControlData.writer.storeTimeSeriesData(pathName, startJulmin, dd,
@@ -322,15 +337,29 @@ public class DssOperation {
 					String dvAliasName=(String)iterator.next();
 					DssDataSetFixLength ddsfl=dvAliasTSCycle.get(dvAliasName);
 					double[] values=ddsfl.getData();
+					String timestep=ddsfl.getTimeStep();
+					int size = values.length;
+					int nTimestep = TimeOperation.getNumberOfTimestep(ControlData.memStartDate, ControlData.prevOutputDate, timestep);
+					if (nTimestep<0) nTimestep=0;
+					double[] values1=new double[size-nTimestep];
+					int size1=values1.length;
+					for (int j=0; j<size1; j++){
+						values1[j]=values[j+nTimestep];
+					}
+					Date startDate;
+					if (timestep.equals("1MON")){
+						startDate=TimeOperation.addOneMonth(ControlData.prevOutputDate);
+					}else{
+						startDate=TimeOperation.addOneDay(ControlData.prevOutputDate);
+					}
 					DSSData dd = new DSSData();
 					dd._dataType=DSSUtil.REGULAR_TIME_SERIES;
 					dd._yType="PER-AVER";
-					dd._numberRead=values.length;
+					dd._numberRead=size1;
 					dd._yUnits=ddsfl.getUnits().toUpperCase();
-					dd._yValues = values;
+					dd._yValues = values1;
 					boolean storeFlags = false;
 					String pathName="/"+ControlData.partA+"_Cycle"+cycleI+"/"+DssOperation.getTSName(dvAliasName)+"/"+ddsfl.getKind()+"//"+ddsfl.getTimeStep()+"/"+ControlData.svDvPartF+"/";
-					Date startDate=new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay);
 					String startDateStr=TimeOperation.dssTimeEndDay(startDate.getYear()+1900, startDate.getMonth()+1, startDate.getDate());
 					long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
 					ControlData.writer.storeTimeSeriesData(pathName, startJulmin, dd,
@@ -665,11 +694,9 @@ public class DssOperation {
 	}
 	
 	public static void shiftData(){
-		Date prevMemDate=new Date(ControlData.prevMemYear-1900, ControlData.prevMemMonth-1, ControlData.prevMemDay);
-		Date memStartDate=new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay);
 		Date outputDate=new Date(ControlData.outputYear-1900, ControlData.outputMonth-1, ControlData.outputDay);
-		shiftDvAliasData(prevMemDate, memStartDate, outputDate);
-		shiftDvAliasCycleData(prevMemDate, memStartDate, outputDate);
+		shiftDvAliasData(ControlData.prevMemDate, ControlData.memStartDate, outputDate);
+		shiftDvAliasCycleData(ControlData.prevMemDate, ControlData.memStartDate, outputDate);
 	}
 	
 	public static void shiftDvAliasData(Date prevMemDate, Date memStartDate, Date outputDate){

@@ -178,6 +178,12 @@ public class ControlData {
 	public static int prevMemYear;
 	public static int prevMemMonth;
 	public static int prevMemDay;
+	public static int prevOutputYear;
+	public static int prevOutputMonth;
+	public static int prevOutputDay;
+	public static Date prevMemDate;
+	public static Date memStartDate;
+	public static Date prevOutputDate;
 	
 	public ControlData(){
 	}
