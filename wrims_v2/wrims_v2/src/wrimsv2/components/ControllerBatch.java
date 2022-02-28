@@ -289,6 +289,7 @@ public class ControllerBatch {
 		VariableTimeStep.initialCurrTimeStep(modelList);
 		VariableTimeStep.initialCycleStartDate();
 		VariableTimeStep.setCycleEndDate(sds);
+		int sectionI=0;
 		time_marching:
 		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
 			if (ControlData.solverName.equalsIgnoreCase("XALOG")) SetXALog.enableXALog();
@@ -392,6 +393,10 @@ public class ControllerBatch {
 			Date date1= new Date(ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
 			Date date2= new Date(ControlData.outputYear-1900, ControlData.outputMonth-1, ControlData.outputDay);
 			if (ControlData.yearOutputSection>0 && date1.after(date2)){
+				if (ControlData.writeInitToDVOutput && sectionI==0){
+					DssOperation.writeInitDvarAliasToDSS();
+				}
+				sectionI++;
 				TimeOperation.setMemDate(ControlData.monMemSection);
 				DssOperation.writeDVAliasToDSS();
 				DssOperation.shiftData();
@@ -421,9 +426,6 @@ public class ControllerBatch {
 		}
 		ControlData.xasolver.close();
 		
-		if (ControlData.writeInitToDVOutput){
-			DssOperation.writeInitDvarAliasToDSS();
-		}
 		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 		if (ControlData.outputType==1){
@@ -528,6 +530,7 @@ public class ControllerBatch {
 		VariableTimeStep.initialCurrTimeStep(modelList);
 		VariableTimeStep.initialCycleStartDate();
 		VariableTimeStep.setCycleEndDate(sds);
+		int sectionI=0;
 		time_marching:
 		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
 			if (ControlData.solverType == Param.SOLVER_XA && ControlData.solverName.toLowerCase().contains("xalog")) SetXALog.enableXALog();
@@ -772,6 +775,10 @@ public class ControllerBatch {
 			Date date1= new Date(ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
 			Date date2= new Date(ControlData.outputYear-1900, ControlData.outputMonth-1, ControlData.outputDay);
 			if (ControlData.yearOutputSection>0 && date1.after(date2)){
+				if (ControlData.writeInitToDVOutput && sectionI==0){
+					DssOperation.writeInitDvarAliasToDSS();
+				}
+				sectionI++;
 				TimeOperation.setMemDate(ControlData.monMemSection);
 				DssOperation.writeDVAliasToDSS();
 				DssOperation.shiftData();
@@ -794,9 +801,6 @@ public class ControllerBatch {
 			ControlData.xasolver.close();
 		}
 		
-		if (ControlData.writeInitToDVOutput){
-			DssOperation.writeInitDvarAliasToDSS();
-		}
 		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 		if (ControlData.outputType==1){
@@ -831,7 +835,7 @@ public class ControllerBatch {
 		
 		TimeOperation.initOutputDate(ControlData.yearOutputSection);
 		TimeOperation.initMemDate(ControlData.monMemSection);
-		
+		int sectionI=0;
 		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
 
 			ClearValue.clearValues(modelList, modelDataSetMap);
@@ -950,6 +954,10 @@ public class ControllerBatch {
 			Date date1= new Date(ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
 			Date date2= new Date(ControlData.outputYear-1900, ControlData.outputMonth-1, ControlData.outputDay);
 			if (ControlData.yearOutputSection>0 && date1.after(date2)){
+				if (ControlData.writeInitToDVOutput && sectionI==0){
+					DssOperation.writeInitDvarAliasToDSS();
+				}
+				sectionI++;
 				TimeOperation.setMemDate(ControlData.monMemSection);
 				DssOperation.writeDVAliasToDSS();
 				DssOperation.shiftData();
@@ -959,10 +967,7 @@ public class ControllerBatch {
 			VariableTimeStep.setCycleEndDate(sds);
 		}
 		GurobiSolver.dispose();
-		
-		if (ControlData.writeInitToDVOutput){
-			DssOperation.writeInitDvarAliasToDSS();
-		}
+
 		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 		if (ControlData.outputType==1){
@@ -1412,6 +1417,7 @@ public class ControllerBatch {
 		VariableTimeStep.initialCurrTimeStep(modelList);
 		VariableTimeStep.initialCycleStartDate();
 		VariableTimeStep.setCycleEndDate(sds);
+		int sectionI=0;
 		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
 					
 			ClearValue.clearValues(modelList, modelDataSetMap);
@@ -1559,6 +1565,10 @@ public class ControllerBatch {
 			Date date1= new Date(ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
 			Date date2= new Date(ControlData.outputYear-1900, ControlData.outputMonth-1, ControlData.outputDay);
 			if (ControlData.yearOutputSection>0 && date1.after(date2)){
+				if (ControlData.writeInitToDVOutput && sectionI==0){
+					DssOperation.writeInitDvarAliasToDSS();
+				}
+				sectionI++;
 				TimeOperation.setMemDate(ControlData.monMemSection);
 				DssOperation.writeDVAliasToDSS();
 				DssOperation.shiftData();
@@ -1588,9 +1598,6 @@ public class ControllerBatch {
 		}
 		CbcSolver.close(); if (ControlData.cbc_debug_routeXA || ControlData.cbc_debug_routeCbc) {ControlData.xasolver.close();}
 		
-		if (ControlData.writeInitToDVOutput){
-			DssOperation.writeInitDvarAliasToDSS();
-		}
 		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 		if (ControlData.outputType==1){

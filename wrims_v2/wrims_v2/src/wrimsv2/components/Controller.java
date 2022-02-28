@@ -305,7 +305,7 @@ public class Controller {
 		}
 		ControlData.xasolver.close();
 		if (ControlData.writeInitToDVOutput){
-		DssOperation.writeInitDvarAliasToDSS();
+			DssOperation.writeInitDvarAliasToDSS();
 		}
 		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();

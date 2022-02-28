@@ -270,6 +270,7 @@ public class ControllerDebug extends Thread {
 		VariableTimeStep.initialCurrTimeStep(modelList);
 		VariableTimeStep.initialCycleStartDate();
 		VariableTimeStep.setCycleEndDate(sds);
+		int sectionI=0;
 		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
 			if (ControlData.solverName.equalsIgnoreCase("XALOG")) SetXALog.enableXALog();
 			ClearValue.clearValues(modelList, modelDataSetMap);
@@ -470,6 +471,10 @@ public class ControllerDebug extends Thread {
 			Date date1= new Date(ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
 			Date date2= new Date(ControlData.outputYear-1900, ControlData.outputMonth-1, ControlData.outputDay);
 			if (ControlData.yearOutputSection>0 && date1.after(date2)){
+				if (ControlData.writeInitToDVOutput && sectionI==0){
+					DssOperation.writeInitDvarAliasToDSS();
+				}
+				sectionI++;
 				TimeOperation.setMemDate(ControlData.monMemSection);
 				DssOperation.writeDVAliasToDSS();
 				DssOperation.shiftData();
@@ -490,10 +495,7 @@ public class ControllerDebug extends Thread {
 			VariableTimeStep.setCycleEndDate(sds);
 		}
 		new CloseCurrentSolver(ControlData.solverName);
-		
-		if (ControlData.writeInitToDVOutput){
-			DssOperation.writeInitDvarAliasToDSS();
-		}
+
 		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 		if (ControlData.outputType==1){
