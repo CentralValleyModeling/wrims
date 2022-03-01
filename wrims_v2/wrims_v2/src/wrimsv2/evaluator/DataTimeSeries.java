@@ -37,11 +37,7 @@ public class DataTimeSeries {
 			double[] data=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
 			dds.setData(data);
 			dds.setTimeStep(ControlData.partE);
-			if (dds.getTimeStep().equals("1MON")){
-				dds.setStartTime(new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay));
-			}else{
-				dds.setStartTime(new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay));
-			}
+			dds.setStartTime(ControlData.memStartDate);
 			dds.setUnits(dvar.units);
 			dds.setKind(dvar.kind);
 			dvAliasTS.put(entryNameTS,dds);
@@ -62,11 +58,7 @@ public class DataTimeSeries {
 			double[] data1=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
 			dds1.setData(data1);
 			dds1.setTimeStep(ControlData.partE);
-			if (dds1.getTimeStep().equals("1MON")){
-				dds1.setStartTime(new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay));
-			}else{
-				dds1.setStartTime(new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay));
-			}
+			dds1.setStartTime(ControlData.memStartDate);
 			dds1.setUnits(dvar.units);
 			dds1.setKind(dvar.kind);
 			dvAliasTSCycle.put(entryNameTS,dds1);

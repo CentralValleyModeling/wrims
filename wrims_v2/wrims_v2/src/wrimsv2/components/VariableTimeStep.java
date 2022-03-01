@@ -79,14 +79,22 @@ public class VariableTimeStep {
 		ControlData.totalTimeStep=new ArrayList<Integer>();
 		for (String timeStep: timeStepList){
 			if (timeStep.equals("1MON")){
-				ControlData.totalTimeStep.add((ControlData.endYear-ControlData.startYear)*12+(ControlData.endMonth-ControlData.startMonth)+1);
+				if (ControlData.yearOutputSection<0){
+					ControlData.totalTimeStep.add((ControlData.endYear-ControlData.startYear)*12+(ControlData.endMonth-ControlData.startMonth)+1);
+				}else{
+					ControlData.totalTimeStep.add(ControlData.yearOutputSection*12+ControlData.monMemSection);
+				}
 			}else{
-				Date startDate = new Date (ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
-				Date endDate=new Date (ControlData.endYear-1900, ControlData.endMonth-1, ControlData.endDay);
-				long startTime=startDate.getTime();
-				long endTime=endDate.getTime();
-				double timestep=(endTime-startTime)/(24*60*60*1000l)+1;
-				ControlData.totalTimeStep.add((int)timestep);
+				if (ControlData.yearOutputSection<0){
+					Date startDate = new Date (ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
+					Date endDate=new Date (ControlData.endYear-1900, ControlData.endMonth-1, ControlData.endDay);
+					long startTime=startDate.getTime();
+					long endTime=endDate.getTime();
+					double timestep=(endTime-startTime)/(24*60*60*1000l)+1;
+					ControlData.totalTimeStep.add((int)timestep);
+				}else{
+					ControlData.totalTimeStep.add(ControlData.yearOutputSection*366+ControlData.monMemSection*31);
+				}
 			}
 		}
 		return ControlData.totalTimeStep;

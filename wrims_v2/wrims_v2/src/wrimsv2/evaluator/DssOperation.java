@@ -524,27 +524,37 @@ public class DssOperation {
 			DssDataSetFixLength ddsfl=DataTimeSeries.dvAliasTS.get(dvAliasName);
 			String timestep = ddsfl.getTimeStep();
 			double[] values=ddsfl.getData();
-			double[] modValues;
+			double[] values1;
+			int size = values.length;
+			int nTimestep = TimeOperation.getNumberOfTimestep(ControlData.memStartDate, ControlData.prevOutputDate, timestep);
+			if (nTimestep<0) nTimestep=0;
 			if (timestep.equals("1MON")){
-				modValues=new double[savedEndMonthlyTimestep+1];
-				for (int i=0; i<=savedEndMonthlyTimestep; i++){
-					modValues[i]=values[i];
+				int size1 = savedEndMonthlyTimestep+1-nTimestep;
+				values1=new double[size1];
+				for (int i=0; i<size1; i++){
+					values1[i]=values[i+nTimestep];
 				}
 			}else{
-				modValues=new double[savedEndDailyTimestep+1];
-				for (int i=0; i<=savedEndDailyTimestep; i++){
-					modValues[i]=values[i];
+				int size1 = savedEndDailyTimestep+1-nTimestep;
+				values1=new double[size1];
+				for (int i=0; i<size1; i++){
+					values1[i]=values[i+nTimestep];
 				}
+			}
+			Date startDate;
+			if (timestep.equals("1MON")){
+				startDate=TimeOperation.addOneMonth(ControlData.prevOutputDate);
+			}else{
+				startDate=TimeOperation.addOneDay(ControlData.prevOutputDate);
 			}
 			DSSData dd = new DSSData();
 			dd._dataType=DSSUtil.REGULAR_TIME_SERIES;
 			dd._yType="PER-AVER";
-			dd._numberRead=modValues.length;
+			dd._numberRead= values1.length;
 			dd._yUnits=ddsfl.getUnits().toUpperCase();
-			dd._yValues = modValues;
+			dd._yValues = values1;
 			boolean storeFlags = false;
 			String pathName="/"+ControlData.partA+"/"+DssOperation.getTSName(dvAliasName)+"/"+ddsfl.getKind()+"//"+timestep+"/"+ControlData.svDvPartF+"/";
-			Date startDate=new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay);
 			String startDateStr=TimeOperation.dssTimeEndDay(startDate.getYear()+1900, startDate.getMonth()+1, startDate.getDate());
 			long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
 			writer.storeTimeSeriesData(pathName, startJulmin, dd,

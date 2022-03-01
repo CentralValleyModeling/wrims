@@ -646,11 +646,7 @@ public class ModelDataSet implements Serializable {
 					double[] data=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
 					dds.setData(data);
 					dds.setTimeStep(ControlData.partE);
-					if (dds.getTimeStep().equals("1MON")){
-						dds.setStartTime(new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay));
-					}else{
-						dds.setStartTime(new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay));
-					}
+					dds.setStartTime(ControlData.memStartDate);
 					dds.setUnits(alias.units);
 					dds.setKind(alias.kind);
 					DataTimeSeries.dvAliasTS.put(entryNameTS,dds);
@@ -658,9 +654,9 @@ public class ModelDataSet implements Serializable {
 				DssDataSetFixLength ddsfl = DataTimeSeries.dvAliasTS.get(entryNameTS);
 				double[] dataList=ddsfl.getData();
 				//dataList[ControlData.currTimeStep.get(ControlData.currCycleIndex)]=id.getData().doubleValue();
-				Date memStartDate = new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay);
+				//Date memStartDate = new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay);
 				Date currDate =  new Date(ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
-				int index=TimeOperation.getNumberOfTimestep(memStartDate, currDate, ddsfl.getTimeStep())-1;
+				int index=TimeOperation.getNumberOfTimestep(ControlData.memStartDate, currDate, ddsfl.getTimeStep())-1;
 				dataList[index]=id.getData().doubleValue();
 				
 				//if (ControlData.outputCycleToDss){
@@ -670,11 +666,7 @@ public class ModelDataSet implements Serializable {
 					double[] data1=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
 					dds1.setData(data1);
 					dds1.setTimeStep(ControlData.partE);
-					if (dds1.getTimeStep().equals("1MON")){
-						dds1.setStartTime(new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay));
-					}else{
-						dds1.setStartTime(new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay));
-					}
+					dds1.setStartTime(ControlData.memStartDate);
 					dds1.setUnits(alias.units);
 					dds1.setKind(alias.kind);
 					dvAliasTSCycle.put(entryNameTS,dds1);
@@ -703,9 +695,9 @@ public class ModelDataSet implements Serializable {
 				DssDataSetFixLength ddsfl = DataTimeSeries.dvAliasTS.get(entryNameTS);
 				double[] dataList=ddsfl.getData();
 				//dataList[ControlData.currTimeStep.get(ControlData.currCycleIndex)]=-901.0;
-				Date memStartDate = new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay);
+				//Date memStartDate = new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay);
 				Date currDate =  new Date(ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
-				int index=TimeOperation.getNumberOfTimestep(memStartDate, currDate, ddsfl.getTimeStep())-1;
+				int index=TimeOperation.getNumberOfTimestep(ControlData.memStartDate, currDate, ddsfl.getTimeStep())-1;
 				dataList[index]=-901.0;
 				
 				//if (ControlData.outputCycleToDss){
@@ -725,20 +717,16 @@ public class ModelDataSet implements Serializable {
 					double[] data=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
 					dds.setData(data);
 					dds.setTimeStep(ControlData.partE);
-					if (dds.getTimeStep().equals("1MON")){
-						dds.setStartTime(new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay));
-					}else{
-						dds.setStartTime(new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay));
-					}
+					dds.setStartTime(ControlData.memStartDate);
 					dds.setUnits(alias.units);
 					dds.setKind(alias.kind);
 					DataTimeSeries.dvAliasTS.put(entryNameTS,dds);
 				}
 				DssDataSetFixLength ddsfl = DataTimeSeries.dvAliasTS.get(entryNameTS);
 				double[] dataList=ddsfl.getData();
-				Date memStartDate = new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay);
+				//Date memStartDate = new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay);
 				Date currDate =  new Date(ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
-				int index=TimeOperation.getNumberOfTimestep(memStartDate, currDate, ddsfl.getTimeStep())-1;
+				int index=TimeOperation.getNumberOfTimestep(ControlData.memStartDate, currDate, ddsfl.getTimeStep())-1;
 				//dataList[ControlData.currTimeStep.get(ControlData.currCycleIndex)]=alias.data.getData().doubleValue();
 				dataList[index]=alias.data.getData().doubleValue();
 				
@@ -749,11 +737,7 @@ public class ModelDataSet implements Serializable {
 					double[] data1=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
 					dds1.setData(data1);
 					dds1.setTimeStep(ControlData.partE);
-					if (dds1.getTimeStep().equals("1MON")){
-						dds1.setStartTime(new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay));
-					}else{
-						dds1.setStartTime(new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay));
-					}
+					dds1.setStartTime(ControlData.memStartDate);
 					dds1.setUnits(alias.units);
 					dds1.setKind(alias.kind);
 					dvAliasTSCycle.put(entryNameTS,dds1);
@@ -797,20 +781,16 @@ public class ModelDataSet implements Serializable {
 						double[] data=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
 						dds.setData(data);
 						dds.setTimeStep(ControlData.partE);
-						if (dds.getTimeStep().equals("1MON")){
-							dds.setStartTime(new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay));
-						}else{
-							dds.setStartTime(new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay));
-						}
+						dds.setStartTime(ControlData.memStartDate);
 						dds.setUnits(alias.units);
 						dds.setKind(alias.kind);
 						DataTimeSeries.dvAliasTS.put(entryNameTS,dds);
 					}
 					DssDataSetFixLength ddsfl = DataTimeSeries.dvAliasTS.get(entryNameTS);
 					double[] dataList=ddsfl.getData();
-					Date memStartDate = new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay);
+					//Date memStartDate = new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay);
 					Date currDate =  new Date(ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
-					int indext=TimeOperation.getNumberOfTimestep(memStartDate, currDate, ddsfl.getTimeStep())-1;
+					int indext=TimeOperation.getNumberOfTimestep(ControlData.memStartDate, currDate, ddsfl.getTimeStep())-1;
 					//dataList[ControlData.currTimeStep.get(ControlData.currCycleIndex)]=id.getData().doubleValue();
 					dataList[indext]=id.getData().doubleValue();
 					
@@ -821,11 +801,7 @@ public class ModelDataSet implements Serializable {
 						double[] data1=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
 						dds1.setData(data1);
 						dds1.setTimeStep(ControlData.partE);
-						if (dds1.getTimeStep().equals("1MON")){
-							dds1.setStartTime(new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay));
-						}else{
-							dds1.setStartTime(new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay));
-						}
+						dds1.setStartTime(ControlData.memStartDate);
 						dds1.setUnits(alias.units);
 						dds1.setKind(alias.kind);
 						dvAliasTSCycle.put(entryNameTS,dds1);
@@ -874,9 +850,9 @@ public class ModelDataSet implements Serializable {
 					String entryNameTS=DssOperation.entryNameTS(newAsName, ControlData.timeStep);
 					DssDataSetFixLength ddsfl = DataTimeSeries.dvAliasTS.get(entryNameTS);
 					double[] dataList=ddsfl.getData();
-					Date memStartDate = new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay);
+					//Date memStartDate = new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay);
 					Date currDate =  new Date(ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
-					int indext=TimeOperation.getNumberOfTimestep(memStartDate, currDate, ddsfl.getTimeStep())-1;
+					int indext=TimeOperation.getNumberOfTimestep(ControlData.memStartDate, currDate, ddsfl.getTimeStep())-1;
 					//dataList[ControlData.currTimeStep.get(ControlData.currCycleIndex)]=-901.0;
 					dataList[indext]=-901.0;
 					
