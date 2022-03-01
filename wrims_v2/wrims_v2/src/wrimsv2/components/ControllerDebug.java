@@ -475,8 +475,8 @@ public class ControllerDebug extends Thread {
 					DssOperation.writeInitDvarAliasToDSS();
 				}
 				sectionI++;
-				TimeOperation.setMemDate(ControlData.monMemSection);
 				DssOperation.writeDVAliasToDSS();
+				TimeOperation.setMemDate(ControlData.monMemSection);
 				DssOperation.shiftData();
 				TimeOperation.setOutputDate(ControlData.yearOutputSection);
 			}

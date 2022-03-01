@@ -321,16 +321,24 @@ public class TimeOperation {
 	}
 	
 	public static void initOutputDate(int year){
-		ControlData.outputYear=(ControlData.startYear/year+1)*year;
-		ControlData.outputMonth=12;
-		ControlData.outputDay=31;
+		//ControlData.outputYear=(ControlData.startYear/year+1)*year;
+		//ControlData.outputMonth=12;
+		//ControlData.outputDay=31;
 		
+		ControlData.outputYear=ControlData.startYear+year;
+		ControlData.outputMonth=ControlData.startMonth-1;
+		if (ControlData.outputMonth==0){
+			ControlData.outputYear=ControlData.outputYear-1;
+			ControlData.outputMonth=12;
+		}
+		ControlData.outputDay=numberOfDays(ControlData.outputMonth, ControlData.outputYear);
 		ControlData.prevOutputYear=ControlData.startYear;
 		ControlData.prevOutputMonth=ControlData.startMonth-1;
 		if (ControlData.prevOutputMonth==0){
 			ControlData.prevOutputYear=ControlData.prevOutputYear-1;
 			ControlData.prevOutputMonth=12;
 		}
+		
 		ControlData.prevOutputDay=TimeOperation.numberOfDays(ControlData.prevOutputMonth, ControlData.prevOutputYear);
 		ControlData.prevOutputDate=new Date(ControlData.prevOutputYear-1900, ControlData.prevOutputMonth-1, ControlData.prevOutputDay);
 	}
@@ -341,8 +349,8 @@ public class TimeOperation {
 		ControlData.prevOutputDay=ControlData.outputDay;
 		
 		ControlData.outputYear=ControlData.outputYear+year;
-		ControlData.outputMonth=12;
-		ControlData.outputDay=31;
+		//ControlData.outputMonth=12;
+		//ControlData.outputDay=31;
 		
 		ControlData.prevOutputDate=new Date(ControlData.prevOutputYear-1900, ControlData.prevOutputMonth-1, ControlData.prevOutputDay);
 	}

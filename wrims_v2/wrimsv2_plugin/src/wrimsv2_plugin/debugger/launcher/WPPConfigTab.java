@@ -40,6 +40,7 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 	private Button dssSectionOutputButton;
 	//private Text yearSectionText;
 	private Text memSectionText;
+	private Text yearSectionText;
 	
 	@Override
 	public void createControl(Composite parent) {
@@ -296,11 +297,11 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 		
 		dssSectionOutputButton = new Button(comp, SWT.RADIO);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.horizontalSpan = 2;
+		gd.horizontalSpan = 1;
 		dssSectionOutputButton.setLayoutData(gd);
 		dssSectionOutputButton.setFont(font);
 		dssSectionOutputButton.setEnabled(true);
-		dssSectionOutputButton.setText("Dss Output at Decades");
+		dssSectionOutputButton.setText("Dss Output at the End of Every ");
 		dssSectionOutputButton.addSelectionListener(new SelectionListener(){
 
 			@Override
@@ -319,7 +320,6 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 			
 		});
 		
-		/*
 		yearSectionText = new Text(comp, SWT.SINGLE | SWT.BORDER);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 1;
@@ -340,8 +340,7 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 		yearSectionOutputLabel.setLayoutData(gd);
 		yearSectionOutputLabel.setFont(font);
 		yearSectionOutputLabel.setText("Years");
-		*/
-		
+				
 		Label memSectionLabel = new Label(comp, SWT.NONE);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 1;
@@ -469,7 +468,6 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 			WPPException.handleException(e);
 		}
 		
-		/*
 		String yearSectionOutput = null;
 		try {
 			yearSectionOutput = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_YEARSECTIONOUTPUT, "10");
@@ -477,7 +475,6 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 		} catch (CoreException e) {
 			WPPException.handleException(e);
 		}
-		*/
 		
 		String monMemSection  = null;
 		try {
@@ -542,7 +539,7 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_DSSENDOUTPUT, dssEndOutput);
 
 		
-		String yearSectionOutput = "10";	//yearSectionText.getText();
+		String yearSectionOutput = yearSectionText.getText();
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_YEARSECTIONOUTPUT, yearSectionOutput);
 			
 		

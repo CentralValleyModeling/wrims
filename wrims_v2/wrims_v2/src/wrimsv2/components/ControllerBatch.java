@@ -397,8 +397,8 @@ public class ControllerBatch {
 					DssOperation.writeInitDvarAliasToDSS();
 				}
 				sectionI++;
-				TimeOperation.setMemDate(ControlData.monMemSection);
 				DssOperation.writeDVAliasToDSS();
+				TimeOperation.setMemDate(ControlData.monMemSection);
 				DssOperation.shiftData();
 				TimeOperation.setOutputDate(ControlData.yearOutputSection);
 			}
@@ -779,8 +779,8 @@ public class ControllerBatch {
 					DssOperation.writeInitDvarAliasToDSS();
 				}
 				sectionI++;
-				TimeOperation.setMemDate(ControlData.monMemSection);
 				DssOperation.writeDVAliasToDSS();
+				TimeOperation.setMemDate(ControlData.monMemSection);
 				DssOperation.shiftData();
 				TimeOperation.setOutputDate(ControlData.yearOutputSection);
 			}
@@ -958,8 +958,8 @@ public class ControllerBatch {
 					DssOperation.writeInitDvarAliasToDSS();
 				}
 				sectionI++;
-				TimeOperation.setMemDate(ControlData.monMemSection);
 				DssOperation.writeDVAliasToDSS();
+				TimeOperation.setMemDate(ControlData.monMemSection);
 				DssOperation.shiftData();
 				TimeOperation.setOutputDate(ControlData.yearOutputSection);
 			}
@@ -1569,8 +1569,8 @@ public class ControllerBatch {
 					DssOperation.writeInitDvarAliasToDSS();
 				}
 				sectionI++;
-				TimeOperation.setMemDate(ControlData.monMemSection);
 				DssOperation.writeDVAliasToDSS();
+				TimeOperation.setMemDate(ControlData.monMemSection);
 				DssOperation.shiftData();
 				TimeOperation.setOutputDate(ControlData.yearOutputSection);
 			}
