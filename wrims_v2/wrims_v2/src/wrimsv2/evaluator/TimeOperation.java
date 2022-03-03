@@ -332,14 +332,27 @@ public class TimeOperation {
 			ControlData.outputMonth=12;
 		}
 		ControlData.outputDay=numberOfDays(ControlData.outputMonth, ControlData.outputYear);
-		ControlData.prevOutputYear=ControlData.startYear;
-		ControlData.prevOutputMonth=ControlData.startMonth-1;
-		if (ControlData.prevOutputMonth==0){
-			ControlData.prevOutputYear=ControlData.prevOutputYear-1;
-			ControlData.prevOutputMonth=12;
+		if (ControlData.timeStep.equals("1MON")){
+			ControlData.prevOutputYear=ControlData.startYear;
+			ControlData.prevOutputMonth=ControlData.startMonth-1;
+			if (ControlData.prevOutputMonth==0){
+				ControlData.prevOutputYear=ControlData.prevOutputYear-1;
+				ControlData.prevOutputMonth=12;
+			}
+			ControlData.prevOutputDay=TimeOperation.numberOfDays(ControlData.prevOutputMonth, ControlData.prevOutputYear);
+		}else{
+			ControlData.prevOutputYear=ControlData.startYear;
+			ControlData.prevOutputMonth=ControlData.startMonth;
+			ControlData.prevOutputDay=ControlData.startDay-1;
+			if (ControlData.prevOutputDay==0){
+				ControlData.prevOutputMonth=ControlData.prevOutputMonth-1;
+				if (ControlData.prevOutputMonth==0){
+					ControlData.prevOutputMonth=12;
+					ControlData.prevOutputYear=ControlData.prevOutputYear-1;
+				}
+				ControlData.prevOutputDay=TimeOperation.numberOfDays(ControlData.prevOutputMonth, ControlData.prevOutputYear);
+			}
 		}
-		
-		ControlData.prevOutputDay=TimeOperation.numberOfDays(ControlData.prevOutputMonth, ControlData.prevOutputYear);
 		ControlData.prevOutputDate=new Date(ControlData.prevOutputYear-1900, ControlData.prevOutputMonth-1, ControlData.prevOutputDay);
 	}
 	
@@ -384,7 +397,11 @@ public class TimeOperation {
 			ControlData.memStartYear=ControlData.memStartYear+1;
 			ControlData.memStartMonth=ControlData.memStartMonth-12;			
 		}
-		ControlData.memStartDay=numberOfDays(ControlData.memStartMonth, ControlData.memStartYear);
+		if (ControlData.timeStep.equals("1MON")){
+			ControlData.memStartDay=numberOfDays(ControlData.memStartMonth, ControlData.memStartYear);
+		}else{
+			ControlData.memStartDay=1;
+		}
 
 		ControlData.prevMemDate=new Date(ControlData.prevMemYear-1900, ControlData.prevMemMonth-1, ControlData.prevMemDay);
 		ControlData.memStartDate=new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay);

@@ -479,6 +479,7 @@ public class ControllerDebug extends Thread {
 				TimeOperation.setMemDate(ControlData.monMemSection);
 				DssOperation.shiftData();
 				TimeOperation.setOutputDate(ControlData.yearOutputSection);
+				System.gc();
 			}
 			updateVarMonitor();
 			if (ControlData.resimDate){

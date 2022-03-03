@@ -299,6 +299,7 @@ public class DssOperation {
 			for (int i=0; i<size1; i++){
 				values1[i]=values[i+nTimestep];
 			}
+			values=null;
 			Date startDate;
 			if (timestep.equals("1MON")){
 				startDate=TimeOperation.addOneMonth(ControlData.prevOutputDate);
@@ -346,6 +347,7 @@ public class DssOperation {
 					for (int j=0; j<size1; j++){
 						values1[j]=values[j+nTimestep];
 					}
+					values=null;
 					Date startDate;
 					if (timestep.equals("1MON")){
 						startDate=TimeOperation.addOneMonth(ControlData.prevOutputDate);
@@ -541,6 +543,7 @@ public class DssOperation {
 					values1[i]=values[i+nTimestep];
 				}
 			}
+			values=null;
 			Date startDate;
 			if (timestep.equals("1MON")){
 				startDate=TimeOperation.addOneMonth(ControlData.prevOutputDate);
@@ -599,6 +602,7 @@ public class DssOperation {
 							modValues[j-savedStartDailyTimestep]=values[j];
 						}
 					}
+					values=null;
 					DSSData dd = new DSSData();
 					dd._dataType=DSSUtil.REGULAR_TIME_SERIES;
 					dd._yType="PER-AVER";
@@ -724,6 +728,7 @@ public class DssOperation {
 			for (int i=0; i<size; i++){
 				values1[i]=values[i+nTimeStep1];
 			}
+			values=null;
 			ddsfl.setData(values1);
 			ddsfl.setStartTime(memStartDate);
 		}
@@ -751,6 +756,7 @@ public class DssOperation {
 					for (int j=0; j<size; j++){
 						values1[j]=values[j+nTimeStep1];
 					}
+					values=null;
 					ddsfl.setData(values1);
 					ddsfl.setStartTime(memStartDate);
 				}
