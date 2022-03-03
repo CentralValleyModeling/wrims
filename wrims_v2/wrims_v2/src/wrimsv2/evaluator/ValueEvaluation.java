@@ -670,6 +670,7 @@ public class ValueEvaluation {
 			}
 		}
 		
+		/*
 		int index=indexValue+ControlData.currTimeStep.get(ControlData.currCycleIndex);
 		if (index>=0){
 			DssDataSetFixLength dds=DataTimeSeries.dvAliasTSCycles.get(ci).get(entryNameTS);
@@ -680,6 +681,21 @@ public class ValueEvaluation {
 			double[] data=dds.getData();
 			return data[index];
 		}
+		*/
+		
+		DssDataSetFixLength ddsfl=DataTimeSeries.dvAliasTSCycles.get(ci).get(entryNameTS);
+		if (ddsfl!=null){
+			Date memStartDate = ddsfl.getStartTime();
+			Date currDate =  new Date(ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
+			int index=TimeOperation.getNumberOfTimestep(memStartDate, currDate, ddsfl.getTimeStep())+indexValue-1;
+			double[] datafl=ddsfl.getData();
+			if (index>=datafl.length){
+				Error.addEvaluationError(ident + " at timestep " +indexValue+" doesn't have value");
+				return 1.0;
+			}else if (index>=0){
+				return datafl[index];
+			}
+		}
 		
 		if (!DataTimeSeries.dvAliasInit.containsKey(entryNameTS)){
 			if (!getDVAliasInitTimeseries(ident)){
@@ -689,7 +705,7 @@ public class ValueEvaluation {
 		}
 		
 		DssDataSet dds=DataTimeSeries.dvAliasInit.get(entryNameTS);
-		index=timeSeriesIndex(dds);
+		int index = timeSeriesIndex(dds);
 		ArrayList<Double> data=dds.getData();
 		if (index>=0 && index<data.size()){
 			double result=data.get(index);

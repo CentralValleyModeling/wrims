@@ -426,6 +426,7 @@ public class ControllerBatch {
 		}
 		ControlData.xasolver.close();
 		
+		if (ControlData.yearOutputSection<0) DssOperation.writeDVAliasToDSS();
 		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 		if (ControlData.outputType==1){
@@ -801,6 +802,7 @@ public class ControllerBatch {
 			ControlData.xasolver.close();
 		}
 		
+		if (ControlData.yearOutputSection<0) DssOperation.writeDVAliasToDSS();
 		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 		if (ControlData.outputType==1){
@@ -968,6 +970,7 @@ public class ControllerBatch {
 		}
 		GurobiSolver.dispose();
 
+		if (ControlData.yearOutputSection<0) DssOperation.writeDVAliasToDSS();
 		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 		if (ControlData.outputType==1){
@@ -1598,6 +1601,7 @@ public class ControllerBatch {
 		}
 		CbcSolver.close(); if (ControlData.cbc_debug_routeXA || ControlData.cbc_debug_routeCbc) {ControlData.xasolver.close();}
 		
+		if (ControlData.yearOutputSection<0) DssOperation.writeDVAliasToDSS();
 		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 		if (ControlData.outputType==1){

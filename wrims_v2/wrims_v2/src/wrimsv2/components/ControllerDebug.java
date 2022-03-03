@@ -496,6 +496,7 @@ public class ControllerDebug extends Thread {
 		}
 		new CloseCurrentSolver(ControlData.solverName);
 
+		if (ControlData.yearOutputSection<0) DssOperation.writeDVAliasToDSS();
 		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 		if (ControlData.outputType==1){
