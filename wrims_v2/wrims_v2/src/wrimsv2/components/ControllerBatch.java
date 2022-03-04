@@ -1424,9 +1424,8 @@ public class ControllerBatch {
 		VariableTimeStep.initialCycleStartDate();
 		VariableTimeStep.setCycleEndDate(sds);
 		int sectionI=0;
-		int i_checkStartDate = VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear);
-		while (i_checkStartDate<=0 && VariableTimeStep.checkEndDate(ControlData.currDay, ControlData.currMonth, ControlData.currYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
-			
+		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
+					
 			ClearValue.clearValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
 			sds.clearVarCycleIndexByTimeStep();
@@ -1441,7 +1440,7 @@ public class ControllerBatch {
 				VariableTimeStep.setCycleTimeStep(sds);
 				VariableTimeStep.setCurrentDate(sds, ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear);
 				time_marching:
-				while(VariableTimeStep.checkEndDate(ControlData.currDay, ControlData.currMonth, ControlData.currYear, ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear)<=0 && noError){
+				while(VariableTimeStep.checkEndDate(ControlData.currDay, ControlData.currMonth, ControlData.currYear, ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear)<0 && noError){
 					ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
 					boolean condition=false;
 					try{

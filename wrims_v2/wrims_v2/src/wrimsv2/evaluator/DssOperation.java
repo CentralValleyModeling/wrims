@@ -318,6 +318,8 @@ public class DssOperation {
 			long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
 			ControlData.writer.storeTimeSeriesData(pathName, startJulmin, dd,
 						storeFlags);
+			dd._yValues=null;
+			values=null;
 		}
 		
 		if (ControlData.isOutputCycle) writeDVAliasCycleDataToDSS();
@@ -366,6 +368,8 @@ public class DssOperation {
 					long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
 					ControlData.writer.storeTimeSeriesData(pathName, startJulmin, dd,
 							storeFlags);
+					dd._yValues=null;
+					values=null;
 				}
 			}
 		}
@@ -562,6 +566,8 @@ public class DssOperation {
 			long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
 			writer.storeTimeSeriesData(pathName, startJulmin, dd,
 						storeFlags);
+			dd._yValues=null;
+			values=null;
 		}
 		
 		if (ControlData.isOutputCycle) saveDvarCycleData(writer, fileName);
