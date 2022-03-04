@@ -1,7 +1,9 @@
 package wrimsv2.components;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.commondata.wresldata.StudyDataSet;
@@ -57,12 +59,14 @@ public class VariableTimeStep {
 	}
 
 	public static void currTimeAddOneDay(){
-		Date currDate = new Date (ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
-		long currTime=currDate.getTime()+1 * 24 * 60 * 60 * 1000l;
-		currDate = new Date (currTime);
-		ControlData.currMonth=currDate.getMonth()+1;
-		ControlData.currYear=currDate.getYear()+1900;
-		ControlData.currDay=currDate.getDate();
+		Calendar c = GregorianCalendar.getInstance();
+		c.set(ControlData.currYear, ControlData.currMonth-1, ControlData.currDay);
+		c.add(Calendar.DATE, 1); 
+		ControlData.currYear = c.get(Calendar.YEAR);
+		ControlData.currMonth = c.get(Calendar.MONTH)+1;
+		ControlData.currDay = c.get(Calendar.DAY_OF_MONTH);
+		
+
 	}
 	
 	private static void addOneDayToCycleEndDate(){
