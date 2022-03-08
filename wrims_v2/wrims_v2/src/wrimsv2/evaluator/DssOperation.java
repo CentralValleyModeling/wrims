@@ -736,9 +736,10 @@ public class DssOperation {
 			for (int i=0; i<size; i++){
 				values1[i]=values[i+nTimeStep1];
 			}
+			ddsfl.data=null;
+			values=null;
 			ddsfl.setData(values1);
 			ddsfl.setStartTime(memStartDate);
-			values=null;
 		}
 		System.gc();
 	}
@@ -765,9 +766,10 @@ public class DssOperation {
 					for (int j=0; j<size; j++){
 						values1[j]=values[j+nTimeStep1];
 					}
+					ddsfl.data=null;
+					values=null;
 					ddsfl.setData(values1);
 					ddsfl.setStartTime(memStartDate);
-					values=null;
 				}
 			}
 		}
