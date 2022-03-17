@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import wrimsv2.commondata.wresldata.Param;
+import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.IntDouble;
 import wrimsv2.wreslparser.elements.LogUtils;
@@ -935,9 +936,29 @@ public class Procedures {
 		return nCyc+1;
 	}
 	
+
+	public static int findWarmStart(int preStop, int nCyc, StudyDataSet sd) {
+		
+		for (int i=preStop+1; i<nCyc; i++){
+			if (sd.cycIntDvMap.get(i).size()>Param.cbcMinIntNumber){
+				return i; 
+			}
+		}
+		return nCyc+1;
+	}
+	
 	public static int findWarmStop(int start, int nCyc) {
 		for (int i=start; i<nCyc-1; i++){
 			if (!ControlData.currStudyDataSet.cycIntDvMap.get(i).equals(ControlData.currStudyDataSet.cycIntDvMap.get(i+1))){
+				return i; 
+			}
+		}
+		return nCyc-1;
+	}
+	
+	public static int findWarmStop(int start, int nCyc, StudyDataSet sd) {
+		for (int i=start; i<nCyc-1; i++){
+			if (!sd.cycIntDvMap.get(i).equals(sd.cycIntDvMap.get(i+1))){
 				return i; 
 			}
 		}

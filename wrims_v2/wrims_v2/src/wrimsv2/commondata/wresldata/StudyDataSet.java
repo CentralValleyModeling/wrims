@@ -40,8 +40,8 @@ public class StudyDataSet implements Serializable {
 	private ArrayList<String> varCycleIndexList = new ArrayList<String>();
 	private ArrayList<String> dvarTimeArrayCycleIndexList = new ArrayList<String>();
 	
-	public static LinkedHashSet<String> allIntDv=new LinkedHashSet<String>();
-	public static Map<Integer,LinkedHashSet<String>> cycIntDvMap=new HashMap<Integer,LinkedHashSet<String>>();
+	public LinkedHashSet<String> allIntDv=new LinkedHashSet<String>();
+	public Map<Integer,LinkedHashSet<String>> cycIntDvMap=new HashMap<Integer,LinkedHashSet<String>>();
 	
 	public ArrayList<String> getParameterList() {
 		return new ArrayList<String>(parameterList);

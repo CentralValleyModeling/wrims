@@ -205,7 +205,7 @@ public class Warmstart {
 				
 				while(stop < nCyc && start < nCyc-1){
 				
-					stop  = Procedures.findWarmStop(start, nCyc); 
+					stop  = Procedures.findWarmStop(start, nCyc, sd); 
 					if ( stop > start){
 						cycWarmStop.add(stop);
 						
@@ -216,7 +216,7 @@ public class Warmstart {
 					}
 					//System.out.println("stop: "+stop);
 					
-					start = Procedures.findWarmStart(stop, nCyc); if (start<nCyc-1) cycWarmStart.add(start);
+					start = Procedures.findWarmStart(stop, nCyc, sd); if (start<nCyc-1) cycWarmStart.add(start);
 					//System.out.println("start: "+start);
 				}
 				
@@ -248,9 +248,9 @@ public class Warmstart {
 				}
 //			Tools.quickLog("warmstart_new.txt", w);
 			}
-		}
+			
+	}
 
-	
 	
 	
 	
