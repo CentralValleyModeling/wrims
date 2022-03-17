@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class DssDataSetFixLength {
-	private double[] data;
+	public double[] data;
 	private String timeStep;
 	private String units;
 	private String kind;

@@ -299,7 +299,6 @@ public class DssOperation {
 			for (int i=0; i<size1; i++){
 				values1[i]=values[i+nTimestep];
 			}
-			values=null;
 			Date startDate;
 			if (timestep.equals("1MON")){
 				startDate=TimeOperation.addOneMonth(ControlData.prevOutputDate);
@@ -321,6 +320,7 @@ public class DssOperation {
 			dd._yValues=null;
 			values=null;
 		}
+		System.gc();
 		
 		if (ControlData.isOutputCycle) writeDVAliasCycleDataToDSS();
 		System.out.println("dvar and alias written to dv dss");
@@ -349,7 +349,6 @@ public class DssOperation {
 					for (int j=0; j<size1; j++){
 						values1[j]=values[j+nTimestep];
 					}
-					values=null;
 					Date startDate;
 					if (timestep.equals("1MON")){
 						startDate=TimeOperation.addOneMonth(ControlData.prevOutputDate);
@@ -373,6 +372,7 @@ public class DssOperation {
 				}
 			}
 		}
+		System.gc();
 	}
 	
 	public static String entryNameTS(String name, String timeStep){
@@ -547,7 +547,6 @@ public class DssOperation {
 					values1[i]=values[i+nTimestep];
 				}
 			}
-			values=null;
 			Date startDate;
 			if (timestep.equals("1MON")){
 				startDate=TimeOperation.addOneMonth(ControlData.prevOutputDate);
@@ -569,6 +568,7 @@ public class DssOperation {
 			dd._yValues=null;
 			values=null;
 		}
+		System.gc();
 		
 		if (ControlData.isOutputCycle) saveDvarCycleData(writer, fileName);
 		
@@ -608,7 +608,6 @@ public class DssOperation {
 							modValues[j-savedStartDailyTimestep]=values[j];
 						}
 					}
-					values=null;
 					DSSData dd = new DSSData();
 					dd._dataType=DSSUtil.REGULAR_TIME_SERIES;
 					dd._yType="PER-AVER";
@@ -623,9 +622,12 @@ public class DssOperation {
 					long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
 					writer.storeTimeSeriesData(pathName, startJulmin, dd,
 								storeFlags);
+					dd._yValues=null;
+					values=null;
 				}
 			}
 		}
+		System.gc();
 	}
 	
 	public static void saveSvarTSData(DSSDataWriter writer, String fileName){
@@ -734,10 +736,12 @@ public class DssOperation {
 			for (int i=0; i<size; i++){
 				values1[i]=values[i+nTimeStep1];
 			}
+			ddsfl.data=null;
 			values=null;
 			ddsfl.setData(values1);
 			ddsfl.setStartTime(memStartDate);
 		}
+		System.gc();
 	}
 	
 	public static void shiftDvAliasCycleData(Date prevMemDate, Date memStartDate, Date outputDate){
@@ -762,11 +766,13 @@ public class DssOperation {
 					for (int j=0; j<size; j++){
 						values1[j]=values[j+nTimeStep1];
 					}
+					ddsfl.data=null;
 					values=null;
 					ddsfl.setData(values1);
 					ddsfl.setStartTime(memStartDate);
 				}
 			}
 		}
+		System.gc();
 	}
 }
