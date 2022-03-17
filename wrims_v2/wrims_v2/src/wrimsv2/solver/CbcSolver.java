@@ -2265,7 +2265,14 @@ int pp=0;
 	
 					
 				Set<String> a=ControlData.currStudyDataSet.cycIntDvMap.get(ControlData.currCycleIndex);
-				a.retainAll(dvIntMap.keySet());
+				//System.out.println("dvIntMap.keySet():"+dvIntMap.keySet());
+				//System.out.println("a:"+a);
+				if (a==null){
+					System.out.println("ControlData.currStudyDataSet.cycIntDvMap might not be initiated.");
+				} else {
+					a.retainAll(dvIntMap.keySet());
+				}
+
 				if ((useWarm || saveWarm) && a.size()>2) {
 		//			int ii = ControlData.currCycleIndex+1;
 		//			System.out.println(ii+": useWarm:"+useWarm);
