@@ -155,7 +155,7 @@ public class PreRunModel {
 				ControlData.currEvalName=exName;
 				External external=exMap.get(exName);
 				ControlData.allExternalFunction.put(exName, external.type);
-				if (!external.type.equals("f90") && !ControlData.allDll.contains(exName)){
+				if (external.type.endsWith(".dll") && !ControlData.allDll.contains(exName)){
 					ControlData.allDll.add(external.type);
 				}
 			}

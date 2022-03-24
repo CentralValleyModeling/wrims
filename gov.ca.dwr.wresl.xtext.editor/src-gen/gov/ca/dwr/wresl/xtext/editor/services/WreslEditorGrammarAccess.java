@@ -1245,15 +1245,14 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cDLLKeyword_1_0_1_1 = (Keyword)cAlternatives_1_0_1.eContents().get(1);
 		private final Group cGroup_1_1 = (Group)cAlternatives_1.eContents().get(1);
 		private final Action cExternalAction_1_1_0 = (Action)cGroup_1_1.eContents().get(0);
-		private final Alternatives cAlternatives_1_1_1 = (Alternatives)cGroup_1_1.eContents().get(1);
-		private final Keyword cF90Keyword_1_1_1_0 = (Keyword)cAlternatives_1_1_1.eContents().get(0);
-		private final Keyword cF90Keyword_1_1_1_1 = (Keyword)cAlternatives_1_1_1.eContents().get(1);
+		private final Assignment cNameAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_1_1_1_0 = (RuleCall)cNameAssignment_1_1_1.eContents().get(0);
 		
 		//External:
-		//	('external' | 'EXTERNAL') (name=ID ('.dll' | '.DLL') | {External} ('f90' | 'F90'));
+		//	('external' | 'EXTERNAL') (name=ID ('.dll' | '.DLL') | {External} name=ID);
 		public ParserRule getRule() { return rule; }
 
-		//('external' | 'EXTERNAL') (name=ID ('.dll' | '.DLL') | {External} ('f90' | 'F90'))
+		//('external' | 'EXTERNAL') (name=ID ('.dll' | '.DLL') | {External} name=ID)
 		public Group getGroup() { return cGroup; }
 
 		//('external' | 'EXTERNAL')
@@ -1265,7 +1264,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//'EXTERNAL'
 		public Keyword getEXTERNALKeyword_0_1() { return cEXTERNALKeyword_0_1; }
 
-		//(name=ID ('.dll' | '.DLL') | {External} ('f90' | 'F90'))
+		//(name=ID ('.dll' | '.DLL') | {External} name=ID)
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 
 		//name=ID ('.dll' | '.DLL')
@@ -1286,20 +1285,17 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//'.DLL'
 		public Keyword getDLLKeyword_1_0_1_1() { return cDLLKeyword_1_0_1_1; }
 
-		//{External} ('f90' | 'F90')
+		//{External} name=ID
 		public Group getGroup_1_1() { return cGroup_1_1; }
 
 		//{External}
 		public Action getExternalAction_1_1_0() { return cExternalAction_1_1_0; }
 
-		//('f90' | 'F90')
-		public Alternatives getAlternatives_1_1_1() { return cAlternatives_1_1_1; }
+		//name=ID
+		public Assignment getNameAssignment_1_1_1() { return cNameAssignment_1_1_1; }
 
-		//'f90'
-		public Keyword getF90Keyword_1_1_1_0() { return cF90Keyword_1_1_1_0; }
-
-		//'F90'
-		public Keyword getF90Keyword_1_1_1_1() { return cF90Keyword_1_1_1_1; }
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_1_1_1_0() { return cNameIDTerminalRuleCall_1_1_1_0; }
 	}
 
 	public class DVarElements extends AbstractParserRuleElementFinder {
@@ -6038,7 +6034,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//External:
-	//	('external' | 'EXTERNAL') (name=ID ('.dll' | '.DLL') | {External} ('f90' | 'F90'));
+	//	('external' | 'EXTERNAL') (name=ID ('.dll' | '.DLL') | {External} name=ID);
 	public ExternalElements getExternalAccess() {
 		return pExternal;
 	}

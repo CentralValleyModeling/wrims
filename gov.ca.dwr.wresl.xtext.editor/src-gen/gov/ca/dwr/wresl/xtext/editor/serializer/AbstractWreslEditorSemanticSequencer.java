@@ -855,7 +855,7 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 	 *     External returns External
 	 *
 	 * Constraint:
-	 *     name=ID?
+	 *     (name=ID | name=ID)
 	 */
 	protected void sequence_External(ISerializationContext context, External semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

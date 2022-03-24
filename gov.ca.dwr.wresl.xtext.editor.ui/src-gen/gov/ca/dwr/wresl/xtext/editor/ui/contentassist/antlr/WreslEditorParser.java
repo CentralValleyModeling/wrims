@@ -70,7 +70,6 @@ public class WreslEditorParser extends AbstractContentAssistParser {
 					put(grammarAccess.getExternalAccess().getAlternatives_0(), "rule__External__Alternatives_0");
 					put(grammarAccess.getExternalAccess().getAlternatives_1(), "rule__External__Alternatives_1");
 					put(grammarAccess.getExternalAccess().getAlternatives_1_0_1(), "rule__External__Alternatives_1_0_1");
-					put(grammarAccess.getExternalAccess().getAlternatives_1_1_1(), "rule__External__Alternatives_1_1_1");
 					put(grammarAccess.getDVarAccess().getAlternatives(), "rule__DVar__Alternatives");
 					put(grammarAccess.getDVarNonStdAccess().getAlternatives_1(), "rule__DVarNonStd__Alternatives_1");
 					put(grammarAccess.getDVarNonStdAccess().getAlternatives_3(), "rule__DVarNonStd__Alternatives_3");
@@ -342,6 +341,7 @@ public class WreslEditorParser extends AbstractContentAssistParser {
 					put(grammarAccess.getAliasAccess().getKindAssignment_7_1(), "rule__Alias__KindAssignment_7_1");
 					put(grammarAccess.getAliasAccess().getUnitsAssignment_8_1(), "rule__Alias__UnitsAssignment_8_1");
 					put(grammarAccess.getExternalAccess().getNameAssignment_1_0_0(), "rule__External__NameAssignment_1_0_0");
+					put(grammarAccess.getExternalAccess().getNameAssignment_1_1_1(), "rule__External__NameAssignment_1_1_1");
 					put(grammarAccess.getDVarNonStdAccess().getLowerUpperAssignment_0(), "rule__DVarNonStd__LowerUpperAssignment_0");
 					put(grammarAccess.getDVarNonStdAccess().getKindAssignment_2(), "rule__DVarNonStd__KindAssignment_2");
 					put(grammarAccess.getDVarNonStdAccess().getUnitsAssignment_4(), "rule__DVarNonStd__UnitsAssignment_4");

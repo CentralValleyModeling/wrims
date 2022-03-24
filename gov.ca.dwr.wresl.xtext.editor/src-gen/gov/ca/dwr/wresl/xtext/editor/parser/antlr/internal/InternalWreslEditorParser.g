@@ -2101,16 +2101,23 @@ ruleExternal returns [EObject current=null]
             $current);
     }
 )(
-	otherlv_6=F90_1
-    {
-    	newLeafNode(otherlv_6, grammarAccess.getExternalAccess().getF90Keyword_1_1_1_0());
-    }
+(
+		lv_name_6_0=RULE_ID
+		{
+			newLeafNode(lv_name_6_0, grammarAccess.getExternalAccess().getNameIDTerminalRuleCall_1_1_1_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getExternalRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"name",
+        		lv_name_6_0, 
+        		"gov.ca.dwr.wresl.xtext.editor.WreslEditor.ID");
+	    }
 
-    |
-	otherlv_7=F90_1
-    {
-    	newLeafNode(otherlv_7, grammarAccess.getExternalAccess().getF90Keyword_1_1_1_1());
-    }
+)
 ))))
 ;
 

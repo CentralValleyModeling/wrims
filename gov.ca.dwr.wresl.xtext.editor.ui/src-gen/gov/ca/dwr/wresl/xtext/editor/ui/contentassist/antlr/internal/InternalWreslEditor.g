@@ -4277,32 +4277,6 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__External__Alternatives_1_1_1
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getExternalAccess().getF90Keyword_1_1_1_0()); }
-
-	'f90' 
-
-{ after(grammarAccess.getExternalAccess().getF90Keyword_1_1_1_0()); }
-)
-
-    |(
-{ before(grammarAccess.getExternalAccess().getF90Keyword_1_1_1_1()); }
-
-	'F90' 
-
-{ after(grammarAccess.getExternalAccess().getF90Keyword_1_1_1_1()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
 rule__DVar__Alternatives
     @init {
 		int stackSize = keepStackSize();
@@ -11203,9 +11177,9 @@ rule__External__Group_1_1__1__Impl
     }
 :
 (
-{ before(grammarAccess.getExternalAccess().getAlternatives_1_1_1()); }
-(rule__External__Alternatives_1_1_1)
-{ after(grammarAccess.getExternalAccess().getAlternatives_1_1_1()); }
+{ before(grammarAccess.getExternalAccess().getNameAssignment_1_1_1()); }
+(rule__External__NameAssignment_1_1_1)
+{ after(grammarAccess.getExternalAccess().getNameAssignment_1_1_1()); }
 )
 
 ;
@@ -22417,6 +22391,21 @@ rule__External__NameAssignment_1_0_0
 (
 { before(grammarAccess.getExternalAccess().getNameIDTerminalRuleCall_1_0_0_0()); }
 	RULE_ID{ after(grammarAccess.getExternalAccess().getNameIDTerminalRuleCall_1_0_0_0()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__External__NameAssignment_1_1_1
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getExternalAccess().getNameIDTerminalRuleCall_1_1_1_0()); }
+	RULE_ID{ after(grammarAccess.getExternalAccess().getNameIDTerminalRuleCall_1_1_1_0()); }
 )
 
 ;

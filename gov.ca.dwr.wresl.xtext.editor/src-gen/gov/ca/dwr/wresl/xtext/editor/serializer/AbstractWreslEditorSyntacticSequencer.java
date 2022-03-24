@@ -50,7 +50,6 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	protected AbstractElementAlias match_ExternalFunction2_MonthParserRuleCall_0_2_or_TafCfsParserRuleCall_0_1;
 	protected AbstractElementAlias match_External_DLLKeyword_1_0_1_1_or_DllKeyword_1_0_1_0;
 	protected AbstractElementAlias match_External_EXTERNALKeyword_0_1_or_ExternalKeyword_0_0;
-	protected AbstractElementAlias match_External_F90Keyword_1_1_1_0_or_F90Keyword_1_1_1_1;
 	protected AbstractElementAlias match_GoalCaseContent_CASEKeyword_0_1_or_CaseKeyword_0_0;
 	protected AbstractElementAlias match_GoalCaseContent_RHSKeyword_4_1_or_RhsKeyword_4_0;
 	protected AbstractElementAlias match_GoalCase_LHSKeyword_0_1_or_LhsKeyword_0_0;
@@ -129,7 +128,6 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 		match_ExternalFunction2_MonthParserRuleCall_0_2_or_TafCfsParserRuleCall_0_1 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getExternalFunction2Access().getMonthParserRuleCall_0_2()), new TokenAlias(false, false, grammarAccess.getExternalFunction2Access().getTafCfsParserRuleCall_0_1()));
 		match_External_DLLKeyword_1_0_1_1_or_DllKeyword_1_0_1_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getExternalAccess().getDLLKeyword_1_0_1_1()), new TokenAlias(false, false, grammarAccess.getExternalAccess().getDllKeyword_1_0_1_0()));
 		match_External_EXTERNALKeyword_0_1_or_ExternalKeyword_0_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getExternalAccess().getEXTERNALKeyword_0_1()), new TokenAlias(false, false, grammarAccess.getExternalAccess().getExternalKeyword_0_0()));
-		match_External_F90Keyword_1_1_1_0_or_F90Keyword_1_1_1_1 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getExternalAccess().getF90Keyword_1_1_1_0()), new TokenAlias(false, false, grammarAccess.getExternalAccess().getF90Keyword_1_1_1_1()));
 		match_GoalCaseContent_CASEKeyword_0_1_or_CaseKeyword_0_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getGoalCaseContentAccess().getCASEKeyword_0_1()), new TokenAlias(false, false, grammarAccess.getGoalCaseContentAccess().getCaseKeyword_0_0()));
 		match_GoalCaseContent_RHSKeyword_4_1_or_RhsKeyword_4_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getGoalCaseContentAccess().getRHSKeyword_4_1()), new TokenAlias(false, false, grammarAccess.getGoalCaseContentAccess().getRhsKeyword_4_0()));
 		match_GoalCase_LHSKeyword_0_1_or_LhsKeyword_0_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getGoalCaseAccess().getLHSKeyword_0_1()), new TokenAlias(false, false, grammarAccess.getGoalCaseAccess().getLhsKeyword_0_0()));
@@ -678,8 +676,6 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 				emit_External_DLLKeyword_1_0_1_1_or_DllKeyword_1_0_1_0(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_External_EXTERNALKeyword_0_1_or_ExternalKeyword_0_0.equals(syntax))
 				emit_External_EXTERNALKeyword_0_1_or_ExternalKeyword_0_0(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_External_F90Keyword_1_1_1_0_or_F90Keyword_1_1_1_1.equals(syntax))
-				emit_External_F90Keyword_1_1_1_0_or_F90Keyword_1_1_1_1(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_GoalCaseContent_CASEKeyword_0_1_or_CaseKeyword_0_0.equals(syntax))
 				emit_GoalCaseContent_CASEKeyword_0_1_or_CaseKeyword_0_0(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_GoalCaseContent_RHSKeyword_4_1_or_RhsKeyword_4_0.equals(syntax))
@@ -1100,21 +1096,9 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	 *     'external' | 'EXTERNAL'
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) ('f90' | 'F90') (rule start)
 	 *     (rule start) (ambiguity) name=ID
 	 */
 	protected void emit_External_EXTERNALKeyword_0_1_or_ExternalKeyword_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Ambiguous syntax:
-	 *     'f90' | 'F90'
-	 *
-	 * This ambiguous syntax occurs at:
-	 *     (rule start) ('external' | 'EXTERNAL') (ambiguity) (rule start)
-	 */
-	protected void emit_External_F90Keyword_1_1_1_0_or_F90Keyword_1_1_1_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

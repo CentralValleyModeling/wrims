@@ -56,7 +56,7 @@ Alias: //name=[SVar|ID] to be changed to reference after scoping is resolved acr
 	'KIND') kind=STRING)? (('units' | 'UNITS') units=STRING)? '}';
 
 External:
-	('external' | 'EXTERNAL') ((name=ID ('.dll' | '.DLL')) | {External} ('f90' | 'F90'));
+	('external' | 'EXTERNAL') ((name=ID ('.dll' | '.DLL')) | {External} name=ID);
 
 DVar:
 	(DVarStd | DVarNonStd);
