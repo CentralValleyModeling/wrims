@@ -90,7 +90,7 @@ public final class MonthlyTableModel extends AbstractTableModel { // extends
 				boolean hasTotalColumn;
 				if ((showTotalColumn && timeSeriesContainer.units.trim()
 						.equalsIgnoreCase("CFS"))
-						|| timeSeriesContainer.units.trim().equalsIgnoreCase("TAF"))
+						|| timeSeriesContainer.units.trim().equalsIgnoreCase("TAF") || timeSeriesContainer.units.trim().equalsIgnoreCase("INCH") ||timeSeriesContainer.units.trim().equalsIgnoreCase("IN"))
 					hasTotalColumn = true;
 				else
 					hasTotalColumn = false;
@@ -140,7 +140,7 @@ public final class MonthlyTableModel extends AbstractTableModel { // extends
 			// separately)
 			boolean hasTotalColumn;
 			if ((timeSeriesContainer.units.trim().equalsIgnoreCase("TAF") || (showTotalColumn && timeSeriesContainer.units
-					.trim().equalsIgnoreCase("CFS"))))
+					.trim().equalsIgnoreCase("CFS") || timeSeriesContainer.units.trim().equalsIgnoreCase("INCH") || timeSeriesContainer.units.trim().equalsIgnoreCase("IN"))))
 				hasTotalColumn = true;
 			else
 				hasTotalColumn = false;

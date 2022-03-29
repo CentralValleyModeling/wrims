@@ -9105,7 +9105,7 @@ System.out.println("linearFill: "+nfe);
 
 					}
 					// now print them
-					for (int i = 0; i < headerLines.size(); i++)
+					for (int i = 0; i < headerLines.size()-1; i++)
 					{
 						try
 						{

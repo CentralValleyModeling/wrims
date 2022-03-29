@@ -309,6 +309,7 @@ public class ValueEvaluation {
 			
 		} catch (Exception e) {
 			Error.addEvaluationError("The function " +ident+" has an error.");
+			e.printStackTrace();
 			result=new IntDouble (1.0,false);
 			return result;
 		}
@@ -415,6 +416,7 @@ public class ValueEvaluation {
 			
 		} catch (Exception e) {
 			Error.addEvaluationError("The function " +ident+" has an error.");
+			e.printStackTrace();
 			result=new IntDouble (1.0,false);
 			return result;
 		}
