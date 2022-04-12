@@ -30,6 +30,7 @@ public class Functionget_req_do extends ExternalFunction{
 		float G_o = ((Number) param1).floatValue();
 
 		float result = get_Req_DO(G_o, ECstd, So, Sb, galpha, gbeta, n);
+		stack.push(result);
 
 	}
 
