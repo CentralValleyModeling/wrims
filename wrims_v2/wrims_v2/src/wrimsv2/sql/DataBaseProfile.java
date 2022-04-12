@@ -59,6 +59,7 @@ public class DataBaseProfile {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
+					configFile.delete();
 				}
 				isConfigExist=true;
 			}
