@@ -59,6 +59,7 @@ import wrimsv2.external.LoadAllDll;
 import wrimsv2.hdf5.HDF5Writer;
 import wrimsv2.ilp.ILP;
 import wrimsv2.launch.LaunchConfiguration;
+import wrimsv2.parallel.ParallelVars;
 import wrimsv2.solver.CbcSolver;
 import wrimsv2.solver.CloseCurrentSolver;
 import wrimsv2.solver.LPSolveSolver;
@@ -667,7 +668,7 @@ public class ControllerDebug extends Thread {
 					if (!(value==-901.0 || value==-902.0)){
 						int timestepListed=i-currIndex;
 						TimeOperation.findTime(timestepListed);
-						dataString=dataString+timestepListed+":"+ControlData.dataMonth+"-"+ControlData.dataDay+"-"+ControlData.dataYear+":"+di.df.format(value)+"#";
+						dataString=dataString+timestepListed+":"+ParallelVars.dataMonth+"-"+ParallelVars.dataDay+"-"+ParallelVars.dataYear+":"+di.df.format(value)+"#";
 					}
 				}
 			}else{
@@ -682,7 +683,7 @@ public class ControllerDebug extends Thread {
 						if (!(value==-901.0 || value==-902.0)){
 							int timestepListed=i-currIndex;
 							TimeOperation.findTime(timestepListed);
-							dataString=dataString+timestepListed+":"+ControlData.dataMonth+"-"+ControlData.dataDay+"-"+ControlData.dataYear+":"+di.df.format(value)+"#";
+							dataString=dataString+timestepListed+":"+ParallelVars.dataMonth+"-"+ParallelVars.dataDay+"-"+ParallelVars.dataYear+":"+di.df.format(value)+"#";
 						}
 					}
 				}

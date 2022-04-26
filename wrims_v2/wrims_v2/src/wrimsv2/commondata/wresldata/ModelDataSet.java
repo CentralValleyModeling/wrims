@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ForkJoinPool;
 
 import wrimsv2.commondata.solverdata.SolverData;
 import wrimsv2.components.ControlData;
@@ -21,6 +24,8 @@ import wrimsv2.evaluator.TimeOperation;
 import wrimsv2.evaluator.ValueEvaluatorLexer;
 import wrimsv2.evaluator.ValueEvaluatorParser;
 import wrimsv2.evaluator.WeightEval;
+import wrimsv2.parallel.ParallelVars;
+import wrimsv2.parallel.ProcessDvar;
 
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
@@ -130,7 +135,7 @@ public class ModelDataSet implements Serializable {
 		usedWtSlackSurplusList = new ArrayList<String>();
 	}
 
-	public int getTimeArraySize(ValueEvaluatorParser timeArraySizeParser){
+	public static int getTimeArraySize(ValueEvaluatorParser timeArraySizeParser){
 		int timeArraySize;
 		try{
 			timeArraySizeParser.evaluator();
@@ -160,7 +165,7 @@ public class ModelDataSet implements Serializable {
 			if (ControlData.showRunTimeMessage) System.out.println("Processing weight "+wtName);
 			WeightElement wt=wtMap.get(wtName);
 			ValueEvaluatorParser evaluator=wt.weightParser;
-			ControlData.timeArrayIndex=0;
+			ParallelVars.timeArrayIndex=0;
 			try {
 				evaluator.evaluator();
 				wt.setValue(evaluator.evalValue.getData().doubleValue());
@@ -173,9 +178,9 @@ public class ModelDataSet implements Serializable {
 			evaluator.reset();
 			
 			int timeArraySize=getTimeArraySize(wt.timeArraySizeParser);
-			for (ControlData.timeArrayIndex=1; ControlData.timeArrayIndex<=timeArraySize; ControlData.timeArrayIndex++){
+			for (ParallelVars.timeArrayIndex=1; ParallelVars.timeArrayIndex<=timeArraySize; ParallelVars.timeArrayIndex++){
 				WeightElement newWt=new WeightElement();
-				String newWtName=wtName+"__fut__"+ControlData.timeArrayIndex;
+				String newWtName=wtName+"__fut__"+ParallelVars.timeArrayIndex;
 				try {
 					evaluator.evaluator();
 					newWt.setValue(evaluator.evalValue.getData().doubleValue());
@@ -207,7 +212,7 @@ public class ModelDataSet implements Serializable {
 			if (ControlData.showRunTimeMessage) System.out.println("Processing weight "+wtSlackSurplusName);
 			WeightElement wtSlackSurplus=wtSlackSurplusMap.get(wtSlackSurplusName);
 			ValueEvaluatorParser evaluator=wtSlackSurplus.weightParser;
-			ControlData.timeArrayIndex=0;
+			ParallelVars.timeArrayIndex=0;
 			try {
 				evaluator.evaluator();
 				wtSlackSurplus.setValue(evaluator.evalValue.getData().doubleValue());
@@ -220,9 +225,9 @@ public class ModelDataSet implements Serializable {
 			evaluator.reset();
 			
 			int timeArraySize=getTimeArraySize(wtSlackSurplus.timeArraySizeParser);
-			for (ControlData.timeArrayIndex=1; ControlData.timeArrayIndex<=timeArraySize; ControlData.timeArrayIndex++){
+			for (ParallelVars.timeArrayIndex=1; ParallelVars.timeArrayIndex<=timeArraySize; ParallelVars.timeArrayIndex++){
 				WeightElement newWtSlackSurplus=new WeightElement();
-				String newWtSlackSurplusName=wtSlackSurplusName+"__fut__"+ControlData.timeArrayIndex;
+				String newWtSlackSurplusName=wtSlackSurplusName+"__fut__"+ParallelVars.timeArrayIndex;
 				try {
 					evaluator.evaluator();
 					newWtSlackSurplus.setValue(evaluator.evalValue.getData().doubleValue());
@@ -258,7 +263,7 @@ public class ModelDataSet implements Serializable {
 			if (ControlData.showRunTimeMessage) System.out.println("Processing svar "+svName);
 			Svar svar=svMap.get(svName);
 			ArrayList<ValueEvaluatorParser> caseConditions=svar.caseConditionParsers;
-			ControlData.timeArrayIndex=0;
+			ParallelVars.timeArrayIndex=0;
 			boolean condition=false;
 			int i=-1;
 			while(!condition && i<=caseConditions.size()-2){
@@ -316,7 +321,7 @@ public class ModelDataSet implements Serializable {
 			}
 			
 			int timeArraySize=getTimeArraySize(svar.timeArraySizeParser);
-			for (ControlData.timeArrayIndex=1; ControlData.timeArrayIndex<=timeArraySize; ControlData.timeArrayIndex++){
+			for (ParallelVars.timeArrayIndex=1; ParallelVars.timeArrayIndex<=timeArraySize; ParallelVars.timeArrayIndex++){
 				condition=false;
 				i=-1;
 				while(!condition && i<=caseConditions.size()-2){
@@ -338,7 +343,7 @@ public class ModelDataSet implements Serializable {
 						caseExpression.evaluator();
 						IntDouble evalValue=caseExpression.evalValue.copyOf();
 						Svar newSvar=new Svar();
-						String newSvName=svName+"__fut__"+ControlData.timeArrayIndex;
+						String newSvName=svName+"__fut__"+ParallelVars.timeArrayIndex;
 						newSvar.setData(evalValue);
 						svFutMap.put(newSvName, newSvar);
 						if (svarUsedByLaterCycle.contains(svName)){
@@ -363,7 +368,7 @@ public class ModelDataSet implements Serializable {
 						Error.addEvaluationError("Case expression evaluation has error.");
 						IntDouble evalValue=new IntDouble(1.0, false);
 						Svar newSvar=new Svar();
-						String newSvName=svName+"__fut__"+ControlData.timeArrayIndex;
+						String newSvName=svName+"__fut__"+ParallelVars.timeArrayIndex;
 						newSvar.setData(evalValue);
 						svFutMap.put(newSvName, newSvar);
 						if (svarUsedByLaterCycle.contains(svName)){
@@ -390,7 +395,7 @@ public class ModelDataSet implements Serializable {
 					Error.addEvaluationError("None of the case conditions is satisfied.");
 					IntDouble evalValue=new IntDouble(1.0, false);
 					Svar newSvar=new Svar();
-					String newSvName=svName+"__fut__"+ControlData.timeArrayIndex;
+					String newSvName=svName+"__fut__"+ParallelVars.timeArrayIndex;
 					newSvar.setData(evalValue);
 					svFutMap.put(newSvName, newSvar);
 				}
@@ -416,7 +421,7 @@ public class ModelDataSet implements Serializable {
 		ArrayList<String> dvList = mds.dvList;
 		Map<String, Dvar> dvMap =mds.dvMap;
 		SolverData.clearDvarMap();
-		Map<String, Dvar> solverDvarMap=SolverData.getDvarMap();
+		ConcurrentHashMap<String, Dvar> solverDvarMap=SolverData.getDvarMap();
 		ControlData.currDvMap=dvMap;
 		ControlData.currEvalTypeIndex=1;
 		dvTimeArrayList = new ArrayList<String>();
@@ -425,78 +430,9 @@ public class ModelDataSet implements Serializable {
 		StudyDataSet sds = ControlData.currStudyDataSet;
 		ArrayList<String> varCycleIndexList = sds.getVarCycleIndexList();
 		ArrayList<String> dvarTimeArrayCycleIndexList = sds.getDvarTimeArrayCycleIndexList();
-		for (String dvName: dvList){
-			ControlData.currEvalName=dvName;
-			if (ControlData.showRunTimeMessage) System.out.println("Processing dvar "+dvName);
-			Dvar dvar=dvMap.get(dvName);
-			
-			ValueEvaluatorParser evaluator=dvar.lowerBoundParser;
-			ControlData.timeArrayIndex=0;
-			try {
-				evaluator.evaluator();
-				dvar.lowerBoundValue=evaluator.evalValue.getData().doubleValue();
-			} catch (RecognitionException e) {
-				Error.addEvaluationError("Lowerbound evaluation has error.");
-				dvar.lowerBoundValue=-901.0;
-			}
-			evaluator.reset();
-			
-			evaluator =dvar.upperBoundParser;
-			try {
-				evaluator.evaluator();
-				dvar.upperBoundValue=evaluator.evalValue.getData().doubleValue();
-			} catch (RecognitionException e) {
-				Error.addEvaluationError("Lowerbound evaluation has error.");
-				dvar.lowerBoundValue=-901.0;
-			}
-			evaluator.reset();
-			solverDvarMap.put(dvName, dvar);
-			
-			int timeArraySize=getTimeArraySize(dvar.timeArraySizeParser);
-			if (!dvar.timeArraySize.equals("0") && !timeArrayDvList.contains(dvName)){
-				timeArrayDvList.add(dvName);
-			}
-			for (ControlData.timeArrayIndex=1; ControlData.timeArrayIndex<=timeArraySize; ControlData.timeArrayIndex++){
-				Dvar newDvar=new Dvar();
-				String newDvarName = dvName+"__fut__"+ControlData.timeArrayIndex;
-				newDvar.kind=dvar.kind;
-				newDvar.units=dvar.units;
-				newDvar.integer=dvar.integer;
-				
-				evaluator=dvar.lowerBoundParser;
-				try {
-					evaluator.evaluator();
-					newDvar.lowerBoundValue=evaluator.evalValue.getData().doubleValue();
-				} catch (RecognitionException e) {
-					Error.addEvaluationError("Lowerbound evaluation of time array dvar has error.");
-					newDvar.lowerBoundValue=-901.0;
-				}
-				evaluator.reset();
-				
-				evaluator =dvar.upperBoundParser;
-				try {
-					evaluator.evaluator();
-					newDvar.upperBoundValue=evaluator.evalValue.getData().doubleValue();
-				} catch (RecognitionException e) {
-					Error.addEvaluationError("Lowerbound evaluation of time array dvar has error.");
-					newDvar.lowerBoundValue=-901.0;
-				}
-				evaluator.reset();
-				if (solverDvarMap.containsKey(newDvarName)){
-					Error.addEvaluationError(newDvarName+" is duplicatedly used in both dvar and time array dvar");
-				}else{
-					solverDvarMap.put(newDvarName, newDvar);
-					dvTimeArrayList.add(newDvarName);
-				}
-				
-				if (dvarUsedByLaterCycle.contains(dvName)){
-					dvarTimeArrayUsedByLaterCycle.add(newDvarName);
-				}
-				if (varCycleIndexList.contains(dvName) && !dvarTimeArrayCycleIndexList.contains(newDvarName)){
-					dvarTimeArrayCycleIndexList.add(newDvarName);
-				}
-			}
-		}
+		ProcessDvar pd = new ProcessDvar(dvList, dvMap, solverDvarMap, timeArrayDvList, dvTimeArrayList, dvarUsedByLaterCycle, dvarTimeArrayUsedByLaterCycle, varCycleIndexList, dvarTimeArrayCycleIndexList, 0, dvList.size()-1);
+		ForkJoinPool pool = new ForkJoinPool();
+		pool.invoke(pd);
 	}
 	
 	public void processGoal(){
@@ -514,9 +450,9 @@ public class ModelDataSet implements Serializable {
 			ArrayList<ValueEvaluatorParser> caseConditions=goal.caseConditionParsers;
 			
 			int timeArraySize=getTimeArraySize(goal.timeArraySizeParser);
-			for (ControlData.timeArrayIndex=1; ControlData.timeArrayIndex<=timeArraySize; ControlData.timeArrayIndex++){
+			for (ParallelVars.timeArrayIndex=1; ParallelVars.timeArrayIndex<=timeArraySize; ParallelVars.timeArrayIndex++){
 				Goal newGoal=new Goal();
-				String newGoalName=goalName+"__fut__"+ControlData.timeArrayIndex;
+				String newGoalName=goalName+"__fut__"+ParallelVars.timeArrayIndex;
 				
 				boolean condition=false;
 				int i=-1;
@@ -553,7 +489,7 @@ public class ModelDataSet implements Serializable {
 						ArrayList<String> dwl = goal.dvarSlackSurplusList.get(i);
 						for (int j=0; j<dwl.size();j++){
 							String dwlItem=dwl.get(j);
-							String usedWtSlackSurplusName=dwlItem+"__fut__"+ControlData.timeArrayIndex;
+							String usedWtSlackSurplusName=dwlItem+"__fut__"+ParallelVars.timeArrayIndex;
 							usedWtSlackSurplusList.add(usedWtSlackSurplusName);
 							if (!usedWtSlackSurplusDvList.contains(dwlItem)){
 								usedWtSlackSurplusDvList.add(dwlItem);
@@ -563,7 +499,7 @@ public class ModelDataSet implements Serializable {
 				}
 			}
 			
-			ControlData.timeArrayIndex=0;
+			ParallelVars.timeArrayIndex=0;
 			boolean condition=false;
 			int i=-1;
 			while(!condition && i<=caseConditions.size()-2){
@@ -623,7 +559,7 @@ public class ModelDataSet implements Serializable {
 			Alias alias=asMap.get(asName);
 			
 			ValueEvaluatorParser evaluator = alias.expressionParser;
-			ControlData.timeArrayIndex=0;
+			ParallelVars.timeArrayIndex=0;
 			try {
 				evaluator.evaluator();
 				IntDouble id=evaluator.evalValue;
@@ -749,8 +685,8 @@ public class ModelDataSet implements Serializable {
 			}
 			
 			int timeArraySize=getTimeArraySize(alias.timeArraySizeParser);
-			for (ControlData.timeArrayIndex=1; ControlData.timeArrayIndex<=timeArraySize; ControlData.timeArrayIndex++){
-				String newAsName=asName+"__fut__"+ControlData.timeArrayIndex;
+			for (ParallelVars.timeArrayIndex=1; ParallelVars.timeArrayIndex<=timeArraySize; ParallelVars.timeArrayIndex++){
+				String newAsName=asName+"__fut__"+ParallelVars.timeArrayIndex;
 				try {
 					evaluator.evaluator();
 					IntDouble id=evaluator.evalValue;
@@ -813,15 +749,15 @@ public class ModelDataSet implements Serializable {
 					
 					String asEntryNameTS=DssOperation.entryNameTS(asName, ControlData.timeStep);
 					double[] asDataList=DataTimeSeries.dvAliasTS.get(asEntryNameTS).getData();
-					//int index=ControlData.currTimeStep.get(ControlData.currCycleIndex)+ControlData.timeArrayIndex;
-					int index=indext+ControlData.timeArrayIndex;
+					//int index=ControlData.currTimeStep.get(ControlData.currCycleIndex)+ParallelVars.timeArrayIndex;
+					int index=indext+ParallelVars.timeArrayIndex;
 					if (index<asDataList.length) asDataList[index]=id.getData().doubleValue();
 					
 					//if (ControlData.outputCycleToDss){
 					//dvAliasTSCycle = DataTimeSeries.dvAliasTSCycles.get(ControlData.currCycleIndex);
 					double[] asDataList1=dvAliasTSCycle.get(asEntryNameTS).getData();
-					//int index1=ControlData.currTimeStep.get(ControlData.currCycleIndex)+ControlData.timeArrayIndex;
-					int index1=indext+ControlData.timeArrayIndex;
+					//int index1=ControlData.currTimeStep.get(ControlData.currCycleIndex)+ParallelVars.timeArrayIndex;
+					int index1=indext+ParallelVars.timeArrayIndex;
 					if (index1<asDataList1.length) asDataList1[index1]=id.getData().doubleValue();
 					//}
 				} catch (RecognitionException e) {

@@ -24,6 +24,7 @@ import wrimsv2.components.FilePaths;
 import wrimsv2.components.IntDouble;
 import wrimsv2.components.PreRunModel;
 import wrimsv2.ilp.ILP;
+import wrimsv2.parallel.ParallelVars;
 import wrimsv2.solver.CbcSolver;
 import wrimsv2.solver.InitialXASolver;
 import wrimsv2.solver.XASolver;
@@ -87,7 +88,7 @@ public class WeightEval {
 			ControlData.currEvalName=wtName;
 			WeightElement wt=wtMap.get(wtName);
 			ValueEvaluatorParser evaluator=wt.weightParser;
-			ControlData.timeArrayIndex=0;
+			ParallelVars.timeArrayIndex=0;
 			try {
 				evaluator.evaluator();
 				double wtv = evaluator.evalValue.getData().doubleValue();
@@ -145,9 +146,9 @@ public class WeightEval {
 			evaluator.reset();
 			
 			int timeArraySize=getTimeArraySize(wt.timeArraySizeParser);
-			for (ControlData.timeArrayIndex=1; ControlData.timeArrayIndex<=timeArraySize; ControlData.timeArrayIndex++){
+			for (ParallelVars.timeArrayIndex=1; ParallelVars.timeArrayIndex<=timeArraySize; ParallelVars.timeArrayIndex++){
 				WeightElement newWt=new WeightElement();
-				String newWtName=wtName+"__fut__"+ControlData.timeArrayIndex;
+				String newWtName=wtName+"__fut__"+ParallelVars.timeArrayIndex;
 				try {
 					evaluator.evaluator();
 					double wtv = evaluator.evalValue.getData().doubleValue();
@@ -215,7 +216,7 @@ public class WeightEval {
 			ControlData.currEvalName=wtssName;
 			WeightElement wt=wtssMap.get(wtssName);
 			ValueEvaluatorParser evaluator=wt.weightParser;
-			ControlData.timeArrayIndex=0;
+			ParallelVars.timeArrayIndex=0;
 			try {
 				evaluator.evaluator();
 				double wtv = evaluator.evalValue.getData().doubleValue();
@@ -273,9 +274,9 @@ public class WeightEval {
 			evaluator.reset();
 			
 			int timeArraySize=getTimeArraySize(wt.timeArraySizeParser);
-			for (ControlData.timeArrayIndex=1; ControlData.timeArrayIndex<=timeArraySize; ControlData.timeArrayIndex++){
+			for (ParallelVars.timeArrayIndex=1; ParallelVars.timeArrayIndex<=timeArraySize; ParallelVars.timeArrayIndex++){
 				WeightElement newWt=new WeightElement();
-				String newWtName=wtssName+"__fut__"+ControlData.timeArrayIndex;
+				String newWtName=wtssName+"__fut__"+ParallelVars.timeArrayIndex;
 				try {
 					evaluator.evaluator();
 					double wtv = evaluator.evalValue.getData().doubleValue();

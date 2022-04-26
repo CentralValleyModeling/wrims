@@ -14,6 +14,7 @@ import wrimsv2.commondata.wresldata.Timeseries;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
 import wrimsv2.hdf5.HDF5Reader;
+import wrimsv2.parallel.ParallelVars;
 import wrimsv2.tools.General;
 
 import java.util.ArrayList;
@@ -128,9 +129,9 @@ public class DssOperation {
 		ArrayList<Double> dataArray= new ArrayList<Double>();
 		Date startDate=rts.getStartTime().getDate();
 		if (ts.units.equals("taf") && ts.convertToUnits.equals("cfs")){
-			ControlData.dataYear=startDate.getYear()+1900;
-			ControlData.dataMonth=startDate.getMonth()+1;
-			ControlData.dataDay=startDate.getDate();
+			ParallelVars.dataYear=startDate.getYear()+1900;
+			ParallelVars.dataMonth=startDate.getMonth()+1;
+			ParallelVars.dataDay=startDate.getDate();
 			int i=0;
 			for (double dataEntry :  rts.getYArray()){
 				if (dataEntry==-901.0){
@@ -144,9 +145,9 @@ public class DssOperation {
 				i=i+1;
 			}
 		}else if (ts.units.equals("cfs") && ts.convertToUnits.equals("taf")){
-			ControlData.dataYear=startDate.getYear()+1900;
-			ControlData.dataMonth=startDate.getMonth()+1;
-			ControlData.dataDay=startDate.getDate();
+			ParallelVars.dataYear=startDate.getYear()+1900;
+			ParallelVars.dataMonth=startDate.getMonth()+1;
+			ParallelVars.dataDay=startDate.getDate();
 			int i=0;
 			for (double dataEntry :  rts.getYArray()){
 				if (dataEntry==-901.0){

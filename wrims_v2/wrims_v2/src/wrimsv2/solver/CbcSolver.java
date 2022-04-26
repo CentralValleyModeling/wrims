@@ -1018,7 +1018,7 @@ public class CbcSolver {
 				w = -wm1.get(dvName).getValue();
 			
 			}
-			//System.out.println("weight of: "+dvName+"="+w);
+			//System.out.println("weight of: "+dvName+"="+w);			
 		    jCbc.addCol(modelObject , dvObj.lowerBoundValue.doubleValue(), dvObj.upperBoundValue.doubleValue(), w, dvName, dvObj.integer==Param.yes ); 
 		    if (isNoteCbc) {
 

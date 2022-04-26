@@ -56,9 +56,6 @@ public class ControlData {
 	public static int currDay=1;
 	public static int currMonth;
 	public static int currYear;
-	public static int dataDay;
-	public static int dataMonth;
-	public static int dataYear;
 	public static String defaultTimeStep="1MON";
 	public static String timeStep ="1MON"; 
 	public static String partE="1MON";
@@ -83,7 +80,6 @@ public class ControlData {
 	public static String svDvPartF;
 	public static String initPartF;
 	public static Stack<LoopIndex> sumIndex= new Stack <LoopIndex>();
-	public static int timeArrayIndex;
 	public static Group groupInit;
 	public static Group groupSvar;
 	public static Group groupSvar2;
@@ -184,6 +180,7 @@ public class ControlData {
 	public static Date prevMemDate;
 	public static Date memStartDate;
 	public static Date prevOutputDate;
+	public static int nThreads=1;
 	
 	public ControlData(){
 	}

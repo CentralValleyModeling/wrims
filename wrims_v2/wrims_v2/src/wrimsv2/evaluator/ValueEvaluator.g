@@ -23,8 +23,8 @@ options {
 }
 
 @members {
-  public static IntDouble evalValue;
-  public static boolean evalCondition;
+  public IntDouble evalValue;
+  public boolean evalCondition;
   
   @Override
   public void reportError(RecognitionException e) {

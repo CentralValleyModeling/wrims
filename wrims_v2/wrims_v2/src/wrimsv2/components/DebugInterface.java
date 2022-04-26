@@ -61,6 +61,7 @@ import wrimsv2.evaluator.ValueEvaluatorLexer;
 import wrimsv2.evaluator.ValueEvaluatorParser;
 import wrimsv2.external.Functioninitgwsystem;
 import wrimsv2.ilp.ILP;
+import wrimsv2.parallel.ParallelVars;
 import wrimsv2.solver.CbcSolver;
 import wrimsv2.solver.CloseCurrentSolver;
 import wrimsv2.solver.InitialXASolver;
@@ -2128,7 +2129,7 @@ public class DebugInterface {
 				if (!(value==-901.0 || value==-902.0)){
 					int timestepListed=i-currIndex;
 					TimeOperation.findTime(timestepListed);
-					dataString=dataString+timestepListed+":"+ControlData.dataMonth+"-"+ControlData.dataDay+"-"+ControlData.dataYear+":"+df.format(value)+"#";
+					dataString=dataString+timestepListed+":"+ParallelVars.dataMonth+"-"+ParallelVars.dataDay+"-"+ParallelVars.dataYear+":"+df.format(value)+"#";
 				}
 			}
 		}else{
@@ -2143,7 +2144,7 @@ public class DebugInterface {
 					if (!(value==-901.0 || value==-902.0)){
 						int timestepListed=i-currIndex;
 						TimeOperation.findTime(timestepListed);
-						dataString=dataString+timestepListed+":"+ControlData.dataMonth+"-"+ControlData.dataDay+"-"+ControlData.dataYear+":"+df.format(value)+"#";
+						dataString=dataString+timestepListed+":"+ParallelVars.dataMonth+"-"+ParallelVars.dataDay+"-"+ParallelVars.dataYear+":"+df.format(value)+"#";
 					}
 				}
 			}
@@ -2197,7 +2198,7 @@ public class DebugInterface {
 		for (int i=0; i<indexList.size(); i++){
 			Integer index=indexList.get(i);
 			TimeOperation.findTime(index);
-			dataString=dataString+index+":"+ControlData.dataMonth+"-"+ControlData.dataDay+"-"+ControlData.dataYear+":"+df.format(futureArray.get(index))+"#";
+			dataString=dataString+index+":"+ParallelVars.dataMonth+"-"+ParallelVars.dataDay+"-"+ParallelVars.dataYear+":"+df.format(futureArray.get(index))+"#";
 		}
 		
 		if (dataString.endsWith("#")) dataString=dataString.substring(0, dataString.length()-1);

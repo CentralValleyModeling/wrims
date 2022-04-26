@@ -1,6 +1,7 @@
 package wrimsv2.evaluator;
 
 import wrimsv2.components.ControlData;
+import wrimsv2.parallel.ParallelVars;
 
 import java.util.Date;
 
@@ -173,31 +174,31 @@ public class TimeOperation {
 		if (ControlData.timeStep.equals("1MON")){
 			int detYear=value/12;
 			int detMonth=value%12;
-			ControlData.dataMonth=ControlData.currMonth+detMonth;
-			ControlData.dataYear=ControlData.currYear+detYear;
-			if (ControlData.dataMonth<1){
-				ControlData.dataMonth=ControlData.dataMonth+12;
-				ControlData.dataYear=ControlData.dataYear-1;
-			}else if (ControlData.dataMonth>12){
-				ControlData.dataMonth=ControlData.dataMonth-12;
-				ControlData.dataYear=ControlData.dataYear+1;
+			ParallelVars.dataMonth=ControlData.currMonth+detMonth;
+			ParallelVars.dataYear=ControlData.currYear+detYear;
+			if (ParallelVars.dataMonth<1){
+				ParallelVars.dataMonth=ParallelVars.dataMonth+12;
+				ParallelVars.dataYear=ParallelVars.dataYear-1;
+			}else if (ParallelVars.dataMonth>12){
+				ParallelVars.dataMonth=ParallelVars.dataMonth-12;
+				ParallelVars.dataYear=ParallelVars.dataYear+1;
 			}
-			int days=numberOfDays(ControlData.dataMonth, ControlData.dataYear);
-			ControlData.dataDay=days;
+			int days=numberOfDays(ParallelVars.dataMonth, ParallelVars.dataYear);
+			ParallelVars.dataDay=days;
 			/*
 			if (ControlData.currDay<=days){
-				ControlData.dataDay=ControlData.currDay;
+				ParallelVars.dataDay=ControlData.currDay;
 			}else{
-				ControlData.dataDay=days-numberOfDays(ControlData.currMonth, ControlData.currYear)+ControlData.currDay;
+				ParallelVars.dataDay=days-numberOfDays(ControlData.currMonth, ControlData.currYear)+ControlData.currDay;
 			}
 			*/
 		}else if(ControlData.timeStep.equals("1DAY")){
 			Date currDate = new Date (ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
 			long dataTime=currDate.getTime()+value*1*24*60*60*1000l;
 			Date dataDate = new Date (dataTime);
-			ControlData.dataDay=dataDate.getDate();
-			ControlData.dataMonth=dataDate.getMonth()+1;
-			ControlData.dataYear=dataDate.getYear()+1900;
+			ParallelVars.dataDay=dataDate.getDate();
+			ParallelVars.dataMonth=dataDate.getMonth()+1;
+			ParallelVars.dataYear=dataDate.getYear()+1900;
 		}
 	}
 	
@@ -205,28 +206,28 @@ public class TimeOperation {
 		if (ControlData.timeStep.equals("1MON")){
 			int detYear=value/12;
 			int detMonth=value%12;
-			ControlData.dataMonth=month+detMonth;
-			ControlData.dataYear=year+detYear;
-			if (ControlData.dataMonth<1){
-				ControlData.dataMonth=ControlData.dataMonth+12;
-				ControlData.dataYear=ControlData.dataYear-1;
-			}else if (ControlData.dataMonth>12){
-				ControlData.dataMonth=ControlData.dataMonth-12;
-				ControlData.dataYear=ControlData.dataYear+1;
+			ParallelVars.dataMonth=month+detMonth;
+			ParallelVars.dataYear=year+detYear;
+			if (ParallelVars.dataMonth<1){
+				ParallelVars.dataMonth=ParallelVars.dataMonth+12;
+				ParallelVars.dataYear=ParallelVars.dataYear-1;
+			}else if (ParallelVars.dataMonth>12){
+				ParallelVars.dataMonth=ParallelVars.dataMonth-12;
+				ParallelVars.dataYear=ParallelVars.dataYear+1;
 			}
-			int days=numberOfDays(ControlData.dataMonth, ControlData.dataYear);
+			int days=numberOfDays(ParallelVars.dataMonth, ParallelVars.dataYear);
 			if (day<=days){
-				ControlData.dataDay=day;
+				ParallelVars.dataDay=day;
 			}else{
-				ControlData.dataDay=days-numberOfDays(month, year)+day;
+				ParallelVars.dataDay=days-numberOfDays(month, year)+day;
 			}
 		}else if(ControlData.timeStep.equals("1DAY")){
 			Date thisDate = new Date (year-1900, month-1, day);
 			long dataTime=thisDate.getTime()+value*1 * 24 * 60 * 60 * 1000l;
 			Date dataDate = new Date (dataTime);
-			ControlData.dataDay=dataDate.getDate();
-			ControlData.dataMonth=dataDate.getMonth()+1;
-			ControlData.dataYear=dataDate.getYear()+1900;
+			ParallelVars.dataDay=dataDate.getDate();
+			ParallelVars.dataMonth=dataDate.getMonth()+1;
+			ParallelVars.dataYear=dataDate.getYear()+1900;
 		}
 	}
 	

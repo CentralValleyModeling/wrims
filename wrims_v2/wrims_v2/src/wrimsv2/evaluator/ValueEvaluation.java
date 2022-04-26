@@ -16,6 +16,7 @@ import wrimsv2.components.FilePaths;
 import wrimsv2.components.IntDouble;
 import wrimsv2.external.*;
 import wrimsv2.hdf5.HDF5Reader;
+import wrimsv2.parallel.ParallelVars;
 import wrimsv2.solver.CbcSolver;
 
 import java.util.Arrays;
@@ -539,11 +540,11 @@ public class ValueEvaluation {
 		long startTime;
 		long currTime;
 		if (ControlData.timeStep.equals("1MON")){
-			dataTime=new Date(ControlData.dataYear-1900, ControlData.dataMonth-1, 1).getTime();
+			dataTime=new Date(ParallelVars.dataYear-1900, ParallelVars.dataMonth-1, 1).getTime();
 			startTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, 1).getTime();
 			currTime=new Date(ControlData.currYear-1900, ControlData.currMonth-1, 1).getTime();
 		}else{
-			dataTime=new Date(ControlData.dataYear-1900, ControlData.dataMonth-1, ControlData.dataDay).getTime();
+			dataTime=new Date(ParallelVars.dataYear-1900, ParallelVars.dataMonth-1, ParallelVars.dataDay).getTime();
 			startTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay).getTime();
 			currTime=new Date(ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay).getTime();
 		}
@@ -735,10 +736,10 @@ public class ValueEvaluation {
 		long sTime=st.getTime();
 		int sYear=st.getYear()+1900;
 		int sMonth=st.getMonth(); //Originally it should be getMonth()-1. However, dss data store at 24:00 Jan31, 1921 is considered to store at 0:00 Feb 1, 1921 
-		long dataTime=new Date(ControlData.dataYear-1900, ControlData.dataMonth-1, ControlData.dataDay).getTime();
+		long dataTime=new Date(ParallelVars.dataYear-1900, ParallelVars.dataMonth-1, ParallelVars.dataDay).getTime();
 		int index;
 		if (dds.getTimeStep().equals("1MON")){
-			index=ControlData.dataYear*12+ControlData.dataMonth-(sYear*12+sMonth);
+			index=ParallelVars.dataYear*12+ParallelVars.dataMonth-(sYear*12+sMonth);
 		}else{
 			double indexValue=(dataTime-sTime)/(1000*60*60*24);
 			index=(int)indexValue+2;
@@ -751,10 +752,10 @@ public class ValueEvaluation {
 		long sTime=st.getTime();
 		int sYear=st.getYear()+1900;
 		int sMonth=st.getMonth(); //Originally it should be getMonth()-1. However, dss data store at 24:00 Jan31, 1921 is considered to store at 0:00 Feb 1, 1921 
-		long dataTime=new Date(ControlData.dataYear-1900, ControlData.dataMonth-1, ControlData.dataDay).getTime();
+		long dataTime=new Date(ParallelVars.dataYear-1900, ParallelVars.dataMonth-1, ParallelVars.dataDay).getTime();
 		int index;
 		if (dds.getTimeStep().equals("1MON")){
-			index=ControlData.dataYear*12+ControlData.dataMonth-(sYear*12+sMonth);
+			index=ParallelVars.dataYear*12+ParallelVars.dataMonth-(sYear*12+sMonth);
 		}else{
 			double indexValue=(dataTime-sTime)/(1000*60*60*24);
 			index=(int)indexValue+2;
@@ -1203,8 +1204,8 @@ public class ValueEvaluation {
 	
 	public static IntDouble tafcfs_term(String ident, IntDouble id){
 		if (id==null){
-			ControlData.dataMonth=ControlData.currMonth;
-			ControlData.dataYear=ControlData.currYear;
+			ParallelVars.dataMonth=ControlData.currMonth;
+			ParallelVars.dataYear=ControlData.currYear;
 		}else{
 			if (!id.isInt()){
 				Error.addEvaluationError("The index of "+ident+" should be integer.");
@@ -1217,7 +1218,7 @@ public class ValueEvaluation {
 	
 	public static double tafcfs(String ident){
 		double convert;
-		int days=TimeOperation.numberOfDays(ControlData.dataMonth, ControlData.dataYear);
+		int days=TimeOperation.numberOfDays(ParallelVars.dataMonth, ParallelVars.dataYear);
 		if (ident.equals("taf_cfs")){
 			if (ControlData.timeStep.equals("1MON")){
 				return 504.1666667 / days;
@@ -1273,7 +1274,7 @@ public class ValueEvaluation {
 	}
 	
 	public static IntDouble term_ARRAY_ITERATOR(){
-		return new IntDouble(ControlData.timeArrayIndex, true);
+		return new IntDouble(ParallelVars.timeArrayIndex, true);
 	}
 	
 	public static void sumExpression_IDENT(String ident){
