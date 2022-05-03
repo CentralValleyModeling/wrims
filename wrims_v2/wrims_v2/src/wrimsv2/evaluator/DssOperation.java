@@ -58,7 +58,7 @@ public class DssOperation {
 		ArrayList<Double> dataArray= new ArrayList<Double>();
 		Date startDate=rts.getStartTime().getDate();
 		int year=startDate.getYear()+1900;
-		int month=startDate.getMonth();;
+		int month=startDate.getMonth();
 		int day = startDate.getDate();
 		if (ts.units.equals("taf") && ts.convertToUnits.equals("cfs")){
 			int i=0;
@@ -68,8 +68,8 @@ public class DssOperation {
 				}else if (dataEntry==-902.0){
 					dataArray.add(-902.0);
 				}else{
-					TimeOperation.findTime(i, year, month, day);
-					double dataEntryValue=dataEntry*Evaluation.tafcfs("taf_cfs");
+					ParallelVars prvs = TimeOperation.findTime(i, year, month, day);
+					double dataEntryValue=dataEntry*Evaluation.tafcfs("taf_cfs", prvs);
 					dataArray.add(dataEntryValue);
 				}
 				i=i+1;
@@ -82,8 +82,8 @@ public class DssOperation {
 				}else if (dataEntry==-902.0){
 					dataArray.add(-902.0);
 				}else{
-					TimeOperation.findTime(i, year, month, day);
-					double dataEntryValue=dataEntry*Evaluation.tafcfs("cfs_taf");
+					ParallelVars prvs = TimeOperation.findTime(i, year, month, day);
+					double dataEntryValue=dataEntry*Evaluation.tafcfs("cfs_taf", prvs);
 					dataArray.add(dataEntryValue);
 				}
 				i=i+1;
@@ -129,9 +129,10 @@ public class DssOperation {
 		ArrayList<Double> dataArray= new ArrayList<Double>();
 		Date startDate=rts.getStartTime().getDate();
 		if (ts.units.equals("taf") && ts.convertToUnits.equals("cfs")){
-			ParallelVars.dataYear=startDate.getYear()+1900;
-			ParallelVars.dataMonth=startDate.getMonth()+1;
-			ParallelVars.dataDay=startDate.getDate();
+			ParallelVars prvs = new ParallelVars(); 
+			prvs.dataYear=startDate.getYear()+1900;
+			prvs.dataMonth=startDate.getMonth()+1;
+			prvs.dataDay=startDate.getDate();
 			int i=0;
 			for (double dataEntry :  rts.getYArray()){
 				if (dataEntry==-901.0){
@@ -140,14 +141,15 @@ public class DssOperation {
 					dataArray.add(-902.0);
 				}else{
 					TimeOperation.findTime(i);
-					dataArray.add(dataEntry*Evaluation.tafcfs("taf_cfs"));
+					dataArray.add(dataEntry*Evaluation.tafcfs("taf_cfs", prvs));
 				}
 				i=i+1;
 			}
 		}else if (ts.units.equals("cfs") && ts.convertToUnits.equals("taf")){
-			ParallelVars.dataYear=startDate.getYear()+1900;
-			ParallelVars.dataMonth=startDate.getMonth()+1;
-			ParallelVars.dataDay=startDate.getDate();
+			ParallelVars prvs = new ParallelVars();
+			prvs.dataYear=startDate.getYear()+1900;
+			prvs.dataMonth=startDate.getMonth()+1;
+			prvs.dataDay=startDate.getDate();
 			int i=0;
 			for (double dataEntry :  rts.getYArray()){
 				if (dataEntry==-901.0){
@@ -156,7 +158,7 @@ public class DssOperation {
 					dataArray.add(-902.0);
 				}else{
 					TimeOperation.findTime(i);
-					dataArray.add(dataEntry*Evaluation.tafcfs("cfs_taf"));
+					dataArray.add(dataEntry*Evaluation.tafcfs("cfs_taf", prvs));
 				}
 				i=i+1;
 			}
@@ -405,7 +407,7 @@ public class DssOperation {
 			Date modelStartDate=new Date(ControlData.startYear-1900, ControlData.startMonth, ControlData.startDay);
 			ds._dataType=DSSUtil.REGULAR_TIME_SERIES;
 			ds._yType="PER-AVER";
-			ds._numberRead=TimeOperation.getNumberOfTimestep(startDate, modelStartDate, timeStep);;
+			ds._numberRead=TimeOperation.getNumberOfTimestep(startDate, modelStartDate, timeStep);
 			ds._yUnits=dds.getUnits().toUpperCase();
 			ds._yValues = values;
 			boolean storeFlags = false;
@@ -435,7 +437,7 @@ public class DssOperation {
 			Date modelStartDate=new Date(ControlData.startYear-1900, ControlData.startMonth, ControlData.startDay);
 			ds._dataType=DSSUtil.REGULAR_TIME_SERIES;
 			ds._yType="PER-AVER";
-			ds._numberRead=TimeOperation.getNumberOfTimestep(startDate, modelStartDate, timeStep);;
+			ds._numberRead=TimeOperation.getNumberOfTimestep(startDate, modelStartDate, timeStep);
 			ds._yUnits=dds.getUnits().toUpperCase();
 			ds._yValues = values;
 			boolean storeFlags = false;
@@ -486,8 +488,8 @@ public class DssOperation {
 						if (value == -901.0 || value == -902.0){
 							dd._yValues[i]=value;
 						}else{
-							TimeOperation.findTime(i, year, month, day);
-							dd._yValues[i]=value/Evaluation.tafcfs("taf_cfs");;
+							ParallelVars prvs=TimeOperation.findTime(i, year, month, day);
+							dd._yValues[i]=value/Evaluation.tafcfs("taf_cfs", prvs);
 						}
 					}
 				}
@@ -500,8 +502,8 @@ public class DssOperation {
 						if (value == -901.0 || value == -902.0){
 							dd._yValues[i]=value;
 						}else{
-							TimeOperation.findTime(i, year, month, day);
-							dd._yValues[i]=value/Evaluation.tafcfs("cfs_taf");;
+							ParallelVars prvs=TimeOperation.findTime(i, year, month, day);
+							dd._yValues[i]=value/Evaluation.tafcfs("cfs_taf", prvs);
 						}
 					}
 				}
@@ -671,8 +673,8 @@ public class DssOperation {
 						if (value == -901.0 || value == -902.0){
 							dd._yValues[i]=value;
 						}else{
-							TimeOperation.findTime(i, year, month, day);
-							dd._yValues[i]=value/Evaluation.tafcfs("taf_cfs");;
+							ParallelVars prvs=TimeOperation.findTime(i, year, month, day);
+							dd._yValues[i]=value/Evaluation.tafcfs("taf_cfs", prvs);
 						}
 					}
 				}
@@ -685,8 +687,8 @@ public class DssOperation {
 						if (value == -901.0 || value == -902.0){
 							dd._yValues[i]=value;
 						}else{
-							TimeOperation.findTime(i, year, month, day);
-							dd._yValues[i]=value/Evaluation.tafcfs("cfs_taf");;
+							ParallelVars prvs=TimeOperation.findTime(i, year, month, day);
+							dd._yValues[i]=value/Evaluation.tafcfs("cfs_taf", prvs);
 						}
 					}
 				}

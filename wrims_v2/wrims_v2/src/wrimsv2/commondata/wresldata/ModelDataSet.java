@@ -165,7 +165,9 @@ public class ModelDataSet implements Serializable {
 			if (ControlData.showRunTimeMessage) System.out.println("Processing weight "+wtName);
 			WeightElement wt=wtMap.get(wtName);
 			ValueEvaluatorParser evaluator=wt.weightParser;
-			ParallelVars.timeArrayIndex=0;
+			ParallelVars prvs = new ParallelVars();
+			evaluator.setParallelVars(prvs);
+			prvs.timeArrayIndex=0;
 			try {
 				evaluator.evaluator();
 				wt.setValue(evaluator.evalValue.getData().doubleValue());
@@ -178,9 +180,9 @@ public class ModelDataSet implements Serializable {
 			evaluator.reset();
 			
 			int timeArraySize=getTimeArraySize(wt.timeArraySizeParser);
-			for (ParallelVars.timeArrayIndex=1; ParallelVars.timeArrayIndex<=timeArraySize; ParallelVars.timeArrayIndex++){
+			for (prvs.timeArrayIndex=1; prvs.timeArrayIndex<=timeArraySize; prvs.timeArrayIndex++){
 				WeightElement newWt=new WeightElement();
-				String newWtName=wtName+"__fut__"+ParallelVars.timeArrayIndex;
+				String newWtName=wtName+"__fut__"+prvs.timeArrayIndex;
 				try {
 					evaluator.evaluator();
 					newWt.setValue(evaluator.evalValue.getData().doubleValue());
@@ -212,7 +214,9 @@ public class ModelDataSet implements Serializable {
 			if (ControlData.showRunTimeMessage) System.out.println("Processing weight "+wtSlackSurplusName);
 			WeightElement wtSlackSurplus=wtSlackSurplusMap.get(wtSlackSurplusName);
 			ValueEvaluatorParser evaluator=wtSlackSurplus.weightParser;
-			ParallelVars.timeArrayIndex=0;
+			ParallelVars prvs = new ParallelVars();
+			evaluator.setParallelVars(prvs);
+			prvs.timeArrayIndex=0;
 			try {
 				evaluator.evaluator();
 				wtSlackSurplus.setValue(evaluator.evalValue.getData().doubleValue());
@@ -225,9 +229,9 @@ public class ModelDataSet implements Serializable {
 			evaluator.reset();
 			
 			int timeArraySize=getTimeArraySize(wtSlackSurplus.timeArraySizeParser);
-			for (ParallelVars.timeArrayIndex=1; ParallelVars.timeArrayIndex<=timeArraySize; ParallelVars.timeArrayIndex++){
+			for (prvs.timeArrayIndex=1; prvs.timeArrayIndex<=timeArraySize; prvs.timeArrayIndex++){
 				WeightElement newWtSlackSurplus=new WeightElement();
-				String newWtSlackSurplusName=wtSlackSurplusName+"__fut__"+ParallelVars.timeArrayIndex;
+				String newWtSlackSurplusName=wtSlackSurplusName+"__fut__"+prvs.timeArrayIndex;
 				try {
 					evaluator.evaluator();
 					newWtSlackSurplus.setValue(evaluator.evalValue.getData().doubleValue());
@@ -263,12 +267,14 @@ public class ModelDataSet implements Serializable {
 			if (ControlData.showRunTimeMessage) System.out.println("Processing svar "+svName);
 			Svar svar=svMap.get(svName);
 			ArrayList<ValueEvaluatorParser> caseConditions=svar.caseConditionParsers;
-			ParallelVars.timeArrayIndex=0;
+			ParallelVars prvs = new ParallelVars();
+			prvs.timeArrayIndex=0;
 			boolean condition=false;
 			int i=-1;
 			while(!condition && i<=caseConditions.size()-2){
 				i=i+1;
 				ValueEvaluatorParser caseCondition=caseConditions.get(i);
+				caseCondition.setParallelVars(prvs);
 				try{
 					caseCondition.evaluator();
 					condition=caseCondition.evalCondition;
@@ -281,6 +287,7 @@ public class ModelDataSet implements Serializable {
 			if (condition){
 				ArrayList<ValueEvaluatorParser> caseExpressions=svar.caseExpressionParsers;
 				ValueEvaluatorParser caseExpression=caseExpressions.get(i);
+				caseExpression.setParallelVars(prvs);
 				try {
 					caseExpression.evaluator();
 					IntDouble evalValue=caseExpression.evalValue.copyOf();
@@ -321,12 +328,13 @@ public class ModelDataSet implements Serializable {
 			}
 			
 			int timeArraySize=getTimeArraySize(svar.timeArraySizeParser);
-			for (ParallelVars.timeArrayIndex=1; ParallelVars.timeArrayIndex<=timeArraySize; ParallelVars.timeArrayIndex++){
+			for (prvs.timeArrayIndex=1; prvs.timeArrayIndex<=timeArraySize; prvs.timeArrayIndex++){
 				condition=false;
 				i=-1;
 				while(!condition && i<=caseConditions.size()-2){
 					i=i+1;
 					ValueEvaluatorParser caseCondition=caseConditions.get(i);
+					caseCondition.setParallelVars(prvs);
 					try{
 						caseCondition.evaluator();
 						condition=caseCondition.evalCondition;
@@ -339,11 +347,12 @@ public class ModelDataSet implements Serializable {
 				if (condition){
 					ArrayList<ValueEvaluatorParser> caseExpressions=svar.caseExpressionParsers;
 					ValueEvaluatorParser caseExpression=caseExpressions.get(i);
+					caseExpression.setParallelVars(prvs);
 					try {
 						caseExpression.evaluator();
 						IntDouble evalValue=caseExpression.evalValue.copyOf();
 						Svar newSvar=new Svar();
-						String newSvName=svName+"__fut__"+ParallelVars.timeArrayIndex;
+						String newSvName=svName+"__fut__"+prvs.timeArrayIndex;
 						newSvar.setData(evalValue);
 						svFutMap.put(newSvName, newSvar);
 						if (svarUsedByLaterCycle.contains(svName)){
@@ -368,7 +377,7 @@ public class ModelDataSet implements Serializable {
 						Error.addEvaluationError("Case expression evaluation has error.");
 						IntDouble evalValue=new IntDouble(1.0, false);
 						Svar newSvar=new Svar();
-						String newSvName=svName+"__fut__"+ParallelVars.timeArrayIndex;
+						String newSvName=svName+"__fut__"+prvs.timeArrayIndex;
 						newSvar.setData(evalValue);
 						svFutMap.put(newSvName, newSvar);
 						if (svarUsedByLaterCycle.contains(svName)){
@@ -395,7 +404,7 @@ public class ModelDataSet implements Serializable {
 					Error.addEvaluationError("None of the case conditions is satisfied.");
 					IntDouble evalValue=new IntDouble(1.0, false);
 					Svar newSvar=new Svar();
-					String newSvName=svName+"__fut__"+ParallelVars.timeArrayIndex;
+					String newSvName=svName+"__fut__"+prvs.timeArrayIndex;
 					newSvar.setData(evalValue);
 					svFutMap.put(newSvName, newSvar);
 				}
@@ -450,15 +459,17 @@ public class ModelDataSet implements Serializable {
 			ArrayList<ValueEvaluatorParser> caseConditions=goal.caseConditionParsers;
 			
 			int timeArraySize=getTimeArraySize(goal.timeArraySizeParser);
-			for (ParallelVars.timeArrayIndex=1; ParallelVars.timeArrayIndex<=timeArraySize; ParallelVars.timeArrayIndex++){
+			ParallelVars prvs = new ParallelVars();
+			for (prvs.timeArrayIndex=1; prvs.timeArrayIndex<=timeArraySize; prvs.timeArrayIndex++){
 				Goal newGoal=new Goal();
-				String newGoalName=goalName+"__fut__"+ParallelVars.timeArrayIndex;
+				String newGoalName=goalName+"__fut__"+prvs.timeArrayIndex;
 				
 				boolean condition=false;
 				int i=-1;
 				while(!condition && i<=caseConditions.size()-2){
 					i=i+1;
 					ValueEvaluatorParser caseCondition=caseConditions.get(i);
+					caseCondition.setParallelVars(prvs);
 					try{
 						caseCondition.evaluator();
 						condition=caseCondition.evalCondition;
@@ -470,7 +481,8 @@ public class ModelDataSet implements Serializable {
 				}
 				if (condition){		
 					ArrayList<EvaluatorParser> caseExpressions=goal.caseExpressionParsers;
-					EvaluatorParser caseExpression=caseExpressions.get(i);				
+					EvaluatorParser caseExpression=caseExpressions.get(i);
+					caseExpression.setParallelVars(prvs);
 					try {
 						caseExpression.evaluator();
 						if (solverGMap.containsKey(newGoalName)){
@@ -489,7 +501,7 @@ public class ModelDataSet implements Serializable {
 						ArrayList<String> dwl = goal.dvarSlackSurplusList.get(i);
 						for (int j=0; j<dwl.size();j++){
 							String dwlItem=dwl.get(j);
-							String usedWtSlackSurplusName=dwlItem+"__fut__"+ParallelVars.timeArrayIndex;
+							String usedWtSlackSurplusName=dwlItem+"__fut__"+prvs.timeArrayIndex;
 							usedWtSlackSurplusList.add(usedWtSlackSurplusName);
 							if (!usedWtSlackSurplusDvList.contains(dwlItem)){
 								usedWtSlackSurplusDvList.add(dwlItem);
@@ -499,12 +511,13 @@ public class ModelDataSet implements Serializable {
 				}
 			}
 			
-			ParallelVars.timeArrayIndex=0;
+			prvs.timeArrayIndex=0;
 			boolean condition=false;
 			int i=-1;
 			while(!condition && i<=caseConditions.size()-2){
 				i=i+1;
 				ValueEvaluatorParser caseCondition=caseConditions.get(i);
+				caseCondition.setParallelVars(prvs);
 				try{
 					caseCondition.evaluator();
 					condition=caseCondition.evalCondition;
@@ -516,7 +529,8 @@ public class ModelDataSet implements Serializable {
 			}
 			if (condition){		
 				ArrayList<EvaluatorParser> caseExpressions=goal.caseExpressionParsers;
-				EvaluatorParser caseExpression=caseExpressions.get(i);				
+				EvaluatorParser caseExpression=caseExpressions.get(i);	
+				caseExpression.setParallelVars(prvs);
 				try {
 					caseExpression.evaluator();
 					solverGMap.put(goalName,caseExpression.evalConstraint);
@@ -559,7 +573,9 @@ public class ModelDataSet implements Serializable {
 			Alias alias=asMap.get(asName);
 			
 			ValueEvaluatorParser evaluator = alias.expressionParser;
-			ParallelVars.timeArrayIndex=0;
+			ParallelVars prvs = new ParallelVars();
+			evaluator.setParallelVars(prvs);
+			prvs.timeArrayIndex=0;
 			try {
 				evaluator.evaluator();
 				IntDouble id=evaluator.evalValue;
@@ -685,8 +701,8 @@ public class ModelDataSet implements Serializable {
 			}
 			
 			int timeArraySize=getTimeArraySize(alias.timeArraySizeParser);
-			for (ParallelVars.timeArrayIndex=1; ParallelVars.timeArrayIndex<=timeArraySize; ParallelVars.timeArrayIndex++){
-				String newAsName=asName+"__fut__"+ParallelVars.timeArrayIndex;
+			for (prvs.timeArrayIndex=1; prvs.timeArrayIndex<=timeArraySize; prvs.timeArrayIndex++){
+				String newAsName=asName+"__fut__"+prvs.timeArrayIndex;
 				try {
 					evaluator.evaluator();
 					IntDouble id=evaluator.evalValue;
@@ -750,14 +766,14 @@ public class ModelDataSet implements Serializable {
 					String asEntryNameTS=DssOperation.entryNameTS(asName, ControlData.timeStep);
 					double[] asDataList=DataTimeSeries.dvAliasTS.get(asEntryNameTS).getData();
 					//int index=ControlData.currTimeStep.get(ControlData.currCycleIndex)+ParallelVars.timeArrayIndex;
-					int index=indext+ParallelVars.timeArrayIndex;
+					int index=indext+prvs.timeArrayIndex;
 					if (index<asDataList.length) asDataList[index]=id.getData().doubleValue();
 					
 					//if (ControlData.outputCycleToDss){
 					//dvAliasTSCycle = DataTimeSeries.dvAliasTSCycles.get(ControlData.currCycleIndex);
 					double[] asDataList1=dvAliasTSCycle.get(asEntryNameTS).getData();
 					//int index1=ControlData.currTimeStep.get(ControlData.currCycleIndex)+ParallelVars.timeArrayIndex;
-					int index1=indext+ParallelVars.timeArrayIndex;
+					int index1=indext+prvs.timeArrayIndex;
 					if (index1<asDataList1.length) asDataList1[index1]=id.getData().doubleValue();
 					//}
 				} catch (RecognitionException e) {

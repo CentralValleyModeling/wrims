@@ -2122,14 +2122,14 @@ public class DebugInterface {
 		if (dvAliasTSMap.containsKey(entryName)){
 			DssDataSetFixLength ddsf = dvAliasTSMap.get(entryName);
 			double[] dataArray = ddsf.getData();
-			TimeOperation.findTime(0);
-			int currIndex=ValueEvaluation.timeSeriesIndex(ddsf)-1;
+			ParallelVars prvs = TimeOperation.findTime(0);
+			int currIndex=ValueEvaluation.timeSeriesIndex(ddsf, prvs)-1;
 			for (int i=0; i<=currIndex; i++){
 				double value=dataArray[i];
 				if (!(value==-901.0 || value==-902.0)){
 					int timestepListed=i-currIndex;
-					TimeOperation.findTime(timestepListed);
-					dataString=dataString+timestepListed+":"+ParallelVars.dataMonth+"-"+ParallelVars.dataDay+"-"+ParallelVars.dataYear+":"+df.format(value)+"#";
+					prvs = TimeOperation.findTime(timestepListed);
+					dataString=dataString+timestepListed+":"+prvs.dataMonth+"-"+prvs.dataDay+"-"+prvs.dataYear+":"+df.format(value)+"#";
 				}
 			}
 		}else{
@@ -2137,14 +2137,14 @@ public class DebugInterface {
 			if (svTSMap.containsKey(entryName)){
 				DssDataSet dds = svTSMap.get(entryName);
 				ArrayList<Double> dataArrayList = dds.getData();
-				TimeOperation.findTime(0);
-				int currIndex=ValueEvaluation.timeSeriesIndex(dds);
+				ParallelVars prvs = TimeOperation.findTime(0);
+				int currIndex=ValueEvaluation.timeSeriesIndex(dds, prvs);
 				for (int i=0; i<dataArrayList.size(); i++){
 					double value=dataArrayList.get(i);
 					if (!(value==-901.0 || value==-902.0)){
 						int timestepListed=i-currIndex;
-						TimeOperation.findTime(timestepListed);
-						dataString=dataString+timestepListed+":"+ParallelVars.dataMonth+"-"+ParallelVars.dataDay+"-"+ParallelVars.dataYear+":"+df.format(value)+"#";
+						prvs = TimeOperation.findTime(timestepListed);
+						dataString=dataString+timestepListed+":"+prvs.dataMonth+"-"+prvs.dataDay+"-"+prvs.dataYear+":"+df.format(value)+"#";
 					}
 				}
 			}
@@ -2197,8 +2197,8 @@ public class DebugInterface {
 		Collections.sort(indexList);
 		for (int i=0; i<indexList.size(); i++){
 			Integer index=indexList.get(i);
-			TimeOperation.findTime(index);
-			dataString=dataString+index+":"+ParallelVars.dataMonth+"-"+ParallelVars.dataDay+"-"+ParallelVars.dataYear+":"+df.format(futureArray.get(index))+"#";
+			ParallelVars prvs = TimeOperation.findTime(index);
+			dataString=dataString+index+":"+prvs.dataMonth+"-"+prvs.dataDay+"-"+prvs.dataYear+":"+df.format(futureArray.get(index))+"#";
 		}
 		
 		if (dataString.endsWith("#")) dataString=dataString.substring(0, dataString.length()-1);
@@ -2303,8 +2303,8 @@ public class DebugInterface {
 		if (dvAliasTSMap.containsKey(entryName)){
 			DssDataSetFixLength ddsf = dvAliasTSMap.get(entryName);
 			double[] dataArray = ddsf.getData();
-			TimeOperation.findTime(index);
-			int tsIndex=ValueEvaluation.timeSeriesIndex(ddsf)-1;
+			ParallelVars prvs = TimeOperation.findTime(index);
+			int tsIndex=ValueEvaluation.timeSeriesIndex(ddsf, prvs)-1;
 			dataArray[tsIndex]=value;
 			isModified=true;
 		}else{
@@ -2312,8 +2312,8 @@ public class DebugInterface {
 			if (svTSMap.containsKey(entryName)){
 				DssDataSet dds = svTSMap.get(entryName);
 				ArrayList<Double> dataArrayList = dds.getData();
-				TimeOperation.findTime(index);
-				int tsIndex=ValueEvaluation.timeSeriesIndex(dds);
+				ParallelVars prvs = TimeOperation.findTime(index);
+				int tsIndex=ValueEvaluation.timeSeriesIndex(dds, prvs);
 				dataArrayList.set(tsIndex, value);
 				isModified=true;
 			}

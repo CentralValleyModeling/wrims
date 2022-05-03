@@ -438,11 +438,11 @@ public class ValueEvaluation {
 		}
 
 		int idValue=id.getData().intValue();
-		TimeOperation.findTime(idValue);
+		ParallelVars prvs = TimeOperation.findTime(idValue);
 		
 		double value;
 		if (ControlData.currDvMap.containsKey(ident)||ControlData.currAliasMap.containsKey(ident)){
-			value=dvarAliasTimeSeries(ident,id.getData().intValue());
+			value=dvarAliasTimeSeries(ident,id.getData().intValue(), prvs);
 		}else{
 			if (ControlData.currSvMap.containsKey(ident)){ 
 				if (idValue==0)	{
@@ -457,18 +457,18 @@ public class ValueEvaluation {
 					}
 				}
 			}
-			value=svarTimeSeries(ident, idValue);
+			value=svarTimeSeries(ident, idValue, prvs);
 		}
 		
 		return new IntDouble (value, false);
 	}
 	
-	public static double svarTimeSeries(String ident, int idValue){
+	public static double svarTimeSeries(String ident, int idValue, ParallelVars prvs){
 		int index;
 		String entryNameTS=DssOperation.entryNameTS(ident, ControlData.timeStep);
 		if (DataTimeSeries.svTS.containsKey(entryNameTS)){
 			DssDataSet dds=DataTimeSeries.svTS.get(entryNameTS);
-			index =timeSeriesIndex(dds);
+			index =timeSeriesIndex(dds, prvs);
 			ArrayList<Double> data=dds.getData();
 			if (index>=0 && index<data.size() && index>=dds.getStudyStartIndex()){
 				double value=data.get(index);
@@ -483,7 +483,7 @@ public class ValueEvaluation {
 		}
 		if (DataTimeSeries.svInit.containsKey(entryNameTS)){
 			DssDataSet dds=DataTimeSeries.svInit.get(entryNameTS);
-			index =timeSeriesIndex(dds);
+			index =timeSeriesIndex(dds, prvs);
 			ArrayList<Double> data=dds.getData();
 			if (index>=0 && index<data.size()){
 				double value=data.get(index);
@@ -495,8 +495,8 @@ public class ValueEvaluation {
 			DataTimeSeries.lookInitDss.add(entryNameTS);
 			if (getSVInitTimeseries(ident)){
 				DssDataSet dds=DataTimeSeries.svInit.get(entryNameTS);
-				TimeOperation.findTime(idValue);
-				index =timeSeriesIndex(dds);
+				prvs = TimeOperation.findTime(idValue);
+				index =timeSeriesIndex(dds, prvs);
 				ArrayList<Double> data=dds.getData();
 				if (index>=0 && index<data.size()){
 					double value=data.get(index);
@@ -508,7 +508,7 @@ public class ValueEvaluation {
 		}
 		if (ControlData.allowSvTsInit && DataTimeSeries.svTS.containsKey(entryNameTS)){
 			DssDataSet dds=DataTimeSeries.svTS.get(entryNameTS);
-			index =timeSeriesIndex(dds);
+			index =timeSeriesIndex(dds, prvs);
 			ArrayList<Double> data=dds.getData();
 			if (index>=0 && index<data.size() && index<dds.getStudyStartIndex()){
 				double value=data.get(index);
@@ -533,18 +533,18 @@ public class ValueEvaluation {
 		}
 	}
 	
-	public static double dvarAliasTimeSeries(String ident){
+	public static double dvarAliasTimeSeries(String ident, ParallelVars prvs){
 		String entryNameTS=DssOperation.entryNameTS(ident, ControlData.timeStep);
 		int index;
 		long dataTime;
 		long startTime;
 		long currTime;
 		if (ControlData.timeStep.equals("1MON")){
-			dataTime=new Date(ParallelVars.dataYear-1900, ParallelVars.dataMonth-1, 1).getTime();
+			dataTime=new Date(prvs.dataYear-1900, prvs.dataMonth-1, 1).getTime();
 			startTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, 1).getTime();
 			currTime=new Date(ControlData.currYear-1900, ControlData.currMonth-1, 1).getTime();
 		}else{
-			dataTime=new Date(ParallelVars.dataYear-1900, ParallelVars.dataMonth-1, ParallelVars.dataDay).getTime();
+			dataTime=new Date(prvs.dataYear-1900, prvs.dataMonth-1, prvs.dataDay).getTime();
 			startTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay).getTime();
 			currTime=new Date(ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay).getTime();
 		}
@@ -554,7 +554,7 @@ public class ValueEvaluation {
 			return 1.0;
 		}else if(dataTime>=startTime && dataTime<currTime){
 			DssDataSetFixLength dds=DataTimeSeries.dvAliasTS.get(entryNameTS);
-			index=timeSeriesIndex(dds);
+			index=timeSeriesIndex(dds, prvs);
 			double[] data=dds.getData();
 			return data[index];
 		}
@@ -567,7 +567,7 @@ public class ValueEvaluation {
 		}
 		
 		DssDataSet dds=DataTimeSeries.dvAliasInit.get(entryNameTS);
-		index=timeSeriesIndex(dds);
+		index=timeSeriesIndex(dds, prvs);
 		ArrayList<Double> data=dds.getData();
 		if (index>=0 && index<data.size()){
 			double result=data.get(index);
@@ -582,7 +582,7 @@ public class ValueEvaluation {
 		return 1.0;
 	}
 	
-	public static double dvarAliasTimeSeries(String ident, int indexValue){
+	public static double dvarAliasTimeSeries(String ident, int indexValue, ParallelVars prvs){
 		String entryNameTS=DssOperation.entryNameTS(ident, ControlData.timeStep);
 		if (indexValue>0){
 			if (indexValue>=0 && (ControlData.currEvalTypeIndex==0 || ControlData.currEvalTypeIndex==7)){
@@ -642,7 +642,7 @@ public class ValueEvaluation {
 		}
 		
 		DssDataSet dds=DataTimeSeries.dvAliasInit.get(entryNameTS);
-		int index = timeSeriesIndex(dds);
+		int index = timeSeriesIndex(dds, prvs);
 		ArrayList<Double> data=dds.getData();
 		if (index>=0 && index<data.size()){
 			double result=data.get(index);
@@ -657,7 +657,7 @@ public class ValueEvaluation {
 		return 1.0;
 	}
 	
-	public static double dvarAliasCycleTimeSeries(String ident, int indexValue, int ci){
+	public static double dvarAliasCycleTimeSeries(String ident, int indexValue, int ci, ParallelVars prvs){
 		String entryNameTS=DssOperation.entryNameTS(ident, ControlData.timeStep);
 		if (indexValue>0){
 			String newName = ident+"__fut__"+indexValue;
@@ -708,7 +708,7 @@ public class ValueEvaluation {
 		}
 		
 		DssDataSet dds=DataTimeSeries.dvAliasInit.get(entryNameTS);
-		int index = timeSeriesIndex(dds);
+		int index = timeSeriesIndex(dds, prvs);
 		ArrayList<Double> data=dds.getData();
 		if (index>=0 && index<data.size()){
 			double result=data.get(index);
@@ -731,15 +731,15 @@ public class ValueEvaluation {
 		}
 	}
 	
-	public static int timeSeriesIndex(DssDataSet dds){
+	public static int timeSeriesIndex(DssDataSet dds, ParallelVars prvs){
 		Date st=dds.getStartTime();
 		long sTime=st.getTime();
 		int sYear=st.getYear()+1900;
 		int sMonth=st.getMonth(); //Originally it should be getMonth()-1. However, dss data store at 24:00 Jan31, 1921 is considered to store at 0:00 Feb 1, 1921 
-		long dataTime=new Date(ParallelVars.dataYear-1900, ParallelVars.dataMonth-1, ParallelVars.dataDay).getTime();
+		long dataTime=new Date(prvs.dataYear-1900, prvs.dataMonth-1, prvs.dataDay).getTime();
 		int index;
 		if (dds.getTimeStep().equals("1MON")){
-			index=ParallelVars.dataYear*12+ParallelVars.dataMonth-(sYear*12+sMonth);
+			index=prvs.dataYear*12+prvs.dataMonth-(sYear*12+sMonth);
 		}else{
 			double indexValue=(dataTime-sTime)/(1000*60*60*24);
 			index=(int)indexValue+2;
@@ -747,15 +747,15 @@ public class ValueEvaluation {
 		return index;
 	}
 	
-	public static int timeSeriesIndex(DssDataSetFixLength dds){
+	public static int timeSeriesIndex(DssDataSetFixLength dds, ParallelVars prvs){
 		Date st=dds.getStartTime();
 		long sTime=st.getTime();
 		int sYear=st.getYear()+1900;
 		int sMonth=st.getMonth(); //Originally it should be getMonth()-1. However, dss data store at 24:00 Jan31, 1921 is considered to store at 0:00 Feb 1, 1921 
-		long dataTime=new Date(ParallelVars.dataYear-1900, ParallelVars.dataMonth-1, ParallelVars.dataDay).getTime();
+		long dataTime=new Date(prvs.dataYear-1900, prvs.dataMonth-1, prvs.dataDay).getTime();
 		int index;
 		if (dds.getTimeStep().equals("1MON")){
-			index=ParallelVars.dataYear*12+ParallelVars.dataMonth-(sYear*12+sMonth);
+			index=prvs.dataYear*12+prvs.dataMonth-(sYear*12+sMonth);
 		}else{
 			double indexValue=(dataTime-sTime)/(1000*60*60*24);
 			index=(int)indexValue+2;
@@ -765,14 +765,14 @@ public class ValueEvaluation {
 	
 	public static IntDouble timeseries(){
 		String svName=ControlData.currEvalName;
-		TimeOperation.findTime(0);
-		double value=svarTimeSeries(svName, 0);
+		ParallelVars prvs = TimeOperation.findTime(0);
+		double value=svarTimeSeries(svName, 0, prvs);
 		return new IntDouble(value,false);
 	}
 	
 	public static double timeseries(String tsName){
-		TimeOperation.findTime(0);
-		return svarTimeSeries(tsName, 0);
+		ParallelVars prvs = TimeOperation.findTime(0);
+		return svarTimeSeries(tsName, 0, prvs);
 	}
 	
 	public static IntDouble pastCycleNoTimeArray(String ident, String cycle){
@@ -830,7 +830,7 @@ public class ValueEvaluation {
 			idArray.add(id);
 			ModelDataSet mds=ControlData.currStudyDataSet.getModelDataSetMap().get(cycle);
 			if (mds.dvMap.containsKey(ident) || mds.asMap.containsKey(ident)){
-				TimeOperation.findTime(index);
+				ParallelVars prvs = TimeOperation.findTime(index);
 				//if (ControlData.outputCycleToDss){
 				ArrayList<String> ml = ControlData.currStudyDataSet.getModelList();
 				int ci=-1;
@@ -843,7 +843,7 @@ public class ValueEvaluation {
 					Error.addEvaluationError("The cycle of "+cycle+" of the variable "+ident+ "  is not in the model.");
 					return data;
 				}
-				return new IntDouble(dvarAliasCycleTimeSeries(ident, index, ci), false);
+				return new IntDouble(dvarAliasCycleTimeSeries(ident, index, ci, prvs), false);
 				//}else{
 				//	return new IntDouble(dvarAliasTimeSeries(ident, index), false);
 				//}
@@ -894,9 +894,9 @@ public class ValueEvaluation {
 			idArray.add(id);
 			ModelDataSet mds=ControlData.currStudyDataSet.getModelDataSetMap().get(cycle);
 			if (mds.dvMap.containsKey(ident) || mds.asMap.containsKey(ident)){
-				TimeOperation.findTime(index);
+				ParallelVars prvs = TimeOperation.findTime(index);
 				//if (ControlData.outputCycleToDss){
-				return new IntDouble(dvarAliasCycleTimeSeries(ident, index, ci), false);
+				return new IntDouble(dvarAliasCycleTimeSeries(ident, index, ci, prvs), false);
 				//}else{
 				//	return new IntDouble(dvarAliasTimeSeries(ident, index), false);
 				//}
@@ -1203,22 +1203,23 @@ public class ValueEvaluation {
 	}
 	
 	public static IntDouble tafcfs_term(String ident, IntDouble id){
+		ParallelVars prvs = new ParallelVars();
 		if (id==null){
-			ParallelVars.dataMonth=ControlData.currMonth;
-			ParallelVars.dataYear=ControlData.currYear;
+			prvs.dataMonth=ControlData.currMonth;
+			prvs.dataYear=ControlData.currYear;
 		}else{
 			if (!id.isInt()){
 				Error.addEvaluationError("The index of "+ident+" should be integer.");
 			}
-			TimeOperation.findTime(id.getData().intValue());
+			prvs=TimeOperation.findTime(id.getData().intValue());
 		}
-		double convert = tafcfs(ident);
+		double convert = tafcfs(ident, prvs);
 		return new IntDouble(convert, false);
 	}
 	
-	public static double tafcfs(String ident){
+	public static double tafcfs(String ident, ParallelVars prvs){
 		double convert;
-		int days=TimeOperation.numberOfDays(ParallelVars.dataMonth, ParallelVars.dataYear);
+		int days=TimeOperation.numberOfDays(prvs.dataMonth, prvs.dataYear);
 		if (ident.equals("taf_cfs")){
 			if (ControlData.timeStep.equals("1MON")){
 				return 504.1666667 / days;
@@ -1273,8 +1274,8 @@ public class ValueEvaluation {
 		return new IntDouble(index,true);
 	}
 	
-	public static IntDouble term_ARRAY_ITERATOR(){
-		return new IntDouble(ParallelVars.timeArrayIndex, true);
+	public static IntDouble term_ARRAY_ITERATOR(ParallelVars prvs){
+		return new IntDouble(prvs.timeArrayIndex, true);
 	}
 	
 	public static void sumExpression_IDENT(String ident){

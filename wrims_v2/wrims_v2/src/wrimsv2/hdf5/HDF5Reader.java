@@ -24,6 +24,7 @@ import wrimsv2.evaluator.DssDataSetFixLength;
 import wrimsv2.evaluator.DssOperation;
 import wrimsv2.evaluator.Evaluation;
 import wrimsv2.evaluator.TimeOperation;
+import wrimsv2.parallel.ParallelVars;
 
 public class HDF5Reader {
 	
@@ -747,8 +748,8 @@ public class HDF5Reader {
 				}else if (dataEntry==-902.0){
 					dataArray.add(-902.0);
 				}else{
-					TimeOperation.findTime(j, startDate.getYear()+1900, startDate.getMonth(), startDate.getDate());
-					double dataEntryValue=dataEntry*Evaluation.tafcfs("taf_cfs");
+					ParallelVars prvs = TimeOperation.findTime(j, startDate.getYear()+1900, startDate.getMonth(), startDate.getDate());
+					double dataEntryValue=dataEntry*Evaluation.tafcfs("taf_cfs", prvs);
 					dataArray.add(dataEntryValue);
 				}
 			}
@@ -760,8 +761,8 @@ public class HDF5Reader {
 				}else if (dataEntry==-902.0){
 					dataArray.add(-902.0);
 				}else{
-					TimeOperation.findTime(j, startDate.getYear()+1900, startDate.getMonth(), startDate.getDate());
-					double dataEntryValue=dataEntry*Evaluation.tafcfs("cfs_taf");
+					ParallelVars prvs = TimeOperation.findTime(j, startDate.getYear()+1900, startDate.getMonth(), startDate.getDate());
+					double dataEntryValue=dataEntry*Evaluation.tafcfs("cfs_taf", prvs);
 					dataArray.add(dataEntryValue);
 				}
 			}
@@ -914,8 +915,8 @@ public class HDF5Reader {
 				}else if (dataEntry==-902.0){
 					dataArray.add(-902.0);
 				}else{
-					TimeOperation.findTime(j, startDate.getYear()+1900, startDate.getMonth(), startDate.getDate());
-					double dataEntryValue=dataEntry*Evaluation.tafcfs("taf_cfs");
+					ParallelVars prvs = TimeOperation.findTime(j, startDate.getYear()+1900, startDate.getMonth(), startDate.getDate());
+					double dataEntryValue=dataEntry*Evaluation.tafcfs("taf_cfs", prvs);
 					dataArray.add(dataEntryValue);
 				}
 			}
@@ -927,8 +928,8 @@ public class HDF5Reader {
 				}else if (dataEntry==-902.0){
 					dataArray.add(-902.0);
 				}else{
-					TimeOperation.findTime(j, startDate.getYear()+1900, startDate.getMonth(), startDate.getDate());
-					double dataEntryValue=dataEntry*Evaluation.tafcfs("cfs_taf");
+					ParallelVars prvs = TimeOperation.findTime(j, startDate.getYear()+1900, startDate.getMonth(), startDate.getDate());
+					double dataEntryValue=dataEntry*Evaluation.tafcfs("cfs_taf", prvs);
 					dataArray.add(dataEntryValue);
 				}
 			}

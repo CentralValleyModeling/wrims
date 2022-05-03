@@ -16,6 +16,7 @@ options {
   import java.util.HashMap;
   import wrimsv2.components.Error;
   import wrimsv2.components.IntDouble;
+  import wrimsv2.parallel.ParallelVars; 
 }
 
 @lexer::header {
@@ -25,10 +26,15 @@ options {
 @members {
   public IntDouble evalValue;
   public boolean evalCondition;
+  public ParallelVars prvs;
   
   @Override
   public void reportError(RecognitionException e) {
        Error.addEvaluationError(getErrorMessage(e, tokenNames));
+  }
+  
+  public void setParallelVars (ParallelVars prvs1) {
+       prvs=prvs1;
   }
 }
 
@@ -290,7 +296,7 @@ term returns [IntDouble id]
 	| DAYSIN{id=ValueEvaluation.daysIn();}
 	| DAYSINTIMESTEP{id=ValueEvaluation.daysInTimeStep();}
 	| (SVAR{id=ValueEvaluation.term_SVAR($SVAR.text.replace("{","").replace("}",""));})
-	| ARRAY_ITERATOR{id=ValueEvaluation.term_ARRAY_ITERATOR();} 
+	| ARRAY_ITERATOR{id=ValueEvaluation.term_ARRAY_ITERATOR(prvs);} 
 	| '(' sumExpression ')' {id=$sumExpression.id;}
 	;
 	

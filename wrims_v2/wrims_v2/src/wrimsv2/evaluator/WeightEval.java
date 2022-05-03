@@ -88,7 +88,9 @@ public class WeightEval {
 			ControlData.currEvalName=wtName;
 			WeightElement wt=wtMap.get(wtName);
 			ValueEvaluatorParser evaluator=wt.weightParser;
-			ParallelVars.timeArrayIndex=0;
+			ParallelVars prvs = new ParallelVars();
+			evaluator.setParallelVars(prvs);
+			prvs.timeArrayIndex=0;
 			try {
 				evaluator.evaluator();
 				double wtv = evaluator.evalValue.getData().doubleValue();
@@ -146,9 +148,9 @@ public class WeightEval {
 			evaluator.reset();
 			
 			int timeArraySize=getTimeArraySize(wt.timeArraySizeParser);
-			for (ParallelVars.timeArrayIndex=1; ParallelVars.timeArrayIndex<=timeArraySize; ParallelVars.timeArrayIndex++){
+			for (prvs.timeArrayIndex=1; prvs.timeArrayIndex<=timeArraySize; prvs.timeArrayIndex++){
 				WeightElement newWt=new WeightElement();
-				String newWtName=wtName+"__fut__"+ParallelVars.timeArrayIndex;
+				String newWtName=wtName+"__fut__"+prvs.timeArrayIndex;
 				try {
 					evaluator.evaluator();
 					double wtv = evaluator.evalValue.getData().doubleValue();
@@ -216,7 +218,9 @@ public class WeightEval {
 			ControlData.currEvalName=wtssName;
 			WeightElement wt=wtssMap.get(wtssName);
 			ValueEvaluatorParser evaluator=wt.weightParser;
-			ParallelVars.timeArrayIndex=0;
+			ParallelVars prvs = new ParallelVars();
+			evaluator.setParallelVars(prvs);
+			prvs.timeArrayIndex=0;
 			try {
 				evaluator.evaluator();
 				double wtv = evaluator.evalValue.getData().doubleValue();
@@ -274,9 +278,9 @@ public class WeightEval {
 			evaluator.reset();
 			
 			int timeArraySize=getTimeArraySize(wt.timeArraySizeParser);
-			for (ParallelVars.timeArrayIndex=1; ParallelVars.timeArrayIndex<=timeArraySize; ParallelVars.timeArrayIndex++){
+			for (prvs.timeArrayIndex=1; prvs.timeArrayIndex<=timeArraySize; prvs.timeArrayIndex++){
 				WeightElement newWt=new WeightElement();
-				String newWtName=wtssName+"__fut__"+ParallelVars.timeArrayIndex;
+				String newWtName=wtssName+"__fut__"+prvs.timeArrayIndex;
 				try {
 					evaluator.evaluator();
 					double wtv = evaluator.evalValue.getData().doubleValue();

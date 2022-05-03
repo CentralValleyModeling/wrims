@@ -88,76 +88,76 @@ public class ProcessDvar extends RecursiveTask<Integer>{
 			ControlData.currEvalName=dvName;
 			if (ControlData.showRunTimeMessage) System.out.println("Processing dvar "+dvName);
 			Dvar dvar=dvMap.get(dvName);
+		
+			ValueEvaluatorParser evaluator=dvar.lowerBoundParser;
+			ParallelVars prvs = new ParallelVars();
+			evaluator.setParallelVars(prvs);
+			prvs.timeArrayIndex=0;
+			try {
+				evaluator.evaluator();
+				dvar.lowerBoundValue=evaluator.evalValue.getData().doubleValue();
+			} catch (RecognitionException e) {
+				Error.addEvaluationError("Lowerbound evaluation has error.");
+				dvar.lowerBoundValue=-901.0;
+			}
+			evaluator.reset();
 			
-			synchronized(ParallelVars.class){
-				ValueEvaluatorParser evaluator=dvar.lowerBoundParser;
-				ParallelVars.timeArrayIndex=0;
-				try {
-					evaluator.evaluator();
-					dvar.lowerBoundValue=evaluator.evalValue.getData().doubleValue();
-				} catch (RecognitionException e) {
-					Error.addEvaluationError("Lowerbound evaluation has error.");
-					dvar.lowerBoundValue=-901.0;
-				}
-				evaluator.reset();
+			evaluator =dvar.upperBoundParser;
+			try {
+				evaluator.evaluator();
+				dvar.upperBoundValue=evaluator.evalValue.getData().doubleValue();
+			} catch (RecognitionException e) {
+				Error.addEvaluationError("Lowerbound evaluation has error.");
+				dvar.lowerBoundValue=-901.0;
+			}
+			evaluator.reset();
+			solverDvarMap.put(dvName, dvar);
 			
-				evaluator =dvar.upperBoundParser;
-				try {
-					evaluator.evaluator();
-					dvar.upperBoundValue=evaluator.evalValue.getData().doubleValue();
-				} catch (RecognitionException e) {
-					Error.addEvaluationError("Lowerbound evaluation has error.");
-					dvar.lowerBoundValue=-901.0;
-				}
-				evaluator.reset();
-				solverDvarMap.put(dvName, dvar);
+			int timeArraySize=ModelDataSet.getTimeArraySize(dvar.timeArraySizeParser);
+			if (!dvar.timeArraySize.equals("0") && !timeArrayDvList.contains(dvName)){
+				timeArrayDvList.add(dvName);
 			
-				int timeArraySize=ModelDataSet.getTimeArraySize(dvar.timeArraySizeParser);
-				if (!dvar.timeArraySize.equals("0") && !timeArrayDvList.contains(dvName)){
-					timeArrayDvList.add(dvName);
+				for (prvs.timeArrayIndex=1; prvs.timeArrayIndex<=timeArraySize; prvs.timeArrayIndex++){
+					Dvar newDvar=new Dvar();
+					String newDvarName = dvName+"__fut__"+prvs.timeArrayIndex;
+					newDvar.kind=dvar.kind;
+					newDvar.units=dvar.units;
+					newDvar.integer=dvar.integer;
 			
-					for (ParallelVars.timeArrayIndex=1; ParallelVars.timeArrayIndex<=timeArraySize; ParallelVars.timeArrayIndex++){
-						Dvar newDvar=new Dvar();
-						String newDvarName = dvName+"__fut__"+ParallelVars.timeArrayIndex;
-						newDvar.kind=dvar.kind;
-						newDvar.units=dvar.units;
-						newDvar.integer=dvar.integer;
+					evaluator=dvar.lowerBoundParser;
+					try {
+						evaluator.evaluator();
+						newDvar.lowerBoundValue=evaluator.evalValue.getData().doubleValue();
+					} catch (RecognitionException e) {
+						Error.addEvaluationError("Lowerbound evaluation of time array dvar has error.");
+						newDvar.lowerBoundValue=-901.0;
+					}
+					evaluator.reset();
 			
-						evaluator=dvar.lowerBoundParser;
-						try {
-							evaluator.evaluator();
-							newDvar.lowerBoundValue=evaluator.evalValue.getData().doubleValue();
-						} catch (RecognitionException e) {
-							Error.addEvaluationError("Lowerbound evaluation of time array dvar has error.");
-							newDvar.lowerBoundValue=-901.0;
-						}
-						evaluator.reset();
+					evaluator =dvar.upperBoundParser;
+					try {
+						evaluator.evaluator();
+						newDvar.upperBoundValue=evaluator.evalValue.getData().doubleValue();
+					} catch (RecognitionException e) {
+						Error.addEvaluationError("Lowerbound evaluation of time array dvar has error.");
+						newDvar.lowerBoundValue=-901.0;
+					}
+					evaluator.reset();
+					if (solverDvarMap.containsKey(newDvarName)){
+						Error.addEvaluationError(newDvarName+" is duplicatedly used in both dvar and time array dvar");
+					}else{
+						solverDvarMap.put(newDvarName, newDvar);
+						dvTimeArrayList.add(newDvarName);
+					}
 			
-						evaluator =dvar.upperBoundParser;
-						try {
-							evaluator.evaluator();
-							newDvar.upperBoundValue=evaluator.evalValue.getData().doubleValue();
-						} catch (RecognitionException e) {
-							Error.addEvaluationError("Lowerbound evaluation of time array dvar has error.");
-							newDvar.lowerBoundValue=-901.0;
-						}
-						evaluator.reset();
-						if (solverDvarMap.containsKey(newDvarName)){
-							Error.addEvaluationError(newDvarName+" is duplicatedly used in both dvar and time array dvar");
-						}else{
-							solverDvarMap.put(newDvarName, newDvar);
-							dvTimeArrayList.add(newDvarName);
-						}
-			
-						if (dvarUsedByLaterCycle.contains(dvName)){
-							dvarTimeArrayUsedByLaterCycle.add(newDvarName);
-						}
-						if (varCycleIndexList.contains(dvName) && !dvarTimeArrayCycleIndexList.contains(newDvarName)){
-							dvarTimeArrayCycleIndexList.add(newDvarName);
-						}
+					if (dvarUsedByLaterCycle.contains(dvName)){
+						dvarTimeArrayUsedByLaterCycle.add(newDvarName);
+					}
+					if (varCycleIndexList.contains(dvName) && !dvarTimeArrayCycleIndexList.contains(newDvarName)){
+						dvarTimeArrayCycleIndexList.add(newDvarName);
 					}
 				}
-    		}
+			}
 		}
 		
     	return 1;

@@ -606,7 +606,7 @@ public class ControllerTree {
 				EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
 				try {
 					evaluator.evaluator();
-					SolverData.getConstraintDataMap().put(goalName,EvaluatorParser.evalConstraint);
+					SolverData.getConstraintDataMap().put(goalName,evaluator.evalConstraint);
 				} catch (RecognitionException e) {
 					Error.addEvaluationError("Case expression evaluation has error.");
 				}	
