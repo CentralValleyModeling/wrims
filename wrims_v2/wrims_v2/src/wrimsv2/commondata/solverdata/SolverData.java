@@ -13,15 +13,15 @@ import wrimsv2.commondata.wresldata.WeightElement;
 public class SolverData {
 	private static Map<String, EvalConstraint> constraintDataMap=new HashMap<String, EvalConstraint>();
 	private static ConcurrentHashMap<String, Dvar> dvarMap= new ConcurrentHashMap<String, Dvar>();
-	private static Map<String, WeightElement> weightMap = new HashMap<String, WeightElement>();
+	private static ConcurrentHashMap<String, WeightElement> weightMap = new ConcurrentHashMap<String, WeightElement>();
 	private static Map<String, WeightElement> weightSlackSurplusMap = new HashMap<String, WeightElement>();
 		
-	public static Map<String, WeightElement> getWeightMap(){
+	public static ConcurrentHashMap<String, WeightElement> getWeightMap(){
 		return weightMap;
 	}
 	
 	public static void clearWeightMap(){
-		weightMap=new HashMap<String, WeightElement>();
+		weightMap=new ConcurrentHashMap<String, WeightElement>();
 	}
 		
 	public static Map<String, WeightElement> getWeightSlackSurplusMap(){

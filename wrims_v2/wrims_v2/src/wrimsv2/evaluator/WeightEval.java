@@ -11,6 +11,8 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.antlr.runtime.RecognitionException;
 
@@ -45,8 +47,8 @@ public class WeightEval {
 	private static HashMap<String, LinkedHashMap<Integer, ArrayList<Double>>> wMap= new HashMap<String, LinkedHashMap<Integer, ArrayList<Double>>>();
 	private static ArrayList<String> variedwList=new ArrayList<String>();
 	
-	private static ArrayList<String> wListAR=new ArrayList<String>();
-	private static Map<String, WeightElement> wMapAR=new HashMap<String, WeightElement>(); 
+	private static CopyOnWriteArrayList<String> wListAR=new CopyOnWriteArrayList<String>();
+	private static ConcurrentHashMap<String, WeightElement> wMapAR=new ConcurrentHashMap<String, WeightElement>(); 
 	
 	public static void procWt(StudyDataSet sds){
 		ControlData.currStudyDataSet=sds;

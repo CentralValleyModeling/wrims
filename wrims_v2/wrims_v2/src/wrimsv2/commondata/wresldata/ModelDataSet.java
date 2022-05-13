@@ -26,6 +26,7 @@ import wrimsv2.evaluator.ValueEvaluatorParser;
 import wrimsv2.evaluator.WeightEval;
 import wrimsv2.parallel.ParallelVars;
 import wrimsv2.parallel.ProcessDvar;
+import wrimsv2.parallel.ProcessWeight;
 
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
@@ -157,49 +158,12 @@ public class ModelDataSet implements Serializable {
 		ArrayList<String> wtList = mds.wtList;
 		Map<String, WeightElement> wtMap =mds.wtMap;
 		SolverData.clearWeightMap();
-		Map<String, WeightElement> solverWtMap=SolverData.getWeightMap();
+		ConcurrentHashMap<String, WeightElement> solverWtMap=SolverData.getWeightMap();
 		ControlData.currEvalTypeIndex=7;
 		wtTimeArrayList = new ArrayList<String>();
-		for (String wtName: wtList){
-			ControlData.currEvalName=wtName;
-			if (ControlData.showRunTimeMessage) System.out.println("Processing weight "+wtName);
-			WeightElement wt=wtMap.get(wtName);
-			ValueEvaluatorParser evaluator=wt.weightParser;
-			ParallelVars prvs = new ParallelVars();
-			evaluator.setParallelVars(prvs);
-			prvs.timeArrayIndex=0;
-			try {
-				evaluator.evaluator();
-				wt.setValue(evaluator.evalValue.getData().doubleValue());
-				WeightEval.collectWtRT(wtName, wt);
-			} catch (RecognitionException e) {
-				Error.addEvaluationError("weight definition has error");
-				wt.setValue(0.0);
-			}
-			solverWtMap.put(wtName,wt);
-			evaluator.reset();
-			
-			int timeArraySize=getTimeArraySize(wt.timeArraySizeParser);
-			for (prvs.timeArrayIndex=1; prvs.timeArrayIndex<=timeArraySize; prvs.timeArrayIndex++){
-				WeightElement newWt=new WeightElement();
-				String newWtName=wtName+"__fut__"+prvs.timeArrayIndex;
-				try {
-					evaluator.evaluator();
-					newWt.setValue(evaluator.evalValue.getData().doubleValue());
-					WeightEval.collectWtRT(newWtName, newWt);
-				} catch (RecognitionException e) {
-					Error.addEvaluationError("time array weight definition "+newWtName+" has error");
-					newWt.setValue(0.0);
-				}
-				if (solverWtMap.containsKey(newWtName)){
-					Error.addEvaluationError(newWtName+" is duplicatedly used in both weight and time array weight");
-				}else{
-					solverWtMap.put(newWtName,newWt);
-					wtTimeArrayList.add(newWtName);
-				}
-				evaluator.reset();
-			}
-		}
+		ProcessWeight pw = new ProcessWeight(wtList, wtMap, solverWtMap, wtTimeArrayList, 0, wtList.size()-1);
+		ForkJoinPool pool = new ForkJoinPool();
+		pool.invoke(pw);
 	}
 	
 	public void processWeightSlackSurplus(){
