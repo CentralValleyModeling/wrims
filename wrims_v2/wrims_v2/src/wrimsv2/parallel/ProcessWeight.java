@@ -56,7 +56,7 @@ public class ProcessWeight extends RecursiveTask<Integer>{
             	if (i==ControlData.nThreads-1){
             		subEnd=end;
             	}else{
-            		subEnd=(i+1)*threshold-1;
+            		subEnd=Math.min(end, (i+1)*threshold-1);
             	}
             	subTasks.add(new ProcessWeight(wtList, wtMap, solverWtMap, wtTimeArrayList, subStart, subEnd));
             }

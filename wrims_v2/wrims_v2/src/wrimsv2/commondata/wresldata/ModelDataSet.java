@@ -27,6 +27,7 @@ import wrimsv2.evaluator.WeightEval;
 import wrimsv2.parallel.ParallelVars;
 import wrimsv2.parallel.ProcessDvar;
 import wrimsv2.parallel.ProcessWeight;
+import wrimsv2.parallel.ProcessWeightSurplusSlack;
 
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
@@ -171,47 +172,11 @@ public class ModelDataSet implements Serializable {
 		ArrayList<String> usedWtSlackSurplusList = mds.usedWtSlackSurplusList;
 		Map<String, WeightElement> wtSlackSurplusMap =mds.wtSlackSurplusMap;
 		SolverData.clearWeightSlackSurplusMap();
-		Map<String, WeightElement> solverWeightSlackSurplusMap=SolverData.getWeightSlackSurplusMap();
+		ConcurrentHashMap<String, WeightElement> solverWeightSlackSurplusMap=SolverData.getWeightSlackSurplusMap();
 		ControlData.currEvalTypeIndex=7;
-		for (String wtSlackSurplusName: usedWtSlackSurplusDvList){
-			ControlData.currEvalName=wtSlackSurplusName;
-			if (ControlData.showRunTimeMessage) System.out.println("Processing weight "+wtSlackSurplusName);
-			WeightElement wtSlackSurplus=wtSlackSurplusMap.get(wtSlackSurplusName);
-			ValueEvaluatorParser evaluator=wtSlackSurplus.weightParser;
-			ParallelVars prvs = new ParallelVars();
-			evaluator.setParallelVars(prvs);
-			prvs.timeArrayIndex=0;
-			try {
-				evaluator.evaluator();
-				wtSlackSurplus.setValue(evaluator.evalValue.getData().doubleValue());
-				WeightEval.collectWtRT(wtSlackSurplusName, wtSlackSurplus);
-			} catch (RecognitionException e) {
-				Error.addEvaluationError("slack surplus weight definition has error");
-				wtSlackSurplus.setValue(0.0);
-			}
-			solverWeightSlackSurplusMap.put(wtSlackSurplusName, wtSlackSurplus);
-			evaluator.reset();
-			
-			int timeArraySize=getTimeArraySize(wtSlackSurplus.timeArraySizeParser);
-			for (prvs.timeArrayIndex=1; prvs.timeArrayIndex<=timeArraySize; prvs.timeArrayIndex++){
-				WeightElement newWtSlackSurplus=new WeightElement();
-				String newWtSlackSurplusName=wtSlackSurplusName+"__fut__"+prvs.timeArrayIndex;
-				try {
-					evaluator.evaluator();
-					newWtSlackSurplus.setValue(evaluator.evalValue.getData().doubleValue());
-					WeightEval.collectWtRT(newWtSlackSurplusName, newWtSlackSurplus);
-				} catch (RecognitionException e) {
-					Error.addEvaluationError("time array slack surplus weight definition "+newWtSlackSurplusName+" has error");
-					newWtSlackSurplus.setValue(0.0);
-				}
-				if (solverWeightSlackSurplusMap.containsKey(newWtSlackSurplusName)){
-					Error.addEvaluationError(newWtSlackSurplusName+" is duplicatedly used in both slack surplus weight and time array slack surplus weight");
-				}else{
-					solverWeightSlackSurplusMap.put(newWtSlackSurplusName,newWtSlackSurplus);
-				}
-				evaluator.reset();
-			}
-		}
+		ProcessWeightSurplusSlack pwss = new ProcessWeightSurplusSlack(usedWtSlackSurplusList, wtSlackSurplusMap, solverWeightSlackSurplusMap, 0, usedWtSlackSurplusList.size()-1);
+		ForkJoinPool pool = new ForkJoinPool();
+		pool.invoke(pwss);
 	}
 	
 	public void processSvar(){

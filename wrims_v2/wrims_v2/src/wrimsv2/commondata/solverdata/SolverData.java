@@ -14,7 +14,7 @@ public class SolverData {
 	private static Map<String, EvalConstraint> constraintDataMap=new HashMap<String, EvalConstraint>();
 	private static ConcurrentHashMap<String, Dvar> dvarMap= new ConcurrentHashMap<String, Dvar>();
 	private static ConcurrentHashMap<String, WeightElement> weightMap = new ConcurrentHashMap<String, WeightElement>();
-	private static Map<String, WeightElement> weightSlackSurplusMap = new HashMap<String, WeightElement>();
+	private static  ConcurrentHashMap<String, WeightElement> weightSlackSurplusMap = new  ConcurrentHashMap<String, WeightElement>();
 		
 	public static ConcurrentHashMap<String, WeightElement> getWeightMap(){
 		return weightMap;
@@ -24,12 +24,12 @@ public class SolverData {
 		weightMap=new ConcurrentHashMap<String, WeightElement>();
 	}
 		
-	public static Map<String, WeightElement> getWeightSlackSurplusMap(){
+	public static  ConcurrentHashMap<String, WeightElement> getWeightSlackSurplusMap(){
 		return weightSlackSurplusMap;
 	}
 	
 	public static void clearWeightSlackSurplusMap(){
-		weightSlackSurplusMap=new HashMap<String, WeightElement>();
+		weightSlackSurplusMap=new  ConcurrentHashMap<String, WeightElement>();
 	}
 
 	public static ConcurrentHashMap<String, Dvar> getDvarMap(){

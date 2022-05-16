@@ -64,7 +64,7 @@ public class ProcessDvar extends RecursiveTask<Integer>{
             	if (i==ControlData.nThreads-1){
             		subEnd=end;
             	}else{
-            		subEnd=(i+1)*threshold-1;
+            		subEnd=Math.min(end, (i+1)*threshold-1);
             	}
             	subTasks.add(new ProcessDvar(dvList, dvMap, solverDvarMap, timeArrayDvList, dvTimeArrayList, dvarUsedByLaterCycle, dvarTimeArrayUsedByLaterCycle, varCycleIndexList, dvarTimeArrayCycleIndexList, subStart, subEnd));
             }
