@@ -79,7 +79,6 @@ public class ControlData {
 	public static String partA;
 	public static String svDvPartF;
 	public static String initPartF;
-	public static Stack<LoopIndex> sumIndex= new Stack <LoopIndex>();
 	public static Group groupInit;
 	public static Group groupSvar;
 	public static Group groupSvar2;
@@ -180,7 +179,7 @@ public class ControlData {
 	public static Date prevMemDate;
 	public static Date memStartDate;
 	public static Date prevOutputDate;
-	public static int nThreads=1;
+	public static int nThreads=8;
 	
 	public ControlData(){
 	}

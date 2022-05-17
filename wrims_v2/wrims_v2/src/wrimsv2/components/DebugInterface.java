@@ -21,6 +21,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
@@ -1612,7 +1613,7 @@ public class DebugInterface {
 			}
 		}
 		Map<String, WeightElement> weightSlackSurplusMap = SolverData.getWeightSlackSurplusMap();
-		ArrayList<String> usedWeightSlackSurplusCollection = ControlData.currModelDataSet.usedWtSlackSurplusList;
+		CopyOnWriteArrayList<String>  usedWeightSlackSurplusCollection = ControlData.currModelDataSet.usedWtSlackSurplusList;
 		Iterator<String> usedWeightSlackSurplusIterator = usedWeightSlackSurplusCollection.iterator();
 	
 		while(usedWeightSlackSurplusIterator.hasNext()){
@@ -1790,7 +1791,7 @@ public class DebugInterface {
 				}
 			}
 			Map<String, WeightElement> weightSlackSurplusMap = SolverData.getWeightSlackSurplusMap();
-			ArrayList<String> usedWeightSlackSurplusCollection = ControlData.currModelDataSet.usedWtSlackSurplusList;
+			CopyOnWriteArrayList<String> usedWeightSlackSurplusCollection = ControlData.currModelDataSet.usedWtSlackSurplusList;
 			Iterator<String> usedWeightSlackSurplusIterator = usedWeightSlackSurplusCollection.iterator();
 	
 			while(usedWeightSlackSurplusIterator.hasNext()){

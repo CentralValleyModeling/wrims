@@ -30,10 +30,6 @@ import java.util.Stack;
 import java.util.Date;
 
 public class Evaluation {
-	private static int start;
-	private static int end;
-	private static int step;
-	
 	public static double convertStringToDouble(String text){
 		return Double.valueOf(text);
 	}
@@ -139,17 +135,17 @@ public class Evaluation {
 		return new EvalExpression(result);
 	}
 	
-	public static EvalExpression term_IDENT (String ident){
-		if (ControlData.sumIndex.size()>0){
-			LoopIndex li=ControlData.sumIndex.pop();
+	public static EvalExpression term_IDENT (String ident, Stack<LoopIndex> sumIndex){
+		if (sumIndex.size()>0){
+			LoopIndex li=sumIndex.pop();
 			if (li.getName().equals(ident) && li.getIndexStart()){
-				ControlData.sumIndex.push(li);
+				sumIndex.push(li);
 				EvalExpression ee = new EvalExpression();
 				IntDouble id = new IntDouble(li.getValue(),true, ident, 0);
 				ee.setValue(id);
 				return ee;
 			}
-			ControlData.sumIndex.push(li);
+			sumIndex.push(li);
 		}
 		if (ControlData.currSvMap.containsKey(ident)){
 			EvalExpression ee=new EvalExpression();
@@ -515,7 +511,7 @@ public class Evaluation {
 		}
 	}
 	
-	public static EvalExpression argFunction(String ident, ArrayList<ArrayList<EvalExpression>> eeArray){
+	public static EvalExpression argFunction(String ident, ArrayList<ArrayList<EvalExpression>> eeArray, Stack<LoopIndex> sumIndex){
 		IntDouble result;
 		if (eeArray.size()==1){
 			if (ControlData.currSvMap.containsKey(ident)||ControlData.currTsMap.containsKey(ident)||ControlData.currDvMap.containsKey(ident)||ControlData.currAliasMap.containsKey(ident)||ControlData.currDvSlackSurplusMap.containsKey(ident)) {
@@ -528,7 +524,7 @@ public class Evaluation {
 							return new EvalExpression(new IntDouble (1.0, false));
 						}
 					}
-					return getTimeSeries(ident, eeArray1);
+					return getTimeSeries(ident, eeArray1, sumIndex);
 				}else{
 					Error.addEvaluationError("Variable "+ident+" has number of indexes different from 1.");
 					return new EvalExpression(new IntDouble (1.0, false));
@@ -649,7 +645,7 @@ public class Evaluation {
 		}
 	}
 	
-	public static EvalExpression getTimeSeries(String ident, ArrayList<EvalExpression> eeArray){
+	public static EvalExpression getTimeSeries(String ident, ArrayList<EvalExpression> eeArray, Stack<LoopIndex> sumIndex){
 		IntDouble result;
 		boolean isSumIndex=false;
 		int indexValue=0;
@@ -661,11 +657,11 @@ public class Evaluation {
 		if (!ee.isNumeric()){
 			HashMap<String, IntDouble> multiplier=ee.getMultiplier();
 			if (multiplier.size()==1){
-				LoopIndex li=ControlData.sumIndex.pop();
+				LoopIndex li=sumIndex.pop();
 				String indexName=li.getName();
 				indexValue=li.getValue();
 				isIndexStart=li.getIndexStart();
-				ControlData.sumIndex.push(li);
+				sumIndex.push(li);
 				if (!(multiplier.containsKey(indexName) && multiplier.get(indexName).getData().doubleValue()==1.0 && ee.getValue().getData().doubleValue()==0.0)){
 					Error.addEvaluationError("The index of "+ident+" contains decision variable.");
 					result=new IntDouble (0.0,false);
@@ -1605,7 +1601,7 @@ public class Evaluation {
 		}
 	}
 	
-	public static EvalExpression tafcfs_term(String ident, EvalExpression ee){
+	public static EvalExpression tafcfs_term(String ident, EvalExpression ee, Stack<LoopIndex> sumIndex){
 		ParallelVars prvs = new ParallelVars();
 		if (ee==null){
 			prvs.dataMonth=ControlData.currMonth;
@@ -1615,11 +1611,11 @@ public class Evaluation {
 			if (!ee.isNumeric()){
 				HashMap<String, IntDouble> multiplier=ee.getMultiplier();
 				if (multiplier.size()==1){
-					if (ControlData.sumIndex.size()>0){
-						LoopIndex li=ControlData.sumIndex.pop();
+					if (sumIndex.size()>0){
+						LoopIndex li=sumIndex.pop();
 						String indexName=li.getName();
 						int indexValue=li.getValue();
-						ControlData.sumIndex.push(li);
+						sumIndex.push(li);
 						id=new IntDouble(indexValue, true);
 					}else{
 						Error.addEvaluationError("The index of "+ident+" should not contain decision variable.");
@@ -1707,16 +1703,17 @@ public class Evaluation {
 		return new EvalExpression(id);
 	}
 	
-	public static void sumExpression_IDENT(String ident){
+	public static void sumExpression_IDENT(String ident, Stack<LoopIndex> sumIndex){
 		//To Do: check if svar, dvar, alias contains ident
-		LoopIndex li=new LoopIndex(ident, 0, false);
-		ControlData.sumIndex.push(li);
+		LoopIndex li=new LoopIndex(ident, 0, false, 0, 0, 0);
+		sumIndex.push(li);
 	}
 	
-	public static void initSumExpression(EvalExpression ee1, EvalExpression ee2, String s){
-		step=1;
+	public static void initSumExpression(EvalExpression ee1, EvalExpression ee2, String s, Stack<LoopIndex> sumIndex){
+		LoopIndex li = sumIndex.pop();
+		li.step=1;
 		if (!s.equals("")){
-			step=convertStringToInt(s);
+			li.step=convertStringToInt(s);
 		}
 		if (!ee1.isNumeric() || !ee1.getValue().isInt()){
 			Error.addEvaluationError("the starting index should be integer");
@@ -1724,34 +1721,38 @@ public class Evaluation {
 		if (!ee2.isNumeric() || !ee2.getValue().isInt()){
 			Error.addEvaluationError("the ending index should be integer");
 		}
-		start=ee1.getValue().getData().intValue();
-		end=ee2.getValue().getData().intValue();
-		LoopIndex li=ControlData.sumIndex.pop();
-		li.setValue(start);
+		li.start=ee1.getValue().getData().intValue();
+		li.end=ee2.getValue().getData().intValue();
+		li.setValue(li.start);
 		li.setIndexStart(true);
-		ControlData.sumIndex.push(li);
-		if (start>end && step>0){
+		sumIndex.push(li);
+		if (li.start>li.end && li.step>0){
 			ControlData.ignoreError=true;
-		}else if (start<end && step<0){
+		}else if (li.start<li.end && li.step<0){
 			ControlData.ignoreError=true;
 		}
 	}
 	
-	public static EvalExpression sumExpression(EvalExpression ee, String expression){	
+	public static EvalExpression sumExpression(EvalExpression ee, String expression, Stack<LoopIndex> sumIndex){	
 		ControlData.ignoreError=false;
-		if (step>=0){
-			if (start>end) return new EvalExpression(new IntDouble(0.0, false));
-			start=start+step;
-			if (start>end) return ee;
-			for (int i=start; i<=end; i=i+step){
-				LoopIndex li=ControlData.sumIndex.pop();
+		LoopIndex li=sumIndex.pop();
+		if (li.step>=0){
+			if (li.start>li.end) {
+				return new EvalExpression(new IntDouble(0.0, false));
+			}
+			li.start=li.start+li.step;
+			if (li.start>li.end) return ee;
+			sumIndex.push(li);
+			for (int i=li.start; i<=li.end; i=i+li.step){
+				li=sumIndex.pop();
 				li.setValue(i);
 				li.setIndexStart(true);
-				ControlData.sumIndex.push(li);
+				sumIndex.push(li);
 				ANTLRStringStream stream = new ANTLRStringStream("s: "+expression); 
 				EvaluatorLexer lexer = new EvaluatorLexer(stream);
 				TokenStream tokenStream = new CommonTokenStream(lexer);
 				EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
+				evaluator.setSumIndex(sumIndex);
 				try{
 					evaluator.evaluator();
 				}catch (RecognitionException e){
@@ -1762,18 +1763,20 @@ public class Evaluation {
 				ee=add(ee, ee0);
 			}
 		}else{
-			if (start<end) return new EvalExpression(new IntDouble(0.0, false));
-			start=start+step;
-			if (start<end) return ee;
-			for (int i=start; i>=end; i=i+step){
-				LoopIndex li=ControlData.sumIndex.pop();
+			if (li.start<li.end) return new EvalExpression(new IntDouble(0.0, false));
+			li.start=li.start+li.step;
+			if (li.start<li.end) return ee;
+			sumIndex.push(li);
+			for (int i=li.start; i>=li.end; i=i+li.step){
+				li=sumIndex.pop();
 				li.setValue(i);
 				li.setIndexStart(true);
-				ControlData.sumIndex.push(li);
+				sumIndex.push(li);
 				ANTLRStringStream stream = new ANTLRStringStream("s: "+expression); 
 				EvaluatorLexer lexer = new EvaluatorLexer(stream);
 				TokenStream tokenStream = new CommonTokenStream(lexer);
 				EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
+				evaluator.setSumIndex(sumIndex);
 				try{
 					evaluator.evaluator();
 				}catch (RecognitionException e){
@@ -1784,8 +1787,7 @@ public class Evaluation {
 				ee=add(ee, ee0);
 			}
 		}
-		
-		ControlData.sumIndex.pop();
+		sumIndex.pop();
 		return ee;
 	}
 	

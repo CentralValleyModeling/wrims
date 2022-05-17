@@ -124,7 +124,7 @@ public class XASolver {
 			}
 		}
 		Map<String, WeightElement> weightSlackSurplusMap = SolverData.getWeightSlackSurplusMap();
-		ArrayList<String> usedWeightSlackSurplusCollection = ControlData.currModelDataSet.usedWtSlackSurplusList;
+		CopyOnWriteArrayList<String> usedWeightSlackSurplusCollection = ControlData.currModelDataSet.usedWtSlackSurplusList;
 		Iterator<String> usedWeightSlackSurplusIterator = usedWeightSlackSurplusCollection.iterator();
 	
 		while(usedWeightSlackSurplusIterator.hasNext()){

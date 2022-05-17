@@ -23,6 +23,7 @@ options {
 @members {
   public static IntDouble evalValue;
   public static boolean evalCondition;
+    public Stack<LoopIndex> sumIndex= new Stack <LoopIndex>();
   
   @Override
   public void reportError(RecognitionException e) {
@@ -207,11 +208,11 @@ where_items returns [HashMap<String, Number> where]
 //sumExpression was redesign. If not work, switch back to the original design above
 
 sumExpression returns [IntDouble id] @init{String s="";}
-  : ^(SUM IDENT{ValueEvaluation.sumExpression_IDENT($IDENT.text);} t1=term t2=term ((('-'{s=s+"-";})? INTEGER {s=s+$INTEGER.text;}))? ({ValueEvaluation.initSumExpression($t1.id, $t2.id, s);})  t3=term{id=ValueEvaluation.sumExpression($t3.id, $t3.text);})
+  : ^(SUM IDENT{$id=new IntDouble(0, false);} t1=term t2=term ((('-'{s=s+"-";})? INTEGER {s=s+$INTEGER.text;}))? ({$id=new IntDouble(0, false);})  t3=term{$id=new IntDouble(0, false);})
   ;
 
 term returns [IntDouble id]
-	:	(IDENT {$id=ValueEvaluation.term_IDENT($IDENT.text);})
+	:	(IDENT {$id=new IntDouble(0, false);})
 	| (FLOAT {$id=ValueEvaluation.term_FLOAT($FLOAT.text);}) 
 	| ( t=expression  {$id=$t.id;})
 	| ((knownTS{$id=ValueEvaluation.term_knownTS($knownTS.result);}) 

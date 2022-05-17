@@ -25,6 +25,7 @@ import wrimsv2.evaluator.ValueEvaluatorLexer;
 import wrimsv2.evaluator.ValueEvaluatorParser;
 import wrimsv2.evaluator.WeightEval;
 import wrimsv2.parallel.ParallelVars;
+import wrimsv2.parallel.ProcessConstraint;
 import wrimsv2.parallel.ProcessDvar;
 import wrimsv2.parallel.ProcessWeight;
 import wrimsv2.parallel.ProcessWeightSurplusSlack;
@@ -44,8 +45,8 @@ public class ModelDataSet implements Serializable {
 	public ArrayList<String> wtList = new ArrayList<String>();
 	public ArrayList<String> wtTimeArrayList = new ArrayList<String>();
 	public ArrayList<String> wtSlackSurplusList = new ArrayList<String>();
-	public ArrayList<String> usedWtSlackSurplusList = new ArrayList<String>();
-	public ArrayList<String> usedWtSlackSurplusDvList = new ArrayList<String>();
+	public CopyOnWriteArrayList<String> usedWtSlackSurplusList = new CopyOnWriteArrayList<String>();
+	public CopyOnWriteArrayList<String> usedWtSlackSurplusDvList = new CopyOnWriteArrayList<String>();
 
 //	public ArrayList<String> wtList_global = new ArrayList<String>();
 //	public ArrayList<String> wtList_local = new ArrayList<String>();
@@ -134,7 +135,7 @@ public class ModelDataSet implements Serializable {
 	}
 
 	public void resetSlackSurplusWeight(){
-		usedWtSlackSurplusList = new ArrayList<String>();
+		usedWtSlackSurplusList = new CopyOnWriteArrayList<String>();
 	}
 
 	public static int getTimeArraySize(ValueEvaluatorParser timeArraySizeParser){
@@ -169,7 +170,7 @@ public class ModelDataSet implements Serializable {
 	
 	public void processWeightSlackSurplus(){
 		ModelDataSet mds=ControlData.currModelDataSet;
-		ArrayList<String> usedWtSlackSurplusList = mds.usedWtSlackSurplusList;
+		CopyOnWriteArrayList<String> usedWtSlackSurplusList = mds.usedWtSlackSurplusList;
 		Map<String, WeightElement> wtSlackSurplusMap =mds.wtSlackSurplusMap;
 		SolverData.clearWeightSlackSurplusMap();
 		ConcurrentHashMap<String, WeightElement> solverWeightSlackSurplusMap=SolverData.getWeightSlackSurplusMap();
@@ -379,109 +380,11 @@ public class ModelDataSet implements Serializable {
 		Map<String, Goal> gMap =mds.gMap;
 		ControlData.currEvalTypeIndex=3;
 		SolverData.clearConstraintDataMap();
-		Map<String, EvalConstraint> solverGMap=SolverData.getConstraintDataMap();
+		ConcurrentHashMap<String, EvalConstraint> solverGMap=SolverData.getConstraintDataMap();
 		gTimeArrayList = new ArrayList<String>();
-		for (String goalName: gList){
-			ControlData.currEvalName=goalName;
-			if (ControlData.showRunTimeMessage) System.out.println("Processing constraint "+goalName);
-			Goal goal=gMap.get(goalName);
-			ArrayList<ValueEvaluatorParser> caseConditions=goal.caseConditionParsers;
-			
-			int timeArraySize=getTimeArraySize(goal.timeArraySizeParser);
-			ParallelVars prvs = new ParallelVars();
-			for (prvs.timeArrayIndex=1; prvs.timeArrayIndex<=timeArraySize; prvs.timeArrayIndex++){
-				Goal newGoal=new Goal();
-				String newGoalName=goalName+"__fut__"+prvs.timeArrayIndex;
-				
-				boolean condition=false;
-				int i=-1;
-				while(!condition && i<=caseConditions.size()-2){
-					i=i+1;
-					ValueEvaluatorParser caseCondition=caseConditions.get(i);
-					caseCondition.setParallelVars(prvs);
-					try{
-						caseCondition.evaluator();
-						condition=caseCondition.evalCondition;
-					}catch (Exception e){
-						Error.addEvaluationError("Case condition evaluation of time array constraint "+newGoalName+" has error.");
-						condition=false;
-					}
-					caseCondition.reset();
-				}
-				if (condition){		
-					ArrayList<EvaluatorParser> caseExpressions=goal.caseExpressionParsers;
-					EvaluatorParser caseExpression=caseExpressions.get(i);
-					caseExpression.setParallelVars(prvs);
-					try {
-						caseExpression.evaluator();
-						if (solverGMap.containsKey(newGoalName)){
-							Error.addEvaluationError(newGoalName+" is duplicatedly used in both goal and time array goal");
-						}else{	
-							solverGMap.put(newGoalName,caseExpression.evalConstraint.copyOf());
-							gTimeArrayList.add(newGoalName);
-						}
-					} catch (RecognitionException e) {
-						Error.addEvaluationError("Case expression evaluation has error.");
-					}
-					caseExpression.reset();
-					
-					// add slack or surplus as dvar and weight
-					if (goal.dvarWeightMapList.size()>i && goal.dvarWeightMapList.get(i)!=null ){
-						ArrayList<String> dwl = goal.dvarSlackSurplusList.get(i);
-						for (int j=0; j<dwl.size();j++){
-							String dwlItem=dwl.get(j);
-							String usedWtSlackSurplusName=dwlItem+"__fut__"+prvs.timeArrayIndex;
-							usedWtSlackSurplusList.add(usedWtSlackSurplusName);
-							if (!usedWtSlackSurplusDvList.contains(dwlItem)){
-								usedWtSlackSurplusDvList.add(dwlItem);
-							}
-						}
-					}
-				}
-			}
-			
-			prvs.timeArrayIndex=0;
-			boolean condition=false;
-			int i=-1;
-			while(!condition && i<=caseConditions.size()-2){
-				i=i+1;
-				ValueEvaluatorParser caseCondition=caseConditions.get(i);
-				caseCondition.setParallelVars(prvs);
-				try{
-					caseCondition.evaluator();
-					condition=caseCondition.evalCondition;
-				}catch (Exception e){
-					Error.addEvaluationError("Case condition evaluation has error.");
-					condition=false;
-				}
-				caseCondition.reset();
-			}
-			if (condition){		
-				ArrayList<EvaluatorParser> caseExpressions=goal.caseExpressionParsers;
-				EvaluatorParser caseExpression=caseExpressions.get(i);	
-				caseExpression.setParallelVars(prvs);
-				try {
-					caseExpression.evaluator();
-					solverGMap.put(goalName,caseExpression.evalConstraint);
-				} catch (RecognitionException e) {
-					Error.addEvaluationError("Case expression evaluation has error.");
-				}
-				caseExpression.reset();
-				
-				// add slack or surplus as dvar and weight
-				if (goal.dvarWeightMapList.size()>i && goal.dvarWeightMapList.get(i)!=null ){
-					ArrayList<String> dwl = goal.dvarSlackSurplusList.get(i);
-					usedWtSlackSurplusList.addAll(dwl);
-					for (int j=0; j<dwl.size();j++){
-						String dwlItem=dwl.get(j);
-						if (!usedWtSlackSurplusDvList.contains(dwlItem)){
-							usedWtSlackSurplusDvList.add(dwlItem);
-						}
-					}
-					
-				}
-			}
-		}
+		ProcessConstraint pc = new ProcessConstraint(gList, gMap, solverGMap, gTimeArrayList, usedWtSlackSurplusList, usedWtSlackSurplusDvList, 0, gList.size()-1);
+		ForkJoinPool pool = new ForkJoinPool();
+		pool.invoke(pc);
 	}
 	
 	public void processAlias(){

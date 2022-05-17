@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import wrimsv2.commondata.solverdata.SolverData;
 import wrimsv2.commondata.wresldata.WeightElement;
@@ -14,7 +15,7 @@ import wrimsv2.evaluator.EvalConstraint;
 public class CheckWeightSlackSurplus {
 	
 	public CheckWeightSlackSurplus(){
-		ArrayList<String> usedWeightSlackSurplusCollection = ControlData.currModelDataSet.usedWtSlackSurplusList;
+		CopyOnWriteArrayList<String> usedWeightSlackSurplusCollection = ControlData.currModelDataSet.usedWtSlackSurplusList;
 		Map<String, WeightElement> weightSlackSurplusMap=SolverData.getWeightSlackSurplusMap();
 		
 		Map<String, EvalConstraint> constraintMap=SolverData.getConstraintDataMap();

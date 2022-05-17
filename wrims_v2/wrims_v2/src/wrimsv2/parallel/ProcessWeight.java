@@ -64,7 +64,9 @@ public class ProcessWeight extends RecursiveTask<Integer>{
             //ProcessDvar subTask1 = new ProcessDvar(dvList, dvMap, solverDvarMap, timeArrayDvList, dvTimeArrayList, dvarUsedByLaterCycle, dvarTimeArrayUsedByLaterCycle, varCycleIndexList, dvarTimeArrayCycleIndexList, start, middle);
             //ProcessDvar subTask2 = new ProcessDvar(dvList, dvMap, solverDvarMap, timeArrayDvList, dvTimeArrayList, dvarUsedByLaterCycle, dvarTimeArrayUsedByLaterCycle, varCycleIndexList, dvarTimeArrayCycleIndexList, middle, end);
  
-            invokeAll(subTasks);
+            for(ProcessWeight subtask : subTasks){
+                subtask.fork();
+            }
             
             int sum=0;
             for (int i=0; i<ControlData.nThreads; i++){

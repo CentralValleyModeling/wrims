@@ -28,11 +28,11 @@ public class ProcessWeightSurplusSlack extends RecursiveTask<Integer>{
 	private int threshold;
 	private int start;
 	private int end;
-	private ArrayList<String> usedWtSlackSurplusDvList;
+	private CopyOnWriteArrayList<String> usedWtSlackSurplusDvList;
 	private Map<String, WeightElement> wtSlackSurplusMap;
 	private ConcurrentHashMap<String, WeightElement> solverWeightSlackSurplusMap;
 	
-    public ProcessWeightSurplusSlack(ArrayList<String> usedWtSlackSurplusDvList, Map<String, WeightElement> wtSlackSurplusMap, ConcurrentHashMap<String, WeightElement> solverWeightSlackSurplusMap, int start, int end) {
+    public ProcessWeightSurplusSlack(CopyOnWriteArrayList<String> usedWtSlackSurplusDvList, Map<String, WeightElement> wtSlackSurplusMap, ConcurrentHashMap<String, WeightElement> solverWeightSlackSurplusMap, int start, int end) {
         this.start = start;
         this.end = end;
         this.usedWtSlackSurplusDvList=usedWtSlackSurplusDvList;
@@ -62,7 +62,9 @@ public class ProcessWeightSurplusSlack extends RecursiveTask<Integer>{
             //ProcessDvar subTask1 = new ProcessDvar(dvList, dvMap, solverDvarMap, timeArrayDvList, dvTimeArrayList, dvarUsedByLaterCycle, dvarTimeArrayUsedByLaterCycle, varCycleIndexList, dvarTimeArrayCycleIndexList, start, middle);
             //ProcessDvar subTask2 = new ProcessDvar(dvList, dvMap, solverDvarMap, timeArrayDvList, dvTimeArrayList, dvarUsedByLaterCycle, dvarTimeArrayUsedByLaterCycle, varCycleIndexList, dvarTimeArrayCycleIndexList, middle, end);
  
-            invokeAll(subTasks);
+            for(ProcessWeightSurplusSlack subtask : subTasks){
+                subtask.fork();
+            }
             
             int sum=0;
             for (int i=0; i<ControlData.nThreads; i++){
@@ -76,7 +78,6 @@ public class ProcessWeightSurplusSlack extends RecursiveTask<Integer>{
     	for (int ii=start; ii<=end; ii++){
     		String wtSlackSurplusName= usedWtSlackSurplusDvList.get(ii);
     		ControlData.currEvalName=wtSlackSurplusName;
-    		if (ControlData.showRunTimeMessage) System.out.println("Processing weight "+wtSlackSurplusName);
     		WeightElement wtSlackSurplus=wtSlackSurplusMap.get(wtSlackSurplusName);
     		ValueEvaluatorParser evaluator=wtSlackSurplus.weightParser;
     		ParallelVars prvs = new ParallelVars();

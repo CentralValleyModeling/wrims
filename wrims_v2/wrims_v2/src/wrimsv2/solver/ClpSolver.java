@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.coinor.clp.SWIGTYPE_p_ClpSimplex;
 import org.coinor.clp.SWIGTYPE_p_CoinBuild;
@@ -261,7 +262,7 @@ public class ClpSolver {
 			}
 		}
 		Map<String, WeightElement> weightSlackSurplusMap = SolverData.getWeightSlackSurplusMap();
-		ArrayList<String> usedWeightSlackSurplusCollection = ControlData.currModelDataSet.usedWtSlackSurplusList;
+		CopyOnWriteArrayList<String> usedWeightSlackSurplusCollection = ControlData.currModelDataSet.usedWtSlackSurplusList;
 		Iterator<String> usedWeightSlackSurplusIterator = usedWeightSlackSurplusCollection.iterator();
 	
 		while(usedWeightSlackSurplusIterator.hasNext()){

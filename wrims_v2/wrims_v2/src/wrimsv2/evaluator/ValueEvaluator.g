@@ -27,6 +27,7 @@ options {
   public IntDouble evalValue;
   public boolean evalCondition;
   public ParallelVars prvs;
+  public Stack<LoopIndex> sumIndex= new Stack <LoopIndex>();
   
   @Override
   public void reportError(RecognitionException e) {
@@ -35,6 +36,10 @@ options {
   
   public void setParallelVars (ParallelVars prvs1) {
        prvs=prvs1;
+  }
+  
+  public void setSumIndex(Stack<LoopIndex> sumIndex){
+      this.sumIndex=sumIndex;
   }
 }
 
@@ -277,11 +282,11 @@ lowerbound:	IDENT|allnumber|(allnumber '*' TAFCFS);
 //sumExpression was redesign. If not work, switch back to the original design above
 
 sumExpression returns [IntDouble id] @init{String s="";}
-  : SUM '(' IDENT{ValueEvaluation.sumExpression_IDENT($IDENT.text);} '=' e1=expression ';' e2=expression (';' (('-'{s=s+"-";})? INTEGER {s=s+$INTEGER.text;}))? (')'{ValueEvaluation.initSumExpression($e1.id, $e2.id, s);})  e3=expression{id=ValueEvaluation.sumExpression($e3.id, $e3.text);}
+  : SUM '(' IDENT{ValueEvaluation.sumExpression_IDENT($IDENT.text, sumIndex);} '=' e1=expression ';' e2=expression (';' (('-'{s=s+"-";})? INTEGER {s=s+$INTEGER.text;}))? (')'{ValueEvaluation.initSumExpression($e1.id, $e2.id, s, sumIndex);})  e3=expression{id=ValueEvaluation.sumExpression($e3.id, $e3.text, sumIndex);}
   ;
 
 term returns [IntDouble id]
-	:	(IDENT {id=ValueEvaluation.term_IDENT($IDENT.text);})
+	:	(IDENT {id=ValueEvaluation.term_IDENT($IDENT.text, sumIndex);})
 	| (FLOAT {id=ValueEvaluation.term_FLOAT($FLOAT.text);}) 
 	| ('(' (e=expression) ')' {id=$e.id;})
 	| (knownTS{id=ValueEvaluation.term_knownTS($knownTS.result);}) 
@@ -345,7 +350,7 @@ argFunction returns [IntDouble result] @init{ArrayList<ArrayList<IntDouble>> idA
   };
 
 trunk_timeArray returns[ArrayList<IntDouble> idArray] @init{idArray = new ArrayList<IntDouble>(); IntDouble start=new IntDouble(1, true);  IntDouble end=new IntDouble(1, true);}
-  : i0=IDENT '(' (n1=integer{start=ValueEvaluation.term_INTEGER($n1.text);}|i1=IDENT{start=ValueEvaluation.term_IDENT($i1.text);}) ':' (n2=integer{end=ValueEvaluation.term_INTEGER($n2.text);}|i2=IDENT{end=ValueEvaluation.term_IDENT($i2.text);}) ')' 
+  : i0=IDENT '(' (n1=integer{start=ValueEvaluation.term_INTEGER($n1.text);}|i1=IDENT{start=ValueEvaluation.term_IDENT($i1.text, sumIndex);}) ':' (n2=integer{end=ValueEvaluation.term_INTEGER($n2.text);}|i2=IDENT{end=ValueEvaluation.term_IDENT($i2.text, sumIndex);}) ')' 
   {
     idArray=ValueEvaluation.trunk_timeArray($i0.text, start, end);
   }

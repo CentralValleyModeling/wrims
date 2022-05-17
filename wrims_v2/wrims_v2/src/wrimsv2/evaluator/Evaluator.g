@@ -29,6 +29,7 @@ options {
   public EvalConstraint evalConstraint;
   public boolean evalCondition;
   public ParallelVars prvs;
+  public Stack<LoopIndex> sumIndex= new Stack <LoopIndex>();
   
   @Override
   public void reportError(RecognitionException e) {
@@ -37,6 +38,10 @@ options {
   
   public void setParallelVars (ParallelVars prvs1) {
        prvs=prvs1;
+  }
+  
+  public void setSumIndex(Stack<LoopIndex> sumIndex){
+      this.sumIndex=sumIndex;
   }
 }
 
@@ -284,11 +289,11 @@ lowerbound:	IDENT|allnumber|(allnumber '*' TAFCFS);
 //sumExpression was redesign. If not work, switch back to the original design above
 
 sumExpression returns [EvalExpression ee] @init{String s="";}
-  : SUM '(' IDENT{Evaluation.sumExpression_IDENT($IDENT.text);} '=' e1=expression ';' e2=expression (';' (('-'{s=s+"-";})? INTEGER {s=s+$INTEGER.text;}))? ')' {Evaluation.initSumExpression($e1.ee, $e2.ee, s);} e3=expression{ee=Evaluation.sumExpression($e3.ee, $e3.text);}
+  : SUM '(' IDENT{Evaluation.sumExpression_IDENT($IDENT.text, sumIndex);} '=' e1=expression ';' e2=expression (';' (('-'{s=s+"-";})? INTEGER {s=s+$INTEGER.text;}))? ')' {Evaluation.initSumExpression($e1.ee, $e2.ee, s, sumIndex);} e3=expression{ee=Evaluation.sumExpression($e3.ee, $e3.text, sumIndex);}
   ;
 
 term returns [EvalExpression ee]
-	:	(IDENT {ee=Evaluation.term_IDENT($IDENT.text);})
+	:	(IDENT {ee=Evaluation.term_IDENT($IDENT.text, sumIndex);})
 	| (FLOAT {ee=Evaluation.term_FLOAT($FLOAT.text);}) 
 	| ('(' (e=expression) ')' {ee=$e.ee;})
 	| pastCycleValue{ee=Evaluation.term_knownTS($pastCycleValue.result);}
@@ -309,7 +314,7 @@ term returns [EvalExpression ee]
 	;
 	
 tafcfs_term returns [EvalExpression ee]: TAFCFS ('(' expression ')')? {
-    ee=Evaluation.tafcfs_term($TAFCFS.text, $expression.ee);
+    ee=Evaluation.tafcfs_term($TAFCFS.text, $expression.ee, sumIndex);
 };
 	  
 pastCycleValue returns[IntDouble result]
@@ -345,11 +350,11 @@ argFunction returns [EvalExpression ee] @init{ArrayList<ArrayList<EvalExpression
     (';' (e2=expression{ArrayList<EvalExpression> eeArray1=new ArrayList<EvalExpression>(); eeArray1.add($e2.ee); eeArray.add(eeArray1);}
     |t2=trunk_timeArray{eeArray.add($t2.eeArray);}))* ')'
     {
-      ee=Evaluation.argFunction($IDENT.text,eeArray);
+      ee=Evaluation.argFunction($IDENT.text,eeArray,sumIndex);
     };
 
 trunk_timeArray returns[ArrayList<EvalExpression> eeArray] @init{eeArray = new ArrayList<EvalExpression>(); IntDouble start=new IntDouble(1, true);  IntDouble end=new IntDouble(1, true);}
-  : i0=IDENT '(' (n1=integer{start=ValueEvaluation.term_INTEGER($n1.text);}|i1=IDENT{start=ValueEvaluation.term_IDENT($i1.text);}) ':' (n2=integer{end=ValueEvaluation.term_INTEGER($n2.text);}|i2=IDENT{end=ValueEvaluation.term_IDENT($i2.text);}) ')' 
+  : i0=IDENT '(' (n1=integer{start=ValueEvaluation.term_INTEGER($n1.text);}|i1=IDENT{start=ValueEvaluation.term_IDENT($i1.text, sumIndex);}) ':' (n2=integer{end=ValueEvaluation.term_INTEGER($n2.text);}|i2=IDENT{end=ValueEvaluation.term_IDENT($i2.text, sumIndex);}) ')' 
   {
     eeArray=Evaluation.trunk_timeArray($i0.text, start, end);
   }

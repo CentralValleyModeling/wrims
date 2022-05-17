@@ -11,7 +11,7 @@ import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.WeightElement;
 
 public class SolverData {
-	private static Map<String, EvalConstraint> constraintDataMap=new HashMap<String, EvalConstraint>();
+	private static ConcurrentHashMap<String, EvalConstraint> constraintDataMap=new ConcurrentHashMap<String, EvalConstraint>();
 	private static ConcurrentHashMap<String, Dvar> dvarMap= new ConcurrentHashMap<String, Dvar>();
 	private static ConcurrentHashMap<String, WeightElement> weightMap = new ConcurrentHashMap<String, WeightElement>();
 	private static  ConcurrentHashMap<String, WeightElement> weightSlackSurplusMap = new  ConcurrentHashMap<String, WeightElement>();
@@ -40,11 +40,11 @@ public class SolverData {
 		dvarMap=new ConcurrentHashMap<String, Dvar>();
 	}
 	
-	public static Map<String, EvalConstraint> getConstraintDataMap(){
+	public static ConcurrentHashMap<String, EvalConstraint> getConstraintDataMap(){
 		return constraintDataMap;
 	}
 	
 	public static void clearConstraintDataMap(){
-		constraintDataMap=new HashMap<String, EvalConstraint>();
+		constraintDataMap=new ConcurrentHashMap<String, EvalConstraint>();
 	}
 }
