@@ -179,7 +179,7 @@ public class ControlData {
 	public static Date prevMemDate;
 	public static Date memStartDate;
 	public static Date prevOutputDate;
-	public static int nThreads=8;
+	public static int nThreads=1;
 	
 	public ControlData(){
 	}
