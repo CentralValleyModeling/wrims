@@ -27,6 +27,7 @@ import wrimsv2.evaluator.WeightEval;
 import wrimsv2.parallel.ParallelVars;
 import wrimsv2.parallel.ProcessConstraint;
 import wrimsv2.parallel.ProcessDvar;
+import wrimsv2.parallel.ProcessTimeseries;
 import wrimsv2.parallel.ProcessWeight;
 import wrimsv2.parallel.ProcessWeightSurplusSlack;
 
@@ -347,12 +348,9 @@ public class ModelDataSet implements Serializable {
 		ArrayList<String> tsList = mds.tsList;
 		Map<String, Timeseries> tsMap =mds.tsMap;
 		ControlData.currEvalTypeIndex=5;
-		for (String tsName:tsList){
-			ControlData.currEvalName=tsName;
-			if (ControlData.showRunTimeMessage) System.out.println("Processing timeseries "+tsName);
-			Timeseries ts=tsMap.get(tsName);
-			ts.setData(new IntDouble(Evaluation.timeseries(tsName),false));
-		}
+		ProcessTimeseries pt = new ProcessTimeseries(tsList, tsMap, 0, tsList.size()-1);
+		ForkJoinPool pool = new ForkJoinPool();
+		pool.invoke(pt);
 	}
 	
 	public void processDvar(){
