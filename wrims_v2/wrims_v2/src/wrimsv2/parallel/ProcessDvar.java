@@ -105,6 +105,8 @@ public class ProcessDvar extends RecursiveTask<Integer>{
 			evaluator.reset();
 			
 			evaluator =dvar.upperBoundParser;
+			evaluator.setParallelVars(prvs);
+			prvs.timeArrayIndex=0;
 			try {
 				evaluator.evaluator();
 				dvar.upperBoundValue=evaluator.evalValue.getData().doubleValue();
@@ -127,6 +129,7 @@ public class ProcessDvar extends RecursiveTask<Integer>{
 					newDvar.integer=dvar.integer;
 			
 					evaluator=dvar.lowerBoundParser;
+					evaluator.setParallelVars(prvs);
 					try {
 						evaluator.evaluator();
 						newDvar.lowerBoundValue=evaluator.evalValue.getData().doubleValue();
@@ -137,6 +140,7 @@ public class ProcessDvar extends RecursiveTask<Integer>{
 					evaluator.reset();
 			
 					evaluator =dvar.upperBoundParser;
+					evaluator.setParallelVars(prvs);
 					try {
 						evaluator.evaluator();
 						newDvar.upperBoundValue=evaluator.evalValue.getData().doubleValue();

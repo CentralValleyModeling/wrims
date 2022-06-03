@@ -176,7 +176,7 @@ public class ModelDataSet implements Serializable {
 		SolverData.clearWeightSlackSurplusMap();
 		ConcurrentHashMap<String, WeightElement> solverWeightSlackSurplusMap=SolverData.getWeightSlackSurplusMap();
 		ControlData.currEvalTypeIndex=7;
-		ProcessWeightSurplusSlack pwss = new ProcessWeightSurplusSlack(usedWtSlackSurplusList, wtSlackSurplusMap, solverWeightSlackSurplusMap, 0, usedWtSlackSurplusList.size()-1);
+		ProcessWeightSurplusSlack pwss = new ProcessWeightSurplusSlack(usedWtSlackSurplusDvList, wtSlackSurplusMap, solverWeightSlackSurplusMap, 0, usedWtSlackSurplusDvList.size()-1);
 		ForkJoinPool pool = new ForkJoinPool();
 		pool.invoke(pwss);
 	}
