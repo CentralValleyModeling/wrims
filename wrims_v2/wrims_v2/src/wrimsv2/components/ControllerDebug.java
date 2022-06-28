@@ -6,6 +6,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -536,9 +537,14 @@ public class ControllerDebug extends Thread {
 			}else{
 				Date startDate = new Date (ControlData.resimYear-1900, ControlData.resimMonth-1, ControlData.resimDay);
 				Date endDate=new Date (ControlData.cycleStartYear-1900, ControlData.cycleStartMonth-1, ControlData.cycleStartDay);
-				long startTime=startDate.getTime();
-				long endTime=endDate.getTime();
-				diffTimeStep=(int)((endTime-startTime)/(24*60*60*1000l));
+				//long startTime=startDate.getTime();
+				//long endTime=endDate.getTime();
+				//diffTimeStep=(int)((endTime-startTime)/(24*60*60*1000l));
+				Calendar c1=Calendar.getInstance();
+				c1.setTime(startDate);
+				Calendar c2=Calendar.getInstance();
+				c2.setTime(endDate);
+				diffTimeStep = (int) Duration.between(c1.toInstant(), c2.toInstant()).toDays();
 			}
 			ControlData.currTimeStep.set(i, initialTimeStep.get(i)-diffTimeStep);
 		}
@@ -615,8 +621,10 @@ public class ControllerDebug extends Thread {
 
 	public void debugTimeAddOneDay(){
 		Date debugDate = new Date (debugYear-1900, debugMonth-1, debugDay);
-		long debugTime=debugDate.getTime()+1 * 24 * 60 * 60 * 1000l;
-		debugDate = new Date (debugTime);
+		Calendar c = Calendar.getInstance();
+        c.setTime(debugDate);
+        c.add(Calendar.DATE, 1);
+      	debugDate = c.getTime();
 		debugMonth=debugDate.getMonth()+1;
 		debugYear=debugDate.getYear()+1900;
 		debugDay=debugDate.getDate();

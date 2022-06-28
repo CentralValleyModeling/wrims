@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
@@ -228,8 +229,10 @@ public class MySQLRWriterAlt{
 	}
 	
 	public Date addOneDay(Date date){
-		long newTime=date.getTime()+1 * 24 * 60 * 60 * 1000l;
-		Date newDate = new Date (newTime);
+		Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.DATE, 1);
+        Date newDate = c.getTime();
 		return newDate;
 	}
 	

@@ -1,5 +1,6 @@
 package wrimsv2.components;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -71,8 +72,10 @@ public class VariableTimeStep {
 	
 	private static void addOneDayToCycleEndDate(){
 		Date startDate = new Date (ControlData.cycleStartYear-1900, ControlData.cycleStartMonth-1, ControlData.cycleStartDay);
-		long cycleEndTime=startDate.getTime()+1 * 24 * 60 * 60 * 1000l;
-		Date cycleEndDate = new Date (cycleEndTime);
+		Calendar c = Calendar.getInstance();
+        c.setTime(startDate);
+        c.add(Calendar.DATE, 1);
+		Date cycleEndDate =c.getTime();
 		ControlData.cycleEndMonth=cycleEndDate.getMonth()+1;
 		ControlData.cycleEndYear=cycleEndDate.getYear()+1900;
 		ControlData.cycleEndDay=cycleEndDate.getDate();
@@ -92,9 +95,14 @@ public class VariableTimeStep {
 				if (ControlData.yearOutputSection<0){
 					Date startDate = new Date (ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
 					Date endDate=new Date (ControlData.endYear-1900, ControlData.endMonth-1, ControlData.endDay);
-					long startTime=startDate.getTime();
-					long endTime=endDate.getTime();
-					double timestep=(endTime-startTime)/(24*60*60*1000l)+1;
+					//long startTime=startDate.getTime();
+					//long endTime=endDate.getTime();
+					//double timestep=(endTime-startTime)/(24*60*60*1000l)+1;
+					Calendar c1=Calendar.getInstance();
+					c1.setTime(startDate);
+					Calendar c2=Calendar.getInstance();
+					c2.setTime(endDate);
+					double timestep = Duration.between(c1.toInstant(), c2.toInstant()).toDays()+1;
 					ControlData.totalTimeStep.add((int)timestep);
 				}else{
 					ControlData.totalTimeStep.add(ControlData.yearOutputSection*366+ControlData.monMemSection*31);
@@ -110,9 +118,14 @@ public class VariableTimeStep {
 		}else{
 			Date startDate = new Date (ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
 			Date endDate=new Date (ControlData.endYear-1900, ControlData.endMonth-1, ControlData.endDay);
-			long startTime=startDate.getTime();
-			long endTime=endDate.getTime();
-			double timestep=(endTime-startTime)/(24*60*60*1000l)+1;
+			//long startTime=startDate.getTime();
+			//long endTime=endDate.getTime();
+			//double timestep=(endTime-startTime)/(24*60*60*1000l)+1;
+			Calendar c1=Calendar.getInstance();
+			c1.setTime(startDate);
+			Calendar c2=Calendar.getInstance();
+			c2.setTime(endDate);
+			double timestep = Duration.between(c1.toInstant(), c2.toInstant()).toDays()+1;
 			return (int)timestep;
 		}
 	}

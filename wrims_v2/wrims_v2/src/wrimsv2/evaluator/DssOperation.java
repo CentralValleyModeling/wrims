@@ -17,7 +17,9 @@ import wrimsv2.hdf5.HDF5Reader;
 import wrimsv2.parallel.ParallelVars;
 import wrimsv2.tools.General;
 
+import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -711,9 +713,14 @@ public class DssOperation {
 		}else{
 			Date startDate = new Date (ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
 			Date endDate=new Date (year-1900, month-1, day);
-			long startTime=startDate.getTime();
-			long endTime=endDate.getTime();
-			double timestep=(endTime-startTime)/(24*60*60*1000l);
+			//long startTime=startDate.getTime();
+			//long endTime=endDate.getTime();
+			//double timestep=(endTime-startTime)/(24*60*60*1000l);
+			Calendar c1=Calendar.getInstance();
+			c1.setTime(startDate);
+			Calendar c2=Calendar.getInstance();
+			c2.setTime(endDate);
+			long timestep = Duration.between(c1.toInstant(), c2.toInstant()).toDays();
 			return (int)timestep;
 		}
 	}

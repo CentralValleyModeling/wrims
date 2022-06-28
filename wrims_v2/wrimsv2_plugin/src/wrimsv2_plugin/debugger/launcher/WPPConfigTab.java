@@ -346,7 +346,7 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 		gd.horizontalSpan = 1;
 		memSectionLabel.setLayoutData(gd);
 		memSectionLabel.setFont(font);
-		memSectionLabel.setText("Keep Number of Months Data in Memory");
+		memSectionLabel.setText("Keep Previous Additional Number of Months Data in Memory");
 		
 		memSectionText = new Text(comp, SWT.SINGLE | SWT.BORDER);
 		gd = new GridData(GridData.FILL_HORIZONTAL);

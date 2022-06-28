@@ -1,7 +1,9 @@
 package wrimsv2.evaluator;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -79,14 +81,19 @@ public class DssDataSet {
 	
 	public void generateStudyStartIndex(){
 		Date st=getStartTime();
-		long sTime=st.getTime();
+		//long sTime=st.getTime();
 		int sYear=st.getYear()+1900;
 		int sMonth=st.getMonth(); //Originally it should be getMonth()-1. However, dss data store at 24:00 Jan31, 1921 is considered to store at 0:00 Feb 1, 1921 
-		long studyStartTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay).getTime();
+		Date studyStart=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
 		if (getTimeStep().equals("1MON")){
 			studyStartIndex=ControlData.startYear*12+ControlData.startMonth-(sYear*12+sMonth);
 		}else{
-			double indexValue=(studyStartTime-sTime)/(1000*60*60*24);
+			//double indexValue=(studyStartTime-sTime)/(1000*60*60*24);
+			Calendar c1=Calendar.getInstance();
+			c1.setTime(st);
+			Calendar c2=Calendar.getInstance();
+			c2.setTime(studyStart);
+			long indexValue = Duration.between(c1.toInstant(), c2.toInstant()).toDays();
 			studyStartIndex=(int)indexValue+2;
 		}
 	}
@@ -191,9 +198,14 @@ public class DssDataSet {
 			return (dataYear-ControlData.currYear)*12+(dataMonth-ControlData.currMonth);
 		}else{
 			Date currDate=new Date (ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
-			long dataTime=dataDate.getTime();
-			long currTime=currDate.getTime();
-			double tsi=(dataTime-currTime)/(24*60*60*1000l);
+			//long dataTime=dataDate.getTime();
+			//long currTime=currDate.getTime();
+			//double tsi=(dataTime-currTime)/(24*60*60*1000l);
+			Calendar c1=Calendar.getInstance();
+			c1.setTime(currDate);
+			Calendar c2=Calendar.getInstance();
+			c2.setTime(dataDate);
+			long tsi = Duration.between(c1.toInstant(), c2.toInstant()).toDays();
 			return (int)tsi;
 		}
 		

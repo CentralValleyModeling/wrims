@@ -703,8 +703,10 @@ public class ControllerTree {
 
 	public void currTimeAddOneDay(){
 		Date currDate = new Date (ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
-		long currTime=currDate.getTime()+1 * 24 * 60 * 60 * 1000l;
-		currDate = new Date (currTime);
+		Calendar c = Calendar.getInstance();
+        c.setTime(currDate);
+        c.add(Calendar.DATE, 1);
+        currDate = c.getTime();
 		ControlData.currMonth=currDate.getMonth()+1;
 		ControlData.currYear=currDate.getYear()+1900;
 		ControlData.currDay=currDate.getDate();

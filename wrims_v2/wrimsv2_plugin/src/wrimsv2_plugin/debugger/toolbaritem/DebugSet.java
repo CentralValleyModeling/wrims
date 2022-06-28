@@ -2,7 +2,9 @@ package wrimsv2_plugin.debugger.toolbaritem;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import org.eclipse.debug.core.DebugException;
 import org.eclipse.jface.action.IContributionItem;
@@ -269,11 +271,19 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 			_month.setText(String.valueOf(yearMonth[1]));
 			_year.setText(String.valueOf(yearMonth[0]));
 		}else{
-			Date endDate= new Date(DebugCorePlugin.endYear-1900, DebugCorePlugin.endMonth-1, DebugCorePlugin.endDay);
-			Date debugDate = new Date (DebugCorePlugin.debugYear-1900, DebugCorePlugin.debugMonth-1, DebugCorePlugin.debugDay);
+			Calendar cal1 = new GregorianCalendar();
+	        Calendar cal2 = new GregorianCalendar();
+			
+			cal1.set(DebugCorePlugin.debugYear, DebugCorePlugin.debugMonth, DebugCorePlugin.debugDay);
+			cal2.set(DebugCorePlugin.endYear, DebugCorePlugin.endMonth, DebugCorePlugin.endDay);
+			
+			Date endDate= cal2.getTime();
+			Date debugDate = cal1.getTime();
 			if (endDate.after(debugDate)){
-				long newDebugTime=debugDate.getTime()+1 * 24 * 60 * 60 * 1000l;
-				debugDate = new Date (newDebugTime);
+				Calendar c = Calendar.getInstance();
+		        c.setTime(debugDate);
+		        c.add(Calendar.DATE, 1);
+		        debugDate = c.getTime();
 				_day.setText(String.valueOf(debugDate.getDate()));
 				_month.setText(String.valueOf(debugDate.getMonth()+1));
 				_year.setText(String.valueOf(debugDate.getYear()+1900));

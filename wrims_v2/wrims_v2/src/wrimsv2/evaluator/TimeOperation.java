@@ -3,6 +3,8 @@ package wrimsv2.evaluator;
 import wrimsv2.components.ControlData;
 import wrimsv2.parallel.ParallelVars;
 
+import java.time.Duration;
+import java.util.Calendar;
 import java.util.Date;
 
 public class TimeOperation {
@@ -195,8 +197,10 @@ public class TimeOperation {
 			*/
 		}else if(ControlData.timeStep.equals("1DAY")){
 			Date currDate = new Date (ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
-			long dataTime=currDate.getTime()+value*1*24*60*60*1000l;
-			Date dataDate = new Date (dataTime);
+			Calendar c = Calendar.getInstance();
+	        c.setTime(currDate);
+	        c.add(Calendar.DATE, value);
+	        Date dataDate = c.getTime();
 			prvs.dataDay=dataDate.getDate();
 			prvs.dataMonth=dataDate.getMonth()+1;
 			prvs.dataYear=dataDate.getYear()+1900;
@@ -226,8 +230,10 @@ public class TimeOperation {
 			}
 		}else if(ControlData.timeStep.equals("1DAY")){
 			Date thisDate = new Date (year-1900, month-1, day);
-			long dataTime=thisDate.getTime()+value*1 * 24 * 60 * 60 * 1000l;
-			Date dataDate = new Date (dataTime);
+			Calendar c = Calendar.getInstance();
+	        c.setTime(thisDate);
+	        c.add(Calendar.DATE, value);
+	        Date dataDate = c.getTime();
 			prvs.dataDay=dataDate.getDate();
 			prvs.dataMonth=dataDate.getMonth()+1;
 			prvs.dataYear=dataDate.getYear()+1900;
@@ -262,9 +268,14 @@ public class TimeOperation {
 			if (diff<=0) diff=0;
 			return diff;
 		}else{
-			long timeA=dateA.getTime();
-			long timeB=dateB.getTime();
-			int diff=Math.round((timeB-timeA)/(1000*60*60*24))+1;
+			//long timeA=dateA.getTime();
+			//long timeB=dateB.getTime();
+			//int diff=Math.round((timeB-timeA)/(1000l*60*60*24))+1;
+			Calendar c1=Calendar.getInstance();
+			c1.setTime(dateA);
+			Calendar c2=Calendar.getInstance();
+			c2.setTime(dateB);
+			int diff = (int)Duration.between(c1.toInstant(), c2.toInstant()).toDays()+1;
 			if (diff<=0) diff=0;
 			return diff;
 		}
@@ -283,8 +294,10 @@ public class TimeOperation {
 	}
 	
 	public static Date addOneDay(Date date){
-		long newTime=date.getTime()+1 * 24 * 60 * 60 * 1000l;
-		Date newDate = new Date (newTime);
+		Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.DATE, 1);
+        Date newDate = c.getTime();
 		return newDate;
 	}
 	
@@ -301,8 +314,10 @@ public class TimeOperation {
 	}
 	
 	public static Date backOneDay(Date date){
-		long newTime=date.getTime()-1 * 24 * 60 * 60 * 1000l;
-		Date newDate = new Date (newTime);
+		Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.DATE, -1);
+        Date newDate = c.getTime();
 		return newDate;
 	}
 	

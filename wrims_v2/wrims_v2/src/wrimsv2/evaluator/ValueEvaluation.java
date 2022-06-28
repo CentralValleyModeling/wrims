@@ -19,7 +19,9 @@ import wrimsv2.hdf5.HDF5Reader;
 import wrimsv2.parallel.ParallelVars;
 import wrimsv2.solver.CbcSolver;
 
+import java.time.Duration;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
@@ -732,12 +734,17 @@ public class ValueEvaluation {
 		long sTime=st.getTime();
 		int sYear=st.getYear()+1900;
 		int sMonth=st.getMonth(); //Originally it should be getMonth()-1. However, dss data store at 24:00 Jan31, 1921 is considered to store at 0:00 Feb 1, 1921 
-		long dataTime=new Date(prvs.dataYear-1900, prvs.dataMonth-1, prvs.dataDay).getTime();
+		Date dataDate=new Date(prvs.dataYear-1900, prvs.dataMonth-1, prvs.dataDay);
 		int index;
 		if (dds.getTimeStep().equals("1MON")){
 			index=prvs.dataYear*12+prvs.dataMonth-(sYear*12+sMonth);
 		}else{
-			double indexValue=(dataTime-sTime)/(1000*60*60*24);
+			//double indexValue=(dataTime-sTime)/(1000*60*60*24);
+			Calendar c1=Calendar.getInstance();
+			c1.setTime(st);
+			Calendar c2=Calendar.getInstance();
+			c2.setTime(dataDate);
+			long indexValue = Duration.between(c1.toInstant(), c2.toInstant()).toDays();
 			index=(int)indexValue+2;
 		}
 		return index;
@@ -748,12 +755,17 @@ public class ValueEvaluation {
 		long sTime=st.getTime();
 		int sYear=st.getYear()+1900;
 		int sMonth=st.getMonth(); //Originally it should be getMonth()-1. However, dss data store at 24:00 Jan31, 1921 is considered to store at 0:00 Feb 1, 1921 
-		long dataTime=new Date(prvs.dataYear-1900, prvs.dataMonth-1, prvs.dataDay).getTime();
+		Date dataDate=new Date(prvs.dataYear-1900, prvs.dataMonth-1, prvs.dataDay);
 		int index;
 		if (dds.getTimeStep().equals("1MON")){
 			index=prvs.dataYear*12+prvs.dataMonth-(sYear*12+sMonth);
 		}else{
-			double indexValue=(dataTime-sTime)/(1000*60*60*24);
+			//double indexValue=(dataTime-sTime)/(1000*60*60*24);
+			Calendar c1=Calendar.getInstance();
+			c1.setTime(st);
+			Calendar c2=Calendar.getInstance();
+			c2.setTime(dataDate);
+			long indexValue = Duration.between(c1.toInstant(), c2.toInstant()).toDays();
 			index=(int)indexValue+2;
 		}
 		return index;

@@ -3,6 +3,7 @@ package wrimsv2.hdf5;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -866,8 +867,13 @@ public class DSSHDF5Converter {
 				double[] data=new double[dim];
 				
 				Date startDate = new Date (ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
-				long startTime=startDate.getTime();
-				double det_timestep=(rtsStartTime-startTime)/(24*60*60*1000l);
+				//long startTime=startDate.getTime();
+				//double det_timestep=(rtsStartTime-startTime)/(24*60*60*1000l);
+				Calendar c1=Calendar.getInstance();
+				c1.setTime(startDate);
+				Calendar c2=Calendar.getInstance();
+				c2.setTime(rtsStartDate);
+				long det_timestep = Duration.between(c1.toInstant(), c2.toInstant()).toDays();
 				
 				for (int j=0; j<dim; j++){
 					int index=(int)det_timestep+j;
@@ -1137,8 +1143,14 @@ public class DSSHDF5Converter {
 				}
 			}
 		}
-		long firstTime=firstDateDaily.getTime();
-		int dim=(int)((modelStartDate.getTime()-firstTime)/(24*60*60*1000l));
+		//long firstTime=firstDateDaily.getTime();
+		//int dim=(int)((modelStartDate.getTime()-firstTime)/(24*60*60*1000l));
+		Calendar c1=Calendar.getInstance();
+		c1.setTime(firstDateDaily);
+		Calendar c2=Calendar.getInstance();
+		c2.setTime(modelStartDate);
+		int dim = (int)Duration.between(c1.toInstant(), c2.toInstant()).toDays();
+		
 		if (dim>0){
 			for (int i=0; i<size; i++){
 				DataSet ds = refs[i].getData();
@@ -1152,8 +1164,13 @@ public class DSSHDF5Converter {
 				
 					double[] data=new double[dim];
 				
-					int det_timestep=(int)((firstTime-startTime)/(24*60*60*1000l));
-				
+					//int det_timestep=(int)((firstTime-startTime)/(24*60*60*1000l));
+					c1=Calendar.getInstance();
+					c1.setTime(startDate);
+					c2=Calendar.getInstance();
+					c2.setTime(firstDateDaily);
+					int det_timestep = (int)Duration.between(c1.toInstant(), c2.toInstant()).toDays();
+					
 					for (int j=0; j<dim; j++){
 						int index=det_timestep+j;
 						if (index<0 || index>=rtsDim){
@@ -1290,9 +1307,14 @@ public class DSSHDF5Converter {
 		}else if (timestepStr.equals("1DAY")){
 			Date startDate = new Date (ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
 			Date endDate=new Date (ControlData.endYear-1900, ControlData.endMonth-1, ControlData.endDay);
-			long startTime=startDate.getTime();
-			long endTime=endDate.getTime();
-			double timestep=(endTime-startTime)/(24*60*60*1000l)+1;
+			//long startTime=startDate.getTime();
+			//long endTime=endDate.getTime();
+			//double timestep=(endTime-startTime)/(24*60*60*1000l)+1;
+			Calendar c1=Calendar.getInstance();
+			c1.setTime(startDate);
+			Calendar c2=Calendar.getInstance();
+			c2.setTime(endDate);
+			long timestep = Duration.between(c1.toInstant(), c2.toInstant()).toDays()+1;
 			return (int)timestep;
 		}
 		return 0;
