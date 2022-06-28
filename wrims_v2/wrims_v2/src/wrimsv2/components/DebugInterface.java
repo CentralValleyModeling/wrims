@@ -2124,23 +2124,19 @@ public class DebugInterface {
 			DssDataSetFixLength ddsf = dvAliasTSMap.get(entryName);
 			double[] dataArray = ddsf.getData();
 			ParallelVars prvs = TimeOperation.findTime(0);
-			int currIndex=ValueEvaluation.timeSeriesIndex(ddsf, prvs)-1;
+			int currIndex;
+			if (ControlData.timeStep.equals("1MON")){
+				currIndex=ValueEvaluation.timeSeriesIndex(ddsf, prvs)-1;
+			}else{
+				currIndex=ValueEvaluation.timeSeriesIndex(ddsf, prvs)-2;
+			}		
 			for (int i=0; i<=currIndex; i++){
 				double value;
-				if (ControlData.timeStep.equals("1MON")){
-					value=dataArray[i];
-					if (!(value==-901.0 || value==-902.0)){
-						int timestepListed=i-currIndex;
-						prvs = TimeOperation.findTime(timestepListed);
-						dataString=dataString+timestepListed+":"+prvs.dataMonth+"-"+prvs.dataDay+"-"+prvs.dataYear+":"+df.format(value)+"#";
-					}
-				}else if(i>=1){
-					value=dataArray[i-1];
-					if (!(value==-901.0 || value==-902.0)){
-						int timestepListed=i-currIndex;
-						prvs = TimeOperation.findTime(timestepListed);
-						dataString=dataString+timestepListed+":"+prvs.dataMonth+"-"+prvs.dataDay+"-"+prvs.dataYear+":"+df.format(value)+"#";
-					}
+				value=dataArray[i];
+				if (!(value==-901.0 || value==-902.0)){
+					int timestepListed=i-currIndex;
+					prvs = TimeOperation.findTime(timestepListed);
+					dataString=dataString+timestepListed+":"+prvs.dataMonth+"-"+prvs.dataDay+"-"+prvs.dataYear+":"+df.format(value)+"#";
 				}
 			}
 		}else{

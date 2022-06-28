@@ -670,7 +670,12 @@ public class ControllerDebug extends Thread {
 				DssDataSetFixLength ddsf = dvAliasTSMap.get(entryName);
 				double[] dataArray = ddsf.getData();
 				ParallelVars prvs = TimeOperation.findTime(-1);
-				int currIndex=ValueEvaluation.timeSeriesIndex(ddsf, prvs)-1;
+				int currIndex;
+				if (monitorVarTimeStep.equals("1MON")){
+					currIndex=ValueEvaluation.timeSeriesIndex(ddsf, prvs)-1;
+				}else{
+					currIndex=ValueEvaluation.timeSeriesIndex(ddsf, prvs)-2;
+				}
 				for (int i=0; i<=currIndex; i++){
 					double value=dataArray[i];
 					if (!(value==-901.0 || value==-902.0)){
