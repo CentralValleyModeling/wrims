@@ -84,7 +84,7 @@ public class PAProcInitBR {
 		Vector<String> paPathList = paInitDss.getPathnameList();
 		Collections.sort(paPathList, Collections.reverseOrder());
 		int size = paPathList.size();
-		int sYear=DebugCorePlugin.startYear;
+		int sYear=brp.startYear;
 		for (int i=0; i<size; i++){
 			String path = paPathList.get(i);
 			try {
@@ -101,17 +101,17 @@ public class PAProcInitBR {
 				WPPException.handleException(e1);
 			}
 		}
-		int dsy = DebugCorePlugin.paStartYear-(DebugCorePlugin.startYear-sYear);
+		int dsy = brp.paStartYear-(brp.startYear-sYear);
 		String startTime=TimeOperation.createStartTime(dsy, 1, 1, "1DAY");
-		String endTime=TimeOperation.createEndTime(DebugCorePlugin.paStartYear, DebugCorePlugin.paStartMonth, DebugCorePlugin.paStartDay, "1DAY");
+		String endTime=TimeOperation.createEndTime(brp.paStartYear, brp.paStartMonth,brp.paStartDay, "1DAY");
 		paInitDss.setTimeWindow(startTime, endTime);
 		for (int i=0; i<size; i++){
 			String path = paPathList.get(i);
 			try {
 				TimeSeriesContainer dc = (TimeSeriesContainer)paInitDss.get(path);
 				TimeSeriesMath tm = new TimeSeriesMath(dc);
-				//TimeSeriesMath tm1 = (TimeSeriesMath) tm.extractTimeSeriesDataForTimeSpecification("YEAR", dsy+"-"+DebugCorePlugin.paStartYear, true, 0, false);
-				HecMath newTm = tm.shiftInTime(DebugCorePlugin.paStartInterval+"MON");
+				//TimeSeriesMath tm1 = (TimeSeriesMath) tm.extractTimeSeriesDataForTimeSpecification("YEAR", dsy+"-"+brp.paStartYear, true, 0, false);
+				HecMath newTm = tm.shiftInTime(brp.paStartInterval+"MON");
 				paInitDss.write(newTm);
 			} catch (Exception e) {
 				WPPException.handleException(e);
