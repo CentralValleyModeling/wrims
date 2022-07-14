@@ -316,6 +316,9 @@ public class WPPWsiDiTab extends AbstractLaunchConfigurationTab {
 				out.println("MonthMemorySection "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_MONMEMSECTION, "24"));
 			}
 			
+			//PlaceHolder
+			//if (DebugCorePlugin.lauchType==1) out.println("unchangeGWRestart "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_UNCHANGEGWRESTART, "yes");
+			
 			//if (DebugCorePlugin.solver.equalsIgnoreCase("LpSolve")) {
 			//	out.println("LpSolveConfigFile         callite.lpsolve");
 			//	out.println("LpSolveNumberOfRetries    2");				

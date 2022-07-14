@@ -107,6 +107,7 @@ public class LaunchConfiguration {
 	public static final String ATTR_WPP_ILPLOG=ID_WPP_DEBUG_MODEL+".ILPLOG";
 	public static final String ATTR_WPP_ALLRESTARTFILES=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_ALLRESTARTFILES";
 	public static final String ATTR_WPP_NUMBERRESTARTFILES=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_NUMBERRESTARTFILES";
+	public static final String ATTR_WPP_UNCHANGEGWRESTART=ID_WPP_DEBUG_MODEL + "ATTR_WPP_UNCHANGEGWRESTART";
 	
 	//private ILaunchConfigurationType fType;
 	
@@ -412,6 +413,13 @@ public class LaunchConfiguration {
 		ControlData.sqlGroup=getStringAttribute(ATTR_WPP_SQLGROUP, "calsim");
 		ControlData.ovOption=Integer.parseInt(getStringAttribute(ATTR_WPP_OVOPTION, "0"));
 		ControlData.ovFile=getStringAttribute(ATTR_WPP_OVFILE, "");
+		
+		String unchangeGWRestart = getStringAttribute(ATTR_WPP_UNCHANGEGWRESTART, "no");
+		if (unchangeGWRestart.equalsIgnoreCase("no")){
+			ControlData.unchangeGWRestart=false;
+		}else{
+			ControlData.unchangeGWRestart=true;
+		}
 		
 		String ilpLog=getStringAttribute(ATTR_WPP_ILPLOG, "no");
 		if (ilpLog.equalsIgnoreCase("no")){

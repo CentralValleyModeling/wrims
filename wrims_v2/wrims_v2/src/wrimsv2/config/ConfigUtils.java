@@ -1077,6 +1077,14 @@ public class ConfigUtils {
 		ControlData.monMemSection = (int)Math.round(readDouble(configMap, k, -1));
 		System.out.println(k+": "+ControlData.monMemSection);
 		
+		String unchangeGWRestart = configMap.get("unchangegwrestart");
+		if (unchangeGWRestart.equalsIgnoreCase("yes") || unchangeGWRestart.equalsIgnoreCase("true")){
+			ControlData.unchangeGWRestart=true;
+		}else{
+			ControlData.unchangeGWRestart=false;
+		}
+		System.out.println("KeepGWRestartatStartDate:    " + ControlData.unchangeGWRestart);
+		
 		//if (Error.getTotalError()<1) readParameter(configFile);
 		
 //		if (Error.getTotalError()<1 && paramMap.size()>0) { 
@@ -1350,6 +1358,7 @@ public class ConfigUtils {
 		configMap.put("NameSorting".toLowerCase(), "No");
 		configMap.put("YearOutputSection".toLowerCase(), "-1");
 		configMap.put("MonthMemorySection".toLowerCase(), "-1");
+		configMap.put("unchangeGWRestart".toLowerCase(), "no");
 		return configMap;
 
 	}

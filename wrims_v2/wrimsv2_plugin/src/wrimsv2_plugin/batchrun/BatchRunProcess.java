@@ -118,6 +118,7 @@ public class BatchRunProcess {
 	private String dssEndOutput;
 	private String yearSectionOutput;
 	private String monMemSection;
+	private String unchangeGWRestart;
 		
 	public void launch(LaunchConfigInfo configuration, String launchFilePath) throws CoreException {		
 		
@@ -394,6 +395,7 @@ public class BatchRunProcess {
 		ovFile=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_OVFILE, "");
 		
 		ifsIsSelFile=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_IFSISSELENTRY, "yes");
+		unchangeGWRestart=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_UNCHANGEGWRESTART, "yes");
 		
 		String mainFileAbsPath;
 		if (new File(mainFile).isAbsolute()){
@@ -552,6 +554,7 @@ public class BatchRunProcess {
 			}
 			
 			configMap.put("ifsisselfile", ifsIsSelFile);
+			configMap.put("unchangegwrestart", unchangeGWRestart);
 			
 			String configName = launchFilePath +".config";
 			File f = new File(configName);
@@ -651,6 +654,9 @@ public class BatchRunProcess {
 			}
 			if (launchType==1 || (ms>1 && afterFirstRound)){
 				out.println("prefixinittodvarfile  "+configMap.get("prefixinittodvarfile"));
+			}
+			if (launchType==1){
+				out.println("unchangegwrestart     "+configMap.get("unchangegwrestart"));
 			}
 			
 			CBCSetting.changeSetting=true;

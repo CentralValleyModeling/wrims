@@ -96,6 +96,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 	private String dssEndOutput;
 	private String yearSectionOutput;
 	private String monMemSection;
+	private String unchangeGWRestart;
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.ILaunchConfigurationDelegate#launch(org.eclipse.debug.core.ILaunchConfiguration, java.lang.String, org.eclipse.debug.core.ILaunch, org.eclipse.core.runtime.IProgressMonitor)
@@ -484,6 +485,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			ovFile=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_OVFILE, "");
 			
 			ifsIsSelFile=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_IFSISSELENTRY, "yes");
+			unchangeGWRestart=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_UNCHANGEGWRESTART, "yes");
 			
 			if (new File(mainFile).isAbsolute()){
 				mainFileAbsPath = mainFile;
@@ -655,6 +657,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			}
 			
 			configMap.put("ifsisselfile", ifsIsSelFile);
+			configMap.put("unchangegwrestart", unchangeGWRestart);
 			
 			String studyDir = configuration.getFile().getLocation().toFile().getParentFile().getAbsolutePath();
 			String configName = "__study.config";
@@ -763,6 +766,10 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			}
 			if (DebugCorePlugin.launchType==1 || (ms>1 && afterFirstRound)){
 				out.println("prefixinittodvarfile  "+configMap.get("prefixinittodvarfile"));
+			}
+			
+			if (DebugCorePlugin.launchType==1){
+				out.println("unchangeGWRestart         "+configMap.get("unchangegwrestart").toLowerCase());
 			}
 			
 			CBCSetting.changeSetting = true;

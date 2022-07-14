@@ -180,6 +180,7 @@ public class ControlData {
 	public static Date memStartDate;
 	public static Date prevOutputDate;
 	public static int nThreads=1;
+	public static boolean unchangeGWRestart=false;
 	
 	public ControlData(){
 	}

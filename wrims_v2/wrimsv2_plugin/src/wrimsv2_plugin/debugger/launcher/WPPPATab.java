@@ -36,6 +36,7 @@ public class WPPPATab extends AbstractLaunchConfigurationTab {
 	private Combo dvYearCombo;
 	private Combo dvMonthCombo;
 	private Combo dvDayCombo;
+	private Button unchangeGWRestartBut;
 	
 	@Override
 	public void createControl(Composite parent) {
@@ -208,6 +209,27 @@ public class WPPPATab extends AbstractLaunchConfigurationTab {
 			}
 			
 		});
+		
+		unchangeGWRestartBut=new Button(comp, SWT.CHECK);
+		gd1 = new GridData(GridData.BEGINNING);
+		gd1.horizontalSpan =7;
+		gd1.widthHint=50;
+		unchangeGWRestartBut.setLayoutData(gd1);
+		unchangeGWRestartBut.setText("Keep GW Restart File at the Start Date");
+		unchangeGWRestartBut.addSelectionListener(new SelectionListener(){
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				updateLaunchConfigurationDialog();	
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 	}
 
 	@Override
@@ -281,6 +303,17 @@ public class WPPPATab extends AbstractLaunchConfigurationTab {
 		} catch (CoreException e) {
 			setErrorMessage(e.getMessage());
 		}
+		
+		try {
+			String unchangeGWRestart = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_UNCHANGEGWRESTART, "yes");
+			if (unchangeGWRestart.equals("yes")){
+				unchangeGWRestartBut.setSelection(true);
+			}else{
+				unchangeGWRestartBut.setSelection(false);
+			}
+		} catch (CoreException e) {
+			setErrorMessage(e.getMessage());
+		}
 	}
 
 	@Override
@@ -307,6 +340,14 @@ public class WPPPATab extends AbstractLaunchConfigurationTab {
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_PADVSTARTYEAR, dvYearCombo.getText());
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_PADVSTARTMONTH, dvMonthCombo.getText());
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_PADVSTARTDAY, dvDayCombo.getText());
+		
+		String unchangeGWRestart="yes";
+		if (unchangeGWRestartBut.getSelection()){
+			unchangeGWRestart="yes";
+		}else{
+			unchangeGWRestart="no";
+		}
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_UNCHANGEGWRESTART, unchangeGWRestart);
 	}
 
 	@Override

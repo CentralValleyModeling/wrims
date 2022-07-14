@@ -101,7 +101,7 @@ public class PreRunModel {
 			System.out.println("HDF5 output data structure is created.");
 		}
 		
-		setGroundwaterInitFile();
+		if (!ControlData.unchangeGWRestart) setGroundwaterInitFile();
 	}
 
 	public void readTimeseries(){
