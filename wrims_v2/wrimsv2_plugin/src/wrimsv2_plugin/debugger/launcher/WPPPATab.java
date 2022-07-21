@@ -211,11 +211,10 @@ public class WPPPATab extends AbstractLaunchConfigurationTab {
 		});
 		
 		unchangeGWRestartBut=new Button(comp, SWT.CHECK);
-		gd1 = new GridData(GridData.BEGINNING);
-		gd1.horizontalSpan =7;
-		gd1.widthHint=50;
-		unchangeGWRestartBut.setLayoutData(gd1);
 		unchangeGWRestartBut.setText("Keep GW Restart File at the Start Date");
+		gd1 = new GridData(GridData.BEGINNING);
+		gd1.horizontalSpan =2;
+		unchangeGWRestartBut.setLayoutData(gd1);
 		unchangeGWRestartBut.addSelectionListener(new SelectionListener(){
 
 			@Override
