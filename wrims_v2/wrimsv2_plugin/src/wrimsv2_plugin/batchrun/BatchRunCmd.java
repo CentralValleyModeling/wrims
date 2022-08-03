@@ -14,7 +14,10 @@ import java.util.Map;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.swt.widgets.List;
 
+import vista.db.dss.DSSUtil;
+import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.core.SettingPref;
+import wrimsv2_plugin.tools.FileProcess;
 
 public class BatchRunCmd {
 
@@ -62,7 +65,25 @@ public class BatchRunCmd {
 		}		
 	}
 	
+	public void generateSVCatalog(){
+		for (int i=0; i<launchPathList.size(); i++){
+			String lfp=launchPathList.get(i);
+			if (configMap.containsKey(lfp) && brpMap.containsKey(lfp)){
+				LaunchConfigInfo config = configMap.get(lfp);
+				String svPath=config.getStringAttribute(DebugCorePlugin.ATTR_WPP_SVARFILE, (String)null);
+				if (!new File(svPath).isAbsolute()){
+					svPath=FileProcess.procRelativePath(svPath, lfp);
+				}
+				int ms=Integer.parseInt(config.getStringAttribute(DebugCorePlugin.ATTR_WPP_MULTISTUDY, "1"));
+				String lt=config.getStringAttribute(DebugCorePlugin.ATTR_WPP_LAUNCHTYPE, "0");
+				int launchType=Integer.parseInt(lt);
+				if (ms==1 && launchType==1) DSSUtil.generateCatalog(svPath);
+			}
+		}
+	}
+	
 	public void startAllBatchRun(){
+		generateSVCatalog();
 		if (isSequential){
 			sequentialRun();
 		}else{

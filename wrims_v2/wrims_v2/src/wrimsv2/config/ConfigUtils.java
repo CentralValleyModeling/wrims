@@ -1085,6 +1085,14 @@ public class ConfigUtils {
 		}
 		System.out.println("KeepGWRestartatStartDate:    " + ControlData.unchangeGWRestart);
 		
+		String genSVCatalog = configMap.get("gensvcatalog");
+		if (genSVCatalog.equalsIgnoreCase("yes") || genSVCatalog.equalsIgnoreCase("true")){
+			ControlData.genSVCatalog=true;
+		}else{
+			ControlData.genSVCatalog=false;
+		}
+		System.out.println("GenSVCatalog:                " + ControlData.genSVCatalog);
+		
 		//if (Error.getTotalError()<1) readParameter(configFile);
 		
 //		if (Error.getTotalError()<1 && paramMap.size()>0) { 
@@ -1359,6 +1367,7 @@ public class ConfigUtils {
 		configMap.put("YearOutputSection".toLowerCase(), "-1");
 		configMap.put("MonthMemorySection".toLowerCase(), "-1");
 		configMap.put("unchangeGWRestart".toLowerCase(), "no");
+		configMap.put("GenSVCatalog".toLowerCase(), "yes");
 		return configMap;
 
 	}

@@ -119,6 +119,7 @@ public class BatchRunProcess {
 	private String yearSectionOutput;
 	private String monMemSection;
 	private String unchangeGWRestart;
+	private String genSVCatalog="no";
 		
 	public void launch(LaunchConfigInfo configuration, String launchFilePath) throws CoreException {		
 		
@@ -555,6 +556,7 @@ public class BatchRunProcess {
 			
 			configMap.put("ifsisselfile", ifsIsSelFile);
 			configMap.put("unchangegwrestart", unchangeGWRestart);
+			configMap.put("gensvcatalog", genSVCatalog);
 			
 			String configName = launchFilePath +".config";
 			File f = new File(configName);
@@ -657,6 +659,7 @@ public class BatchRunProcess {
 			}
 			if (launchType==1){
 				out.println("unchangegwrestart     "+configMap.get("unchangegwrestart"));
+				out.println("gensvcatalog          "+configMap.get("gensvcatalog"));
 			}
 			
 			CBCSetting.changeSetting=true;

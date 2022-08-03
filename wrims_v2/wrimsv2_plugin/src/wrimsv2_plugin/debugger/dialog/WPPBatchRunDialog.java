@@ -29,10 +29,12 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 
+import vista.db.dss.DSSUtil;
 import wrimsv2_plugin.batchrun.BatchRunProcess;
 import wrimsv2_plugin.batchrun.LaunchConfigInfo;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.tools.FileProcess;
 
 
 public class WPPBatchRunDialog extends Dialog {
@@ -376,7 +378,7 @@ public class WPPBatchRunDialog extends Dialog {
 			}
 		
 			checkProgress();
-		
+			generateSVCatalog();
 			if (isSequential){
 				sequentialRun();
 			}else{
@@ -724,6 +726,23 @@ public class WPPBatchRunDialog extends Dialog {
 			out.close();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void generateSVCatalog(){
+		for (int i=0; i<launchPathList.size(); i++){
+			String lfp=launchPathList.get(i);
+			if (configMap.containsKey(lfp) && brpMap.containsKey(lfp)){
+				LaunchConfigInfo config = configMap.get(lfp);
+				String svPath=config.getStringAttribute(DebugCorePlugin.ATTR_WPP_SVARFILE, (String)null);
+				if (!new File(svPath).isAbsolute()){
+					svPath=FileProcess.procRelativePath(svPath, lfp);
+				}
+				int ms=Integer.parseInt(config.getStringAttribute(DebugCorePlugin.ATTR_WPP_MULTISTUDY, "1"));
+				String lt=config.getStringAttribute(DebugCorePlugin.ATTR_WPP_LAUNCHTYPE, "0");
+				int launchType=Integer.parseInt(lt);
+				if (ms==1 && launchType==1) DSSUtil.generateCatalog(svPath);
+			}
 		}
 	}
 }

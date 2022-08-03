@@ -67,10 +67,10 @@ public class PreRunModel {
 		if (FilePaths.svarFile.toLowerCase().endsWith(".h5")){
 			HDF5Reader.readTimeseries();
 		}else{
-			DSSUtil.generateCatalog(FilePaths.fullSvarFilePath);
+			if (ControlData.genSVCatalog) DSSUtil.generateCatalog(FilePaths.fullSvarFilePath);
 			ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarFilePath);
 			if (!FilePaths.fullSvarFile2Path.equals("")){
-				DSSUtil.generateCatalog(FilePaths.fullSvarFile2Path);
+				if (ControlData.genSVCatalog) DSSUtil.generateCatalog(FilePaths.fullSvarFile2Path);
 				ControlData.groupSvar2= DSSUtil.createGroup("local", FilePaths.fullSvarFile2Path);
 			}
 			readTimeseries();

@@ -181,6 +181,7 @@ public class ControlData {
 	public static Date prevOutputDate;
 	public static int nThreads=1;
 	public static boolean unchangeGWRestart=false;
+	public static boolean genSVCatalog=true;
 	
 	public ControlData(){
 	}

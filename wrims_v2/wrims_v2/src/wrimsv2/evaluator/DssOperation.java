@@ -232,7 +232,7 @@ public class DssOperation {
         return ref.getData();
     }
     
-    public static DataSet getDataForSvar(String apart, String bpart, String cpart, String dpart, String epart, String fpart, int svFileIndex){
+    public static synchronized DataSet getDataForSvar(String apart, String bpart, String cpart, String dpart, String epart, String fpart, int svFileIndex){
     	DataReference[] refs;
     	
     	if (svFileIndex==1){
