@@ -1019,11 +1019,11 @@ public class CbcSolver {
 			
 			}
 			//System.out.println("weight of: "+dvName+"="+w);			
-		    jCbc.addCol(modelObject , dvObj.lowerBoundValue.doubleValue(), dvObj.upperBoundValue.doubleValue(), w, dvName, dvObj.integer==Param.yes ); 
+		    jCbc.addCol(modelObject , dvObj.lowerBoundValue.doubleValue(), dvObj.upperBoundValue.doubleValue(), w, dvName, dvObj.integer.equalsIgnoreCase(Param.yes)); 
 		    if (isNoteCbc) {
 
 		    	int isInt=0;
-		    	if (dvObj.integer==Param.yes) isInt=1;
+		    	if (dvObj.integer.equalsIgnoreCase(Param.yes)) isInt=1;
 		    	c = c + isInt+","+dvName+","+w+","+dvObj.lowerBoundValue.doubleValue()+","+dvObj.upperBoundValue.doubleValue()+"\n"; 
 		    
 		    }
@@ -1055,7 +1055,7 @@ public class CbcSolver {
 //				}
 			
 			}
-			double lb=9; double ub=-9; boolean isInteger=(dvObj.integer==Param.yes);
+			double lb=9; double ub=-9; boolean isInteger=(dvObj.integer.equalsIgnoreCase(Param.yes));
 			if (isInteger) {intSize = intSize+1;}
 			if (isInteger && dvIntMap2021.containsKey(dvName)){
 				dvIntPredict.add(dvName);
@@ -1085,7 +1085,7 @@ public class CbcSolver {
 			String dvName = dvBiMap.get(i);
 			Dvar dvObj = dvarMap.get(dvName);
 			
-		    jCbc.addCol(modelObject , dvObj.lowerBoundValue.doubleValue(), dvObj.upperBoundValue.doubleValue(), 0, dvName, dvObj.integer==Param.yes ); 
+		    jCbc.addCol(modelObject , dvObj.lowerBoundValue.doubleValue(), dvObj.upperBoundValue.doubleValue(), 0, dvName, dvObj.integer.equalsIgnoreCase(Param.yes)); 
 			
 		}
 		
