@@ -58,6 +58,7 @@ public class WPPPATab extends AbstractLaunchConfigurationTab {
 	private ILaunchConfiguration configuration;
 	private String startTime="";
 	private String endTime="";
+	private ProgressBar seriesPAInitPB;
 	
 	public WPPPATab(WPPMainTab mainTab){
 		this.mainTab=mainTab;
@@ -274,6 +275,14 @@ public class WPPPATab extends AbstractLaunchConfigurationTab {
 			}
 			
 		});
+		
+		seriesPAInitPB=new ProgressBar(comp, SWT.NONE);
+		seriesPAInitPB.setMinimum(1922);
+		seriesPAInitPB.setMaximum(2015);
+		gd1 = new GridData(GridData.BEGINNING);
+		gd1.horizontalSpan =2;
+		seriesPAInitPB.setLayoutData(gd1);
+		seriesPAInitPB.setVisible(true);
 	}
 
 	@Override
@@ -458,7 +467,12 @@ public class WPPPATab extends AbstractLaunchConfigurationTab {
 		cal2.set(endYear, endMonth, endDay);
 		int i = 0;
 		boolean isFirstOne=true;
+		seriesPAInitPB.setMinimum(startYear);
+		seriesPAInitPB.setMaximum(endYear);
+		seriesPAInitPB.setVisible(true);
 		while (cal1.before(cal2) || cal1.equals(cal2)){
+			seriesPAInitPB.setSelection(paStartYear);
+			seriesPAInitPB.setVisible(true);
 			createPAInit(paStartYear, paStartMonth, paStartDay, startYear, startMonth, startDay, i*interval, isFirstOne);
 			cal1.add(Calendar.MONTH, interval);
 			paStartYear = cal1.get(Calendar.YEAR);
