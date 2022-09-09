@@ -1,7 +1,19 @@
 package wrimsv2_plugin.debugger.launcher;
 
-import java.util.Calendar;
+import hec.heclib.dss.HecDss;
+import hec.hecmath.HecMath;
+import hec.hecmath.TimeSeriesMath;
+import hec.io.TimeSeriesContainer;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Vector;
+
+import org.apache.commons.io.FileUtils;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
@@ -20,10 +32,14 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Text;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.debugger.pa.PAProcRun;
+import wrimsv2_plugin.tools.DssOperations;
+import wrimsv2_plugin.tools.FileProcess;
 import wrimsv2_plugin.tools.TimeOperation;
 
 public class WPPPATab extends AbstractLaunchConfigurationTab {
@@ -37,6 +53,15 @@ public class WPPPATab extends AbstractLaunchConfigurationTab {
 	private Combo dvMonthCombo;
 	private Combo dvDayCombo;
 	private Button unchangeGWRestartBut;
+	private Button createSeriesPAInitsBut;
+	private WPPMainTab mainTab;
+	private ILaunchConfiguration configuration;
+	private String startTime="";
+	private String endTime="";
+	
+	public WPPPATab(WPPMainTab mainTab){
+		this.mainTab=mainTab;
+	}
 	
 	@Override
 	public void createControl(Composite parent) {
@@ -229,6 +254,26 @@ public class WPPPATab extends AbstractLaunchConfigurationTab {
 			}
 			
 		});
+		
+		createSeriesPAInitsBut=new Button(comp, SWT.NONE);
+		createSeriesPAInitsBut.setText("Create a Series of PA Intial Files");
+		gd1 = new GridData(GridData.BEGINNING);
+		gd1.horizontalSpan =2;
+		createSeriesPAInitsBut.setLayoutData(gd1);
+		createSeriesPAInitsBut.addSelectionListener(new SelectionListener(){
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				createSeriesPAInits();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 	}
 
 	@Override
@@ -238,6 +283,7 @@ public class WPPPATab extends AbstractLaunchConfigurationTab {
 
 	@Override
 	public void initializeFrom(ILaunchConfiguration configuration) {
+		this.configuration=configuration;
 		try {
 			String paStartInterval = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_PASTARTINTERVAL, "12");
 			paStartIntervalText.setText(paStartInterval);
@@ -393,4 +439,113 @@ public class WPPPATab extends AbstractLaunchConfigurationTab {
 			dvDayCombo.add(String.valueOf(i));
 		}
 	}
+	
+	public void createSeriesPAInits(){
+		int interval = Integer.parseInt(paStartIntervalText.getText());
+		int startYear=Integer.parseInt(mainTab.startYearCombo.getText());
+		int startMonth=TimeOperation.monthValue(mainTab.startMonthCombo.getText());
+		int startDay=Integer.parseInt(mainTab.startDayCombo.getText());
+		int endYear=Integer.parseInt(mainTab.endYearCombo.getText());
+		int endMonth=TimeOperation.monthValue(mainTab.endMonthCombo.getText());
+		int endDay=Integer.parseInt(mainTab.endDayCombo.getText());
+		int paStartYear=startYear;
+		int paStartMonth=startMonth;
+		int paStartDay=startDay;
+		
+		Calendar cal1 = new GregorianCalendar();
+        Calendar cal2 = new GregorianCalendar();
+		cal1.set(paStartYear, paStartMonth, paStartDay);
+		cal2.set(endYear, endMonth, endDay);
+		int i = 0;
+		boolean isFirstOne=true;
+		while (cal1.before(cal2) || cal1.equals(cal2)){
+			createPAInit(paStartYear, paStartMonth, paStartDay, startYear, startMonth, startDay, i*interval, isFirstOne);
+			cal1.add(Calendar.MONTH, interval);
+			paStartYear = cal1.get(Calendar.YEAR);
+			paStartMonth = cal1.get(Calendar.MONTH);
+			paStartDay = cal1.get(Calendar.DAY_OF_MONTH);
+			i++;
+			isFirstOne=false;
+		}
+	}
+	
+	public void createPAInit(int paStartYear, int paStartMonth, int paStartDay, int startYear, int startMonth, int startDay, int intervalMonths, boolean isFirstOne){
+		String initFile = mainTab.fInitFileText.getText();
+		File initDSSFile=new File(initFile);
+		if (initFile !=null){
+			if (!initDSSFile.isAbsolute()){
+				initFile=FileProcess.procRelativePath(initFile, configuration);
+				initDSSFile=new File(initFile);
+			}
+			String paInitFileName = createPAInitFileName(initFile, paStartYear, paStartMonth, paStartDay);
+			if (initDSSFile !=null){
+				File newInitDSSFile = new File(paInitFileName);
+				try {
+					FileUtils.copyFile(initDSSFile, newInitDSSFile);
+					createInitData(paInitFileName, paStartYear, paStartMonth, paStartDay, startYear, startMonth, startDay, intervalMonths, isFirstOne);
+				} catch (IOException e) {
+					WPPException.handleException(e);
+				}
+			}
+		}
+	}
+	
+	public String createPAInitFileName(String initFile, int paStartYear, int paStartMonth, int paStartDay){
+		File file = new File(initFile);
+		String fn = file.getName();
+		String fp = file.getParent();
+		String prefix="\\pa_"+paStartYear+TimeOperation.getModMonthText(paStartMonth)+TimeOperation.getModDayhText(paStartDay)+"_";
+		return fp+prefix+fn;
+	}
+	
+	public void createInitData(String paInitFileName, int paStartYear, int paStartMonth, int paStartDay, int startYear, int startMonth, int startDay, int intervalMonths, boolean isFirstOne){
+		HecDss paInitDss;
+		try {
+			paInitDss=HecDss.open(paInitFileName);
+		} catch (Exception e) {
+			WPPException.handleException(e);
+			return;
+		}
+		Vector<String> paPathList = paInitDss.getPathnameList();
+		Collections.sort(paPathList, Collections.reverseOrder());
+		int size = paPathList.size();
+		if (isFirstOne){
+			int sYear=startYear;
+			for (int i=0; i<size; i++){
+				String path = paPathList.get(i);
+				try {
+					TimeSeriesContainer firstDc = (TimeSeriesContainer)paInitDss.get(path);
+					long st=firstDc.startTime;
+					long stms=st*60000;
+					long l1970=1440l * 25568l * 60000l;
+					long ststd=stms-l1970;
+					int sYear1=new Date(ststd).getYear()+1900;
+					if (sYear1<sYear){
+						sYear=sYear1;
+					}
+				} catch (Exception e1) {
+					WPPException.handleException(e1);
+				}
+			}
+			startTime=TimeOperation.createStartTime(sYear, 1, 1, "1DAY");
+			endTime=TimeOperation.createEndTime(startYear, startMonth, startDay, "1DAY");
+			
+		}else{
+			paInitDss.setTimeWindow(startTime, endTime);
+			for (int i=0; i<size; i++){
+				String path = paPathList.get(i);
+				try {
+					TimeSeriesContainer dc = (TimeSeriesContainer)paInitDss.get(path);
+					TimeSeriesMath tm = new TimeSeriesMath(dc);
+					//TimeSeriesMath tm1 = (TimeSeriesMath) tm.extractTimeSeriesDataForTimeSpecification("YEAR", dsy+"-"+paStartYear, true, 0, false);
+					HecMath newTm = tm.shiftInTime(intervalMonths+"MON");
+					paInitDss.write(newTm);
+				} catch (Exception e) {
+					WPPException.handleException(e);
+				}
+			}
+		}
+		paInitDss.close();
+	}
+
 }

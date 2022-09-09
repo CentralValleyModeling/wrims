@@ -175,4 +175,20 @@ public class TimeOperation {
 		int diff=Math.round((timeB-timeA)/(1000*60*60*24));
 		return diff;
 	}
+	
+	public static String getModMonthText(int month){
+		if (month<10){
+			return "0"+month;
+		}else{
+			return ""+month;
+		}
+	}
+	
+	public static String getModDayhText(int day){
+		if (day<10){
+			return "0"+day;
+		}else{
+			return ""+day;
+		}
+	}
 }

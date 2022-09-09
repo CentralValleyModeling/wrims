@@ -41,7 +41,7 @@ public class WPPTabGroup extends AbstractLaunchConfigurationTabGroup {
 		mainTab=new WPPMainTab();
 		configTab=new WPPConfigTab();
 		wsidiTab=new WPPWsiDiTab(mainTab);
-		paTab=new WPPPATab();
+		paTab=new WPPPATab(mainTab);
 		msTab=new WPPMSTab();
 		infeasibilityCheckTab=new WPPInfeasibilityTab();
 		sqlTab=new WPPSQLTab();
