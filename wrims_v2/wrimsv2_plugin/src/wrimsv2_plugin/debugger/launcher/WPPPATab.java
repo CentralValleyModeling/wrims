@@ -30,6 +30,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.ProgressBar;
@@ -59,6 +60,8 @@ public class WPPPATab extends AbstractLaunchConfigurationTab {
 	private String startTime="";
 	private String endTime="";
 	private ProgressBar seriesPAInitPB;
+	private boolean isCreateSeriesPAInit=true;
+	private Button cancelSeriesPAInitsBut;
 	
 	public WPPPATab(WPPMainTab mainTab){
 		this.mainTab=mainTab;
@@ -283,6 +286,26 @@ public class WPPPATab extends AbstractLaunchConfigurationTab {
 		gd1.horizontalSpan =2;
 		seriesPAInitPB.setLayoutData(gd1);
 		seriesPAInitPB.setVisible(true);
+		
+		cancelSeriesPAInitsBut=new Button(comp, SWT.NONE);
+		cancelSeriesPAInitsBut.setText("Cancel");
+		gd1 = new GridData(GridData.BEGINNING);
+		gd1.horizontalSpan =2;
+		cancelSeriesPAInitsBut.setLayoutData(gd1);
+		cancelSeriesPAInitsBut.addSelectionListener(new SelectionListener(){
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				isCreateSeriesPAInit=false;
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 	}
 
 	@Override
@@ -450,41 +473,64 @@ public class WPPPATab extends AbstractLaunchConfigurationTab {
 	}
 	
 	public void createSeriesPAInits(){
-		int interval = Integer.parseInt(paStartIntervalText.getText());
-		int startYear=Integer.parseInt(mainTab.startYearCombo.getText());
-		int startMonth=TimeOperation.monthValue(mainTab.startMonthCombo.getText());
-		int startDay=Integer.parseInt(mainTab.startDayCombo.getText());
-		int endYear=Integer.parseInt(mainTab.endYearCombo.getText());
-		int endMonth=TimeOperation.monthValue(mainTab.endMonthCombo.getText());
-		int endDay=Integer.parseInt(mainTab.endDayCombo.getText());
-		int paStartYear=startYear;
-		int paStartMonth=startMonth;
-		int paStartDay=startDay;
-		
-		Calendar cal1 = new GregorianCalendar();
-        Calendar cal2 = new GregorianCalendar();
-		cal1.set(paStartYear, paStartMonth, paStartDay);
-		cal2.set(endYear, endMonth, endDay);
-		int i = 0;
-		boolean isFirstOne=true;
-		seriesPAInitPB.setMinimum(startYear);
-		seriesPAInitPB.setMaximum(endYear);
-		seriesPAInitPB.setVisible(true);
-		while (cal1.before(cal2) || cal1.equals(cal2)){
-			seriesPAInitPB.setSelection(paStartYear);
-			seriesPAInitPB.setVisible(true);
-			createPAInit(paStartYear, paStartMonth, paStartDay, startYear, startMonth, startDay, i*interval, isFirstOne);
-			cal1.add(Calendar.MONTH, interval);
-			paStartYear = cal1.get(Calendar.YEAR);
-			paStartMonth = cal1.get(Calendar.MONTH);
-			paStartDay = cal1.get(Calendar.DAY_OF_MONTH);
-			i++;
-			isFirstOne=false;
-		}
+		final int interval = Integer.parseInt(paStartIntervalText.getText());
+		final int startYear=Integer.parseInt(mainTab.startYearCombo.getText());
+		final int startMonth=TimeOperation.monthValue(mainTab.startMonthCombo.getText());
+		final int startDay=Integer.parseInt(mainTab.startDayCombo.getText());
+		final int endYear=Integer.parseInt(mainTab.endYearCombo.getText());
+		final int endMonth=TimeOperation.monthValue(mainTab.endMonthCombo.getText());
+		final int endDay=Integer.parseInt(mainTab.endDayCombo.getText());
+		final String initFile = mainTab.fInitFileText.getText();
+
+		Thread thread=new Thread(){
+			private int paStartYear;
+			private int paStartMonth;
+			private int paStartDay;
+
+			public void run(){
+				paStartYear=startYear;
+				paStartMonth=startMonth;
+				paStartDay=startDay;
+				
+				Calendar cal1 = new GregorianCalendar();
+		        Calendar cal2 = new GregorianCalendar();
+				cal1.set(paStartYear, paStartMonth, paStartDay);
+				cal2.set(endYear, endMonth, endDay);
+				int i = 0;
+				boolean isFirstOne=true;
+				isCreateSeriesPAInit=true;
+				
+				Display.getDefault().asyncExec(new Runnable(){
+					
+					public void run(){
+						seriesPAInitPB.setMinimum(startYear);
+						seriesPAInitPB.setMaximum(endYear);
+						seriesPAInitPB.setVisible(true);
+					}
+				});
+
+				while ((cal1.before(cal2) || cal1.equals(cal2)) && isCreateSeriesPAInit) {
+					Display.getDefault().asyncExec(new Runnable(){
+						
+						public void run(){
+							seriesPAInitPB.setSelection(paStartYear);
+							seriesPAInitPB.setVisible(true);
+						}
+					});
+					createPAInit(paStartYear, paStartMonth, paStartDay, startYear, startMonth, startDay, i*interval, isFirstOne, initFile);
+					cal1.add(Calendar.MONTH, interval);
+					paStartYear = cal1.get(Calendar.YEAR);
+					paStartMonth = cal1.get(Calendar.MONTH);
+					paStartDay = cal1.get(Calendar.DAY_OF_MONTH);
+					i++;
+					isFirstOne=false;
+				}
+			}
+		};
+		thread.start();
 	}
 	
-	public void createPAInit(int paStartYear, int paStartMonth, int paStartDay, int startYear, int startMonth, int startDay, int intervalMonths, boolean isFirstOne){
-		String initFile = mainTab.fInitFileText.getText();
+	public void createPAInit(int paStartYear, int paStartMonth, int paStartDay, int startYear, int startMonth, int startDay, int intervalMonths, boolean isFirstOne, String initFile){
 		File initDSSFile=new File(initFile);
 		if (initFile !=null){
 			if (!initDSSFile.isAbsolute()){
