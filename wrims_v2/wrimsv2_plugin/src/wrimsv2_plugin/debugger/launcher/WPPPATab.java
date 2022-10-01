@@ -525,6 +525,16 @@ public class WPPPATab extends AbstractLaunchConfigurationTab {
 					i++;
 					isFirstOne=false;
 				}
+				
+				if (isCreateSeriesPAInit){
+					Display.getDefault().asyncExec(new Runnable(){
+					
+						public void run(){
+							seriesPAInitPB.setSelection(endYear);
+							seriesPAInitPB.setVisible(true);
+						}
+					});
+				}
 			}
 		};
 		thread.start();
@@ -588,7 +598,7 @@ public class WPPPATab extends AbstractLaunchConfigurationTab {
 				}
 			}
 			startTime=TimeOperation.createStartTime(sYear, 1, 1, "1DAY");
-			endTime=TimeOperation.createEndTime(startYear, startMonth, startDay, "1DAY");
+			endTime=TimeOperation.createEndTime1(startYear, startMonth, startDay, "1DAY");
 			
 		}else{
 			paInitDss.setTimeWindow(startTime, endTime);

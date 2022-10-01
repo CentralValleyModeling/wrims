@@ -109,7 +109,7 @@ public class PAProcInit {
 		}
 		int dsy = DebugCorePlugin.paStartYear-(DebugCorePlugin.startYear-sYear);
 		String startTime=TimeOperation.createStartTime(dsy, 1, 1, "1DAY");
-		String endTime=TimeOperation.createEndTime(DebugCorePlugin.paStartYear, DebugCorePlugin.paStartMonth, DebugCorePlugin.paStartDay, "1DAY");
+		String endTime=TimeOperation.createEndTime1(DebugCorePlugin.paStartYear, DebugCorePlugin.paStartMonth, DebugCorePlugin.paStartDay, "1DAY");
 		paInitDss.setTimeWindow(startTime, endTime);
 		for (int i=0; i<size; i++){
 			String path = paPathList.get(i);

@@ -195,8 +195,8 @@ public class BatchRunProcess {
 			}
 			
 			procDV.resetDVStartDate(this);
-			procRun.updatePATime(this);
 			procInit.createInitData(procRun, this);
+			procRun.updatePATime(this);
 			useMainFile=false;
 		}
 		procInit.deletePAInit(this);

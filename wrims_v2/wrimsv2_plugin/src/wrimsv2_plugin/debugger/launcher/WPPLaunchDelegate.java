@@ -244,8 +244,8 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			}
 			
 			procDV.resetDVStartDate();
-			procRun.updatePATime();
 			procInit.createInitData(procRun);
+			procRun.updatePATime();
 			useMainFile=false;
 		}
 		procInit.deletePAInit();

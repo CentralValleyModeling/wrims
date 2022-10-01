@@ -139,6 +139,21 @@ public class TimeOperation {
 		}
 	}
 	
+	public static String createEndTime1 (int year, int month, int day, String timestep){
+		String monthStr=getMonthText(month);
+		if (timestep.equals("1MON")){
+			int lastDay=numberOfDays(month, year);
+			return lastDay+monthStr+year+" 2400";
+		}else{
+			if (day<10){
+				String dayStr="0"+day;
+				return dayStr+monthStr+year+" 0000";
+			}else{
+				return day+monthStr+year+" 0000"; 
+			}
+		}
+	}
+	
 	public static String getMonthText(int month){
 		switch (month){
 		case 1:

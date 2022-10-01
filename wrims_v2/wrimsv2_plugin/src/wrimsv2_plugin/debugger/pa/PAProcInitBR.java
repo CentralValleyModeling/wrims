@@ -103,7 +103,7 @@ public class PAProcInitBR {
 		}
 		int dsy = brp.paStartYear-(brp.startYear-sYear);
 		String startTime=TimeOperation.createStartTime(dsy, 1, 1, "1DAY");
-		String endTime=TimeOperation.createEndTime(brp.paStartYear, brp.paStartMonth,brp.paStartDay, "1DAY");
+		String endTime=TimeOperation.createEndTime1(brp.paStartYear, brp.paStartMonth,brp.paStartDay, "1DAY");
 		paInitDss.setTimeWindow(startTime, endTime);
 		for (int i=0; i<size; i++){
 			String path = paPathList.get(i);
