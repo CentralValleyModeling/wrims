@@ -116,7 +116,10 @@ public class ControllerDebug extends Thread {
 		connectToDataBase();
 		//generateStudyFile();
 		try {
+			long t1 = Calendar.getInstance().getTimeInMillis();
 			StudyDataSet sds = parse();
+			long t2 = Calendar.getInstance().getTimeInMillis();
+			ControlData.t_parse=ControlData.t_parse+(int) (t2-t1);
 			if (StudyParser.total_errors==0){
 				if (!StudyUtils.loadParserData && !FilePaths.fullMainPath.endsWith(".par")){
 					StudyUtils.writeObj(sds, FilePaths.mainDirectory+File.separator+StudyUtils.configFileName+".par");
@@ -237,6 +240,7 @@ public class ControllerDebug extends Thread {
 			if (ControlData.outputType!=1) ControlData.writer.closeDSSFile();
 			return;
 		}
+		if (ControlData.showTimeUsage) new TimeUsage();
 		System.out.println("=================Run ends!================");
 	}
 	

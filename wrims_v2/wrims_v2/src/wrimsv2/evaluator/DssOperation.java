@@ -288,6 +288,7 @@ public class DssOperation {
 	}
 	
 	public static void writeDVAliasToDSS() {
+		long t1 = Calendar.getInstance().getTimeInMillis();
 		System.out.println("writing dvar and alias to dv dss");
 		Set dvAliasSet=DataTimeSeries.dvAliasTS.keySet();
 		Iterator iterator = dvAliasSet.iterator();
@@ -329,6 +330,8 @@ public class DssOperation {
 		
 		if (ControlData.isOutputCycle) writeDVAliasCycleDataToDSS();
 		System.out.println("dvar and alias written to dv dss");
+		long t2 = Calendar.getInstance().getTimeInMillis();
+		ControlData.t_writeDss=ControlData.t_writeDss+(int) (t2-t1);
 	}
 	
 	public static void writeDVAliasCycleDataToDSS() {

@@ -2,6 +2,8 @@ package wrimsv2.external;
 
 import java.util.*;
 
+import wrimsv2.components.ControlData;
+
 public class Functioncamdll extends ExternalFunction{
 	private final boolean DEBUG = false;
 
@@ -12,6 +14,8 @@ public class Functioncamdll extends ExternalFunction{
 
 	public void execute(Stack stack) {
 
+		long t1 = Calendar.getInstance().getTimeInMillis();
+		
 		if (stack.size()==2){
 			Object param2 = stack.pop();
 			Object param1 = stack.pop();
@@ -434,7 +438,11 @@ public class Functioncamdll extends ExternalFunction{
 			
 			// push the result on the Stack
 			stack.push(new Float(result));
+
 		}
+		
+		long t2 = Calendar.getInstance().getTimeInMillis();
+		ControlData.t_cam=ControlData.t_cam+(int) (t2-t1);
 	}
 
 	public native float camdll(int ICALC, int ICODE, float IYPOSX, float IMPOSX, float IYEARX, float IMX, float IFREQODX, float IFREQ1X, float IFREQ2X, float IFREQ3X, float IFREQ4X, float IFREQ5X, float SQKS_0_1, float SQKS_0_2, float SQKS_0_3, float SQKS_0_4, float SQKS_1_1, float SQKS_1_2, float SQKS_1_3, float SQKS_1_4, float SQKS_1_5, float SQKS_1_6, float SQKS_1_7, float SQKS_1_8, float SQKS_1_9, float SQKS_1_10, float SQKS_1_11, float SQKS_1_12, float SQKS_2_10, float SQKS_2_11, float SQKS_2_12, float SQOR_0_1, float SQOR_0_2, float SQOR_0_3, float SQOR_0_4, float SQOR_1_1, float SQOR_1_2, float SQOR_1_3, float SQOR_1_4, float SQOR_1_5, float SQOR_1_6, float SQOR_1_7, float SQOR_1_8, float SQOR_1_9, float SQOR_1_10, float SQOR_1_11, float SQOR_1_12, float SQOR_2_10, float SQOR_2_11, float SQOR_2_12, float SQFW_0_1, float SQFW_0_2, float SQFW_0_3, float SQFW_0_4, float SQFW_1_1, float SQFW_1_2, float SQFW_1_3, float SQFW_1_4, float SQFW_1_5, float SQFW_1_6, float SQFW_1_7, float SQFW_1_8, float SQFW_1_9, float SQFW_1_10, float SQFW_1_11, float SQFW_1_12, float SQFW_2_10, float SQFW_2_11, float SQFW_2_12, float SQFP_0_1, float SQFP_0_2, float SQFP_0_3, float SQFP_0_4, float SQFP_1_1, float SQFP_1_2, float SQFP_1_3, float SQFP_1_4, float SQFP_1_5, float SQFP_1_6, float SQFP_1_7, float SQFP_1_8, float SQFP_1_9, float SQFP_1_10, float SQFP_1_11, float SQFP_1_12, float SQFP_2_10, float SQFP_2_11, float SQFP_2_12, float SQSW_0_1, float SQSW_0_2, float SQSW_0_3, float SQSW_0_4, float SQSW_1_1, float SQSW_1_2, float SQSW_1_3, float SQSW_1_4, float SQSW_1_5, float SQSW_1_6, float SQSW_1_7, float SQSW_1_8, float SQSW_1_9, float SQSW_1_10, float SQSW_1_11, float SQSW_1_12, float SQSW_2_10, float SQSW_2_11, float SQSW_2_12, float SQNB_0_1, float SQNB_0_2, float SQNB_0_3, float SQNB_0_4, float SQNB_1_1, float SQNB_1_2, float SQNB_1_3, float SQNB_1_4, float SQNB_1_5, float SQNB_1_6, float SQNB_1_7, float SQNB_1_8, float SQNB_1_9, float SQNB_1_10, float SQNB_1_11, float SQNB_1_12, float SQNB_2_10, float SQNB_2_11, float SQNB_2_12, float QOR_0_1, float QOR_0_2, float QOR_0_3, float QOR_0_4, float QOR_1_1, float QOR_1_2, float QOR_1_3, float QOR_1_4, float QOR_1_5, float QOR_1_6, float QOR_1_7, float QOR_1_8, float QOR_1_9, float QOR_1_10, float QOR_1_11, float QOR_1_12, float QOR_2_10, float QOR_2_11, float QOR_2_12, float QFO_0_1, float QFO_0_2, float QFO_0_3, float QFO_0_4, float QFO_1_10, float QFO_1_11, float QFO_1_12, float QYU_0_1, float QYU_0_2, float QYU_0_3, float QYU_0_4, float QYU_1_10, float QYU_1_11, float QYU_1_12, float QSH_0_1, float QSH_0_2, float QSH_0_3, float QSH_0_4, float QSH_1_10, float QSH_1_11, float QSH_1_12, float QBD_0_1, float QBD_0_2, float QBD_0_3, float QBD_0_4, float QBD_1_10, float QBD_1_11, float QBD_1_12, float POR_0_1, float POR_0_2, float POR_0_3, float POR_0_4, float POR_1_10, float POR_1_11, float POR_1_12, float PFO_0_1, float PFO_0_2, float PFO_0_3, float PFO_0_4, float PFO_1_10, float PFO_1_11, float PFO_1_12, float PYU_0_1, float PYU_0_2, float PYU_0_3, float PYU_0_4, float PYU_1_10, float PYU_1_11, float PYU_1_12, float PSH_0_1, float PSH_0_2, float PSH_0_3, float PSH_0_4, float PSH_1_10, float PSH_1_11, float PSH_1_12);

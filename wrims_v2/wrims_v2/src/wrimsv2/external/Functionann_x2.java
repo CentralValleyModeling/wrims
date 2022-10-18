@@ -2,6 +2,8 @@ package wrimsv2.external;
 
 import java.util.*;
 
+import wrimsv2.components.ControlData;
+
 public class Functionann_x2 extends ExternalFunction{
 	private final boolean DEBUG = false;
 
@@ -12,6 +14,8 @@ public class Functionann_x2 extends ExternalFunction{
 
 	public void execute(Stack stack) {
 
+		long t1 = Calendar.getInstance().getTimeInMillis();
+		
 		if (stack.size()==20){
 			//values in reverse order:
 			Object param20 = stack.pop();
@@ -108,7 +112,11 @@ public class Functionann_x2 extends ExternalFunction{
 
 			// push the result on the Stack
 			stack.push(new Float(result));
+
 		}
+		
+		long t2 = Calendar.getInstance().getTimeInMillis();
+		ControlData.t_ann=ControlData.t_ann+(int) (t2-t1);
 	}
 
 	public native float ann_x2(float X2_prv0, float X2_prv1, float X2_prv2, float X2_prv3, float X2_prv4, float DO_prv0, float DO_prv1, float DO_prv2, float DO_prv3, float DO_prv4, int mon0, int mon1, int mon2, int mon3, int mon4, int ave_type, int currMonth, int currYear, int BeginDay, int EndDay);

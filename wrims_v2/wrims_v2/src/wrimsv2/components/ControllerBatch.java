@@ -79,8 +79,8 @@ public class ControllerBatch {
 			}
 			StudyDataSet sds = parse();
 			long afterParsing = Calendar.getInstance().getTimeInMillis();
-			int parsingPeriod=(int) (afterParsing-startTimeInMillis);
-			System.out.println("Parsing Time is "+parsingPeriod/60000+"min"+Math.round((parsingPeriod/60000.0-parsingPeriod/60000)*60)+"sec");
+			ControlData.t_parse=(int) (afterParsing-startTimeInMillis);
+			System.out.println("Parsing Time is "+ControlData.t_parse/60000+"min"+Math.round((ControlData.t_parse/60000.0-ControlData.t_parse/60000)*60)+"sec");
 			
 			if (StudyUtils.total_errors+Error.getTotalError()==0 && !StudyUtils.compileOnly){
 				if (!StudyUtils.loadParserData && !FilePaths.fullMainPath.endsWith(".par")){
@@ -97,6 +97,7 @@ public class ControllerBatch {
 				ILP.setMaximumFractionDigits();
 				
 				runModel(sds);
+				if (ControlData.showTimeUsage) new TimeUsage();
 				long endTimeInMillis = Calendar.getInstance().getTimeInMillis();
 				int runPeriod=(int) (endTimeInMillis-startTimeInMillis);
 				System.out.println("=================Run Time is "+runPeriod/60000+"min"+Math.round((runPeriod/60000.0-runPeriod/60000)*60)+"sec====");

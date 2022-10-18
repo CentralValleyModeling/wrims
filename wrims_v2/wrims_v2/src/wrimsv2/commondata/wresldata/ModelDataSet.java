@@ -2,6 +2,7 @@ package wrimsv2.commondata.wresldata;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -121,18 +122,31 @@ public class ModelDataSet implements Serializable {
 		
 	public void processModel(){
 		resetSlackSurplusWeight(); // this clears slack and surplus vars
+		long t1 = Calendar.getInstance().getTimeInMillis();
 		processTimeseries();
 		if (ControlData.showRunTimeMessage) System.out.println("Process Timeseries Done.");
+		long t2 = Calendar.getInstance().getTimeInMillis();
+		ControlData.t_ts=ControlData.t_ts+(int) (t2-t1);
 		processSvar();
 		if (ControlData.showRunTimeMessage) System.out.println("Process Svar Done.");
+		long t3 = Calendar.getInstance().getTimeInMillis();
+		ControlData.t_svar=ControlData.t_svar+(int) (t3-t2);
 		processDvar();	
 		if (ControlData.showRunTimeMessage) System.out.println("Process Dvar Done.");
+		long t4 = Calendar.getInstance().getTimeInMillis();
+		ControlData.t_dvar=ControlData.t_dvar+(int) (t4-t3);
 		processGoal();	
 		if (ControlData.showRunTimeMessage) System.out.println("Process Goal Done.");
+		long t5 = Calendar.getInstance().getTimeInMillis();
+		ControlData.t_goal=ControlData.t_goal+(int) (t5-t4);
 		processWeight();
 		if (ControlData.showRunTimeMessage) System.out.println("Process Weight Done.");
+		long t6 = Calendar.getInstance().getTimeInMillis();
+		ControlData.t_wt=ControlData.t_wt+(int) (t6-t5);
 		processWeightSlackSurplus();
 		if (ControlData.showRunTimeMessage) System.out.println("Process Weight Slack Surplus Done.");
+		long t7 = Calendar.getInstance().getTimeInMillis();
+		ControlData.t_wtss=ControlData.t_wtss+(int) (t7-t6);
 	}
 
 	public void resetSlackSurplusWeight(){
@@ -386,6 +400,7 @@ public class ModelDataSet implements Serializable {
 	}
 	
 	public void processAlias(){
+		long t1 = Calendar.getInstance().getTimeInMillis();
 		StudyDataSet sds = ControlData.currStudyDataSet;
 		ModelDataSet mds=ControlData.currModelDataSet;
 		ArrayList<String> asList = mds.asList;
@@ -648,6 +663,8 @@ public class ModelDataSet implements Serializable {
 				evaluator.reset();
 			}
 		}
+		long t2 = Calendar.getInstance().getTimeInMillis();
+		ControlData.t_as=ControlData.t_as+(int) (t2-t1);
 	}
 	
 	public void clearFutureSvMap(){

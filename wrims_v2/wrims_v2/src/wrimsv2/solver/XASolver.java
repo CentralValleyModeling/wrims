@@ -40,6 +40,7 @@ public class XASolver {
 	int modelStatus;
 	
 	public XASolver(){
+		long t1 = Calendar.getInstance().getTimeInMillis();
 		ControlData.xasolver.loadNewModel();
 		setConstraints();
 		setDVars();
@@ -53,6 +54,8 @@ public class XASolver {
 		if (ControlData.showRunTimeMessage) System.out.println("Model status: "+modelStatus);
 		if (modelStatus>=2)	getSolverInformation();
 		if (Error.error_solving.size()<1) assignDvar(); 
+		long t2 = Calendar.getInstance().getTimeInMillis();
+		ControlData.t_xa=ControlData.t_xa+(int) (t2-t1);
 	}
 	
 	public void getSolverInformation(){

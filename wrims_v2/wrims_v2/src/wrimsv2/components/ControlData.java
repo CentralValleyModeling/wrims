@@ -182,6 +182,21 @@ public class ControlData {
 	public static int nThreads=1;
 	public static boolean unchangeGWRestart=false;
 	public static boolean genSVCatalog=true;
+	public static boolean showTimeUsage=true;
+	public static int t_cbc=0;
+	public static int t_xa=0;
+	public static int t_ts=0;
+	public static int t_svar=0;
+	public static int t_dvar=0;
+	public static int t_goal=0;
+	public static int t_wt=0;
+	public static int t_wtss=0;
+	public static int t_as=0;
+	public static int t_readTs=0;
+	public static int t_writeDss=0;
+	public static int t_ann=0;
+	public static int t_cam=0;
+	public static int t_parse=0;
 	
 	public ControlData(){
 	}

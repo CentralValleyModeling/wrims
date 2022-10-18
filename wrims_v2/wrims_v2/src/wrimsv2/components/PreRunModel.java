@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -64,6 +65,7 @@ public class PreRunModel {
 		}
 		ControlData.allTsMap=sds.getTimeseriesMap();
 
+		long t1 = Calendar.getInstance().getTimeInMillis();
 		if (FilePaths.svarFile.toLowerCase().endsWith(".h5")){
 			HDF5Reader.readTimeseries();
 		}else{
@@ -75,7 +77,9 @@ public class PreRunModel {
 			}
 			readTimeseries();
 		}
-
+		long t2 = Calendar.getInstance().getTimeInMillis();
+		ControlData.t_readTs=ControlData.t_readTs+(int) (t2-t1);
+		
 		if (FilePaths.initFile.toLowerCase().endsWith(".h5")){
 			ControlData.initHDF5=true;
 			HDF5Reader.readInitialData();

@@ -2,6 +2,8 @@ package wrimsv2.external;
 
 import java.util.*;
 
+import wrimsv2.components.ControlData;
+
 public class Functioncamsjrdll extends ExternalFunction{
 	private final boolean DEBUG = false;
 
@@ -12,6 +14,8 @@ public class Functioncamsjrdll extends ExternalFunction{
 
 	public void execute(Stack stack) {
 
+		long t1 = Calendar.getInstance().getTimeInMillis();
+		
 		if (stack.size()==2){
 			Object param2 = stack.pop();
 			Object param1 = stack.pop();
@@ -193,6 +197,9 @@ public class Functioncamsjrdll extends ExternalFunction{
 			// push the result on the Stack
 			stack.push(new Float(result));
 		}
+		
+		long t2 = Calendar.getInstance().getTimeInMillis();
+		ControlData.t_cam=ControlData.t_cam+(int) (t2-t1);
 	}
 
 	public native float camsjrdll(int ICALC, int ICODE, float IYPOSX, float IMPOSX, float IYEARX, float IMX, float IFREQODX, float IFREQ1X, float IFREQ2X, float IFREQ3X, float IFREQ4X, float IFREQ5X, float QST_0_1, float QST_0_2, float QST_0_3, float QST_0_4, float QST_1_1, float QST_1_2, float QST_1_3, float QST_1_4, float QST_1_5, float QST_1_6, float QST_1_7, float QST_1_8, float QST_1_9, float QST_1_10, float QST_1_11, float QST_1_12, float QST_2_10, float QST_2_11, float QST_2_12, float QTU_0_1, float QTU_0_2, float QTU_0_3, float QTU_0_4, float QTU_1_10, float QTU_1_11, float QTU_1_12, float QME_0_1, float QME_0_2, float QME_0_3, float QME_0_4, float QME_1_10, float QME_1_11, float QME_1_12, float QSJ_0_1, float QSJ_0_2, float QSJ_0_3, float QSJ_0_4, float QSJ_1_10, float QSJ_1_11, float QSJ_1_12, float PST_0_1, float PST_0_2, float PST_0_3, float PST_0_4, float PST_1_10, float PST_1_11, float PST_1_12, float PTU_0_1, float PTU_0_2, float PTU_0_3, float PTU_0_4, float PTU_1_10, float PTU_1_11, float PTU_1_12, float PME_0_1, float PME_0_2, float PME_0_3, float PME_0_4, float PME_1_10, float PME_1_11, float PME_1_12, float PSJ_0_1, float PSJ_0_2, float PSJ_0_3, float PSJ_0_4, float PSJ_1_10, float PSJ_1_11, float PSJ_1_12);

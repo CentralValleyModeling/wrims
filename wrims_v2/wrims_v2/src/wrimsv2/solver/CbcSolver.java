@@ -217,6 +217,7 @@ public class CbcSolver {
 	}
 	
 	public static void newProblem(){
+		long t1 = Calendar.getInstance().getTimeInMillis();
 		//System.out.println(" current cycle: "+ControlData.currCycleIndex);
 		dvIntPredict = new ArrayList<String>();
 		if (ControlData.useCbcWarmStart) {
@@ -543,7 +544,8 @@ public class CbcSolver {
 			}
 				
 		}
-		
+		long t2 = Calendar.getInstance().getTimeInMillis();
+		ControlData.t_cbc=ControlData.t_cbc+(int) (t2-t1);
 	}
 	
 	public static double getObjValue(){
