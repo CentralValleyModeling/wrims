@@ -131,6 +131,9 @@ public class Functionannlinegen extends ExternalFunction{
 		
 		long t2 = Calendar.getInstance().getTimeInMillis();
 		ControlData.t_ann=ControlData.t_ann+(int) (t2-t1);
+		ControlData.t_annlinegen=ControlData.t_annlinegen+(int) (t2-t1);
+		ControlData.n_ann=ControlData.n_ann+1;
+		ControlData.n_annlinegen=ControlData.n_annlinegen+1;
 	}
 
 	public native float annlinegen(float Qsac_prv0, float Qsac_prv1, float Qsac_prv2, float Qsac_prv3, float Qexp_prv0, float Qexp_prv1, float Qexp_prv2, float Qexp_prv3, float Qsjr_prv0, float Qsjr_prv1, float Qsjr_prv2, float Qsjr_prv3, float Qsjr_fut, float DXC_prv0, float DXC_prv1, float DXC_prv2, float DXC_prv3, float DXC_fut, float DICU_prv0, float DICU_prv1, float DICU_prv2, float DICU_prv3, float DICU_fut, float Qsac_oth_prv0, float Qsac_oth_prv1, float Qsac_oth_prv2, float Qsac_oth_prv3, float Qsac_oth_fut, float Qexp_oth_prv0, float Qexp_oth_prv1, float Qexp_oth_prv2, float Qexp_oth_prv3, float Qexp_oth_fut, float VernEC_prv0, float VernEC_prv1, float VernEC_prv2, float VernEC_prv3, float VernEC_fut, int mon0, int mon1, int mon2, int mon3, int mon4, float ECTARGET, float linear1, float linear2, int location, int variable, int ave_type, int currMonth, int currYear, int ForceOption);

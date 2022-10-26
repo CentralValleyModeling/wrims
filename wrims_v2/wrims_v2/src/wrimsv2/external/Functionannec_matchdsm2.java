@@ -2,6 +2,8 @@ package wrimsv2.external;
 
 import java.util.*;
 
+import wrimsv2.components.ControlData;
+
 public class Functionannec_matchdsm2 extends ExternalFunction{
 	private final boolean DEBUG = false;
 
@@ -11,6 +13,8 @@ public class Functionannec_matchdsm2 extends ExternalFunction{
 	}
 
 	public void execute(Stack stack) {
+		
+		long t1 = Calendar.getInstance().getTimeInMillis();
 		
 		if (stack.size()==57){
 			//values in reverse order:
@@ -257,6 +261,12 @@ public class Functionannec_matchdsm2 extends ExternalFunction{
 			// push the result on the Stack
 			stack.push(new Float(result));
 		}
+		
+		long t2 = Calendar.getInstance().getTimeInMillis();
+		ControlData.t_ann=ControlData.t_ann+(int) (t2-t1);
+		ControlData.t_annec_matchdsm2=ControlData.t_annec_matchdsm2+(int) (t2-t1);
+		ControlData.n_ann=ControlData.n_ann+1;
+		ControlData.n_annec_matchdsm2=ControlData.n_annec_matchdsm2+1;
 	}
 
 	public native float annec_matchdsm2(float Qsac_prv0, float Qsac_prv1, float Qsac_prv2, float Qsac_prv3, float Qsac_prv4, float Qsac_prv5, float Qsac_prv6, float Qexp_prv0, float Qexp_prv1, float Qexp_prv2, float Qexp_prv3, float Qexp_prv4, float Qsjr_prv0, float Qsjr_prv1, float Qsjr_prv2, float Qsjr_prv3, float Qsjr_prv4, float Qsjr_prv5, float Qsjr_prv6, float DXC_prv0, float DXC_prv1, float DXC_prv2, float DXC_prv3, float DXC_prv4, float DICU_prv0, float DICU_prv1, float DICU_prv2, float DICU_prv3, float DICU_prv4, float Qsac_oth_prv0, float Qsac_oth_prv1, float Qsac_oth_prv2, float Qsac_oth_prv3, float Qsac_oth_prv4, float Qexp_oth_prv0, float Qexp_oth_prv1, float Qexp_oth_prv2, float Qexp_oth_prv3, float Qexp_oth_prv4, float VernEC_prv0, float VernEC_prv1, float VernEC_prv2, float VernEC_prv3, float VernEC_prv4, int mon0, int mon1, int mon2, int mon3, int mon4, int mon5, int mon6, int location, int ave_type, int currMonth, int currYear, int BeginDay, int EndDay);

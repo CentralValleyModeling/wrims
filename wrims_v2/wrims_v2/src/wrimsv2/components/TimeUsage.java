@@ -15,8 +15,21 @@ public class TimeUsage {
 		System.out.println("XA Time Usage: "+ControlData.t_xa/60000+"min "+Math.round((ControlData.t_xa/60000.0-ControlData.t_xa/60000)*60)+"sec");
 		System.out.println("Process Alias Time Usage: "+ControlData.t_as/60000+"min "+Math.round((ControlData.t_as/60000.0-ControlData.t_as/60000)*60)+"sec");
 		System.out.println("Write Dss Time Usage: "+ControlData.t_writeDss/60000+"min "+Math.round((ControlData.t_writeDss/60000.0-ControlData.t_writeDss/60000)*60)+"sec");
-		System.out.println("ANN Time Usage: "+ControlData.t_ann/60000+"min "+Math.round((ControlData.t_ann/60000.0-ControlData.t_ann/60000)*60)+"sec");
 		System.out.println("CAM Time Usage: "+ControlData.t_cam/60000+"min "+Math.round((ControlData.t_cam/60000.0-ControlData.t_cam/60000)*60)+"sec");
+		System.out.println("ANN Time Usage: "+ControlData.t_ann/60000+"min "+Math.round((ControlData.t_ann/60000.0-ControlData.t_ann/60000)*60)+"sec");
+		System.out.println("ANN Number of Calls: "+ControlData.n_ann);
+		System.out.println("ANN EC Time Usage: "+ControlData.t_annec/60000+"min "+Math.round((ControlData.t_annec/60000.0-ControlData.t_annec/60000)*60)+"sec");
+		System.out.println("ANN EC Number of Calls: "+ControlData.n_annec);
+		System.out.println("ANN Linegen Time Usage: "+ControlData.t_annlinegen/60000+"min "+Math.round((ControlData.t_annlinegen/60000.0-ControlData.t_annlinegen/60000)*60)+"sec");
+		System.out.println("ANN Linegen Number of Calls: "+ControlData.n_annlinegen);
+		System.out.println("ANN EC Match DSM2 Time Usage: "+ControlData.t_annec_matchdsm2/60000+"min "+Math.round((ControlData.t_annec_matchdsm2/60000.0-ControlData.t_annec_matchdsm2/60000)*60)+"sec");
+		System.out.println("ANN EC Match DSM2 Number of Calls: "+ControlData.n_annec_matchdsm2);
+		System.out.println("ANN X2 Time Usage: "+ControlData.t_annx2/60000+"min "+Math.round((ControlData.t_annx2/60000.0-ControlData.t_annx2/60000)*60)+"sec");
+		System.out.println("ANN X2 Number of Calls: "+ControlData.n_annx2);
+		System.out.println("ANN Get NDO X2 Time Usage: "+ControlData.t_anngetndo_x2/60000+"min "+Math.round((ControlData.t_anngetndo_x2/60000.0-ControlData.t_anngetndo_x2/60000)*60)+"sec");
+		System.out.println("ANN Get NDO X2 Number of Calls: "+ControlData.n_anngetndo_x2);
+		System.out.println("ANN Get NDO X2 Split Time Usage: "+ControlData.t_anngetndo_x2_curmonndosplit/60000+"min "+Math.round((ControlData.t_anngetndo_x2_curmonndosplit/60000.0-ControlData.t_anngetndo_x2_curmonndosplit/60000)*60)+"sec");
+		System.out.println("ANN Get NDO X2 Split Number of Calls: "+ControlData.n_anngetndo_x2_curmonndosplit);
 	}
 	
 }

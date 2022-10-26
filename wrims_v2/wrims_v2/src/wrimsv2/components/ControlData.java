@@ -194,9 +194,22 @@ public class ControlData {
 	public static int t_as=0;
 	public static int t_readTs=0;
 	public static int t_writeDss=0;
-	public static int t_ann=0;
 	public static int t_cam=0;
 	public static int t_parse=0;
+	public static int t_ann=0;
+	public static int n_ann=0;
+	public static int t_annx2=0;
+	public static int n_annx2=0;
+	public static int t_annec=0;
+	public static int n_annec=0;
+	public static int t_annlinegen=0;
+	public static int n_annlinegen=0;
+	public static int t_anngetndo_x2=0;
+	public static int n_anngetndo_x2=0;
+	public static int t_anngetndo_x2_curmonndosplit=0;
+	public static int n_anngetndo_x2_curmonndosplit=0;
+	public static int t_annec_matchdsm2=0;
+	public static int n_annec_matchdsm2=0;
 	
 	public ControlData(){
 	}

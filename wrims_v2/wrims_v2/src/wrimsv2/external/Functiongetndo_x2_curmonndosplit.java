@@ -75,6 +75,9 @@ public class Functiongetndo_x2_curmonndosplit extends ExternalFunction{
 		
 		long t2 = Calendar.getInstance().getTimeInMillis();
 		ControlData.t_ann=ControlData.t_ann+(int) (t2-t1);
+		ControlData.t_anngetndo_x2_curmonndosplit=ControlData.t_anngetndo_x2_curmonndosplit+(int) (t2-t1);
+		ControlData.n_ann=ControlData.n_ann+1;
+		ControlData.n_anngetndo_x2_curmonndosplit=ControlData.n_anngetndo_x2_curmonndosplit+1;
 	}
 
 	public native float getndo_x2_curmonndosplit(float X2, float X2_prv0, float X2_prv1, float X2_prv2, float X2_prv3, float X2_prv4, float DO_prv0, float DO_prv1, float DO_prv2, float DO_prv3, float DO_prv4_1, float DO_prv4_2, int mon0, int mon1, int mon2, int mon3, int mon4, int mon4_1, int mon4_2, int ave_type, int currMonth, int currYear, int BeginDay, int EndDay);
