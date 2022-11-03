@@ -519,7 +519,7 @@ public class ValueEvaluation {
 				}
 			}
 		}
-		Error.addEvaluationError("The data requested for timeseries "+ident+" is outside of the time frame provided in dss file.");
+		Error.addEvaluationError("The data requested for timeseries "+ident+" does not match the entries in the dss file. Please check the name, kind, unit, and requested time period.");
 		return 1.0;
 	}
 	
@@ -576,7 +576,7 @@ public class ValueEvaluation {
 			return result;
 		}
 		
-		Error.addEvaluationError("The data requested for timeseries "+ident+" is outside of the time frame provided in dss file.");
+		Error.addEvaluationError("The data requested for timeseries "+ident+" does not match the entries in the dss file. Please check the name, kind, unit, and requested time period.");
 		return 1.0;
 	}
 	
@@ -651,7 +651,7 @@ public class ValueEvaluation {
 			return result;
 		}
 		
-		Error.addEvaluationError("The data requested for timeseries "+ident+" is outside of the time frame provided in dss file.");
+		Error.addEvaluationError("The data requested for timeseries "+ident+" does not match the entries in the dss file. Please check the name, kind, unit, and requested time period.");
 		return 1.0;
 	}
 	
@@ -717,7 +717,7 @@ public class ValueEvaluation {
 			return result;
 		}
 		
-		Error.addEvaluationError("The data requested for timeseries "+ident+" is outside of the time frame provided in dss file.");
+		Error.addEvaluationError("The data requested for timeseries "+ident+" does not match the entries in the dss file. Please check the name, kind, unit, and requested time period.");
 		return 1.0;
 	}
 	
