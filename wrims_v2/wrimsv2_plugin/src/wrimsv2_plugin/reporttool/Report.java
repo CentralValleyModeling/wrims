@@ -412,7 +412,7 @@ public class Report {
 					double diff = avgAlt - avgBase;
 					double pctDiff = Double.NaN;
 					if (avgBase != 0) {
-						pctDiff = diff / avgBase * 100;
+						pctDiff = diff / Math.abs(avgBase) * 100;
 					}
 					rowData.add(formatDoubleValue(diff));
 					rowData.add(formatDoubleValue(pctDiff));
