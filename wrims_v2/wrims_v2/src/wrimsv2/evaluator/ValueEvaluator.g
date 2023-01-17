@@ -290,6 +290,7 @@ term returns [IntDouble id]
 	| (FLOAT {id=ValueEvaluation.term_FLOAT($FLOAT.text);}) 
 	| ('(' (e=expression) ')' {id=$e.id;})
 	| (knownTS{id=ValueEvaluation.term_knownTS($knownTS.result);}) 
+	| pastTSFV{id=$pastTSFV.result;}
 	| func{id=$func.id;}
 	| (INTEGER {id=ValueEvaluation.term_INTEGER($INTEGER.text);})
 	| tafcfs_term{id=$tafcfs_term.id;}
@@ -312,7 +313,11 @@ tafcfs_term returns [IntDouble id]: TAFCFS ('(' expression ')')? {
 knownTS returns [IntDouble result]  
   : (f=function{result=$f.result;})|(p=pastCycleValue {result=$p.result;}) 
   ;
-  
+
+pastTSFV returns[IntDouble result]
+  : i1=IDENT '{' e1=expression '}' '(' e2=expression ')' {result=ValueEvaluation.pastTSFV($i1.text, $e1.id, $e2.id, prvs);}
+  ; 
+    
 pastCycleValue returns [IntDouble result]
   : (p1=pastCycleNoTimeArray{return $p1.result;})|(p2=pastCycleTimeArray{return $p2.result;})|(p3=pastCycleIndexNoTimeArray{return $p3.result;})|(p4=pastCycleIndexTimeArray{return $p4.result;})
   ;

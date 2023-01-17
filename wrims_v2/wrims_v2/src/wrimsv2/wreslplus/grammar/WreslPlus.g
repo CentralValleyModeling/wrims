@@ -949,9 +949,14 @@ atom
     |  externalFunc
     |  vf=varFunc     {if (isParameter) dependants_notAllowed.add($vf.text);}    
     |  p=preCycleVar  {if (isParameter) dependants_notAllowed.add($p.text);}   
+    |  pastTSFV
     ;
 
 specialVar : 'i' | '$m' | '$M';
+
+pastTSFV 
+  : i1=varID '{' e1=expr_add '}' '(' e2=expr_add ')' 
+  ; 
 
 preCycleVar
 	:  p1=preCycleVar_old {varInCycle.add($p1.text);} | p2=preCycleVarIndex {varInCycle.add($p2.text);}
