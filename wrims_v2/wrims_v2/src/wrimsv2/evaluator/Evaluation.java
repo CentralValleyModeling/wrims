@@ -1065,31 +1065,45 @@ public class Evaluation {
 		return svarTimeSeries(tsName, 0, prvs);
 	}
 	
-	public static IntDouble pastTSFV(String ident, EvalExpression ee1, EvalExpression ee2,  ParallelVars prvs){
+	public static EvalExpression pastTSFV(String ident, EvalExpression ee1, ArrayList<ArrayList<EvalExpression>> eeArray,  ParallelVars prvs){
+		//turn off when multi-dimensional array is used
+		if (eeArray.size()!=1){
+			Error.addEvaluationError("The future index of array variable "+ident+" has to be a single integer.");
+			return new EvalExpression(new IntDouble(1.0,false));
+		}
+		//
+		
+		ArrayList<EvalExpression> ee2Array = eeArray.get(0);
+		if (ee2Array.size() !=1){
+			Error.addEvaluationError("The future index of array variable "+ident+" has to be a single integer but not a range.");
+			return new EvalExpression(new IntDouble(1.0,false));
+		}
+		EvalExpression ee2 = ee2Array.get(0);
+		
 		if (!ee1.isNumeric() || !ee2.isNumeric()){
 			Error.addEvaluationError("The index of array variable "+ident+" has to be an integer.");
-			return new IntDouble(1.0,false);
+			return new EvalExpression(new IntDouble(1.0,false));
 		}
 		IntDouble id1=ee1.getValue();
 		IntDouble id2=ee2.getValue();
 		if (!id1.isInt() || !id2.isInt()){
 			Error.addEvaluationError("The index of array variable "+ident+" has to be an integer.");
-			return new IntDouble(1.0,false);
+			return new EvalExpression(new IntDouble(1.0,false));
 		}
 		int i1 = id1.getData().intValue();
 		int i2 = id2.getData().intValue();
 		
 		if (i1>=0){
 			Error.addEvaluationError("The first index of array variable "+ident+" has to be less than 0.");
-			return new IntDouble(1.0,false);
+			return new EvalExpression(new IntDouble(1.0,false));
 		}
 		if (i2<0){
 			Error.addEvaluationError("The second index of array variable "+ident+" has to be larger or equal than 0.");
-			return new IntDouble(1.0,false);
+			return new EvalExpression(new IntDouble(1.0,false));
 		}
 		if (!ControlData.currDvMap.containsKey(ident) && !ControlData.currAliasMap.containsKey(ident)){
 			Error.addEvaluationError("The array variable "+ident+" is not a dvar or alias. The value from the past time step could not be retrieved.");
-			return new IntDouble(1.0,false);
+			return new EvalExpression(new IntDouble(1.0,false));
 		}
 		String vn=ident+"__fut__"+i2;
 		String entryNameTS=DssOperation.entryNameTS(vn, ControlData.timeStep);
@@ -1102,19 +1116,19 @@ public class Evaluation {
 				double[] datafl=ddsfl.getData();
 				if (index>=datafl.length){
 					Error.addEvaluationError(vn + " at timestep " +i1+" doesn't have value.");
-					return new IntDouble(1.0,false);
+					return new EvalExpression(new IntDouble(1.0,false));
 				}else if (index>=0){
-					return new IntDouble(datafl[index], false);
+					return new EvalExpression(new IntDouble(datafl[index], false));
 				}else{
 					Error.addEvaluationError(vn + " at timestep " +i1+" doesn't have value.");
-					return new IntDouble(1.0,false);
+					return new EvalExpression(new IntDouble(1.0,false));
 				}
 			}
 			
 			if (DataTimeSeries.dvAliasInit.containsKey(entryNameTS)){
 				if (!getDVAliasInitTimeseries(ident)){
 					Error.addEvaluationError("Initial file doesn't have data for decision vairiable/alias " +vn);
-					return new IntDouble(1.0,false);
+					return new EvalExpression(new IntDouble(1.0,false));
 				}
 				
 				DssDataSet dds=DataTimeSeries.dvAliasInit.get(entryNameTS);
@@ -1124,20 +1138,20 @@ public class Evaluation {
 					double result=data.get(index);
 					if (result==-901.0 || result==-902.0){
 						Error.addEvaluationError("Initial file doesn't have data for decision vairiable/alias " + vn + " at time step "+i1+".");
-						return new IntDouble(1.0,false);
+						return new EvalExpression(new IntDouble(1.0,false));
 					}
-					return new IntDouble(result, false);
+					return new EvalExpression(new IntDouble(result, false));
 				}else{
 					Error.addEvaluationError("Initial file doesn't have data for decision vairiable/alias " + vn + " at time step "+i1+".");
-					return new IntDouble(1.0,false);
+					return new EvalExpression(new IntDouble(1.0,false));
 				}
 			}else{
 				Error.addEvaluationError(vn + " doesn't have value.");
-				return new IntDouble(1.0,false);
+				return new EvalExpression(new IntDouble(1.0,false));
 			}
 		}else{
 			Error.addEvaluationError(vn + "doesn't exist.");
-			return new IntDouble(1.0,false);
+			return new EvalExpression(new IntDouble(1.0,false));
 		}
 	}
 	

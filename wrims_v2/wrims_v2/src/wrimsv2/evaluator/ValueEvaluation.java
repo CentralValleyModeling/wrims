@@ -805,7 +805,21 @@ public class ValueEvaluation {
 		return new IntDouble(data.getData(),data.isInt());
 	}
 	
-	public static IntDouble pastTSFV(String ident, IntDouble id1, IntDouble id2, ParallelVars prvs) {
+	public static IntDouble pastTSFV(String ident, IntDouble id1, ArrayList<ArrayList<IntDouble>> idArray, ParallelVars prvs) {
+		//turn off when multi-dimensional array is used
+		if (idArray.size()!=1){
+			Error.addEvaluationError("The future index of array variable "+ident+" has to be a single integer.");
+			return new IntDouble(1.0,false);
+		}
+		//
+		
+		ArrayList<IntDouble> id2Array = idArray.get(0);
+		if (id2Array.size() !=1){
+			Error.addEvaluationError("The future index of array variable "+ident+" has to be a single integer but not a range.");
+			return new IntDouble(1.0,false);
+		}
+		IntDouble id2 = id2Array.get(0);
+		
 		if (!id1.isInt() || !id2.isInt()){
 			Error.addEvaluationError("The index of array variable "+ident+" has to be an integer.");
 			return new IntDouble(1.0,false);

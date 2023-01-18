@@ -297,7 +297,6 @@ term returns [EvalExpression ee]
 	| (FLOAT {ee=Evaluation.term_FLOAT($FLOAT.text);}) 
 	| ('(' (e=expression) ')' {ee=$e.ee;})
 	| pastCycleValue{ee=Evaluation.term_knownTS($pastCycleValue.result);}
-	| pastTSFV{ee=Evaluation.term_knownTS($pastTSFV.result);}
 	| function{ee=$function.ee;}
 	| func{ee=$func.ee;}
 	| (INTEGER {ee=Evaluation.term_INTEGER($INTEGER.text);}) 
@@ -317,10 +316,6 @@ term returns [EvalExpression ee]
 tafcfs_term returns [EvalExpression ee]: TAFCFS ('(' expression ')')? {
     ee=Evaluation.tafcfs_term($TAFCFS.text, $expression.ee, sumIndex);
 };
-
-pastTSFV returns[IntDouble result]
-  : i1=IDENT '{' e1=expression '}' '(' e2=expression ')' {result=Evaluation.pastTSFV($i1.text, $e1.ee, $e2.ee, prvs);}
-  ; 
 	  
 pastCycleValue returns[IntDouble result]
   : (p1=pastCycleNoTimeArray{return $p1.result;})|(p2=pastCycleTimeArray{return $p2.result;})|(p3=pastCycleIndexNoTimeArray{return $p3.result;})|(p4=pastCycleIndexTimeArray{return $p4.result;})
@@ -349,13 +344,17 @@ function returns [EvalExpression ee]
 noArgFunction returns [EvalExpression ee]
   : IDENT '(' ')' {ee=Evaluation.noArgFunction($IDENT.text);};
 
-argFunction returns [EvalExpression ee] @init{ArrayList<ArrayList<EvalExpression>> eeArray = new ArrayList<ArrayList<EvalExpression>>();}
+argFunction returns [EvalExpression ee] @init{ArrayList<ArrayList<EvalExpression>> eeArray = new ArrayList<ArrayList<EvalExpression>>(); ArrayList<EvalExpression> ee0Array=new ArrayList<EvalExpression>();}
   : IDENT '(' (e1=expression {ArrayList<EvalExpression> eeArray1=new ArrayList<EvalExpression>(); eeArray1.add($e1.ee); eeArray.add(eeArray1);}
     |t1=trunk_timeArray{eeArray.add($t1.eeArray);}) 
     (';' (e2=expression{ArrayList<EvalExpression> eeArray1=new ArrayList<EvalExpression>(); eeArray1.add($e2.ee); eeArray.add(eeArray1);}
-    |t2=trunk_timeArray{eeArray.add($t2.eeArray);}))* ')'
+    |t2=trunk_timeArray{eeArray.add($t2.eeArray);}))* ')' ('(' e0=expression {ee0Array.add($e0.ee);} ')')?
     {
-      ee=Evaluation.argFunction($IDENT.text,eeArray,sumIndex);
+        if (ee0Array.size()==0){
+          ee=Evaluation.argFunction($IDENT.text,eeArray,sumIndex);   
+        }else{
+          ee=Evaluation.pastTSFV($IDENT.text, $e0.ee, eeArray, prvs);
+        }
     };
 
 trunk_timeArray returns[ArrayList<EvalExpression> eeArray] @init{eeArray = new ArrayList<EvalExpression>(); IntDouble start=new IntDouble(1, true);  IntDouble end=new IntDouble(1, true);}

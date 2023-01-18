@@ -290,7 +290,6 @@ term returns [IntDouble id]
 	| (FLOAT {id=ValueEvaluation.term_FLOAT($FLOAT.text);}) 
 	| ('(' (e=expression) ')' {id=$e.id;})
 	| (knownTS{id=ValueEvaluation.term_knownTS($knownTS.result);}) 
-	| pastTSFV{id=$pastTSFV.result;}
 	| func{id=$func.id;}
 	| (INTEGER {id=ValueEvaluation.term_INTEGER($INTEGER.text);})
 	| tafcfs_term{id=$tafcfs_term.id;}
@@ -313,10 +312,6 @@ tafcfs_term returns [IntDouble id]: TAFCFS ('(' expression ')')? {
 knownTS returns [IntDouble result]  
   : (f=function{result=$f.result;})|(p=pastCycleValue {result=$p.result;}) 
   ;
-
-pastTSFV returns[IntDouble result]
-  : i1=IDENT '{' e1=expression '}' '(' e2=expression ')' {result=ValueEvaluation.pastTSFV($i1.text, $e1.id, $e2.id, prvs);}
-  ; 
     
 pastCycleValue returns [IntDouble result]
   : (p1=pastCycleNoTimeArray{return $p1.result;})|(p2=pastCycleTimeArray{return $p2.result;})|(p3=pastCycleIndexNoTimeArray{return $p3.result;})|(p4=pastCycleIndexTimeArray{return $p4.result;})
@@ -345,13 +340,17 @@ function returns [IntDouble result]
 noArgFunction returns [IntDouble result]
   : IDENT '(' ')' {result=ValueEvaluation.noArgFunction($IDENT.text);};
 
-argFunction returns [IntDouble result] @init{ArrayList<ArrayList<IntDouble>> idArray = new ArrayList<ArrayList<IntDouble>>();}
+argFunction returns [IntDouble result] @init{ArrayList<ArrayList<IntDouble>> idArray = new ArrayList<ArrayList<IntDouble>>(); ArrayList<IntDouble> id0Array=new ArrayList<IntDouble>();}
   : IDENT '(' (e1=expression {ArrayList<IntDouble> idArray1=new ArrayList<IntDouble>(); idArray1.add($e1.id); idArray.add(idArray1);} 
   | t1=trunk_timeArray{idArray.add($t1.idArray);}) 
   (';' (e2=expression{ArrayList<IntDouble> idArray1=new ArrayList<IntDouble>(); idArray1.add($e2.id); idArray.add(idArray1);}
-  |t2=trunk_timeArray{idArray.add($t2.idArray);}))* ')' 
+  |t2=trunk_timeArray{idArray.add($t2.idArray);}))* ')' ('(' e0=expression {id0Array.add($e0.id);} ')')?
   {
-    result=ValueEvaluation.argFunction($IDENT.text,idArray);
+    if (id0Array.size()==0) {
+      result=ValueEvaluation.argFunction($IDENT.text,idArray);
+    }else{
+      result=ValueEvaluation.pastTSFV($IDENT.text, $e0.id, idArray, prvs);
+    }
   };
 
 trunk_timeArray returns[ArrayList<IntDouble> idArray] @init{idArray = new ArrayList<IntDouble>(); IntDouble start=new IntDouble(1, true);  IntDouble end=new IntDouble(1, true);}
