@@ -10734,6 +10734,12 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
             case Include:
                 {
                 switch ( input.LA(2) ) {
+                case LeftSquareBracket:
+                case RULE_STRING:
+                    {
+                    alt7=2;
+                    }
+                    break;
                 case Model:
                     {
                     alt7=3;
@@ -10742,12 +10748,6 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
                 case Group:
                     {
                     alt7=4;
-                    }
-                    break;
-                case LeftSquareBracket:
-                case RULE_STRING:
-                    {
-                    alt7=2;
                     }
                     break;
                 default:
@@ -14214,11 +14214,11 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
             if ( (LA43_0==Integer) ) {
                 int LA43_1 = input.LA(2);
 
-                if ( (LA43_1==Lower||LA43_1==Upper) ) {
-                    alt43=2;
-                }
-                else if ( (LA43_1==Std) ) {
+                if ( (LA43_1==Std) ) {
                     alt43=1;
+                }
+                else if ( (LA43_1==Lower||LA43_1==Upper) ) {
+                    alt43=2;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return ;}
@@ -21981,11 +21981,11 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
                         {
                         int LA117_6 = input.LA(4);
 
-                        if ( ((LA117_6>=RightParenthesis && LA117_6<=Solidus)) ) {
-                            alt117=1;
-                        }
-                        else if ( (LA117_6==Colon) ) {
+                        if ( (LA117_6==Colon) ) {
                             alt117=2;
+                        }
+                        else if ( ((LA117_6>=RightParenthesis && LA117_6<=Solidus)) ) {
+                            alt117=1;
                         }
                         else {
                             if (state.backtracking>0) {state.failed=true; return ;}
@@ -22101,11 +22101,79 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
             else if ( (LA118_0==RULE_ID) ) {
                 int LA118_2 = input.LA(2);
 
-                if ( (LA118_2==EOF||(LA118_2>=RightParenthesis && LA118_2<=Solidus)||LA118_2==LeftSquareBracket) ) {
-                    alt118=1;
-                }
-                else if ( (LA118_2==LeftParenthesis) ) {
+                if ( (LA118_2==LeftParenthesis) ) {
                     switch ( input.LA(3) ) {
+                    case RULE_INT:
+                        {
+                        int LA118_4 = input.LA(4);
+
+                        if ( ((LA118_4>=RightParenthesis && LA118_4<=Solidus)) ) {
+                            alt118=1;
+                        }
+                        else if ( (LA118_4==Colon) ) {
+                            alt118=2;
+                        }
+                        else {
+                            if (state.backtracking>0) {state.failed=true; return ;}
+                            NoViableAltException nvae =
+                                new NoViableAltException("", 118, 4, input);
+
+                            throw nvae;
+                        }
+                        }
+                        break;
+                    case HyphenMinus:
+                        {
+                        int LA118_5 = input.LA(4);
+
+                        if ( (LA118_5==RULE_INT) ) {
+                            int LA118_8 = input.LA(5);
+
+                            if ( ((LA118_8>=RightParenthesis && LA118_8<=Solidus)) ) {
+                                alt118=1;
+                            }
+                            else if ( (LA118_8==Colon) ) {
+                                alt118=2;
+                            }
+                            else {
+                                if (state.backtracking>0) {state.failed=true; return ;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("", 118, 8, input);
+
+                                throw nvae;
+                            }
+                        }
+                        else if ( ((LA118_5>=Daysintimestep && LA118_5<=Daysinmonth)||LA118_5==Wateryear||LA118_5==Cfs_taf||(LA118_5>=Prevapr && LA118_5<=Daysin)||LA118_5==Month||(LA118_5>=Apr && LA118_5<=Jun)||(LA118_5>=Mar && LA118_5<=Oct)||LA118_5==Sep||LA118_5==M||LA118_5==LeftParenthesis||LA118_5==I||(LA118_5>=RULE_MIN && LA118_5<=RULE_ACOT)||LA118_5==RULE_FLOAT||LA118_5==RULE_ID) ) {
+                            alt118=1;
+                        }
+                        else {
+                            if (state.backtracking>0) {state.failed=true; return ;}
+                            NoViableAltException nvae =
+                                new NoViableAltException("", 118, 5, input);
+
+                            throw nvae;
+                        }
+                        }
+                        break;
+                    case RULE_ID:
+                        {
+                        int LA118_6 = input.LA(4);
+
+                        if ( ((LA118_6>=LeftParenthesis && LA118_6<=Solidus)||LA118_6==LeftSquareBracket) ) {
+                            alt118=1;
+                        }
+                        else if ( (LA118_6==Colon) ) {
+                            alt118=2;
+                        }
+                        else {
+                            if (state.backtracking>0) {state.failed=true; return ;}
+                            NoViableAltException nvae =
+                                new NoViableAltException("", 118, 6, input);
+
+                            throw nvae;
+                        }
+                        }
+                        break;
                     case Daysintimestep:
                     case Daysinmonth:
                     case Wateryear:
@@ -22166,77 +22234,6 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
                         alt118=1;
                         }
                         break;
-                    case HyphenMinus:
-                        {
-                        int LA118_4 = input.LA(4);
-
-                        if ( (LA118_4==RULE_INT) ) {
-                            int LA118_7 = input.LA(5);
-
-                            if ( (LA118_7==Colon) ) {
-                                alt118=2;
-                            }
-                            else if ( ((LA118_7>=RightParenthesis && LA118_7<=Solidus)) ) {
-                                alt118=1;
-                            }
-                            else {
-                                if (state.backtracking>0) {state.failed=true; return ;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("", 118, 7, input);
-
-                                throw nvae;
-                            }
-                        }
-                        else if ( ((LA118_4>=Daysintimestep && LA118_4<=Daysinmonth)||LA118_4==Wateryear||LA118_4==Cfs_taf||(LA118_4>=Prevapr && LA118_4<=Daysin)||LA118_4==Month||(LA118_4>=Apr && LA118_4<=Jun)||(LA118_4>=Mar && LA118_4<=Oct)||LA118_4==Sep||LA118_4==M||LA118_4==LeftParenthesis||LA118_4==I||(LA118_4>=RULE_MIN && LA118_4<=RULE_ACOT)||LA118_4==RULE_FLOAT||LA118_4==RULE_ID) ) {
-                            alt118=1;
-                        }
-                        else {
-                            if (state.backtracking>0) {state.failed=true; return ;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("", 118, 4, input);
-
-                            throw nvae;
-                        }
-                        }
-                        break;
-                    case RULE_ID:
-                        {
-                        int LA118_5 = input.LA(4);
-
-                        if ( ((LA118_5>=LeftParenthesis && LA118_5<=Solidus)||LA118_5==LeftSquareBracket) ) {
-                            alt118=1;
-                        }
-                        else if ( (LA118_5==Colon) ) {
-                            alt118=2;
-                        }
-                        else {
-                            if (state.backtracking>0) {state.failed=true; return ;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("", 118, 5, input);
-
-                            throw nvae;
-                        }
-                        }
-                        break;
-                    case RULE_INT:
-                        {
-                        int LA118_6 = input.LA(4);
-
-                        if ( (LA118_6==Colon) ) {
-                            alt118=2;
-                        }
-                        else if ( ((LA118_6>=RightParenthesis && LA118_6<=Solidus)) ) {
-                            alt118=1;
-                        }
-                        else {
-                            if (state.backtracking>0) {state.failed=true; return ;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("", 118, 6, input);
-
-                            throw nvae;
-                        }
-                        }
-                        break;
                     default:
                         if (state.backtracking>0) {state.failed=true; return ;}
                         NoViableAltException nvae =
@@ -22245,6 +22242,9 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
                         throw nvae;
                     }
 
+                }
+                else if ( (LA118_2==EOF||(LA118_2>=RightParenthesis && LA118_2<=Solidus)||LA118_2==LeftSquareBracket) ) {
+                    alt118=1;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return ;}
@@ -53339,17 +53339,22 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ExternalFunction1__Group__4"
-    // InternalWreslEditorParser.g:17563:1: rule__ExternalFunction1__Group__4 : rule__ExternalFunction1__Group__4__Impl ;
+    // InternalWreslEditorParser.g:17563:1: rule__ExternalFunction1__Group__4 : rule__ExternalFunction1__Group__4__Impl rule__ExternalFunction1__Group__5 ;
     public final void rule__ExternalFunction1__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:17567:1: ( rule__ExternalFunction1__Group__4__Impl )
-            // InternalWreslEditorParser.g:17568:2: rule__ExternalFunction1__Group__4__Impl
+            // InternalWreslEditorParser.g:17567:1: ( rule__ExternalFunction1__Group__4__Impl rule__ExternalFunction1__Group__5 )
+            // InternalWreslEditorParser.g:17568:2: rule__ExternalFunction1__Group__4__Impl rule__ExternalFunction1__Group__5
             {
-            pushFollow(FOLLOW_2);
+            pushFollow(FOLLOW_45);
             rule__ExternalFunction1__Group__4__Impl();
+
+            state._fsp--;
+            if (state.failed) return ;
+            pushFollow(FOLLOW_2);
+            rule__ExternalFunction1__Group__5();
 
             state._fsp--;
             if (state.failed) return ;
@@ -53372,17 +53377,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ExternalFunction1__Group__4__Impl"
-    // InternalWreslEditorParser.g:17574:1: rule__ExternalFunction1__Group__4__Impl : ( RightParenthesis ) ;
+    // InternalWreslEditorParser.g:17575:1: rule__ExternalFunction1__Group__4__Impl : ( RightParenthesis ) ;
     public final void rule__ExternalFunction1__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:17578:1: ( ( RightParenthesis ) )
-            // InternalWreslEditorParser.g:17579:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:17579:1: ( ( RightParenthesis ) )
+            // InternalWreslEditorParser.g:17580:1: ( RightParenthesis )
             {
-            // InternalWreslEditorParser.g:17579:1: ( RightParenthesis )
-            // InternalWreslEditorParser.g:17580:1: RightParenthesis
+            // InternalWreslEditorParser.g:17580:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:17581:1: RightParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExternalFunction1Access().getRightParenthesisKeyword_4()); 
@@ -53412,15 +53417,110 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
     // $ANTLR end "rule__ExternalFunction1__Group__4__Impl"
 
 
+    // $ANTLR start "rule__ExternalFunction1__Group__5"
+    // InternalWreslEditorParser.g:17594:1: rule__ExternalFunction1__Group__5 : rule__ExternalFunction1__Group__5__Impl ;
+    public final void rule__ExternalFunction1__Group__5() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalWreslEditorParser.g:17598:1: ( rule__ExternalFunction1__Group__5__Impl )
+            // InternalWreslEditorParser.g:17599:2: rule__ExternalFunction1__Group__5__Impl
+            {
+            pushFollow(FOLLOW_2);
+            rule__ExternalFunction1__Group__5__Impl();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__ExternalFunction1__Group__5"
+
+
+    // $ANTLR start "rule__ExternalFunction1__Group__5__Impl"
+    // InternalWreslEditorParser.g:17605:1: rule__ExternalFunction1__Group__5__Impl : ( ( rule__ExternalFunction1__Group_5__0 )? ) ;
+    public final void rule__ExternalFunction1__Group__5__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalWreslEditorParser.g:17609:1: ( ( ( rule__ExternalFunction1__Group_5__0 )? ) )
+            // InternalWreslEditorParser.g:17610:1: ( ( rule__ExternalFunction1__Group_5__0 )? )
+            {
+            // InternalWreslEditorParser.g:17610:1: ( ( rule__ExternalFunction1__Group_5__0 )? )
+            // InternalWreslEditorParser.g:17611:1: ( rule__ExternalFunction1__Group_5__0 )?
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getExternalFunction1Access().getGroup_5()); 
+            }
+            // InternalWreslEditorParser.g:17612:1: ( rule__ExternalFunction1__Group_5__0 )?
+            int alt193=2;
+            int LA193_0 = input.LA(1);
+
+            if ( (LA193_0==LeftParenthesis) ) {
+                alt193=1;
+            }
+            switch (alt193) {
+                case 1 :
+                    // InternalWreslEditorParser.g:17612:2: rule__ExternalFunction1__Group_5__0
+                    {
+                    pushFollow(FOLLOW_2);
+                    rule__ExternalFunction1__Group_5__0();
+
+                    state._fsp--;
+                    if (state.failed) return ;
+
+                    }
+                    break;
+
+            }
+
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getExternalFunction1Access().getGroup_5()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__ExternalFunction1__Group__5__Impl"
+
+
     // $ANTLR start "rule__ExternalFunction1__Group_3__0"
-    // InternalWreslEditorParser.g:17603:1: rule__ExternalFunction1__Group_3__0 : rule__ExternalFunction1__Group_3__0__Impl rule__ExternalFunction1__Group_3__1 ;
+    // InternalWreslEditorParser.g:17634:1: rule__ExternalFunction1__Group_3__0 : rule__ExternalFunction1__Group_3__0__Impl rule__ExternalFunction1__Group_3__1 ;
     public final void rule__ExternalFunction1__Group_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:17607:1: ( rule__ExternalFunction1__Group_3__0__Impl rule__ExternalFunction1__Group_3__1 )
-            // InternalWreslEditorParser.g:17608:2: rule__ExternalFunction1__Group_3__0__Impl rule__ExternalFunction1__Group_3__1
+            // InternalWreslEditorParser.g:17638:1: ( rule__ExternalFunction1__Group_3__0__Impl rule__ExternalFunction1__Group_3__1 )
+            // InternalWreslEditorParser.g:17639:2: rule__ExternalFunction1__Group_3__0__Impl rule__ExternalFunction1__Group_3__1
             {
             pushFollow(FOLLOW_25);
             rule__ExternalFunction1__Group_3__0__Impl();
@@ -53451,17 +53551,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ExternalFunction1__Group_3__0__Impl"
-    // InternalWreslEditorParser.g:17615:1: rule__ExternalFunction1__Group_3__0__Impl : ( Comma ) ;
+    // InternalWreslEditorParser.g:17646:1: rule__ExternalFunction1__Group_3__0__Impl : ( Comma ) ;
     public final void rule__ExternalFunction1__Group_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:17619:1: ( ( Comma ) )
-            // InternalWreslEditorParser.g:17620:1: ( Comma )
+            // InternalWreslEditorParser.g:17650:1: ( ( Comma ) )
+            // InternalWreslEditorParser.g:17651:1: ( Comma )
             {
-            // InternalWreslEditorParser.g:17620:1: ( Comma )
-            // InternalWreslEditorParser.g:17621:1: Comma
+            // InternalWreslEditorParser.g:17651:1: ( Comma )
+            // InternalWreslEditorParser.g:17652:1: Comma
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExternalFunction1Access().getCommaKeyword_3_0()); 
@@ -53492,14 +53592,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ExternalFunction1__Group_3__1"
-    // InternalWreslEditorParser.g:17634:1: rule__ExternalFunction1__Group_3__1 : rule__ExternalFunction1__Group_3__1__Impl ;
+    // InternalWreslEditorParser.g:17665:1: rule__ExternalFunction1__Group_3__1 : rule__ExternalFunction1__Group_3__1__Impl ;
     public final void rule__ExternalFunction1__Group_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:17638:1: ( rule__ExternalFunction1__Group_3__1__Impl )
-            // InternalWreslEditorParser.g:17639:2: rule__ExternalFunction1__Group_3__1__Impl
+            // InternalWreslEditorParser.g:17669:1: ( rule__ExternalFunction1__Group_3__1__Impl )
+            // InternalWreslEditorParser.g:17670:2: rule__ExternalFunction1__Group_3__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ExternalFunction1__Group_3__1__Impl();
@@ -53525,23 +53625,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ExternalFunction1__Group_3__1__Impl"
-    // InternalWreslEditorParser.g:17645:1: rule__ExternalFunction1__Group_3__1__Impl : ( ( rule__ExternalFunction1__E2Assignment_3_1 ) ) ;
+    // InternalWreslEditorParser.g:17676:1: rule__ExternalFunction1__Group_3__1__Impl : ( ( rule__ExternalFunction1__E2Assignment_3_1 ) ) ;
     public final void rule__ExternalFunction1__Group_3__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:17649:1: ( ( ( rule__ExternalFunction1__E2Assignment_3_1 ) ) )
-            // InternalWreslEditorParser.g:17650:1: ( ( rule__ExternalFunction1__E2Assignment_3_1 ) )
+            // InternalWreslEditorParser.g:17680:1: ( ( ( rule__ExternalFunction1__E2Assignment_3_1 ) ) )
+            // InternalWreslEditorParser.g:17681:1: ( ( rule__ExternalFunction1__E2Assignment_3_1 ) )
             {
-            // InternalWreslEditorParser.g:17650:1: ( ( rule__ExternalFunction1__E2Assignment_3_1 ) )
-            // InternalWreslEditorParser.g:17651:1: ( rule__ExternalFunction1__E2Assignment_3_1 )
+            // InternalWreslEditorParser.g:17681:1: ( ( rule__ExternalFunction1__E2Assignment_3_1 ) )
+            // InternalWreslEditorParser.g:17682:1: ( rule__ExternalFunction1__E2Assignment_3_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExternalFunction1Access().getE2Assignment_3_1()); 
             }
-            // InternalWreslEditorParser.g:17652:1: ( rule__ExternalFunction1__E2Assignment_3_1 )
-            // InternalWreslEditorParser.g:17652:2: rule__ExternalFunction1__E2Assignment_3_1
+            // InternalWreslEditorParser.g:17683:1: ( rule__ExternalFunction1__E2Assignment_3_1 )
+            // InternalWreslEditorParser.g:17683:2: rule__ExternalFunction1__E2Assignment_3_1
             {
             pushFollow(FOLLOW_2);
             rule__ExternalFunction1__E2Assignment_3_1();
@@ -53575,15 +53675,257 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
     // $ANTLR end "rule__ExternalFunction1__Group_3__1__Impl"
 
 
+    // $ANTLR start "rule__ExternalFunction1__Group_5__0"
+    // InternalWreslEditorParser.g:17697:1: rule__ExternalFunction1__Group_5__0 : rule__ExternalFunction1__Group_5__0__Impl rule__ExternalFunction1__Group_5__1 ;
+    public final void rule__ExternalFunction1__Group_5__0() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalWreslEditorParser.g:17701:1: ( rule__ExternalFunction1__Group_5__0__Impl rule__ExternalFunction1__Group_5__1 )
+            // InternalWreslEditorParser.g:17702:2: rule__ExternalFunction1__Group_5__0__Impl rule__ExternalFunction1__Group_5__1
+            {
+            pushFollow(FOLLOW_25);
+            rule__ExternalFunction1__Group_5__0__Impl();
+
+            state._fsp--;
+            if (state.failed) return ;
+            pushFollow(FOLLOW_2);
+            rule__ExternalFunction1__Group_5__1();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__ExternalFunction1__Group_5__0"
+
+
+    // $ANTLR start "rule__ExternalFunction1__Group_5__0__Impl"
+    // InternalWreslEditorParser.g:17709:1: rule__ExternalFunction1__Group_5__0__Impl : ( LeftParenthesis ) ;
+    public final void rule__ExternalFunction1__Group_5__0__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalWreslEditorParser.g:17713:1: ( ( LeftParenthesis ) )
+            // InternalWreslEditorParser.g:17714:1: ( LeftParenthesis )
+            {
+            // InternalWreslEditorParser.g:17714:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:17715:1: LeftParenthesis
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getExternalFunction1Access().getLeftParenthesisKeyword_5_0()); 
+            }
+            match(input,LeftParenthesis,FOLLOW_2); if (state.failed) return ;
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getExternalFunction1Access().getLeftParenthesisKeyword_5_0()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__ExternalFunction1__Group_5__0__Impl"
+
+
+    // $ANTLR start "rule__ExternalFunction1__Group_5__1"
+    // InternalWreslEditorParser.g:17728:1: rule__ExternalFunction1__Group_5__1 : rule__ExternalFunction1__Group_5__1__Impl rule__ExternalFunction1__Group_5__2 ;
+    public final void rule__ExternalFunction1__Group_5__1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalWreslEditorParser.g:17732:1: ( rule__ExternalFunction1__Group_5__1__Impl rule__ExternalFunction1__Group_5__2 )
+            // InternalWreslEditorParser.g:17733:2: rule__ExternalFunction1__Group_5__1__Impl rule__ExternalFunction1__Group_5__2
+            {
+            pushFollow(FOLLOW_17);
+            rule__ExternalFunction1__Group_5__1__Impl();
+
+            state._fsp--;
+            if (state.failed) return ;
+            pushFollow(FOLLOW_2);
+            rule__ExternalFunction1__Group_5__2();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__ExternalFunction1__Group_5__1"
+
+
+    // $ANTLR start "rule__ExternalFunction1__Group_5__1__Impl"
+    // InternalWreslEditorParser.g:17740:1: rule__ExternalFunction1__Group_5__1__Impl : ( ( rule__ExternalFunction1__E0Assignment_5_1 ) ) ;
+    public final void rule__ExternalFunction1__Group_5__1__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalWreslEditorParser.g:17744:1: ( ( ( rule__ExternalFunction1__E0Assignment_5_1 ) ) )
+            // InternalWreslEditorParser.g:17745:1: ( ( rule__ExternalFunction1__E0Assignment_5_1 ) )
+            {
+            // InternalWreslEditorParser.g:17745:1: ( ( rule__ExternalFunction1__E0Assignment_5_1 ) )
+            // InternalWreslEditorParser.g:17746:1: ( rule__ExternalFunction1__E0Assignment_5_1 )
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getExternalFunction1Access().getE0Assignment_5_1()); 
+            }
+            // InternalWreslEditorParser.g:17747:1: ( rule__ExternalFunction1__E0Assignment_5_1 )
+            // InternalWreslEditorParser.g:17747:2: rule__ExternalFunction1__E0Assignment_5_1
+            {
+            pushFollow(FOLLOW_2);
+            rule__ExternalFunction1__E0Assignment_5_1();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getExternalFunction1Access().getE0Assignment_5_1()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__ExternalFunction1__Group_5__1__Impl"
+
+
+    // $ANTLR start "rule__ExternalFunction1__Group_5__2"
+    // InternalWreslEditorParser.g:17757:1: rule__ExternalFunction1__Group_5__2 : rule__ExternalFunction1__Group_5__2__Impl ;
+    public final void rule__ExternalFunction1__Group_5__2() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalWreslEditorParser.g:17761:1: ( rule__ExternalFunction1__Group_5__2__Impl )
+            // InternalWreslEditorParser.g:17762:2: rule__ExternalFunction1__Group_5__2__Impl
+            {
+            pushFollow(FOLLOW_2);
+            rule__ExternalFunction1__Group_5__2__Impl();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__ExternalFunction1__Group_5__2"
+
+
+    // $ANTLR start "rule__ExternalFunction1__Group_5__2__Impl"
+    // InternalWreslEditorParser.g:17768:1: rule__ExternalFunction1__Group_5__2__Impl : ( RightParenthesis ) ;
+    public final void rule__ExternalFunction1__Group_5__2__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalWreslEditorParser.g:17772:1: ( ( RightParenthesis ) )
+            // InternalWreslEditorParser.g:17773:1: ( RightParenthesis )
+            {
+            // InternalWreslEditorParser.g:17773:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:17774:1: RightParenthesis
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getExternalFunction1Access().getRightParenthesisKeyword_5_2()); 
+            }
+            match(input,RightParenthesis,FOLLOW_2); if (state.failed) return ;
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getExternalFunction1Access().getRightParenthesisKeyword_5_2()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__ExternalFunction1__Group_5__2__Impl"
+
+
     // $ANTLR start "rule__ExternalFunction2__Group__0"
-    // InternalWreslEditorParser.g:17666:1: rule__ExternalFunction2__Group__0 : rule__ExternalFunction2__Group__0__Impl rule__ExternalFunction2__Group__1 ;
+    // InternalWreslEditorParser.g:17793:1: rule__ExternalFunction2__Group__0 : rule__ExternalFunction2__Group__0__Impl rule__ExternalFunction2__Group__1 ;
     public final void rule__ExternalFunction2__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:17670:1: ( rule__ExternalFunction2__Group__0__Impl rule__ExternalFunction2__Group__1 )
-            // InternalWreslEditorParser.g:17671:2: rule__ExternalFunction2__Group__0__Impl rule__ExternalFunction2__Group__1
+            // InternalWreslEditorParser.g:17797:1: ( rule__ExternalFunction2__Group__0__Impl rule__ExternalFunction2__Group__1 )
+            // InternalWreslEditorParser.g:17798:2: rule__ExternalFunction2__Group__0__Impl rule__ExternalFunction2__Group__1
             {
             pushFollow(FOLLOW_45);
             rule__ExternalFunction2__Group__0__Impl();
@@ -53614,23 +53956,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ExternalFunction2__Group__0__Impl"
-    // InternalWreslEditorParser.g:17678:1: rule__ExternalFunction2__Group__0__Impl : ( ( rule__ExternalFunction2__Alternatives_0 ) ) ;
+    // InternalWreslEditorParser.g:17805:1: rule__ExternalFunction2__Group__0__Impl : ( ( rule__ExternalFunction2__Alternatives_0 ) ) ;
     public final void rule__ExternalFunction2__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:17682:1: ( ( ( rule__ExternalFunction2__Alternatives_0 ) ) )
-            // InternalWreslEditorParser.g:17683:1: ( ( rule__ExternalFunction2__Alternatives_0 ) )
+            // InternalWreslEditorParser.g:17809:1: ( ( ( rule__ExternalFunction2__Alternatives_0 ) ) )
+            // InternalWreslEditorParser.g:17810:1: ( ( rule__ExternalFunction2__Alternatives_0 ) )
             {
-            // InternalWreslEditorParser.g:17683:1: ( ( rule__ExternalFunction2__Alternatives_0 ) )
-            // InternalWreslEditorParser.g:17684:1: ( rule__ExternalFunction2__Alternatives_0 )
+            // InternalWreslEditorParser.g:17810:1: ( ( rule__ExternalFunction2__Alternatives_0 ) )
+            // InternalWreslEditorParser.g:17811:1: ( rule__ExternalFunction2__Alternatives_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExternalFunction2Access().getAlternatives_0()); 
             }
-            // InternalWreslEditorParser.g:17685:1: ( rule__ExternalFunction2__Alternatives_0 )
-            // InternalWreslEditorParser.g:17685:2: rule__ExternalFunction2__Alternatives_0
+            // InternalWreslEditorParser.g:17812:1: ( rule__ExternalFunction2__Alternatives_0 )
+            // InternalWreslEditorParser.g:17812:2: rule__ExternalFunction2__Alternatives_0
             {
             pushFollow(FOLLOW_2);
             rule__ExternalFunction2__Alternatives_0();
@@ -53665,14 +54007,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ExternalFunction2__Group__1"
-    // InternalWreslEditorParser.g:17695:1: rule__ExternalFunction2__Group__1 : rule__ExternalFunction2__Group__1__Impl rule__ExternalFunction2__Group__2 ;
+    // InternalWreslEditorParser.g:17822:1: rule__ExternalFunction2__Group__1 : rule__ExternalFunction2__Group__1__Impl rule__ExternalFunction2__Group__2 ;
     public final void rule__ExternalFunction2__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:17699:1: ( rule__ExternalFunction2__Group__1__Impl rule__ExternalFunction2__Group__2 )
-            // InternalWreslEditorParser.g:17700:2: rule__ExternalFunction2__Group__1__Impl rule__ExternalFunction2__Group__2
+            // InternalWreslEditorParser.g:17826:1: ( rule__ExternalFunction2__Group__1__Impl rule__ExternalFunction2__Group__2 )
+            // InternalWreslEditorParser.g:17827:2: rule__ExternalFunction2__Group__1__Impl rule__ExternalFunction2__Group__2
             {
             pushFollow(FOLLOW_17);
             rule__ExternalFunction2__Group__1__Impl();
@@ -53703,17 +54045,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ExternalFunction2__Group__1__Impl"
-    // InternalWreslEditorParser.g:17707:1: rule__ExternalFunction2__Group__1__Impl : ( LeftParenthesis ) ;
+    // InternalWreslEditorParser.g:17834:1: rule__ExternalFunction2__Group__1__Impl : ( LeftParenthesis ) ;
     public final void rule__ExternalFunction2__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:17711:1: ( ( LeftParenthesis ) )
-            // InternalWreslEditorParser.g:17712:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:17838:1: ( ( LeftParenthesis ) )
+            // InternalWreslEditorParser.g:17839:1: ( LeftParenthesis )
             {
-            // InternalWreslEditorParser.g:17712:1: ( LeftParenthesis )
-            // InternalWreslEditorParser.g:17713:1: LeftParenthesis
+            // InternalWreslEditorParser.g:17839:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:17840:1: LeftParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExternalFunction2Access().getLeftParenthesisKeyword_1()); 
@@ -53744,14 +54086,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ExternalFunction2__Group__2"
-    // InternalWreslEditorParser.g:17726:1: rule__ExternalFunction2__Group__2 : rule__ExternalFunction2__Group__2__Impl ;
+    // InternalWreslEditorParser.g:17853:1: rule__ExternalFunction2__Group__2 : rule__ExternalFunction2__Group__2__Impl ;
     public final void rule__ExternalFunction2__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:17730:1: ( rule__ExternalFunction2__Group__2__Impl )
-            // InternalWreslEditorParser.g:17731:2: rule__ExternalFunction2__Group__2__Impl
+            // InternalWreslEditorParser.g:17857:1: ( rule__ExternalFunction2__Group__2__Impl )
+            // InternalWreslEditorParser.g:17858:2: rule__ExternalFunction2__Group__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ExternalFunction2__Group__2__Impl();
@@ -53777,17 +54119,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ExternalFunction2__Group__2__Impl"
-    // InternalWreslEditorParser.g:17737:1: rule__ExternalFunction2__Group__2__Impl : ( RightParenthesis ) ;
+    // InternalWreslEditorParser.g:17864:1: rule__ExternalFunction2__Group__2__Impl : ( RightParenthesis ) ;
     public final void rule__ExternalFunction2__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:17741:1: ( ( RightParenthesis ) )
-            // InternalWreslEditorParser.g:17742:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:17868:1: ( ( RightParenthesis ) )
+            // InternalWreslEditorParser.g:17869:1: ( RightParenthesis )
             {
-            // InternalWreslEditorParser.g:17742:1: ( RightParenthesis )
-            // InternalWreslEditorParser.g:17743:1: RightParenthesis
+            // InternalWreslEditorParser.g:17869:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:17870:1: RightParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExternalFunction2Access().getRightParenthesisKeyword_2()); 
@@ -53818,14 +54160,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TrunkTimeArray__Group__0"
-    // InternalWreslEditorParser.g:17762:1: rule__TrunkTimeArray__Group__0 : rule__TrunkTimeArray__Group__0__Impl rule__TrunkTimeArray__Group__1 ;
+    // InternalWreslEditorParser.g:17889:1: rule__TrunkTimeArray__Group__0 : rule__TrunkTimeArray__Group__0__Impl rule__TrunkTimeArray__Group__1 ;
     public final void rule__TrunkTimeArray__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:17766:1: ( rule__TrunkTimeArray__Group__0__Impl rule__TrunkTimeArray__Group__1 )
-            // InternalWreslEditorParser.g:17767:2: rule__TrunkTimeArray__Group__0__Impl rule__TrunkTimeArray__Group__1
+            // InternalWreslEditorParser.g:17893:1: ( rule__TrunkTimeArray__Group__0__Impl rule__TrunkTimeArray__Group__1 )
+            // InternalWreslEditorParser.g:17894:2: rule__TrunkTimeArray__Group__0__Impl rule__TrunkTimeArray__Group__1
             {
             pushFollow(FOLLOW_45);
             rule__TrunkTimeArray__Group__0__Impl();
@@ -53856,23 +54198,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TrunkTimeArray__Group__0__Impl"
-    // InternalWreslEditorParser.g:17774:1: rule__TrunkTimeArray__Group__0__Impl : ( ( rule__TrunkTimeArray__RefAssignment_0 ) ) ;
+    // InternalWreslEditorParser.g:17901:1: rule__TrunkTimeArray__Group__0__Impl : ( ( rule__TrunkTimeArray__RefAssignment_0 ) ) ;
     public final void rule__TrunkTimeArray__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:17778:1: ( ( ( rule__TrunkTimeArray__RefAssignment_0 ) ) )
-            // InternalWreslEditorParser.g:17779:1: ( ( rule__TrunkTimeArray__RefAssignment_0 ) )
+            // InternalWreslEditorParser.g:17905:1: ( ( ( rule__TrunkTimeArray__RefAssignment_0 ) ) )
+            // InternalWreslEditorParser.g:17906:1: ( ( rule__TrunkTimeArray__RefAssignment_0 ) )
             {
-            // InternalWreslEditorParser.g:17779:1: ( ( rule__TrunkTimeArray__RefAssignment_0 ) )
-            // InternalWreslEditorParser.g:17780:1: ( rule__TrunkTimeArray__RefAssignment_0 )
+            // InternalWreslEditorParser.g:17906:1: ( ( rule__TrunkTimeArray__RefAssignment_0 ) )
+            // InternalWreslEditorParser.g:17907:1: ( rule__TrunkTimeArray__RefAssignment_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTrunkTimeArrayAccess().getRefAssignment_0()); 
             }
-            // InternalWreslEditorParser.g:17781:1: ( rule__TrunkTimeArray__RefAssignment_0 )
-            // InternalWreslEditorParser.g:17781:2: rule__TrunkTimeArray__RefAssignment_0
+            // InternalWreslEditorParser.g:17908:1: ( rule__TrunkTimeArray__RefAssignment_0 )
+            // InternalWreslEditorParser.g:17908:2: rule__TrunkTimeArray__RefAssignment_0
             {
             pushFollow(FOLLOW_2);
             rule__TrunkTimeArray__RefAssignment_0();
@@ -53907,14 +54249,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TrunkTimeArray__Group__1"
-    // InternalWreslEditorParser.g:17791:1: rule__TrunkTimeArray__Group__1 : rule__TrunkTimeArray__Group__1__Impl rule__TrunkTimeArray__Group__2 ;
+    // InternalWreslEditorParser.g:17918:1: rule__TrunkTimeArray__Group__1 : rule__TrunkTimeArray__Group__1__Impl rule__TrunkTimeArray__Group__2 ;
     public final void rule__TrunkTimeArray__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:17795:1: ( rule__TrunkTimeArray__Group__1__Impl rule__TrunkTimeArray__Group__2 )
-            // InternalWreslEditorParser.g:17796:2: rule__TrunkTimeArray__Group__1__Impl rule__TrunkTimeArray__Group__2
+            // InternalWreslEditorParser.g:17922:1: ( rule__TrunkTimeArray__Group__1__Impl rule__TrunkTimeArray__Group__2 )
+            // InternalWreslEditorParser.g:17923:2: rule__TrunkTimeArray__Group__1__Impl rule__TrunkTimeArray__Group__2
             {
             pushFollow(FOLLOW_83);
             rule__TrunkTimeArray__Group__1__Impl();
@@ -53945,17 +54287,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TrunkTimeArray__Group__1__Impl"
-    // InternalWreslEditorParser.g:17803:1: rule__TrunkTimeArray__Group__1__Impl : ( LeftParenthesis ) ;
+    // InternalWreslEditorParser.g:17930:1: rule__TrunkTimeArray__Group__1__Impl : ( LeftParenthesis ) ;
     public final void rule__TrunkTimeArray__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:17807:1: ( ( LeftParenthesis ) )
-            // InternalWreslEditorParser.g:17808:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:17934:1: ( ( LeftParenthesis ) )
+            // InternalWreslEditorParser.g:17935:1: ( LeftParenthesis )
             {
-            // InternalWreslEditorParser.g:17808:1: ( LeftParenthesis )
-            // InternalWreslEditorParser.g:17809:1: LeftParenthesis
+            // InternalWreslEditorParser.g:17935:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:17936:1: LeftParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTrunkTimeArrayAccess().getLeftParenthesisKeyword_1()); 
@@ -53986,14 +54328,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TrunkTimeArray__Group__2"
-    // InternalWreslEditorParser.g:17822:1: rule__TrunkTimeArray__Group__2 : rule__TrunkTimeArray__Group__2__Impl rule__TrunkTimeArray__Group__3 ;
+    // InternalWreslEditorParser.g:17949:1: rule__TrunkTimeArray__Group__2 : rule__TrunkTimeArray__Group__2__Impl rule__TrunkTimeArray__Group__3 ;
     public final void rule__TrunkTimeArray__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:17826:1: ( rule__TrunkTimeArray__Group__2__Impl rule__TrunkTimeArray__Group__3 )
-            // InternalWreslEditorParser.g:17827:2: rule__TrunkTimeArray__Group__2__Impl rule__TrunkTimeArray__Group__3
+            // InternalWreslEditorParser.g:17953:1: ( rule__TrunkTimeArray__Group__2__Impl rule__TrunkTimeArray__Group__3 )
+            // InternalWreslEditorParser.g:17954:2: rule__TrunkTimeArray__Group__2__Impl rule__TrunkTimeArray__Group__3
             {
             pushFollow(FOLLOW_84);
             rule__TrunkTimeArray__Group__2__Impl();
@@ -54024,23 +54366,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TrunkTimeArray__Group__2__Impl"
-    // InternalWreslEditorParser.g:17834:1: rule__TrunkTimeArray__Group__2__Impl : ( ( rule__TrunkTimeArray__T1Assignment_2 ) ) ;
+    // InternalWreslEditorParser.g:17961:1: rule__TrunkTimeArray__Group__2__Impl : ( ( rule__TrunkTimeArray__T1Assignment_2 ) ) ;
     public final void rule__TrunkTimeArray__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:17838:1: ( ( ( rule__TrunkTimeArray__T1Assignment_2 ) ) )
-            // InternalWreslEditorParser.g:17839:1: ( ( rule__TrunkTimeArray__T1Assignment_2 ) )
+            // InternalWreslEditorParser.g:17965:1: ( ( ( rule__TrunkTimeArray__T1Assignment_2 ) ) )
+            // InternalWreslEditorParser.g:17966:1: ( ( rule__TrunkTimeArray__T1Assignment_2 ) )
             {
-            // InternalWreslEditorParser.g:17839:1: ( ( rule__TrunkTimeArray__T1Assignment_2 ) )
-            // InternalWreslEditorParser.g:17840:1: ( rule__TrunkTimeArray__T1Assignment_2 )
+            // InternalWreslEditorParser.g:17966:1: ( ( rule__TrunkTimeArray__T1Assignment_2 ) )
+            // InternalWreslEditorParser.g:17967:1: ( rule__TrunkTimeArray__T1Assignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTrunkTimeArrayAccess().getT1Assignment_2()); 
             }
-            // InternalWreslEditorParser.g:17841:1: ( rule__TrunkTimeArray__T1Assignment_2 )
-            // InternalWreslEditorParser.g:17841:2: rule__TrunkTimeArray__T1Assignment_2
+            // InternalWreslEditorParser.g:17968:1: ( rule__TrunkTimeArray__T1Assignment_2 )
+            // InternalWreslEditorParser.g:17968:2: rule__TrunkTimeArray__T1Assignment_2
             {
             pushFollow(FOLLOW_2);
             rule__TrunkTimeArray__T1Assignment_2();
@@ -54075,14 +54417,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TrunkTimeArray__Group__3"
-    // InternalWreslEditorParser.g:17851:1: rule__TrunkTimeArray__Group__3 : rule__TrunkTimeArray__Group__3__Impl rule__TrunkTimeArray__Group__4 ;
+    // InternalWreslEditorParser.g:17978:1: rule__TrunkTimeArray__Group__3 : rule__TrunkTimeArray__Group__3__Impl rule__TrunkTimeArray__Group__4 ;
     public final void rule__TrunkTimeArray__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:17855:1: ( rule__TrunkTimeArray__Group__3__Impl rule__TrunkTimeArray__Group__4 )
-            // InternalWreslEditorParser.g:17856:2: rule__TrunkTimeArray__Group__3__Impl rule__TrunkTimeArray__Group__4
+            // InternalWreslEditorParser.g:17982:1: ( rule__TrunkTimeArray__Group__3__Impl rule__TrunkTimeArray__Group__4 )
+            // InternalWreslEditorParser.g:17983:2: rule__TrunkTimeArray__Group__3__Impl rule__TrunkTimeArray__Group__4
             {
             pushFollow(FOLLOW_83);
             rule__TrunkTimeArray__Group__3__Impl();
@@ -54113,17 +54455,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TrunkTimeArray__Group__3__Impl"
-    // InternalWreslEditorParser.g:17863:1: rule__TrunkTimeArray__Group__3__Impl : ( Colon ) ;
+    // InternalWreslEditorParser.g:17990:1: rule__TrunkTimeArray__Group__3__Impl : ( Colon ) ;
     public final void rule__TrunkTimeArray__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:17867:1: ( ( Colon ) )
-            // InternalWreslEditorParser.g:17868:1: ( Colon )
+            // InternalWreslEditorParser.g:17994:1: ( ( Colon ) )
+            // InternalWreslEditorParser.g:17995:1: ( Colon )
             {
-            // InternalWreslEditorParser.g:17868:1: ( Colon )
-            // InternalWreslEditorParser.g:17869:1: Colon
+            // InternalWreslEditorParser.g:17995:1: ( Colon )
+            // InternalWreslEditorParser.g:17996:1: Colon
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTrunkTimeArrayAccess().getColonKeyword_3()); 
@@ -54154,14 +54496,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TrunkTimeArray__Group__4"
-    // InternalWreslEditorParser.g:17882:1: rule__TrunkTimeArray__Group__4 : rule__TrunkTimeArray__Group__4__Impl rule__TrunkTimeArray__Group__5 ;
+    // InternalWreslEditorParser.g:18009:1: rule__TrunkTimeArray__Group__4 : rule__TrunkTimeArray__Group__4__Impl rule__TrunkTimeArray__Group__5 ;
     public final void rule__TrunkTimeArray__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:17886:1: ( rule__TrunkTimeArray__Group__4__Impl rule__TrunkTimeArray__Group__5 )
-            // InternalWreslEditorParser.g:17887:2: rule__TrunkTimeArray__Group__4__Impl rule__TrunkTimeArray__Group__5
+            // InternalWreslEditorParser.g:18013:1: ( rule__TrunkTimeArray__Group__4__Impl rule__TrunkTimeArray__Group__5 )
+            // InternalWreslEditorParser.g:18014:2: rule__TrunkTimeArray__Group__4__Impl rule__TrunkTimeArray__Group__5
             {
             pushFollow(FOLLOW_17);
             rule__TrunkTimeArray__Group__4__Impl();
@@ -54192,23 +54534,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TrunkTimeArray__Group__4__Impl"
-    // InternalWreslEditorParser.g:17894:1: rule__TrunkTimeArray__Group__4__Impl : ( ( rule__TrunkTimeArray__T2Assignment_4 ) ) ;
+    // InternalWreslEditorParser.g:18021:1: rule__TrunkTimeArray__Group__4__Impl : ( ( rule__TrunkTimeArray__T2Assignment_4 ) ) ;
     public final void rule__TrunkTimeArray__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:17898:1: ( ( ( rule__TrunkTimeArray__T2Assignment_4 ) ) )
-            // InternalWreslEditorParser.g:17899:1: ( ( rule__TrunkTimeArray__T2Assignment_4 ) )
+            // InternalWreslEditorParser.g:18025:1: ( ( ( rule__TrunkTimeArray__T2Assignment_4 ) ) )
+            // InternalWreslEditorParser.g:18026:1: ( ( rule__TrunkTimeArray__T2Assignment_4 ) )
             {
-            // InternalWreslEditorParser.g:17899:1: ( ( rule__TrunkTimeArray__T2Assignment_4 ) )
-            // InternalWreslEditorParser.g:17900:1: ( rule__TrunkTimeArray__T2Assignment_4 )
+            // InternalWreslEditorParser.g:18026:1: ( ( rule__TrunkTimeArray__T2Assignment_4 ) )
+            // InternalWreslEditorParser.g:18027:1: ( rule__TrunkTimeArray__T2Assignment_4 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTrunkTimeArrayAccess().getT2Assignment_4()); 
             }
-            // InternalWreslEditorParser.g:17901:1: ( rule__TrunkTimeArray__T2Assignment_4 )
-            // InternalWreslEditorParser.g:17901:2: rule__TrunkTimeArray__T2Assignment_4
+            // InternalWreslEditorParser.g:18028:1: ( rule__TrunkTimeArray__T2Assignment_4 )
+            // InternalWreslEditorParser.g:18028:2: rule__TrunkTimeArray__T2Assignment_4
             {
             pushFollow(FOLLOW_2);
             rule__TrunkTimeArray__T2Assignment_4();
@@ -54243,14 +54585,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TrunkTimeArray__Group__5"
-    // InternalWreslEditorParser.g:17911:1: rule__TrunkTimeArray__Group__5 : rule__TrunkTimeArray__Group__5__Impl ;
+    // InternalWreslEditorParser.g:18038:1: rule__TrunkTimeArray__Group__5 : rule__TrunkTimeArray__Group__5__Impl ;
     public final void rule__TrunkTimeArray__Group__5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:17915:1: ( rule__TrunkTimeArray__Group__5__Impl )
-            // InternalWreslEditorParser.g:17916:2: rule__TrunkTimeArray__Group__5__Impl
+            // InternalWreslEditorParser.g:18042:1: ( rule__TrunkTimeArray__Group__5__Impl )
+            // InternalWreslEditorParser.g:18043:2: rule__TrunkTimeArray__Group__5__Impl
             {
             pushFollow(FOLLOW_2);
             rule__TrunkTimeArray__Group__5__Impl();
@@ -54276,17 +54618,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TrunkTimeArray__Group__5__Impl"
-    // InternalWreslEditorParser.g:17922:1: rule__TrunkTimeArray__Group__5__Impl : ( RightParenthesis ) ;
+    // InternalWreslEditorParser.g:18049:1: rule__TrunkTimeArray__Group__5__Impl : ( RightParenthesis ) ;
     public final void rule__TrunkTimeArray__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:17926:1: ( ( RightParenthesis ) )
-            // InternalWreslEditorParser.g:17927:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:18053:1: ( ( RightParenthesis ) )
+            // InternalWreslEditorParser.g:18054:1: ( RightParenthesis )
             {
-            // InternalWreslEditorParser.g:17927:1: ( RightParenthesis )
-            // InternalWreslEditorParser.g:17928:1: RightParenthesis
+            // InternalWreslEditorParser.g:18054:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:18055:1: RightParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTrunkTimeArrayAccess().getRightParenthesisKeyword_5()); 
@@ -54317,14 +54659,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TrunkTimeArrayIndex__Group_1__0"
-    // InternalWreslEditorParser.g:17953:1: rule__TrunkTimeArrayIndex__Group_1__0 : rule__TrunkTimeArrayIndex__Group_1__0__Impl rule__TrunkTimeArrayIndex__Group_1__1 ;
+    // InternalWreslEditorParser.g:18080:1: rule__TrunkTimeArrayIndex__Group_1__0 : rule__TrunkTimeArrayIndex__Group_1__0__Impl rule__TrunkTimeArrayIndex__Group_1__1 ;
     public final void rule__TrunkTimeArrayIndex__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:17957:1: ( rule__TrunkTimeArrayIndex__Group_1__0__Impl rule__TrunkTimeArrayIndex__Group_1__1 )
-            // InternalWreslEditorParser.g:17958:2: rule__TrunkTimeArrayIndex__Group_1__0__Impl rule__TrunkTimeArrayIndex__Group_1__1
+            // InternalWreslEditorParser.g:18084:1: ( rule__TrunkTimeArrayIndex__Group_1__0__Impl rule__TrunkTimeArrayIndex__Group_1__1 )
+            // InternalWreslEditorParser.g:18085:2: rule__TrunkTimeArrayIndex__Group_1__0__Impl rule__TrunkTimeArrayIndex__Group_1__1
             {
             pushFollow(FOLLOW_71);
             rule__TrunkTimeArrayIndex__Group_1__0__Impl();
@@ -54355,17 +54697,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TrunkTimeArrayIndex__Group_1__0__Impl"
-    // InternalWreslEditorParser.g:17965:1: rule__TrunkTimeArrayIndex__Group_1__0__Impl : ( HyphenMinus ) ;
+    // InternalWreslEditorParser.g:18092:1: rule__TrunkTimeArrayIndex__Group_1__0__Impl : ( HyphenMinus ) ;
     public final void rule__TrunkTimeArrayIndex__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:17969:1: ( ( HyphenMinus ) )
-            // InternalWreslEditorParser.g:17970:1: ( HyphenMinus )
+            // InternalWreslEditorParser.g:18096:1: ( ( HyphenMinus ) )
+            // InternalWreslEditorParser.g:18097:1: ( HyphenMinus )
             {
-            // InternalWreslEditorParser.g:17970:1: ( HyphenMinus )
-            // InternalWreslEditorParser.g:17971:1: HyphenMinus
+            // InternalWreslEditorParser.g:18097:1: ( HyphenMinus )
+            // InternalWreslEditorParser.g:18098:1: HyphenMinus
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTrunkTimeArrayIndexAccess().getHyphenMinusKeyword_1_0()); 
@@ -54396,14 +54738,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TrunkTimeArrayIndex__Group_1__1"
-    // InternalWreslEditorParser.g:17984:1: rule__TrunkTimeArrayIndex__Group_1__1 : rule__TrunkTimeArrayIndex__Group_1__1__Impl ;
+    // InternalWreslEditorParser.g:18111:1: rule__TrunkTimeArrayIndex__Group_1__1 : rule__TrunkTimeArrayIndex__Group_1__1__Impl ;
     public final void rule__TrunkTimeArrayIndex__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:17988:1: ( rule__TrunkTimeArrayIndex__Group_1__1__Impl )
-            // InternalWreslEditorParser.g:17989:2: rule__TrunkTimeArrayIndex__Group_1__1__Impl
+            // InternalWreslEditorParser.g:18115:1: ( rule__TrunkTimeArrayIndex__Group_1__1__Impl )
+            // InternalWreslEditorParser.g:18116:2: rule__TrunkTimeArrayIndex__Group_1__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__TrunkTimeArrayIndex__Group_1__1__Impl();
@@ -54429,17 +54771,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TrunkTimeArrayIndex__Group_1__1__Impl"
-    // InternalWreslEditorParser.g:17995:1: rule__TrunkTimeArrayIndex__Group_1__1__Impl : ( RULE_INT ) ;
+    // InternalWreslEditorParser.g:18122:1: rule__TrunkTimeArrayIndex__Group_1__1__Impl : ( RULE_INT ) ;
     public final void rule__TrunkTimeArrayIndex__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:17999:1: ( ( RULE_INT ) )
-            // InternalWreslEditorParser.g:18000:1: ( RULE_INT )
+            // InternalWreslEditorParser.g:18126:1: ( ( RULE_INT ) )
+            // InternalWreslEditorParser.g:18127:1: ( RULE_INT )
             {
-            // InternalWreslEditorParser.g:18000:1: ( RULE_INT )
-            // InternalWreslEditorParser.g:18001:1: RULE_INT
+            // InternalWreslEditorParser.g:18127:1: ( RULE_INT )
+            // InternalWreslEditorParser.g:18128:1: RULE_INT
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTrunkTimeArrayIndexAccess().getINTTerminalRuleCall_1_1()); 
@@ -54470,14 +54812,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__MaxFunction__Group__0"
-    // InternalWreslEditorParser.g:18016:1: rule__MaxFunction__Group__0 : rule__MaxFunction__Group__0__Impl rule__MaxFunction__Group__1 ;
+    // InternalWreslEditorParser.g:18143:1: rule__MaxFunction__Group__0 : rule__MaxFunction__Group__0__Impl rule__MaxFunction__Group__1 ;
     public final void rule__MaxFunction__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18020:1: ( rule__MaxFunction__Group__0__Impl rule__MaxFunction__Group__1 )
-            // InternalWreslEditorParser.g:18021:2: rule__MaxFunction__Group__0__Impl rule__MaxFunction__Group__1
+            // InternalWreslEditorParser.g:18147:1: ( rule__MaxFunction__Group__0__Impl rule__MaxFunction__Group__1 )
+            // InternalWreslEditorParser.g:18148:2: rule__MaxFunction__Group__0__Impl rule__MaxFunction__Group__1
             {
             pushFollow(FOLLOW_45);
             rule__MaxFunction__Group__0__Impl();
@@ -54508,17 +54850,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__MaxFunction__Group__0__Impl"
-    // InternalWreslEditorParser.g:18028:1: rule__MaxFunction__Group__0__Impl : ( RULE_MAX ) ;
+    // InternalWreslEditorParser.g:18155:1: rule__MaxFunction__Group__0__Impl : ( RULE_MAX ) ;
     public final void rule__MaxFunction__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18032:1: ( ( RULE_MAX ) )
-            // InternalWreslEditorParser.g:18033:1: ( RULE_MAX )
+            // InternalWreslEditorParser.g:18159:1: ( ( RULE_MAX ) )
+            // InternalWreslEditorParser.g:18160:1: ( RULE_MAX )
             {
-            // InternalWreslEditorParser.g:18033:1: ( RULE_MAX )
-            // InternalWreslEditorParser.g:18034:1: RULE_MAX
+            // InternalWreslEditorParser.g:18160:1: ( RULE_MAX )
+            // InternalWreslEditorParser.g:18161:1: RULE_MAX
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMaxFunctionAccess().getMAXTerminalRuleCall_0()); 
@@ -54549,14 +54891,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__MaxFunction__Group__1"
-    // InternalWreslEditorParser.g:18045:1: rule__MaxFunction__Group__1 : rule__MaxFunction__Group__1__Impl rule__MaxFunction__Group__2 ;
+    // InternalWreslEditorParser.g:18172:1: rule__MaxFunction__Group__1 : rule__MaxFunction__Group__1__Impl rule__MaxFunction__Group__2 ;
     public final void rule__MaxFunction__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18049:1: ( rule__MaxFunction__Group__1__Impl rule__MaxFunction__Group__2 )
-            // InternalWreslEditorParser.g:18050:2: rule__MaxFunction__Group__1__Impl rule__MaxFunction__Group__2
+            // InternalWreslEditorParser.g:18176:1: ( rule__MaxFunction__Group__1__Impl rule__MaxFunction__Group__2 )
+            // InternalWreslEditorParser.g:18177:2: rule__MaxFunction__Group__1__Impl rule__MaxFunction__Group__2
             {
             pushFollow(FOLLOW_25);
             rule__MaxFunction__Group__1__Impl();
@@ -54587,17 +54929,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__MaxFunction__Group__1__Impl"
-    // InternalWreslEditorParser.g:18057:1: rule__MaxFunction__Group__1__Impl : ( LeftParenthesis ) ;
+    // InternalWreslEditorParser.g:18184:1: rule__MaxFunction__Group__1__Impl : ( LeftParenthesis ) ;
     public final void rule__MaxFunction__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18061:1: ( ( LeftParenthesis ) )
-            // InternalWreslEditorParser.g:18062:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:18188:1: ( ( LeftParenthesis ) )
+            // InternalWreslEditorParser.g:18189:1: ( LeftParenthesis )
             {
-            // InternalWreslEditorParser.g:18062:1: ( LeftParenthesis )
-            // InternalWreslEditorParser.g:18063:1: LeftParenthesis
+            // InternalWreslEditorParser.g:18189:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:18190:1: LeftParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMaxFunctionAccess().getLeftParenthesisKeyword_1()); 
@@ -54628,14 +54970,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__MaxFunction__Group__2"
-    // InternalWreslEditorParser.g:18076:1: rule__MaxFunction__Group__2 : rule__MaxFunction__Group__2__Impl rule__MaxFunction__Group__3 ;
+    // InternalWreslEditorParser.g:18203:1: rule__MaxFunction__Group__2 : rule__MaxFunction__Group__2__Impl rule__MaxFunction__Group__3 ;
     public final void rule__MaxFunction__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18080:1: ( rule__MaxFunction__Group__2__Impl rule__MaxFunction__Group__3 )
-            // InternalWreslEditorParser.g:18081:2: rule__MaxFunction__Group__2__Impl rule__MaxFunction__Group__3
+            // InternalWreslEditorParser.g:18207:1: ( rule__MaxFunction__Group__2__Impl rule__MaxFunction__Group__3 )
+            // InternalWreslEditorParser.g:18208:2: rule__MaxFunction__Group__2__Impl rule__MaxFunction__Group__3
             {
             pushFollow(FOLLOW_47);
             rule__MaxFunction__Group__2__Impl();
@@ -54666,23 +55008,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__MaxFunction__Group__2__Impl"
-    // InternalWreslEditorParser.g:18088:1: rule__MaxFunction__Group__2__Impl : ( ( rule__MaxFunction__E1Assignment_2 ) ) ;
+    // InternalWreslEditorParser.g:18215:1: rule__MaxFunction__Group__2__Impl : ( ( rule__MaxFunction__E1Assignment_2 ) ) ;
     public final void rule__MaxFunction__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18092:1: ( ( ( rule__MaxFunction__E1Assignment_2 ) ) )
-            // InternalWreslEditorParser.g:18093:1: ( ( rule__MaxFunction__E1Assignment_2 ) )
+            // InternalWreslEditorParser.g:18219:1: ( ( ( rule__MaxFunction__E1Assignment_2 ) ) )
+            // InternalWreslEditorParser.g:18220:1: ( ( rule__MaxFunction__E1Assignment_2 ) )
             {
-            // InternalWreslEditorParser.g:18093:1: ( ( rule__MaxFunction__E1Assignment_2 ) )
-            // InternalWreslEditorParser.g:18094:1: ( rule__MaxFunction__E1Assignment_2 )
+            // InternalWreslEditorParser.g:18220:1: ( ( rule__MaxFunction__E1Assignment_2 ) )
+            // InternalWreslEditorParser.g:18221:1: ( rule__MaxFunction__E1Assignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMaxFunctionAccess().getE1Assignment_2()); 
             }
-            // InternalWreslEditorParser.g:18095:1: ( rule__MaxFunction__E1Assignment_2 )
-            // InternalWreslEditorParser.g:18095:2: rule__MaxFunction__E1Assignment_2
+            // InternalWreslEditorParser.g:18222:1: ( rule__MaxFunction__E1Assignment_2 )
+            // InternalWreslEditorParser.g:18222:2: rule__MaxFunction__E1Assignment_2
             {
             pushFollow(FOLLOW_2);
             rule__MaxFunction__E1Assignment_2();
@@ -54717,14 +55059,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__MaxFunction__Group__3"
-    // InternalWreslEditorParser.g:18105:1: rule__MaxFunction__Group__3 : rule__MaxFunction__Group__3__Impl rule__MaxFunction__Group__4 ;
+    // InternalWreslEditorParser.g:18232:1: rule__MaxFunction__Group__3 : rule__MaxFunction__Group__3__Impl rule__MaxFunction__Group__4 ;
     public final void rule__MaxFunction__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18109:1: ( rule__MaxFunction__Group__3__Impl rule__MaxFunction__Group__4 )
-            // InternalWreslEditorParser.g:18110:2: rule__MaxFunction__Group__3__Impl rule__MaxFunction__Group__4
+            // InternalWreslEditorParser.g:18236:1: ( rule__MaxFunction__Group__3__Impl rule__MaxFunction__Group__4 )
+            // InternalWreslEditorParser.g:18237:2: rule__MaxFunction__Group__3__Impl rule__MaxFunction__Group__4
             {
             pushFollow(FOLLOW_47);
             rule__MaxFunction__Group__3__Impl();
@@ -54755,35 +55097,35 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__MaxFunction__Group__3__Impl"
-    // InternalWreslEditorParser.g:18117:1: rule__MaxFunction__Group__3__Impl : ( ( rule__MaxFunction__Group_3__0 )* ) ;
+    // InternalWreslEditorParser.g:18244:1: rule__MaxFunction__Group__3__Impl : ( ( rule__MaxFunction__Group_3__0 )* ) ;
     public final void rule__MaxFunction__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18121:1: ( ( ( rule__MaxFunction__Group_3__0 )* ) )
-            // InternalWreslEditorParser.g:18122:1: ( ( rule__MaxFunction__Group_3__0 )* )
+            // InternalWreslEditorParser.g:18248:1: ( ( ( rule__MaxFunction__Group_3__0 )* ) )
+            // InternalWreslEditorParser.g:18249:1: ( ( rule__MaxFunction__Group_3__0 )* )
             {
-            // InternalWreslEditorParser.g:18122:1: ( ( rule__MaxFunction__Group_3__0 )* )
-            // InternalWreslEditorParser.g:18123:1: ( rule__MaxFunction__Group_3__0 )*
+            // InternalWreslEditorParser.g:18249:1: ( ( rule__MaxFunction__Group_3__0 )* )
+            // InternalWreslEditorParser.g:18250:1: ( rule__MaxFunction__Group_3__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMaxFunctionAccess().getGroup_3()); 
             }
-            // InternalWreslEditorParser.g:18124:1: ( rule__MaxFunction__Group_3__0 )*
-            loop193:
+            // InternalWreslEditorParser.g:18251:1: ( rule__MaxFunction__Group_3__0 )*
+            loop194:
             do {
-                int alt193=2;
-                int LA193_0 = input.LA(1);
+                int alt194=2;
+                int LA194_0 = input.LA(1);
 
-                if ( (LA193_0==Comma) ) {
-                    alt193=1;
+                if ( (LA194_0==Comma) ) {
+                    alt194=1;
                 }
 
 
-                switch (alt193) {
+                switch (alt194) {
             	case 1 :
-            	    // InternalWreslEditorParser.g:18124:2: rule__MaxFunction__Group_3__0
+            	    // InternalWreslEditorParser.g:18251:2: rule__MaxFunction__Group_3__0
             	    {
             	    pushFollow(FOLLOW_53);
             	    rule__MaxFunction__Group_3__0();
@@ -54795,7 +55137,7 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
             	    break;
 
             	default :
-            	    break loop193;
+            	    break loop194;
                 }
             } while (true);
 
@@ -54824,14 +55166,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__MaxFunction__Group__4"
-    // InternalWreslEditorParser.g:18134:1: rule__MaxFunction__Group__4 : rule__MaxFunction__Group__4__Impl ;
+    // InternalWreslEditorParser.g:18261:1: rule__MaxFunction__Group__4 : rule__MaxFunction__Group__4__Impl ;
     public final void rule__MaxFunction__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18138:1: ( rule__MaxFunction__Group__4__Impl )
-            // InternalWreslEditorParser.g:18139:2: rule__MaxFunction__Group__4__Impl
+            // InternalWreslEditorParser.g:18265:1: ( rule__MaxFunction__Group__4__Impl )
+            // InternalWreslEditorParser.g:18266:2: rule__MaxFunction__Group__4__Impl
             {
             pushFollow(FOLLOW_2);
             rule__MaxFunction__Group__4__Impl();
@@ -54857,17 +55199,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__MaxFunction__Group__4__Impl"
-    // InternalWreslEditorParser.g:18145:1: rule__MaxFunction__Group__4__Impl : ( RightParenthesis ) ;
+    // InternalWreslEditorParser.g:18272:1: rule__MaxFunction__Group__4__Impl : ( RightParenthesis ) ;
     public final void rule__MaxFunction__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18149:1: ( ( RightParenthesis ) )
-            // InternalWreslEditorParser.g:18150:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:18276:1: ( ( RightParenthesis ) )
+            // InternalWreslEditorParser.g:18277:1: ( RightParenthesis )
             {
-            // InternalWreslEditorParser.g:18150:1: ( RightParenthesis )
-            // InternalWreslEditorParser.g:18151:1: RightParenthesis
+            // InternalWreslEditorParser.g:18277:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:18278:1: RightParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMaxFunctionAccess().getRightParenthesisKeyword_4()); 
@@ -54898,14 +55240,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__MaxFunction__Group_3__0"
-    // InternalWreslEditorParser.g:18174:1: rule__MaxFunction__Group_3__0 : rule__MaxFunction__Group_3__0__Impl rule__MaxFunction__Group_3__1 ;
+    // InternalWreslEditorParser.g:18301:1: rule__MaxFunction__Group_3__0 : rule__MaxFunction__Group_3__0__Impl rule__MaxFunction__Group_3__1 ;
     public final void rule__MaxFunction__Group_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18178:1: ( rule__MaxFunction__Group_3__0__Impl rule__MaxFunction__Group_3__1 )
-            // InternalWreslEditorParser.g:18179:2: rule__MaxFunction__Group_3__0__Impl rule__MaxFunction__Group_3__1
+            // InternalWreslEditorParser.g:18305:1: ( rule__MaxFunction__Group_3__0__Impl rule__MaxFunction__Group_3__1 )
+            // InternalWreslEditorParser.g:18306:2: rule__MaxFunction__Group_3__0__Impl rule__MaxFunction__Group_3__1
             {
             pushFollow(FOLLOW_25);
             rule__MaxFunction__Group_3__0__Impl();
@@ -54936,17 +55278,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__MaxFunction__Group_3__0__Impl"
-    // InternalWreslEditorParser.g:18186:1: rule__MaxFunction__Group_3__0__Impl : ( Comma ) ;
+    // InternalWreslEditorParser.g:18313:1: rule__MaxFunction__Group_3__0__Impl : ( Comma ) ;
     public final void rule__MaxFunction__Group_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18190:1: ( ( Comma ) )
-            // InternalWreslEditorParser.g:18191:1: ( Comma )
+            // InternalWreslEditorParser.g:18317:1: ( ( Comma ) )
+            // InternalWreslEditorParser.g:18318:1: ( Comma )
             {
-            // InternalWreslEditorParser.g:18191:1: ( Comma )
-            // InternalWreslEditorParser.g:18192:1: Comma
+            // InternalWreslEditorParser.g:18318:1: ( Comma )
+            // InternalWreslEditorParser.g:18319:1: Comma
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMaxFunctionAccess().getCommaKeyword_3_0()); 
@@ -54977,14 +55319,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__MaxFunction__Group_3__1"
-    // InternalWreslEditorParser.g:18205:1: rule__MaxFunction__Group_3__1 : rule__MaxFunction__Group_3__1__Impl ;
+    // InternalWreslEditorParser.g:18332:1: rule__MaxFunction__Group_3__1 : rule__MaxFunction__Group_3__1__Impl ;
     public final void rule__MaxFunction__Group_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18209:1: ( rule__MaxFunction__Group_3__1__Impl )
-            // InternalWreslEditorParser.g:18210:2: rule__MaxFunction__Group_3__1__Impl
+            // InternalWreslEditorParser.g:18336:1: ( rule__MaxFunction__Group_3__1__Impl )
+            // InternalWreslEditorParser.g:18337:2: rule__MaxFunction__Group_3__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__MaxFunction__Group_3__1__Impl();
@@ -55010,23 +55352,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__MaxFunction__Group_3__1__Impl"
-    // InternalWreslEditorParser.g:18216:1: rule__MaxFunction__Group_3__1__Impl : ( ( rule__MaxFunction__E2Assignment_3_1 ) ) ;
+    // InternalWreslEditorParser.g:18343:1: rule__MaxFunction__Group_3__1__Impl : ( ( rule__MaxFunction__E2Assignment_3_1 ) ) ;
     public final void rule__MaxFunction__Group_3__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18220:1: ( ( ( rule__MaxFunction__E2Assignment_3_1 ) ) )
-            // InternalWreslEditorParser.g:18221:1: ( ( rule__MaxFunction__E2Assignment_3_1 ) )
+            // InternalWreslEditorParser.g:18347:1: ( ( ( rule__MaxFunction__E2Assignment_3_1 ) ) )
+            // InternalWreslEditorParser.g:18348:1: ( ( rule__MaxFunction__E2Assignment_3_1 ) )
             {
-            // InternalWreslEditorParser.g:18221:1: ( ( rule__MaxFunction__E2Assignment_3_1 ) )
-            // InternalWreslEditorParser.g:18222:1: ( rule__MaxFunction__E2Assignment_3_1 )
+            // InternalWreslEditorParser.g:18348:1: ( ( rule__MaxFunction__E2Assignment_3_1 ) )
+            // InternalWreslEditorParser.g:18349:1: ( rule__MaxFunction__E2Assignment_3_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMaxFunctionAccess().getE2Assignment_3_1()); 
             }
-            // InternalWreslEditorParser.g:18223:1: ( rule__MaxFunction__E2Assignment_3_1 )
-            // InternalWreslEditorParser.g:18223:2: rule__MaxFunction__E2Assignment_3_1
+            // InternalWreslEditorParser.g:18350:1: ( rule__MaxFunction__E2Assignment_3_1 )
+            // InternalWreslEditorParser.g:18350:2: rule__MaxFunction__E2Assignment_3_1
             {
             pushFollow(FOLLOW_2);
             rule__MaxFunction__E2Assignment_3_1();
@@ -55061,14 +55403,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__MinFunction__Group__0"
-    // InternalWreslEditorParser.g:18237:1: rule__MinFunction__Group__0 : rule__MinFunction__Group__0__Impl rule__MinFunction__Group__1 ;
+    // InternalWreslEditorParser.g:18364:1: rule__MinFunction__Group__0 : rule__MinFunction__Group__0__Impl rule__MinFunction__Group__1 ;
     public final void rule__MinFunction__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18241:1: ( rule__MinFunction__Group__0__Impl rule__MinFunction__Group__1 )
-            // InternalWreslEditorParser.g:18242:2: rule__MinFunction__Group__0__Impl rule__MinFunction__Group__1
+            // InternalWreslEditorParser.g:18368:1: ( rule__MinFunction__Group__0__Impl rule__MinFunction__Group__1 )
+            // InternalWreslEditorParser.g:18369:2: rule__MinFunction__Group__0__Impl rule__MinFunction__Group__1
             {
             pushFollow(FOLLOW_45);
             rule__MinFunction__Group__0__Impl();
@@ -55099,17 +55441,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__MinFunction__Group__0__Impl"
-    // InternalWreslEditorParser.g:18249:1: rule__MinFunction__Group__0__Impl : ( RULE_MIN ) ;
+    // InternalWreslEditorParser.g:18376:1: rule__MinFunction__Group__0__Impl : ( RULE_MIN ) ;
     public final void rule__MinFunction__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18253:1: ( ( RULE_MIN ) )
-            // InternalWreslEditorParser.g:18254:1: ( RULE_MIN )
+            // InternalWreslEditorParser.g:18380:1: ( ( RULE_MIN ) )
+            // InternalWreslEditorParser.g:18381:1: ( RULE_MIN )
             {
-            // InternalWreslEditorParser.g:18254:1: ( RULE_MIN )
-            // InternalWreslEditorParser.g:18255:1: RULE_MIN
+            // InternalWreslEditorParser.g:18381:1: ( RULE_MIN )
+            // InternalWreslEditorParser.g:18382:1: RULE_MIN
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMinFunctionAccess().getMINTerminalRuleCall_0()); 
@@ -55140,14 +55482,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__MinFunction__Group__1"
-    // InternalWreslEditorParser.g:18266:1: rule__MinFunction__Group__1 : rule__MinFunction__Group__1__Impl rule__MinFunction__Group__2 ;
+    // InternalWreslEditorParser.g:18393:1: rule__MinFunction__Group__1 : rule__MinFunction__Group__1__Impl rule__MinFunction__Group__2 ;
     public final void rule__MinFunction__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18270:1: ( rule__MinFunction__Group__1__Impl rule__MinFunction__Group__2 )
-            // InternalWreslEditorParser.g:18271:2: rule__MinFunction__Group__1__Impl rule__MinFunction__Group__2
+            // InternalWreslEditorParser.g:18397:1: ( rule__MinFunction__Group__1__Impl rule__MinFunction__Group__2 )
+            // InternalWreslEditorParser.g:18398:2: rule__MinFunction__Group__1__Impl rule__MinFunction__Group__2
             {
             pushFollow(FOLLOW_25);
             rule__MinFunction__Group__1__Impl();
@@ -55178,17 +55520,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__MinFunction__Group__1__Impl"
-    // InternalWreslEditorParser.g:18278:1: rule__MinFunction__Group__1__Impl : ( LeftParenthesis ) ;
+    // InternalWreslEditorParser.g:18405:1: rule__MinFunction__Group__1__Impl : ( LeftParenthesis ) ;
     public final void rule__MinFunction__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18282:1: ( ( LeftParenthesis ) )
-            // InternalWreslEditorParser.g:18283:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:18409:1: ( ( LeftParenthesis ) )
+            // InternalWreslEditorParser.g:18410:1: ( LeftParenthesis )
             {
-            // InternalWreslEditorParser.g:18283:1: ( LeftParenthesis )
-            // InternalWreslEditorParser.g:18284:1: LeftParenthesis
+            // InternalWreslEditorParser.g:18410:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:18411:1: LeftParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMinFunctionAccess().getLeftParenthesisKeyword_1()); 
@@ -55219,14 +55561,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__MinFunction__Group__2"
-    // InternalWreslEditorParser.g:18297:1: rule__MinFunction__Group__2 : rule__MinFunction__Group__2__Impl rule__MinFunction__Group__3 ;
+    // InternalWreslEditorParser.g:18424:1: rule__MinFunction__Group__2 : rule__MinFunction__Group__2__Impl rule__MinFunction__Group__3 ;
     public final void rule__MinFunction__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18301:1: ( rule__MinFunction__Group__2__Impl rule__MinFunction__Group__3 )
-            // InternalWreslEditorParser.g:18302:2: rule__MinFunction__Group__2__Impl rule__MinFunction__Group__3
+            // InternalWreslEditorParser.g:18428:1: ( rule__MinFunction__Group__2__Impl rule__MinFunction__Group__3 )
+            // InternalWreslEditorParser.g:18429:2: rule__MinFunction__Group__2__Impl rule__MinFunction__Group__3
             {
             pushFollow(FOLLOW_47);
             rule__MinFunction__Group__2__Impl();
@@ -55257,23 +55599,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__MinFunction__Group__2__Impl"
-    // InternalWreslEditorParser.g:18309:1: rule__MinFunction__Group__2__Impl : ( ( rule__MinFunction__E1Assignment_2 ) ) ;
+    // InternalWreslEditorParser.g:18436:1: rule__MinFunction__Group__2__Impl : ( ( rule__MinFunction__E1Assignment_2 ) ) ;
     public final void rule__MinFunction__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18313:1: ( ( ( rule__MinFunction__E1Assignment_2 ) ) )
-            // InternalWreslEditorParser.g:18314:1: ( ( rule__MinFunction__E1Assignment_2 ) )
+            // InternalWreslEditorParser.g:18440:1: ( ( ( rule__MinFunction__E1Assignment_2 ) ) )
+            // InternalWreslEditorParser.g:18441:1: ( ( rule__MinFunction__E1Assignment_2 ) )
             {
-            // InternalWreslEditorParser.g:18314:1: ( ( rule__MinFunction__E1Assignment_2 ) )
-            // InternalWreslEditorParser.g:18315:1: ( rule__MinFunction__E1Assignment_2 )
+            // InternalWreslEditorParser.g:18441:1: ( ( rule__MinFunction__E1Assignment_2 ) )
+            // InternalWreslEditorParser.g:18442:1: ( rule__MinFunction__E1Assignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMinFunctionAccess().getE1Assignment_2()); 
             }
-            // InternalWreslEditorParser.g:18316:1: ( rule__MinFunction__E1Assignment_2 )
-            // InternalWreslEditorParser.g:18316:2: rule__MinFunction__E1Assignment_2
+            // InternalWreslEditorParser.g:18443:1: ( rule__MinFunction__E1Assignment_2 )
+            // InternalWreslEditorParser.g:18443:2: rule__MinFunction__E1Assignment_2
             {
             pushFollow(FOLLOW_2);
             rule__MinFunction__E1Assignment_2();
@@ -55308,14 +55650,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__MinFunction__Group__3"
-    // InternalWreslEditorParser.g:18326:1: rule__MinFunction__Group__3 : rule__MinFunction__Group__3__Impl rule__MinFunction__Group__4 ;
+    // InternalWreslEditorParser.g:18453:1: rule__MinFunction__Group__3 : rule__MinFunction__Group__3__Impl rule__MinFunction__Group__4 ;
     public final void rule__MinFunction__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18330:1: ( rule__MinFunction__Group__3__Impl rule__MinFunction__Group__4 )
-            // InternalWreslEditorParser.g:18331:2: rule__MinFunction__Group__3__Impl rule__MinFunction__Group__4
+            // InternalWreslEditorParser.g:18457:1: ( rule__MinFunction__Group__3__Impl rule__MinFunction__Group__4 )
+            // InternalWreslEditorParser.g:18458:2: rule__MinFunction__Group__3__Impl rule__MinFunction__Group__4
             {
             pushFollow(FOLLOW_47);
             rule__MinFunction__Group__3__Impl();
@@ -55346,35 +55688,35 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__MinFunction__Group__3__Impl"
-    // InternalWreslEditorParser.g:18338:1: rule__MinFunction__Group__3__Impl : ( ( rule__MinFunction__Group_3__0 )* ) ;
+    // InternalWreslEditorParser.g:18465:1: rule__MinFunction__Group__3__Impl : ( ( rule__MinFunction__Group_3__0 )* ) ;
     public final void rule__MinFunction__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18342:1: ( ( ( rule__MinFunction__Group_3__0 )* ) )
-            // InternalWreslEditorParser.g:18343:1: ( ( rule__MinFunction__Group_3__0 )* )
+            // InternalWreslEditorParser.g:18469:1: ( ( ( rule__MinFunction__Group_3__0 )* ) )
+            // InternalWreslEditorParser.g:18470:1: ( ( rule__MinFunction__Group_3__0 )* )
             {
-            // InternalWreslEditorParser.g:18343:1: ( ( rule__MinFunction__Group_3__0 )* )
-            // InternalWreslEditorParser.g:18344:1: ( rule__MinFunction__Group_3__0 )*
+            // InternalWreslEditorParser.g:18470:1: ( ( rule__MinFunction__Group_3__0 )* )
+            // InternalWreslEditorParser.g:18471:1: ( rule__MinFunction__Group_3__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMinFunctionAccess().getGroup_3()); 
             }
-            // InternalWreslEditorParser.g:18345:1: ( rule__MinFunction__Group_3__0 )*
-            loop194:
+            // InternalWreslEditorParser.g:18472:1: ( rule__MinFunction__Group_3__0 )*
+            loop195:
             do {
-                int alt194=2;
-                int LA194_0 = input.LA(1);
+                int alt195=2;
+                int LA195_0 = input.LA(1);
 
-                if ( (LA194_0==Comma) ) {
-                    alt194=1;
+                if ( (LA195_0==Comma) ) {
+                    alt195=1;
                 }
 
 
-                switch (alt194) {
+                switch (alt195) {
             	case 1 :
-            	    // InternalWreslEditorParser.g:18345:2: rule__MinFunction__Group_3__0
+            	    // InternalWreslEditorParser.g:18472:2: rule__MinFunction__Group_3__0
             	    {
             	    pushFollow(FOLLOW_53);
             	    rule__MinFunction__Group_3__0();
@@ -55386,7 +55728,7 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
             	    break;
 
             	default :
-            	    break loop194;
+            	    break loop195;
                 }
             } while (true);
 
@@ -55415,14 +55757,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__MinFunction__Group__4"
-    // InternalWreslEditorParser.g:18355:1: rule__MinFunction__Group__4 : rule__MinFunction__Group__4__Impl ;
+    // InternalWreslEditorParser.g:18482:1: rule__MinFunction__Group__4 : rule__MinFunction__Group__4__Impl ;
     public final void rule__MinFunction__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18359:1: ( rule__MinFunction__Group__4__Impl )
-            // InternalWreslEditorParser.g:18360:2: rule__MinFunction__Group__4__Impl
+            // InternalWreslEditorParser.g:18486:1: ( rule__MinFunction__Group__4__Impl )
+            // InternalWreslEditorParser.g:18487:2: rule__MinFunction__Group__4__Impl
             {
             pushFollow(FOLLOW_2);
             rule__MinFunction__Group__4__Impl();
@@ -55448,17 +55790,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__MinFunction__Group__4__Impl"
-    // InternalWreslEditorParser.g:18366:1: rule__MinFunction__Group__4__Impl : ( RightParenthesis ) ;
+    // InternalWreslEditorParser.g:18493:1: rule__MinFunction__Group__4__Impl : ( RightParenthesis ) ;
     public final void rule__MinFunction__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18370:1: ( ( RightParenthesis ) )
-            // InternalWreslEditorParser.g:18371:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:18497:1: ( ( RightParenthesis ) )
+            // InternalWreslEditorParser.g:18498:1: ( RightParenthesis )
             {
-            // InternalWreslEditorParser.g:18371:1: ( RightParenthesis )
-            // InternalWreslEditorParser.g:18372:1: RightParenthesis
+            // InternalWreslEditorParser.g:18498:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:18499:1: RightParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMinFunctionAccess().getRightParenthesisKeyword_4()); 
@@ -55489,14 +55831,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__MinFunction__Group_3__0"
-    // InternalWreslEditorParser.g:18395:1: rule__MinFunction__Group_3__0 : rule__MinFunction__Group_3__0__Impl rule__MinFunction__Group_3__1 ;
+    // InternalWreslEditorParser.g:18522:1: rule__MinFunction__Group_3__0 : rule__MinFunction__Group_3__0__Impl rule__MinFunction__Group_3__1 ;
     public final void rule__MinFunction__Group_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18399:1: ( rule__MinFunction__Group_3__0__Impl rule__MinFunction__Group_3__1 )
-            // InternalWreslEditorParser.g:18400:2: rule__MinFunction__Group_3__0__Impl rule__MinFunction__Group_3__1
+            // InternalWreslEditorParser.g:18526:1: ( rule__MinFunction__Group_3__0__Impl rule__MinFunction__Group_3__1 )
+            // InternalWreslEditorParser.g:18527:2: rule__MinFunction__Group_3__0__Impl rule__MinFunction__Group_3__1
             {
             pushFollow(FOLLOW_25);
             rule__MinFunction__Group_3__0__Impl();
@@ -55527,17 +55869,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__MinFunction__Group_3__0__Impl"
-    // InternalWreslEditorParser.g:18407:1: rule__MinFunction__Group_3__0__Impl : ( Comma ) ;
+    // InternalWreslEditorParser.g:18534:1: rule__MinFunction__Group_3__0__Impl : ( Comma ) ;
     public final void rule__MinFunction__Group_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18411:1: ( ( Comma ) )
-            // InternalWreslEditorParser.g:18412:1: ( Comma )
+            // InternalWreslEditorParser.g:18538:1: ( ( Comma ) )
+            // InternalWreslEditorParser.g:18539:1: ( Comma )
             {
-            // InternalWreslEditorParser.g:18412:1: ( Comma )
-            // InternalWreslEditorParser.g:18413:1: Comma
+            // InternalWreslEditorParser.g:18539:1: ( Comma )
+            // InternalWreslEditorParser.g:18540:1: Comma
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMinFunctionAccess().getCommaKeyword_3_0()); 
@@ -55568,14 +55910,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__MinFunction__Group_3__1"
-    // InternalWreslEditorParser.g:18426:1: rule__MinFunction__Group_3__1 : rule__MinFunction__Group_3__1__Impl ;
+    // InternalWreslEditorParser.g:18553:1: rule__MinFunction__Group_3__1 : rule__MinFunction__Group_3__1__Impl ;
     public final void rule__MinFunction__Group_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18430:1: ( rule__MinFunction__Group_3__1__Impl )
-            // InternalWreslEditorParser.g:18431:2: rule__MinFunction__Group_3__1__Impl
+            // InternalWreslEditorParser.g:18557:1: ( rule__MinFunction__Group_3__1__Impl )
+            // InternalWreslEditorParser.g:18558:2: rule__MinFunction__Group_3__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__MinFunction__Group_3__1__Impl();
@@ -55601,23 +55943,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__MinFunction__Group_3__1__Impl"
-    // InternalWreslEditorParser.g:18437:1: rule__MinFunction__Group_3__1__Impl : ( ( rule__MinFunction__E2Assignment_3_1 ) ) ;
+    // InternalWreslEditorParser.g:18564:1: rule__MinFunction__Group_3__1__Impl : ( ( rule__MinFunction__E2Assignment_3_1 ) ) ;
     public final void rule__MinFunction__Group_3__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18441:1: ( ( ( rule__MinFunction__E2Assignment_3_1 ) ) )
-            // InternalWreslEditorParser.g:18442:1: ( ( rule__MinFunction__E2Assignment_3_1 ) )
+            // InternalWreslEditorParser.g:18568:1: ( ( ( rule__MinFunction__E2Assignment_3_1 ) ) )
+            // InternalWreslEditorParser.g:18569:1: ( ( rule__MinFunction__E2Assignment_3_1 ) )
             {
-            // InternalWreslEditorParser.g:18442:1: ( ( rule__MinFunction__E2Assignment_3_1 ) )
-            // InternalWreslEditorParser.g:18443:1: ( rule__MinFunction__E2Assignment_3_1 )
+            // InternalWreslEditorParser.g:18569:1: ( ( rule__MinFunction__E2Assignment_3_1 ) )
+            // InternalWreslEditorParser.g:18570:1: ( rule__MinFunction__E2Assignment_3_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMinFunctionAccess().getE2Assignment_3_1()); 
             }
-            // InternalWreslEditorParser.g:18444:1: ( rule__MinFunction__E2Assignment_3_1 )
-            // InternalWreslEditorParser.g:18444:2: rule__MinFunction__E2Assignment_3_1
+            // InternalWreslEditorParser.g:18571:1: ( rule__MinFunction__E2Assignment_3_1 )
+            // InternalWreslEditorParser.g:18571:2: rule__MinFunction__E2Assignment_3_1
             {
             pushFollow(FOLLOW_2);
             rule__MinFunction__E2Assignment_3_1();
@@ -55652,14 +55994,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ModFunction__Group__0"
-    // InternalWreslEditorParser.g:18458:1: rule__ModFunction__Group__0 : rule__ModFunction__Group__0__Impl rule__ModFunction__Group__1 ;
+    // InternalWreslEditorParser.g:18585:1: rule__ModFunction__Group__0 : rule__ModFunction__Group__0__Impl rule__ModFunction__Group__1 ;
     public final void rule__ModFunction__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18462:1: ( rule__ModFunction__Group__0__Impl rule__ModFunction__Group__1 )
-            // InternalWreslEditorParser.g:18463:2: rule__ModFunction__Group__0__Impl rule__ModFunction__Group__1
+            // InternalWreslEditorParser.g:18589:1: ( rule__ModFunction__Group__0__Impl rule__ModFunction__Group__1 )
+            // InternalWreslEditorParser.g:18590:2: rule__ModFunction__Group__0__Impl rule__ModFunction__Group__1
             {
             pushFollow(FOLLOW_45);
             rule__ModFunction__Group__0__Impl();
@@ -55690,17 +56032,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ModFunction__Group__0__Impl"
-    // InternalWreslEditorParser.g:18470:1: rule__ModFunction__Group__0__Impl : ( RULE_MOD ) ;
+    // InternalWreslEditorParser.g:18597:1: rule__ModFunction__Group__0__Impl : ( RULE_MOD ) ;
     public final void rule__ModFunction__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18474:1: ( ( RULE_MOD ) )
-            // InternalWreslEditorParser.g:18475:1: ( RULE_MOD )
+            // InternalWreslEditorParser.g:18601:1: ( ( RULE_MOD ) )
+            // InternalWreslEditorParser.g:18602:1: ( RULE_MOD )
             {
-            // InternalWreslEditorParser.g:18475:1: ( RULE_MOD )
-            // InternalWreslEditorParser.g:18476:1: RULE_MOD
+            // InternalWreslEditorParser.g:18602:1: ( RULE_MOD )
+            // InternalWreslEditorParser.g:18603:1: RULE_MOD
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getModFunctionAccess().getMODTerminalRuleCall_0()); 
@@ -55731,14 +56073,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ModFunction__Group__1"
-    // InternalWreslEditorParser.g:18487:1: rule__ModFunction__Group__1 : rule__ModFunction__Group__1__Impl rule__ModFunction__Group__2 ;
+    // InternalWreslEditorParser.g:18614:1: rule__ModFunction__Group__1 : rule__ModFunction__Group__1__Impl rule__ModFunction__Group__2 ;
     public final void rule__ModFunction__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18491:1: ( rule__ModFunction__Group__1__Impl rule__ModFunction__Group__2 )
-            // InternalWreslEditorParser.g:18492:2: rule__ModFunction__Group__1__Impl rule__ModFunction__Group__2
+            // InternalWreslEditorParser.g:18618:1: ( rule__ModFunction__Group__1__Impl rule__ModFunction__Group__2 )
+            // InternalWreslEditorParser.g:18619:2: rule__ModFunction__Group__1__Impl rule__ModFunction__Group__2
             {
             pushFollow(FOLLOW_25);
             rule__ModFunction__Group__1__Impl();
@@ -55769,17 +56111,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ModFunction__Group__1__Impl"
-    // InternalWreslEditorParser.g:18499:1: rule__ModFunction__Group__1__Impl : ( LeftParenthesis ) ;
+    // InternalWreslEditorParser.g:18626:1: rule__ModFunction__Group__1__Impl : ( LeftParenthesis ) ;
     public final void rule__ModFunction__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18503:1: ( ( LeftParenthesis ) )
-            // InternalWreslEditorParser.g:18504:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:18630:1: ( ( LeftParenthesis ) )
+            // InternalWreslEditorParser.g:18631:1: ( LeftParenthesis )
             {
-            // InternalWreslEditorParser.g:18504:1: ( LeftParenthesis )
-            // InternalWreslEditorParser.g:18505:1: LeftParenthesis
+            // InternalWreslEditorParser.g:18631:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:18632:1: LeftParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getModFunctionAccess().getLeftParenthesisKeyword_1()); 
@@ -55810,14 +56152,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ModFunction__Group__2"
-    // InternalWreslEditorParser.g:18518:1: rule__ModFunction__Group__2 : rule__ModFunction__Group__2__Impl rule__ModFunction__Group__3 ;
+    // InternalWreslEditorParser.g:18645:1: rule__ModFunction__Group__2 : rule__ModFunction__Group__2__Impl rule__ModFunction__Group__3 ;
     public final void rule__ModFunction__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18522:1: ( rule__ModFunction__Group__2__Impl rule__ModFunction__Group__3 )
-            // InternalWreslEditorParser.g:18523:2: rule__ModFunction__Group__2__Impl rule__ModFunction__Group__3
+            // InternalWreslEditorParser.g:18649:1: ( rule__ModFunction__Group__2__Impl rule__ModFunction__Group__3 )
+            // InternalWreslEditorParser.g:18650:2: rule__ModFunction__Group__2__Impl rule__ModFunction__Group__3
             {
             pushFollow(FOLLOW_26);
             rule__ModFunction__Group__2__Impl();
@@ -55848,23 +56190,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ModFunction__Group__2__Impl"
-    // InternalWreslEditorParser.g:18530:1: rule__ModFunction__Group__2__Impl : ( ( rule__ModFunction__E1Assignment_2 ) ) ;
+    // InternalWreslEditorParser.g:18657:1: rule__ModFunction__Group__2__Impl : ( ( rule__ModFunction__E1Assignment_2 ) ) ;
     public final void rule__ModFunction__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18534:1: ( ( ( rule__ModFunction__E1Assignment_2 ) ) )
-            // InternalWreslEditorParser.g:18535:1: ( ( rule__ModFunction__E1Assignment_2 ) )
+            // InternalWreslEditorParser.g:18661:1: ( ( ( rule__ModFunction__E1Assignment_2 ) ) )
+            // InternalWreslEditorParser.g:18662:1: ( ( rule__ModFunction__E1Assignment_2 ) )
             {
-            // InternalWreslEditorParser.g:18535:1: ( ( rule__ModFunction__E1Assignment_2 ) )
-            // InternalWreslEditorParser.g:18536:1: ( rule__ModFunction__E1Assignment_2 )
+            // InternalWreslEditorParser.g:18662:1: ( ( rule__ModFunction__E1Assignment_2 ) )
+            // InternalWreslEditorParser.g:18663:1: ( rule__ModFunction__E1Assignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getModFunctionAccess().getE1Assignment_2()); 
             }
-            // InternalWreslEditorParser.g:18537:1: ( rule__ModFunction__E1Assignment_2 )
-            // InternalWreslEditorParser.g:18537:2: rule__ModFunction__E1Assignment_2
+            // InternalWreslEditorParser.g:18664:1: ( rule__ModFunction__E1Assignment_2 )
+            // InternalWreslEditorParser.g:18664:2: rule__ModFunction__E1Assignment_2
             {
             pushFollow(FOLLOW_2);
             rule__ModFunction__E1Assignment_2();
@@ -55899,14 +56241,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ModFunction__Group__3"
-    // InternalWreslEditorParser.g:18547:1: rule__ModFunction__Group__3 : rule__ModFunction__Group__3__Impl rule__ModFunction__Group__4 ;
+    // InternalWreslEditorParser.g:18674:1: rule__ModFunction__Group__3 : rule__ModFunction__Group__3__Impl rule__ModFunction__Group__4 ;
     public final void rule__ModFunction__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18551:1: ( rule__ModFunction__Group__3__Impl rule__ModFunction__Group__4 )
-            // InternalWreslEditorParser.g:18552:2: rule__ModFunction__Group__3__Impl rule__ModFunction__Group__4
+            // InternalWreslEditorParser.g:18678:1: ( rule__ModFunction__Group__3__Impl rule__ModFunction__Group__4 )
+            // InternalWreslEditorParser.g:18679:2: rule__ModFunction__Group__3__Impl rule__ModFunction__Group__4
             {
             pushFollow(FOLLOW_25);
             rule__ModFunction__Group__3__Impl();
@@ -55937,17 +56279,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ModFunction__Group__3__Impl"
-    // InternalWreslEditorParser.g:18559:1: rule__ModFunction__Group__3__Impl : ( Comma ) ;
+    // InternalWreslEditorParser.g:18686:1: rule__ModFunction__Group__3__Impl : ( Comma ) ;
     public final void rule__ModFunction__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18563:1: ( ( Comma ) )
-            // InternalWreslEditorParser.g:18564:1: ( Comma )
+            // InternalWreslEditorParser.g:18690:1: ( ( Comma ) )
+            // InternalWreslEditorParser.g:18691:1: ( Comma )
             {
-            // InternalWreslEditorParser.g:18564:1: ( Comma )
-            // InternalWreslEditorParser.g:18565:1: Comma
+            // InternalWreslEditorParser.g:18691:1: ( Comma )
+            // InternalWreslEditorParser.g:18692:1: Comma
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getModFunctionAccess().getCommaKeyword_3()); 
@@ -55978,14 +56320,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ModFunction__Group__4"
-    // InternalWreslEditorParser.g:18578:1: rule__ModFunction__Group__4 : rule__ModFunction__Group__4__Impl rule__ModFunction__Group__5 ;
+    // InternalWreslEditorParser.g:18705:1: rule__ModFunction__Group__4 : rule__ModFunction__Group__4__Impl rule__ModFunction__Group__5 ;
     public final void rule__ModFunction__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18582:1: ( rule__ModFunction__Group__4__Impl rule__ModFunction__Group__5 )
-            // InternalWreslEditorParser.g:18583:2: rule__ModFunction__Group__4__Impl rule__ModFunction__Group__5
+            // InternalWreslEditorParser.g:18709:1: ( rule__ModFunction__Group__4__Impl rule__ModFunction__Group__5 )
+            // InternalWreslEditorParser.g:18710:2: rule__ModFunction__Group__4__Impl rule__ModFunction__Group__5
             {
             pushFollow(FOLLOW_17);
             rule__ModFunction__Group__4__Impl();
@@ -56016,23 +56358,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ModFunction__Group__4__Impl"
-    // InternalWreslEditorParser.g:18590:1: rule__ModFunction__Group__4__Impl : ( ( rule__ModFunction__E2Assignment_4 ) ) ;
+    // InternalWreslEditorParser.g:18717:1: rule__ModFunction__Group__4__Impl : ( ( rule__ModFunction__E2Assignment_4 ) ) ;
     public final void rule__ModFunction__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18594:1: ( ( ( rule__ModFunction__E2Assignment_4 ) ) )
-            // InternalWreslEditorParser.g:18595:1: ( ( rule__ModFunction__E2Assignment_4 ) )
+            // InternalWreslEditorParser.g:18721:1: ( ( ( rule__ModFunction__E2Assignment_4 ) ) )
+            // InternalWreslEditorParser.g:18722:1: ( ( rule__ModFunction__E2Assignment_4 ) )
             {
-            // InternalWreslEditorParser.g:18595:1: ( ( rule__ModFunction__E2Assignment_4 ) )
-            // InternalWreslEditorParser.g:18596:1: ( rule__ModFunction__E2Assignment_4 )
+            // InternalWreslEditorParser.g:18722:1: ( ( rule__ModFunction__E2Assignment_4 ) )
+            // InternalWreslEditorParser.g:18723:1: ( rule__ModFunction__E2Assignment_4 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getModFunctionAccess().getE2Assignment_4()); 
             }
-            // InternalWreslEditorParser.g:18597:1: ( rule__ModFunction__E2Assignment_4 )
-            // InternalWreslEditorParser.g:18597:2: rule__ModFunction__E2Assignment_4
+            // InternalWreslEditorParser.g:18724:1: ( rule__ModFunction__E2Assignment_4 )
+            // InternalWreslEditorParser.g:18724:2: rule__ModFunction__E2Assignment_4
             {
             pushFollow(FOLLOW_2);
             rule__ModFunction__E2Assignment_4();
@@ -56067,14 +56409,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ModFunction__Group__5"
-    // InternalWreslEditorParser.g:18607:1: rule__ModFunction__Group__5 : rule__ModFunction__Group__5__Impl ;
+    // InternalWreslEditorParser.g:18734:1: rule__ModFunction__Group__5 : rule__ModFunction__Group__5__Impl ;
     public final void rule__ModFunction__Group__5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18611:1: ( rule__ModFunction__Group__5__Impl )
-            // InternalWreslEditorParser.g:18612:2: rule__ModFunction__Group__5__Impl
+            // InternalWreslEditorParser.g:18738:1: ( rule__ModFunction__Group__5__Impl )
+            // InternalWreslEditorParser.g:18739:2: rule__ModFunction__Group__5__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ModFunction__Group__5__Impl();
@@ -56100,17 +56442,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ModFunction__Group__5__Impl"
-    // InternalWreslEditorParser.g:18618:1: rule__ModFunction__Group__5__Impl : ( RightParenthesis ) ;
+    // InternalWreslEditorParser.g:18745:1: rule__ModFunction__Group__5__Impl : ( RightParenthesis ) ;
     public final void rule__ModFunction__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18622:1: ( ( RightParenthesis ) )
-            // InternalWreslEditorParser.g:18623:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:18749:1: ( ( RightParenthesis ) )
+            // InternalWreslEditorParser.g:18750:1: ( RightParenthesis )
             {
-            // InternalWreslEditorParser.g:18623:1: ( RightParenthesis )
-            // InternalWreslEditorParser.g:18624:1: RightParenthesis
+            // InternalWreslEditorParser.g:18750:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:18751:1: RightParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getModFunctionAccess().getRightParenthesisKeyword_5()); 
@@ -56141,14 +56483,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IntFunction__Group__0"
-    // InternalWreslEditorParser.g:18649:1: rule__IntFunction__Group__0 : rule__IntFunction__Group__0__Impl rule__IntFunction__Group__1 ;
+    // InternalWreslEditorParser.g:18776:1: rule__IntFunction__Group__0 : rule__IntFunction__Group__0__Impl rule__IntFunction__Group__1 ;
     public final void rule__IntFunction__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18653:1: ( rule__IntFunction__Group__0__Impl rule__IntFunction__Group__1 )
-            // InternalWreslEditorParser.g:18654:2: rule__IntFunction__Group__0__Impl rule__IntFunction__Group__1
+            // InternalWreslEditorParser.g:18780:1: ( rule__IntFunction__Group__0__Impl rule__IntFunction__Group__1 )
+            // InternalWreslEditorParser.g:18781:2: rule__IntFunction__Group__0__Impl rule__IntFunction__Group__1
             {
             pushFollow(FOLLOW_45);
             rule__IntFunction__Group__0__Impl();
@@ -56179,17 +56521,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IntFunction__Group__0__Impl"
-    // InternalWreslEditorParser.g:18661:1: rule__IntFunction__Group__0__Impl : ( RULE_INTFUNC ) ;
+    // InternalWreslEditorParser.g:18788:1: rule__IntFunction__Group__0__Impl : ( RULE_INTFUNC ) ;
     public final void rule__IntFunction__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18665:1: ( ( RULE_INTFUNC ) )
-            // InternalWreslEditorParser.g:18666:1: ( RULE_INTFUNC )
+            // InternalWreslEditorParser.g:18792:1: ( ( RULE_INTFUNC ) )
+            // InternalWreslEditorParser.g:18793:1: ( RULE_INTFUNC )
             {
-            // InternalWreslEditorParser.g:18666:1: ( RULE_INTFUNC )
-            // InternalWreslEditorParser.g:18667:1: RULE_INTFUNC
+            // InternalWreslEditorParser.g:18793:1: ( RULE_INTFUNC )
+            // InternalWreslEditorParser.g:18794:1: RULE_INTFUNC
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIntFunctionAccess().getINTFUNCTerminalRuleCall_0()); 
@@ -56220,14 +56562,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IntFunction__Group__1"
-    // InternalWreslEditorParser.g:18678:1: rule__IntFunction__Group__1 : rule__IntFunction__Group__1__Impl rule__IntFunction__Group__2 ;
+    // InternalWreslEditorParser.g:18805:1: rule__IntFunction__Group__1 : rule__IntFunction__Group__1__Impl rule__IntFunction__Group__2 ;
     public final void rule__IntFunction__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18682:1: ( rule__IntFunction__Group__1__Impl rule__IntFunction__Group__2 )
-            // InternalWreslEditorParser.g:18683:2: rule__IntFunction__Group__1__Impl rule__IntFunction__Group__2
+            // InternalWreslEditorParser.g:18809:1: ( rule__IntFunction__Group__1__Impl rule__IntFunction__Group__2 )
+            // InternalWreslEditorParser.g:18810:2: rule__IntFunction__Group__1__Impl rule__IntFunction__Group__2
             {
             pushFollow(FOLLOW_25);
             rule__IntFunction__Group__1__Impl();
@@ -56258,17 +56600,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IntFunction__Group__1__Impl"
-    // InternalWreslEditorParser.g:18690:1: rule__IntFunction__Group__1__Impl : ( LeftParenthesis ) ;
+    // InternalWreslEditorParser.g:18817:1: rule__IntFunction__Group__1__Impl : ( LeftParenthesis ) ;
     public final void rule__IntFunction__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18694:1: ( ( LeftParenthesis ) )
-            // InternalWreslEditorParser.g:18695:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:18821:1: ( ( LeftParenthesis ) )
+            // InternalWreslEditorParser.g:18822:1: ( LeftParenthesis )
             {
-            // InternalWreslEditorParser.g:18695:1: ( LeftParenthesis )
-            // InternalWreslEditorParser.g:18696:1: LeftParenthesis
+            // InternalWreslEditorParser.g:18822:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:18823:1: LeftParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIntFunctionAccess().getLeftParenthesisKeyword_1()); 
@@ -56299,14 +56641,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IntFunction__Group__2"
-    // InternalWreslEditorParser.g:18709:1: rule__IntFunction__Group__2 : rule__IntFunction__Group__2__Impl rule__IntFunction__Group__3 ;
+    // InternalWreslEditorParser.g:18836:1: rule__IntFunction__Group__2 : rule__IntFunction__Group__2__Impl rule__IntFunction__Group__3 ;
     public final void rule__IntFunction__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18713:1: ( rule__IntFunction__Group__2__Impl rule__IntFunction__Group__3 )
-            // InternalWreslEditorParser.g:18714:2: rule__IntFunction__Group__2__Impl rule__IntFunction__Group__3
+            // InternalWreslEditorParser.g:18840:1: ( rule__IntFunction__Group__2__Impl rule__IntFunction__Group__3 )
+            // InternalWreslEditorParser.g:18841:2: rule__IntFunction__Group__2__Impl rule__IntFunction__Group__3
             {
             pushFollow(FOLLOW_17);
             rule__IntFunction__Group__2__Impl();
@@ -56337,23 +56679,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IntFunction__Group__2__Impl"
-    // InternalWreslEditorParser.g:18721:1: rule__IntFunction__Group__2__Impl : ( ( rule__IntFunction__EAssignment_2 ) ) ;
+    // InternalWreslEditorParser.g:18848:1: rule__IntFunction__Group__2__Impl : ( ( rule__IntFunction__EAssignment_2 ) ) ;
     public final void rule__IntFunction__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18725:1: ( ( ( rule__IntFunction__EAssignment_2 ) ) )
-            // InternalWreslEditorParser.g:18726:1: ( ( rule__IntFunction__EAssignment_2 ) )
+            // InternalWreslEditorParser.g:18852:1: ( ( ( rule__IntFunction__EAssignment_2 ) ) )
+            // InternalWreslEditorParser.g:18853:1: ( ( rule__IntFunction__EAssignment_2 ) )
             {
-            // InternalWreslEditorParser.g:18726:1: ( ( rule__IntFunction__EAssignment_2 ) )
-            // InternalWreslEditorParser.g:18727:1: ( rule__IntFunction__EAssignment_2 )
+            // InternalWreslEditorParser.g:18853:1: ( ( rule__IntFunction__EAssignment_2 ) )
+            // InternalWreslEditorParser.g:18854:1: ( rule__IntFunction__EAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIntFunctionAccess().getEAssignment_2()); 
             }
-            // InternalWreslEditorParser.g:18728:1: ( rule__IntFunction__EAssignment_2 )
-            // InternalWreslEditorParser.g:18728:2: rule__IntFunction__EAssignment_2
+            // InternalWreslEditorParser.g:18855:1: ( rule__IntFunction__EAssignment_2 )
+            // InternalWreslEditorParser.g:18855:2: rule__IntFunction__EAssignment_2
             {
             pushFollow(FOLLOW_2);
             rule__IntFunction__EAssignment_2();
@@ -56388,14 +56730,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IntFunction__Group__3"
-    // InternalWreslEditorParser.g:18738:1: rule__IntFunction__Group__3 : rule__IntFunction__Group__3__Impl ;
+    // InternalWreslEditorParser.g:18865:1: rule__IntFunction__Group__3 : rule__IntFunction__Group__3__Impl ;
     public final void rule__IntFunction__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18742:1: ( rule__IntFunction__Group__3__Impl )
-            // InternalWreslEditorParser.g:18743:2: rule__IntFunction__Group__3__Impl
+            // InternalWreslEditorParser.g:18869:1: ( rule__IntFunction__Group__3__Impl )
+            // InternalWreslEditorParser.g:18870:2: rule__IntFunction__Group__3__Impl
             {
             pushFollow(FOLLOW_2);
             rule__IntFunction__Group__3__Impl();
@@ -56421,17 +56763,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IntFunction__Group__3__Impl"
-    // InternalWreslEditorParser.g:18749:1: rule__IntFunction__Group__3__Impl : ( RightParenthesis ) ;
+    // InternalWreslEditorParser.g:18876:1: rule__IntFunction__Group__3__Impl : ( RightParenthesis ) ;
     public final void rule__IntFunction__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18753:1: ( ( RightParenthesis ) )
-            // InternalWreslEditorParser.g:18754:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:18880:1: ( ( RightParenthesis ) )
+            // InternalWreslEditorParser.g:18881:1: ( RightParenthesis )
             {
-            // InternalWreslEditorParser.g:18754:1: ( RightParenthesis )
-            // InternalWreslEditorParser.g:18755:1: RightParenthesis
+            // InternalWreslEditorParser.g:18881:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:18882:1: RightParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIntFunctionAccess().getRightParenthesisKeyword_3()); 
@@ -56462,14 +56804,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AbsFunction__Group__0"
-    // InternalWreslEditorParser.g:18776:1: rule__AbsFunction__Group__0 : rule__AbsFunction__Group__0__Impl rule__AbsFunction__Group__1 ;
+    // InternalWreslEditorParser.g:18903:1: rule__AbsFunction__Group__0 : rule__AbsFunction__Group__0__Impl rule__AbsFunction__Group__1 ;
     public final void rule__AbsFunction__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18780:1: ( rule__AbsFunction__Group__0__Impl rule__AbsFunction__Group__1 )
-            // InternalWreslEditorParser.g:18781:2: rule__AbsFunction__Group__0__Impl rule__AbsFunction__Group__1
+            // InternalWreslEditorParser.g:18907:1: ( rule__AbsFunction__Group__0__Impl rule__AbsFunction__Group__1 )
+            // InternalWreslEditorParser.g:18908:2: rule__AbsFunction__Group__0__Impl rule__AbsFunction__Group__1
             {
             pushFollow(FOLLOW_45);
             rule__AbsFunction__Group__0__Impl();
@@ -56500,17 +56842,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AbsFunction__Group__0__Impl"
-    // InternalWreslEditorParser.g:18788:1: rule__AbsFunction__Group__0__Impl : ( RULE_ABS ) ;
+    // InternalWreslEditorParser.g:18915:1: rule__AbsFunction__Group__0__Impl : ( RULE_ABS ) ;
     public final void rule__AbsFunction__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18792:1: ( ( RULE_ABS ) )
-            // InternalWreslEditorParser.g:18793:1: ( RULE_ABS )
+            // InternalWreslEditorParser.g:18919:1: ( ( RULE_ABS ) )
+            // InternalWreslEditorParser.g:18920:1: ( RULE_ABS )
             {
-            // InternalWreslEditorParser.g:18793:1: ( RULE_ABS )
-            // InternalWreslEditorParser.g:18794:1: RULE_ABS
+            // InternalWreslEditorParser.g:18920:1: ( RULE_ABS )
+            // InternalWreslEditorParser.g:18921:1: RULE_ABS
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAbsFunctionAccess().getABSTerminalRuleCall_0()); 
@@ -56541,14 +56883,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AbsFunction__Group__1"
-    // InternalWreslEditorParser.g:18805:1: rule__AbsFunction__Group__1 : rule__AbsFunction__Group__1__Impl rule__AbsFunction__Group__2 ;
+    // InternalWreslEditorParser.g:18932:1: rule__AbsFunction__Group__1 : rule__AbsFunction__Group__1__Impl rule__AbsFunction__Group__2 ;
     public final void rule__AbsFunction__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18809:1: ( rule__AbsFunction__Group__1__Impl rule__AbsFunction__Group__2 )
-            // InternalWreslEditorParser.g:18810:2: rule__AbsFunction__Group__1__Impl rule__AbsFunction__Group__2
+            // InternalWreslEditorParser.g:18936:1: ( rule__AbsFunction__Group__1__Impl rule__AbsFunction__Group__2 )
+            // InternalWreslEditorParser.g:18937:2: rule__AbsFunction__Group__1__Impl rule__AbsFunction__Group__2
             {
             pushFollow(FOLLOW_25);
             rule__AbsFunction__Group__1__Impl();
@@ -56579,17 +56921,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AbsFunction__Group__1__Impl"
-    // InternalWreslEditorParser.g:18817:1: rule__AbsFunction__Group__1__Impl : ( LeftParenthesis ) ;
+    // InternalWreslEditorParser.g:18944:1: rule__AbsFunction__Group__1__Impl : ( LeftParenthesis ) ;
     public final void rule__AbsFunction__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18821:1: ( ( LeftParenthesis ) )
-            // InternalWreslEditorParser.g:18822:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:18948:1: ( ( LeftParenthesis ) )
+            // InternalWreslEditorParser.g:18949:1: ( LeftParenthesis )
             {
-            // InternalWreslEditorParser.g:18822:1: ( LeftParenthesis )
-            // InternalWreslEditorParser.g:18823:1: LeftParenthesis
+            // InternalWreslEditorParser.g:18949:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:18950:1: LeftParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAbsFunctionAccess().getLeftParenthesisKeyword_1()); 
@@ -56620,14 +56962,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AbsFunction__Group__2"
-    // InternalWreslEditorParser.g:18836:1: rule__AbsFunction__Group__2 : rule__AbsFunction__Group__2__Impl rule__AbsFunction__Group__3 ;
+    // InternalWreslEditorParser.g:18963:1: rule__AbsFunction__Group__2 : rule__AbsFunction__Group__2__Impl rule__AbsFunction__Group__3 ;
     public final void rule__AbsFunction__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18840:1: ( rule__AbsFunction__Group__2__Impl rule__AbsFunction__Group__3 )
-            // InternalWreslEditorParser.g:18841:2: rule__AbsFunction__Group__2__Impl rule__AbsFunction__Group__3
+            // InternalWreslEditorParser.g:18967:1: ( rule__AbsFunction__Group__2__Impl rule__AbsFunction__Group__3 )
+            // InternalWreslEditorParser.g:18968:2: rule__AbsFunction__Group__2__Impl rule__AbsFunction__Group__3
             {
             pushFollow(FOLLOW_17);
             rule__AbsFunction__Group__2__Impl();
@@ -56658,23 +57000,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AbsFunction__Group__2__Impl"
-    // InternalWreslEditorParser.g:18848:1: rule__AbsFunction__Group__2__Impl : ( ( rule__AbsFunction__EAssignment_2 ) ) ;
+    // InternalWreslEditorParser.g:18975:1: rule__AbsFunction__Group__2__Impl : ( ( rule__AbsFunction__EAssignment_2 ) ) ;
     public final void rule__AbsFunction__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18852:1: ( ( ( rule__AbsFunction__EAssignment_2 ) ) )
-            // InternalWreslEditorParser.g:18853:1: ( ( rule__AbsFunction__EAssignment_2 ) )
+            // InternalWreslEditorParser.g:18979:1: ( ( ( rule__AbsFunction__EAssignment_2 ) ) )
+            // InternalWreslEditorParser.g:18980:1: ( ( rule__AbsFunction__EAssignment_2 ) )
             {
-            // InternalWreslEditorParser.g:18853:1: ( ( rule__AbsFunction__EAssignment_2 ) )
-            // InternalWreslEditorParser.g:18854:1: ( rule__AbsFunction__EAssignment_2 )
+            // InternalWreslEditorParser.g:18980:1: ( ( rule__AbsFunction__EAssignment_2 ) )
+            // InternalWreslEditorParser.g:18981:1: ( rule__AbsFunction__EAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAbsFunctionAccess().getEAssignment_2()); 
             }
-            // InternalWreslEditorParser.g:18855:1: ( rule__AbsFunction__EAssignment_2 )
-            // InternalWreslEditorParser.g:18855:2: rule__AbsFunction__EAssignment_2
+            // InternalWreslEditorParser.g:18982:1: ( rule__AbsFunction__EAssignment_2 )
+            // InternalWreslEditorParser.g:18982:2: rule__AbsFunction__EAssignment_2
             {
             pushFollow(FOLLOW_2);
             rule__AbsFunction__EAssignment_2();
@@ -56709,14 +57051,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AbsFunction__Group__3"
-    // InternalWreslEditorParser.g:18865:1: rule__AbsFunction__Group__3 : rule__AbsFunction__Group__3__Impl ;
+    // InternalWreslEditorParser.g:18992:1: rule__AbsFunction__Group__3 : rule__AbsFunction__Group__3__Impl ;
     public final void rule__AbsFunction__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18869:1: ( rule__AbsFunction__Group__3__Impl )
-            // InternalWreslEditorParser.g:18870:2: rule__AbsFunction__Group__3__Impl
+            // InternalWreslEditorParser.g:18996:1: ( rule__AbsFunction__Group__3__Impl )
+            // InternalWreslEditorParser.g:18997:2: rule__AbsFunction__Group__3__Impl
             {
             pushFollow(FOLLOW_2);
             rule__AbsFunction__Group__3__Impl();
@@ -56742,17 +57084,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AbsFunction__Group__3__Impl"
-    // InternalWreslEditorParser.g:18876:1: rule__AbsFunction__Group__3__Impl : ( RightParenthesis ) ;
+    // InternalWreslEditorParser.g:19003:1: rule__AbsFunction__Group__3__Impl : ( RightParenthesis ) ;
     public final void rule__AbsFunction__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18880:1: ( ( RightParenthesis ) )
-            // InternalWreslEditorParser.g:18881:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:19007:1: ( ( RightParenthesis ) )
+            // InternalWreslEditorParser.g:19008:1: ( RightParenthesis )
             {
-            // InternalWreslEditorParser.g:18881:1: ( RightParenthesis )
-            // InternalWreslEditorParser.g:18882:1: RightParenthesis
+            // InternalWreslEditorParser.g:19008:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:19009:1: RightParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAbsFunctionAccess().getRightParenthesisKeyword_3()); 
@@ -56783,14 +57125,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__RoundFunction__Group__0"
-    // InternalWreslEditorParser.g:18903:1: rule__RoundFunction__Group__0 : rule__RoundFunction__Group__0__Impl rule__RoundFunction__Group__1 ;
+    // InternalWreslEditorParser.g:19030:1: rule__RoundFunction__Group__0 : rule__RoundFunction__Group__0__Impl rule__RoundFunction__Group__1 ;
     public final void rule__RoundFunction__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18907:1: ( rule__RoundFunction__Group__0__Impl rule__RoundFunction__Group__1 )
-            // InternalWreslEditorParser.g:18908:2: rule__RoundFunction__Group__0__Impl rule__RoundFunction__Group__1
+            // InternalWreslEditorParser.g:19034:1: ( rule__RoundFunction__Group__0__Impl rule__RoundFunction__Group__1 )
+            // InternalWreslEditorParser.g:19035:2: rule__RoundFunction__Group__0__Impl rule__RoundFunction__Group__1
             {
             pushFollow(FOLLOW_45);
             rule__RoundFunction__Group__0__Impl();
@@ -56821,17 +57163,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__RoundFunction__Group__0__Impl"
-    // InternalWreslEditorParser.g:18915:1: rule__RoundFunction__Group__0__Impl : ( RULE_ROUND ) ;
+    // InternalWreslEditorParser.g:19042:1: rule__RoundFunction__Group__0__Impl : ( RULE_ROUND ) ;
     public final void rule__RoundFunction__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18919:1: ( ( RULE_ROUND ) )
-            // InternalWreslEditorParser.g:18920:1: ( RULE_ROUND )
+            // InternalWreslEditorParser.g:19046:1: ( ( RULE_ROUND ) )
+            // InternalWreslEditorParser.g:19047:1: ( RULE_ROUND )
             {
-            // InternalWreslEditorParser.g:18920:1: ( RULE_ROUND )
-            // InternalWreslEditorParser.g:18921:1: RULE_ROUND
+            // InternalWreslEditorParser.g:19047:1: ( RULE_ROUND )
+            // InternalWreslEditorParser.g:19048:1: RULE_ROUND
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRoundFunctionAccess().getROUNDTerminalRuleCall_0()); 
@@ -56862,14 +57204,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__RoundFunction__Group__1"
-    // InternalWreslEditorParser.g:18932:1: rule__RoundFunction__Group__1 : rule__RoundFunction__Group__1__Impl rule__RoundFunction__Group__2 ;
+    // InternalWreslEditorParser.g:19059:1: rule__RoundFunction__Group__1 : rule__RoundFunction__Group__1__Impl rule__RoundFunction__Group__2 ;
     public final void rule__RoundFunction__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18936:1: ( rule__RoundFunction__Group__1__Impl rule__RoundFunction__Group__2 )
-            // InternalWreslEditorParser.g:18937:2: rule__RoundFunction__Group__1__Impl rule__RoundFunction__Group__2
+            // InternalWreslEditorParser.g:19063:1: ( rule__RoundFunction__Group__1__Impl rule__RoundFunction__Group__2 )
+            // InternalWreslEditorParser.g:19064:2: rule__RoundFunction__Group__1__Impl rule__RoundFunction__Group__2
             {
             pushFollow(FOLLOW_25);
             rule__RoundFunction__Group__1__Impl();
@@ -56900,17 +57242,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__RoundFunction__Group__1__Impl"
-    // InternalWreslEditorParser.g:18944:1: rule__RoundFunction__Group__1__Impl : ( LeftParenthesis ) ;
+    // InternalWreslEditorParser.g:19071:1: rule__RoundFunction__Group__1__Impl : ( LeftParenthesis ) ;
     public final void rule__RoundFunction__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18948:1: ( ( LeftParenthesis ) )
-            // InternalWreslEditorParser.g:18949:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:19075:1: ( ( LeftParenthesis ) )
+            // InternalWreslEditorParser.g:19076:1: ( LeftParenthesis )
             {
-            // InternalWreslEditorParser.g:18949:1: ( LeftParenthesis )
-            // InternalWreslEditorParser.g:18950:1: LeftParenthesis
+            // InternalWreslEditorParser.g:19076:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:19077:1: LeftParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRoundFunctionAccess().getLeftParenthesisKeyword_1()); 
@@ -56941,14 +57283,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__RoundFunction__Group__2"
-    // InternalWreslEditorParser.g:18963:1: rule__RoundFunction__Group__2 : rule__RoundFunction__Group__2__Impl rule__RoundFunction__Group__3 ;
+    // InternalWreslEditorParser.g:19090:1: rule__RoundFunction__Group__2 : rule__RoundFunction__Group__2__Impl rule__RoundFunction__Group__3 ;
     public final void rule__RoundFunction__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18967:1: ( rule__RoundFunction__Group__2__Impl rule__RoundFunction__Group__3 )
-            // InternalWreslEditorParser.g:18968:2: rule__RoundFunction__Group__2__Impl rule__RoundFunction__Group__3
+            // InternalWreslEditorParser.g:19094:1: ( rule__RoundFunction__Group__2__Impl rule__RoundFunction__Group__3 )
+            // InternalWreslEditorParser.g:19095:2: rule__RoundFunction__Group__2__Impl rule__RoundFunction__Group__3
             {
             pushFollow(FOLLOW_17);
             rule__RoundFunction__Group__2__Impl();
@@ -56979,23 +57321,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__RoundFunction__Group__2__Impl"
-    // InternalWreslEditorParser.g:18975:1: rule__RoundFunction__Group__2__Impl : ( ( rule__RoundFunction__EAssignment_2 ) ) ;
+    // InternalWreslEditorParser.g:19102:1: rule__RoundFunction__Group__2__Impl : ( ( rule__RoundFunction__EAssignment_2 ) ) ;
     public final void rule__RoundFunction__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18979:1: ( ( ( rule__RoundFunction__EAssignment_2 ) ) )
-            // InternalWreslEditorParser.g:18980:1: ( ( rule__RoundFunction__EAssignment_2 ) )
+            // InternalWreslEditorParser.g:19106:1: ( ( ( rule__RoundFunction__EAssignment_2 ) ) )
+            // InternalWreslEditorParser.g:19107:1: ( ( rule__RoundFunction__EAssignment_2 ) )
             {
-            // InternalWreslEditorParser.g:18980:1: ( ( rule__RoundFunction__EAssignment_2 ) )
-            // InternalWreslEditorParser.g:18981:1: ( rule__RoundFunction__EAssignment_2 )
+            // InternalWreslEditorParser.g:19107:1: ( ( rule__RoundFunction__EAssignment_2 ) )
+            // InternalWreslEditorParser.g:19108:1: ( rule__RoundFunction__EAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRoundFunctionAccess().getEAssignment_2()); 
             }
-            // InternalWreslEditorParser.g:18982:1: ( rule__RoundFunction__EAssignment_2 )
-            // InternalWreslEditorParser.g:18982:2: rule__RoundFunction__EAssignment_2
+            // InternalWreslEditorParser.g:19109:1: ( rule__RoundFunction__EAssignment_2 )
+            // InternalWreslEditorParser.g:19109:2: rule__RoundFunction__EAssignment_2
             {
             pushFollow(FOLLOW_2);
             rule__RoundFunction__EAssignment_2();
@@ -57030,14 +57372,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__RoundFunction__Group__3"
-    // InternalWreslEditorParser.g:18992:1: rule__RoundFunction__Group__3 : rule__RoundFunction__Group__3__Impl ;
+    // InternalWreslEditorParser.g:19119:1: rule__RoundFunction__Group__3 : rule__RoundFunction__Group__3__Impl ;
     public final void rule__RoundFunction__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:18996:1: ( rule__RoundFunction__Group__3__Impl )
-            // InternalWreslEditorParser.g:18997:2: rule__RoundFunction__Group__3__Impl
+            // InternalWreslEditorParser.g:19123:1: ( rule__RoundFunction__Group__3__Impl )
+            // InternalWreslEditorParser.g:19124:2: rule__RoundFunction__Group__3__Impl
             {
             pushFollow(FOLLOW_2);
             rule__RoundFunction__Group__3__Impl();
@@ -57063,17 +57405,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__RoundFunction__Group__3__Impl"
-    // InternalWreslEditorParser.g:19003:1: rule__RoundFunction__Group__3__Impl : ( RightParenthesis ) ;
+    // InternalWreslEditorParser.g:19130:1: rule__RoundFunction__Group__3__Impl : ( RightParenthesis ) ;
     public final void rule__RoundFunction__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19007:1: ( ( RightParenthesis ) )
-            // InternalWreslEditorParser.g:19008:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:19134:1: ( ( RightParenthesis ) )
+            // InternalWreslEditorParser.g:19135:1: ( RightParenthesis )
             {
-            // InternalWreslEditorParser.g:19008:1: ( RightParenthesis )
-            // InternalWreslEditorParser.g:19009:1: RightParenthesis
+            // InternalWreslEditorParser.g:19135:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:19136:1: RightParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRoundFunctionAccess().getRightParenthesisKeyword_3()); 
@@ -57104,14 +57446,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__PowFunction__Group__0"
-    // InternalWreslEditorParser.g:19030:1: rule__PowFunction__Group__0 : rule__PowFunction__Group__0__Impl rule__PowFunction__Group__1 ;
+    // InternalWreslEditorParser.g:19157:1: rule__PowFunction__Group__0 : rule__PowFunction__Group__0__Impl rule__PowFunction__Group__1 ;
     public final void rule__PowFunction__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19034:1: ( rule__PowFunction__Group__0__Impl rule__PowFunction__Group__1 )
-            // InternalWreslEditorParser.g:19035:2: rule__PowFunction__Group__0__Impl rule__PowFunction__Group__1
+            // InternalWreslEditorParser.g:19161:1: ( rule__PowFunction__Group__0__Impl rule__PowFunction__Group__1 )
+            // InternalWreslEditorParser.g:19162:2: rule__PowFunction__Group__0__Impl rule__PowFunction__Group__1
             {
             pushFollow(FOLLOW_45);
             rule__PowFunction__Group__0__Impl();
@@ -57142,17 +57484,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__PowFunction__Group__0__Impl"
-    // InternalWreslEditorParser.g:19042:1: rule__PowFunction__Group__0__Impl : ( RULE_POW ) ;
+    // InternalWreslEditorParser.g:19169:1: rule__PowFunction__Group__0__Impl : ( RULE_POW ) ;
     public final void rule__PowFunction__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19046:1: ( ( RULE_POW ) )
-            // InternalWreslEditorParser.g:19047:1: ( RULE_POW )
+            // InternalWreslEditorParser.g:19173:1: ( ( RULE_POW ) )
+            // InternalWreslEditorParser.g:19174:1: ( RULE_POW )
             {
-            // InternalWreslEditorParser.g:19047:1: ( RULE_POW )
-            // InternalWreslEditorParser.g:19048:1: RULE_POW
+            // InternalWreslEditorParser.g:19174:1: ( RULE_POW )
+            // InternalWreslEditorParser.g:19175:1: RULE_POW
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPowFunctionAccess().getPOWTerminalRuleCall_0()); 
@@ -57183,14 +57525,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__PowFunction__Group__1"
-    // InternalWreslEditorParser.g:19059:1: rule__PowFunction__Group__1 : rule__PowFunction__Group__1__Impl rule__PowFunction__Group__2 ;
+    // InternalWreslEditorParser.g:19186:1: rule__PowFunction__Group__1 : rule__PowFunction__Group__1__Impl rule__PowFunction__Group__2 ;
     public final void rule__PowFunction__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19063:1: ( rule__PowFunction__Group__1__Impl rule__PowFunction__Group__2 )
-            // InternalWreslEditorParser.g:19064:2: rule__PowFunction__Group__1__Impl rule__PowFunction__Group__2
+            // InternalWreslEditorParser.g:19190:1: ( rule__PowFunction__Group__1__Impl rule__PowFunction__Group__2 )
+            // InternalWreslEditorParser.g:19191:2: rule__PowFunction__Group__1__Impl rule__PowFunction__Group__2
             {
             pushFollow(FOLLOW_25);
             rule__PowFunction__Group__1__Impl();
@@ -57221,17 +57563,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__PowFunction__Group__1__Impl"
-    // InternalWreslEditorParser.g:19071:1: rule__PowFunction__Group__1__Impl : ( LeftParenthesis ) ;
+    // InternalWreslEditorParser.g:19198:1: rule__PowFunction__Group__1__Impl : ( LeftParenthesis ) ;
     public final void rule__PowFunction__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19075:1: ( ( LeftParenthesis ) )
-            // InternalWreslEditorParser.g:19076:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:19202:1: ( ( LeftParenthesis ) )
+            // InternalWreslEditorParser.g:19203:1: ( LeftParenthesis )
             {
-            // InternalWreslEditorParser.g:19076:1: ( LeftParenthesis )
-            // InternalWreslEditorParser.g:19077:1: LeftParenthesis
+            // InternalWreslEditorParser.g:19203:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:19204:1: LeftParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPowFunctionAccess().getLeftParenthesisKeyword_1()); 
@@ -57262,14 +57604,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__PowFunction__Group__2"
-    // InternalWreslEditorParser.g:19090:1: rule__PowFunction__Group__2 : rule__PowFunction__Group__2__Impl rule__PowFunction__Group__3 ;
+    // InternalWreslEditorParser.g:19217:1: rule__PowFunction__Group__2 : rule__PowFunction__Group__2__Impl rule__PowFunction__Group__3 ;
     public final void rule__PowFunction__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19094:1: ( rule__PowFunction__Group__2__Impl rule__PowFunction__Group__3 )
-            // InternalWreslEditorParser.g:19095:2: rule__PowFunction__Group__2__Impl rule__PowFunction__Group__3
+            // InternalWreslEditorParser.g:19221:1: ( rule__PowFunction__Group__2__Impl rule__PowFunction__Group__3 )
+            // InternalWreslEditorParser.g:19222:2: rule__PowFunction__Group__2__Impl rule__PowFunction__Group__3
             {
             pushFollow(FOLLOW_26);
             rule__PowFunction__Group__2__Impl();
@@ -57300,23 +57642,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__PowFunction__Group__2__Impl"
-    // InternalWreslEditorParser.g:19102:1: rule__PowFunction__Group__2__Impl : ( ( rule__PowFunction__E1Assignment_2 ) ) ;
+    // InternalWreslEditorParser.g:19229:1: rule__PowFunction__Group__2__Impl : ( ( rule__PowFunction__E1Assignment_2 ) ) ;
     public final void rule__PowFunction__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19106:1: ( ( ( rule__PowFunction__E1Assignment_2 ) ) )
-            // InternalWreslEditorParser.g:19107:1: ( ( rule__PowFunction__E1Assignment_2 ) )
+            // InternalWreslEditorParser.g:19233:1: ( ( ( rule__PowFunction__E1Assignment_2 ) ) )
+            // InternalWreslEditorParser.g:19234:1: ( ( rule__PowFunction__E1Assignment_2 ) )
             {
-            // InternalWreslEditorParser.g:19107:1: ( ( rule__PowFunction__E1Assignment_2 ) )
-            // InternalWreslEditorParser.g:19108:1: ( rule__PowFunction__E1Assignment_2 )
+            // InternalWreslEditorParser.g:19234:1: ( ( rule__PowFunction__E1Assignment_2 ) )
+            // InternalWreslEditorParser.g:19235:1: ( rule__PowFunction__E1Assignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPowFunctionAccess().getE1Assignment_2()); 
             }
-            // InternalWreslEditorParser.g:19109:1: ( rule__PowFunction__E1Assignment_2 )
-            // InternalWreslEditorParser.g:19109:2: rule__PowFunction__E1Assignment_2
+            // InternalWreslEditorParser.g:19236:1: ( rule__PowFunction__E1Assignment_2 )
+            // InternalWreslEditorParser.g:19236:2: rule__PowFunction__E1Assignment_2
             {
             pushFollow(FOLLOW_2);
             rule__PowFunction__E1Assignment_2();
@@ -57351,14 +57693,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__PowFunction__Group__3"
-    // InternalWreslEditorParser.g:19119:1: rule__PowFunction__Group__3 : rule__PowFunction__Group__3__Impl rule__PowFunction__Group__4 ;
+    // InternalWreslEditorParser.g:19246:1: rule__PowFunction__Group__3 : rule__PowFunction__Group__3__Impl rule__PowFunction__Group__4 ;
     public final void rule__PowFunction__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19123:1: ( rule__PowFunction__Group__3__Impl rule__PowFunction__Group__4 )
-            // InternalWreslEditorParser.g:19124:2: rule__PowFunction__Group__3__Impl rule__PowFunction__Group__4
+            // InternalWreslEditorParser.g:19250:1: ( rule__PowFunction__Group__3__Impl rule__PowFunction__Group__4 )
+            // InternalWreslEditorParser.g:19251:2: rule__PowFunction__Group__3__Impl rule__PowFunction__Group__4
             {
             pushFollow(FOLLOW_25);
             rule__PowFunction__Group__3__Impl();
@@ -57389,17 +57731,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__PowFunction__Group__3__Impl"
-    // InternalWreslEditorParser.g:19131:1: rule__PowFunction__Group__3__Impl : ( Comma ) ;
+    // InternalWreslEditorParser.g:19258:1: rule__PowFunction__Group__3__Impl : ( Comma ) ;
     public final void rule__PowFunction__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19135:1: ( ( Comma ) )
-            // InternalWreslEditorParser.g:19136:1: ( Comma )
+            // InternalWreslEditorParser.g:19262:1: ( ( Comma ) )
+            // InternalWreslEditorParser.g:19263:1: ( Comma )
             {
-            // InternalWreslEditorParser.g:19136:1: ( Comma )
-            // InternalWreslEditorParser.g:19137:1: Comma
+            // InternalWreslEditorParser.g:19263:1: ( Comma )
+            // InternalWreslEditorParser.g:19264:1: Comma
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPowFunctionAccess().getCommaKeyword_3()); 
@@ -57430,14 +57772,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__PowFunction__Group__4"
-    // InternalWreslEditorParser.g:19150:1: rule__PowFunction__Group__4 : rule__PowFunction__Group__4__Impl rule__PowFunction__Group__5 ;
+    // InternalWreslEditorParser.g:19277:1: rule__PowFunction__Group__4 : rule__PowFunction__Group__4__Impl rule__PowFunction__Group__5 ;
     public final void rule__PowFunction__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19154:1: ( rule__PowFunction__Group__4__Impl rule__PowFunction__Group__5 )
-            // InternalWreslEditorParser.g:19155:2: rule__PowFunction__Group__4__Impl rule__PowFunction__Group__5
+            // InternalWreslEditorParser.g:19281:1: ( rule__PowFunction__Group__4__Impl rule__PowFunction__Group__5 )
+            // InternalWreslEditorParser.g:19282:2: rule__PowFunction__Group__4__Impl rule__PowFunction__Group__5
             {
             pushFollow(FOLLOW_17);
             rule__PowFunction__Group__4__Impl();
@@ -57468,23 +57810,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__PowFunction__Group__4__Impl"
-    // InternalWreslEditorParser.g:19162:1: rule__PowFunction__Group__4__Impl : ( ( rule__PowFunction__E2Assignment_4 ) ) ;
+    // InternalWreslEditorParser.g:19289:1: rule__PowFunction__Group__4__Impl : ( ( rule__PowFunction__E2Assignment_4 ) ) ;
     public final void rule__PowFunction__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19166:1: ( ( ( rule__PowFunction__E2Assignment_4 ) ) )
-            // InternalWreslEditorParser.g:19167:1: ( ( rule__PowFunction__E2Assignment_4 ) )
+            // InternalWreslEditorParser.g:19293:1: ( ( ( rule__PowFunction__E2Assignment_4 ) ) )
+            // InternalWreslEditorParser.g:19294:1: ( ( rule__PowFunction__E2Assignment_4 ) )
             {
-            // InternalWreslEditorParser.g:19167:1: ( ( rule__PowFunction__E2Assignment_4 ) )
-            // InternalWreslEditorParser.g:19168:1: ( rule__PowFunction__E2Assignment_4 )
+            // InternalWreslEditorParser.g:19294:1: ( ( rule__PowFunction__E2Assignment_4 ) )
+            // InternalWreslEditorParser.g:19295:1: ( rule__PowFunction__E2Assignment_4 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPowFunctionAccess().getE2Assignment_4()); 
             }
-            // InternalWreslEditorParser.g:19169:1: ( rule__PowFunction__E2Assignment_4 )
-            // InternalWreslEditorParser.g:19169:2: rule__PowFunction__E2Assignment_4
+            // InternalWreslEditorParser.g:19296:1: ( rule__PowFunction__E2Assignment_4 )
+            // InternalWreslEditorParser.g:19296:2: rule__PowFunction__E2Assignment_4
             {
             pushFollow(FOLLOW_2);
             rule__PowFunction__E2Assignment_4();
@@ -57519,14 +57861,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__PowFunction__Group__5"
-    // InternalWreslEditorParser.g:19179:1: rule__PowFunction__Group__5 : rule__PowFunction__Group__5__Impl ;
+    // InternalWreslEditorParser.g:19306:1: rule__PowFunction__Group__5 : rule__PowFunction__Group__5__Impl ;
     public final void rule__PowFunction__Group__5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19183:1: ( rule__PowFunction__Group__5__Impl )
-            // InternalWreslEditorParser.g:19184:2: rule__PowFunction__Group__5__Impl
+            // InternalWreslEditorParser.g:19310:1: ( rule__PowFunction__Group__5__Impl )
+            // InternalWreslEditorParser.g:19311:2: rule__PowFunction__Group__5__Impl
             {
             pushFollow(FOLLOW_2);
             rule__PowFunction__Group__5__Impl();
@@ -57552,17 +57894,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__PowFunction__Group__5__Impl"
-    // InternalWreslEditorParser.g:19190:1: rule__PowFunction__Group__5__Impl : ( RightParenthesis ) ;
+    // InternalWreslEditorParser.g:19317:1: rule__PowFunction__Group__5__Impl : ( RightParenthesis ) ;
     public final void rule__PowFunction__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19194:1: ( ( RightParenthesis ) )
-            // InternalWreslEditorParser.g:19195:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:19321:1: ( ( RightParenthesis ) )
+            // InternalWreslEditorParser.g:19322:1: ( RightParenthesis )
             {
-            // InternalWreslEditorParser.g:19195:1: ( RightParenthesis )
-            // InternalWreslEditorParser.g:19196:1: RightParenthesis
+            // InternalWreslEditorParser.g:19322:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:19323:1: RightParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPowFunctionAccess().getRightParenthesisKeyword_5()); 
@@ -57593,14 +57935,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__LogFunction__Group__0"
-    // InternalWreslEditorParser.g:19221:1: rule__LogFunction__Group__0 : rule__LogFunction__Group__0__Impl rule__LogFunction__Group__1 ;
+    // InternalWreslEditorParser.g:19348:1: rule__LogFunction__Group__0 : rule__LogFunction__Group__0__Impl rule__LogFunction__Group__1 ;
     public final void rule__LogFunction__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19225:1: ( rule__LogFunction__Group__0__Impl rule__LogFunction__Group__1 )
-            // InternalWreslEditorParser.g:19226:2: rule__LogFunction__Group__0__Impl rule__LogFunction__Group__1
+            // InternalWreslEditorParser.g:19352:1: ( rule__LogFunction__Group__0__Impl rule__LogFunction__Group__1 )
+            // InternalWreslEditorParser.g:19353:2: rule__LogFunction__Group__0__Impl rule__LogFunction__Group__1
             {
             pushFollow(FOLLOW_45);
             rule__LogFunction__Group__0__Impl();
@@ -57631,17 +57973,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__LogFunction__Group__0__Impl"
-    // InternalWreslEditorParser.g:19233:1: rule__LogFunction__Group__0__Impl : ( RULE_LOG ) ;
+    // InternalWreslEditorParser.g:19360:1: rule__LogFunction__Group__0__Impl : ( RULE_LOG ) ;
     public final void rule__LogFunction__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19237:1: ( ( RULE_LOG ) )
-            // InternalWreslEditorParser.g:19238:1: ( RULE_LOG )
+            // InternalWreslEditorParser.g:19364:1: ( ( RULE_LOG ) )
+            // InternalWreslEditorParser.g:19365:1: ( RULE_LOG )
             {
-            // InternalWreslEditorParser.g:19238:1: ( RULE_LOG )
-            // InternalWreslEditorParser.g:19239:1: RULE_LOG
+            // InternalWreslEditorParser.g:19365:1: ( RULE_LOG )
+            // InternalWreslEditorParser.g:19366:1: RULE_LOG
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogFunctionAccess().getLOGTerminalRuleCall_0()); 
@@ -57672,14 +58014,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__LogFunction__Group__1"
-    // InternalWreslEditorParser.g:19250:1: rule__LogFunction__Group__1 : rule__LogFunction__Group__1__Impl rule__LogFunction__Group__2 ;
+    // InternalWreslEditorParser.g:19377:1: rule__LogFunction__Group__1 : rule__LogFunction__Group__1__Impl rule__LogFunction__Group__2 ;
     public final void rule__LogFunction__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19254:1: ( rule__LogFunction__Group__1__Impl rule__LogFunction__Group__2 )
-            // InternalWreslEditorParser.g:19255:2: rule__LogFunction__Group__1__Impl rule__LogFunction__Group__2
+            // InternalWreslEditorParser.g:19381:1: ( rule__LogFunction__Group__1__Impl rule__LogFunction__Group__2 )
+            // InternalWreslEditorParser.g:19382:2: rule__LogFunction__Group__1__Impl rule__LogFunction__Group__2
             {
             pushFollow(FOLLOW_25);
             rule__LogFunction__Group__1__Impl();
@@ -57710,17 +58052,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__LogFunction__Group__1__Impl"
-    // InternalWreslEditorParser.g:19262:1: rule__LogFunction__Group__1__Impl : ( LeftParenthesis ) ;
+    // InternalWreslEditorParser.g:19389:1: rule__LogFunction__Group__1__Impl : ( LeftParenthesis ) ;
     public final void rule__LogFunction__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19266:1: ( ( LeftParenthesis ) )
-            // InternalWreslEditorParser.g:19267:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:19393:1: ( ( LeftParenthesis ) )
+            // InternalWreslEditorParser.g:19394:1: ( LeftParenthesis )
             {
-            // InternalWreslEditorParser.g:19267:1: ( LeftParenthesis )
-            // InternalWreslEditorParser.g:19268:1: LeftParenthesis
+            // InternalWreslEditorParser.g:19394:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:19395:1: LeftParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogFunctionAccess().getLeftParenthesisKeyword_1()); 
@@ -57751,14 +58093,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__LogFunction__Group__2"
-    // InternalWreslEditorParser.g:19281:1: rule__LogFunction__Group__2 : rule__LogFunction__Group__2__Impl rule__LogFunction__Group__3 ;
+    // InternalWreslEditorParser.g:19408:1: rule__LogFunction__Group__2 : rule__LogFunction__Group__2__Impl rule__LogFunction__Group__3 ;
     public final void rule__LogFunction__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19285:1: ( rule__LogFunction__Group__2__Impl rule__LogFunction__Group__3 )
-            // InternalWreslEditorParser.g:19286:2: rule__LogFunction__Group__2__Impl rule__LogFunction__Group__3
+            // InternalWreslEditorParser.g:19412:1: ( rule__LogFunction__Group__2__Impl rule__LogFunction__Group__3 )
+            // InternalWreslEditorParser.g:19413:2: rule__LogFunction__Group__2__Impl rule__LogFunction__Group__3
             {
             pushFollow(FOLLOW_17);
             rule__LogFunction__Group__2__Impl();
@@ -57789,23 +58131,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__LogFunction__Group__2__Impl"
-    // InternalWreslEditorParser.g:19293:1: rule__LogFunction__Group__2__Impl : ( ( rule__LogFunction__EAssignment_2 ) ) ;
+    // InternalWreslEditorParser.g:19420:1: rule__LogFunction__Group__2__Impl : ( ( rule__LogFunction__EAssignment_2 ) ) ;
     public final void rule__LogFunction__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19297:1: ( ( ( rule__LogFunction__EAssignment_2 ) ) )
-            // InternalWreslEditorParser.g:19298:1: ( ( rule__LogFunction__EAssignment_2 ) )
+            // InternalWreslEditorParser.g:19424:1: ( ( ( rule__LogFunction__EAssignment_2 ) ) )
+            // InternalWreslEditorParser.g:19425:1: ( ( rule__LogFunction__EAssignment_2 ) )
             {
-            // InternalWreslEditorParser.g:19298:1: ( ( rule__LogFunction__EAssignment_2 ) )
-            // InternalWreslEditorParser.g:19299:1: ( rule__LogFunction__EAssignment_2 )
+            // InternalWreslEditorParser.g:19425:1: ( ( rule__LogFunction__EAssignment_2 ) )
+            // InternalWreslEditorParser.g:19426:1: ( rule__LogFunction__EAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogFunctionAccess().getEAssignment_2()); 
             }
-            // InternalWreslEditorParser.g:19300:1: ( rule__LogFunction__EAssignment_2 )
-            // InternalWreslEditorParser.g:19300:2: rule__LogFunction__EAssignment_2
+            // InternalWreslEditorParser.g:19427:1: ( rule__LogFunction__EAssignment_2 )
+            // InternalWreslEditorParser.g:19427:2: rule__LogFunction__EAssignment_2
             {
             pushFollow(FOLLOW_2);
             rule__LogFunction__EAssignment_2();
@@ -57840,14 +58182,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__LogFunction__Group__3"
-    // InternalWreslEditorParser.g:19310:1: rule__LogFunction__Group__3 : rule__LogFunction__Group__3__Impl ;
+    // InternalWreslEditorParser.g:19437:1: rule__LogFunction__Group__3 : rule__LogFunction__Group__3__Impl ;
     public final void rule__LogFunction__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19314:1: ( rule__LogFunction__Group__3__Impl )
-            // InternalWreslEditorParser.g:19315:2: rule__LogFunction__Group__3__Impl
+            // InternalWreslEditorParser.g:19441:1: ( rule__LogFunction__Group__3__Impl )
+            // InternalWreslEditorParser.g:19442:2: rule__LogFunction__Group__3__Impl
             {
             pushFollow(FOLLOW_2);
             rule__LogFunction__Group__3__Impl();
@@ -57873,17 +58215,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__LogFunction__Group__3__Impl"
-    // InternalWreslEditorParser.g:19321:1: rule__LogFunction__Group__3__Impl : ( RightParenthesis ) ;
+    // InternalWreslEditorParser.g:19448:1: rule__LogFunction__Group__3__Impl : ( RightParenthesis ) ;
     public final void rule__LogFunction__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19325:1: ( ( RightParenthesis ) )
-            // InternalWreslEditorParser.g:19326:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:19452:1: ( ( RightParenthesis ) )
+            // InternalWreslEditorParser.g:19453:1: ( RightParenthesis )
             {
-            // InternalWreslEditorParser.g:19326:1: ( RightParenthesis )
-            // InternalWreslEditorParser.g:19327:1: RightParenthesis
+            // InternalWreslEditorParser.g:19453:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:19454:1: RightParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogFunctionAccess().getRightParenthesisKeyword_3()); 
@@ -57914,14 +58256,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__SinFunction__Group__0"
-    // InternalWreslEditorParser.g:19348:1: rule__SinFunction__Group__0 : rule__SinFunction__Group__0__Impl rule__SinFunction__Group__1 ;
+    // InternalWreslEditorParser.g:19475:1: rule__SinFunction__Group__0 : rule__SinFunction__Group__0__Impl rule__SinFunction__Group__1 ;
     public final void rule__SinFunction__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19352:1: ( rule__SinFunction__Group__0__Impl rule__SinFunction__Group__1 )
-            // InternalWreslEditorParser.g:19353:2: rule__SinFunction__Group__0__Impl rule__SinFunction__Group__1
+            // InternalWreslEditorParser.g:19479:1: ( rule__SinFunction__Group__0__Impl rule__SinFunction__Group__1 )
+            // InternalWreslEditorParser.g:19480:2: rule__SinFunction__Group__0__Impl rule__SinFunction__Group__1
             {
             pushFollow(FOLLOW_45);
             rule__SinFunction__Group__0__Impl();
@@ -57952,17 +58294,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__SinFunction__Group__0__Impl"
-    // InternalWreslEditorParser.g:19360:1: rule__SinFunction__Group__0__Impl : ( RULE_SIN ) ;
+    // InternalWreslEditorParser.g:19487:1: rule__SinFunction__Group__0__Impl : ( RULE_SIN ) ;
     public final void rule__SinFunction__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19364:1: ( ( RULE_SIN ) )
-            // InternalWreslEditorParser.g:19365:1: ( RULE_SIN )
+            // InternalWreslEditorParser.g:19491:1: ( ( RULE_SIN ) )
+            // InternalWreslEditorParser.g:19492:1: ( RULE_SIN )
             {
-            // InternalWreslEditorParser.g:19365:1: ( RULE_SIN )
-            // InternalWreslEditorParser.g:19366:1: RULE_SIN
+            // InternalWreslEditorParser.g:19492:1: ( RULE_SIN )
+            // InternalWreslEditorParser.g:19493:1: RULE_SIN
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSinFunctionAccess().getSINTerminalRuleCall_0()); 
@@ -57993,14 +58335,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__SinFunction__Group__1"
-    // InternalWreslEditorParser.g:19377:1: rule__SinFunction__Group__1 : rule__SinFunction__Group__1__Impl rule__SinFunction__Group__2 ;
+    // InternalWreslEditorParser.g:19504:1: rule__SinFunction__Group__1 : rule__SinFunction__Group__1__Impl rule__SinFunction__Group__2 ;
     public final void rule__SinFunction__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19381:1: ( rule__SinFunction__Group__1__Impl rule__SinFunction__Group__2 )
-            // InternalWreslEditorParser.g:19382:2: rule__SinFunction__Group__1__Impl rule__SinFunction__Group__2
+            // InternalWreslEditorParser.g:19508:1: ( rule__SinFunction__Group__1__Impl rule__SinFunction__Group__2 )
+            // InternalWreslEditorParser.g:19509:2: rule__SinFunction__Group__1__Impl rule__SinFunction__Group__2
             {
             pushFollow(FOLLOW_25);
             rule__SinFunction__Group__1__Impl();
@@ -58031,17 +58373,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__SinFunction__Group__1__Impl"
-    // InternalWreslEditorParser.g:19389:1: rule__SinFunction__Group__1__Impl : ( LeftParenthesis ) ;
+    // InternalWreslEditorParser.g:19516:1: rule__SinFunction__Group__1__Impl : ( LeftParenthesis ) ;
     public final void rule__SinFunction__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19393:1: ( ( LeftParenthesis ) )
-            // InternalWreslEditorParser.g:19394:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:19520:1: ( ( LeftParenthesis ) )
+            // InternalWreslEditorParser.g:19521:1: ( LeftParenthesis )
             {
-            // InternalWreslEditorParser.g:19394:1: ( LeftParenthesis )
-            // InternalWreslEditorParser.g:19395:1: LeftParenthesis
+            // InternalWreslEditorParser.g:19521:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:19522:1: LeftParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSinFunctionAccess().getLeftParenthesisKeyword_1()); 
@@ -58072,14 +58414,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__SinFunction__Group__2"
-    // InternalWreslEditorParser.g:19408:1: rule__SinFunction__Group__2 : rule__SinFunction__Group__2__Impl rule__SinFunction__Group__3 ;
+    // InternalWreslEditorParser.g:19535:1: rule__SinFunction__Group__2 : rule__SinFunction__Group__2__Impl rule__SinFunction__Group__3 ;
     public final void rule__SinFunction__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19412:1: ( rule__SinFunction__Group__2__Impl rule__SinFunction__Group__3 )
-            // InternalWreslEditorParser.g:19413:2: rule__SinFunction__Group__2__Impl rule__SinFunction__Group__3
+            // InternalWreslEditorParser.g:19539:1: ( rule__SinFunction__Group__2__Impl rule__SinFunction__Group__3 )
+            // InternalWreslEditorParser.g:19540:2: rule__SinFunction__Group__2__Impl rule__SinFunction__Group__3
             {
             pushFollow(FOLLOW_17);
             rule__SinFunction__Group__2__Impl();
@@ -58110,23 +58452,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__SinFunction__Group__2__Impl"
-    // InternalWreslEditorParser.g:19420:1: rule__SinFunction__Group__2__Impl : ( ( rule__SinFunction__EAssignment_2 ) ) ;
+    // InternalWreslEditorParser.g:19547:1: rule__SinFunction__Group__2__Impl : ( ( rule__SinFunction__EAssignment_2 ) ) ;
     public final void rule__SinFunction__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19424:1: ( ( ( rule__SinFunction__EAssignment_2 ) ) )
-            // InternalWreslEditorParser.g:19425:1: ( ( rule__SinFunction__EAssignment_2 ) )
+            // InternalWreslEditorParser.g:19551:1: ( ( ( rule__SinFunction__EAssignment_2 ) ) )
+            // InternalWreslEditorParser.g:19552:1: ( ( rule__SinFunction__EAssignment_2 ) )
             {
-            // InternalWreslEditorParser.g:19425:1: ( ( rule__SinFunction__EAssignment_2 ) )
-            // InternalWreslEditorParser.g:19426:1: ( rule__SinFunction__EAssignment_2 )
+            // InternalWreslEditorParser.g:19552:1: ( ( rule__SinFunction__EAssignment_2 ) )
+            // InternalWreslEditorParser.g:19553:1: ( rule__SinFunction__EAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSinFunctionAccess().getEAssignment_2()); 
             }
-            // InternalWreslEditorParser.g:19427:1: ( rule__SinFunction__EAssignment_2 )
-            // InternalWreslEditorParser.g:19427:2: rule__SinFunction__EAssignment_2
+            // InternalWreslEditorParser.g:19554:1: ( rule__SinFunction__EAssignment_2 )
+            // InternalWreslEditorParser.g:19554:2: rule__SinFunction__EAssignment_2
             {
             pushFollow(FOLLOW_2);
             rule__SinFunction__EAssignment_2();
@@ -58161,14 +58503,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__SinFunction__Group__3"
-    // InternalWreslEditorParser.g:19437:1: rule__SinFunction__Group__3 : rule__SinFunction__Group__3__Impl ;
+    // InternalWreslEditorParser.g:19564:1: rule__SinFunction__Group__3 : rule__SinFunction__Group__3__Impl ;
     public final void rule__SinFunction__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19441:1: ( rule__SinFunction__Group__3__Impl )
-            // InternalWreslEditorParser.g:19442:2: rule__SinFunction__Group__3__Impl
+            // InternalWreslEditorParser.g:19568:1: ( rule__SinFunction__Group__3__Impl )
+            // InternalWreslEditorParser.g:19569:2: rule__SinFunction__Group__3__Impl
             {
             pushFollow(FOLLOW_2);
             rule__SinFunction__Group__3__Impl();
@@ -58194,17 +58536,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__SinFunction__Group__3__Impl"
-    // InternalWreslEditorParser.g:19448:1: rule__SinFunction__Group__3__Impl : ( RightParenthesis ) ;
+    // InternalWreslEditorParser.g:19575:1: rule__SinFunction__Group__3__Impl : ( RightParenthesis ) ;
     public final void rule__SinFunction__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19452:1: ( ( RightParenthesis ) )
-            // InternalWreslEditorParser.g:19453:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:19579:1: ( ( RightParenthesis ) )
+            // InternalWreslEditorParser.g:19580:1: ( RightParenthesis )
             {
-            // InternalWreslEditorParser.g:19453:1: ( RightParenthesis )
-            // InternalWreslEditorParser.g:19454:1: RightParenthesis
+            // InternalWreslEditorParser.g:19580:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:19581:1: RightParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSinFunctionAccess().getRightParenthesisKeyword_3()); 
@@ -58235,14 +58577,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__CosFunction__Group__0"
-    // InternalWreslEditorParser.g:19475:1: rule__CosFunction__Group__0 : rule__CosFunction__Group__0__Impl rule__CosFunction__Group__1 ;
+    // InternalWreslEditorParser.g:19602:1: rule__CosFunction__Group__0 : rule__CosFunction__Group__0__Impl rule__CosFunction__Group__1 ;
     public final void rule__CosFunction__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19479:1: ( rule__CosFunction__Group__0__Impl rule__CosFunction__Group__1 )
-            // InternalWreslEditorParser.g:19480:2: rule__CosFunction__Group__0__Impl rule__CosFunction__Group__1
+            // InternalWreslEditorParser.g:19606:1: ( rule__CosFunction__Group__0__Impl rule__CosFunction__Group__1 )
+            // InternalWreslEditorParser.g:19607:2: rule__CosFunction__Group__0__Impl rule__CosFunction__Group__1
             {
             pushFollow(FOLLOW_45);
             rule__CosFunction__Group__0__Impl();
@@ -58273,17 +58615,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__CosFunction__Group__0__Impl"
-    // InternalWreslEditorParser.g:19487:1: rule__CosFunction__Group__0__Impl : ( RULE_COS ) ;
+    // InternalWreslEditorParser.g:19614:1: rule__CosFunction__Group__0__Impl : ( RULE_COS ) ;
     public final void rule__CosFunction__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19491:1: ( ( RULE_COS ) )
-            // InternalWreslEditorParser.g:19492:1: ( RULE_COS )
+            // InternalWreslEditorParser.g:19618:1: ( ( RULE_COS ) )
+            // InternalWreslEditorParser.g:19619:1: ( RULE_COS )
             {
-            // InternalWreslEditorParser.g:19492:1: ( RULE_COS )
-            // InternalWreslEditorParser.g:19493:1: RULE_COS
+            // InternalWreslEditorParser.g:19619:1: ( RULE_COS )
+            // InternalWreslEditorParser.g:19620:1: RULE_COS
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCosFunctionAccess().getCOSTerminalRuleCall_0()); 
@@ -58314,14 +58656,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__CosFunction__Group__1"
-    // InternalWreslEditorParser.g:19504:1: rule__CosFunction__Group__1 : rule__CosFunction__Group__1__Impl rule__CosFunction__Group__2 ;
+    // InternalWreslEditorParser.g:19631:1: rule__CosFunction__Group__1 : rule__CosFunction__Group__1__Impl rule__CosFunction__Group__2 ;
     public final void rule__CosFunction__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19508:1: ( rule__CosFunction__Group__1__Impl rule__CosFunction__Group__2 )
-            // InternalWreslEditorParser.g:19509:2: rule__CosFunction__Group__1__Impl rule__CosFunction__Group__2
+            // InternalWreslEditorParser.g:19635:1: ( rule__CosFunction__Group__1__Impl rule__CosFunction__Group__2 )
+            // InternalWreslEditorParser.g:19636:2: rule__CosFunction__Group__1__Impl rule__CosFunction__Group__2
             {
             pushFollow(FOLLOW_25);
             rule__CosFunction__Group__1__Impl();
@@ -58352,17 +58694,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__CosFunction__Group__1__Impl"
-    // InternalWreslEditorParser.g:19516:1: rule__CosFunction__Group__1__Impl : ( LeftParenthesis ) ;
+    // InternalWreslEditorParser.g:19643:1: rule__CosFunction__Group__1__Impl : ( LeftParenthesis ) ;
     public final void rule__CosFunction__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19520:1: ( ( LeftParenthesis ) )
-            // InternalWreslEditorParser.g:19521:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:19647:1: ( ( LeftParenthesis ) )
+            // InternalWreslEditorParser.g:19648:1: ( LeftParenthesis )
             {
-            // InternalWreslEditorParser.g:19521:1: ( LeftParenthesis )
-            // InternalWreslEditorParser.g:19522:1: LeftParenthesis
+            // InternalWreslEditorParser.g:19648:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:19649:1: LeftParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCosFunctionAccess().getLeftParenthesisKeyword_1()); 
@@ -58393,14 +58735,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__CosFunction__Group__2"
-    // InternalWreslEditorParser.g:19535:1: rule__CosFunction__Group__2 : rule__CosFunction__Group__2__Impl rule__CosFunction__Group__3 ;
+    // InternalWreslEditorParser.g:19662:1: rule__CosFunction__Group__2 : rule__CosFunction__Group__2__Impl rule__CosFunction__Group__3 ;
     public final void rule__CosFunction__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19539:1: ( rule__CosFunction__Group__2__Impl rule__CosFunction__Group__3 )
-            // InternalWreslEditorParser.g:19540:2: rule__CosFunction__Group__2__Impl rule__CosFunction__Group__3
+            // InternalWreslEditorParser.g:19666:1: ( rule__CosFunction__Group__2__Impl rule__CosFunction__Group__3 )
+            // InternalWreslEditorParser.g:19667:2: rule__CosFunction__Group__2__Impl rule__CosFunction__Group__3
             {
             pushFollow(FOLLOW_17);
             rule__CosFunction__Group__2__Impl();
@@ -58431,23 +58773,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__CosFunction__Group__2__Impl"
-    // InternalWreslEditorParser.g:19547:1: rule__CosFunction__Group__2__Impl : ( ( rule__CosFunction__EAssignment_2 ) ) ;
+    // InternalWreslEditorParser.g:19674:1: rule__CosFunction__Group__2__Impl : ( ( rule__CosFunction__EAssignment_2 ) ) ;
     public final void rule__CosFunction__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19551:1: ( ( ( rule__CosFunction__EAssignment_2 ) ) )
-            // InternalWreslEditorParser.g:19552:1: ( ( rule__CosFunction__EAssignment_2 ) )
+            // InternalWreslEditorParser.g:19678:1: ( ( ( rule__CosFunction__EAssignment_2 ) ) )
+            // InternalWreslEditorParser.g:19679:1: ( ( rule__CosFunction__EAssignment_2 ) )
             {
-            // InternalWreslEditorParser.g:19552:1: ( ( rule__CosFunction__EAssignment_2 ) )
-            // InternalWreslEditorParser.g:19553:1: ( rule__CosFunction__EAssignment_2 )
+            // InternalWreslEditorParser.g:19679:1: ( ( rule__CosFunction__EAssignment_2 ) )
+            // InternalWreslEditorParser.g:19680:1: ( rule__CosFunction__EAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCosFunctionAccess().getEAssignment_2()); 
             }
-            // InternalWreslEditorParser.g:19554:1: ( rule__CosFunction__EAssignment_2 )
-            // InternalWreslEditorParser.g:19554:2: rule__CosFunction__EAssignment_2
+            // InternalWreslEditorParser.g:19681:1: ( rule__CosFunction__EAssignment_2 )
+            // InternalWreslEditorParser.g:19681:2: rule__CosFunction__EAssignment_2
             {
             pushFollow(FOLLOW_2);
             rule__CosFunction__EAssignment_2();
@@ -58482,14 +58824,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__CosFunction__Group__3"
-    // InternalWreslEditorParser.g:19564:1: rule__CosFunction__Group__3 : rule__CosFunction__Group__3__Impl ;
+    // InternalWreslEditorParser.g:19691:1: rule__CosFunction__Group__3 : rule__CosFunction__Group__3__Impl ;
     public final void rule__CosFunction__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19568:1: ( rule__CosFunction__Group__3__Impl )
-            // InternalWreslEditorParser.g:19569:2: rule__CosFunction__Group__3__Impl
+            // InternalWreslEditorParser.g:19695:1: ( rule__CosFunction__Group__3__Impl )
+            // InternalWreslEditorParser.g:19696:2: rule__CosFunction__Group__3__Impl
             {
             pushFollow(FOLLOW_2);
             rule__CosFunction__Group__3__Impl();
@@ -58515,17 +58857,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__CosFunction__Group__3__Impl"
-    // InternalWreslEditorParser.g:19575:1: rule__CosFunction__Group__3__Impl : ( RightParenthesis ) ;
+    // InternalWreslEditorParser.g:19702:1: rule__CosFunction__Group__3__Impl : ( RightParenthesis ) ;
     public final void rule__CosFunction__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19579:1: ( ( RightParenthesis ) )
-            // InternalWreslEditorParser.g:19580:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:19706:1: ( ( RightParenthesis ) )
+            // InternalWreslEditorParser.g:19707:1: ( RightParenthesis )
             {
-            // InternalWreslEditorParser.g:19580:1: ( RightParenthesis )
-            // InternalWreslEditorParser.g:19581:1: RightParenthesis
+            // InternalWreslEditorParser.g:19707:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:19708:1: RightParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCosFunctionAccess().getRightParenthesisKeyword_3()); 
@@ -58556,14 +58898,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TanFunction__Group__0"
-    // InternalWreslEditorParser.g:19602:1: rule__TanFunction__Group__0 : rule__TanFunction__Group__0__Impl rule__TanFunction__Group__1 ;
+    // InternalWreslEditorParser.g:19729:1: rule__TanFunction__Group__0 : rule__TanFunction__Group__0__Impl rule__TanFunction__Group__1 ;
     public final void rule__TanFunction__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19606:1: ( rule__TanFunction__Group__0__Impl rule__TanFunction__Group__1 )
-            // InternalWreslEditorParser.g:19607:2: rule__TanFunction__Group__0__Impl rule__TanFunction__Group__1
+            // InternalWreslEditorParser.g:19733:1: ( rule__TanFunction__Group__0__Impl rule__TanFunction__Group__1 )
+            // InternalWreslEditorParser.g:19734:2: rule__TanFunction__Group__0__Impl rule__TanFunction__Group__1
             {
             pushFollow(FOLLOW_45);
             rule__TanFunction__Group__0__Impl();
@@ -58594,17 +58936,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TanFunction__Group__0__Impl"
-    // InternalWreslEditorParser.g:19614:1: rule__TanFunction__Group__0__Impl : ( RULE_TAN ) ;
+    // InternalWreslEditorParser.g:19741:1: rule__TanFunction__Group__0__Impl : ( RULE_TAN ) ;
     public final void rule__TanFunction__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19618:1: ( ( RULE_TAN ) )
-            // InternalWreslEditorParser.g:19619:1: ( RULE_TAN )
+            // InternalWreslEditorParser.g:19745:1: ( ( RULE_TAN ) )
+            // InternalWreslEditorParser.g:19746:1: ( RULE_TAN )
             {
-            // InternalWreslEditorParser.g:19619:1: ( RULE_TAN )
-            // InternalWreslEditorParser.g:19620:1: RULE_TAN
+            // InternalWreslEditorParser.g:19746:1: ( RULE_TAN )
+            // InternalWreslEditorParser.g:19747:1: RULE_TAN
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTanFunctionAccess().getTANTerminalRuleCall_0()); 
@@ -58635,14 +58977,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TanFunction__Group__1"
-    // InternalWreslEditorParser.g:19631:1: rule__TanFunction__Group__1 : rule__TanFunction__Group__1__Impl rule__TanFunction__Group__2 ;
+    // InternalWreslEditorParser.g:19758:1: rule__TanFunction__Group__1 : rule__TanFunction__Group__1__Impl rule__TanFunction__Group__2 ;
     public final void rule__TanFunction__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19635:1: ( rule__TanFunction__Group__1__Impl rule__TanFunction__Group__2 )
-            // InternalWreslEditorParser.g:19636:2: rule__TanFunction__Group__1__Impl rule__TanFunction__Group__2
+            // InternalWreslEditorParser.g:19762:1: ( rule__TanFunction__Group__1__Impl rule__TanFunction__Group__2 )
+            // InternalWreslEditorParser.g:19763:2: rule__TanFunction__Group__1__Impl rule__TanFunction__Group__2
             {
             pushFollow(FOLLOW_25);
             rule__TanFunction__Group__1__Impl();
@@ -58673,17 +59015,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TanFunction__Group__1__Impl"
-    // InternalWreslEditorParser.g:19643:1: rule__TanFunction__Group__1__Impl : ( LeftParenthesis ) ;
+    // InternalWreslEditorParser.g:19770:1: rule__TanFunction__Group__1__Impl : ( LeftParenthesis ) ;
     public final void rule__TanFunction__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19647:1: ( ( LeftParenthesis ) )
-            // InternalWreslEditorParser.g:19648:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:19774:1: ( ( LeftParenthesis ) )
+            // InternalWreslEditorParser.g:19775:1: ( LeftParenthesis )
             {
-            // InternalWreslEditorParser.g:19648:1: ( LeftParenthesis )
-            // InternalWreslEditorParser.g:19649:1: LeftParenthesis
+            // InternalWreslEditorParser.g:19775:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:19776:1: LeftParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTanFunctionAccess().getLeftParenthesisKeyword_1()); 
@@ -58714,14 +59056,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TanFunction__Group__2"
-    // InternalWreslEditorParser.g:19662:1: rule__TanFunction__Group__2 : rule__TanFunction__Group__2__Impl rule__TanFunction__Group__3 ;
+    // InternalWreslEditorParser.g:19789:1: rule__TanFunction__Group__2 : rule__TanFunction__Group__2__Impl rule__TanFunction__Group__3 ;
     public final void rule__TanFunction__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19666:1: ( rule__TanFunction__Group__2__Impl rule__TanFunction__Group__3 )
-            // InternalWreslEditorParser.g:19667:2: rule__TanFunction__Group__2__Impl rule__TanFunction__Group__3
+            // InternalWreslEditorParser.g:19793:1: ( rule__TanFunction__Group__2__Impl rule__TanFunction__Group__3 )
+            // InternalWreslEditorParser.g:19794:2: rule__TanFunction__Group__2__Impl rule__TanFunction__Group__3
             {
             pushFollow(FOLLOW_17);
             rule__TanFunction__Group__2__Impl();
@@ -58752,23 +59094,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TanFunction__Group__2__Impl"
-    // InternalWreslEditorParser.g:19674:1: rule__TanFunction__Group__2__Impl : ( ( rule__TanFunction__EAssignment_2 ) ) ;
+    // InternalWreslEditorParser.g:19801:1: rule__TanFunction__Group__2__Impl : ( ( rule__TanFunction__EAssignment_2 ) ) ;
     public final void rule__TanFunction__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19678:1: ( ( ( rule__TanFunction__EAssignment_2 ) ) )
-            // InternalWreslEditorParser.g:19679:1: ( ( rule__TanFunction__EAssignment_2 ) )
+            // InternalWreslEditorParser.g:19805:1: ( ( ( rule__TanFunction__EAssignment_2 ) ) )
+            // InternalWreslEditorParser.g:19806:1: ( ( rule__TanFunction__EAssignment_2 ) )
             {
-            // InternalWreslEditorParser.g:19679:1: ( ( rule__TanFunction__EAssignment_2 ) )
-            // InternalWreslEditorParser.g:19680:1: ( rule__TanFunction__EAssignment_2 )
+            // InternalWreslEditorParser.g:19806:1: ( ( rule__TanFunction__EAssignment_2 ) )
+            // InternalWreslEditorParser.g:19807:1: ( rule__TanFunction__EAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTanFunctionAccess().getEAssignment_2()); 
             }
-            // InternalWreslEditorParser.g:19681:1: ( rule__TanFunction__EAssignment_2 )
-            // InternalWreslEditorParser.g:19681:2: rule__TanFunction__EAssignment_2
+            // InternalWreslEditorParser.g:19808:1: ( rule__TanFunction__EAssignment_2 )
+            // InternalWreslEditorParser.g:19808:2: rule__TanFunction__EAssignment_2
             {
             pushFollow(FOLLOW_2);
             rule__TanFunction__EAssignment_2();
@@ -58803,14 +59145,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TanFunction__Group__3"
-    // InternalWreslEditorParser.g:19691:1: rule__TanFunction__Group__3 : rule__TanFunction__Group__3__Impl ;
+    // InternalWreslEditorParser.g:19818:1: rule__TanFunction__Group__3 : rule__TanFunction__Group__3__Impl ;
     public final void rule__TanFunction__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19695:1: ( rule__TanFunction__Group__3__Impl )
-            // InternalWreslEditorParser.g:19696:2: rule__TanFunction__Group__3__Impl
+            // InternalWreslEditorParser.g:19822:1: ( rule__TanFunction__Group__3__Impl )
+            // InternalWreslEditorParser.g:19823:2: rule__TanFunction__Group__3__Impl
             {
             pushFollow(FOLLOW_2);
             rule__TanFunction__Group__3__Impl();
@@ -58836,17 +59178,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TanFunction__Group__3__Impl"
-    // InternalWreslEditorParser.g:19702:1: rule__TanFunction__Group__3__Impl : ( RightParenthesis ) ;
+    // InternalWreslEditorParser.g:19829:1: rule__TanFunction__Group__3__Impl : ( RightParenthesis ) ;
     public final void rule__TanFunction__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19706:1: ( ( RightParenthesis ) )
-            // InternalWreslEditorParser.g:19707:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:19833:1: ( ( RightParenthesis ) )
+            // InternalWreslEditorParser.g:19834:1: ( RightParenthesis )
             {
-            // InternalWreslEditorParser.g:19707:1: ( RightParenthesis )
-            // InternalWreslEditorParser.g:19708:1: RightParenthesis
+            // InternalWreslEditorParser.g:19834:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:19835:1: RightParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTanFunctionAccess().getRightParenthesisKeyword_3()); 
@@ -58877,14 +59219,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__CotFunction__Group__0"
-    // InternalWreslEditorParser.g:19729:1: rule__CotFunction__Group__0 : rule__CotFunction__Group__0__Impl rule__CotFunction__Group__1 ;
+    // InternalWreslEditorParser.g:19856:1: rule__CotFunction__Group__0 : rule__CotFunction__Group__0__Impl rule__CotFunction__Group__1 ;
     public final void rule__CotFunction__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19733:1: ( rule__CotFunction__Group__0__Impl rule__CotFunction__Group__1 )
-            // InternalWreslEditorParser.g:19734:2: rule__CotFunction__Group__0__Impl rule__CotFunction__Group__1
+            // InternalWreslEditorParser.g:19860:1: ( rule__CotFunction__Group__0__Impl rule__CotFunction__Group__1 )
+            // InternalWreslEditorParser.g:19861:2: rule__CotFunction__Group__0__Impl rule__CotFunction__Group__1
             {
             pushFollow(FOLLOW_45);
             rule__CotFunction__Group__0__Impl();
@@ -58915,17 +59257,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__CotFunction__Group__0__Impl"
-    // InternalWreslEditorParser.g:19741:1: rule__CotFunction__Group__0__Impl : ( RULE_COT ) ;
+    // InternalWreslEditorParser.g:19868:1: rule__CotFunction__Group__0__Impl : ( RULE_COT ) ;
     public final void rule__CotFunction__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19745:1: ( ( RULE_COT ) )
-            // InternalWreslEditorParser.g:19746:1: ( RULE_COT )
+            // InternalWreslEditorParser.g:19872:1: ( ( RULE_COT ) )
+            // InternalWreslEditorParser.g:19873:1: ( RULE_COT )
             {
-            // InternalWreslEditorParser.g:19746:1: ( RULE_COT )
-            // InternalWreslEditorParser.g:19747:1: RULE_COT
+            // InternalWreslEditorParser.g:19873:1: ( RULE_COT )
+            // InternalWreslEditorParser.g:19874:1: RULE_COT
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCotFunctionAccess().getCOTTerminalRuleCall_0()); 
@@ -58956,14 +59298,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__CotFunction__Group__1"
-    // InternalWreslEditorParser.g:19758:1: rule__CotFunction__Group__1 : rule__CotFunction__Group__1__Impl rule__CotFunction__Group__2 ;
+    // InternalWreslEditorParser.g:19885:1: rule__CotFunction__Group__1 : rule__CotFunction__Group__1__Impl rule__CotFunction__Group__2 ;
     public final void rule__CotFunction__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19762:1: ( rule__CotFunction__Group__1__Impl rule__CotFunction__Group__2 )
-            // InternalWreslEditorParser.g:19763:2: rule__CotFunction__Group__1__Impl rule__CotFunction__Group__2
+            // InternalWreslEditorParser.g:19889:1: ( rule__CotFunction__Group__1__Impl rule__CotFunction__Group__2 )
+            // InternalWreslEditorParser.g:19890:2: rule__CotFunction__Group__1__Impl rule__CotFunction__Group__2
             {
             pushFollow(FOLLOW_25);
             rule__CotFunction__Group__1__Impl();
@@ -58994,17 +59336,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__CotFunction__Group__1__Impl"
-    // InternalWreslEditorParser.g:19770:1: rule__CotFunction__Group__1__Impl : ( LeftParenthesis ) ;
+    // InternalWreslEditorParser.g:19897:1: rule__CotFunction__Group__1__Impl : ( LeftParenthesis ) ;
     public final void rule__CotFunction__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19774:1: ( ( LeftParenthesis ) )
-            // InternalWreslEditorParser.g:19775:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:19901:1: ( ( LeftParenthesis ) )
+            // InternalWreslEditorParser.g:19902:1: ( LeftParenthesis )
             {
-            // InternalWreslEditorParser.g:19775:1: ( LeftParenthesis )
-            // InternalWreslEditorParser.g:19776:1: LeftParenthesis
+            // InternalWreslEditorParser.g:19902:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:19903:1: LeftParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCotFunctionAccess().getLeftParenthesisKeyword_1()); 
@@ -59035,14 +59377,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__CotFunction__Group__2"
-    // InternalWreslEditorParser.g:19789:1: rule__CotFunction__Group__2 : rule__CotFunction__Group__2__Impl rule__CotFunction__Group__3 ;
+    // InternalWreslEditorParser.g:19916:1: rule__CotFunction__Group__2 : rule__CotFunction__Group__2__Impl rule__CotFunction__Group__3 ;
     public final void rule__CotFunction__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19793:1: ( rule__CotFunction__Group__2__Impl rule__CotFunction__Group__3 )
-            // InternalWreslEditorParser.g:19794:2: rule__CotFunction__Group__2__Impl rule__CotFunction__Group__3
+            // InternalWreslEditorParser.g:19920:1: ( rule__CotFunction__Group__2__Impl rule__CotFunction__Group__3 )
+            // InternalWreslEditorParser.g:19921:2: rule__CotFunction__Group__2__Impl rule__CotFunction__Group__3
             {
             pushFollow(FOLLOW_17);
             rule__CotFunction__Group__2__Impl();
@@ -59073,23 +59415,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__CotFunction__Group__2__Impl"
-    // InternalWreslEditorParser.g:19801:1: rule__CotFunction__Group__2__Impl : ( ( rule__CotFunction__EAssignment_2 ) ) ;
+    // InternalWreslEditorParser.g:19928:1: rule__CotFunction__Group__2__Impl : ( ( rule__CotFunction__EAssignment_2 ) ) ;
     public final void rule__CotFunction__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19805:1: ( ( ( rule__CotFunction__EAssignment_2 ) ) )
-            // InternalWreslEditorParser.g:19806:1: ( ( rule__CotFunction__EAssignment_2 ) )
+            // InternalWreslEditorParser.g:19932:1: ( ( ( rule__CotFunction__EAssignment_2 ) ) )
+            // InternalWreslEditorParser.g:19933:1: ( ( rule__CotFunction__EAssignment_2 ) )
             {
-            // InternalWreslEditorParser.g:19806:1: ( ( rule__CotFunction__EAssignment_2 ) )
-            // InternalWreslEditorParser.g:19807:1: ( rule__CotFunction__EAssignment_2 )
+            // InternalWreslEditorParser.g:19933:1: ( ( rule__CotFunction__EAssignment_2 ) )
+            // InternalWreslEditorParser.g:19934:1: ( rule__CotFunction__EAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCotFunctionAccess().getEAssignment_2()); 
             }
-            // InternalWreslEditorParser.g:19808:1: ( rule__CotFunction__EAssignment_2 )
-            // InternalWreslEditorParser.g:19808:2: rule__CotFunction__EAssignment_2
+            // InternalWreslEditorParser.g:19935:1: ( rule__CotFunction__EAssignment_2 )
+            // InternalWreslEditorParser.g:19935:2: rule__CotFunction__EAssignment_2
             {
             pushFollow(FOLLOW_2);
             rule__CotFunction__EAssignment_2();
@@ -59124,14 +59466,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__CotFunction__Group__3"
-    // InternalWreslEditorParser.g:19818:1: rule__CotFunction__Group__3 : rule__CotFunction__Group__3__Impl ;
+    // InternalWreslEditorParser.g:19945:1: rule__CotFunction__Group__3 : rule__CotFunction__Group__3__Impl ;
     public final void rule__CotFunction__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19822:1: ( rule__CotFunction__Group__3__Impl )
-            // InternalWreslEditorParser.g:19823:2: rule__CotFunction__Group__3__Impl
+            // InternalWreslEditorParser.g:19949:1: ( rule__CotFunction__Group__3__Impl )
+            // InternalWreslEditorParser.g:19950:2: rule__CotFunction__Group__3__Impl
             {
             pushFollow(FOLLOW_2);
             rule__CotFunction__Group__3__Impl();
@@ -59157,17 +59499,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__CotFunction__Group__3__Impl"
-    // InternalWreslEditorParser.g:19829:1: rule__CotFunction__Group__3__Impl : ( RightParenthesis ) ;
+    // InternalWreslEditorParser.g:19956:1: rule__CotFunction__Group__3__Impl : ( RightParenthesis ) ;
     public final void rule__CotFunction__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19833:1: ( ( RightParenthesis ) )
-            // InternalWreslEditorParser.g:19834:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:19960:1: ( ( RightParenthesis ) )
+            // InternalWreslEditorParser.g:19961:1: ( RightParenthesis )
             {
-            // InternalWreslEditorParser.g:19834:1: ( RightParenthesis )
-            // InternalWreslEditorParser.g:19835:1: RightParenthesis
+            // InternalWreslEditorParser.g:19961:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:19962:1: RightParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCotFunctionAccess().getRightParenthesisKeyword_3()); 
@@ -59198,14 +59540,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AsinFunction__Group__0"
-    // InternalWreslEditorParser.g:19856:1: rule__AsinFunction__Group__0 : rule__AsinFunction__Group__0__Impl rule__AsinFunction__Group__1 ;
+    // InternalWreslEditorParser.g:19983:1: rule__AsinFunction__Group__0 : rule__AsinFunction__Group__0__Impl rule__AsinFunction__Group__1 ;
     public final void rule__AsinFunction__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19860:1: ( rule__AsinFunction__Group__0__Impl rule__AsinFunction__Group__1 )
-            // InternalWreslEditorParser.g:19861:2: rule__AsinFunction__Group__0__Impl rule__AsinFunction__Group__1
+            // InternalWreslEditorParser.g:19987:1: ( rule__AsinFunction__Group__0__Impl rule__AsinFunction__Group__1 )
+            // InternalWreslEditorParser.g:19988:2: rule__AsinFunction__Group__0__Impl rule__AsinFunction__Group__1
             {
             pushFollow(FOLLOW_45);
             rule__AsinFunction__Group__0__Impl();
@@ -59236,17 +59578,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AsinFunction__Group__0__Impl"
-    // InternalWreslEditorParser.g:19868:1: rule__AsinFunction__Group__0__Impl : ( RULE_ASIN ) ;
+    // InternalWreslEditorParser.g:19995:1: rule__AsinFunction__Group__0__Impl : ( RULE_ASIN ) ;
     public final void rule__AsinFunction__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19872:1: ( ( RULE_ASIN ) )
-            // InternalWreslEditorParser.g:19873:1: ( RULE_ASIN )
+            // InternalWreslEditorParser.g:19999:1: ( ( RULE_ASIN ) )
+            // InternalWreslEditorParser.g:20000:1: ( RULE_ASIN )
             {
-            // InternalWreslEditorParser.g:19873:1: ( RULE_ASIN )
-            // InternalWreslEditorParser.g:19874:1: RULE_ASIN
+            // InternalWreslEditorParser.g:20000:1: ( RULE_ASIN )
+            // InternalWreslEditorParser.g:20001:1: RULE_ASIN
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAsinFunctionAccess().getASINTerminalRuleCall_0()); 
@@ -59277,14 +59619,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AsinFunction__Group__1"
-    // InternalWreslEditorParser.g:19885:1: rule__AsinFunction__Group__1 : rule__AsinFunction__Group__1__Impl rule__AsinFunction__Group__2 ;
+    // InternalWreslEditorParser.g:20012:1: rule__AsinFunction__Group__1 : rule__AsinFunction__Group__1__Impl rule__AsinFunction__Group__2 ;
     public final void rule__AsinFunction__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19889:1: ( rule__AsinFunction__Group__1__Impl rule__AsinFunction__Group__2 )
-            // InternalWreslEditorParser.g:19890:2: rule__AsinFunction__Group__1__Impl rule__AsinFunction__Group__2
+            // InternalWreslEditorParser.g:20016:1: ( rule__AsinFunction__Group__1__Impl rule__AsinFunction__Group__2 )
+            // InternalWreslEditorParser.g:20017:2: rule__AsinFunction__Group__1__Impl rule__AsinFunction__Group__2
             {
             pushFollow(FOLLOW_25);
             rule__AsinFunction__Group__1__Impl();
@@ -59315,17 +59657,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AsinFunction__Group__1__Impl"
-    // InternalWreslEditorParser.g:19897:1: rule__AsinFunction__Group__1__Impl : ( LeftParenthesis ) ;
+    // InternalWreslEditorParser.g:20024:1: rule__AsinFunction__Group__1__Impl : ( LeftParenthesis ) ;
     public final void rule__AsinFunction__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19901:1: ( ( LeftParenthesis ) )
-            // InternalWreslEditorParser.g:19902:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:20028:1: ( ( LeftParenthesis ) )
+            // InternalWreslEditorParser.g:20029:1: ( LeftParenthesis )
             {
-            // InternalWreslEditorParser.g:19902:1: ( LeftParenthesis )
-            // InternalWreslEditorParser.g:19903:1: LeftParenthesis
+            // InternalWreslEditorParser.g:20029:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:20030:1: LeftParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAsinFunctionAccess().getLeftParenthesisKeyword_1()); 
@@ -59356,14 +59698,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AsinFunction__Group__2"
-    // InternalWreslEditorParser.g:19916:1: rule__AsinFunction__Group__2 : rule__AsinFunction__Group__2__Impl rule__AsinFunction__Group__3 ;
+    // InternalWreslEditorParser.g:20043:1: rule__AsinFunction__Group__2 : rule__AsinFunction__Group__2__Impl rule__AsinFunction__Group__3 ;
     public final void rule__AsinFunction__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19920:1: ( rule__AsinFunction__Group__2__Impl rule__AsinFunction__Group__3 )
-            // InternalWreslEditorParser.g:19921:2: rule__AsinFunction__Group__2__Impl rule__AsinFunction__Group__3
+            // InternalWreslEditorParser.g:20047:1: ( rule__AsinFunction__Group__2__Impl rule__AsinFunction__Group__3 )
+            // InternalWreslEditorParser.g:20048:2: rule__AsinFunction__Group__2__Impl rule__AsinFunction__Group__3
             {
             pushFollow(FOLLOW_17);
             rule__AsinFunction__Group__2__Impl();
@@ -59394,23 +59736,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AsinFunction__Group__2__Impl"
-    // InternalWreslEditorParser.g:19928:1: rule__AsinFunction__Group__2__Impl : ( ( rule__AsinFunction__EAssignment_2 ) ) ;
+    // InternalWreslEditorParser.g:20055:1: rule__AsinFunction__Group__2__Impl : ( ( rule__AsinFunction__EAssignment_2 ) ) ;
     public final void rule__AsinFunction__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19932:1: ( ( ( rule__AsinFunction__EAssignment_2 ) ) )
-            // InternalWreslEditorParser.g:19933:1: ( ( rule__AsinFunction__EAssignment_2 ) )
+            // InternalWreslEditorParser.g:20059:1: ( ( ( rule__AsinFunction__EAssignment_2 ) ) )
+            // InternalWreslEditorParser.g:20060:1: ( ( rule__AsinFunction__EAssignment_2 ) )
             {
-            // InternalWreslEditorParser.g:19933:1: ( ( rule__AsinFunction__EAssignment_2 ) )
-            // InternalWreslEditorParser.g:19934:1: ( rule__AsinFunction__EAssignment_2 )
+            // InternalWreslEditorParser.g:20060:1: ( ( rule__AsinFunction__EAssignment_2 ) )
+            // InternalWreslEditorParser.g:20061:1: ( rule__AsinFunction__EAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAsinFunctionAccess().getEAssignment_2()); 
             }
-            // InternalWreslEditorParser.g:19935:1: ( rule__AsinFunction__EAssignment_2 )
-            // InternalWreslEditorParser.g:19935:2: rule__AsinFunction__EAssignment_2
+            // InternalWreslEditorParser.g:20062:1: ( rule__AsinFunction__EAssignment_2 )
+            // InternalWreslEditorParser.g:20062:2: rule__AsinFunction__EAssignment_2
             {
             pushFollow(FOLLOW_2);
             rule__AsinFunction__EAssignment_2();
@@ -59445,14 +59787,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AsinFunction__Group__3"
-    // InternalWreslEditorParser.g:19945:1: rule__AsinFunction__Group__3 : rule__AsinFunction__Group__3__Impl ;
+    // InternalWreslEditorParser.g:20072:1: rule__AsinFunction__Group__3 : rule__AsinFunction__Group__3__Impl ;
     public final void rule__AsinFunction__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19949:1: ( rule__AsinFunction__Group__3__Impl )
-            // InternalWreslEditorParser.g:19950:2: rule__AsinFunction__Group__3__Impl
+            // InternalWreslEditorParser.g:20076:1: ( rule__AsinFunction__Group__3__Impl )
+            // InternalWreslEditorParser.g:20077:2: rule__AsinFunction__Group__3__Impl
             {
             pushFollow(FOLLOW_2);
             rule__AsinFunction__Group__3__Impl();
@@ -59478,17 +59820,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AsinFunction__Group__3__Impl"
-    // InternalWreslEditorParser.g:19956:1: rule__AsinFunction__Group__3__Impl : ( RightParenthesis ) ;
+    // InternalWreslEditorParser.g:20083:1: rule__AsinFunction__Group__3__Impl : ( RightParenthesis ) ;
     public final void rule__AsinFunction__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19960:1: ( ( RightParenthesis ) )
-            // InternalWreslEditorParser.g:19961:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:20087:1: ( ( RightParenthesis ) )
+            // InternalWreslEditorParser.g:20088:1: ( RightParenthesis )
             {
-            // InternalWreslEditorParser.g:19961:1: ( RightParenthesis )
-            // InternalWreslEditorParser.g:19962:1: RightParenthesis
+            // InternalWreslEditorParser.g:20088:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:20089:1: RightParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAsinFunctionAccess().getRightParenthesisKeyword_3()); 
@@ -59519,14 +59861,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AcosFunction__Group__0"
-    // InternalWreslEditorParser.g:19983:1: rule__AcosFunction__Group__0 : rule__AcosFunction__Group__0__Impl rule__AcosFunction__Group__1 ;
+    // InternalWreslEditorParser.g:20110:1: rule__AcosFunction__Group__0 : rule__AcosFunction__Group__0__Impl rule__AcosFunction__Group__1 ;
     public final void rule__AcosFunction__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19987:1: ( rule__AcosFunction__Group__0__Impl rule__AcosFunction__Group__1 )
-            // InternalWreslEditorParser.g:19988:2: rule__AcosFunction__Group__0__Impl rule__AcosFunction__Group__1
+            // InternalWreslEditorParser.g:20114:1: ( rule__AcosFunction__Group__0__Impl rule__AcosFunction__Group__1 )
+            // InternalWreslEditorParser.g:20115:2: rule__AcosFunction__Group__0__Impl rule__AcosFunction__Group__1
             {
             pushFollow(FOLLOW_45);
             rule__AcosFunction__Group__0__Impl();
@@ -59557,17 +59899,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AcosFunction__Group__0__Impl"
-    // InternalWreslEditorParser.g:19995:1: rule__AcosFunction__Group__0__Impl : ( RULE_ACOS ) ;
+    // InternalWreslEditorParser.g:20122:1: rule__AcosFunction__Group__0__Impl : ( RULE_ACOS ) ;
     public final void rule__AcosFunction__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:19999:1: ( ( RULE_ACOS ) )
-            // InternalWreslEditorParser.g:20000:1: ( RULE_ACOS )
+            // InternalWreslEditorParser.g:20126:1: ( ( RULE_ACOS ) )
+            // InternalWreslEditorParser.g:20127:1: ( RULE_ACOS )
             {
-            // InternalWreslEditorParser.g:20000:1: ( RULE_ACOS )
-            // InternalWreslEditorParser.g:20001:1: RULE_ACOS
+            // InternalWreslEditorParser.g:20127:1: ( RULE_ACOS )
+            // InternalWreslEditorParser.g:20128:1: RULE_ACOS
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAcosFunctionAccess().getACOSTerminalRuleCall_0()); 
@@ -59598,14 +59940,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AcosFunction__Group__1"
-    // InternalWreslEditorParser.g:20012:1: rule__AcosFunction__Group__1 : rule__AcosFunction__Group__1__Impl rule__AcosFunction__Group__2 ;
+    // InternalWreslEditorParser.g:20139:1: rule__AcosFunction__Group__1 : rule__AcosFunction__Group__1__Impl rule__AcosFunction__Group__2 ;
     public final void rule__AcosFunction__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20016:1: ( rule__AcosFunction__Group__1__Impl rule__AcosFunction__Group__2 )
-            // InternalWreslEditorParser.g:20017:2: rule__AcosFunction__Group__1__Impl rule__AcosFunction__Group__2
+            // InternalWreslEditorParser.g:20143:1: ( rule__AcosFunction__Group__1__Impl rule__AcosFunction__Group__2 )
+            // InternalWreslEditorParser.g:20144:2: rule__AcosFunction__Group__1__Impl rule__AcosFunction__Group__2
             {
             pushFollow(FOLLOW_25);
             rule__AcosFunction__Group__1__Impl();
@@ -59636,17 +59978,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AcosFunction__Group__1__Impl"
-    // InternalWreslEditorParser.g:20024:1: rule__AcosFunction__Group__1__Impl : ( LeftParenthesis ) ;
+    // InternalWreslEditorParser.g:20151:1: rule__AcosFunction__Group__1__Impl : ( LeftParenthesis ) ;
     public final void rule__AcosFunction__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20028:1: ( ( LeftParenthesis ) )
-            // InternalWreslEditorParser.g:20029:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:20155:1: ( ( LeftParenthesis ) )
+            // InternalWreslEditorParser.g:20156:1: ( LeftParenthesis )
             {
-            // InternalWreslEditorParser.g:20029:1: ( LeftParenthesis )
-            // InternalWreslEditorParser.g:20030:1: LeftParenthesis
+            // InternalWreslEditorParser.g:20156:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:20157:1: LeftParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAcosFunctionAccess().getLeftParenthesisKeyword_1()); 
@@ -59677,14 +60019,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AcosFunction__Group__2"
-    // InternalWreslEditorParser.g:20043:1: rule__AcosFunction__Group__2 : rule__AcosFunction__Group__2__Impl rule__AcosFunction__Group__3 ;
+    // InternalWreslEditorParser.g:20170:1: rule__AcosFunction__Group__2 : rule__AcosFunction__Group__2__Impl rule__AcosFunction__Group__3 ;
     public final void rule__AcosFunction__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20047:1: ( rule__AcosFunction__Group__2__Impl rule__AcosFunction__Group__3 )
-            // InternalWreslEditorParser.g:20048:2: rule__AcosFunction__Group__2__Impl rule__AcosFunction__Group__3
+            // InternalWreslEditorParser.g:20174:1: ( rule__AcosFunction__Group__2__Impl rule__AcosFunction__Group__3 )
+            // InternalWreslEditorParser.g:20175:2: rule__AcosFunction__Group__2__Impl rule__AcosFunction__Group__3
             {
             pushFollow(FOLLOW_17);
             rule__AcosFunction__Group__2__Impl();
@@ -59715,23 +60057,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AcosFunction__Group__2__Impl"
-    // InternalWreslEditorParser.g:20055:1: rule__AcosFunction__Group__2__Impl : ( ( rule__AcosFunction__EAssignment_2 ) ) ;
+    // InternalWreslEditorParser.g:20182:1: rule__AcosFunction__Group__2__Impl : ( ( rule__AcosFunction__EAssignment_2 ) ) ;
     public final void rule__AcosFunction__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20059:1: ( ( ( rule__AcosFunction__EAssignment_2 ) ) )
-            // InternalWreslEditorParser.g:20060:1: ( ( rule__AcosFunction__EAssignment_2 ) )
+            // InternalWreslEditorParser.g:20186:1: ( ( ( rule__AcosFunction__EAssignment_2 ) ) )
+            // InternalWreslEditorParser.g:20187:1: ( ( rule__AcosFunction__EAssignment_2 ) )
             {
-            // InternalWreslEditorParser.g:20060:1: ( ( rule__AcosFunction__EAssignment_2 ) )
-            // InternalWreslEditorParser.g:20061:1: ( rule__AcosFunction__EAssignment_2 )
+            // InternalWreslEditorParser.g:20187:1: ( ( rule__AcosFunction__EAssignment_2 ) )
+            // InternalWreslEditorParser.g:20188:1: ( rule__AcosFunction__EAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAcosFunctionAccess().getEAssignment_2()); 
             }
-            // InternalWreslEditorParser.g:20062:1: ( rule__AcosFunction__EAssignment_2 )
-            // InternalWreslEditorParser.g:20062:2: rule__AcosFunction__EAssignment_2
+            // InternalWreslEditorParser.g:20189:1: ( rule__AcosFunction__EAssignment_2 )
+            // InternalWreslEditorParser.g:20189:2: rule__AcosFunction__EAssignment_2
             {
             pushFollow(FOLLOW_2);
             rule__AcosFunction__EAssignment_2();
@@ -59766,14 +60108,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AcosFunction__Group__3"
-    // InternalWreslEditorParser.g:20072:1: rule__AcosFunction__Group__3 : rule__AcosFunction__Group__3__Impl ;
+    // InternalWreslEditorParser.g:20199:1: rule__AcosFunction__Group__3 : rule__AcosFunction__Group__3__Impl ;
     public final void rule__AcosFunction__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20076:1: ( rule__AcosFunction__Group__3__Impl )
-            // InternalWreslEditorParser.g:20077:2: rule__AcosFunction__Group__3__Impl
+            // InternalWreslEditorParser.g:20203:1: ( rule__AcosFunction__Group__3__Impl )
+            // InternalWreslEditorParser.g:20204:2: rule__AcosFunction__Group__3__Impl
             {
             pushFollow(FOLLOW_2);
             rule__AcosFunction__Group__3__Impl();
@@ -59799,17 +60141,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AcosFunction__Group__3__Impl"
-    // InternalWreslEditorParser.g:20083:1: rule__AcosFunction__Group__3__Impl : ( RightParenthesis ) ;
+    // InternalWreslEditorParser.g:20210:1: rule__AcosFunction__Group__3__Impl : ( RightParenthesis ) ;
     public final void rule__AcosFunction__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20087:1: ( ( RightParenthesis ) )
-            // InternalWreslEditorParser.g:20088:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:20214:1: ( ( RightParenthesis ) )
+            // InternalWreslEditorParser.g:20215:1: ( RightParenthesis )
             {
-            // InternalWreslEditorParser.g:20088:1: ( RightParenthesis )
-            // InternalWreslEditorParser.g:20089:1: RightParenthesis
+            // InternalWreslEditorParser.g:20215:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:20216:1: RightParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAcosFunctionAccess().getRightParenthesisKeyword_3()); 
@@ -59840,14 +60182,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AtanFunction__Group__0"
-    // InternalWreslEditorParser.g:20110:1: rule__AtanFunction__Group__0 : rule__AtanFunction__Group__0__Impl rule__AtanFunction__Group__1 ;
+    // InternalWreslEditorParser.g:20237:1: rule__AtanFunction__Group__0 : rule__AtanFunction__Group__0__Impl rule__AtanFunction__Group__1 ;
     public final void rule__AtanFunction__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20114:1: ( rule__AtanFunction__Group__0__Impl rule__AtanFunction__Group__1 )
-            // InternalWreslEditorParser.g:20115:2: rule__AtanFunction__Group__0__Impl rule__AtanFunction__Group__1
+            // InternalWreslEditorParser.g:20241:1: ( rule__AtanFunction__Group__0__Impl rule__AtanFunction__Group__1 )
+            // InternalWreslEditorParser.g:20242:2: rule__AtanFunction__Group__0__Impl rule__AtanFunction__Group__1
             {
             pushFollow(FOLLOW_45);
             rule__AtanFunction__Group__0__Impl();
@@ -59878,17 +60220,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AtanFunction__Group__0__Impl"
-    // InternalWreslEditorParser.g:20122:1: rule__AtanFunction__Group__0__Impl : ( RULE_ATAN ) ;
+    // InternalWreslEditorParser.g:20249:1: rule__AtanFunction__Group__0__Impl : ( RULE_ATAN ) ;
     public final void rule__AtanFunction__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20126:1: ( ( RULE_ATAN ) )
-            // InternalWreslEditorParser.g:20127:1: ( RULE_ATAN )
+            // InternalWreslEditorParser.g:20253:1: ( ( RULE_ATAN ) )
+            // InternalWreslEditorParser.g:20254:1: ( RULE_ATAN )
             {
-            // InternalWreslEditorParser.g:20127:1: ( RULE_ATAN )
-            // InternalWreslEditorParser.g:20128:1: RULE_ATAN
+            // InternalWreslEditorParser.g:20254:1: ( RULE_ATAN )
+            // InternalWreslEditorParser.g:20255:1: RULE_ATAN
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAtanFunctionAccess().getATANTerminalRuleCall_0()); 
@@ -59919,14 +60261,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AtanFunction__Group__1"
-    // InternalWreslEditorParser.g:20139:1: rule__AtanFunction__Group__1 : rule__AtanFunction__Group__1__Impl rule__AtanFunction__Group__2 ;
+    // InternalWreslEditorParser.g:20266:1: rule__AtanFunction__Group__1 : rule__AtanFunction__Group__1__Impl rule__AtanFunction__Group__2 ;
     public final void rule__AtanFunction__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20143:1: ( rule__AtanFunction__Group__1__Impl rule__AtanFunction__Group__2 )
-            // InternalWreslEditorParser.g:20144:2: rule__AtanFunction__Group__1__Impl rule__AtanFunction__Group__2
+            // InternalWreslEditorParser.g:20270:1: ( rule__AtanFunction__Group__1__Impl rule__AtanFunction__Group__2 )
+            // InternalWreslEditorParser.g:20271:2: rule__AtanFunction__Group__1__Impl rule__AtanFunction__Group__2
             {
             pushFollow(FOLLOW_25);
             rule__AtanFunction__Group__1__Impl();
@@ -59957,17 +60299,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AtanFunction__Group__1__Impl"
-    // InternalWreslEditorParser.g:20151:1: rule__AtanFunction__Group__1__Impl : ( LeftParenthesis ) ;
+    // InternalWreslEditorParser.g:20278:1: rule__AtanFunction__Group__1__Impl : ( LeftParenthesis ) ;
     public final void rule__AtanFunction__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20155:1: ( ( LeftParenthesis ) )
-            // InternalWreslEditorParser.g:20156:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:20282:1: ( ( LeftParenthesis ) )
+            // InternalWreslEditorParser.g:20283:1: ( LeftParenthesis )
             {
-            // InternalWreslEditorParser.g:20156:1: ( LeftParenthesis )
-            // InternalWreslEditorParser.g:20157:1: LeftParenthesis
+            // InternalWreslEditorParser.g:20283:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:20284:1: LeftParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAtanFunctionAccess().getLeftParenthesisKeyword_1()); 
@@ -59998,14 +60340,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AtanFunction__Group__2"
-    // InternalWreslEditorParser.g:20170:1: rule__AtanFunction__Group__2 : rule__AtanFunction__Group__2__Impl rule__AtanFunction__Group__3 ;
+    // InternalWreslEditorParser.g:20297:1: rule__AtanFunction__Group__2 : rule__AtanFunction__Group__2__Impl rule__AtanFunction__Group__3 ;
     public final void rule__AtanFunction__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20174:1: ( rule__AtanFunction__Group__2__Impl rule__AtanFunction__Group__3 )
-            // InternalWreslEditorParser.g:20175:2: rule__AtanFunction__Group__2__Impl rule__AtanFunction__Group__3
+            // InternalWreslEditorParser.g:20301:1: ( rule__AtanFunction__Group__2__Impl rule__AtanFunction__Group__3 )
+            // InternalWreslEditorParser.g:20302:2: rule__AtanFunction__Group__2__Impl rule__AtanFunction__Group__3
             {
             pushFollow(FOLLOW_17);
             rule__AtanFunction__Group__2__Impl();
@@ -60036,23 +60378,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AtanFunction__Group__2__Impl"
-    // InternalWreslEditorParser.g:20182:1: rule__AtanFunction__Group__2__Impl : ( ( rule__AtanFunction__EAssignment_2 ) ) ;
+    // InternalWreslEditorParser.g:20309:1: rule__AtanFunction__Group__2__Impl : ( ( rule__AtanFunction__EAssignment_2 ) ) ;
     public final void rule__AtanFunction__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20186:1: ( ( ( rule__AtanFunction__EAssignment_2 ) ) )
-            // InternalWreslEditorParser.g:20187:1: ( ( rule__AtanFunction__EAssignment_2 ) )
+            // InternalWreslEditorParser.g:20313:1: ( ( ( rule__AtanFunction__EAssignment_2 ) ) )
+            // InternalWreslEditorParser.g:20314:1: ( ( rule__AtanFunction__EAssignment_2 ) )
             {
-            // InternalWreslEditorParser.g:20187:1: ( ( rule__AtanFunction__EAssignment_2 ) )
-            // InternalWreslEditorParser.g:20188:1: ( rule__AtanFunction__EAssignment_2 )
+            // InternalWreslEditorParser.g:20314:1: ( ( rule__AtanFunction__EAssignment_2 ) )
+            // InternalWreslEditorParser.g:20315:1: ( rule__AtanFunction__EAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAtanFunctionAccess().getEAssignment_2()); 
             }
-            // InternalWreslEditorParser.g:20189:1: ( rule__AtanFunction__EAssignment_2 )
-            // InternalWreslEditorParser.g:20189:2: rule__AtanFunction__EAssignment_2
+            // InternalWreslEditorParser.g:20316:1: ( rule__AtanFunction__EAssignment_2 )
+            // InternalWreslEditorParser.g:20316:2: rule__AtanFunction__EAssignment_2
             {
             pushFollow(FOLLOW_2);
             rule__AtanFunction__EAssignment_2();
@@ -60087,14 +60429,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AtanFunction__Group__3"
-    // InternalWreslEditorParser.g:20199:1: rule__AtanFunction__Group__3 : rule__AtanFunction__Group__3__Impl ;
+    // InternalWreslEditorParser.g:20326:1: rule__AtanFunction__Group__3 : rule__AtanFunction__Group__3__Impl ;
     public final void rule__AtanFunction__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20203:1: ( rule__AtanFunction__Group__3__Impl )
-            // InternalWreslEditorParser.g:20204:2: rule__AtanFunction__Group__3__Impl
+            // InternalWreslEditorParser.g:20330:1: ( rule__AtanFunction__Group__3__Impl )
+            // InternalWreslEditorParser.g:20331:2: rule__AtanFunction__Group__3__Impl
             {
             pushFollow(FOLLOW_2);
             rule__AtanFunction__Group__3__Impl();
@@ -60120,17 +60462,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AtanFunction__Group__3__Impl"
-    // InternalWreslEditorParser.g:20210:1: rule__AtanFunction__Group__3__Impl : ( RightParenthesis ) ;
+    // InternalWreslEditorParser.g:20337:1: rule__AtanFunction__Group__3__Impl : ( RightParenthesis ) ;
     public final void rule__AtanFunction__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20214:1: ( ( RightParenthesis ) )
-            // InternalWreslEditorParser.g:20215:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:20341:1: ( ( RightParenthesis ) )
+            // InternalWreslEditorParser.g:20342:1: ( RightParenthesis )
             {
-            // InternalWreslEditorParser.g:20215:1: ( RightParenthesis )
-            // InternalWreslEditorParser.g:20216:1: RightParenthesis
+            // InternalWreslEditorParser.g:20342:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:20343:1: RightParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAtanFunctionAccess().getRightParenthesisKeyword_3()); 
@@ -60161,14 +60503,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AcotFunction__Group__0"
-    // InternalWreslEditorParser.g:20237:1: rule__AcotFunction__Group__0 : rule__AcotFunction__Group__0__Impl rule__AcotFunction__Group__1 ;
+    // InternalWreslEditorParser.g:20364:1: rule__AcotFunction__Group__0 : rule__AcotFunction__Group__0__Impl rule__AcotFunction__Group__1 ;
     public final void rule__AcotFunction__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20241:1: ( rule__AcotFunction__Group__0__Impl rule__AcotFunction__Group__1 )
-            // InternalWreslEditorParser.g:20242:2: rule__AcotFunction__Group__0__Impl rule__AcotFunction__Group__1
+            // InternalWreslEditorParser.g:20368:1: ( rule__AcotFunction__Group__0__Impl rule__AcotFunction__Group__1 )
+            // InternalWreslEditorParser.g:20369:2: rule__AcotFunction__Group__0__Impl rule__AcotFunction__Group__1
             {
             pushFollow(FOLLOW_45);
             rule__AcotFunction__Group__0__Impl();
@@ -60199,17 +60541,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AcotFunction__Group__0__Impl"
-    // InternalWreslEditorParser.g:20249:1: rule__AcotFunction__Group__0__Impl : ( RULE_ACOT ) ;
+    // InternalWreslEditorParser.g:20376:1: rule__AcotFunction__Group__0__Impl : ( RULE_ACOT ) ;
     public final void rule__AcotFunction__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20253:1: ( ( RULE_ACOT ) )
-            // InternalWreslEditorParser.g:20254:1: ( RULE_ACOT )
+            // InternalWreslEditorParser.g:20380:1: ( ( RULE_ACOT ) )
+            // InternalWreslEditorParser.g:20381:1: ( RULE_ACOT )
             {
-            // InternalWreslEditorParser.g:20254:1: ( RULE_ACOT )
-            // InternalWreslEditorParser.g:20255:1: RULE_ACOT
+            // InternalWreslEditorParser.g:20381:1: ( RULE_ACOT )
+            // InternalWreslEditorParser.g:20382:1: RULE_ACOT
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAcotFunctionAccess().getACOTTerminalRuleCall_0()); 
@@ -60240,14 +60582,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AcotFunction__Group__1"
-    // InternalWreslEditorParser.g:20266:1: rule__AcotFunction__Group__1 : rule__AcotFunction__Group__1__Impl rule__AcotFunction__Group__2 ;
+    // InternalWreslEditorParser.g:20393:1: rule__AcotFunction__Group__1 : rule__AcotFunction__Group__1__Impl rule__AcotFunction__Group__2 ;
     public final void rule__AcotFunction__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20270:1: ( rule__AcotFunction__Group__1__Impl rule__AcotFunction__Group__2 )
-            // InternalWreslEditorParser.g:20271:2: rule__AcotFunction__Group__1__Impl rule__AcotFunction__Group__2
+            // InternalWreslEditorParser.g:20397:1: ( rule__AcotFunction__Group__1__Impl rule__AcotFunction__Group__2 )
+            // InternalWreslEditorParser.g:20398:2: rule__AcotFunction__Group__1__Impl rule__AcotFunction__Group__2
             {
             pushFollow(FOLLOW_25);
             rule__AcotFunction__Group__1__Impl();
@@ -60278,17 +60620,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AcotFunction__Group__1__Impl"
-    // InternalWreslEditorParser.g:20278:1: rule__AcotFunction__Group__1__Impl : ( LeftParenthesis ) ;
+    // InternalWreslEditorParser.g:20405:1: rule__AcotFunction__Group__1__Impl : ( LeftParenthesis ) ;
     public final void rule__AcotFunction__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20282:1: ( ( LeftParenthesis ) )
-            // InternalWreslEditorParser.g:20283:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:20409:1: ( ( LeftParenthesis ) )
+            // InternalWreslEditorParser.g:20410:1: ( LeftParenthesis )
             {
-            // InternalWreslEditorParser.g:20283:1: ( LeftParenthesis )
-            // InternalWreslEditorParser.g:20284:1: LeftParenthesis
+            // InternalWreslEditorParser.g:20410:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:20411:1: LeftParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAcotFunctionAccess().getLeftParenthesisKeyword_1()); 
@@ -60319,14 +60661,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AcotFunction__Group__2"
-    // InternalWreslEditorParser.g:20297:1: rule__AcotFunction__Group__2 : rule__AcotFunction__Group__2__Impl rule__AcotFunction__Group__3 ;
+    // InternalWreslEditorParser.g:20424:1: rule__AcotFunction__Group__2 : rule__AcotFunction__Group__2__Impl rule__AcotFunction__Group__3 ;
     public final void rule__AcotFunction__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20301:1: ( rule__AcotFunction__Group__2__Impl rule__AcotFunction__Group__3 )
-            // InternalWreslEditorParser.g:20302:2: rule__AcotFunction__Group__2__Impl rule__AcotFunction__Group__3
+            // InternalWreslEditorParser.g:20428:1: ( rule__AcotFunction__Group__2__Impl rule__AcotFunction__Group__3 )
+            // InternalWreslEditorParser.g:20429:2: rule__AcotFunction__Group__2__Impl rule__AcotFunction__Group__3
             {
             pushFollow(FOLLOW_17);
             rule__AcotFunction__Group__2__Impl();
@@ -60357,23 +60699,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AcotFunction__Group__2__Impl"
-    // InternalWreslEditorParser.g:20309:1: rule__AcotFunction__Group__2__Impl : ( ( rule__AcotFunction__EAssignment_2 ) ) ;
+    // InternalWreslEditorParser.g:20436:1: rule__AcotFunction__Group__2__Impl : ( ( rule__AcotFunction__EAssignment_2 ) ) ;
     public final void rule__AcotFunction__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20313:1: ( ( ( rule__AcotFunction__EAssignment_2 ) ) )
-            // InternalWreslEditorParser.g:20314:1: ( ( rule__AcotFunction__EAssignment_2 ) )
+            // InternalWreslEditorParser.g:20440:1: ( ( ( rule__AcotFunction__EAssignment_2 ) ) )
+            // InternalWreslEditorParser.g:20441:1: ( ( rule__AcotFunction__EAssignment_2 ) )
             {
-            // InternalWreslEditorParser.g:20314:1: ( ( rule__AcotFunction__EAssignment_2 ) )
-            // InternalWreslEditorParser.g:20315:1: ( rule__AcotFunction__EAssignment_2 )
+            // InternalWreslEditorParser.g:20441:1: ( ( rule__AcotFunction__EAssignment_2 ) )
+            // InternalWreslEditorParser.g:20442:1: ( rule__AcotFunction__EAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAcotFunctionAccess().getEAssignment_2()); 
             }
-            // InternalWreslEditorParser.g:20316:1: ( rule__AcotFunction__EAssignment_2 )
-            // InternalWreslEditorParser.g:20316:2: rule__AcotFunction__EAssignment_2
+            // InternalWreslEditorParser.g:20443:1: ( rule__AcotFunction__EAssignment_2 )
+            // InternalWreslEditorParser.g:20443:2: rule__AcotFunction__EAssignment_2
             {
             pushFollow(FOLLOW_2);
             rule__AcotFunction__EAssignment_2();
@@ -60408,14 +60750,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AcotFunction__Group__3"
-    // InternalWreslEditorParser.g:20326:1: rule__AcotFunction__Group__3 : rule__AcotFunction__Group__3__Impl ;
+    // InternalWreslEditorParser.g:20453:1: rule__AcotFunction__Group__3 : rule__AcotFunction__Group__3__Impl ;
     public final void rule__AcotFunction__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20330:1: ( rule__AcotFunction__Group__3__Impl )
-            // InternalWreslEditorParser.g:20331:2: rule__AcotFunction__Group__3__Impl
+            // InternalWreslEditorParser.g:20457:1: ( rule__AcotFunction__Group__3__Impl )
+            // InternalWreslEditorParser.g:20458:2: rule__AcotFunction__Group__3__Impl
             {
             pushFollow(FOLLOW_2);
             rule__AcotFunction__Group__3__Impl();
@@ -60441,17 +60783,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AcotFunction__Group__3__Impl"
-    // InternalWreslEditorParser.g:20337:1: rule__AcotFunction__Group__3__Impl : ( RightParenthesis ) ;
+    // InternalWreslEditorParser.g:20464:1: rule__AcotFunction__Group__3__Impl : ( RightParenthesis ) ;
     public final void rule__AcotFunction__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20341:1: ( ( RightParenthesis ) )
-            // InternalWreslEditorParser.g:20342:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:20468:1: ( ( RightParenthesis ) )
+            // InternalWreslEditorParser.g:20469:1: ( RightParenthesis )
             {
-            // InternalWreslEditorParser.g:20342:1: ( RightParenthesis )
-            // InternalWreslEditorParser.g:20343:1: RightParenthesis
+            // InternalWreslEditorParser.g:20469:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:20470:1: RightParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAcotFunctionAccess().getRightParenthesisKeyword_3()); 
@@ -60482,14 +60824,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModel__Group__0"
-    // InternalWreslEditorParser.g:20364:1: rule__VarModel__Group__0 : rule__VarModel__Group__0__Impl rule__VarModel__Group__1 ;
+    // InternalWreslEditorParser.g:20491:1: rule__VarModel__Group__0 : rule__VarModel__Group__0__Impl rule__VarModel__Group__1 ;
     public final void rule__VarModel__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20368:1: ( rule__VarModel__Group__0__Impl rule__VarModel__Group__1 )
-            // InternalWreslEditorParser.g:20369:2: rule__VarModel__Group__0__Impl rule__VarModel__Group__1
+            // InternalWreslEditorParser.g:20495:1: ( rule__VarModel__Group__0__Impl rule__VarModel__Group__1 )
+            // InternalWreslEditorParser.g:20496:2: rule__VarModel__Group__0__Impl rule__VarModel__Group__1
             {
             pushFollow(FOLLOW_20);
             rule__VarModel__Group__0__Impl();
@@ -60520,23 +60862,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModel__Group__0__Impl"
-    // InternalWreslEditorParser.g:20376:1: rule__VarModel__Group__0__Impl : ( ( rule__VarModel__Ref1Assignment_0 ) ) ;
+    // InternalWreslEditorParser.g:20503:1: rule__VarModel__Group__0__Impl : ( ( rule__VarModel__Ref1Assignment_0 ) ) ;
     public final void rule__VarModel__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20380:1: ( ( ( rule__VarModel__Ref1Assignment_0 ) ) )
-            // InternalWreslEditorParser.g:20381:1: ( ( rule__VarModel__Ref1Assignment_0 ) )
+            // InternalWreslEditorParser.g:20507:1: ( ( ( rule__VarModel__Ref1Assignment_0 ) ) )
+            // InternalWreslEditorParser.g:20508:1: ( ( rule__VarModel__Ref1Assignment_0 ) )
             {
-            // InternalWreslEditorParser.g:20381:1: ( ( rule__VarModel__Ref1Assignment_0 ) )
-            // InternalWreslEditorParser.g:20382:1: ( rule__VarModel__Ref1Assignment_0 )
+            // InternalWreslEditorParser.g:20508:1: ( ( rule__VarModel__Ref1Assignment_0 ) )
+            // InternalWreslEditorParser.g:20509:1: ( rule__VarModel__Ref1Assignment_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelAccess().getRef1Assignment_0()); 
             }
-            // InternalWreslEditorParser.g:20383:1: ( rule__VarModel__Ref1Assignment_0 )
-            // InternalWreslEditorParser.g:20383:2: rule__VarModel__Ref1Assignment_0
+            // InternalWreslEditorParser.g:20510:1: ( rule__VarModel__Ref1Assignment_0 )
+            // InternalWreslEditorParser.g:20510:2: rule__VarModel__Ref1Assignment_0
             {
             pushFollow(FOLLOW_2);
             rule__VarModel__Ref1Assignment_0();
@@ -60571,14 +60913,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModel__Group__1"
-    // InternalWreslEditorParser.g:20393:1: rule__VarModel__Group__1 : rule__VarModel__Group__1__Impl rule__VarModel__Group__2 ;
+    // InternalWreslEditorParser.g:20520:1: rule__VarModel__Group__1 : rule__VarModel__Group__1__Impl rule__VarModel__Group__2 ;
     public final void rule__VarModel__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20397:1: ( rule__VarModel__Group__1__Impl rule__VarModel__Group__2 )
-            // InternalWreslEditorParser.g:20398:2: rule__VarModel__Group__1__Impl rule__VarModel__Group__2
+            // InternalWreslEditorParser.g:20524:1: ( rule__VarModel__Group__1__Impl rule__VarModel__Group__2 )
+            // InternalWreslEditorParser.g:20525:2: rule__VarModel__Group__1__Impl rule__VarModel__Group__2
             {
             pushFollow(FOLLOW_11);
             rule__VarModel__Group__1__Impl();
@@ -60609,17 +60951,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModel__Group__1__Impl"
-    // InternalWreslEditorParser.g:20405:1: rule__VarModel__Group__1__Impl : ( LeftSquareBracket ) ;
+    // InternalWreslEditorParser.g:20532:1: rule__VarModel__Group__1__Impl : ( LeftSquareBracket ) ;
     public final void rule__VarModel__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20409:1: ( ( LeftSquareBracket ) )
-            // InternalWreslEditorParser.g:20410:1: ( LeftSquareBracket )
+            // InternalWreslEditorParser.g:20536:1: ( ( LeftSquareBracket ) )
+            // InternalWreslEditorParser.g:20537:1: ( LeftSquareBracket )
             {
-            // InternalWreslEditorParser.g:20410:1: ( LeftSquareBracket )
-            // InternalWreslEditorParser.g:20411:1: LeftSquareBracket
+            // InternalWreslEditorParser.g:20537:1: ( LeftSquareBracket )
+            // InternalWreslEditorParser.g:20538:1: LeftSquareBracket
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelAccess().getLeftSquareBracketKeyword_1()); 
@@ -60650,14 +60992,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModel__Group__2"
-    // InternalWreslEditorParser.g:20424:1: rule__VarModel__Group__2 : rule__VarModel__Group__2__Impl rule__VarModel__Group__3 ;
+    // InternalWreslEditorParser.g:20551:1: rule__VarModel__Group__2 : rule__VarModel__Group__2__Impl rule__VarModel__Group__3 ;
     public final void rule__VarModel__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20428:1: ( rule__VarModel__Group__2__Impl rule__VarModel__Group__3 )
-            // InternalWreslEditorParser.g:20429:2: rule__VarModel__Group__2__Impl rule__VarModel__Group__3
+            // InternalWreslEditorParser.g:20555:1: ( rule__VarModel__Group__2__Impl rule__VarModel__Group__3 )
+            // InternalWreslEditorParser.g:20556:2: rule__VarModel__Group__2__Impl rule__VarModel__Group__3
             {
             pushFollow(FOLLOW_23);
             rule__VarModel__Group__2__Impl();
@@ -60688,23 +61030,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModel__Group__2__Impl"
-    // InternalWreslEditorParser.g:20436:1: rule__VarModel__Group__2__Impl : ( ( rule__VarModel__Ref2Assignment_2 ) ) ;
+    // InternalWreslEditorParser.g:20563:1: rule__VarModel__Group__2__Impl : ( ( rule__VarModel__Ref2Assignment_2 ) ) ;
     public final void rule__VarModel__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20440:1: ( ( ( rule__VarModel__Ref2Assignment_2 ) ) )
-            // InternalWreslEditorParser.g:20441:1: ( ( rule__VarModel__Ref2Assignment_2 ) )
+            // InternalWreslEditorParser.g:20567:1: ( ( ( rule__VarModel__Ref2Assignment_2 ) ) )
+            // InternalWreslEditorParser.g:20568:1: ( ( rule__VarModel__Ref2Assignment_2 ) )
             {
-            // InternalWreslEditorParser.g:20441:1: ( ( rule__VarModel__Ref2Assignment_2 ) )
-            // InternalWreslEditorParser.g:20442:1: ( rule__VarModel__Ref2Assignment_2 )
+            // InternalWreslEditorParser.g:20568:1: ( ( rule__VarModel__Ref2Assignment_2 ) )
+            // InternalWreslEditorParser.g:20569:1: ( rule__VarModel__Ref2Assignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelAccess().getRef2Assignment_2()); 
             }
-            // InternalWreslEditorParser.g:20443:1: ( rule__VarModel__Ref2Assignment_2 )
-            // InternalWreslEditorParser.g:20443:2: rule__VarModel__Ref2Assignment_2
+            // InternalWreslEditorParser.g:20570:1: ( rule__VarModel__Ref2Assignment_2 )
+            // InternalWreslEditorParser.g:20570:2: rule__VarModel__Ref2Assignment_2
             {
             pushFollow(FOLLOW_2);
             rule__VarModel__Ref2Assignment_2();
@@ -60739,14 +61081,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModel__Group__3"
-    // InternalWreslEditorParser.g:20453:1: rule__VarModel__Group__3 : rule__VarModel__Group__3__Impl ;
+    // InternalWreslEditorParser.g:20580:1: rule__VarModel__Group__3 : rule__VarModel__Group__3__Impl ;
     public final void rule__VarModel__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20457:1: ( rule__VarModel__Group__3__Impl )
-            // InternalWreslEditorParser.g:20458:2: rule__VarModel__Group__3__Impl
+            // InternalWreslEditorParser.g:20584:1: ( rule__VarModel__Group__3__Impl )
+            // InternalWreslEditorParser.g:20585:2: rule__VarModel__Group__3__Impl
             {
             pushFollow(FOLLOW_2);
             rule__VarModel__Group__3__Impl();
@@ -60772,17 +61114,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModel__Group__3__Impl"
-    // InternalWreslEditorParser.g:20464:1: rule__VarModel__Group__3__Impl : ( RightSquareBracket ) ;
+    // InternalWreslEditorParser.g:20591:1: rule__VarModel__Group__3__Impl : ( RightSquareBracket ) ;
     public final void rule__VarModel__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20468:1: ( ( RightSquareBracket ) )
-            // InternalWreslEditorParser.g:20469:1: ( RightSquareBracket )
+            // InternalWreslEditorParser.g:20595:1: ( ( RightSquareBracket ) )
+            // InternalWreslEditorParser.g:20596:1: ( RightSquareBracket )
             {
-            // InternalWreslEditorParser.g:20469:1: ( RightSquareBracket )
-            // InternalWreslEditorParser.g:20470:1: RightSquareBracket
+            // InternalWreslEditorParser.g:20596:1: ( RightSquareBracket )
+            // InternalWreslEditorParser.g:20597:1: RightSquareBracket
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelAccess().getRightSquareBracketKeyword_3()); 
@@ -60813,14 +61155,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelStep__Group__0"
-    // InternalWreslEditorParser.g:20491:1: rule__VarModelStep__Group__0 : rule__VarModelStep__Group__0__Impl rule__VarModelStep__Group__1 ;
+    // InternalWreslEditorParser.g:20618:1: rule__VarModelStep__Group__0 : rule__VarModelStep__Group__0__Impl rule__VarModelStep__Group__1 ;
     public final void rule__VarModelStep__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20495:1: ( rule__VarModelStep__Group__0__Impl rule__VarModelStep__Group__1 )
-            // InternalWreslEditorParser.g:20496:2: rule__VarModelStep__Group__0__Impl rule__VarModelStep__Group__1
+            // InternalWreslEditorParser.g:20622:1: ( rule__VarModelStep__Group__0__Impl rule__VarModelStep__Group__1 )
+            // InternalWreslEditorParser.g:20623:2: rule__VarModelStep__Group__0__Impl rule__VarModelStep__Group__1
             {
             pushFollow(FOLLOW_20);
             rule__VarModelStep__Group__0__Impl();
@@ -60851,23 +61193,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelStep__Group__0__Impl"
-    // InternalWreslEditorParser.g:20503:1: rule__VarModelStep__Group__0__Impl : ( ( rule__VarModelStep__Ref1Assignment_0 ) ) ;
+    // InternalWreslEditorParser.g:20630:1: rule__VarModelStep__Group__0__Impl : ( ( rule__VarModelStep__Ref1Assignment_0 ) ) ;
     public final void rule__VarModelStep__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20507:1: ( ( ( rule__VarModelStep__Ref1Assignment_0 ) ) )
-            // InternalWreslEditorParser.g:20508:1: ( ( rule__VarModelStep__Ref1Assignment_0 ) )
+            // InternalWreslEditorParser.g:20634:1: ( ( ( rule__VarModelStep__Ref1Assignment_0 ) ) )
+            // InternalWreslEditorParser.g:20635:1: ( ( rule__VarModelStep__Ref1Assignment_0 ) )
             {
-            // InternalWreslEditorParser.g:20508:1: ( ( rule__VarModelStep__Ref1Assignment_0 ) )
-            // InternalWreslEditorParser.g:20509:1: ( rule__VarModelStep__Ref1Assignment_0 )
+            // InternalWreslEditorParser.g:20635:1: ( ( rule__VarModelStep__Ref1Assignment_0 ) )
+            // InternalWreslEditorParser.g:20636:1: ( rule__VarModelStep__Ref1Assignment_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelStepAccess().getRef1Assignment_0()); 
             }
-            // InternalWreslEditorParser.g:20510:1: ( rule__VarModelStep__Ref1Assignment_0 )
-            // InternalWreslEditorParser.g:20510:2: rule__VarModelStep__Ref1Assignment_0
+            // InternalWreslEditorParser.g:20637:1: ( rule__VarModelStep__Ref1Assignment_0 )
+            // InternalWreslEditorParser.g:20637:2: rule__VarModelStep__Ref1Assignment_0
             {
             pushFollow(FOLLOW_2);
             rule__VarModelStep__Ref1Assignment_0();
@@ -60902,14 +61244,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelStep__Group__1"
-    // InternalWreslEditorParser.g:20520:1: rule__VarModelStep__Group__1 : rule__VarModelStep__Group__1__Impl rule__VarModelStep__Group__2 ;
+    // InternalWreslEditorParser.g:20647:1: rule__VarModelStep__Group__1 : rule__VarModelStep__Group__1__Impl rule__VarModelStep__Group__2 ;
     public final void rule__VarModelStep__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20524:1: ( rule__VarModelStep__Group__1__Impl rule__VarModelStep__Group__2 )
-            // InternalWreslEditorParser.g:20525:2: rule__VarModelStep__Group__1__Impl rule__VarModelStep__Group__2
+            // InternalWreslEditorParser.g:20651:1: ( rule__VarModelStep__Group__1__Impl rule__VarModelStep__Group__2 )
+            // InternalWreslEditorParser.g:20652:2: rule__VarModelStep__Group__1__Impl rule__VarModelStep__Group__2
             {
             pushFollow(FOLLOW_11);
             rule__VarModelStep__Group__1__Impl();
@@ -60940,17 +61282,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelStep__Group__1__Impl"
-    // InternalWreslEditorParser.g:20532:1: rule__VarModelStep__Group__1__Impl : ( LeftSquareBracket ) ;
+    // InternalWreslEditorParser.g:20659:1: rule__VarModelStep__Group__1__Impl : ( LeftSquareBracket ) ;
     public final void rule__VarModelStep__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20536:1: ( ( LeftSquareBracket ) )
-            // InternalWreslEditorParser.g:20537:1: ( LeftSquareBracket )
+            // InternalWreslEditorParser.g:20663:1: ( ( LeftSquareBracket ) )
+            // InternalWreslEditorParser.g:20664:1: ( LeftSquareBracket )
             {
-            // InternalWreslEditorParser.g:20537:1: ( LeftSquareBracket )
-            // InternalWreslEditorParser.g:20538:1: LeftSquareBracket
+            // InternalWreslEditorParser.g:20664:1: ( LeftSquareBracket )
+            // InternalWreslEditorParser.g:20665:1: LeftSquareBracket
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelStepAccess().getLeftSquareBracketKeyword_1()); 
@@ -60981,14 +61323,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelStep__Group__2"
-    // InternalWreslEditorParser.g:20551:1: rule__VarModelStep__Group__2 : rule__VarModelStep__Group__2__Impl rule__VarModelStep__Group__3 ;
+    // InternalWreslEditorParser.g:20678:1: rule__VarModelStep__Group__2 : rule__VarModelStep__Group__2__Impl rule__VarModelStep__Group__3 ;
     public final void rule__VarModelStep__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20555:1: ( rule__VarModelStep__Group__2__Impl rule__VarModelStep__Group__3 )
-            // InternalWreslEditorParser.g:20556:2: rule__VarModelStep__Group__2__Impl rule__VarModelStep__Group__3
+            // InternalWreslEditorParser.g:20682:1: ( rule__VarModelStep__Group__2__Impl rule__VarModelStep__Group__3 )
+            // InternalWreslEditorParser.g:20683:2: rule__VarModelStep__Group__2__Impl rule__VarModelStep__Group__3
             {
             pushFollow(FOLLOW_23);
             rule__VarModelStep__Group__2__Impl();
@@ -61019,23 +61361,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelStep__Group__2__Impl"
-    // InternalWreslEditorParser.g:20563:1: rule__VarModelStep__Group__2__Impl : ( ( rule__VarModelStep__Ref2Assignment_2 ) ) ;
+    // InternalWreslEditorParser.g:20690:1: rule__VarModelStep__Group__2__Impl : ( ( rule__VarModelStep__Ref2Assignment_2 ) ) ;
     public final void rule__VarModelStep__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20567:1: ( ( ( rule__VarModelStep__Ref2Assignment_2 ) ) )
-            // InternalWreslEditorParser.g:20568:1: ( ( rule__VarModelStep__Ref2Assignment_2 ) )
+            // InternalWreslEditorParser.g:20694:1: ( ( ( rule__VarModelStep__Ref2Assignment_2 ) ) )
+            // InternalWreslEditorParser.g:20695:1: ( ( rule__VarModelStep__Ref2Assignment_2 ) )
             {
-            // InternalWreslEditorParser.g:20568:1: ( ( rule__VarModelStep__Ref2Assignment_2 ) )
-            // InternalWreslEditorParser.g:20569:1: ( rule__VarModelStep__Ref2Assignment_2 )
+            // InternalWreslEditorParser.g:20695:1: ( ( rule__VarModelStep__Ref2Assignment_2 ) )
+            // InternalWreslEditorParser.g:20696:1: ( rule__VarModelStep__Ref2Assignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelStepAccess().getRef2Assignment_2()); 
             }
-            // InternalWreslEditorParser.g:20570:1: ( rule__VarModelStep__Ref2Assignment_2 )
-            // InternalWreslEditorParser.g:20570:2: rule__VarModelStep__Ref2Assignment_2
+            // InternalWreslEditorParser.g:20697:1: ( rule__VarModelStep__Ref2Assignment_2 )
+            // InternalWreslEditorParser.g:20697:2: rule__VarModelStep__Ref2Assignment_2
             {
             pushFollow(FOLLOW_2);
             rule__VarModelStep__Ref2Assignment_2();
@@ -61070,14 +61412,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelStep__Group__3"
-    // InternalWreslEditorParser.g:20580:1: rule__VarModelStep__Group__3 : rule__VarModelStep__Group__3__Impl rule__VarModelStep__Group__4 ;
+    // InternalWreslEditorParser.g:20707:1: rule__VarModelStep__Group__3 : rule__VarModelStep__Group__3__Impl rule__VarModelStep__Group__4 ;
     public final void rule__VarModelStep__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20584:1: ( rule__VarModelStep__Group__3__Impl rule__VarModelStep__Group__4 )
-            // InternalWreslEditorParser.g:20585:2: rule__VarModelStep__Group__3__Impl rule__VarModelStep__Group__4
+            // InternalWreslEditorParser.g:20711:1: ( rule__VarModelStep__Group__3__Impl rule__VarModelStep__Group__4 )
+            // InternalWreslEditorParser.g:20712:2: rule__VarModelStep__Group__3__Impl rule__VarModelStep__Group__4
             {
             pushFollow(FOLLOW_45);
             rule__VarModelStep__Group__3__Impl();
@@ -61108,17 +61450,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelStep__Group__3__Impl"
-    // InternalWreslEditorParser.g:20592:1: rule__VarModelStep__Group__3__Impl : ( RightSquareBracket ) ;
+    // InternalWreslEditorParser.g:20719:1: rule__VarModelStep__Group__3__Impl : ( RightSquareBracket ) ;
     public final void rule__VarModelStep__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20596:1: ( ( RightSquareBracket ) )
-            // InternalWreslEditorParser.g:20597:1: ( RightSquareBracket )
+            // InternalWreslEditorParser.g:20723:1: ( ( RightSquareBracket ) )
+            // InternalWreslEditorParser.g:20724:1: ( RightSquareBracket )
             {
-            // InternalWreslEditorParser.g:20597:1: ( RightSquareBracket )
-            // InternalWreslEditorParser.g:20598:1: RightSquareBracket
+            // InternalWreslEditorParser.g:20724:1: ( RightSquareBracket )
+            // InternalWreslEditorParser.g:20725:1: RightSquareBracket
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelStepAccess().getRightSquareBracketKeyword_3()); 
@@ -61149,14 +61491,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelStep__Group__4"
-    // InternalWreslEditorParser.g:20611:1: rule__VarModelStep__Group__4 : rule__VarModelStep__Group__4__Impl rule__VarModelStep__Group__5 ;
+    // InternalWreslEditorParser.g:20738:1: rule__VarModelStep__Group__4 : rule__VarModelStep__Group__4__Impl rule__VarModelStep__Group__5 ;
     public final void rule__VarModelStep__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20615:1: ( rule__VarModelStep__Group__4__Impl rule__VarModelStep__Group__5 )
-            // InternalWreslEditorParser.g:20616:2: rule__VarModelStep__Group__4__Impl rule__VarModelStep__Group__5
+            // InternalWreslEditorParser.g:20742:1: ( rule__VarModelStep__Group__4__Impl rule__VarModelStep__Group__5 )
+            // InternalWreslEditorParser.g:20743:2: rule__VarModelStep__Group__4__Impl rule__VarModelStep__Group__5
             {
             pushFollow(FOLLOW_25);
             rule__VarModelStep__Group__4__Impl();
@@ -61187,17 +61529,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelStep__Group__4__Impl"
-    // InternalWreslEditorParser.g:20623:1: rule__VarModelStep__Group__4__Impl : ( LeftParenthesis ) ;
+    // InternalWreslEditorParser.g:20750:1: rule__VarModelStep__Group__4__Impl : ( LeftParenthesis ) ;
     public final void rule__VarModelStep__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20627:1: ( ( LeftParenthesis ) )
-            // InternalWreslEditorParser.g:20628:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:20754:1: ( ( LeftParenthesis ) )
+            // InternalWreslEditorParser.g:20755:1: ( LeftParenthesis )
             {
-            // InternalWreslEditorParser.g:20628:1: ( LeftParenthesis )
-            // InternalWreslEditorParser.g:20629:1: LeftParenthesis
+            // InternalWreslEditorParser.g:20755:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:20756:1: LeftParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelStepAccess().getLeftParenthesisKeyword_4()); 
@@ -61228,14 +61570,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelStep__Group__5"
-    // InternalWreslEditorParser.g:20642:1: rule__VarModelStep__Group__5 : rule__VarModelStep__Group__5__Impl rule__VarModelStep__Group__6 ;
+    // InternalWreslEditorParser.g:20769:1: rule__VarModelStep__Group__5 : rule__VarModelStep__Group__5__Impl rule__VarModelStep__Group__6 ;
     public final void rule__VarModelStep__Group__5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20646:1: ( rule__VarModelStep__Group__5__Impl rule__VarModelStep__Group__6 )
-            // InternalWreslEditorParser.g:20647:2: rule__VarModelStep__Group__5__Impl rule__VarModelStep__Group__6
+            // InternalWreslEditorParser.g:20773:1: ( rule__VarModelStep__Group__5__Impl rule__VarModelStep__Group__6 )
+            // InternalWreslEditorParser.g:20774:2: rule__VarModelStep__Group__5__Impl rule__VarModelStep__Group__6
             {
             pushFollow(FOLLOW_17);
             rule__VarModelStep__Group__5__Impl();
@@ -61266,23 +61608,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelStep__Group__5__Impl"
-    // InternalWreslEditorParser.g:20654:1: rule__VarModelStep__Group__5__Impl : ( ( rule__VarModelStep__EAssignment_5 ) ) ;
+    // InternalWreslEditorParser.g:20781:1: rule__VarModelStep__Group__5__Impl : ( ( rule__VarModelStep__EAssignment_5 ) ) ;
     public final void rule__VarModelStep__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20658:1: ( ( ( rule__VarModelStep__EAssignment_5 ) ) )
-            // InternalWreslEditorParser.g:20659:1: ( ( rule__VarModelStep__EAssignment_5 ) )
+            // InternalWreslEditorParser.g:20785:1: ( ( ( rule__VarModelStep__EAssignment_5 ) ) )
+            // InternalWreslEditorParser.g:20786:1: ( ( rule__VarModelStep__EAssignment_5 ) )
             {
-            // InternalWreslEditorParser.g:20659:1: ( ( rule__VarModelStep__EAssignment_5 ) )
-            // InternalWreslEditorParser.g:20660:1: ( rule__VarModelStep__EAssignment_5 )
+            // InternalWreslEditorParser.g:20786:1: ( ( rule__VarModelStep__EAssignment_5 ) )
+            // InternalWreslEditorParser.g:20787:1: ( rule__VarModelStep__EAssignment_5 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelStepAccess().getEAssignment_5()); 
             }
-            // InternalWreslEditorParser.g:20661:1: ( rule__VarModelStep__EAssignment_5 )
-            // InternalWreslEditorParser.g:20661:2: rule__VarModelStep__EAssignment_5
+            // InternalWreslEditorParser.g:20788:1: ( rule__VarModelStep__EAssignment_5 )
+            // InternalWreslEditorParser.g:20788:2: rule__VarModelStep__EAssignment_5
             {
             pushFollow(FOLLOW_2);
             rule__VarModelStep__EAssignment_5();
@@ -61317,14 +61659,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelStep__Group__6"
-    // InternalWreslEditorParser.g:20671:1: rule__VarModelStep__Group__6 : rule__VarModelStep__Group__6__Impl ;
+    // InternalWreslEditorParser.g:20798:1: rule__VarModelStep__Group__6 : rule__VarModelStep__Group__6__Impl ;
     public final void rule__VarModelStep__Group__6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20675:1: ( rule__VarModelStep__Group__6__Impl )
-            // InternalWreslEditorParser.g:20676:2: rule__VarModelStep__Group__6__Impl
+            // InternalWreslEditorParser.g:20802:1: ( rule__VarModelStep__Group__6__Impl )
+            // InternalWreslEditorParser.g:20803:2: rule__VarModelStep__Group__6__Impl
             {
             pushFollow(FOLLOW_2);
             rule__VarModelStep__Group__6__Impl();
@@ -61350,17 +61692,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelStep__Group__6__Impl"
-    // InternalWreslEditorParser.g:20682:1: rule__VarModelStep__Group__6__Impl : ( RightParenthesis ) ;
+    // InternalWreslEditorParser.g:20809:1: rule__VarModelStep__Group__6__Impl : ( RightParenthesis ) ;
     public final void rule__VarModelStep__Group__6__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20686:1: ( ( RightParenthesis ) )
-            // InternalWreslEditorParser.g:20687:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:20813:1: ( ( RightParenthesis ) )
+            // InternalWreslEditorParser.g:20814:1: ( RightParenthesis )
             {
-            // InternalWreslEditorParser.g:20687:1: ( RightParenthesis )
-            // InternalWreslEditorParser.g:20688:1: RightParenthesis
+            // InternalWreslEditorParser.g:20814:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:20815:1: RightParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelStepAccess().getRightParenthesisKeyword_6()); 
@@ -61391,14 +61733,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelIndex__Group__0"
-    // InternalWreslEditorParser.g:20715:1: rule__VarModelIndex__Group__0 : rule__VarModelIndex__Group__0__Impl rule__VarModelIndex__Group__1 ;
+    // InternalWreslEditorParser.g:20842:1: rule__VarModelIndex__Group__0 : rule__VarModelIndex__Group__0__Impl rule__VarModelIndex__Group__1 ;
     public final void rule__VarModelIndex__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20719:1: ( rule__VarModelIndex__Group__0__Impl rule__VarModelIndex__Group__1 )
-            // InternalWreslEditorParser.g:20720:2: rule__VarModelIndex__Group__0__Impl rule__VarModelIndex__Group__1
+            // InternalWreslEditorParser.g:20846:1: ( rule__VarModelIndex__Group__0__Impl rule__VarModelIndex__Group__1 )
+            // InternalWreslEditorParser.g:20847:2: rule__VarModelIndex__Group__0__Impl rule__VarModelIndex__Group__1
             {
             pushFollow(FOLLOW_20);
             rule__VarModelIndex__Group__0__Impl();
@@ -61429,23 +61771,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelIndex__Group__0__Impl"
-    // InternalWreslEditorParser.g:20727:1: rule__VarModelIndex__Group__0__Impl : ( ( rule__VarModelIndex__Ref1Assignment_0 ) ) ;
+    // InternalWreslEditorParser.g:20854:1: rule__VarModelIndex__Group__0__Impl : ( ( rule__VarModelIndex__Ref1Assignment_0 ) ) ;
     public final void rule__VarModelIndex__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20731:1: ( ( ( rule__VarModelIndex__Ref1Assignment_0 ) ) )
-            // InternalWreslEditorParser.g:20732:1: ( ( rule__VarModelIndex__Ref1Assignment_0 ) )
+            // InternalWreslEditorParser.g:20858:1: ( ( ( rule__VarModelIndex__Ref1Assignment_0 ) ) )
+            // InternalWreslEditorParser.g:20859:1: ( ( rule__VarModelIndex__Ref1Assignment_0 ) )
             {
-            // InternalWreslEditorParser.g:20732:1: ( ( rule__VarModelIndex__Ref1Assignment_0 ) )
-            // InternalWreslEditorParser.g:20733:1: ( rule__VarModelIndex__Ref1Assignment_0 )
+            // InternalWreslEditorParser.g:20859:1: ( ( rule__VarModelIndex__Ref1Assignment_0 ) )
+            // InternalWreslEditorParser.g:20860:1: ( rule__VarModelIndex__Ref1Assignment_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelIndexAccess().getRef1Assignment_0()); 
             }
-            // InternalWreslEditorParser.g:20734:1: ( rule__VarModelIndex__Ref1Assignment_0 )
-            // InternalWreslEditorParser.g:20734:2: rule__VarModelIndex__Ref1Assignment_0
+            // InternalWreslEditorParser.g:20861:1: ( rule__VarModelIndex__Ref1Assignment_0 )
+            // InternalWreslEditorParser.g:20861:2: rule__VarModelIndex__Ref1Assignment_0
             {
             pushFollow(FOLLOW_2);
             rule__VarModelIndex__Ref1Assignment_0();
@@ -61480,14 +61822,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelIndex__Group__1"
-    // InternalWreslEditorParser.g:20744:1: rule__VarModelIndex__Group__1 : rule__VarModelIndex__Group__1__Impl rule__VarModelIndex__Group__2 ;
+    // InternalWreslEditorParser.g:20871:1: rule__VarModelIndex__Group__1 : rule__VarModelIndex__Group__1__Impl rule__VarModelIndex__Group__2 ;
     public final void rule__VarModelIndex__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20748:1: ( rule__VarModelIndex__Group__1__Impl rule__VarModelIndex__Group__2 )
-            // InternalWreslEditorParser.g:20749:2: rule__VarModelIndex__Group__1__Impl rule__VarModelIndex__Group__2
+            // InternalWreslEditorParser.g:20875:1: ( rule__VarModelIndex__Group__1__Impl rule__VarModelIndex__Group__2 )
+            // InternalWreslEditorParser.g:20876:2: rule__VarModelIndex__Group__1__Impl rule__VarModelIndex__Group__2
             {
             pushFollow(FOLLOW_85);
             rule__VarModelIndex__Group__1__Impl();
@@ -61518,17 +61860,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelIndex__Group__1__Impl"
-    // InternalWreslEditorParser.g:20756:1: rule__VarModelIndex__Group__1__Impl : ( LeftSquareBracket ) ;
+    // InternalWreslEditorParser.g:20883:1: rule__VarModelIndex__Group__1__Impl : ( LeftSquareBracket ) ;
     public final void rule__VarModelIndex__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20760:1: ( ( LeftSquareBracket ) )
-            // InternalWreslEditorParser.g:20761:1: ( LeftSquareBracket )
+            // InternalWreslEditorParser.g:20887:1: ( ( LeftSquareBracket ) )
+            // InternalWreslEditorParser.g:20888:1: ( LeftSquareBracket )
             {
-            // InternalWreslEditorParser.g:20761:1: ( LeftSquareBracket )
-            // InternalWreslEditorParser.g:20762:1: LeftSquareBracket
+            // InternalWreslEditorParser.g:20888:1: ( LeftSquareBracket )
+            // InternalWreslEditorParser.g:20889:1: LeftSquareBracket
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelIndexAccess().getLeftSquareBracketKeyword_1()); 
@@ -61559,14 +61901,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelIndex__Group__2"
-    // InternalWreslEditorParser.g:20775:1: rule__VarModelIndex__Group__2 : rule__VarModelIndex__Group__2__Impl rule__VarModelIndex__Group__3 ;
+    // InternalWreslEditorParser.g:20902:1: rule__VarModelIndex__Group__2 : rule__VarModelIndex__Group__2__Impl rule__VarModelIndex__Group__3 ;
     public final void rule__VarModelIndex__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20779:1: ( rule__VarModelIndex__Group__2__Impl rule__VarModelIndex__Group__3 )
-            // InternalWreslEditorParser.g:20780:2: rule__VarModelIndex__Group__2__Impl rule__VarModelIndex__Group__3
+            // InternalWreslEditorParser.g:20906:1: ( rule__VarModelIndex__Group__2__Impl rule__VarModelIndex__Group__3 )
+            // InternalWreslEditorParser.g:20907:2: rule__VarModelIndex__Group__2__Impl rule__VarModelIndex__Group__3
             {
             pushFollow(FOLLOW_71);
             rule__VarModelIndex__Group__2__Impl();
@@ -61597,17 +61939,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelIndex__Group__2__Impl"
-    // InternalWreslEditorParser.g:20787:1: rule__VarModelIndex__Group__2__Impl : ( HyphenMinus ) ;
+    // InternalWreslEditorParser.g:20914:1: rule__VarModelIndex__Group__2__Impl : ( HyphenMinus ) ;
     public final void rule__VarModelIndex__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20791:1: ( ( HyphenMinus ) )
-            // InternalWreslEditorParser.g:20792:1: ( HyphenMinus )
+            // InternalWreslEditorParser.g:20918:1: ( ( HyphenMinus ) )
+            // InternalWreslEditorParser.g:20919:1: ( HyphenMinus )
             {
-            // InternalWreslEditorParser.g:20792:1: ( HyphenMinus )
-            // InternalWreslEditorParser.g:20793:1: HyphenMinus
+            // InternalWreslEditorParser.g:20919:1: ( HyphenMinus )
+            // InternalWreslEditorParser.g:20920:1: HyphenMinus
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelIndexAccess().getHyphenMinusKeyword_2()); 
@@ -61638,14 +61980,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelIndex__Group__3"
-    // InternalWreslEditorParser.g:20806:1: rule__VarModelIndex__Group__3 : rule__VarModelIndex__Group__3__Impl rule__VarModelIndex__Group__4 ;
+    // InternalWreslEditorParser.g:20933:1: rule__VarModelIndex__Group__3 : rule__VarModelIndex__Group__3__Impl rule__VarModelIndex__Group__4 ;
     public final void rule__VarModelIndex__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20810:1: ( rule__VarModelIndex__Group__3__Impl rule__VarModelIndex__Group__4 )
-            // InternalWreslEditorParser.g:20811:2: rule__VarModelIndex__Group__3__Impl rule__VarModelIndex__Group__4
+            // InternalWreslEditorParser.g:20937:1: ( rule__VarModelIndex__Group__3__Impl rule__VarModelIndex__Group__4 )
+            // InternalWreslEditorParser.g:20938:2: rule__VarModelIndex__Group__3__Impl rule__VarModelIndex__Group__4
             {
             pushFollow(FOLLOW_23);
             rule__VarModelIndex__Group__3__Impl();
@@ -61676,17 +62018,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelIndex__Group__3__Impl"
-    // InternalWreslEditorParser.g:20818:1: rule__VarModelIndex__Group__3__Impl : ( RULE_INT ) ;
+    // InternalWreslEditorParser.g:20945:1: rule__VarModelIndex__Group__3__Impl : ( RULE_INT ) ;
     public final void rule__VarModelIndex__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20822:1: ( ( RULE_INT ) )
-            // InternalWreslEditorParser.g:20823:1: ( RULE_INT )
+            // InternalWreslEditorParser.g:20949:1: ( ( RULE_INT ) )
+            // InternalWreslEditorParser.g:20950:1: ( RULE_INT )
             {
-            // InternalWreslEditorParser.g:20823:1: ( RULE_INT )
-            // InternalWreslEditorParser.g:20824:1: RULE_INT
+            // InternalWreslEditorParser.g:20950:1: ( RULE_INT )
+            // InternalWreslEditorParser.g:20951:1: RULE_INT
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelIndexAccess().getINTTerminalRuleCall_3()); 
@@ -61717,14 +62059,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelIndex__Group__4"
-    // InternalWreslEditorParser.g:20835:1: rule__VarModelIndex__Group__4 : rule__VarModelIndex__Group__4__Impl ;
+    // InternalWreslEditorParser.g:20962:1: rule__VarModelIndex__Group__4 : rule__VarModelIndex__Group__4__Impl ;
     public final void rule__VarModelIndex__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20839:1: ( rule__VarModelIndex__Group__4__Impl )
-            // InternalWreslEditorParser.g:20840:2: rule__VarModelIndex__Group__4__Impl
+            // InternalWreslEditorParser.g:20966:1: ( rule__VarModelIndex__Group__4__Impl )
+            // InternalWreslEditorParser.g:20967:2: rule__VarModelIndex__Group__4__Impl
             {
             pushFollow(FOLLOW_2);
             rule__VarModelIndex__Group__4__Impl();
@@ -61750,17 +62092,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelIndex__Group__4__Impl"
-    // InternalWreslEditorParser.g:20846:1: rule__VarModelIndex__Group__4__Impl : ( RightSquareBracket ) ;
+    // InternalWreslEditorParser.g:20973:1: rule__VarModelIndex__Group__4__Impl : ( RightSquareBracket ) ;
     public final void rule__VarModelIndex__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20850:1: ( ( RightSquareBracket ) )
-            // InternalWreslEditorParser.g:20851:1: ( RightSquareBracket )
+            // InternalWreslEditorParser.g:20977:1: ( ( RightSquareBracket ) )
+            // InternalWreslEditorParser.g:20978:1: ( RightSquareBracket )
             {
-            // InternalWreslEditorParser.g:20851:1: ( RightSquareBracket )
-            // InternalWreslEditorParser.g:20852:1: RightSquareBracket
+            // InternalWreslEditorParser.g:20978:1: ( RightSquareBracket )
+            // InternalWreslEditorParser.g:20979:1: RightSquareBracket
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelIndexAccess().getRightSquareBracketKeyword_4()); 
@@ -61791,14 +62133,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelIndexStep__Group__0"
-    // InternalWreslEditorParser.g:20875:1: rule__VarModelIndexStep__Group__0 : rule__VarModelIndexStep__Group__0__Impl rule__VarModelIndexStep__Group__1 ;
+    // InternalWreslEditorParser.g:21002:1: rule__VarModelIndexStep__Group__0 : rule__VarModelIndexStep__Group__0__Impl rule__VarModelIndexStep__Group__1 ;
     public final void rule__VarModelIndexStep__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20879:1: ( rule__VarModelIndexStep__Group__0__Impl rule__VarModelIndexStep__Group__1 )
-            // InternalWreslEditorParser.g:20880:2: rule__VarModelIndexStep__Group__0__Impl rule__VarModelIndexStep__Group__1
+            // InternalWreslEditorParser.g:21006:1: ( rule__VarModelIndexStep__Group__0__Impl rule__VarModelIndexStep__Group__1 )
+            // InternalWreslEditorParser.g:21007:2: rule__VarModelIndexStep__Group__0__Impl rule__VarModelIndexStep__Group__1
             {
             pushFollow(FOLLOW_20);
             rule__VarModelIndexStep__Group__0__Impl();
@@ -61829,23 +62171,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelIndexStep__Group__0__Impl"
-    // InternalWreslEditorParser.g:20887:1: rule__VarModelIndexStep__Group__0__Impl : ( ( rule__VarModelIndexStep__Ref1Assignment_0 ) ) ;
+    // InternalWreslEditorParser.g:21014:1: rule__VarModelIndexStep__Group__0__Impl : ( ( rule__VarModelIndexStep__Ref1Assignment_0 ) ) ;
     public final void rule__VarModelIndexStep__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20891:1: ( ( ( rule__VarModelIndexStep__Ref1Assignment_0 ) ) )
-            // InternalWreslEditorParser.g:20892:1: ( ( rule__VarModelIndexStep__Ref1Assignment_0 ) )
+            // InternalWreslEditorParser.g:21018:1: ( ( ( rule__VarModelIndexStep__Ref1Assignment_0 ) ) )
+            // InternalWreslEditorParser.g:21019:1: ( ( rule__VarModelIndexStep__Ref1Assignment_0 ) )
             {
-            // InternalWreslEditorParser.g:20892:1: ( ( rule__VarModelIndexStep__Ref1Assignment_0 ) )
-            // InternalWreslEditorParser.g:20893:1: ( rule__VarModelIndexStep__Ref1Assignment_0 )
+            // InternalWreslEditorParser.g:21019:1: ( ( rule__VarModelIndexStep__Ref1Assignment_0 ) )
+            // InternalWreslEditorParser.g:21020:1: ( rule__VarModelIndexStep__Ref1Assignment_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelIndexStepAccess().getRef1Assignment_0()); 
             }
-            // InternalWreslEditorParser.g:20894:1: ( rule__VarModelIndexStep__Ref1Assignment_0 )
-            // InternalWreslEditorParser.g:20894:2: rule__VarModelIndexStep__Ref1Assignment_0
+            // InternalWreslEditorParser.g:21021:1: ( rule__VarModelIndexStep__Ref1Assignment_0 )
+            // InternalWreslEditorParser.g:21021:2: rule__VarModelIndexStep__Ref1Assignment_0
             {
             pushFollow(FOLLOW_2);
             rule__VarModelIndexStep__Ref1Assignment_0();
@@ -61880,14 +62222,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelIndexStep__Group__1"
-    // InternalWreslEditorParser.g:20904:1: rule__VarModelIndexStep__Group__1 : rule__VarModelIndexStep__Group__1__Impl rule__VarModelIndexStep__Group__2 ;
+    // InternalWreslEditorParser.g:21031:1: rule__VarModelIndexStep__Group__1 : rule__VarModelIndexStep__Group__1__Impl rule__VarModelIndexStep__Group__2 ;
     public final void rule__VarModelIndexStep__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20908:1: ( rule__VarModelIndexStep__Group__1__Impl rule__VarModelIndexStep__Group__2 )
-            // InternalWreslEditorParser.g:20909:2: rule__VarModelIndexStep__Group__1__Impl rule__VarModelIndexStep__Group__2
+            // InternalWreslEditorParser.g:21035:1: ( rule__VarModelIndexStep__Group__1__Impl rule__VarModelIndexStep__Group__2 )
+            // InternalWreslEditorParser.g:21036:2: rule__VarModelIndexStep__Group__1__Impl rule__VarModelIndexStep__Group__2
             {
             pushFollow(FOLLOW_85);
             rule__VarModelIndexStep__Group__1__Impl();
@@ -61918,17 +62260,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelIndexStep__Group__1__Impl"
-    // InternalWreslEditorParser.g:20916:1: rule__VarModelIndexStep__Group__1__Impl : ( LeftSquareBracket ) ;
+    // InternalWreslEditorParser.g:21043:1: rule__VarModelIndexStep__Group__1__Impl : ( LeftSquareBracket ) ;
     public final void rule__VarModelIndexStep__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20920:1: ( ( LeftSquareBracket ) )
-            // InternalWreslEditorParser.g:20921:1: ( LeftSquareBracket )
+            // InternalWreslEditorParser.g:21047:1: ( ( LeftSquareBracket ) )
+            // InternalWreslEditorParser.g:21048:1: ( LeftSquareBracket )
             {
-            // InternalWreslEditorParser.g:20921:1: ( LeftSquareBracket )
-            // InternalWreslEditorParser.g:20922:1: LeftSquareBracket
+            // InternalWreslEditorParser.g:21048:1: ( LeftSquareBracket )
+            // InternalWreslEditorParser.g:21049:1: LeftSquareBracket
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelIndexStepAccess().getLeftSquareBracketKeyword_1()); 
@@ -61959,14 +62301,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelIndexStep__Group__2"
-    // InternalWreslEditorParser.g:20935:1: rule__VarModelIndexStep__Group__2 : rule__VarModelIndexStep__Group__2__Impl rule__VarModelIndexStep__Group__3 ;
+    // InternalWreslEditorParser.g:21062:1: rule__VarModelIndexStep__Group__2 : rule__VarModelIndexStep__Group__2__Impl rule__VarModelIndexStep__Group__3 ;
     public final void rule__VarModelIndexStep__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20939:1: ( rule__VarModelIndexStep__Group__2__Impl rule__VarModelIndexStep__Group__3 )
-            // InternalWreslEditorParser.g:20940:2: rule__VarModelIndexStep__Group__2__Impl rule__VarModelIndexStep__Group__3
+            // InternalWreslEditorParser.g:21066:1: ( rule__VarModelIndexStep__Group__2__Impl rule__VarModelIndexStep__Group__3 )
+            // InternalWreslEditorParser.g:21067:2: rule__VarModelIndexStep__Group__2__Impl rule__VarModelIndexStep__Group__3
             {
             pushFollow(FOLLOW_71);
             rule__VarModelIndexStep__Group__2__Impl();
@@ -61997,17 +62339,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelIndexStep__Group__2__Impl"
-    // InternalWreslEditorParser.g:20947:1: rule__VarModelIndexStep__Group__2__Impl : ( HyphenMinus ) ;
+    // InternalWreslEditorParser.g:21074:1: rule__VarModelIndexStep__Group__2__Impl : ( HyphenMinus ) ;
     public final void rule__VarModelIndexStep__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20951:1: ( ( HyphenMinus ) )
-            // InternalWreslEditorParser.g:20952:1: ( HyphenMinus )
+            // InternalWreslEditorParser.g:21078:1: ( ( HyphenMinus ) )
+            // InternalWreslEditorParser.g:21079:1: ( HyphenMinus )
             {
-            // InternalWreslEditorParser.g:20952:1: ( HyphenMinus )
-            // InternalWreslEditorParser.g:20953:1: HyphenMinus
+            // InternalWreslEditorParser.g:21079:1: ( HyphenMinus )
+            // InternalWreslEditorParser.g:21080:1: HyphenMinus
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelIndexStepAccess().getHyphenMinusKeyword_2()); 
@@ -62038,14 +62380,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelIndexStep__Group__3"
-    // InternalWreslEditorParser.g:20966:1: rule__VarModelIndexStep__Group__3 : rule__VarModelIndexStep__Group__3__Impl rule__VarModelIndexStep__Group__4 ;
+    // InternalWreslEditorParser.g:21093:1: rule__VarModelIndexStep__Group__3 : rule__VarModelIndexStep__Group__3__Impl rule__VarModelIndexStep__Group__4 ;
     public final void rule__VarModelIndexStep__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20970:1: ( rule__VarModelIndexStep__Group__3__Impl rule__VarModelIndexStep__Group__4 )
-            // InternalWreslEditorParser.g:20971:2: rule__VarModelIndexStep__Group__3__Impl rule__VarModelIndexStep__Group__4
+            // InternalWreslEditorParser.g:21097:1: ( rule__VarModelIndexStep__Group__3__Impl rule__VarModelIndexStep__Group__4 )
+            // InternalWreslEditorParser.g:21098:2: rule__VarModelIndexStep__Group__3__Impl rule__VarModelIndexStep__Group__4
             {
             pushFollow(FOLLOW_23);
             rule__VarModelIndexStep__Group__3__Impl();
@@ -62076,17 +62418,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelIndexStep__Group__3__Impl"
-    // InternalWreslEditorParser.g:20978:1: rule__VarModelIndexStep__Group__3__Impl : ( RULE_INT ) ;
+    // InternalWreslEditorParser.g:21105:1: rule__VarModelIndexStep__Group__3__Impl : ( RULE_INT ) ;
     public final void rule__VarModelIndexStep__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20982:1: ( ( RULE_INT ) )
-            // InternalWreslEditorParser.g:20983:1: ( RULE_INT )
+            // InternalWreslEditorParser.g:21109:1: ( ( RULE_INT ) )
+            // InternalWreslEditorParser.g:21110:1: ( RULE_INT )
             {
-            // InternalWreslEditorParser.g:20983:1: ( RULE_INT )
-            // InternalWreslEditorParser.g:20984:1: RULE_INT
+            // InternalWreslEditorParser.g:21110:1: ( RULE_INT )
+            // InternalWreslEditorParser.g:21111:1: RULE_INT
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelIndexStepAccess().getINTTerminalRuleCall_3()); 
@@ -62117,14 +62459,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelIndexStep__Group__4"
-    // InternalWreslEditorParser.g:20995:1: rule__VarModelIndexStep__Group__4 : rule__VarModelIndexStep__Group__4__Impl rule__VarModelIndexStep__Group__5 ;
+    // InternalWreslEditorParser.g:21122:1: rule__VarModelIndexStep__Group__4 : rule__VarModelIndexStep__Group__4__Impl rule__VarModelIndexStep__Group__5 ;
     public final void rule__VarModelIndexStep__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:20999:1: ( rule__VarModelIndexStep__Group__4__Impl rule__VarModelIndexStep__Group__5 )
-            // InternalWreslEditorParser.g:21000:2: rule__VarModelIndexStep__Group__4__Impl rule__VarModelIndexStep__Group__5
+            // InternalWreslEditorParser.g:21126:1: ( rule__VarModelIndexStep__Group__4__Impl rule__VarModelIndexStep__Group__5 )
+            // InternalWreslEditorParser.g:21127:2: rule__VarModelIndexStep__Group__4__Impl rule__VarModelIndexStep__Group__5
             {
             pushFollow(FOLLOW_45);
             rule__VarModelIndexStep__Group__4__Impl();
@@ -62155,17 +62497,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelIndexStep__Group__4__Impl"
-    // InternalWreslEditorParser.g:21007:1: rule__VarModelIndexStep__Group__4__Impl : ( RightSquareBracket ) ;
+    // InternalWreslEditorParser.g:21134:1: rule__VarModelIndexStep__Group__4__Impl : ( RightSquareBracket ) ;
     public final void rule__VarModelIndexStep__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21011:1: ( ( RightSquareBracket ) )
-            // InternalWreslEditorParser.g:21012:1: ( RightSquareBracket )
+            // InternalWreslEditorParser.g:21138:1: ( ( RightSquareBracket ) )
+            // InternalWreslEditorParser.g:21139:1: ( RightSquareBracket )
             {
-            // InternalWreslEditorParser.g:21012:1: ( RightSquareBracket )
-            // InternalWreslEditorParser.g:21013:1: RightSquareBracket
+            // InternalWreslEditorParser.g:21139:1: ( RightSquareBracket )
+            // InternalWreslEditorParser.g:21140:1: RightSquareBracket
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelIndexStepAccess().getRightSquareBracketKeyword_4()); 
@@ -62196,14 +62538,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelIndexStep__Group__5"
-    // InternalWreslEditorParser.g:21026:1: rule__VarModelIndexStep__Group__5 : rule__VarModelIndexStep__Group__5__Impl rule__VarModelIndexStep__Group__6 ;
+    // InternalWreslEditorParser.g:21153:1: rule__VarModelIndexStep__Group__5 : rule__VarModelIndexStep__Group__5__Impl rule__VarModelIndexStep__Group__6 ;
     public final void rule__VarModelIndexStep__Group__5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21030:1: ( rule__VarModelIndexStep__Group__5__Impl rule__VarModelIndexStep__Group__6 )
-            // InternalWreslEditorParser.g:21031:2: rule__VarModelIndexStep__Group__5__Impl rule__VarModelIndexStep__Group__6
+            // InternalWreslEditorParser.g:21157:1: ( rule__VarModelIndexStep__Group__5__Impl rule__VarModelIndexStep__Group__6 )
+            // InternalWreslEditorParser.g:21158:2: rule__VarModelIndexStep__Group__5__Impl rule__VarModelIndexStep__Group__6
             {
             pushFollow(FOLLOW_25);
             rule__VarModelIndexStep__Group__5__Impl();
@@ -62234,17 +62576,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelIndexStep__Group__5__Impl"
-    // InternalWreslEditorParser.g:21038:1: rule__VarModelIndexStep__Group__5__Impl : ( LeftParenthesis ) ;
+    // InternalWreslEditorParser.g:21165:1: rule__VarModelIndexStep__Group__5__Impl : ( LeftParenthesis ) ;
     public final void rule__VarModelIndexStep__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21042:1: ( ( LeftParenthesis ) )
-            // InternalWreslEditorParser.g:21043:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:21169:1: ( ( LeftParenthesis ) )
+            // InternalWreslEditorParser.g:21170:1: ( LeftParenthesis )
             {
-            // InternalWreslEditorParser.g:21043:1: ( LeftParenthesis )
-            // InternalWreslEditorParser.g:21044:1: LeftParenthesis
+            // InternalWreslEditorParser.g:21170:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:21171:1: LeftParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelIndexStepAccess().getLeftParenthesisKeyword_5()); 
@@ -62275,14 +62617,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelIndexStep__Group__6"
-    // InternalWreslEditorParser.g:21057:1: rule__VarModelIndexStep__Group__6 : rule__VarModelIndexStep__Group__6__Impl rule__VarModelIndexStep__Group__7 ;
+    // InternalWreslEditorParser.g:21184:1: rule__VarModelIndexStep__Group__6 : rule__VarModelIndexStep__Group__6__Impl rule__VarModelIndexStep__Group__7 ;
     public final void rule__VarModelIndexStep__Group__6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21061:1: ( rule__VarModelIndexStep__Group__6__Impl rule__VarModelIndexStep__Group__7 )
-            // InternalWreslEditorParser.g:21062:2: rule__VarModelIndexStep__Group__6__Impl rule__VarModelIndexStep__Group__7
+            // InternalWreslEditorParser.g:21188:1: ( rule__VarModelIndexStep__Group__6__Impl rule__VarModelIndexStep__Group__7 )
+            // InternalWreslEditorParser.g:21189:2: rule__VarModelIndexStep__Group__6__Impl rule__VarModelIndexStep__Group__7
             {
             pushFollow(FOLLOW_17);
             rule__VarModelIndexStep__Group__6__Impl();
@@ -62313,23 +62655,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelIndexStep__Group__6__Impl"
-    // InternalWreslEditorParser.g:21069:1: rule__VarModelIndexStep__Group__6__Impl : ( ( rule__VarModelIndexStep__EAssignment_6 ) ) ;
+    // InternalWreslEditorParser.g:21196:1: rule__VarModelIndexStep__Group__6__Impl : ( ( rule__VarModelIndexStep__EAssignment_6 ) ) ;
     public final void rule__VarModelIndexStep__Group__6__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21073:1: ( ( ( rule__VarModelIndexStep__EAssignment_6 ) ) )
-            // InternalWreslEditorParser.g:21074:1: ( ( rule__VarModelIndexStep__EAssignment_6 ) )
+            // InternalWreslEditorParser.g:21200:1: ( ( ( rule__VarModelIndexStep__EAssignment_6 ) ) )
+            // InternalWreslEditorParser.g:21201:1: ( ( rule__VarModelIndexStep__EAssignment_6 ) )
             {
-            // InternalWreslEditorParser.g:21074:1: ( ( rule__VarModelIndexStep__EAssignment_6 ) )
-            // InternalWreslEditorParser.g:21075:1: ( rule__VarModelIndexStep__EAssignment_6 )
+            // InternalWreslEditorParser.g:21201:1: ( ( rule__VarModelIndexStep__EAssignment_6 ) )
+            // InternalWreslEditorParser.g:21202:1: ( rule__VarModelIndexStep__EAssignment_6 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelIndexStepAccess().getEAssignment_6()); 
             }
-            // InternalWreslEditorParser.g:21076:1: ( rule__VarModelIndexStep__EAssignment_6 )
-            // InternalWreslEditorParser.g:21076:2: rule__VarModelIndexStep__EAssignment_6
+            // InternalWreslEditorParser.g:21203:1: ( rule__VarModelIndexStep__EAssignment_6 )
+            // InternalWreslEditorParser.g:21203:2: rule__VarModelIndexStep__EAssignment_6
             {
             pushFollow(FOLLOW_2);
             rule__VarModelIndexStep__EAssignment_6();
@@ -62364,14 +62706,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelIndexStep__Group__7"
-    // InternalWreslEditorParser.g:21086:1: rule__VarModelIndexStep__Group__7 : rule__VarModelIndexStep__Group__7__Impl ;
+    // InternalWreslEditorParser.g:21213:1: rule__VarModelIndexStep__Group__7 : rule__VarModelIndexStep__Group__7__Impl ;
     public final void rule__VarModelIndexStep__Group__7() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21090:1: ( rule__VarModelIndexStep__Group__7__Impl )
-            // InternalWreslEditorParser.g:21091:2: rule__VarModelIndexStep__Group__7__Impl
+            // InternalWreslEditorParser.g:21217:1: ( rule__VarModelIndexStep__Group__7__Impl )
+            // InternalWreslEditorParser.g:21218:2: rule__VarModelIndexStep__Group__7__Impl
             {
             pushFollow(FOLLOW_2);
             rule__VarModelIndexStep__Group__7__Impl();
@@ -62397,17 +62739,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelIndexStep__Group__7__Impl"
-    // InternalWreslEditorParser.g:21097:1: rule__VarModelIndexStep__Group__7__Impl : ( RightParenthesis ) ;
+    // InternalWreslEditorParser.g:21224:1: rule__VarModelIndexStep__Group__7__Impl : ( RightParenthesis ) ;
     public final void rule__VarModelIndexStep__Group__7__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21101:1: ( ( RightParenthesis ) )
-            // InternalWreslEditorParser.g:21102:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:21228:1: ( ( RightParenthesis ) )
+            // InternalWreslEditorParser.g:21229:1: ( RightParenthesis )
             {
-            // InternalWreslEditorParser.g:21102:1: ( RightParenthesis )
-            // InternalWreslEditorParser.g:21103:1: RightParenthesis
+            // InternalWreslEditorParser.g:21229:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:21230:1: RightParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelIndexStepAccess().getRightParenthesisKeyword_7()); 
@@ -62438,14 +62780,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__RangeFunction__Group__0"
-    // InternalWreslEditorParser.g:21132:1: rule__RangeFunction__Group__0 : rule__RangeFunction__Group__0__Impl rule__RangeFunction__Group__1 ;
+    // InternalWreslEditorParser.g:21259:1: rule__RangeFunction__Group__0 : rule__RangeFunction__Group__0__Impl rule__RangeFunction__Group__1 ;
     public final void rule__RangeFunction__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21136:1: ( rule__RangeFunction__Group__0__Impl rule__RangeFunction__Group__1 )
-            // InternalWreslEditorParser.g:21137:2: rule__RangeFunction__Group__0__Impl rule__RangeFunction__Group__1
+            // InternalWreslEditorParser.g:21263:1: ( rule__RangeFunction__Group__0__Impl rule__RangeFunction__Group__1 )
+            // InternalWreslEditorParser.g:21264:2: rule__RangeFunction__Group__0__Impl rule__RangeFunction__Group__1
             {
             pushFollow(FOLLOW_45);
             rule__RangeFunction__Group__0__Impl();
@@ -62476,17 +62818,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__RangeFunction__Group__0__Impl"
-    // InternalWreslEditorParser.g:21144:1: rule__RangeFunction__Group__0__Impl : ( RULE_RANGE ) ;
+    // InternalWreslEditorParser.g:21271:1: rule__RangeFunction__Group__0__Impl : ( RULE_RANGE ) ;
     public final void rule__RangeFunction__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21148:1: ( ( RULE_RANGE ) )
-            // InternalWreslEditorParser.g:21149:1: ( RULE_RANGE )
+            // InternalWreslEditorParser.g:21275:1: ( ( RULE_RANGE ) )
+            // InternalWreslEditorParser.g:21276:1: ( RULE_RANGE )
             {
-            // InternalWreslEditorParser.g:21149:1: ( RULE_RANGE )
-            // InternalWreslEditorParser.g:21150:1: RULE_RANGE
+            // InternalWreslEditorParser.g:21276:1: ( RULE_RANGE )
+            // InternalWreslEditorParser.g:21277:1: RULE_RANGE
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRangeFunctionAccess().getRANGETerminalRuleCall_0()); 
@@ -62517,14 +62859,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__RangeFunction__Group__1"
-    // InternalWreslEditorParser.g:21161:1: rule__RangeFunction__Group__1 : rule__RangeFunction__Group__1__Impl rule__RangeFunction__Group__2 ;
+    // InternalWreslEditorParser.g:21288:1: rule__RangeFunction__Group__1 : rule__RangeFunction__Group__1__Impl rule__RangeFunction__Group__2 ;
     public final void rule__RangeFunction__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21165:1: ( rule__RangeFunction__Group__1__Impl rule__RangeFunction__Group__2 )
-            // InternalWreslEditorParser.g:21166:2: rule__RangeFunction__Group__1__Impl rule__RangeFunction__Group__2
+            // InternalWreslEditorParser.g:21292:1: ( rule__RangeFunction__Group__1__Impl rule__RangeFunction__Group__2 )
+            // InternalWreslEditorParser.g:21293:2: rule__RangeFunction__Group__1__Impl rule__RangeFunction__Group__2
             {
             pushFollow(FOLLOW_86);
             rule__RangeFunction__Group__1__Impl();
@@ -62555,17 +62897,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__RangeFunction__Group__1__Impl"
-    // InternalWreslEditorParser.g:21173:1: rule__RangeFunction__Group__1__Impl : ( LeftParenthesis ) ;
+    // InternalWreslEditorParser.g:21300:1: rule__RangeFunction__Group__1__Impl : ( LeftParenthesis ) ;
     public final void rule__RangeFunction__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21177:1: ( ( LeftParenthesis ) )
-            // InternalWreslEditorParser.g:21178:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:21304:1: ( ( LeftParenthesis ) )
+            // InternalWreslEditorParser.g:21305:1: ( LeftParenthesis )
             {
-            // InternalWreslEditorParser.g:21178:1: ( LeftParenthesis )
-            // InternalWreslEditorParser.g:21179:1: LeftParenthesis
+            // InternalWreslEditorParser.g:21305:1: ( LeftParenthesis )
+            // InternalWreslEditorParser.g:21306:1: LeftParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRangeFunctionAccess().getLeftParenthesisKeyword_1()); 
@@ -62596,14 +62938,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__RangeFunction__Group__2"
-    // InternalWreslEditorParser.g:21192:1: rule__RangeFunction__Group__2 : rule__RangeFunction__Group__2__Impl rule__RangeFunction__Group__3 ;
+    // InternalWreslEditorParser.g:21319:1: rule__RangeFunction__Group__2 : rule__RangeFunction__Group__2__Impl rule__RangeFunction__Group__3 ;
     public final void rule__RangeFunction__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21196:1: ( rule__RangeFunction__Group__2__Impl rule__RangeFunction__Group__3 )
-            // InternalWreslEditorParser.g:21197:2: rule__RangeFunction__Group__2__Impl rule__RangeFunction__Group__3
+            // InternalWreslEditorParser.g:21323:1: ( rule__RangeFunction__Group__2__Impl rule__RangeFunction__Group__3 )
+            // InternalWreslEditorParser.g:21324:2: rule__RangeFunction__Group__2__Impl rule__RangeFunction__Group__3
             {
             pushFollow(FOLLOW_26);
             rule__RangeFunction__Group__2__Impl();
@@ -62634,23 +62976,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__RangeFunction__Group__2__Impl"
-    // InternalWreslEditorParser.g:21204:1: rule__RangeFunction__Group__2__Impl : ( ( rule__RangeFunction__Alternatives_2 ) ) ;
+    // InternalWreslEditorParser.g:21331:1: rule__RangeFunction__Group__2__Impl : ( ( rule__RangeFunction__Alternatives_2 ) ) ;
     public final void rule__RangeFunction__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21208:1: ( ( ( rule__RangeFunction__Alternatives_2 ) ) )
-            // InternalWreslEditorParser.g:21209:1: ( ( rule__RangeFunction__Alternatives_2 ) )
+            // InternalWreslEditorParser.g:21335:1: ( ( ( rule__RangeFunction__Alternatives_2 ) ) )
+            // InternalWreslEditorParser.g:21336:1: ( ( rule__RangeFunction__Alternatives_2 ) )
             {
-            // InternalWreslEditorParser.g:21209:1: ( ( rule__RangeFunction__Alternatives_2 ) )
-            // InternalWreslEditorParser.g:21210:1: ( rule__RangeFunction__Alternatives_2 )
+            // InternalWreslEditorParser.g:21336:1: ( ( rule__RangeFunction__Alternatives_2 ) )
+            // InternalWreslEditorParser.g:21337:1: ( rule__RangeFunction__Alternatives_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRangeFunctionAccess().getAlternatives_2()); 
             }
-            // InternalWreslEditorParser.g:21211:1: ( rule__RangeFunction__Alternatives_2 )
-            // InternalWreslEditorParser.g:21211:2: rule__RangeFunction__Alternatives_2
+            // InternalWreslEditorParser.g:21338:1: ( rule__RangeFunction__Alternatives_2 )
+            // InternalWreslEditorParser.g:21338:2: rule__RangeFunction__Alternatives_2
             {
             pushFollow(FOLLOW_2);
             rule__RangeFunction__Alternatives_2();
@@ -62685,14 +63027,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__RangeFunction__Group__3"
-    // InternalWreslEditorParser.g:21221:1: rule__RangeFunction__Group__3 : rule__RangeFunction__Group__3__Impl rule__RangeFunction__Group__4 ;
+    // InternalWreslEditorParser.g:21348:1: rule__RangeFunction__Group__3 : rule__RangeFunction__Group__3__Impl rule__RangeFunction__Group__4 ;
     public final void rule__RangeFunction__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21225:1: ( rule__RangeFunction__Group__3__Impl rule__RangeFunction__Group__4 )
-            // InternalWreslEditorParser.g:21226:2: rule__RangeFunction__Group__3__Impl rule__RangeFunction__Group__4
+            // InternalWreslEditorParser.g:21352:1: ( rule__RangeFunction__Group__3__Impl rule__RangeFunction__Group__4 )
+            // InternalWreslEditorParser.g:21353:2: rule__RangeFunction__Group__3__Impl rule__RangeFunction__Group__4
             {
             pushFollow(FOLLOW_87);
             rule__RangeFunction__Group__3__Impl();
@@ -62723,17 +63065,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__RangeFunction__Group__3__Impl"
-    // InternalWreslEditorParser.g:21233:1: rule__RangeFunction__Group__3__Impl : ( Comma ) ;
+    // InternalWreslEditorParser.g:21360:1: rule__RangeFunction__Group__3__Impl : ( Comma ) ;
     public final void rule__RangeFunction__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21237:1: ( ( Comma ) )
-            // InternalWreslEditorParser.g:21238:1: ( Comma )
+            // InternalWreslEditorParser.g:21364:1: ( ( Comma ) )
+            // InternalWreslEditorParser.g:21365:1: ( Comma )
             {
-            // InternalWreslEditorParser.g:21238:1: ( Comma )
-            // InternalWreslEditorParser.g:21239:1: Comma
+            // InternalWreslEditorParser.g:21365:1: ( Comma )
+            // InternalWreslEditorParser.g:21366:1: Comma
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRangeFunctionAccess().getCommaKeyword_3()); 
@@ -62764,14 +63106,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__RangeFunction__Group__4"
-    // InternalWreslEditorParser.g:21252:1: rule__RangeFunction__Group__4 : rule__RangeFunction__Group__4__Impl rule__RangeFunction__Group__5 ;
+    // InternalWreslEditorParser.g:21379:1: rule__RangeFunction__Group__4 : rule__RangeFunction__Group__4__Impl rule__RangeFunction__Group__5 ;
     public final void rule__RangeFunction__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21256:1: ( rule__RangeFunction__Group__4__Impl rule__RangeFunction__Group__5 )
-            // InternalWreslEditorParser.g:21257:2: rule__RangeFunction__Group__4__Impl rule__RangeFunction__Group__5
+            // InternalWreslEditorParser.g:21383:1: ( rule__RangeFunction__Group__4__Impl rule__RangeFunction__Group__5 )
+            // InternalWreslEditorParser.g:21384:2: rule__RangeFunction__Group__4__Impl rule__RangeFunction__Group__5
             {
             pushFollow(FOLLOW_26);
             rule__RangeFunction__Group__4__Impl();
@@ -62802,23 +63144,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__RangeFunction__Group__4__Impl"
-    // InternalWreslEditorParser.g:21264:1: rule__RangeFunction__Group__4__Impl : ( ( rule__RangeFunction__Alternatives_4 ) ) ;
+    // InternalWreslEditorParser.g:21391:1: rule__RangeFunction__Group__4__Impl : ( ( rule__RangeFunction__Alternatives_4 ) ) ;
     public final void rule__RangeFunction__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21268:1: ( ( ( rule__RangeFunction__Alternatives_4 ) ) )
-            // InternalWreslEditorParser.g:21269:1: ( ( rule__RangeFunction__Alternatives_4 ) )
+            // InternalWreslEditorParser.g:21395:1: ( ( ( rule__RangeFunction__Alternatives_4 ) ) )
+            // InternalWreslEditorParser.g:21396:1: ( ( rule__RangeFunction__Alternatives_4 ) )
             {
-            // InternalWreslEditorParser.g:21269:1: ( ( rule__RangeFunction__Alternatives_4 ) )
-            // InternalWreslEditorParser.g:21270:1: ( rule__RangeFunction__Alternatives_4 )
+            // InternalWreslEditorParser.g:21396:1: ( ( rule__RangeFunction__Alternatives_4 ) )
+            // InternalWreslEditorParser.g:21397:1: ( rule__RangeFunction__Alternatives_4 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRangeFunctionAccess().getAlternatives_4()); 
             }
-            // InternalWreslEditorParser.g:21271:1: ( rule__RangeFunction__Alternatives_4 )
-            // InternalWreslEditorParser.g:21271:2: rule__RangeFunction__Alternatives_4
+            // InternalWreslEditorParser.g:21398:1: ( rule__RangeFunction__Alternatives_4 )
+            // InternalWreslEditorParser.g:21398:2: rule__RangeFunction__Alternatives_4
             {
             pushFollow(FOLLOW_2);
             rule__RangeFunction__Alternatives_4();
@@ -62853,14 +63195,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__RangeFunction__Group__5"
-    // InternalWreslEditorParser.g:21281:1: rule__RangeFunction__Group__5 : rule__RangeFunction__Group__5__Impl rule__RangeFunction__Group__6 ;
+    // InternalWreslEditorParser.g:21408:1: rule__RangeFunction__Group__5 : rule__RangeFunction__Group__5__Impl rule__RangeFunction__Group__6 ;
     public final void rule__RangeFunction__Group__5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21285:1: ( rule__RangeFunction__Group__5__Impl rule__RangeFunction__Group__6 )
-            // InternalWreslEditorParser.g:21286:2: rule__RangeFunction__Group__5__Impl rule__RangeFunction__Group__6
+            // InternalWreslEditorParser.g:21412:1: ( rule__RangeFunction__Group__5__Impl rule__RangeFunction__Group__6 )
+            // InternalWreslEditorParser.g:21413:2: rule__RangeFunction__Group__5__Impl rule__RangeFunction__Group__6
             {
             pushFollow(FOLLOW_87);
             rule__RangeFunction__Group__5__Impl();
@@ -62891,17 +63233,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__RangeFunction__Group__5__Impl"
-    // InternalWreslEditorParser.g:21293:1: rule__RangeFunction__Group__5__Impl : ( Comma ) ;
+    // InternalWreslEditorParser.g:21420:1: rule__RangeFunction__Group__5__Impl : ( Comma ) ;
     public final void rule__RangeFunction__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21297:1: ( ( Comma ) )
-            // InternalWreslEditorParser.g:21298:1: ( Comma )
+            // InternalWreslEditorParser.g:21424:1: ( ( Comma ) )
+            // InternalWreslEditorParser.g:21425:1: ( Comma )
             {
-            // InternalWreslEditorParser.g:21298:1: ( Comma )
-            // InternalWreslEditorParser.g:21299:1: Comma
+            // InternalWreslEditorParser.g:21425:1: ( Comma )
+            // InternalWreslEditorParser.g:21426:1: Comma
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRangeFunctionAccess().getCommaKeyword_5()); 
@@ -62932,14 +63274,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__RangeFunction__Group__6"
-    // InternalWreslEditorParser.g:21312:1: rule__RangeFunction__Group__6 : rule__RangeFunction__Group__6__Impl rule__RangeFunction__Group__7 ;
+    // InternalWreslEditorParser.g:21439:1: rule__RangeFunction__Group__6 : rule__RangeFunction__Group__6__Impl rule__RangeFunction__Group__7 ;
     public final void rule__RangeFunction__Group__6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21316:1: ( rule__RangeFunction__Group__6__Impl rule__RangeFunction__Group__7 )
-            // InternalWreslEditorParser.g:21317:2: rule__RangeFunction__Group__6__Impl rule__RangeFunction__Group__7
+            // InternalWreslEditorParser.g:21443:1: ( rule__RangeFunction__Group__6__Impl rule__RangeFunction__Group__7 )
+            // InternalWreslEditorParser.g:21444:2: rule__RangeFunction__Group__6__Impl rule__RangeFunction__Group__7
             {
             pushFollow(FOLLOW_17);
             rule__RangeFunction__Group__6__Impl();
@@ -62970,23 +63312,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__RangeFunction__Group__6__Impl"
-    // InternalWreslEditorParser.g:21324:1: rule__RangeFunction__Group__6__Impl : ( ( rule__RangeFunction__Alternatives_6 ) ) ;
+    // InternalWreslEditorParser.g:21451:1: rule__RangeFunction__Group__6__Impl : ( ( rule__RangeFunction__Alternatives_6 ) ) ;
     public final void rule__RangeFunction__Group__6__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21328:1: ( ( ( rule__RangeFunction__Alternatives_6 ) ) )
-            // InternalWreslEditorParser.g:21329:1: ( ( rule__RangeFunction__Alternatives_6 ) )
+            // InternalWreslEditorParser.g:21455:1: ( ( ( rule__RangeFunction__Alternatives_6 ) ) )
+            // InternalWreslEditorParser.g:21456:1: ( ( rule__RangeFunction__Alternatives_6 ) )
             {
-            // InternalWreslEditorParser.g:21329:1: ( ( rule__RangeFunction__Alternatives_6 ) )
-            // InternalWreslEditorParser.g:21330:1: ( rule__RangeFunction__Alternatives_6 )
+            // InternalWreslEditorParser.g:21456:1: ( ( rule__RangeFunction__Alternatives_6 ) )
+            // InternalWreslEditorParser.g:21457:1: ( rule__RangeFunction__Alternatives_6 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRangeFunctionAccess().getAlternatives_6()); 
             }
-            // InternalWreslEditorParser.g:21331:1: ( rule__RangeFunction__Alternatives_6 )
-            // InternalWreslEditorParser.g:21331:2: rule__RangeFunction__Alternatives_6
+            // InternalWreslEditorParser.g:21458:1: ( rule__RangeFunction__Alternatives_6 )
+            // InternalWreslEditorParser.g:21458:2: rule__RangeFunction__Alternatives_6
             {
             pushFollow(FOLLOW_2);
             rule__RangeFunction__Alternatives_6();
@@ -63021,14 +63363,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__RangeFunction__Group__7"
-    // InternalWreslEditorParser.g:21341:1: rule__RangeFunction__Group__7 : rule__RangeFunction__Group__7__Impl ;
+    // InternalWreslEditorParser.g:21468:1: rule__RangeFunction__Group__7 : rule__RangeFunction__Group__7__Impl ;
     public final void rule__RangeFunction__Group__7() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21345:1: ( rule__RangeFunction__Group__7__Impl )
-            // InternalWreslEditorParser.g:21346:2: rule__RangeFunction__Group__7__Impl
+            // InternalWreslEditorParser.g:21472:1: ( rule__RangeFunction__Group__7__Impl )
+            // InternalWreslEditorParser.g:21473:2: rule__RangeFunction__Group__7__Impl
             {
             pushFollow(FOLLOW_2);
             rule__RangeFunction__Group__7__Impl();
@@ -63054,17 +63396,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__RangeFunction__Group__7__Impl"
-    // InternalWreslEditorParser.g:21352:1: rule__RangeFunction__Group__7__Impl : ( RightParenthesis ) ;
+    // InternalWreslEditorParser.g:21479:1: rule__RangeFunction__Group__7__Impl : ( RightParenthesis ) ;
     public final void rule__RangeFunction__Group__7__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21356:1: ( ( RightParenthesis ) )
-            // InternalWreslEditorParser.g:21357:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:21483:1: ( ( RightParenthesis ) )
+            // InternalWreslEditorParser.g:21484:1: ( RightParenthesis )
             {
-            // InternalWreslEditorParser.g:21357:1: ( RightParenthesis )
-            // InternalWreslEditorParser.g:21358:1: RightParenthesis
+            // InternalWreslEditorParser.g:21484:1: ( RightParenthesis )
+            // InternalWreslEditorParser.g:21485:1: RightParenthesis
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRangeFunctionAccess().getRightParenthesisKeyword_7()); 
@@ -63095,14 +63437,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IncludeFile__Group__0"
-    // InternalWreslEditorParser.g:21387:1: rule__IncludeFile__Group__0 : rule__IncludeFile__Group__0__Impl rule__IncludeFile__Group__1 ;
+    // InternalWreslEditorParser.g:21514:1: rule__IncludeFile__Group__0 : rule__IncludeFile__Group__0__Impl rule__IncludeFile__Group__1 ;
     public final void rule__IncludeFile__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21391:1: ( rule__IncludeFile__Group__0__Impl rule__IncludeFile__Group__1 )
-            // InternalWreslEditorParser.g:21392:2: rule__IncludeFile__Group__0__Impl rule__IncludeFile__Group__1
+            // InternalWreslEditorParser.g:21518:1: ( rule__IncludeFile__Group__0__Impl rule__IncludeFile__Group__1 )
+            // InternalWreslEditorParser.g:21519:2: rule__IncludeFile__Group__0__Impl rule__IncludeFile__Group__1
             {
             pushFollow(FOLLOW_88);
             rule__IncludeFile__Group__0__Impl();
@@ -63133,23 +63475,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IncludeFile__Group__0__Impl"
-    // InternalWreslEditorParser.g:21399:1: rule__IncludeFile__Group__0__Impl : ( ( rule__IncludeFile__Alternatives_0 ) ) ;
+    // InternalWreslEditorParser.g:21526:1: rule__IncludeFile__Group__0__Impl : ( ( rule__IncludeFile__Alternatives_0 ) ) ;
     public final void rule__IncludeFile__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21403:1: ( ( ( rule__IncludeFile__Alternatives_0 ) ) )
-            // InternalWreslEditorParser.g:21404:1: ( ( rule__IncludeFile__Alternatives_0 ) )
+            // InternalWreslEditorParser.g:21530:1: ( ( ( rule__IncludeFile__Alternatives_0 ) ) )
+            // InternalWreslEditorParser.g:21531:1: ( ( rule__IncludeFile__Alternatives_0 ) )
             {
-            // InternalWreslEditorParser.g:21404:1: ( ( rule__IncludeFile__Alternatives_0 ) )
-            // InternalWreslEditorParser.g:21405:1: ( rule__IncludeFile__Alternatives_0 )
+            // InternalWreslEditorParser.g:21531:1: ( ( rule__IncludeFile__Alternatives_0 ) )
+            // InternalWreslEditorParser.g:21532:1: ( rule__IncludeFile__Alternatives_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIncludeFileAccess().getAlternatives_0()); 
             }
-            // InternalWreslEditorParser.g:21406:1: ( rule__IncludeFile__Alternatives_0 )
-            // InternalWreslEditorParser.g:21406:2: rule__IncludeFile__Alternatives_0
+            // InternalWreslEditorParser.g:21533:1: ( rule__IncludeFile__Alternatives_0 )
+            // InternalWreslEditorParser.g:21533:2: rule__IncludeFile__Alternatives_0
             {
             pushFollow(FOLLOW_2);
             rule__IncludeFile__Alternatives_0();
@@ -63184,14 +63526,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IncludeFile__Group__1"
-    // InternalWreslEditorParser.g:21416:1: rule__IncludeFile__Group__1 : rule__IncludeFile__Group__1__Impl rule__IncludeFile__Group__2 ;
+    // InternalWreslEditorParser.g:21543:1: rule__IncludeFile__Group__1 : rule__IncludeFile__Group__1__Impl rule__IncludeFile__Group__2 ;
     public final void rule__IncludeFile__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21420:1: ( rule__IncludeFile__Group__1__Impl rule__IncludeFile__Group__2 )
-            // InternalWreslEditorParser.g:21421:2: rule__IncludeFile__Group__1__Impl rule__IncludeFile__Group__2
+            // InternalWreslEditorParser.g:21547:1: ( rule__IncludeFile__Group__1__Impl rule__IncludeFile__Group__2 )
+            // InternalWreslEditorParser.g:21548:2: rule__IncludeFile__Group__1__Impl rule__IncludeFile__Group__2
             {
             pushFollow(FOLLOW_88);
             rule__IncludeFile__Group__1__Impl();
@@ -63222,31 +63564,31 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IncludeFile__Group__1__Impl"
-    // InternalWreslEditorParser.g:21428:1: rule__IncludeFile__Group__1__Impl : ( ( rule__IncludeFile__Group_1__0 )? ) ;
+    // InternalWreslEditorParser.g:21555:1: rule__IncludeFile__Group__1__Impl : ( ( rule__IncludeFile__Group_1__0 )? ) ;
     public final void rule__IncludeFile__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21432:1: ( ( ( rule__IncludeFile__Group_1__0 )? ) )
-            // InternalWreslEditorParser.g:21433:1: ( ( rule__IncludeFile__Group_1__0 )? )
+            // InternalWreslEditorParser.g:21559:1: ( ( ( rule__IncludeFile__Group_1__0 )? ) )
+            // InternalWreslEditorParser.g:21560:1: ( ( rule__IncludeFile__Group_1__0 )? )
             {
-            // InternalWreslEditorParser.g:21433:1: ( ( rule__IncludeFile__Group_1__0 )? )
-            // InternalWreslEditorParser.g:21434:1: ( rule__IncludeFile__Group_1__0 )?
+            // InternalWreslEditorParser.g:21560:1: ( ( rule__IncludeFile__Group_1__0 )? )
+            // InternalWreslEditorParser.g:21561:1: ( rule__IncludeFile__Group_1__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIncludeFileAccess().getGroup_1()); 
             }
-            // InternalWreslEditorParser.g:21435:1: ( rule__IncludeFile__Group_1__0 )?
-            int alt195=2;
-            int LA195_0 = input.LA(1);
+            // InternalWreslEditorParser.g:21562:1: ( rule__IncludeFile__Group_1__0 )?
+            int alt196=2;
+            int LA196_0 = input.LA(1);
 
-            if ( (LA195_0==LeftSquareBracket) ) {
-                alt195=1;
+            if ( (LA196_0==LeftSquareBracket) ) {
+                alt196=1;
             }
-            switch (alt195) {
+            switch (alt196) {
                 case 1 :
-                    // InternalWreslEditorParser.g:21435:2: rule__IncludeFile__Group_1__0
+                    // InternalWreslEditorParser.g:21562:2: rule__IncludeFile__Group_1__0
                     {
                     pushFollow(FOLLOW_2);
                     rule__IncludeFile__Group_1__0();
@@ -63284,14 +63626,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IncludeFile__Group__2"
-    // InternalWreslEditorParser.g:21445:1: rule__IncludeFile__Group__2 : rule__IncludeFile__Group__2__Impl ;
+    // InternalWreslEditorParser.g:21572:1: rule__IncludeFile__Group__2 : rule__IncludeFile__Group__2__Impl ;
     public final void rule__IncludeFile__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21449:1: ( rule__IncludeFile__Group__2__Impl )
-            // InternalWreslEditorParser.g:21450:2: rule__IncludeFile__Group__2__Impl
+            // InternalWreslEditorParser.g:21576:1: ( rule__IncludeFile__Group__2__Impl )
+            // InternalWreslEditorParser.g:21577:2: rule__IncludeFile__Group__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__IncludeFile__Group__2__Impl();
@@ -63317,23 +63659,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IncludeFile__Group__2__Impl"
-    // InternalWreslEditorParser.g:21456:1: rule__IncludeFile__Group__2__Impl : ( ( rule__IncludeFile__FileAssignment_2 ) ) ;
+    // InternalWreslEditorParser.g:21583:1: rule__IncludeFile__Group__2__Impl : ( ( rule__IncludeFile__FileAssignment_2 ) ) ;
     public final void rule__IncludeFile__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21460:1: ( ( ( rule__IncludeFile__FileAssignment_2 ) ) )
-            // InternalWreslEditorParser.g:21461:1: ( ( rule__IncludeFile__FileAssignment_2 ) )
+            // InternalWreslEditorParser.g:21587:1: ( ( ( rule__IncludeFile__FileAssignment_2 ) ) )
+            // InternalWreslEditorParser.g:21588:1: ( ( rule__IncludeFile__FileAssignment_2 ) )
             {
-            // InternalWreslEditorParser.g:21461:1: ( ( rule__IncludeFile__FileAssignment_2 ) )
-            // InternalWreslEditorParser.g:21462:1: ( rule__IncludeFile__FileAssignment_2 )
+            // InternalWreslEditorParser.g:21588:1: ( ( rule__IncludeFile__FileAssignment_2 ) )
+            // InternalWreslEditorParser.g:21589:1: ( rule__IncludeFile__FileAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIncludeFileAccess().getFileAssignment_2()); 
             }
-            // InternalWreslEditorParser.g:21463:1: ( rule__IncludeFile__FileAssignment_2 )
-            // InternalWreslEditorParser.g:21463:2: rule__IncludeFile__FileAssignment_2
+            // InternalWreslEditorParser.g:21590:1: ( rule__IncludeFile__FileAssignment_2 )
+            // InternalWreslEditorParser.g:21590:2: rule__IncludeFile__FileAssignment_2
             {
             pushFollow(FOLLOW_2);
             rule__IncludeFile__FileAssignment_2();
@@ -63368,14 +63710,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IncludeFile__Group_1__0"
-    // InternalWreslEditorParser.g:21479:1: rule__IncludeFile__Group_1__0 : rule__IncludeFile__Group_1__0__Impl rule__IncludeFile__Group_1__1 ;
+    // InternalWreslEditorParser.g:21606:1: rule__IncludeFile__Group_1__0 : rule__IncludeFile__Group_1__0__Impl rule__IncludeFile__Group_1__1 ;
     public final void rule__IncludeFile__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21483:1: ( rule__IncludeFile__Group_1__0__Impl rule__IncludeFile__Group_1__1 )
-            // InternalWreslEditorParser.g:21484:2: rule__IncludeFile__Group_1__0__Impl rule__IncludeFile__Group_1__1
+            // InternalWreslEditorParser.g:21610:1: ( rule__IncludeFile__Group_1__0__Impl rule__IncludeFile__Group_1__1 )
+            // InternalWreslEditorParser.g:21611:2: rule__IncludeFile__Group_1__0__Impl rule__IncludeFile__Group_1__1
             {
             pushFollow(FOLLOW_22);
             rule__IncludeFile__Group_1__0__Impl();
@@ -63406,17 +63748,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IncludeFile__Group_1__0__Impl"
-    // InternalWreslEditorParser.g:21491:1: rule__IncludeFile__Group_1__0__Impl : ( LeftSquareBracket ) ;
+    // InternalWreslEditorParser.g:21618:1: rule__IncludeFile__Group_1__0__Impl : ( LeftSquareBracket ) ;
     public final void rule__IncludeFile__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21495:1: ( ( LeftSquareBracket ) )
-            // InternalWreslEditorParser.g:21496:1: ( LeftSquareBracket )
+            // InternalWreslEditorParser.g:21622:1: ( ( LeftSquareBracket ) )
+            // InternalWreslEditorParser.g:21623:1: ( LeftSquareBracket )
             {
-            // InternalWreslEditorParser.g:21496:1: ( LeftSquareBracket )
-            // InternalWreslEditorParser.g:21497:1: LeftSquareBracket
+            // InternalWreslEditorParser.g:21623:1: ( LeftSquareBracket )
+            // InternalWreslEditorParser.g:21624:1: LeftSquareBracket
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIncludeFileAccess().getLeftSquareBracketKeyword_1_0()); 
@@ -63447,14 +63789,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IncludeFile__Group_1__1"
-    // InternalWreslEditorParser.g:21510:1: rule__IncludeFile__Group_1__1 : rule__IncludeFile__Group_1__1__Impl rule__IncludeFile__Group_1__2 ;
+    // InternalWreslEditorParser.g:21637:1: rule__IncludeFile__Group_1__1 : rule__IncludeFile__Group_1__1__Impl rule__IncludeFile__Group_1__2 ;
     public final void rule__IncludeFile__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21514:1: ( rule__IncludeFile__Group_1__1__Impl rule__IncludeFile__Group_1__2 )
-            // InternalWreslEditorParser.g:21515:2: rule__IncludeFile__Group_1__1__Impl rule__IncludeFile__Group_1__2
+            // InternalWreslEditorParser.g:21641:1: ( rule__IncludeFile__Group_1__1__Impl rule__IncludeFile__Group_1__2 )
+            // InternalWreslEditorParser.g:21642:2: rule__IncludeFile__Group_1__1__Impl rule__IncludeFile__Group_1__2
             {
             pushFollow(FOLLOW_23);
             rule__IncludeFile__Group_1__1__Impl();
@@ -63485,23 +63827,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IncludeFile__Group_1__1__Impl"
-    // InternalWreslEditorParser.g:21522:1: rule__IncludeFile__Group_1__1__Impl : ( ( rule__IncludeFile__LocalAssignment_1_1 ) ) ;
+    // InternalWreslEditorParser.g:21649:1: rule__IncludeFile__Group_1__1__Impl : ( ( rule__IncludeFile__LocalAssignment_1_1 ) ) ;
     public final void rule__IncludeFile__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21526:1: ( ( ( rule__IncludeFile__LocalAssignment_1_1 ) ) )
-            // InternalWreslEditorParser.g:21527:1: ( ( rule__IncludeFile__LocalAssignment_1_1 ) )
+            // InternalWreslEditorParser.g:21653:1: ( ( ( rule__IncludeFile__LocalAssignment_1_1 ) ) )
+            // InternalWreslEditorParser.g:21654:1: ( ( rule__IncludeFile__LocalAssignment_1_1 ) )
             {
-            // InternalWreslEditorParser.g:21527:1: ( ( rule__IncludeFile__LocalAssignment_1_1 ) )
-            // InternalWreslEditorParser.g:21528:1: ( rule__IncludeFile__LocalAssignment_1_1 )
+            // InternalWreslEditorParser.g:21654:1: ( ( rule__IncludeFile__LocalAssignment_1_1 ) )
+            // InternalWreslEditorParser.g:21655:1: ( rule__IncludeFile__LocalAssignment_1_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIncludeFileAccess().getLocalAssignment_1_1()); 
             }
-            // InternalWreslEditorParser.g:21529:1: ( rule__IncludeFile__LocalAssignment_1_1 )
-            // InternalWreslEditorParser.g:21529:2: rule__IncludeFile__LocalAssignment_1_1
+            // InternalWreslEditorParser.g:21656:1: ( rule__IncludeFile__LocalAssignment_1_1 )
+            // InternalWreslEditorParser.g:21656:2: rule__IncludeFile__LocalAssignment_1_1
             {
             pushFollow(FOLLOW_2);
             rule__IncludeFile__LocalAssignment_1_1();
@@ -63536,14 +63878,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IncludeFile__Group_1__2"
-    // InternalWreslEditorParser.g:21539:1: rule__IncludeFile__Group_1__2 : rule__IncludeFile__Group_1__2__Impl ;
+    // InternalWreslEditorParser.g:21666:1: rule__IncludeFile__Group_1__2 : rule__IncludeFile__Group_1__2__Impl ;
     public final void rule__IncludeFile__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21543:1: ( rule__IncludeFile__Group_1__2__Impl )
-            // InternalWreslEditorParser.g:21544:2: rule__IncludeFile__Group_1__2__Impl
+            // InternalWreslEditorParser.g:21670:1: ( rule__IncludeFile__Group_1__2__Impl )
+            // InternalWreslEditorParser.g:21671:2: rule__IncludeFile__Group_1__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__IncludeFile__Group_1__2__Impl();
@@ -63569,17 +63911,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IncludeFile__Group_1__2__Impl"
-    // InternalWreslEditorParser.g:21550:1: rule__IncludeFile__Group_1__2__Impl : ( RightSquareBracket ) ;
+    // InternalWreslEditorParser.g:21677:1: rule__IncludeFile__Group_1__2__Impl : ( RightSquareBracket ) ;
     public final void rule__IncludeFile__Group_1__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21554:1: ( ( RightSquareBracket ) )
-            // InternalWreslEditorParser.g:21555:1: ( RightSquareBracket )
+            // InternalWreslEditorParser.g:21681:1: ( ( RightSquareBracket ) )
+            // InternalWreslEditorParser.g:21682:1: ( RightSquareBracket )
             {
-            // InternalWreslEditorParser.g:21555:1: ( RightSquareBracket )
-            // InternalWreslEditorParser.g:21556:1: RightSquareBracket
+            // InternalWreslEditorParser.g:21682:1: ( RightSquareBracket )
+            // InternalWreslEditorParser.g:21683:1: RightSquareBracket
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIncludeFileAccess().getRightSquareBracketKeyword_1_2()); 
@@ -63610,14 +63952,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IncludeModel__Group__0"
-    // InternalWreslEditorParser.g:21575:1: rule__IncludeModel__Group__0 : rule__IncludeModel__Group__0__Impl rule__IncludeModel__Group__1 ;
+    // InternalWreslEditorParser.g:21702:1: rule__IncludeModel__Group__0 : rule__IncludeModel__Group__0__Impl rule__IncludeModel__Group__1 ;
     public final void rule__IncludeModel__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21579:1: ( rule__IncludeModel__Group__0__Impl rule__IncludeModel__Group__1 )
-            // InternalWreslEditorParser.g:21580:2: rule__IncludeModel__Group__0__Impl rule__IncludeModel__Group__1
+            // InternalWreslEditorParser.g:21706:1: ( rule__IncludeModel__Group__0__Impl rule__IncludeModel__Group__1 )
+            // InternalWreslEditorParser.g:21707:2: rule__IncludeModel__Group__0__Impl rule__IncludeModel__Group__1
             {
             pushFollow(FOLLOW_69);
             rule__IncludeModel__Group__0__Impl();
@@ -63648,23 +63990,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IncludeModel__Group__0__Impl"
-    // InternalWreslEditorParser.g:21587:1: rule__IncludeModel__Group__0__Impl : ( ( rule__IncludeModel__Alternatives_0 ) ) ;
+    // InternalWreslEditorParser.g:21714:1: rule__IncludeModel__Group__0__Impl : ( ( rule__IncludeModel__Alternatives_0 ) ) ;
     public final void rule__IncludeModel__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21591:1: ( ( ( rule__IncludeModel__Alternatives_0 ) ) )
-            // InternalWreslEditorParser.g:21592:1: ( ( rule__IncludeModel__Alternatives_0 ) )
+            // InternalWreslEditorParser.g:21718:1: ( ( ( rule__IncludeModel__Alternatives_0 ) ) )
+            // InternalWreslEditorParser.g:21719:1: ( ( rule__IncludeModel__Alternatives_0 ) )
             {
-            // InternalWreslEditorParser.g:21592:1: ( ( rule__IncludeModel__Alternatives_0 ) )
-            // InternalWreslEditorParser.g:21593:1: ( rule__IncludeModel__Alternatives_0 )
+            // InternalWreslEditorParser.g:21719:1: ( ( rule__IncludeModel__Alternatives_0 ) )
+            // InternalWreslEditorParser.g:21720:1: ( rule__IncludeModel__Alternatives_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIncludeModelAccess().getAlternatives_0()); 
             }
-            // InternalWreslEditorParser.g:21594:1: ( rule__IncludeModel__Alternatives_0 )
-            // InternalWreslEditorParser.g:21594:2: rule__IncludeModel__Alternatives_0
+            // InternalWreslEditorParser.g:21721:1: ( rule__IncludeModel__Alternatives_0 )
+            // InternalWreslEditorParser.g:21721:2: rule__IncludeModel__Alternatives_0
             {
             pushFollow(FOLLOW_2);
             rule__IncludeModel__Alternatives_0();
@@ -63699,14 +64041,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IncludeModel__Group__1"
-    // InternalWreslEditorParser.g:21604:1: rule__IncludeModel__Group__1 : rule__IncludeModel__Group__1__Impl rule__IncludeModel__Group__2 ;
+    // InternalWreslEditorParser.g:21731:1: rule__IncludeModel__Group__1 : rule__IncludeModel__Group__1__Impl rule__IncludeModel__Group__2 ;
     public final void rule__IncludeModel__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21608:1: ( rule__IncludeModel__Group__1__Impl rule__IncludeModel__Group__2 )
-            // InternalWreslEditorParser.g:21609:2: rule__IncludeModel__Group__1__Impl rule__IncludeModel__Group__2
+            // InternalWreslEditorParser.g:21735:1: ( rule__IncludeModel__Group__1__Impl rule__IncludeModel__Group__2 )
+            // InternalWreslEditorParser.g:21736:2: rule__IncludeModel__Group__1__Impl rule__IncludeModel__Group__2
             {
             pushFollow(FOLLOW_11);
             rule__IncludeModel__Group__1__Impl();
@@ -63737,23 +64079,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IncludeModel__Group__1__Impl"
-    // InternalWreslEditorParser.g:21616:1: rule__IncludeModel__Group__1__Impl : ( ( rule__IncludeModel__Alternatives_1 ) ) ;
+    // InternalWreslEditorParser.g:21743:1: rule__IncludeModel__Group__1__Impl : ( ( rule__IncludeModel__Alternatives_1 ) ) ;
     public final void rule__IncludeModel__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21620:1: ( ( ( rule__IncludeModel__Alternatives_1 ) ) )
-            // InternalWreslEditorParser.g:21621:1: ( ( rule__IncludeModel__Alternatives_1 ) )
+            // InternalWreslEditorParser.g:21747:1: ( ( ( rule__IncludeModel__Alternatives_1 ) ) )
+            // InternalWreslEditorParser.g:21748:1: ( ( rule__IncludeModel__Alternatives_1 ) )
             {
-            // InternalWreslEditorParser.g:21621:1: ( ( rule__IncludeModel__Alternatives_1 ) )
-            // InternalWreslEditorParser.g:21622:1: ( rule__IncludeModel__Alternatives_1 )
+            // InternalWreslEditorParser.g:21748:1: ( ( rule__IncludeModel__Alternatives_1 ) )
+            // InternalWreslEditorParser.g:21749:1: ( rule__IncludeModel__Alternatives_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIncludeModelAccess().getAlternatives_1()); 
             }
-            // InternalWreslEditorParser.g:21623:1: ( rule__IncludeModel__Alternatives_1 )
-            // InternalWreslEditorParser.g:21623:2: rule__IncludeModel__Alternatives_1
+            // InternalWreslEditorParser.g:21750:1: ( rule__IncludeModel__Alternatives_1 )
+            // InternalWreslEditorParser.g:21750:2: rule__IncludeModel__Alternatives_1
             {
             pushFollow(FOLLOW_2);
             rule__IncludeModel__Alternatives_1();
@@ -63788,14 +64130,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IncludeModel__Group__2"
-    // InternalWreslEditorParser.g:21633:1: rule__IncludeModel__Group__2 : rule__IncludeModel__Group__2__Impl ;
+    // InternalWreslEditorParser.g:21760:1: rule__IncludeModel__Group__2 : rule__IncludeModel__Group__2__Impl ;
     public final void rule__IncludeModel__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21637:1: ( rule__IncludeModel__Group__2__Impl )
-            // InternalWreslEditorParser.g:21638:2: rule__IncludeModel__Group__2__Impl
+            // InternalWreslEditorParser.g:21764:1: ( rule__IncludeModel__Group__2__Impl )
+            // InternalWreslEditorParser.g:21765:2: rule__IncludeModel__Group__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__IncludeModel__Group__2__Impl();
@@ -63821,17 +64163,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IncludeModel__Group__2__Impl"
-    // InternalWreslEditorParser.g:21644:1: rule__IncludeModel__Group__2__Impl : ( RULE_ID ) ;
+    // InternalWreslEditorParser.g:21771:1: rule__IncludeModel__Group__2__Impl : ( RULE_ID ) ;
     public final void rule__IncludeModel__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21648:1: ( ( RULE_ID ) )
-            // InternalWreslEditorParser.g:21649:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:21775:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:21776:1: ( RULE_ID )
             {
-            // InternalWreslEditorParser.g:21649:1: ( RULE_ID )
-            // InternalWreslEditorParser.g:21650:1: RULE_ID
+            // InternalWreslEditorParser.g:21776:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:21777:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIncludeModelAccess().getIDTerminalRuleCall_2()); 
@@ -63862,14 +64204,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IncludeGroup__Group__0"
-    // InternalWreslEditorParser.g:21667:1: rule__IncludeGroup__Group__0 : rule__IncludeGroup__Group__0__Impl rule__IncludeGroup__Group__1 ;
+    // InternalWreslEditorParser.g:21794:1: rule__IncludeGroup__Group__0 : rule__IncludeGroup__Group__0__Impl rule__IncludeGroup__Group__1 ;
     public final void rule__IncludeGroup__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21671:1: ( rule__IncludeGroup__Group__0__Impl rule__IncludeGroup__Group__1 )
-            // InternalWreslEditorParser.g:21672:2: rule__IncludeGroup__Group__0__Impl rule__IncludeGroup__Group__1
+            // InternalWreslEditorParser.g:21798:1: ( rule__IncludeGroup__Group__0__Impl rule__IncludeGroup__Group__1 )
+            // InternalWreslEditorParser.g:21799:2: rule__IncludeGroup__Group__0__Impl rule__IncludeGroup__Group__1
             {
             pushFollow(FOLLOW_89);
             rule__IncludeGroup__Group__0__Impl();
@@ -63900,23 +64242,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IncludeGroup__Group__0__Impl"
-    // InternalWreslEditorParser.g:21679:1: rule__IncludeGroup__Group__0__Impl : ( ( rule__IncludeGroup__Alternatives_0 ) ) ;
+    // InternalWreslEditorParser.g:21806:1: rule__IncludeGroup__Group__0__Impl : ( ( rule__IncludeGroup__Alternatives_0 ) ) ;
     public final void rule__IncludeGroup__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21683:1: ( ( ( rule__IncludeGroup__Alternatives_0 ) ) )
-            // InternalWreslEditorParser.g:21684:1: ( ( rule__IncludeGroup__Alternatives_0 ) )
+            // InternalWreslEditorParser.g:21810:1: ( ( ( rule__IncludeGroup__Alternatives_0 ) ) )
+            // InternalWreslEditorParser.g:21811:1: ( ( rule__IncludeGroup__Alternatives_0 ) )
             {
-            // InternalWreslEditorParser.g:21684:1: ( ( rule__IncludeGroup__Alternatives_0 ) )
-            // InternalWreslEditorParser.g:21685:1: ( rule__IncludeGroup__Alternatives_0 )
+            // InternalWreslEditorParser.g:21811:1: ( ( rule__IncludeGroup__Alternatives_0 ) )
+            // InternalWreslEditorParser.g:21812:1: ( rule__IncludeGroup__Alternatives_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIncludeGroupAccess().getAlternatives_0()); 
             }
-            // InternalWreslEditorParser.g:21686:1: ( rule__IncludeGroup__Alternatives_0 )
-            // InternalWreslEditorParser.g:21686:2: rule__IncludeGroup__Alternatives_0
+            // InternalWreslEditorParser.g:21813:1: ( rule__IncludeGroup__Alternatives_0 )
+            // InternalWreslEditorParser.g:21813:2: rule__IncludeGroup__Alternatives_0
             {
             pushFollow(FOLLOW_2);
             rule__IncludeGroup__Alternatives_0();
@@ -63951,14 +64293,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IncludeGroup__Group__1"
-    // InternalWreslEditorParser.g:21696:1: rule__IncludeGroup__Group__1 : rule__IncludeGroup__Group__1__Impl rule__IncludeGroup__Group__2 ;
+    // InternalWreslEditorParser.g:21823:1: rule__IncludeGroup__Group__1 : rule__IncludeGroup__Group__1__Impl rule__IncludeGroup__Group__2 ;
     public final void rule__IncludeGroup__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21700:1: ( rule__IncludeGroup__Group__1__Impl rule__IncludeGroup__Group__2 )
-            // InternalWreslEditorParser.g:21701:2: rule__IncludeGroup__Group__1__Impl rule__IncludeGroup__Group__2
+            // InternalWreslEditorParser.g:21827:1: ( rule__IncludeGroup__Group__1__Impl rule__IncludeGroup__Group__2 )
+            // InternalWreslEditorParser.g:21828:2: rule__IncludeGroup__Group__1__Impl rule__IncludeGroup__Group__2
             {
             pushFollow(FOLLOW_11);
             rule__IncludeGroup__Group__1__Impl();
@@ -63989,23 +64331,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IncludeGroup__Group__1__Impl"
-    // InternalWreslEditorParser.g:21708:1: rule__IncludeGroup__Group__1__Impl : ( ( rule__IncludeGroup__Alternatives_1 ) ) ;
+    // InternalWreslEditorParser.g:21835:1: rule__IncludeGroup__Group__1__Impl : ( ( rule__IncludeGroup__Alternatives_1 ) ) ;
     public final void rule__IncludeGroup__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21712:1: ( ( ( rule__IncludeGroup__Alternatives_1 ) ) )
-            // InternalWreslEditorParser.g:21713:1: ( ( rule__IncludeGroup__Alternatives_1 ) )
+            // InternalWreslEditorParser.g:21839:1: ( ( ( rule__IncludeGroup__Alternatives_1 ) ) )
+            // InternalWreslEditorParser.g:21840:1: ( ( rule__IncludeGroup__Alternatives_1 ) )
             {
-            // InternalWreslEditorParser.g:21713:1: ( ( rule__IncludeGroup__Alternatives_1 ) )
-            // InternalWreslEditorParser.g:21714:1: ( rule__IncludeGroup__Alternatives_1 )
+            // InternalWreslEditorParser.g:21840:1: ( ( rule__IncludeGroup__Alternatives_1 ) )
+            // InternalWreslEditorParser.g:21841:1: ( rule__IncludeGroup__Alternatives_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIncludeGroupAccess().getAlternatives_1()); 
             }
-            // InternalWreslEditorParser.g:21715:1: ( rule__IncludeGroup__Alternatives_1 )
-            // InternalWreslEditorParser.g:21715:2: rule__IncludeGroup__Alternatives_1
+            // InternalWreslEditorParser.g:21842:1: ( rule__IncludeGroup__Alternatives_1 )
+            // InternalWreslEditorParser.g:21842:2: rule__IncludeGroup__Alternatives_1
             {
             pushFollow(FOLLOW_2);
             rule__IncludeGroup__Alternatives_1();
@@ -64040,14 +64382,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IncludeGroup__Group__2"
-    // InternalWreslEditorParser.g:21725:1: rule__IncludeGroup__Group__2 : rule__IncludeGroup__Group__2__Impl ;
+    // InternalWreslEditorParser.g:21852:1: rule__IncludeGroup__Group__2 : rule__IncludeGroup__Group__2__Impl ;
     public final void rule__IncludeGroup__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21729:1: ( rule__IncludeGroup__Group__2__Impl )
-            // InternalWreslEditorParser.g:21730:2: rule__IncludeGroup__Group__2__Impl
+            // InternalWreslEditorParser.g:21856:1: ( rule__IncludeGroup__Group__2__Impl )
+            // InternalWreslEditorParser.g:21857:2: rule__IncludeGroup__Group__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__IncludeGroup__Group__2__Impl();
@@ -64073,17 +64415,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IncludeGroup__Group__2__Impl"
-    // InternalWreslEditorParser.g:21736:1: rule__IncludeGroup__Group__2__Impl : ( RULE_ID ) ;
+    // InternalWreslEditorParser.g:21863:1: rule__IncludeGroup__Group__2__Impl : ( RULE_ID ) ;
     public final void rule__IncludeGroup__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21740:1: ( ( RULE_ID ) )
-            // InternalWreslEditorParser.g:21741:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:21867:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:21868:1: ( RULE_ID )
             {
-            // InternalWreslEditorParser.g:21741:1: ( RULE_ID )
-            // InternalWreslEditorParser.g:21742:1: RULE_ID
+            // InternalWreslEditorParser.g:21868:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:21869:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIncludeGroupAccess().getIDTerminalRuleCall_2()); 
@@ -64114,17 +64456,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__WreslEvaluator__PatternAssignment_0_0"
-    // InternalWreslEditorParser.g:21760:1: rule__WreslEvaluator__PatternAssignment_0_0 : ( rulePattern ) ;
+    // InternalWreslEditorParser.g:21887:1: rule__WreslEvaluator__PatternAssignment_0_0 : ( rulePattern ) ;
     public final void rule__WreslEvaluator__PatternAssignment_0_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21764:1: ( ( rulePattern ) )
-            // InternalWreslEditorParser.g:21765:1: ( rulePattern )
+            // InternalWreslEditorParser.g:21891:1: ( ( rulePattern ) )
+            // InternalWreslEditorParser.g:21892:1: ( rulePattern )
             {
-            // InternalWreslEditorParser.g:21765:1: ( rulePattern )
-            // InternalWreslEditorParser.g:21766:1: rulePattern
+            // InternalWreslEditorParser.g:21892:1: ( rulePattern )
+            // InternalWreslEditorParser.g:21893:1: rulePattern
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWreslEvaluatorAccess().getPatternPatternParserRuleCall_0_0_0()); 
@@ -64159,17 +64501,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__WreslEvaluator__IfincitemAssignment_0_1"
-    // InternalWreslEditorParser.g:21775:1: rule__WreslEvaluator__IfincitemAssignment_0_1 : ( ruleIfIncItems ) ;
+    // InternalWreslEditorParser.g:21902:1: rule__WreslEvaluator__IfincitemAssignment_0_1 : ( ruleIfIncItems ) ;
     public final void rule__WreslEvaluator__IfincitemAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21779:1: ( ( ruleIfIncItems ) )
-            // InternalWreslEditorParser.g:21780:1: ( ruleIfIncItems )
+            // InternalWreslEditorParser.g:21906:1: ( ( ruleIfIncItems ) )
+            // InternalWreslEditorParser.g:21907:1: ( ruleIfIncItems )
             {
-            // InternalWreslEditorParser.g:21780:1: ( ruleIfIncItems )
-            // InternalWreslEditorParser.g:21781:1: ruleIfIncItems
+            // InternalWreslEditorParser.g:21907:1: ( ruleIfIncItems )
+            // InternalWreslEditorParser.g:21908:1: ruleIfIncItems
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWreslEvaluatorAccess().getIfincitemIfIncItemsParserRuleCall_0_1_0()); 
@@ -64204,17 +64546,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__WreslEvaluator__InitialAssignment_1_0"
-    // InternalWreslEditorParser.g:21790:1: rule__WreslEvaluator__InitialAssignment_1_0 : ( ruleInitial ) ;
+    // InternalWreslEditorParser.g:21917:1: rule__WreslEvaluator__InitialAssignment_1_0 : ( ruleInitial ) ;
     public final void rule__WreslEvaluator__InitialAssignment_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21794:1: ( ( ruleInitial ) )
-            // InternalWreslEditorParser.g:21795:1: ( ruleInitial )
+            // InternalWreslEditorParser.g:21921:1: ( ( ruleInitial ) )
+            // InternalWreslEditorParser.g:21922:1: ( ruleInitial )
             {
-            // InternalWreslEditorParser.g:21795:1: ( ruleInitial )
-            // InternalWreslEditorParser.g:21796:1: ruleInitial
+            // InternalWreslEditorParser.g:21922:1: ( ruleInitial )
+            // InternalWreslEditorParser.g:21923:1: ruleInitial
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWreslEvaluatorAccess().getInitialInitialParserRuleCall_1_0_0()); 
@@ -64249,17 +64591,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__WreslEvaluator__SequenceAssignment_1_1"
-    // InternalWreslEditorParser.g:21805:1: rule__WreslEvaluator__SequenceAssignment_1_1 : ( ruleSequence ) ;
+    // InternalWreslEditorParser.g:21932:1: rule__WreslEvaluator__SequenceAssignment_1_1 : ( ruleSequence ) ;
     public final void rule__WreslEvaluator__SequenceAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21809:1: ( ( ruleSequence ) )
-            // InternalWreslEditorParser.g:21810:1: ( ruleSequence )
+            // InternalWreslEditorParser.g:21936:1: ( ( ruleSequence ) )
+            // InternalWreslEditorParser.g:21937:1: ( ruleSequence )
             {
-            // InternalWreslEditorParser.g:21810:1: ( ruleSequence )
-            // InternalWreslEditorParser.g:21811:1: ruleSequence
+            // InternalWreslEditorParser.g:21937:1: ( ruleSequence )
+            // InternalWreslEditorParser.g:21938:1: ruleSequence
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWreslEvaluatorAccess().getSequenceSequenceParserRuleCall_1_1_0()); 
@@ -64294,23 +64636,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__WreslEvaluator__ModelAssignment_1_2"
-    // InternalWreslEditorParser.g:21820:1: rule__WreslEvaluator__ModelAssignment_1_2 : ( ( rule__WreslEvaluator__ModelAlternatives_1_2_0 ) ) ;
+    // InternalWreslEditorParser.g:21947:1: rule__WreslEvaluator__ModelAssignment_1_2 : ( ( rule__WreslEvaluator__ModelAlternatives_1_2_0 ) ) ;
     public final void rule__WreslEvaluator__ModelAssignment_1_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21824:1: ( ( ( rule__WreslEvaluator__ModelAlternatives_1_2_0 ) ) )
-            // InternalWreslEditorParser.g:21825:1: ( ( rule__WreslEvaluator__ModelAlternatives_1_2_0 ) )
+            // InternalWreslEditorParser.g:21951:1: ( ( ( rule__WreslEvaluator__ModelAlternatives_1_2_0 ) ) )
+            // InternalWreslEditorParser.g:21952:1: ( ( rule__WreslEvaluator__ModelAlternatives_1_2_0 ) )
             {
-            // InternalWreslEditorParser.g:21825:1: ( ( rule__WreslEvaluator__ModelAlternatives_1_2_0 ) )
-            // InternalWreslEditorParser.g:21826:1: ( rule__WreslEvaluator__ModelAlternatives_1_2_0 )
+            // InternalWreslEditorParser.g:21952:1: ( ( rule__WreslEvaluator__ModelAlternatives_1_2_0 ) )
+            // InternalWreslEditorParser.g:21953:1: ( rule__WreslEvaluator__ModelAlternatives_1_2_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWreslEvaluatorAccess().getModelAlternatives_1_2_0()); 
             }
-            // InternalWreslEditorParser.g:21827:1: ( rule__WreslEvaluator__ModelAlternatives_1_2_0 )
-            // InternalWreslEditorParser.g:21827:2: rule__WreslEvaluator__ModelAlternatives_1_2_0
+            // InternalWreslEditorParser.g:21954:1: ( rule__WreslEvaluator__ModelAlternatives_1_2_0 )
+            // InternalWreslEditorParser.g:21954:2: rule__WreslEvaluator__ModelAlternatives_1_2_0
             {
             pushFollow(FOLLOW_2);
             rule__WreslEvaluator__ModelAlternatives_1_2_0();
@@ -64345,17 +64687,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Declaration__NameAssignment_2"
-    // InternalWreslEditorParser.g:21836:1: rule__Declaration__NameAssignment_2 : ( RULE_ID ) ;
+    // InternalWreslEditorParser.g:21963:1: rule__Declaration__NameAssignment_2 : ( RULE_ID ) ;
     public final void rule__Declaration__NameAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21840:1: ( ( RULE_ID ) )
-            // InternalWreslEditorParser.g:21841:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:21967:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:21968:1: ( RULE_ID )
             {
-            // InternalWreslEditorParser.g:21841:1: ( RULE_ID )
-            // InternalWreslEditorParser.g:21842:1: RULE_ID
+            // InternalWreslEditorParser.g:21968:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:21969:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDeclarationAccess().getNameIDTerminalRuleCall_2_0()); 
@@ -64386,17 +64728,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IfIncItems__ElseiftermAssignment_1"
-    // InternalWreslEditorParser.g:21851:1: rule__IfIncItems__ElseiftermAssignment_1 : ( ruleElseIfTerm ) ;
+    // InternalWreslEditorParser.g:21978:1: rule__IfIncItems__ElseiftermAssignment_1 : ( ruleElseIfTerm ) ;
     public final void rule__IfIncItems__ElseiftermAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21855:1: ( ( ruleElseIfTerm ) )
-            // InternalWreslEditorParser.g:21856:1: ( ruleElseIfTerm )
+            // InternalWreslEditorParser.g:21982:1: ( ( ruleElseIfTerm ) )
+            // InternalWreslEditorParser.g:21983:1: ( ruleElseIfTerm )
             {
-            // InternalWreslEditorParser.g:21856:1: ( ruleElseIfTerm )
-            // InternalWreslEditorParser.g:21857:1: ruleElseIfTerm
+            // InternalWreslEditorParser.g:21983:1: ( ruleElseIfTerm )
+            // InternalWreslEditorParser.g:21984:1: ruleElseIfTerm
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIfIncItemsAccess().getElseiftermElseIfTermParserRuleCall_1_0()); 
@@ -64431,17 +64773,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IfIncItems__ElsetermAssignment_2"
-    // InternalWreslEditorParser.g:21866:1: rule__IfIncItems__ElsetermAssignment_2 : ( ruleElseTerm ) ;
+    // InternalWreslEditorParser.g:21993:1: rule__IfIncItems__ElsetermAssignment_2 : ( ruleElseTerm ) ;
     public final void rule__IfIncItems__ElsetermAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21870:1: ( ( ruleElseTerm ) )
-            // InternalWreslEditorParser.g:21871:1: ( ruleElseTerm )
+            // InternalWreslEditorParser.g:21997:1: ( ( ruleElseTerm ) )
+            // InternalWreslEditorParser.g:21998:1: ( ruleElseTerm )
             {
-            // InternalWreslEditorParser.g:21871:1: ( ruleElseTerm )
-            // InternalWreslEditorParser.g:21872:1: ruleElseTerm
+            // InternalWreslEditorParser.g:21998:1: ( ruleElseTerm )
+            // InternalWreslEditorParser.g:21999:1: ruleElseTerm
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIfIncItemsAccess().getElsetermElseTermParserRuleCall_2_0()); 
@@ -64476,17 +64818,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IfTerm__LogicalAssignment_1"
-    // InternalWreslEditorParser.g:21881:1: rule__IfTerm__LogicalAssignment_1 : ( ruleLogicalExpression ) ;
+    // InternalWreslEditorParser.g:22008:1: rule__IfTerm__LogicalAssignment_1 : ( ruleLogicalExpression ) ;
     public final void rule__IfTerm__LogicalAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21885:1: ( ( ruleLogicalExpression ) )
-            // InternalWreslEditorParser.g:21886:1: ( ruleLogicalExpression )
+            // InternalWreslEditorParser.g:22012:1: ( ( ruleLogicalExpression ) )
+            // InternalWreslEditorParser.g:22013:1: ( ruleLogicalExpression )
             {
-            // InternalWreslEditorParser.g:21886:1: ( ruleLogicalExpression )
-            // InternalWreslEditorParser.g:21887:1: ruleLogicalExpression
+            // InternalWreslEditorParser.g:22013:1: ( ruleLogicalExpression )
+            // InternalWreslEditorParser.g:22014:1: ruleLogicalExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIfTermAccess().getLogicalLogicalExpressionParserRuleCall_1_0()); 
@@ -64521,17 +64863,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IfTerm__PatternAssignment_3"
-    // InternalWreslEditorParser.g:21896:1: rule__IfTerm__PatternAssignment_3 : ( rulePattern ) ;
+    // InternalWreslEditorParser.g:22023:1: rule__IfTerm__PatternAssignment_3 : ( rulePattern ) ;
     public final void rule__IfTerm__PatternAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21900:1: ( ( rulePattern ) )
-            // InternalWreslEditorParser.g:21901:1: ( rulePattern )
+            // InternalWreslEditorParser.g:22027:1: ( ( rulePattern ) )
+            // InternalWreslEditorParser.g:22028:1: ( rulePattern )
             {
-            // InternalWreslEditorParser.g:21901:1: ( rulePattern )
-            // InternalWreslEditorParser.g:21902:1: rulePattern
+            // InternalWreslEditorParser.g:22028:1: ( rulePattern )
+            // InternalWreslEditorParser.g:22029:1: rulePattern
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIfTermAccess().getPatternPatternParserRuleCall_3_0()); 
@@ -64566,17 +64908,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ElseIfTerm__LogicalAssignment_1"
-    // InternalWreslEditorParser.g:21911:1: rule__ElseIfTerm__LogicalAssignment_1 : ( ruleLogicalExpression ) ;
+    // InternalWreslEditorParser.g:22038:1: rule__ElseIfTerm__LogicalAssignment_1 : ( ruleLogicalExpression ) ;
     public final void rule__ElseIfTerm__LogicalAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21915:1: ( ( ruleLogicalExpression ) )
-            // InternalWreslEditorParser.g:21916:1: ( ruleLogicalExpression )
+            // InternalWreslEditorParser.g:22042:1: ( ( ruleLogicalExpression ) )
+            // InternalWreslEditorParser.g:22043:1: ( ruleLogicalExpression )
             {
-            // InternalWreslEditorParser.g:21916:1: ( ruleLogicalExpression )
-            // InternalWreslEditorParser.g:21917:1: ruleLogicalExpression
+            // InternalWreslEditorParser.g:22043:1: ( ruleLogicalExpression )
+            // InternalWreslEditorParser.g:22044:1: ruleLogicalExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getElseIfTermAccess().getLogicalLogicalExpressionParserRuleCall_1_0()); 
@@ -64611,17 +64953,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ElseIfTerm__PatternAssignment_3"
-    // InternalWreslEditorParser.g:21926:1: rule__ElseIfTerm__PatternAssignment_3 : ( rulePattern ) ;
+    // InternalWreslEditorParser.g:22053:1: rule__ElseIfTerm__PatternAssignment_3 : ( rulePattern ) ;
     public final void rule__ElseIfTerm__PatternAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21930:1: ( ( rulePattern ) )
-            // InternalWreslEditorParser.g:21931:1: ( rulePattern )
+            // InternalWreslEditorParser.g:22057:1: ( ( rulePattern ) )
+            // InternalWreslEditorParser.g:22058:1: ( rulePattern )
             {
-            // InternalWreslEditorParser.g:21931:1: ( rulePattern )
-            // InternalWreslEditorParser.g:21932:1: rulePattern
+            // InternalWreslEditorParser.g:22058:1: ( rulePattern )
+            // InternalWreslEditorParser.g:22059:1: rulePattern
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getElseIfTermAccess().getPatternPatternParserRuleCall_3_0()); 
@@ -64656,17 +64998,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ElseTerm__PatternAssignment_2"
-    // InternalWreslEditorParser.g:21941:1: rule__ElseTerm__PatternAssignment_2 : ( rulePattern ) ;
+    // InternalWreslEditorParser.g:22068:1: rule__ElseTerm__PatternAssignment_2 : ( rulePattern ) ;
     public final void rule__ElseTerm__PatternAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21945:1: ( ( rulePattern ) )
-            // InternalWreslEditorParser.g:21946:1: ( rulePattern )
+            // InternalWreslEditorParser.g:22072:1: ( ( rulePattern ) )
+            // InternalWreslEditorParser.g:22073:1: ( rulePattern )
             {
-            // InternalWreslEditorParser.g:21946:1: ( rulePattern )
-            // InternalWreslEditorParser.g:21947:1: rulePattern
+            // InternalWreslEditorParser.g:22073:1: ( rulePattern )
+            // InternalWreslEditorParser.g:22074:1: rulePattern
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getElseTermAccess().getPatternPatternParserRuleCall_2_0()); 
@@ -64701,23 +65043,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TimeArraySize__NameAssignment_1"
-    // InternalWreslEditorParser.g:21956:1: rule__TimeArraySize__NameAssignment_1 : ( ( RULE_ID ) ) ;
+    // InternalWreslEditorParser.g:22083:1: rule__TimeArraySize__NameAssignment_1 : ( ( RULE_ID ) ) ;
     public final void rule__TimeArraySize__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21960:1: ( ( ( RULE_ID ) ) )
-            // InternalWreslEditorParser.g:21961:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:22087:1: ( ( ( RULE_ID ) ) )
+            // InternalWreslEditorParser.g:22088:1: ( ( RULE_ID ) )
             {
-            // InternalWreslEditorParser.g:21961:1: ( ( RULE_ID ) )
-            // InternalWreslEditorParser.g:21962:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:22088:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:22089:1: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTimeArraySizeAccess().getNameDeclarationCrossReference_1_0()); 
             }
-            // InternalWreslEditorParser.g:21963:1: ( RULE_ID )
-            // InternalWreslEditorParser.g:21964:1: RULE_ID
+            // InternalWreslEditorParser.g:22090:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:22091:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTimeArraySizeAccess().getNameDeclarationIDTerminalRuleCall_1_0_1()); 
@@ -64754,23 +65096,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Objective__LocalAssignment_1_1"
-    // InternalWreslEditorParser.g:21975:1: rule__Objective__LocalAssignment_1_1 : ( ( rule__Objective__LocalAlternatives_1_1_0 ) ) ;
+    // InternalWreslEditorParser.g:22102:1: rule__Objective__LocalAssignment_1_1 : ( ( rule__Objective__LocalAlternatives_1_1_0 ) ) ;
     public final void rule__Objective__LocalAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21979:1: ( ( ( rule__Objective__LocalAlternatives_1_1_0 ) ) )
-            // InternalWreslEditorParser.g:21980:1: ( ( rule__Objective__LocalAlternatives_1_1_0 ) )
+            // InternalWreslEditorParser.g:22106:1: ( ( ( rule__Objective__LocalAlternatives_1_1_0 ) ) )
+            // InternalWreslEditorParser.g:22107:1: ( ( rule__Objective__LocalAlternatives_1_1_0 ) )
             {
-            // InternalWreslEditorParser.g:21980:1: ( ( rule__Objective__LocalAlternatives_1_1_0 ) )
-            // InternalWreslEditorParser.g:21981:1: ( rule__Objective__LocalAlternatives_1_1_0 )
+            // InternalWreslEditorParser.g:22107:1: ( ( rule__Objective__LocalAlternatives_1_1_0 ) )
+            // InternalWreslEditorParser.g:22108:1: ( rule__Objective__LocalAlternatives_1_1_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getObjectiveAccess().getLocalAlternatives_1_1_0()); 
             }
-            // InternalWreslEditorParser.g:21982:1: ( rule__Objective__LocalAlternatives_1_1_0 )
-            // InternalWreslEditorParser.g:21982:2: rule__Objective__LocalAlternatives_1_1_0
+            // InternalWreslEditorParser.g:22109:1: ( rule__Objective__LocalAlternatives_1_1_0 )
+            // InternalWreslEditorParser.g:22109:2: rule__Objective__LocalAlternatives_1_1_0
             {
             pushFollow(FOLLOW_2);
             rule__Objective__LocalAlternatives_1_1_0();
@@ -64805,17 +65147,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Objective__NameAssignment_2"
-    // InternalWreslEditorParser.g:21991:1: rule__Objective__NameAssignment_2 : ( RULE_ID ) ;
+    // InternalWreslEditorParser.g:22118:1: rule__Objective__NameAssignment_2 : ( RULE_ID ) ;
     public final void rule__Objective__NameAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:21995:1: ( ( RULE_ID ) )
-            // InternalWreslEditorParser.g:21996:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:22122:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:22123:1: ( RULE_ID )
             {
-            // InternalWreslEditorParser.g:21996:1: ( RULE_ID )
-            // InternalWreslEditorParser.g:21997:1: RULE_ID
+            // InternalWreslEditorParser.g:22123:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:22124:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getObjectiveAccess().getNameIDTerminalRuleCall_2_0()); 
@@ -64846,17 +65188,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Objective__WeightsAssignment_5"
-    // InternalWreslEditorParser.g:22006:1: rule__Objective__WeightsAssignment_5 : ( ruleWeightItem ) ;
+    // InternalWreslEditorParser.g:22133:1: rule__Objective__WeightsAssignment_5 : ( ruleWeightItem ) ;
     public final void rule__Objective__WeightsAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22010:1: ( ( ruleWeightItem ) )
-            // InternalWreslEditorParser.g:22011:1: ( ruleWeightItem )
+            // InternalWreslEditorParser.g:22137:1: ( ( ruleWeightItem ) )
+            // InternalWreslEditorParser.g:22138:1: ( ruleWeightItem )
             {
-            // InternalWreslEditorParser.g:22011:1: ( ruleWeightItem )
-            // InternalWreslEditorParser.g:22012:1: ruleWeightItem
+            // InternalWreslEditorParser.g:22138:1: ( ruleWeightItem )
+            // InternalWreslEditorParser.g:22139:1: ruleWeightItem
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getObjectiveAccess().getWeightsWeightItemParserRuleCall_5_0()); 
@@ -64891,23 +65233,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__WeightItem__RefAssignment_1"
-    // InternalWreslEditorParser.g:22021:1: rule__WeightItem__RefAssignment_1 : ( ( RULE_ID ) ) ;
+    // InternalWreslEditorParser.g:22148:1: rule__WeightItem__RefAssignment_1 : ( ( RULE_ID ) ) ;
     public final void rule__WeightItem__RefAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22025:1: ( ( ( RULE_ID ) ) )
-            // InternalWreslEditorParser.g:22026:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:22152:1: ( ( ( RULE_ID ) ) )
+            // InternalWreslEditorParser.g:22153:1: ( ( RULE_ID ) )
             {
-            // InternalWreslEditorParser.g:22026:1: ( ( RULE_ID ) )
-            // InternalWreslEditorParser.g:22027:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:22153:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:22154:1: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWeightItemAccess().getRefDeclarationCrossReference_1_0()); 
             }
-            // InternalWreslEditorParser.g:22028:1: ( RULE_ID )
-            // InternalWreslEditorParser.g:22029:1: RULE_ID
+            // InternalWreslEditorParser.g:22155:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:22156:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWeightItemAccess().getRefDeclarationIDTerminalRuleCall_1_0_1()); 
@@ -64944,17 +65286,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__WeightItem__TaAssignment_2"
-    // InternalWreslEditorParser.g:22040:1: rule__WeightItem__TaAssignment_2 : ( ruleTimeArraySize ) ;
+    // InternalWreslEditorParser.g:22167:1: rule__WeightItem__TaAssignment_2 : ( ruleTimeArraySize ) ;
     public final void rule__WeightItem__TaAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22044:1: ( ( ruleTimeArraySize ) )
-            // InternalWreslEditorParser.g:22045:1: ( ruleTimeArraySize )
+            // InternalWreslEditorParser.g:22171:1: ( ( ruleTimeArraySize ) )
+            // InternalWreslEditorParser.g:22172:1: ( ruleTimeArraySize )
             {
-            // InternalWreslEditorParser.g:22045:1: ( ruleTimeArraySize )
-            // InternalWreslEditorParser.g:22046:1: ruleTimeArraySize
+            // InternalWreslEditorParser.g:22172:1: ( ruleTimeArraySize )
+            // InternalWreslEditorParser.g:22173:1: ruleTimeArraySize
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWeightItemAccess().getTaTimeArraySizeParserRuleCall_2_0()); 
@@ -64989,17 +65331,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__WeightItem__ExpressionAssignment_4"
-    // InternalWreslEditorParser.g:22055:1: rule__WeightItem__ExpressionAssignment_4 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:22182:1: rule__WeightItem__ExpressionAssignment_4 : ( ruleExpression ) ;
     public final void rule__WeightItem__ExpressionAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22059:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:22060:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:22186:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:22187:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:22060:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:22061:1: ruleExpression
+            // InternalWreslEditorParser.g:22187:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:22188:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWeightItemAccess().getExpressionExpressionParserRuleCall_4_0()); 
@@ -65034,23 +65376,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ExternalDef__LocalAssignment_1_1"
-    // InternalWreslEditorParser.g:22070:1: rule__ExternalDef__LocalAssignment_1_1 : ( ( rule__ExternalDef__LocalAlternatives_1_1_0 ) ) ;
+    // InternalWreslEditorParser.g:22197:1: rule__ExternalDef__LocalAssignment_1_1 : ( ( rule__ExternalDef__LocalAlternatives_1_1_0 ) ) ;
     public final void rule__ExternalDef__LocalAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22074:1: ( ( ( rule__ExternalDef__LocalAlternatives_1_1_0 ) ) )
-            // InternalWreslEditorParser.g:22075:1: ( ( rule__ExternalDef__LocalAlternatives_1_1_0 ) )
+            // InternalWreslEditorParser.g:22201:1: ( ( ( rule__ExternalDef__LocalAlternatives_1_1_0 ) ) )
+            // InternalWreslEditorParser.g:22202:1: ( ( rule__ExternalDef__LocalAlternatives_1_1_0 ) )
             {
-            // InternalWreslEditorParser.g:22075:1: ( ( rule__ExternalDef__LocalAlternatives_1_1_0 ) )
-            // InternalWreslEditorParser.g:22076:1: ( rule__ExternalDef__LocalAlternatives_1_1_0 )
+            // InternalWreslEditorParser.g:22202:1: ( ( rule__ExternalDef__LocalAlternatives_1_1_0 ) )
+            // InternalWreslEditorParser.g:22203:1: ( rule__ExternalDef__LocalAlternatives_1_1_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExternalDefAccess().getLocalAlternatives_1_1_0()); 
             }
-            // InternalWreslEditorParser.g:22077:1: ( rule__ExternalDef__LocalAlternatives_1_1_0 )
-            // InternalWreslEditorParser.g:22077:2: rule__ExternalDef__LocalAlternatives_1_1_0
+            // InternalWreslEditorParser.g:22204:1: ( rule__ExternalDef__LocalAlternatives_1_1_0 )
+            // InternalWreslEditorParser.g:22204:2: rule__ExternalDef__LocalAlternatives_1_1_0
             {
             pushFollow(FOLLOW_2);
             rule__ExternalDef__LocalAlternatives_1_1_0();
@@ -65085,23 +65427,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ExternalDef__RefAssignment_2"
-    // InternalWreslEditorParser.g:22086:1: rule__ExternalDef__RefAssignment_2 : ( ( RULE_ID ) ) ;
+    // InternalWreslEditorParser.g:22213:1: rule__ExternalDef__RefAssignment_2 : ( ( RULE_ID ) ) ;
     public final void rule__ExternalDef__RefAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22090:1: ( ( ( RULE_ID ) ) )
-            // InternalWreslEditorParser.g:22091:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:22217:1: ( ( ( RULE_ID ) ) )
+            // InternalWreslEditorParser.g:22218:1: ( ( RULE_ID ) )
             {
-            // InternalWreslEditorParser.g:22091:1: ( ( RULE_ID ) )
-            // InternalWreslEditorParser.g:22092:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:22218:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:22219:1: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExternalDefAccess().getRefDeclarationCrossReference_2_0()); 
             }
-            // InternalWreslEditorParser.g:22093:1: ( RULE_ID )
-            // InternalWreslEditorParser.g:22094:1: RULE_ID
+            // InternalWreslEditorParser.g:22220:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:22221:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExternalDefAccess().getRefDeclarationIDTerminalRuleCall_2_0_1()); 
@@ -65138,17 +65480,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ExternalDef__DefinitionAssignment_4"
-    // InternalWreslEditorParser.g:22105:1: rule__ExternalDef__DefinitionAssignment_4 : ( ruleExternal ) ;
+    // InternalWreslEditorParser.g:22232:1: rule__ExternalDef__DefinitionAssignment_4 : ( ruleExternal ) ;
     public final void rule__ExternalDef__DefinitionAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22109:1: ( ( ruleExternal ) )
-            // InternalWreslEditorParser.g:22110:1: ( ruleExternal )
+            // InternalWreslEditorParser.g:22236:1: ( ( ruleExternal ) )
+            // InternalWreslEditorParser.g:22237:1: ( ruleExternal )
             {
-            // InternalWreslEditorParser.g:22110:1: ( ruleExternal )
-            // InternalWreslEditorParser.g:22111:1: ruleExternal
+            // InternalWreslEditorParser.g:22237:1: ( ruleExternal )
+            // InternalWreslEditorParser.g:22238:1: ruleExternal
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExternalDefAccess().getDefinitionExternalParserRuleCall_4_0()); 
@@ -65183,17 +65525,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__SvarDef__TaAssignment_0_1"
-    // InternalWreslEditorParser.g:22120:1: rule__SvarDef__TaAssignment_0_1 : ( ruleTimeArraySize ) ;
+    // InternalWreslEditorParser.g:22247:1: rule__SvarDef__TaAssignment_0_1 : ( ruleTimeArraySize ) ;
     public final void rule__SvarDef__TaAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22124:1: ( ( ruleTimeArraySize ) )
-            // InternalWreslEditorParser.g:22125:1: ( ruleTimeArraySize )
+            // InternalWreslEditorParser.g:22251:1: ( ( ruleTimeArraySize ) )
+            // InternalWreslEditorParser.g:22252:1: ( ruleTimeArraySize )
             {
-            // InternalWreslEditorParser.g:22125:1: ( ruleTimeArraySize )
-            // InternalWreslEditorParser.g:22126:1: ruleTimeArraySize
+            // InternalWreslEditorParser.g:22252:1: ( ruleTimeArraySize )
+            // InternalWreslEditorParser.g:22253:1: ruleTimeArraySize
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSvarDefAccess().getTaTimeArraySizeParserRuleCall_0_1_0()); 
@@ -65228,23 +65570,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__SvarDef__LocalAssignment_0_2_1"
-    // InternalWreslEditorParser.g:22135:1: rule__SvarDef__LocalAssignment_0_2_1 : ( ( rule__SvarDef__LocalAlternatives_0_2_1_0 ) ) ;
+    // InternalWreslEditorParser.g:22262:1: rule__SvarDef__LocalAssignment_0_2_1 : ( ( rule__SvarDef__LocalAlternatives_0_2_1_0 ) ) ;
     public final void rule__SvarDef__LocalAssignment_0_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22139:1: ( ( ( rule__SvarDef__LocalAlternatives_0_2_1_0 ) ) )
-            // InternalWreslEditorParser.g:22140:1: ( ( rule__SvarDef__LocalAlternatives_0_2_1_0 ) )
+            // InternalWreslEditorParser.g:22266:1: ( ( ( rule__SvarDef__LocalAlternatives_0_2_1_0 ) ) )
+            // InternalWreslEditorParser.g:22267:1: ( ( rule__SvarDef__LocalAlternatives_0_2_1_0 ) )
             {
-            // InternalWreslEditorParser.g:22140:1: ( ( rule__SvarDef__LocalAlternatives_0_2_1_0 ) )
-            // InternalWreslEditorParser.g:22141:1: ( rule__SvarDef__LocalAlternatives_0_2_1_0 )
+            // InternalWreslEditorParser.g:22267:1: ( ( rule__SvarDef__LocalAlternatives_0_2_1_0 ) )
+            // InternalWreslEditorParser.g:22268:1: ( rule__SvarDef__LocalAlternatives_0_2_1_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSvarDefAccess().getLocalAlternatives_0_2_1_0()); 
             }
-            // InternalWreslEditorParser.g:22142:1: ( rule__SvarDef__LocalAlternatives_0_2_1_0 )
-            // InternalWreslEditorParser.g:22142:2: rule__SvarDef__LocalAlternatives_0_2_1_0
+            // InternalWreslEditorParser.g:22269:1: ( rule__SvarDef__LocalAlternatives_0_2_1_0 )
+            // InternalWreslEditorParser.g:22269:2: rule__SvarDef__LocalAlternatives_0_2_1_0
             {
             pushFollow(FOLLOW_2);
             rule__SvarDef__LocalAlternatives_0_2_1_0();
@@ -65279,23 +65621,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__SvarDef__RefAssignment_0_3"
-    // InternalWreslEditorParser.g:22151:1: rule__SvarDef__RefAssignment_0_3 : ( ( RULE_ID ) ) ;
+    // InternalWreslEditorParser.g:22278:1: rule__SvarDef__RefAssignment_0_3 : ( ( RULE_ID ) ) ;
     public final void rule__SvarDef__RefAssignment_0_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22155:1: ( ( ( RULE_ID ) ) )
-            // InternalWreslEditorParser.g:22156:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:22282:1: ( ( ( RULE_ID ) ) )
+            // InternalWreslEditorParser.g:22283:1: ( ( RULE_ID ) )
             {
-            // InternalWreslEditorParser.g:22156:1: ( ( RULE_ID ) )
-            // InternalWreslEditorParser.g:22157:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:22283:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:22284:1: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSvarDefAccess().getRefDeclarationCrossReference_0_3_0()); 
             }
-            // InternalWreslEditorParser.g:22158:1: ( RULE_ID )
-            // InternalWreslEditorParser.g:22159:1: RULE_ID
+            // InternalWreslEditorParser.g:22285:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:22286:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSvarDefAccess().getRefDeclarationIDTerminalRuleCall_0_3_0_1()); 
@@ -65332,17 +65674,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__SvarDef__DefinitionAssignment_0_5"
-    // InternalWreslEditorParser.g:22170:1: rule__SvarDef__DefinitionAssignment_0_5 : ( ruleSVar ) ;
+    // InternalWreslEditorParser.g:22297:1: rule__SvarDef__DefinitionAssignment_0_5 : ( ruleSVar ) ;
     public final void rule__SvarDef__DefinitionAssignment_0_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22174:1: ( ( ruleSVar ) )
-            // InternalWreslEditorParser.g:22175:1: ( ruleSVar )
+            // InternalWreslEditorParser.g:22301:1: ( ( ruleSVar ) )
+            // InternalWreslEditorParser.g:22302:1: ( ruleSVar )
             {
-            // InternalWreslEditorParser.g:22175:1: ( ruleSVar )
-            // InternalWreslEditorParser.g:22176:1: ruleSVar
+            // InternalWreslEditorParser.g:22302:1: ( ruleSVar )
+            // InternalWreslEditorParser.g:22303:1: ruleSVar
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSvarDefAccess().getDefinitionSVarParserRuleCall_0_5_0()); 
@@ -65377,17 +65719,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__SvarDef__TaAssignment_1_1"
-    // InternalWreslEditorParser.g:22185:1: rule__SvarDef__TaAssignment_1_1 : ( ruleTimeArraySize ) ;
+    // InternalWreslEditorParser.g:22312:1: rule__SvarDef__TaAssignment_1_1 : ( ruleTimeArraySize ) ;
     public final void rule__SvarDef__TaAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22189:1: ( ( ruleTimeArraySize ) )
-            // InternalWreslEditorParser.g:22190:1: ( ruleTimeArraySize )
+            // InternalWreslEditorParser.g:22316:1: ( ( ruleTimeArraySize ) )
+            // InternalWreslEditorParser.g:22317:1: ( ruleTimeArraySize )
             {
-            // InternalWreslEditorParser.g:22190:1: ( ruleTimeArraySize )
-            // InternalWreslEditorParser.g:22191:1: ruleTimeArraySize
+            // InternalWreslEditorParser.g:22317:1: ( ruleTimeArraySize )
+            // InternalWreslEditorParser.g:22318:1: ruleTimeArraySize
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSvarDefAccess().getTaTimeArraySizeParserRuleCall_1_1_0()); 
@@ -65422,23 +65764,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__SvarDef__LocalAssignment_1_2_1"
-    // InternalWreslEditorParser.g:22200:1: rule__SvarDef__LocalAssignment_1_2_1 : ( ( rule__SvarDef__LocalAlternatives_1_2_1_0 ) ) ;
+    // InternalWreslEditorParser.g:22327:1: rule__SvarDef__LocalAssignment_1_2_1 : ( ( rule__SvarDef__LocalAlternatives_1_2_1_0 ) ) ;
     public final void rule__SvarDef__LocalAssignment_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22204:1: ( ( ( rule__SvarDef__LocalAlternatives_1_2_1_0 ) ) )
-            // InternalWreslEditorParser.g:22205:1: ( ( rule__SvarDef__LocalAlternatives_1_2_1_0 ) )
+            // InternalWreslEditorParser.g:22331:1: ( ( ( rule__SvarDef__LocalAlternatives_1_2_1_0 ) ) )
+            // InternalWreslEditorParser.g:22332:1: ( ( rule__SvarDef__LocalAlternatives_1_2_1_0 ) )
             {
-            // InternalWreslEditorParser.g:22205:1: ( ( rule__SvarDef__LocalAlternatives_1_2_1_0 ) )
-            // InternalWreslEditorParser.g:22206:1: ( rule__SvarDef__LocalAlternatives_1_2_1_0 )
+            // InternalWreslEditorParser.g:22332:1: ( ( rule__SvarDef__LocalAlternatives_1_2_1_0 ) )
+            // InternalWreslEditorParser.g:22333:1: ( rule__SvarDef__LocalAlternatives_1_2_1_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSvarDefAccess().getLocalAlternatives_1_2_1_0()); 
             }
-            // InternalWreslEditorParser.g:22207:1: ( rule__SvarDef__LocalAlternatives_1_2_1_0 )
-            // InternalWreslEditorParser.g:22207:2: rule__SvarDef__LocalAlternatives_1_2_1_0
+            // InternalWreslEditorParser.g:22334:1: ( rule__SvarDef__LocalAlternatives_1_2_1_0 )
+            // InternalWreslEditorParser.g:22334:2: rule__SvarDef__LocalAlternatives_1_2_1_0
             {
             pushFollow(FOLLOW_2);
             rule__SvarDef__LocalAlternatives_1_2_1_0();
@@ -65473,23 +65815,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__SvarDef__RefAssignment_1_3"
-    // InternalWreslEditorParser.g:22216:1: rule__SvarDef__RefAssignment_1_3 : ( ( RULE_ID ) ) ;
+    // InternalWreslEditorParser.g:22343:1: rule__SvarDef__RefAssignment_1_3 : ( ( RULE_ID ) ) ;
     public final void rule__SvarDef__RefAssignment_1_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22220:1: ( ( ( RULE_ID ) ) )
-            // InternalWreslEditorParser.g:22221:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:22347:1: ( ( ( RULE_ID ) ) )
+            // InternalWreslEditorParser.g:22348:1: ( ( RULE_ID ) )
             {
-            // InternalWreslEditorParser.g:22221:1: ( ( RULE_ID ) )
-            // InternalWreslEditorParser.g:22222:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:22348:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:22349:1: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSvarDefAccess().getRefDeclarationCrossReference_1_3_0()); 
             }
-            // InternalWreslEditorParser.g:22223:1: ( RULE_ID )
-            // InternalWreslEditorParser.g:22224:1: RULE_ID
+            // InternalWreslEditorParser.g:22350:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:22351:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSvarDefAccess().getRefDeclarationIDTerminalRuleCall_1_3_0_1()); 
@@ -65526,17 +65868,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__SvarDef__DefinitionAssignment_1_5"
-    // InternalWreslEditorParser.g:22235:1: rule__SvarDef__DefinitionAssignment_1_5 : ( ruleSVar ) ;
+    // InternalWreslEditorParser.g:22362:1: rule__SvarDef__DefinitionAssignment_1_5 : ( ruleSVar ) ;
     public final void rule__SvarDef__DefinitionAssignment_1_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22239:1: ( ( ruleSVar ) )
-            // InternalWreslEditorParser.g:22240:1: ( ruleSVar )
+            // InternalWreslEditorParser.g:22366:1: ( ( ruleSVar ) )
+            // InternalWreslEditorParser.g:22367:1: ( ruleSVar )
             {
-            // InternalWreslEditorParser.g:22240:1: ( ruleSVar )
-            // InternalWreslEditorParser.g:22241:1: ruleSVar
+            // InternalWreslEditorParser.g:22367:1: ( ruleSVar )
+            // InternalWreslEditorParser.g:22368:1: ruleSVar
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSvarDefAccess().getDefinitionSVarParserRuleCall_1_5_0()); 
@@ -65571,17 +65913,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__DvarDef__TaAssignment_0_1"
-    // InternalWreslEditorParser.g:22250:1: rule__DvarDef__TaAssignment_0_1 : ( ruleTimeArraySize ) ;
+    // InternalWreslEditorParser.g:22377:1: rule__DvarDef__TaAssignment_0_1 : ( ruleTimeArraySize ) ;
     public final void rule__DvarDef__TaAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22254:1: ( ( ruleTimeArraySize ) )
-            // InternalWreslEditorParser.g:22255:1: ( ruleTimeArraySize )
+            // InternalWreslEditorParser.g:22381:1: ( ( ruleTimeArraySize ) )
+            // InternalWreslEditorParser.g:22382:1: ( ruleTimeArraySize )
             {
-            // InternalWreslEditorParser.g:22255:1: ( ruleTimeArraySize )
-            // InternalWreslEditorParser.g:22256:1: ruleTimeArraySize
+            // InternalWreslEditorParser.g:22382:1: ( ruleTimeArraySize )
+            // InternalWreslEditorParser.g:22383:1: ruleTimeArraySize
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDvarDefAccess().getTaTimeArraySizeParserRuleCall_0_1_0()); 
@@ -65616,23 +65958,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__DvarDef__LocalAssignment_0_2_1"
-    // InternalWreslEditorParser.g:22265:1: rule__DvarDef__LocalAssignment_0_2_1 : ( ( rule__DvarDef__LocalAlternatives_0_2_1_0 ) ) ;
+    // InternalWreslEditorParser.g:22392:1: rule__DvarDef__LocalAssignment_0_2_1 : ( ( rule__DvarDef__LocalAlternatives_0_2_1_0 ) ) ;
     public final void rule__DvarDef__LocalAssignment_0_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22269:1: ( ( ( rule__DvarDef__LocalAlternatives_0_2_1_0 ) ) )
-            // InternalWreslEditorParser.g:22270:1: ( ( rule__DvarDef__LocalAlternatives_0_2_1_0 ) )
+            // InternalWreslEditorParser.g:22396:1: ( ( ( rule__DvarDef__LocalAlternatives_0_2_1_0 ) ) )
+            // InternalWreslEditorParser.g:22397:1: ( ( rule__DvarDef__LocalAlternatives_0_2_1_0 ) )
             {
-            // InternalWreslEditorParser.g:22270:1: ( ( rule__DvarDef__LocalAlternatives_0_2_1_0 ) )
-            // InternalWreslEditorParser.g:22271:1: ( rule__DvarDef__LocalAlternatives_0_2_1_0 )
+            // InternalWreslEditorParser.g:22397:1: ( ( rule__DvarDef__LocalAlternatives_0_2_1_0 ) )
+            // InternalWreslEditorParser.g:22398:1: ( rule__DvarDef__LocalAlternatives_0_2_1_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDvarDefAccess().getLocalAlternatives_0_2_1_0()); 
             }
-            // InternalWreslEditorParser.g:22272:1: ( rule__DvarDef__LocalAlternatives_0_2_1_0 )
-            // InternalWreslEditorParser.g:22272:2: rule__DvarDef__LocalAlternatives_0_2_1_0
+            // InternalWreslEditorParser.g:22399:1: ( rule__DvarDef__LocalAlternatives_0_2_1_0 )
+            // InternalWreslEditorParser.g:22399:2: rule__DvarDef__LocalAlternatives_0_2_1_0
             {
             pushFollow(FOLLOW_2);
             rule__DvarDef__LocalAlternatives_0_2_1_0();
@@ -65667,23 +66009,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__DvarDef__RefAssignment_0_3"
-    // InternalWreslEditorParser.g:22281:1: rule__DvarDef__RefAssignment_0_3 : ( ( RULE_ID ) ) ;
+    // InternalWreslEditorParser.g:22408:1: rule__DvarDef__RefAssignment_0_3 : ( ( RULE_ID ) ) ;
     public final void rule__DvarDef__RefAssignment_0_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22285:1: ( ( ( RULE_ID ) ) )
-            // InternalWreslEditorParser.g:22286:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:22412:1: ( ( ( RULE_ID ) ) )
+            // InternalWreslEditorParser.g:22413:1: ( ( RULE_ID ) )
             {
-            // InternalWreslEditorParser.g:22286:1: ( ( RULE_ID ) )
-            // InternalWreslEditorParser.g:22287:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:22413:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:22414:1: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDvarDefAccess().getRefDeclarationCrossReference_0_3_0()); 
             }
-            // InternalWreslEditorParser.g:22288:1: ( RULE_ID )
-            // InternalWreslEditorParser.g:22289:1: RULE_ID
+            // InternalWreslEditorParser.g:22415:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:22416:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDvarDefAccess().getRefDeclarationIDTerminalRuleCall_0_3_0_1()); 
@@ -65720,23 +66062,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__DvarDef__DefinitionAssignment_0_5"
-    // InternalWreslEditorParser.g:22300:1: rule__DvarDef__DefinitionAssignment_0_5 : ( ( rule__DvarDef__DefinitionAlternatives_0_5_0 ) ) ;
+    // InternalWreslEditorParser.g:22427:1: rule__DvarDef__DefinitionAssignment_0_5 : ( ( rule__DvarDef__DefinitionAlternatives_0_5_0 ) ) ;
     public final void rule__DvarDef__DefinitionAssignment_0_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22304:1: ( ( ( rule__DvarDef__DefinitionAlternatives_0_5_0 ) ) )
-            // InternalWreslEditorParser.g:22305:1: ( ( rule__DvarDef__DefinitionAlternatives_0_5_0 ) )
+            // InternalWreslEditorParser.g:22431:1: ( ( ( rule__DvarDef__DefinitionAlternatives_0_5_0 ) ) )
+            // InternalWreslEditorParser.g:22432:1: ( ( rule__DvarDef__DefinitionAlternatives_0_5_0 ) )
             {
-            // InternalWreslEditorParser.g:22305:1: ( ( rule__DvarDef__DefinitionAlternatives_0_5_0 ) )
-            // InternalWreslEditorParser.g:22306:1: ( rule__DvarDef__DefinitionAlternatives_0_5_0 )
+            // InternalWreslEditorParser.g:22432:1: ( ( rule__DvarDef__DefinitionAlternatives_0_5_0 ) )
+            // InternalWreslEditorParser.g:22433:1: ( rule__DvarDef__DefinitionAlternatives_0_5_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDvarDefAccess().getDefinitionAlternatives_0_5_0()); 
             }
-            // InternalWreslEditorParser.g:22307:1: ( rule__DvarDef__DefinitionAlternatives_0_5_0 )
-            // InternalWreslEditorParser.g:22307:2: rule__DvarDef__DefinitionAlternatives_0_5_0
+            // InternalWreslEditorParser.g:22434:1: ( rule__DvarDef__DefinitionAlternatives_0_5_0 )
+            // InternalWreslEditorParser.g:22434:2: rule__DvarDef__DefinitionAlternatives_0_5_0
             {
             pushFollow(FOLLOW_2);
             rule__DvarDef__DefinitionAlternatives_0_5_0();
@@ -65771,17 +66113,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__DvarDef__TaAssignment_1_1"
-    // InternalWreslEditorParser.g:22316:1: rule__DvarDef__TaAssignment_1_1 : ( ruleTimeArraySize ) ;
+    // InternalWreslEditorParser.g:22443:1: rule__DvarDef__TaAssignment_1_1 : ( ruleTimeArraySize ) ;
     public final void rule__DvarDef__TaAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22320:1: ( ( ruleTimeArraySize ) )
-            // InternalWreslEditorParser.g:22321:1: ( ruleTimeArraySize )
+            // InternalWreslEditorParser.g:22447:1: ( ( ruleTimeArraySize ) )
+            // InternalWreslEditorParser.g:22448:1: ( ruleTimeArraySize )
             {
-            // InternalWreslEditorParser.g:22321:1: ( ruleTimeArraySize )
-            // InternalWreslEditorParser.g:22322:1: ruleTimeArraySize
+            // InternalWreslEditorParser.g:22448:1: ( ruleTimeArraySize )
+            // InternalWreslEditorParser.g:22449:1: ruleTimeArraySize
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDvarDefAccess().getTaTimeArraySizeParserRuleCall_1_1_0()); 
@@ -65816,23 +66158,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__DvarDef__LocalAssignment_1_2_1"
-    // InternalWreslEditorParser.g:22331:1: rule__DvarDef__LocalAssignment_1_2_1 : ( ( rule__DvarDef__LocalAlternatives_1_2_1_0 ) ) ;
+    // InternalWreslEditorParser.g:22458:1: rule__DvarDef__LocalAssignment_1_2_1 : ( ( rule__DvarDef__LocalAlternatives_1_2_1_0 ) ) ;
     public final void rule__DvarDef__LocalAssignment_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22335:1: ( ( ( rule__DvarDef__LocalAlternatives_1_2_1_0 ) ) )
-            // InternalWreslEditorParser.g:22336:1: ( ( rule__DvarDef__LocalAlternatives_1_2_1_0 ) )
+            // InternalWreslEditorParser.g:22462:1: ( ( ( rule__DvarDef__LocalAlternatives_1_2_1_0 ) ) )
+            // InternalWreslEditorParser.g:22463:1: ( ( rule__DvarDef__LocalAlternatives_1_2_1_0 ) )
             {
-            // InternalWreslEditorParser.g:22336:1: ( ( rule__DvarDef__LocalAlternatives_1_2_1_0 ) )
-            // InternalWreslEditorParser.g:22337:1: ( rule__DvarDef__LocalAlternatives_1_2_1_0 )
+            // InternalWreslEditorParser.g:22463:1: ( ( rule__DvarDef__LocalAlternatives_1_2_1_0 ) )
+            // InternalWreslEditorParser.g:22464:1: ( rule__DvarDef__LocalAlternatives_1_2_1_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDvarDefAccess().getLocalAlternatives_1_2_1_0()); 
             }
-            // InternalWreslEditorParser.g:22338:1: ( rule__DvarDef__LocalAlternatives_1_2_1_0 )
-            // InternalWreslEditorParser.g:22338:2: rule__DvarDef__LocalAlternatives_1_2_1_0
+            // InternalWreslEditorParser.g:22465:1: ( rule__DvarDef__LocalAlternatives_1_2_1_0 )
+            // InternalWreslEditorParser.g:22465:2: rule__DvarDef__LocalAlternatives_1_2_1_0
             {
             pushFollow(FOLLOW_2);
             rule__DvarDef__LocalAlternatives_1_2_1_0();
@@ -65867,23 +66209,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__DvarDef__RefAssignment_1_3"
-    // InternalWreslEditorParser.g:22347:1: rule__DvarDef__RefAssignment_1_3 : ( ( RULE_ID ) ) ;
+    // InternalWreslEditorParser.g:22474:1: rule__DvarDef__RefAssignment_1_3 : ( ( RULE_ID ) ) ;
     public final void rule__DvarDef__RefAssignment_1_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22351:1: ( ( ( RULE_ID ) ) )
-            // InternalWreslEditorParser.g:22352:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:22478:1: ( ( ( RULE_ID ) ) )
+            // InternalWreslEditorParser.g:22479:1: ( ( RULE_ID ) )
             {
-            // InternalWreslEditorParser.g:22352:1: ( ( RULE_ID ) )
-            // InternalWreslEditorParser.g:22353:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:22479:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:22480:1: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDvarDefAccess().getRefDeclarationCrossReference_1_3_0()); 
             }
-            // InternalWreslEditorParser.g:22354:1: ( RULE_ID )
-            // InternalWreslEditorParser.g:22355:1: RULE_ID
+            // InternalWreslEditorParser.g:22481:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:22482:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDvarDefAccess().getRefDeclarationIDTerminalRuleCall_1_3_0_1()); 
@@ -65920,23 +66262,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__DvarDef__DefinitionAssignment_1_5"
-    // InternalWreslEditorParser.g:22366:1: rule__DvarDef__DefinitionAssignment_1_5 : ( ( rule__DvarDef__DefinitionAlternatives_1_5_0 ) ) ;
+    // InternalWreslEditorParser.g:22493:1: rule__DvarDef__DefinitionAssignment_1_5 : ( ( rule__DvarDef__DefinitionAlternatives_1_5_0 ) ) ;
     public final void rule__DvarDef__DefinitionAssignment_1_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22370:1: ( ( ( rule__DvarDef__DefinitionAlternatives_1_5_0 ) ) )
-            // InternalWreslEditorParser.g:22371:1: ( ( rule__DvarDef__DefinitionAlternatives_1_5_0 ) )
+            // InternalWreslEditorParser.g:22497:1: ( ( ( rule__DvarDef__DefinitionAlternatives_1_5_0 ) ) )
+            // InternalWreslEditorParser.g:22498:1: ( ( rule__DvarDef__DefinitionAlternatives_1_5_0 ) )
             {
-            // InternalWreslEditorParser.g:22371:1: ( ( rule__DvarDef__DefinitionAlternatives_1_5_0 ) )
-            // InternalWreslEditorParser.g:22372:1: ( rule__DvarDef__DefinitionAlternatives_1_5_0 )
+            // InternalWreslEditorParser.g:22498:1: ( ( rule__DvarDef__DefinitionAlternatives_1_5_0 ) )
+            // InternalWreslEditorParser.g:22499:1: ( rule__DvarDef__DefinitionAlternatives_1_5_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDvarDefAccess().getDefinitionAlternatives_1_5_0()); 
             }
-            // InternalWreslEditorParser.g:22373:1: ( rule__DvarDef__DefinitionAlternatives_1_5_0 )
-            // InternalWreslEditorParser.g:22373:2: rule__DvarDef__DefinitionAlternatives_1_5_0
+            // InternalWreslEditorParser.g:22500:1: ( rule__DvarDef__DefinitionAlternatives_1_5_0 )
+            // InternalWreslEditorParser.g:22500:2: rule__DvarDef__DefinitionAlternatives_1_5_0
             {
             pushFollow(FOLLOW_2);
             rule__DvarDef__DefinitionAlternatives_1_5_0();
@@ -65971,23 +66313,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ConstDef__LocalAssignment_1_1"
-    // InternalWreslEditorParser.g:22382:1: rule__ConstDef__LocalAssignment_1_1 : ( ( rule__ConstDef__LocalAlternatives_1_1_0 ) ) ;
+    // InternalWreslEditorParser.g:22509:1: rule__ConstDef__LocalAssignment_1_1 : ( ( rule__ConstDef__LocalAlternatives_1_1_0 ) ) ;
     public final void rule__ConstDef__LocalAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22386:1: ( ( ( rule__ConstDef__LocalAlternatives_1_1_0 ) ) )
-            // InternalWreslEditorParser.g:22387:1: ( ( rule__ConstDef__LocalAlternatives_1_1_0 ) )
+            // InternalWreslEditorParser.g:22513:1: ( ( ( rule__ConstDef__LocalAlternatives_1_1_0 ) ) )
+            // InternalWreslEditorParser.g:22514:1: ( ( rule__ConstDef__LocalAlternatives_1_1_0 ) )
             {
-            // InternalWreslEditorParser.g:22387:1: ( ( rule__ConstDef__LocalAlternatives_1_1_0 ) )
-            // InternalWreslEditorParser.g:22388:1: ( rule__ConstDef__LocalAlternatives_1_1_0 )
+            // InternalWreslEditorParser.g:22514:1: ( ( rule__ConstDef__LocalAlternatives_1_1_0 ) )
+            // InternalWreslEditorParser.g:22515:1: ( rule__ConstDef__LocalAlternatives_1_1_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getConstDefAccess().getLocalAlternatives_1_1_0()); 
             }
-            // InternalWreslEditorParser.g:22389:1: ( rule__ConstDef__LocalAlternatives_1_1_0 )
-            // InternalWreslEditorParser.g:22389:2: rule__ConstDef__LocalAlternatives_1_1_0
+            // InternalWreslEditorParser.g:22516:1: ( rule__ConstDef__LocalAlternatives_1_1_0 )
+            // InternalWreslEditorParser.g:22516:2: rule__ConstDef__LocalAlternatives_1_1_0
             {
             pushFollow(FOLLOW_2);
             rule__ConstDef__LocalAlternatives_1_1_0();
@@ -66022,23 +66364,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ConstDef__RefAssignment_2"
-    // InternalWreslEditorParser.g:22398:1: rule__ConstDef__RefAssignment_2 : ( ( RULE_ID ) ) ;
+    // InternalWreslEditorParser.g:22525:1: rule__ConstDef__RefAssignment_2 : ( ( RULE_ID ) ) ;
     public final void rule__ConstDef__RefAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22402:1: ( ( ( RULE_ID ) ) )
-            // InternalWreslEditorParser.g:22403:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:22529:1: ( ( ( RULE_ID ) ) )
+            // InternalWreslEditorParser.g:22530:1: ( ( RULE_ID ) )
             {
-            // InternalWreslEditorParser.g:22403:1: ( ( RULE_ID ) )
-            // InternalWreslEditorParser.g:22404:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:22530:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:22531:1: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getConstDefAccess().getRefDeclarationCrossReference_2_0()); 
             }
-            // InternalWreslEditorParser.g:22405:1: ( RULE_ID )
-            // InternalWreslEditorParser.g:22406:1: RULE_ID
+            // InternalWreslEditorParser.g:22532:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:22533:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getConstDefAccess().getRefDeclarationIDTerminalRuleCall_2_0_1()); 
@@ -66075,17 +66417,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ConstDef__DefinitionAssignment_4"
-    // InternalWreslEditorParser.g:22417:1: rule__ConstDef__DefinitionAssignment_4 : ( ruleNumber ) ;
+    // InternalWreslEditorParser.g:22544:1: rule__ConstDef__DefinitionAssignment_4 : ( ruleNumber ) ;
     public final void rule__ConstDef__DefinitionAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22421:1: ( ( ruleNumber ) )
-            // InternalWreslEditorParser.g:22422:1: ( ruleNumber )
+            // InternalWreslEditorParser.g:22548:1: ( ( ruleNumber ) )
+            // InternalWreslEditorParser.g:22549:1: ( ruleNumber )
             {
-            // InternalWreslEditorParser.g:22422:1: ( ruleNumber )
-            // InternalWreslEditorParser.g:22423:1: ruleNumber
+            // InternalWreslEditorParser.g:22549:1: ( ruleNumber )
+            // InternalWreslEditorParser.g:22550:1: ruleNumber
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getConstDefAccess().getDefinitionNumberParserRuleCall_4_0()); 
@@ -66120,17 +66462,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Alias__TaAssignment_1"
-    // InternalWreslEditorParser.g:22432:1: rule__Alias__TaAssignment_1 : ( ruleTimeArraySize ) ;
+    // InternalWreslEditorParser.g:22559:1: rule__Alias__TaAssignment_1 : ( ruleTimeArraySize ) ;
     public final void rule__Alias__TaAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22436:1: ( ( ruleTimeArraySize ) )
-            // InternalWreslEditorParser.g:22437:1: ( ruleTimeArraySize )
+            // InternalWreslEditorParser.g:22563:1: ( ( ruleTimeArraySize ) )
+            // InternalWreslEditorParser.g:22564:1: ( ruleTimeArraySize )
             {
-            // InternalWreslEditorParser.g:22437:1: ( ruleTimeArraySize )
-            // InternalWreslEditorParser.g:22438:1: ruleTimeArraySize
+            // InternalWreslEditorParser.g:22564:1: ( ruleTimeArraySize )
+            // InternalWreslEditorParser.g:22565:1: ruleTimeArraySize
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAliasAccess().getTaTimeArraySizeParserRuleCall_1_0()); 
@@ -66165,23 +66507,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Alias__LocalAssignment_2_1"
-    // InternalWreslEditorParser.g:22447:1: rule__Alias__LocalAssignment_2_1 : ( ( rule__Alias__LocalAlternatives_2_1_0 ) ) ;
+    // InternalWreslEditorParser.g:22574:1: rule__Alias__LocalAssignment_2_1 : ( ( rule__Alias__LocalAlternatives_2_1_0 ) ) ;
     public final void rule__Alias__LocalAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22451:1: ( ( ( rule__Alias__LocalAlternatives_2_1_0 ) ) )
-            // InternalWreslEditorParser.g:22452:1: ( ( rule__Alias__LocalAlternatives_2_1_0 ) )
+            // InternalWreslEditorParser.g:22578:1: ( ( ( rule__Alias__LocalAlternatives_2_1_0 ) ) )
+            // InternalWreslEditorParser.g:22579:1: ( ( rule__Alias__LocalAlternatives_2_1_0 ) )
             {
-            // InternalWreslEditorParser.g:22452:1: ( ( rule__Alias__LocalAlternatives_2_1_0 ) )
-            // InternalWreslEditorParser.g:22453:1: ( rule__Alias__LocalAlternatives_2_1_0 )
+            // InternalWreslEditorParser.g:22579:1: ( ( rule__Alias__LocalAlternatives_2_1_0 ) )
+            // InternalWreslEditorParser.g:22580:1: ( rule__Alias__LocalAlternatives_2_1_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAliasAccess().getLocalAlternatives_2_1_0()); 
             }
-            // InternalWreslEditorParser.g:22454:1: ( rule__Alias__LocalAlternatives_2_1_0 )
-            // InternalWreslEditorParser.g:22454:2: rule__Alias__LocalAlternatives_2_1_0
+            // InternalWreslEditorParser.g:22581:1: ( rule__Alias__LocalAlternatives_2_1_0 )
+            // InternalWreslEditorParser.g:22581:2: rule__Alias__LocalAlternatives_2_1_0
             {
             pushFollow(FOLLOW_2);
             rule__Alias__LocalAlternatives_2_1_0();
@@ -66216,23 +66558,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Alias__RefAssignment_3"
-    // InternalWreslEditorParser.g:22463:1: rule__Alias__RefAssignment_3 : ( ( RULE_ID ) ) ;
+    // InternalWreslEditorParser.g:22590:1: rule__Alias__RefAssignment_3 : ( ( RULE_ID ) ) ;
     public final void rule__Alias__RefAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22467:1: ( ( ( RULE_ID ) ) )
-            // InternalWreslEditorParser.g:22468:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:22594:1: ( ( ( RULE_ID ) ) )
+            // InternalWreslEditorParser.g:22595:1: ( ( RULE_ID ) )
             {
-            // InternalWreslEditorParser.g:22468:1: ( ( RULE_ID ) )
-            // InternalWreslEditorParser.g:22469:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:22595:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:22596:1: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAliasAccess().getRefDeclarationCrossReference_3_0()); 
             }
-            // InternalWreslEditorParser.g:22470:1: ( RULE_ID )
-            // InternalWreslEditorParser.g:22471:1: RULE_ID
+            // InternalWreslEditorParser.g:22597:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:22598:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAliasAccess().getRefDeclarationIDTerminalRuleCall_3_0_1()); 
@@ -66269,17 +66611,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Alias__ExpressionAssignment_6"
-    // InternalWreslEditorParser.g:22482:1: rule__Alias__ExpressionAssignment_6 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:22609:1: rule__Alias__ExpressionAssignment_6 : ( ruleExpression ) ;
     public final void rule__Alias__ExpressionAssignment_6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22486:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:22487:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:22613:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:22614:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:22487:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:22488:1: ruleExpression
+            // InternalWreslEditorParser.g:22614:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:22615:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAliasAccess().getExpressionExpressionParserRuleCall_6_0()); 
@@ -66314,17 +66656,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Alias__KindAssignment_7_1"
-    // InternalWreslEditorParser.g:22497:1: rule__Alias__KindAssignment_7_1 : ( RULE_STRING ) ;
+    // InternalWreslEditorParser.g:22624:1: rule__Alias__KindAssignment_7_1 : ( RULE_STRING ) ;
     public final void rule__Alias__KindAssignment_7_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22501:1: ( ( RULE_STRING ) )
-            // InternalWreslEditorParser.g:22502:1: ( RULE_STRING )
+            // InternalWreslEditorParser.g:22628:1: ( ( RULE_STRING ) )
+            // InternalWreslEditorParser.g:22629:1: ( RULE_STRING )
             {
-            // InternalWreslEditorParser.g:22502:1: ( RULE_STRING )
-            // InternalWreslEditorParser.g:22503:1: RULE_STRING
+            // InternalWreslEditorParser.g:22629:1: ( RULE_STRING )
+            // InternalWreslEditorParser.g:22630:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAliasAccess().getKindSTRINGTerminalRuleCall_7_1_0()); 
@@ -66355,17 +66697,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Alias__UnitsAssignment_8_1"
-    // InternalWreslEditorParser.g:22512:1: rule__Alias__UnitsAssignment_8_1 : ( RULE_STRING ) ;
+    // InternalWreslEditorParser.g:22639:1: rule__Alias__UnitsAssignment_8_1 : ( RULE_STRING ) ;
     public final void rule__Alias__UnitsAssignment_8_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22516:1: ( ( RULE_STRING ) )
-            // InternalWreslEditorParser.g:22517:1: ( RULE_STRING )
+            // InternalWreslEditorParser.g:22643:1: ( ( RULE_STRING ) )
+            // InternalWreslEditorParser.g:22644:1: ( RULE_STRING )
             {
-            // InternalWreslEditorParser.g:22517:1: ( RULE_STRING )
-            // InternalWreslEditorParser.g:22518:1: RULE_STRING
+            // InternalWreslEditorParser.g:22644:1: ( RULE_STRING )
+            // InternalWreslEditorParser.g:22645:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAliasAccess().getUnitsSTRINGTerminalRuleCall_8_1_0()); 
@@ -66396,17 +66738,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__External__NameAssignment_1_0_0"
-    // InternalWreslEditorParser.g:22527:1: rule__External__NameAssignment_1_0_0 : ( RULE_ID ) ;
+    // InternalWreslEditorParser.g:22654:1: rule__External__NameAssignment_1_0_0 : ( RULE_ID ) ;
     public final void rule__External__NameAssignment_1_0_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22531:1: ( ( RULE_ID ) )
-            // InternalWreslEditorParser.g:22532:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:22658:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:22659:1: ( RULE_ID )
             {
-            // InternalWreslEditorParser.g:22532:1: ( RULE_ID )
-            // InternalWreslEditorParser.g:22533:1: RULE_ID
+            // InternalWreslEditorParser.g:22659:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:22660:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExternalAccess().getNameIDTerminalRuleCall_1_0_0_0()); 
@@ -66437,17 +66779,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__External__NameAssignment_1_1_1"
-    // InternalWreslEditorParser.g:22542:1: rule__External__NameAssignment_1_1_1 : ( RULE_ID ) ;
+    // InternalWreslEditorParser.g:22669:1: rule__External__NameAssignment_1_1_1 : ( RULE_ID ) ;
     public final void rule__External__NameAssignment_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22546:1: ( ( RULE_ID ) )
-            // InternalWreslEditorParser.g:22547:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:22673:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:22674:1: ( RULE_ID )
             {
-            // InternalWreslEditorParser.g:22547:1: ( RULE_ID )
-            // InternalWreslEditorParser.g:22548:1: RULE_ID
+            // InternalWreslEditorParser.g:22674:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:22675:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExternalAccess().getNameIDTerminalRuleCall_1_1_1_0()); 
@@ -66478,17 +66820,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__DVarNonStd__LowerUpperAssignment_0"
-    // InternalWreslEditorParser.g:22557:1: rule__DVarNonStd__LowerUpperAssignment_0 : ( ruleLowerAndOrUpper ) ;
+    // InternalWreslEditorParser.g:22684:1: rule__DVarNonStd__LowerUpperAssignment_0 : ( ruleLowerAndOrUpper ) ;
     public final void rule__DVarNonStd__LowerUpperAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22561:1: ( ( ruleLowerAndOrUpper ) )
-            // InternalWreslEditorParser.g:22562:1: ( ruleLowerAndOrUpper )
+            // InternalWreslEditorParser.g:22688:1: ( ( ruleLowerAndOrUpper ) )
+            // InternalWreslEditorParser.g:22689:1: ( ruleLowerAndOrUpper )
             {
-            // InternalWreslEditorParser.g:22562:1: ( ruleLowerAndOrUpper )
-            // InternalWreslEditorParser.g:22563:1: ruleLowerAndOrUpper
+            // InternalWreslEditorParser.g:22689:1: ( ruleLowerAndOrUpper )
+            // InternalWreslEditorParser.g:22690:1: ruleLowerAndOrUpper
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDVarNonStdAccess().getLowerUpperLowerAndOrUpperParserRuleCall_0_0()); 
@@ -66523,17 +66865,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__DVarNonStd__KindAssignment_2"
-    // InternalWreslEditorParser.g:22572:1: rule__DVarNonStd__KindAssignment_2 : ( RULE_STRING ) ;
+    // InternalWreslEditorParser.g:22699:1: rule__DVarNonStd__KindAssignment_2 : ( RULE_STRING ) ;
     public final void rule__DVarNonStd__KindAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22576:1: ( ( RULE_STRING ) )
-            // InternalWreslEditorParser.g:22577:1: ( RULE_STRING )
+            // InternalWreslEditorParser.g:22703:1: ( ( RULE_STRING ) )
+            // InternalWreslEditorParser.g:22704:1: ( RULE_STRING )
             {
-            // InternalWreslEditorParser.g:22577:1: ( RULE_STRING )
-            // InternalWreslEditorParser.g:22578:1: RULE_STRING
+            // InternalWreslEditorParser.g:22704:1: ( RULE_STRING )
+            // InternalWreslEditorParser.g:22705:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDVarNonStdAccess().getKindSTRINGTerminalRuleCall_2_0()); 
@@ -66564,17 +66906,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__DVarNonStd__UnitsAssignment_4"
-    // InternalWreslEditorParser.g:22587:1: rule__DVarNonStd__UnitsAssignment_4 : ( RULE_STRING ) ;
+    // InternalWreslEditorParser.g:22714:1: rule__DVarNonStd__UnitsAssignment_4 : ( RULE_STRING ) ;
     public final void rule__DVarNonStd__UnitsAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22591:1: ( ( RULE_STRING ) )
-            // InternalWreslEditorParser.g:22592:1: ( RULE_STRING )
+            // InternalWreslEditorParser.g:22718:1: ( ( RULE_STRING ) )
+            // InternalWreslEditorParser.g:22719:1: ( RULE_STRING )
             {
-            // InternalWreslEditorParser.g:22592:1: ( RULE_STRING )
-            // InternalWreslEditorParser.g:22593:1: RULE_STRING
+            // InternalWreslEditorParser.g:22719:1: ( RULE_STRING )
+            // InternalWreslEditorParser.g:22720:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDVarNonStdAccess().getUnitsSTRINGTerminalRuleCall_4_0()); 
@@ -66605,17 +66947,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__DVarStd__KindAssignment_2"
-    // InternalWreslEditorParser.g:22602:1: rule__DVarStd__KindAssignment_2 : ( RULE_STRING ) ;
+    // InternalWreslEditorParser.g:22729:1: rule__DVarStd__KindAssignment_2 : ( RULE_STRING ) ;
     public final void rule__DVarStd__KindAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22606:1: ( ( RULE_STRING ) )
-            // InternalWreslEditorParser.g:22607:1: ( RULE_STRING )
+            // InternalWreslEditorParser.g:22733:1: ( ( RULE_STRING ) )
+            // InternalWreslEditorParser.g:22734:1: ( RULE_STRING )
             {
-            // InternalWreslEditorParser.g:22607:1: ( RULE_STRING )
-            // InternalWreslEditorParser.g:22608:1: RULE_STRING
+            // InternalWreslEditorParser.g:22734:1: ( RULE_STRING )
+            // InternalWreslEditorParser.g:22735:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDVarStdAccess().getKindSTRINGTerminalRuleCall_2_0()); 
@@ -66646,17 +66988,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__DVarStd__UnitsAssignment_4"
-    // InternalWreslEditorParser.g:22617:1: rule__DVarStd__UnitsAssignment_4 : ( RULE_STRING ) ;
+    // InternalWreslEditorParser.g:22744:1: rule__DVarStd__UnitsAssignment_4 : ( RULE_STRING ) ;
     public final void rule__DVarStd__UnitsAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22621:1: ( ( RULE_STRING ) )
-            // InternalWreslEditorParser.g:22622:1: ( RULE_STRING )
+            // InternalWreslEditorParser.g:22748:1: ( ( RULE_STRING ) )
+            // InternalWreslEditorParser.g:22749:1: ( RULE_STRING )
             {
-            // InternalWreslEditorParser.g:22622:1: ( RULE_STRING )
-            // InternalWreslEditorParser.g:22623:1: RULE_STRING
+            // InternalWreslEditorParser.g:22749:1: ( RULE_STRING )
+            // InternalWreslEditorParser.g:22750:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDVarStdAccess().getUnitsSTRINGTerminalRuleCall_4_0()); 
@@ -66687,17 +67029,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__DVarIntegerStd__KindAssignment_3"
-    // InternalWreslEditorParser.g:22632:1: rule__DVarIntegerStd__KindAssignment_3 : ( RULE_STRING ) ;
+    // InternalWreslEditorParser.g:22759:1: rule__DVarIntegerStd__KindAssignment_3 : ( RULE_STRING ) ;
     public final void rule__DVarIntegerStd__KindAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22636:1: ( ( RULE_STRING ) )
-            // InternalWreslEditorParser.g:22637:1: ( RULE_STRING )
+            // InternalWreslEditorParser.g:22763:1: ( ( RULE_STRING ) )
+            // InternalWreslEditorParser.g:22764:1: ( RULE_STRING )
             {
-            // InternalWreslEditorParser.g:22637:1: ( RULE_STRING )
-            // InternalWreslEditorParser.g:22638:1: RULE_STRING
+            // InternalWreslEditorParser.g:22764:1: ( RULE_STRING )
+            // InternalWreslEditorParser.g:22765:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDVarIntegerStdAccess().getKindSTRINGTerminalRuleCall_3_0()); 
@@ -66728,17 +67070,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__DVarIntegerStd__UnitsAssignment_5"
-    // InternalWreslEditorParser.g:22647:1: rule__DVarIntegerStd__UnitsAssignment_5 : ( RULE_STRING ) ;
+    // InternalWreslEditorParser.g:22774:1: rule__DVarIntegerStd__UnitsAssignment_5 : ( RULE_STRING ) ;
     public final void rule__DVarIntegerStd__UnitsAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22651:1: ( ( RULE_STRING ) )
-            // InternalWreslEditorParser.g:22652:1: ( RULE_STRING )
+            // InternalWreslEditorParser.g:22778:1: ( ( RULE_STRING ) )
+            // InternalWreslEditorParser.g:22779:1: ( RULE_STRING )
             {
-            // InternalWreslEditorParser.g:22652:1: ( RULE_STRING )
-            // InternalWreslEditorParser.g:22653:1: RULE_STRING
+            // InternalWreslEditorParser.g:22779:1: ( RULE_STRING )
+            // InternalWreslEditorParser.g:22780:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDVarIntegerStdAccess().getUnitsSTRINGTerminalRuleCall_5_0()); 
@@ -66769,17 +67111,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__DVarIntegerNonStd__KindAssignment_3"
-    // InternalWreslEditorParser.g:22662:1: rule__DVarIntegerNonStd__KindAssignment_3 : ( RULE_STRING ) ;
+    // InternalWreslEditorParser.g:22789:1: rule__DVarIntegerNonStd__KindAssignment_3 : ( RULE_STRING ) ;
     public final void rule__DVarIntegerNonStd__KindAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22666:1: ( ( RULE_STRING ) )
-            // InternalWreslEditorParser.g:22667:1: ( RULE_STRING )
+            // InternalWreslEditorParser.g:22793:1: ( ( RULE_STRING ) )
+            // InternalWreslEditorParser.g:22794:1: ( RULE_STRING )
             {
-            // InternalWreslEditorParser.g:22667:1: ( RULE_STRING )
-            // InternalWreslEditorParser.g:22668:1: RULE_STRING
+            // InternalWreslEditorParser.g:22794:1: ( RULE_STRING )
+            // InternalWreslEditorParser.g:22795:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDVarIntegerNonStdAccess().getKindSTRINGTerminalRuleCall_3_0()); 
@@ -66810,17 +67152,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__DVarIntegerNonStd__UnitsAssignment_5"
-    // InternalWreslEditorParser.g:22677:1: rule__DVarIntegerNonStd__UnitsAssignment_5 : ( RULE_STRING ) ;
+    // InternalWreslEditorParser.g:22804:1: rule__DVarIntegerNonStd__UnitsAssignment_5 : ( RULE_STRING ) ;
     public final void rule__DVarIntegerNonStd__UnitsAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22681:1: ( ( RULE_STRING ) )
-            // InternalWreslEditorParser.g:22682:1: ( RULE_STRING )
+            // InternalWreslEditorParser.g:22808:1: ( ( RULE_STRING ) )
+            // InternalWreslEditorParser.g:22809:1: ( RULE_STRING )
             {
-            // InternalWreslEditorParser.g:22682:1: ( RULE_STRING )
-            // InternalWreslEditorParser.g:22683:1: RULE_STRING
+            // InternalWreslEditorParser.g:22809:1: ( RULE_STRING )
+            // InternalWreslEditorParser.g:22810:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDVarIntegerNonStdAccess().getUnitsSTRINGTerminalRuleCall_5_0()); 
@@ -66851,17 +67193,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__SVarDSS__BPartAssignment_1"
-    // InternalWreslEditorParser.g:22692:1: rule__SVarDSS__BPartAssignment_1 : ( RULE_STRING ) ;
+    // InternalWreslEditorParser.g:22819:1: rule__SVarDSS__BPartAssignment_1 : ( RULE_STRING ) ;
     public final void rule__SVarDSS__BPartAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22696:1: ( ( RULE_STRING ) )
-            // InternalWreslEditorParser.g:22697:1: ( RULE_STRING )
+            // InternalWreslEditorParser.g:22823:1: ( ( RULE_STRING ) )
+            // InternalWreslEditorParser.g:22824:1: ( RULE_STRING )
             {
-            // InternalWreslEditorParser.g:22697:1: ( RULE_STRING )
-            // InternalWreslEditorParser.g:22698:1: RULE_STRING
+            // InternalWreslEditorParser.g:22824:1: ( RULE_STRING )
+            // InternalWreslEditorParser.g:22825:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSVarDSSAccess().getBPartSTRINGTerminalRuleCall_1_0()); 
@@ -66892,17 +67234,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__SVarDSS__KindAssignment_3"
-    // InternalWreslEditorParser.g:22707:1: rule__SVarDSS__KindAssignment_3 : ( RULE_STRING ) ;
+    // InternalWreslEditorParser.g:22834:1: rule__SVarDSS__KindAssignment_3 : ( RULE_STRING ) ;
     public final void rule__SVarDSS__KindAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22711:1: ( ( RULE_STRING ) )
-            // InternalWreslEditorParser.g:22712:1: ( RULE_STRING )
+            // InternalWreslEditorParser.g:22838:1: ( ( RULE_STRING ) )
+            // InternalWreslEditorParser.g:22839:1: ( RULE_STRING )
             {
-            // InternalWreslEditorParser.g:22712:1: ( RULE_STRING )
-            // InternalWreslEditorParser.g:22713:1: RULE_STRING
+            // InternalWreslEditorParser.g:22839:1: ( RULE_STRING )
+            // InternalWreslEditorParser.g:22840:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSVarDSSAccess().getKindSTRINGTerminalRuleCall_3_0()); 
@@ -66933,17 +67275,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__SVarDSS__UnitsAssignment_5"
-    // InternalWreslEditorParser.g:22722:1: rule__SVarDSS__UnitsAssignment_5 : ( RULE_STRING ) ;
+    // InternalWreslEditorParser.g:22849:1: rule__SVarDSS__UnitsAssignment_5 : ( RULE_STRING ) ;
     public final void rule__SVarDSS__UnitsAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22726:1: ( ( RULE_STRING ) )
-            // InternalWreslEditorParser.g:22727:1: ( RULE_STRING )
+            // InternalWreslEditorParser.g:22853:1: ( ( RULE_STRING ) )
+            // InternalWreslEditorParser.g:22854:1: ( RULE_STRING )
             {
-            // InternalWreslEditorParser.g:22727:1: ( RULE_STRING )
-            // InternalWreslEditorParser.g:22728:1: RULE_STRING
+            // InternalWreslEditorParser.g:22854:1: ( RULE_STRING )
+            // InternalWreslEditorParser.g:22855:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSVarDSSAccess().getUnitsSTRINGTerminalRuleCall_5_0()); 
@@ -66974,17 +67316,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__SVarDSS__ConvertAssignment_6_1"
-    // InternalWreslEditorParser.g:22737:1: rule__SVarDSS__ConvertAssignment_6_1 : ( RULE_STRING ) ;
+    // InternalWreslEditorParser.g:22864:1: rule__SVarDSS__ConvertAssignment_6_1 : ( RULE_STRING ) ;
     public final void rule__SVarDSS__ConvertAssignment_6_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22741:1: ( ( RULE_STRING ) )
-            // InternalWreslEditorParser.g:22742:1: ( RULE_STRING )
+            // InternalWreslEditorParser.g:22868:1: ( ( RULE_STRING ) )
+            // InternalWreslEditorParser.g:22869:1: ( RULE_STRING )
             {
-            // InternalWreslEditorParser.g:22742:1: ( RULE_STRING )
-            // InternalWreslEditorParser.g:22743:1: RULE_STRING
+            // InternalWreslEditorParser.g:22869:1: ( RULE_STRING )
+            // InternalWreslEditorParser.g:22870:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSVarDSSAccess().getConvertSTRINGTerminalRuleCall_6_1_0()); 
@@ -67015,17 +67357,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__SVarExpression__ExpressionAssignment_1"
-    // InternalWreslEditorParser.g:22752:1: rule__SVarExpression__ExpressionAssignment_1 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:22879:1: rule__SVarExpression__ExpressionAssignment_1 : ( ruleExpression ) ;
     public final void rule__SVarExpression__ExpressionAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22756:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:22757:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:22883:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:22884:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:22757:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:22758:1: ruleExpression
+            // InternalWreslEditorParser.g:22884:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:22885:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSVarExpressionAccess().getExpressionExpressionParserRuleCall_1_0()); 
@@ -67060,17 +67402,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__SVarSum__SumContentAssignment"
-    // InternalWreslEditorParser.g:22767:1: rule__SVarSum__SumContentAssignment : ( ruleSumContent ) ;
+    // InternalWreslEditorParser.g:22894:1: rule__SVarSum__SumContentAssignment : ( ruleSumContent ) ;
     public final void rule__SVarSum__SumContentAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22771:1: ( ( ruleSumContent ) )
-            // InternalWreslEditorParser.g:22772:1: ( ruleSumContent )
+            // InternalWreslEditorParser.g:22898:1: ( ( ruleSumContent ) )
+            // InternalWreslEditorParser.g:22899:1: ( ruleSumContent )
             {
-            // InternalWreslEditorParser.g:22772:1: ( ruleSumContent )
-            // InternalWreslEditorParser.g:22773:1: ruleSumContent
+            // InternalWreslEditorParser.g:22899:1: ( ruleSumContent )
+            // InternalWreslEditorParser.g:22900:1: ruleSumContent
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSVarSumAccess().getSumContentSumContentParserRuleCall_0()); 
@@ -67105,17 +67447,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__SVarTable__TableContentAssignment"
-    // InternalWreslEditorParser.g:22782:1: rule__SVarTable__TableContentAssignment : ( ruleTableContent ) ;
+    // InternalWreslEditorParser.g:22909:1: rule__SVarTable__TableContentAssignment : ( ruleTableContent ) ;
     public final void rule__SVarTable__TableContentAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22786:1: ( ( ruleTableContent ) )
-            // InternalWreslEditorParser.g:22787:1: ( ruleTableContent )
+            // InternalWreslEditorParser.g:22913:1: ( ( ruleTableContent ) )
+            // InternalWreslEditorParser.g:22914:1: ( ruleTableContent )
             {
-            // InternalWreslEditorParser.g:22787:1: ( ruleTableContent )
-            // InternalWreslEditorParser.g:22788:1: ruleTableContent
+            // InternalWreslEditorParser.g:22914:1: ( ruleTableContent )
+            // InternalWreslEditorParser.g:22915:1: ruleTableContent
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSVarTableAccess().getTableContentTableContentParserRuleCall_0()); 
@@ -67150,17 +67492,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__SVarCase__CaseContentAssignment"
-    // InternalWreslEditorParser.g:22797:1: rule__SVarCase__CaseContentAssignment : ( ruleCaseContent ) ;
+    // InternalWreslEditorParser.g:22924:1: rule__SVarCase__CaseContentAssignment : ( ruleCaseContent ) ;
     public final void rule__SVarCase__CaseContentAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22801:1: ( ( ruleCaseContent ) )
-            // InternalWreslEditorParser.g:22802:1: ( ruleCaseContent )
+            // InternalWreslEditorParser.g:22928:1: ( ( ruleCaseContent ) )
+            // InternalWreslEditorParser.g:22929:1: ( ruleCaseContent )
             {
-            // InternalWreslEditorParser.g:22802:1: ( ruleCaseContent )
-            // InternalWreslEditorParser.g:22803:1: ruleCaseContent
+            // InternalWreslEditorParser.g:22929:1: ( ruleCaseContent )
+            // InternalWreslEditorParser.g:22930:1: ruleCaseContent
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSVarCaseAccess().getCaseContentCaseContentParserRuleCall_0()); 
@@ -67195,23 +67537,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__CaseContent__CaseNameAssignment_1"
-    // InternalWreslEditorParser.g:22812:1: rule__CaseContent__CaseNameAssignment_1 : ( ( rule__CaseContent__CaseNameAlternatives_1_0 ) ) ;
+    // InternalWreslEditorParser.g:22939:1: rule__CaseContent__CaseNameAssignment_1 : ( ( rule__CaseContent__CaseNameAlternatives_1_0 ) ) ;
     public final void rule__CaseContent__CaseNameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22816:1: ( ( ( rule__CaseContent__CaseNameAlternatives_1_0 ) ) )
-            // InternalWreslEditorParser.g:22817:1: ( ( rule__CaseContent__CaseNameAlternatives_1_0 ) )
+            // InternalWreslEditorParser.g:22943:1: ( ( ( rule__CaseContent__CaseNameAlternatives_1_0 ) ) )
+            // InternalWreslEditorParser.g:22944:1: ( ( rule__CaseContent__CaseNameAlternatives_1_0 ) )
             {
-            // InternalWreslEditorParser.g:22817:1: ( ( rule__CaseContent__CaseNameAlternatives_1_0 ) )
-            // InternalWreslEditorParser.g:22818:1: ( rule__CaseContent__CaseNameAlternatives_1_0 )
+            // InternalWreslEditorParser.g:22944:1: ( ( rule__CaseContent__CaseNameAlternatives_1_0 ) )
+            // InternalWreslEditorParser.g:22945:1: ( rule__CaseContent__CaseNameAlternatives_1_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCaseContentAccess().getCaseNameAlternatives_1_0()); 
             }
-            // InternalWreslEditorParser.g:22819:1: ( rule__CaseContent__CaseNameAlternatives_1_0 )
-            // InternalWreslEditorParser.g:22819:2: rule__CaseContent__CaseNameAlternatives_1_0
+            // InternalWreslEditorParser.g:22946:1: ( rule__CaseContent__CaseNameAlternatives_1_0 )
+            // InternalWreslEditorParser.g:22946:2: rule__CaseContent__CaseNameAlternatives_1_0
             {
             pushFollow(FOLLOW_2);
             rule__CaseContent__CaseNameAlternatives_1_0();
@@ -67246,17 +67588,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__CaseContent__ConditionAssignment_3"
-    // InternalWreslEditorParser.g:22828:1: rule__CaseContent__ConditionAssignment_3 : ( ruleCondition ) ;
+    // InternalWreslEditorParser.g:22955:1: rule__CaseContent__ConditionAssignment_3 : ( ruleCondition ) ;
     public final void rule__CaseContent__ConditionAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22832:1: ( ( ruleCondition ) )
-            // InternalWreslEditorParser.g:22833:1: ( ruleCondition )
+            // InternalWreslEditorParser.g:22959:1: ( ( ruleCondition ) )
+            // InternalWreslEditorParser.g:22960:1: ( ruleCondition )
             {
-            // InternalWreslEditorParser.g:22833:1: ( ruleCondition )
-            // InternalWreslEditorParser.g:22834:1: ruleCondition
+            // InternalWreslEditorParser.g:22960:1: ( ruleCondition )
+            // InternalWreslEditorParser.g:22961:1: ruleCondition
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCaseContentAccess().getConditionConditionParserRuleCall_3_0()); 
@@ -67291,17 +67633,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__CaseContent__ContentAssignment_4_0"
-    // InternalWreslEditorParser.g:22843:1: rule__CaseContent__ContentAssignment_4_0 : ( ruleTableContent ) ;
+    // InternalWreslEditorParser.g:22970:1: rule__CaseContent__ContentAssignment_4_0 : ( ruleTableContent ) ;
     public final void rule__CaseContent__ContentAssignment_4_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22847:1: ( ( ruleTableContent ) )
-            // InternalWreslEditorParser.g:22848:1: ( ruleTableContent )
+            // InternalWreslEditorParser.g:22974:1: ( ( ruleTableContent ) )
+            // InternalWreslEditorParser.g:22975:1: ( ruleTableContent )
             {
-            // InternalWreslEditorParser.g:22848:1: ( ruleTableContent )
-            // InternalWreslEditorParser.g:22849:1: ruleTableContent
+            // InternalWreslEditorParser.g:22975:1: ( ruleTableContent )
+            // InternalWreslEditorParser.g:22976:1: ruleTableContent
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCaseContentAccess().getContentTableContentParserRuleCall_4_0_0()); 
@@ -67336,17 +67678,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__CaseContent__ContentAssignment_4_1"
-    // InternalWreslEditorParser.g:22858:1: rule__CaseContent__ContentAssignment_4_1 : ( ruleValueContent ) ;
+    // InternalWreslEditorParser.g:22985:1: rule__CaseContent__ContentAssignment_4_1 : ( ruleValueContent ) ;
     public final void rule__CaseContent__ContentAssignment_4_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22862:1: ( ( ruleValueContent ) )
-            // InternalWreslEditorParser.g:22863:1: ( ruleValueContent )
+            // InternalWreslEditorParser.g:22989:1: ( ( ruleValueContent ) )
+            // InternalWreslEditorParser.g:22990:1: ( ruleValueContent )
             {
-            // InternalWreslEditorParser.g:22863:1: ( ruleValueContent )
-            // InternalWreslEditorParser.g:22864:1: ruleValueContent
+            // InternalWreslEditorParser.g:22990:1: ( ruleValueContent )
+            // InternalWreslEditorParser.g:22991:1: ruleValueContent
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCaseContentAccess().getContentValueContentParserRuleCall_4_1_0()); 
@@ -67381,17 +67723,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__CaseContent__ContentAssignment_4_2"
-    // InternalWreslEditorParser.g:22873:1: rule__CaseContent__ContentAssignment_4_2 : ( ruleSumContent ) ;
+    // InternalWreslEditorParser.g:23000:1: rule__CaseContent__ContentAssignment_4_2 : ( ruleSumContent ) ;
     public final void rule__CaseContent__ContentAssignment_4_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22877:1: ( ( ruleSumContent ) )
-            // InternalWreslEditorParser.g:22878:1: ( ruleSumContent )
+            // InternalWreslEditorParser.g:23004:1: ( ( ruleSumContent ) )
+            // InternalWreslEditorParser.g:23005:1: ( ruleSumContent )
             {
-            // InternalWreslEditorParser.g:22878:1: ( ruleSumContent )
-            // InternalWreslEditorParser.g:22879:1: ruleSumContent
+            // InternalWreslEditorParser.g:23005:1: ( ruleSumContent )
+            // InternalWreslEditorParser.g:23006:1: ruleSumContent
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCaseContentAccess().getContentSumContentParserRuleCall_4_2_0()); 
@@ -67426,17 +67768,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__SumContent__HeaderAssignment_1"
-    // InternalWreslEditorParser.g:22888:1: rule__SumContent__HeaderAssignment_1 : ( ruleSumHeader ) ;
+    // InternalWreslEditorParser.g:23015:1: rule__SumContent__HeaderAssignment_1 : ( ruleSumHeader ) ;
     public final void rule__SumContent__HeaderAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22892:1: ( ( ruleSumHeader ) )
-            // InternalWreslEditorParser.g:22893:1: ( ruleSumHeader )
+            // InternalWreslEditorParser.g:23019:1: ( ( ruleSumHeader ) )
+            // InternalWreslEditorParser.g:23020:1: ( ruleSumHeader )
             {
-            // InternalWreslEditorParser.g:22893:1: ( ruleSumHeader )
-            // InternalWreslEditorParser.g:22894:1: ruleSumHeader
+            // InternalWreslEditorParser.g:23020:1: ( ruleSumHeader )
+            // InternalWreslEditorParser.g:23021:1: ruleSumHeader
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSumContentAccess().getHeaderSumHeaderParserRuleCall_1_0()); 
@@ -67471,17 +67813,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__SumContent__ExpressionAssignment_2"
-    // InternalWreslEditorParser.g:22903:1: rule__SumContent__ExpressionAssignment_2 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:23030:1: rule__SumContent__ExpressionAssignment_2 : ( ruleExpression ) ;
     public final void rule__SumContent__ExpressionAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22907:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:22908:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:23034:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:23035:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:22908:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:22909:1: ruleExpression
+            // InternalWreslEditorParser.g:23035:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:23036:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSumContentAccess().getExpressionExpressionParserRuleCall_2_0()); 
@@ -67516,17 +67858,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__SumHeader__Expression1Assignment_2"
-    // InternalWreslEditorParser.g:22918:1: rule__SumHeader__Expression1Assignment_2 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:23045:1: rule__SumHeader__Expression1Assignment_2 : ( ruleExpression ) ;
     public final void rule__SumHeader__Expression1Assignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22922:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:22923:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:23049:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:23050:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:22923:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:22924:1: ruleExpression
+            // InternalWreslEditorParser.g:23050:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:23051:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSumHeaderAccess().getExpression1ExpressionParserRuleCall_2_0()); 
@@ -67561,17 +67903,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__SumHeader__Expression2Assignment_4"
-    // InternalWreslEditorParser.g:22933:1: rule__SumHeader__Expression2Assignment_4 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:23060:1: rule__SumHeader__Expression2Assignment_4 : ( ruleExpression ) ;
     public final void rule__SumHeader__Expression2Assignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22937:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:22938:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:23064:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:23065:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:22938:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:22939:1: ruleExpression
+            // InternalWreslEditorParser.g:23065:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:23066:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSumHeaderAccess().getExpression2ExpressionParserRuleCall_4_0()); 
@@ -67606,17 +67948,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ValueContent__ExpressionAssignment_1"
-    // InternalWreslEditorParser.g:22948:1: rule__ValueContent__ExpressionAssignment_1 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:23075:1: rule__ValueContent__ExpressionAssignment_1 : ( ruleExpression ) ;
     public final void rule__ValueContent__ExpressionAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22952:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:22953:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:23079:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:23080:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:22953:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:22954:1: ruleExpression
+            // InternalWreslEditorParser.g:23080:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:23081:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValueContentAccess().getExpressionExpressionParserRuleCall_1_0()); 
@@ -67651,23 +67993,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TableContent__TableNameAssignment_1"
-    // InternalWreslEditorParser.g:22963:1: rule__TableContent__TableNameAssignment_1 : ( ( rule__TableContent__TableNameAlternatives_1_0 ) ) ;
+    // InternalWreslEditorParser.g:23090:1: rule__TableContent__TableNameAssignment_1 : ( ( rule__TableContent__TableNameAlternatives_1_0 ) ) ;
     public final void rule__TableContent__TableNameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22967:1: ( ( ( rule__TableContent__TableNameAlternatives_1_0 ) ) )
-            // InternalWreslEditorParser.g:22968:1: ( ( rule__TableContent__TableNameAlternatives_1_0 ) )
+            // InternalWreslEditorParser.g:23094:1: ( ( ( rule__TableContent__TableNameAlternatives_1_0 ) ) )
+            // InternalWreslEditorParser.g:23095:1: ( ( rule__TableContent__TableNameAlternatives_1_0 ) )
             {
-            // InternalWreslEditorParser.g:22968:1: ( ( rule__TableContent__TableNameAlternatives_1_0 ) )
-            // InternalWreslEditorParser.g:22969:1: ( rule__TableContent__TableNameAlternatives_1_0 )
+            // InternalWreslEditorParser.g:23095:1: ( ( rule__TableContent__TableNameAlternatives_1_0 ) )
+            // InternalWreslEditorParser.g:23096:1: ( rule__TableContent__TableNameAlternatives_1_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTableContentAccess().getTableNameAlternatives_1_0()); 
             }
-            // InternalWreslEditorParser.g:22970:1: ( rule__TableContent__TableNameAlternatives_1_0 )
-            // InternalWreslEditorParser.g:22970:2: rule__TableContent__TableNameAlternatives_1_0
+            // InternalWreslEditorParser.g:23097:1: ( rule__TableContent__TableNameAlternatives_1_0 )
+            // InternalWreslEditorParser.g:23097:2: rule__TableContent__TableNameAlternatives_1_0
             {
             pushFollow(FOLLOW_2);
             rule__TableContent__TableNameAlternatives_1_0();
@@ -67702,23 +68044,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TableContent__FromAssignment_3"
-    // InternalWreslEditorParser.g:22979:1: rule__TableContent__FromAssignment_3 : ( ( rule__TableContent__FromAlternatives_3_0 ) ) ;
+    // InternalWreslEditorParser.g:23106:1: rule__TableContent__FromAssignment_3 : ( ( rule__TableContent__FromAlternatives_3_0 ) ) ;
     public final void rule__TableContent__FromAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22983:1: ( ( ( rule__TableContent__FromAlternatives_3_0 ) ) )
-            // InternalWreslEditorParser.g:22984:1: ( ( rule__TableContent__FromAlternatives_3_0 ) )
+            // InternalWreslEditorParser.g:23110:1: ( ( ( rule__TableContent__FromAlternatives_3_0 ) ) )
+            // InternalWreslEditorParser.g:23111:1: ( ( rule__TableContent__FromAlternatives_3_0 ) )
             {
-            // InternalWreslEditorParser.g:22984:1: ( ( rule__TableContent__FromAlternatives_3_0 ) )
-            // InternalWreslEditorParser.g:22985:1: ( rule__TableContent__FromAlternatives_3_0 )
+            // InternalWreslEditorParser.g:23111:1: ( ( rule__TableContent__FromAlternatives_3_0 ) )
+            // InternalWreslEditorParser.g:23112:1: ( rule__TableContent__FromAlternatives_3_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTableContentAccess().getFromAlternatives_3_0()); 
             }
-            // InternalWreslEditorParser.g:22986:1: ( rule__TableContent__FromAlternatives_3_0 )
-            // InternalWreslEditorParser.g:22986:2: rule__TableContent__FromAlternatives_3_0
+            // InternalWreslEditorParser.g:23113:1: ( rule__TableContent__FromAlternatives_3_0 )
+            // InternalWreslEditorParser.g:23113:2: rule__TableContent__FromAlternatives_3_0
             {
             pushFollow(FOLLOW_2);
             rule__TableContent__FromAlternatives_3_0();
@@ -67753,17 +68095,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TableContent__GivenAssignment_4_1"
-    // InternalWreslEditorParser.g:22995:1: rule__TableContent__GivenAssignment_4_1 : ( ruleAssignment ) ;
+    // InternalWreslEditorParser.g:23122:1: rule__TableContent__GivenAssignment_4_1 : ( ruleAssignment ) ;
     public final void rule__TableContent__GivenAssignment_4_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:22999:1: ( ( ruleAssignment ) )
-            // InternalWreslEditorParser.g:23000:1: ( ruleAssignment )
+            // InternalWreslEditorParser.g:23126:1: ( ( ruleAssignment ) )
+            // InternalWreslEditorParser.g:23127:1: ( ruleAssignment )
             {
-            // InternalWreslEditorParser.g:23000:1: ( ruleAssignment )
-            // InternalWreslEditorParser.g:23001:1: ruleAssignment
+            // InternalWreslEditorParser.g:23127:1: ( ruleAssignment )
+            // InternalWreslEditorParser.g:23128:1: ruleAssignment
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTableContentAccess().getGivenAssignmentParserRuleCall_4_1_0()); 
@@ -67798,17 +68140,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TableContent__UseAssignment_4_3"
-    // InternalWreslEditorParser.g:23010:1: rule__TableContent__UseAssignment_4_3 : ( RULE_ID ) ;
+    // InternalWreslEditorParser.g:23137:1: rule__TableContent__UseAssignment_4_3 : ( RULE_ID ) ;
     public final void rule__TableContent__UseAssignment_4_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23014:1: ( ( RULE_ID ) )
-            // InternalWreslEditorParser.g:23015:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:23141:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:23142:1: ( RULE_ID )
             {
-            // InternalWreslEditorParser.g:23015:1: ( RULE_ID )
-            // InternalWreslEditorParser.g:23016:1: RULE_ID
+            // InternalWreslEditorParser.g:23142:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:23143:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTableContentAccess().getUseIDTerminalRuleCall_4_3_0()); 
@@ -67839,17 +68181,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TableContent__WhereAssignment_5_1"
-    // InternalWreslEditorParser.g:23025:1: rule__TableContent__WhereAssignment_5_1 : ( ruleWhereItems ) ;
+    // InternalWreslEditorParser.g:23152:1: rule__TableContent__WhereAssignment_5_1 : ( ruleWhereItems ) ;
     public final void rule__TableContent__WhereAssignment_5_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23029:1: ( ( ruleWhereItems ) )
-            // InternalWreslEditorParser.g:23030:1: ( ruleWhereItems )
+            // InternalWreslEditorParser.g:23156:1: ( ( ruleWhereItems ) )
+            // InternalWreslEditorParser.g:23157:1: ( ruleWhereItems )
             {
-            // InternalWreslEditorParser.g:23030:1: ( ruleWhereItems )
-            // InternalWreslEditorParser.g:23031:1: ruleWhereItems
+            // InternalWreslEditorParser.g:23157:1: ( ruleWhereItems )
+            // InternalWreslEditorParser.g:23158:1: ruleWhereItems
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTableContentAccess().getWhereWhereItemsParserRuleCall_5_1_0()); 
@@ -67884,17 +68226,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__WhereItems__AssignmentAssignment_0"
-    // InternalWreslEditorParser.g:23040:1: rule__WhereItems__AssignmentAssignment_0 : ( ruleAssignment ) ;
+    // InternalWreslEditorParser.g:23167:1: rule__WhereItems__AssignmentAssignment_0 : ( ruleAssignment ) ;
     public final void rule__WhereItems__AssignmentAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23044:1: ( ( ruleAssignment ) )
-            // InternalWreslEditorParser.g:23045:1: ( ruleAssignment )
+            // InternalWreslEditorParser.g:23171:1: ( ( ruleAssignment ) )
+            // InternalWreslEditorParser.g:23172:1: ( ruleAssignment )
             {
-            // InternalWreslEditorParser.g:23045:1: ( ruleAssignment )
-            // InternalWreslEditorParser.g:23046:1: ruleAssignment
+            // InternalWreslEditorParser.g:23172:1: ( ruleAssignment )
+            // InternalWreslEditorParser.g:23173:1: ruleAssignment
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWhereItemsAccess().getAssignmentAssignmentParserRuleCall_0_0()); 
@@ -67929,17 +68271,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__WhereItems__AssignmentAssignment_1_1"
-    // InternalWreslEditorParser.g:23055:1: rule__WhereItems__AssignmentAssignment_1_1 : ( ruleAssignment ) ;
+    // InternalWreslEditorParser.g:23182:1: rule__WhereItems__AssignmentAssignment_1_1 : ( ruleAssignment ) ;
     public final void rule__WhereItems__AssignmentAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23059:1: ( ( ruleAssignment ) )
-            // InternalWreslEditorParser.g:23060:1: ( ruleAssignment )
+            // InternalWreslEditorParser.g:23186:1: ( ( ruleAssignment ) )
+            // InternalWreslEditorParser.g:23187:1: ( ruleAssignment )
             {
-            // InternalWreslEditorParser.g:23060:1: ( ruleAssignment )
-            // InternalWreslEditorParser.g:23061:1: ruleAssignment
+            // InternalWreslEditorParser.g:23187:1: ( ruleAssignment )
+            // InternalWreslEditorParser.g:23188:1: ruleAssignment
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWhereItemsAccess().getAssignmentAssignmentParserRuleCall_1_1_0()); 
@@ -67974,17 +68316,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Assignment__TermAssignment_0"
-    // InternalWreslEditorParser.g:23070:1: rule__Assignment__TermAssignment_0 : ( ruleTermSimple ) ;
+    // InternalWreslEditorParser.g:23197:1: rule__Assignment__TermAssignment_0 : ( ruleTermSimple ) ;
     public final void rule__Assignment__TermAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23074:1: ( ( ruleTermSimple ) )
-            // InternalWreslEditorParser.g:23075:1: ( ruleTermSimple )
+            // InternalWreslEditorParser.g:23201:1: ( ( ruleTermSimple ) )
+            // InternalWreslEditorParser.g:23202:1: ( ruleTermSimple )
             {
-            // InternalWreslEditorParser.g:23075:1: ( ruleTermSimple )
-            // InternalWreslEditorParser.g:23076:1: ruleTermSimple
+            // InternalWreslEditorParser.g:23202:1: ( ruleTermSimple )
+            // InternalWreslEditorParser.g:23203:1: ruleTermSimple
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAssignmentAccess().getTermTermSimpleParserRuleCall_0_0()); 
@@ -68019,17 +68361,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Assignment__ExpressionAssignment_2"
-    // InternalWreslEditorParser.g:23085:1: rule__Assignment__ExpressionAssignment_2 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:23212:1: rule__Assignment__ExpressionAssignment_2 : ( ruleExpression ) ;
     public final void rule__Assignment__ExpressionAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23089:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:23090:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:23216:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:23217:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:23090:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:23091:1: ruleExpression
+            // InternalWreslEditorParser.g:23217:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:23218:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAssignmentAccess().getExpressionExpressionParserRuleCall_2_0()); 
@@ -68064,17 +68406,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__UpperLower__UpperAssignment_0"
-    // InternalWreslEditorParser.g:23100:1: rule__UpperLower__UpperAssignment_0 : ( ruleUpper ) ;
+    // InternalWreslEditorParser.g:23227:1: rule__UpperLower__UpperAssignment_0 : ( ruleUpper ) ;
     public final void rule__UpperLower__UpperAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23104:1: ( ( ruleUpper ) )
-            // InternalWreslEditorParser.g:23105:1: ( ruleUpper )
+            // InternalWreslEditorParser.g:23231:1: ( ( ruleUpper ) )
+            // InternalWreslEditorParser.g:23232:1: ( ruleUpper )
             {
-            // InternalWreslEditorParser.g:23105:1: ( ruleUpper )
-            // InternalWreslEditorParser.g:23106:1: ruleUpper
+            // InternalWreslEditorParser.g:23232:1: ( ruleUpper )
+            // InternalWreslEditorParser.g:23233:1: ruleUpper
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getUpperLowerAccess().getUpperUpperParserRuleCall_0_0()); 
@@ -68109,17 +68451,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__UpperLower__LowerAssignment_1"
-    // InternalWreslEditorParser.g:23115:1: rule__UpperLower__LowerAssignment_1 : ( ruleLower ) ;
+    // InternalWreslEditorParser.g:23242:1: rule__UpperLower__LowerAssignment_1 : ( ruleLower ) ;
     public final void rule__UpperLower__LowerAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23119:1: ( ( ruleLower ) )
-            // InternalWreslEditorParser.g:23120:1: ( ruleLower )
+            // InternalWreslEditorParser.g:23246:1: ( ( ruleLower ) )
+            // InternalWreslEditorParser.g:23247:1: ( ruleLower )
             {
-            // InternalWreslEditorParser.g:23120:1: ( ruleLower )
-            // InternalWreslEditorParser.g:23121:1: ruleLower
+            // InternalWreslEditorParser.g:23247:1: ( ruleLower )
+            // InternalWreslEditorParser.g:23248:1: ruleLower
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getUpperLowerAccess().getLowerLowerParserRuleCall_1_0()); 
@@ -68154,17 +68496,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__LowerUpper__LowerAssignment_0"
-    // InternalWreslEditorParser.g:23130:1: rule__LowerUpper__LowerAssignment_0 : ( ruleLower ) ;
+    // InternalWreslEditorParser.g:23257:1: rule__LowerUpper__LowerAssignment_0 : ( ruleLower ) ;
     public final void rule__LowerUpper__LowerAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23134:1: ( ( ruleLower ) )
-            // InternalWreslEditorParser.g:23135:1: ( ruleLower )
+            // InternalWreslEditorParser.g:23261:1: ( ( ruleLower ) )
+            // InternalWreslEditorParser.g:23262:1: ( ruleLower )
             {
-            // InternalWreslEditorParser.g:23135:1: ( ruleLower )
-            // InternalWreslEditorParser.g:23136:1: ruleLower
+            // InternalWreslEditorParser.g:23262:1: ( ruleLower )
+            // InternalWreslEditorParser.g:23263:1: ruleLower
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLowerUpperAccess().getLowerLowerParserRuleCall_0_0()); 
@@ -68199,17 +68541,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__LowerUpper__UpperAssignment_1"
-    // InternalWreslEditorParser.g:23145:1: rule__LowerUpper__UpperAssignment_1 : ( ruleUpper ) ;
+    // InternalWreslEditorParser.g:23272:1: rule__LowerUpper__UpperAssignment_1 : ( ruleUpper ) ;
     public final void rule__LowerUpper__UpperAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23149:1: ( ( ruleUpper ) )
-            // InternalWreslEditorParser.g:23150:1: ( ruleUpper )
+            // InternalWreslEditorParser.g:23276:1: ( ( ruleUpper ) )
+            // InternalWreslEditorParser.g:23277:1: ( ruleUpper )
             {
-            // InternalWreslEditorParser.g:23150:1: ( ruleUpper )
-            // InternalWreslEditorParser.g:23151:1: ruleUpper
+            // InternalWreslEditorParser.g:23277:1: ( ruleUpper )
+            // InternalWreslEditorParser.g:23278:1: ruleUpper
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLowerUpperAccess().getUpperUpperParserRuleCall_1_0()); 
@@ -68244,17 +68586,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Upper__ExpressionAssignment_1_1"
-    // InternalWreslEditorParser.g:23160:1: rule__Upper__ExpressionAssignment_1_1 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:23287:1: rule__Upper__ExpressionAssignment_1_1 : ( ruleExpression ) ;
     public final void rule__Upper__ExpressionAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23164:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:23165:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:23291:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:23292:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:23165:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:23166:1: ruleExpression
+            // InternalWreslEditorParser.g:23292:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:23293:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getUpperAccess().getExpressionExpressionParserRuleCall_1_1_0()); 
@@ -68289,17 +68631,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Lower__ExpressionAssignment_1_1"
-    // InternalWreslEditorParser.g:23175:1: rule__Lower__ExpressionAssignment_1_1 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:23302:1: rule__Lower__ExpressionAssignment_1_1 : ( ruleExpression ) ;
     public final void rule__Lower__ExpressionAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23179:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:23180:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:23306:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:23307:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:23180:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:23181:1: ruleExpression
+            // InternalWreslEditorParser.g:23307:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:23308:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLowerAccess().getExpressionExpressionParserRuleCall_1_1_0()); 
@@ -68334,17 +68676,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Goal__TaAssignment_1"
-    // InternalWreslEditorParser.g:23190:1: rule__Goal__TaAssignment_1 : ( ruleTimeArraySize ) ;
+    // InternalWreslEditorParser.g:23317:1: rule__Goal__TaAssignment_1 : ( ruleTimeArraySize ) ;
     public final void rule__Goal__TaAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23194:1: ( ( ruleTimeArraySize ) )
-            // InternalWreslEditorParser.g:23195:1: ( ruleTimeArraySize )
+            // InternalWreslEditorParser.g:23321:1: ( ( ruleTimeArraySize ) )
+            // InternalWreslEditorParser.g:23322:1: ( ruleTimeArraySize )
             {
-            // InternalWreslEditorParser.g:23195:1: ( ruleTimeArraySize )
-            // InternalWreslEditorParser.g:23196:1: ruleTimeArraySize
+            // InternalWreslEditorParser.g:23322:1: ( ruleTimeArraySize )
+            // InternalWreslEditorParser.g:23323:1: ruleTimeArraySize
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getGoalAccess().getTaTimeArraySizeParserRuleCall_1_0()); 
@@ -68379,23 +68721,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Goal__LocalAssignment_2_1"
-    // InternalWreslEditorParser.g:23205:1: rule__Goal__LocalAssignment_2_1 : ( ( rule__Goal__LocalAlternatives_2_1_0 ) ) ;
+    // InternalWreslEditorParser.g:23332:1: rule__Goal__LocalAssignment_2_1 : ( ( rule__Goal__LocalAlternatives_2_1_0 ) ) ;
     public final void rule__Goal__LocalAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23209:1: ( ( ( rule__Goal__LocalAlternatives_2_1_0 ) ) )
-            // InternalWreslEditorParser.g:23210:1: ( ( rule__Goal__LocalAlternatives_2_1_0 ) )
+            // InternalWreslEditorParser.g:23336:1: ( ( ( rule__Goal__LocalAlternatives_2_1_0 ) ) )
+            // InternalWreslEditorParser.g:23337:1: ( ( rule__Goal__LocalAlternatives_2_1_0 ) )
             {
-            // InternalWreslEditorParser.g:23210:1: ( ( rule__Goal__LocalAlternatives_2_1_0 ) )
-            // InternalWreslEditorParser.g:23211:1: ( rule__Goal__LocalAlternatives_2_1_0 )
+            // InternalWreslEditorParser.g:23337:1: ( ( rule__Goal__LocalAlternatives_2_1_0 ) )
+            // InternalWreslEditorParser.g:23338:1: ( rule__Goal__LocalAlternatives_2_1_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getGoalAccess().getLocalAlternatives_2_1_0()); 
             }
-            // InternalWreslEditorParser.g:23212:1: ( rule__Goal__LocalAlternatives_2_1_0 )
-            // InternalWreslEditorParser.g:23212:2: rule__Goal__LocalAlternatives_2_1_0
+            // InternalWreslEditorParser.g:23339:1: ( rule__Goal__LocalAlternatives_2_1_0 )
+            // InternalWreslEditorParser.g:23339:2: rule__Goal__LocalAlternatives_2_1_0
             {
             pushFollow(FOLLOW_2);
             rule__Goal__LocalAlternatives_2_1_0();
@@ -68430,17 +68772,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Goal__NameAssignment_3"
-    // InternalWreslEditorParser.g:23221:1: rule__Goal__NameAssignment_3 : ( RULE_ID ) ;
+    // InternalWreslEditorParser.g:23348:1: rule__Goal__NameAssignment_3 : ( RULE_ID ) ;
     public final void rule__Goal__NameAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23225:1: ( ( RULE_ID ) )
-            // InternalWreslEditorParser.g:23226:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:23352:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:23353:1: ( RULE_ID )
             {
-            // InternalWreslEditorParser.g:23226:1: ( RULE_ID )
-            // InternalWreslEditorParser.g:23227:1: RULE_ID
+            // InternalWreslEditorParser.g:23353:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:23354:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getGoalAccess().getNameIDTerminalRuleCall_3_0()); 
@@ -68471,23 +68813,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Goal__DefinitionAssignment_5"
-    // InternalWreslEditorParser.g:23236:1: rule__Goal__DefinitionAssignment_5 : ( ( rule__Goal__DefinitionAlternatives_5_0 ) ) ;
+    // InternalWreslEditorParser.g:23363:1: rule__Goal__DefinitionAssignment_5 : ( ( rule__Goal__DefinitionAlternatives_5_0 ) ) ;
     public final void rule__Goal__DefinitionAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23240:1: ( ( ( rule__Goal__DefinitionAlternatives_5_0 ) ) )
-            // InternalWreslEditorParser.g:23241:1: ( ( rule__Goal__DefinitionAlternatives_5_0 ) )
+            // InternalWreslEditorParser.g:23367:1: ( ( ( rule__Goal__DefinitionAlternatives_5_0 ) ) )
+            // InternalWreslEditorParser.g:23368:1: ( ( rule__Goal__DefinitionAlternatives_5_0 ) )
             {
-            // InternalWreslEditorParser.g:23241:1: ( ( rule__Goal__DefinitionAlternatives_5_0 ) )
-            // InternalWreslEditorParser.g:23242:1: ( rule__Goal__DefinitionAlternatives_5_0 )
+            // InternalWreslEditorParser.g:23368:1: ( ( rule__Goal__DefinitionAlternatives_5_0 ) )
+            // InternalWreslEditorParser.g:23369:1: ( rule__Goal__DefinitionAlternatives_5_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getGoalAccess().getDefinitionAlternatives_5_0()); 
             }
-            // InternalWreslEditorParser.g:23243:1: ( rule__Goal__DefinitionAlternatives_5_0 )
-            // InternalWreslEditorParser.g:23243:2: rule__Goal__DefinitionAlternatives_5_0
+            // InternalWreslEditorParser.g:23370:1: ( rule__Goal__DefinitionAlternatives_5_0 )
+            // InternalWreslEditorParser.g:23370:2: rule__Goal__DefinitionAlternatives_5_0
             {
             pushFollow(FOLLOW_2);
             rule__Goal__DefinitionAlternatives_5_0();
@@ -68522,17 +68864,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__GoalCase__LhsAssignment_1"
-    // InternalWreslEditorParser.g:23252:1: rule__GoalCase__LhsAssignment_1 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:23379:1: rule__GoalCase__LhsAssignment_1 : ( ruleExpression ) ;
     public final void rule__GoalCase__LhsAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23256:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:23257:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:23383:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:23384:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:23257:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:23258:1: ruleExpression
+            // InternalWreslEditorParser.g:23384:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:23385:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getGoalCaseAccess().getLhsExpressionParserRuleCall_1_0()); 
@@ -68567,17 +68909,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__GoalCase__ContentAssignment_2_0"
-    // InternalWreslEditorParser.g:23267:1: rule__GoalCase__ContentAssignment_2_0 : ( ruleGoalNoCaseContent ) ;
+    // InternalWreslEditorParser.g:23394:1: rule__GoalCase__ContentAssignment_2_0 : ( ruleGoalNoCaseContent ) ;
     public final void rule__GoalCase__ContentAssignment_2_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23271:1: ( ( ruleGoalNoCaseContent ) )
-            // InternalWreslEditorParser.g:23272:1: ( ruleGoalNoCaseContent )
+            // InternalWreslEditorParser.g:23398:1: ( ( ruleGoalNoCaseContent ) )
+            // InternalWreslEditorParser.g:23399:1: ( ruleGoalNoCaseContent )
             {
-            // InternalWreslEditorParser.g:23272:1: ( ruleGoalNoCaseContent )
-            // InternalWreslEditorParser.g:23273:1: ruleGoalNoCaseContent
+            // InternalWreslEditorParser.g:23399:1: ( ruleGoalNoCaseContent )
+            // InternalWreslEditorParser.g:23400:1: ruleGoalNoCaseContent
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getGoalCaseAccess().getContentGoalNoCaseContentParserRuleCall_2_0_0()); 
@@ -68612,17 +68954,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__GoalCase__CaseContentAssignment_2_1"
-    // InternalWreslEditorParser.g:23282:1: rule__GoalCase__CaseContentAssignment_2_1 : ( ruleGoalCaseContent ) ;
+    // InternalWreslEditorParser.g:23409:1: rule__GoalCase__CaseContentAssignment_2_1 : ( ruleGoalCaseContent ) ;
     public final void rule__GoalCase__CaseContentAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23286:1: ( ( ruleGoalCaseContent ) )
-            // InternalWreslEditorParser.g:23287:1: ( ruleGoalCaseContent )
+            // InternalWreslEditorParser.g:23413:1: ( ( ruleGoalCaseContent ) )
+            // InternalWreslEditorParser.g:23414:1: ( ruleGoalCaseContent )
             {
-            // InternalWreslEditorParser.g:23287:1: ( ruleGoalCaseContent )
-            // InternalWreslEditorParser.g:23288:1: ruleGoalCaseContent
+            // InternalWreslEditorParser.g:23414:1: ( ruleGoalCaseContent )
+            // InternalWreslEditorParser.g:23415:1: ruleGoalCaseContent
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getGoalCaseAccess().getCaseContentGoalCaseContentParserRuleCall_2_1_0()); 
@@ -68657,23 +68999,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__GoalCaseContent__CaseNameAssignment_1"
-    // InternalWreslEditorParser.g:23297:1: rule__GoalCaseContent__CaseNameAssignment_1 : ( ( rule__GoalCaseContent__CaseNameAlternatives_1_0 ) ) ;
+    // InternalWreslEditorParser.g:23424:1: rule__GoalCaseContent__CaseNameAssignment_1 : ( ( rule__GoalCaseContent__CaseNameAlternatives_1_0 ) ) ;
     public final void rule__GoalCaseContent__CaseNameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23301:1: ( ( ( rule__GoalCaseContent__CaseNameAlternatives_1_0 ) ) )
-            // InternalWreslEditorParser.g:23302:1: ( ( rule__GoalCaseContent__CaseNameAlternatives_1_0 ) )
+            // InternalWreslEditorParser.g:23428:1: ( ( ( rule__GoalCaseContent__CaseNameAlternatives_1_0 ) ) )
+            // InternalWreslEditorParser.g:23429:1: ( ( rule__GoalCaseContent__CaseNameAlternatives_1_0 ) )
             {
-            // InternalWreslEditorParser.g:23302:1: ( ( rule__GoalCaseContent__CaseNameAlternatives_1_0 ) )
-            // InternalWreslEditorParser.g:23303:1: ( rule__GoalCaseContent__CaseNameAlternatives_1_0 )
+            // InternalWreslEditorParser.g:23429:1: ( ( rule__GoalCaseContent__CaseNameAlternatives_1_0 ) )
+            // InternalWreslEditorParser.g:23430:1: ( rule__GoalCaseContent__CaseNameAlternatives_1_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getGoalCaseContentAccess().getCaseNameAlternatives_1_0()); 
             }
-            // InternalWreslEditorParser.g:23304:1: ( rule__GoalCaseContent__CaseNameAlternatives_1_0 )
-            // InternalWreslEditorParser.g:23304:2: rule__GoalCaseContent__CaseNameAlternatives_1_0
+            // InternalWreslEditorParser.g:23431:1: ( rule__GoalCaseContent__CaseNameAlternatives_1_0 )
+            // InternalWreslEditorParser.g:23431:2: rule__GoalCaseContent__CaseNameAlternatives_1_0
             {
             pushFollow(FOLLOW_2);
             rule__GoalCaseContent__CaseNameAlternatives_1_0();
@@ -68708,17 +69050,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__GoalCaseContent__ConditionAssignment_3"
-    // InternalWreslEditorParser.g:23313:1: rule__GoalCaseContent__ConditionAssignment_3 : ( ruleCondition ) ;
+    // InternalWreslEditorParser.g:23440:1: rule__GoalCaseContent__ConditionAssignment_3 : ( ruleCondition ) ;
     public final void rule__GoalCaseContent__ConditionAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23317:1: ( ( ruleCondition ) )
-            // InternalWreslEditorParser.g:23318:1: ( ruleCondition )
+            // InternalWreslEditorParser.g:23444:1: ( ( ruleCondition ) )
+            // InternalWreslEditorParser.g:23445:1: ( ruleCondition )
             {
-            // InternalWreslEditorParser.g:23318:1: ( ruleCondition )
-            // InternalWreslEditorParser.g:23319:1: ruleCondition
+            // InternalWreslEditorParser.g:23445:1: ( ruleCondition )
+            // InternalWreslEditorParser.g:23446:1: ruleCondition
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getGoalCaseContentAccess().getConditionConditionParserRuleCall_3_0()); 
@@ -68753,17 +69095,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__GoalCaseContent__RhsAssignment_5"
-    // InternalWreslEditorParser.g:23328:1: rule__GoalCaseContent__RhsAssignment_5 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:23455:1: rule__GoalCaseContent__RhsAssignment_5 : ( ruleExpression ) ;
     public final void rule__GoalCaseContent__RhsAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23332:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:23333:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:23459:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:23460:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:23333:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:23334:1: ruleExpression
+            // InternalWreslEditorParser.g:23460:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:23461:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getGoalCaseContentAccess().getRhsExpressionParserRuleCall_5_0()); 
@@ -68798,17 +69140,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__GoalCaseContent__SubContentAssignment_6"
-    // InternalWreslEditorParser.g:23343:1: rule__GoalCaseContent__SubContentAssignment_6 : ( ruleSubContent ) ;
+    // InternalWreslEditorParser.g:23470:1: rule__GoalCaseContent__SubContentAssignment_6 : ( ruleSubContent ) ;
     public final void rule__GoalCaseContent__SubContentAssignment_6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23347:1: ( ( ruleSubContent ) )
-            // InternalWreslEditorParser.g:23348:1: ( ruleSubContent )
+            // InternalWreslEditorParser.g:23474:1: ( ( ruleSubContent ) )
+            // InternalWreslEditorParser.g:23475:1: ( ruleSubContent )
             {
-            // InternalWreslEditorParser.g:23348:1: ( ruleSubContent )
-            // InternalWreslEditorParser.g:23349:1: ruleSubContent
+            // InternalWreslEditorParser.g:23475:1: ( ruleSubContent )
+            // InternalWreslEditorParser.g:23476:1: ruleSubContent
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getGoalCaseContentAccess().getSubContentSubContentParserRuleCall_6_0()); 
@@ -68843,17 +69185,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__GoalNoCaseContent__RhsAssignment_1"
-    // InternalWreslEditorParser.g:23358:1: rule__GoalNoCaseContent__RhsAssignment_1 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:23485:1: rule__GoalNoCaseContent__RhsAssignment_1 : ( ruleExpression ) ;
     public final void rule__GoalNoCaseContent__RhsAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23362:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:23363:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:23489:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:23490:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:23363:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:23364:1: ruleExpression
+            // InternalWreslEditorParser.g:23490:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:23491:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getGoalNoCaseContentAccess().getRhsExpressionParserRuleCall_1_0()); 
@@ -68888,17 +69230,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__GoalNoCaseContent__SubContentAssignment_2"
-    // InternalWreslEditorParser.g:23373:1: rule__GoalNoCaseContent__SubContentAssignment_2 : ( ruleSubContent ) ;
+    // InternalWreslEditorParser.g:23500:1: rule__GoalNoCaseContent__SubContentAssignment_2 : ( ruleSubContent ) ;
     public final void rule__GoalNoCaseContent__SubContentAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23377:1: ( ( ruleSubContent ) )
-            // InternalWreslEditorParser.g:23378:1: ( ruleSubContent )
+            // InternalWreslEditorParser.g:23504:1: ( ( ruleSubContent ) )
+            // InternalWreslEditorParser.g:23505:1: ( ruleSubContent )
             {
-            // InternalWreslEditorParser.g:23378:1: ( ruleSubContent )
-            // InternalWreslEditorParser.g:23379:1: ruleSubContent
+            // InternalWreslEditorParser.g:23505:1: ( ruleSubContent )
+            // InternalWreslEditorParser.g:23506:1: ruleSubContent
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getGoalNoCaseContentAccess().getSubContentSubContentParserRuleCall_2_0()); 
@@ -68933,17 +69275,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__SubContent__GtAssignment_0_0"
-    // InternalWreslEditorParser.g:23388:1: rule__SubContent__GtAssignment_0_0 : ( ruleLhsGtRhs ) ;
+    // InternalWreslEditorParser.g:23515:1: rule__SubContent__GtAssignment_0_0 : ( ruleLhsGtRhs ) ;
     public final void rule__SubContent__GtAssignment_0_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23392:1: ( ( ruleLhsGtRhs ) )
-            // InternalWreslEditorParser.g:23393:1: ( ruleLhsGtRhs )
+            // InternalWreslEditorParser.g:23519:1: ( ( ruleLhsGtRhs ) )
+            // InternalWreslEditorParser.g:23520:1: ( ruleLhsGtRhs )
             {
-            // InternalWreslEditorParser.g:23393:1: ( ruleLhsGtRhs )
-            // InternalWreslEditorParser.g:23394:1: ruleLhsGtRhs
+            // InternalWreslEditorParser.g:23520:1: ( ruleLhsGtRhs )
+            // InternalWreslEditorParser.g:23521:1: ruleLhsGtRhs
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubContentAccess().getGtLhsGtRhsParserRuleCall_0_0_0()); 
@@ -68978,17 +69320,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__SubContent__LtAssignment_0_1"
-    // InternalWreslEditorParser.g:23403:1: rule__SubContent__LtAssignment_0_1 : ( ruleLhsLtRhs ) ;
+    // InternalWreslEditorParser.g:23530:1: rule__SubContent__LtAssignment_0_1 : ( ruleLhsLtRhs ) ;
     public final void rule__SubContent__LtAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23407:1: ( ( ruleLhsLtRhs ) )
-            // InternalWreslEditorParser.g:23408:1: ( ruleLhsLtRhs )
+            // InternalWreslEditorParser.g:23534:1: ( ( ruleLhsLtRhs ) )
+            // InternalWreslEditorParser.g:23535:1: ( ruleLhsLtRhs )
             {
-            // InternalWreslEditorParser.g:23408:1: ( ruleLhsLtRhs )
-            // InternalWreslEditorParser.g:23409:1: ruleLhsLtRhs
+            // InternalWreslEditorParser.g:23535:1: ( ruleLhsLtRhs )
+            // InternalWreslEditorParser.g:23536:1: ruleLhsLtRhs
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubContentAccess().getLtLhsLtRhsParserRuleCall_0_1_0()); 
@@ -69023,17 +69365,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__SubContent__LtAssignment_1_0"
-    // InternalWreslEditorParser.g:23418:1: rule__SubContent__LtAssignment_1_0 : ( ruleLhsLtRhs ) ;
+    // InternalWreslEditorParser.g:23545:1: rule__SubContent__LtAssignment_1_0 : ( ruleLhsLtRhs ) ;
     public final void rule__SubContent__LtAssignment_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23422:1: ( ( ruleLhsLtRhs ) )
-            // InternalWreslEditorParser.g:23423:1: ( ruleLhsLtRhs )
+            // InternalWreslEditorParser.g:23549:1: ( ( ruleLhsLtRhs ) )
+            // InternalWreslEditorParser.g:23550:1: ( ruleLhsLtRhs )
             {
-            // InternalWreslEditorParser.g:23423:1: ( ruleLhsLtRhs )
-            // InternalWreslEditorParser.g:23424:1: ruleLhsLtRhs
+            // InternalWreslEditorParser.g:23550:1: ( ruleLhsLtRhs )
+            // InternalWreslEditorParser.g:23551:1: ruleLhsLtRhs
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubContentAccess().getLtLhsLtRhsParserRuleCall_1_0_0()); 
@@ -69068,17 +69410,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__SubContent__GtAssignment_1_1"
-    // InternalWreslEditorParser.g:23433:1: rule__SubContent__GtAssignment_1_1 : ( ruleLhsGtRhs ) ;
+    // InternalWreslEditorParser.g:23560:1: rule__SubContent__GtAssignment_1_1 : ( ruleLhsGtRhs ) ;
     public final void rule__SubContent__GtAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23437:1: ( ( ruleLhsGtRhs ) )
-            // InternalWreslEditorParser.g:23438:1: ( ruleLhsGtRhs )
+            // InternalWreslEditorParser.g:23564:1: ( ( ruleLhsGtRhs ) )
+            // InternalWreslEditorParser.g:23565:1: ( ruleLhsGtRhs )
             {
-            // InternalWreslEditorParser.g:23438:1: ( ruleLhsGtRhs )
-            // InternalWreslEditorParser.g:23439:1: ruleLhsGtRhs
+            // InternalWreslEditorParser.g:23565:1: ( ruleLhsGtRhs )
+            // InternalWreslEditorParser.g:23566:1: ruleLhsGtRhs
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubContentAccess().getGtLhsGtRhsParserRuleCall_1_1_0()); 
@@ -69113,17 +69455,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__LhsGtRhs__PenaltyAssignment_3_1"
-    // InternalWreslEditorParser.g:23448:1: rule__LhsGtRhs__PenaltyAssignment_3_1 : ( rulePenalty ) ;
+    // InternalWreslEditorParser.g:23575:1: rule__LhsGtRhs__PenaltyAssignment_3_1 : ( rulePenalty ) ;
     public final void rule__LhsGtRhs__PenaltyAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23452:1: ( ( rulePenalty ) )
-            // InternalWreslEditorParser.g:23453:1: ( rulePenalty )
+            // InternalWreslEditorParser.g:23579:1: ( ( rulePenalty ) )
+            // InternalWreslEditorParser.g:23580:1: ( rulePenalty )
             {
-            // InternalWreslEditorParser.g:23453:1: ( rulePenalty )
-            // InternalWreslEditorParser.g:23454:1: rulePenalty
+            // InternalWreslEditorParser.g:23580:1: ( rulePenalty )
+            // InternalWreslEditorParser.g:23581:1: rulePenalty
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLhsGtRhsAccess().getPenaltyPenaltyParserRuleCall_3_1_0()); 
@@ -69158,17 +69500,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__LhsLtRhs__PenaltyAssignment_3_1"
-    // InternalWreslEditorParser.g:23463:1: rule__LhsLtRhs__PenaltyAssignment_3_1 : ( rulePenalty ) ;
+    // InternalWreslEditorParser.g:23590:1: rule__LhsLtRhs__PenaltyAssignment_3_1 : ( rulePenalty ) ;
     public final void rule__LhsLtRhs__PenaltyAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23467:1: ( ( rulePenalty ) )
-            // InternalWreslEditorParser.g:23468:1: ( rulePenalty )
+            // InternalWreslEditorParser.g:23594:1: ( ( rulePenalty ) )
+            // InternalWreslEditorParser.g:23595:1: ( rulePenalty )
             {
-            // InternalWreslEditorParser.g:23468:1: ( rulePenalty )
-            // InternalWreslEditorParser.g:23469:1: rulePenalty
+            // InternalWreslEditorParser.g:23595:1: ( rulePenalty )
+            // InternalWreslEditorParser.g:23596:1: rulePenalty
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLhsLtRhsAccess().getPenaltyPenaltyParserRuleCall_3_1_0()); 
@@ -69203,17 +69545,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Penalty__ExpressionAssignment_1"
-    // InternalWreslEditorParser.g:23478:1: rule__Penalty__ExpressionAssignment_1 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:23605:1: rule__Penalty__ExpressionAssignment_1 : ( ruleExpression ) ;
     public final void rule__Penalty__ExpressionAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23482:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:23483:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:23609:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:23610:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:23483:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:23484:1: ruleExpression
+            // InternalWreslEditorParser.g:23610:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:23611:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPenaltyAccess().getExpressionExpressionParserRuleCall_1_0()); 
@@ -69248,17 +69590,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__GoalSimple__ConstraintAssignment"
-    // InternalWreslEditorParser.g:23493:1: rule__GoalSimple__ConstraintAssignment : ( ruleConstraint ) ;
+    // InternalWreslEditorParser.g:23620:1: rule__GoalSimple__ConstraintAssignment : ( ruleConstraint ) ;
     public final void rule__GoalSimple__ConstraintAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23497:1: ( ( ruleConstraint ) )
-            // InternalWreslEditorParser.g:23498:1: ( ruleConstraint )
+            // InternalWreslEditorParser.g:23624:1: ( ( ruleConstraint ) )
+            // InternalWreslEditorParser.g:23625:1: ( ruleConstraint )
             {
-            // InternalWreslEditorParser.g:23498:1: ( ruleConstraint )
-            // InternalWreslEditorParser.g:23499:1: ruleConstraint
+            // InternalWreslEditorParser.g:23625:1: ( ruleConstraint )
+            // InternalWreslEditorParser.g:23626:1: ruleConstraint
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getGoalSimpleAccess().getConstraintConstraintParserRuleCall_0()); 
@@ -69293,17 +69635,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Constraint__LhsAssignment_0"
-    // InternalWreslEditorParser.g:23508:1: rule__Constraint__LhsAssignment_0 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:23635:1: rule__Constraint__LhsAssignment_0 : ( ruleExpression ) ;
     public final void rule__Constraint__LhsAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23512:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:23513:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:23639:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:23640:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:23513:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:23514:1: ruleExpression
+            // InternalWreslEditorParser.g:23640:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:23641:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getConstraintAccess().getLhsExpressionParserRuleCall_0_0()); 
@@ -69338,23 +69680,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Constraint__OperatorAssignment_1"
-    // InternalWreslEditorParser.g:23523:1: rule__Constraint__OperatorAssignment_1 : ( ( rule__Constraint__OperatorAlternatives_1_0 ) ) ;
+    // InternalWreslEditorParser.g:23650:1: rule__Constraint__OperatorAssignment_1 : ( ( rule__Constraint__OperatorAlternatives_1_0 ) ) ;
     public final void rule__Constraint__OperatorAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23527:1: ( ( ( rule__Constraint__OperatorAlternatives_1_0 ) ) )
-            // InternalWreslEditorParser.g:23528:1: ( ( rule__Constraint__OperatorAlternatives_1_0 ) )
+            // InternalWreslEditorParser.g:23654:1: ( ( ( rule__Constraint__OperatorAlternatives_1_0 ) ) )
+            // InternalWreslEditorParser.g:23655:1: ( ( rule__Constraint__OperatorAlternatives_1_0 ) )
             {
-            // InternalWreslEditorParser.g:23528:1: ( ( rule__Constraint__OperatorAlternatives_1_0 ) )
-            // InternalWreslEditorParser.g:23529:1: ( rule__Constraint__OperatorAlternatives_1_0 )
+            // InternalWreslEditorParser.g:23655:1: ( ( rule__Constraint__OperatorAlternatives_1_0 ) )
+            // InternalWreslEditorParser.g:23656:1: ( rule__Constraint__OperatorAlternatives_1_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getConstraintAccess().getOperatorAlternatives_1_0()); 
             }
-            // InternalWreslEditorParser.g:23530:1: ( rule__Constraint__OperatorAlternatives_1_0 )
-            // InternalWreslEditorParser.g:23530:2: rule__Constraint__OperatorAlternatives_1_0
+            // InternalWreslEditorParser.g:23657:1: ( rule__Constraint__OperatorAlternatives_1_0 )
+            // InternalWreslEditorParser.g:23657:2: rule__Constraint__OperatorAlternatives_1_0
             {
             pushFollow(FOLLOW_2);
             rule__Constraint__OperatorAlternatives_1_0();
@@ -69389,17 +69731,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Constraint__RhsAssignment_2"
-    // InternalWreslEditorParser.g:23539:1: rule__Constraint__RhsAssignment_2 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:23666:1: rule__Constraint__RhsAssignment_2 : ( ruleExpression ) ;
     public final void rule__Constraint__RhsAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23543:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:23544:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:23670:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:23671:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:23544:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:23545:1: ruleExpression
+            // InternalWreslEditorParser.g:23671:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:23672:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getConstraintAccess().getRhsExpressionParserRuleCall_2_0()); 
@@ -69434,17 +69776,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Group__NameAssignment_1"
-    // InternalWreslEditorParser.g:23554:1: rule__Group__NameAssignment_1 : ( RULE_ID ) ;
+    // InternalWreslEditorParser.g:23681:1: rule__Group__NameAssignment_1 : ( RULE_ID ) ;
     public final void rule__Group__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23558:1: ( ( RULE_ID ) )
-            // InternalWreslEditorParser.g:23559:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:23685:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:23686:1: ( RULE_ID )
             {
-            // InternalWreslEditorParser.g:23559:1: ( RULE_ID )
-            // InternalWreslEditorParser.g:23560:1: RULE_ID
+            // InternalWreslEditorParser.g:23686:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:23687:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getGroupAccess().getNameIDTerminalRuleCall_1_0()); 
@@ -69475,17 +69817,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Group__PatternAssignment_3_0"
-    // InternalWreslEditorParser.g:23569:1: rule__Group__PatternAssignment_3_0 : ( rulePattern ) ;
+    // InternalWreslEditorParser.g:23696:1: rule__Group__PatternAssignment_3_0 : ( rulePattern ) ;
     public final void rule__Group__PatternAssignment_3_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23573:1: ( ( rulePattern ) )
-            // InternalWreslEditorParser.g:23574:1: ( rulePattern )
+            // InternalWreslEditorParser.g:23700:1: ( ( rulePattern ) )
+            // InternalWreslEditorParser.g:23701:1: ( rulePattern )
             {
-            // InternalWreslEditorParser.g:23574:1: ( rulePattern )
-            // InternalWreslEditorParser.g:23575:1: rulePattern
+            // InternalWreslEditorParser.g:23701:1: ( rulePattern )
+            // InternalWreslEditorParser.g:23702:1: rulePattern
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getGroupAccess().getPatternPatternParserRuleCall_3_0_0()); 
@@ -69520,17 +69862,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Group__IfincitemsAssignment_3_1"
-    // InternalWreslEditorParser.g:23584:1: rule__Group__IfincitemsAssignment_3_1 : ( ruleIfIncItems ) ;
+    // InternalWreslEditorParser.g:23711:1: rule__Group__IfincitemsAssignment_3_1 : ( ruleIfIncItems ) ;
     public final void rule__Group__IfincitemsAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23588:1: ( ( ruleIfIncItems ) )
-            // InternalWreslEditorParser.g:23589:1: ( ruleIfIncItems )
+            // InternalWreslEditorParser.g:23715:1: ( ( ruleIfIncItems ) )
+            // InternalWreslEditorParser.g:23716:1: ( ruleIfIncItems )
             {
-            // InternalWreslEditorParser.g:23589:1: ( ruleIfIncItems )
-            // InternalWreslEditorParser.g:23590:1: ruleIfIncItems
+            // InternalWreslEditorParser.g:23716:1: ( ruleIfIncItems )
+            // InternalWreslEditorParser.g:23717:1: ruleIfIncItems
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getGroupAccess().getIfincitemsIfIncItemsParserRuleCall_3_1_0()); 
@@ -69565,17 +69907,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Model__NameAssignment_1"
-    // InternalWreslEditorParser.g:23599:1: rule__Model__NameAssignment_1 : ( RULE_ID ) ;
+    // InternalWreslEditorParser.g:23726:1: rule__Model__NameAssignment_1 : ( RULE_ID ) ;
     public final void rule__Model__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23603:1: ( ( RULE_ID ) )
-            // InternalWreslEditorParser.g:23604:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:23730:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:23731:1: ( RULE_ID )
             {
-            // InternalWreslEditorParser.g:23604:1: ( RULE_ID )
-            // InternalWreslEditorParser.g:23605:1: RULE_ID
+            // InternalWreslEditorParser.g:23731:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:23732:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getModelAccess().getNameIDTerminalRuleCall_1_0()); 
@@ -69606,17 +69948,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Model__PatternAssignment_3_0"
-    // InternalWreslEditorParser.g:23614:1: rule__Model__PatternAssignment_3_0 : ( rulePattern ) ;
+    // InternalWreslEditorParser.g:23741:1: rule__Model__PatternAssignment_3_0 : ( rulePattern ) ;
     public final void rule__Model__PatternAssignment_3_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23618:1: ( ( rulePattern ) )
-            // InternalWreslEditorParser.g:23619:1: ( rulePattern )
+            // InternalWreslEditorParser.g:23745:1: ( ( rulePattern ) )
+            // InternalWreslEditorParser.g:23746:1: ( rulePattern )
             {
-            // InternalWreslEditorParser.g:23619:1: ( rulePattern )
-            // InternalWreslEditorParser.g:23620:1: rulePattern
+            // InternalWreslEditorParser.g:23746:1: ( rulePattern )
+            // InternalWreslEditorParser.g:23747:1: rulePattern
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getModelAccess().getPatternPatternParserRuleCall_3_0_0()); 
@@ -69651,17 +69993,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Model__IfincitemsAssignment_3_1"
-    // InternalWreslEditorParser.g:23629:1: rule__Model__IfincitemsAssignment_3_1 : ( ruleIfIncItems ) ;
+    // InternalWreslEditorParser.g:23756:1: rule__Model__IfincitemsAssignment_3_1 : ( ruleIfIncItems ) ;
     public final void rule__Model__IfincitemsAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23633:1: ( ( ruleIfIncItems ) )
-            // InternalWreslEditorParser.g:23634:1: ( ruleIfIncItems )
+            // InternalWreslEditorParser.g:23760:1: ( ( ruleIfIncItems ) )
+            // InternalWreslEditorParser.g:23761:1: ( ruleIfIncItems )
             {
-            // InternalWreslEditorParser.g:23634:1: ( ruleIfIncItems )
-            // InternalWreslEditorParser.g:23635:1: ruleIfIncItems
+            // InternalWreslEditorParser.g:23761:1: ( ruleIfIncItems )
+            // InternalWreslEditorParser.g:23762:1: ruleIfIncItems
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getModelAccess().getIfincitemsIfIncItemsParserRuleCall_3_1_0()); 
@@ -69696,17 +70038,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Initial__PatternAssignment_2"
-    // InternalWreslEditorParser.g:23644:1: rule__Initial__PatternAssignment_2 : ( rulePattern ) ;
+    // InternalWreslEditorParser.g:23771:1: rule__Initial__PatternAssignment_2 : ( rulePattern ) ;
     public final void rule__Initial__PatternAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23648:1: ( ( rulePattern ) )
-            // InternalWreslEditorParser.g:23649:1: ( rulePattern )
+            // InternalWreslEditorParser.g:23775:1: ( ( rulePattern ) )
+            // InternalWreslEditorParser.g:23776:1: ( rulePattern )
             {
-            // InternalWreslEditorParser.g:23649:1: ( rulePattern )
-            // InternalWreslEditorParser.g:23650:1: rulePattern
+            // InternalWreslEditorParser.g:23776:1: ( rulePattern )
+            // InternalWreslEditorParser.g:23777:1: rulePattern
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getInitialAccess().getPatternPatternParserRuleCall_2_0()); 
@@ -69741,17 +70083,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Sequence__NameAssignment_0_1"
-    // InternalWreslEditorParser.g:23659:1: rule__Sequence__NameAssignment_0_1 : ( RULE_ID ) ;
+    // InternalWreslEditorParser.g:23786:1: rule__Sequence__NameAssignment_0_1 : ( RULE_ID ) ;
     public final void rule__Sequence__NameAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23663:1: ( ( RULE_ID ) )
-            // InternalWreslEditorParser.g:23664:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:23790:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:23791:1: ( RULE_ID )
             {
-            // InternalWreslEditorParser.g:23664:1: ( RULE_ID )
-            // InternalWreslEditorParser.g:23665:1: RULE_ID
+            // InternalWreslEditorParser.g:23791:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:23792:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSequenceAccess().getNameIDTerminalRuleCall_0_1_0()); 
@@ -69782,23 +70124,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Sequence__ModelAssignment_0_4"
-    // InternalWreslEditorParser.g:23674:1: rule__Sequence__ModelAssignment_0_4 : ( ( RULE_ID ) ) ;
+    // InternalWreslEditorParser.g:23801:1: rule__Sequence__ModelAssignment_0_4 : ( ( RULE_ID ) ) ;
     public final void rule__Sequence__ModelAssignment_0_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23678:1: ( ( ( RULE_ID ) ) )
-            // InternalWreslEditorParser.g:23679:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:23805:1: ( ( ( RULE_ID ) ) )
+            // InternalWreslEditorParser.g:23806:1: ( ( RULE_ID ) )
             {
-            // InternalWreslEditorParser.g:23679:1: ( ( RULE_ID ) )
-            // InternalWreslEditorParser.g:23680:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:23806:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:23807:1: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSequenceAccess().getModelModelCrossReference_0_4_0()); 
             }
-            // InternalWreslEditorParser.g:23681:1: ( RULE_ID )
-            // InternalWreslEditorParser.g:23682:1: RULE_ID
+            // InternalWreslEditorParser.g:23808:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:23809:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSequenceAccess().getModelModelIDTerminalRuleCall_0_4_0_1()); 
@@ -69835,17 +70177,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Sequence__ConditionAssignment_0_5_0"
-    // InternalWreslEditorParser.g:23693:1: rule__Sequence__ConditionAssignment_0_5_0 : ( ruleCondition ) ;
+    // InternalWreslEditorParser.g:23820:1: rule__Sequence__ConditionAssignment_0_5_0 : ( ruleCondition ) ;
     public final void rule__Sequence__ConditionAssignment_0_5_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23697:1: ( ( ruleCondition ) )
-            // InternalWreslEditorParser.g:23698:1: ( ruleCondition )
+            // InternalWreslEditorParser.g:23824:1: ( ( ruleCondition ) )
+            // InternalWreslEditorParser.g:23825:1: ( ruleCondition )
             {
-            // InternalWreslEditorParser.g:23698:1: ( ruleCondition )
-            // InternalWreslEditorParser.g:23699:1: ruleCondition
+            // InternalWreslEditorParser.g:23825:1: ( ruleCondition )
+            // InternalWreslEditorParser.g:23826:1: ruleCondition
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSequenceAccess().getConditionConditionParserRuleCall_0_5_0_0()); 
@@ -69880,17 +70222,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Sequence__OrderAssignment_0_5_1_1"
-    // InternalWreslEditorParser.g:23708:1: rule__Sequence__OrderAssignment_0_5_1_1 : ( RULE_INT ) ;
+    // InternalWreslEditorParser.g:23835:1: rule__Sequence__OrderAssignment_0_5_1_1 : ( RULE_INT ) ;
     public final void rule__Sequence__OrderAssignment_0_5_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23712:1: ( ( RULE_INT ) )
-            // InternalWreslEditorParser.g:23713:1: ( RULE_INT )
+            // InternalWreslEditorParser.g:23839:1: ( ( RULE_INT ) )
+            // InternalWreslEditorParser.g:23840:1: ( RULE_INT )
             {
-            // InternalWreslEditorParser.g:23713:1: ( RULE_INT )
-            // InternalWreslEditorParser.g:23714:1: RULE_INT
+            // InternalWreslEditorParser.g:23840:1: ( RULE_INT )
+            // InternalWreslEditorParser.g:23841:1: RULE_INT
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSequenceAccess().getOrderINTTerminalRuleCall_0_5_1_1_0()); 
@@ -69921,17 +70263,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Sequence__OrderAssignment_1_0_0_1"
-    // InternalWreslEditorParser.g:23723:1: rule__Sequence__OrderAssignment_1_0_0_1 : ( RULE_INT ) ;
+    // InternalWreslEditorParser.g:23850:1: rule__Sequence__OrderAssignment_1_0_0_1 : ( RULE_INT ) ;
     public final void rule__Sequence__OrderAssignment_1_0_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23727:1: ( ( RULE_INT ) )
-            // InternalWreslEditorParser.g:23728:1: ( RULE_INT )
+            // InternalWreslEditorParser.g:23854:1: ( ( RULE_INT ) )
+            // InternalWreslEditorParser.g:23855:1: ( RULE_INT )
             {
-            // InternalWreslEditorParser.g:23728:1: ( RULE_INT )
-            // InternalWreslEditorParser.g:23729:1: RULE_INT
+            // InternalWreslEditorParser.g:23855:1: ( RULE_INT )
+            // InternalWreslEditorParser.g:23856:1: RULE_INT
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSequenceAccess().getOrderINTTerminalRuleCall_1_0_0_1_0()); 
@@ -69962,17 +70304,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Sequence__ConditionAssignment_1_0_1"
-    // InternalWreslEditorParser.g:23738:1: rule__Sequence__ConditionAssignment_1_0_1 : ( ruleCondition ) ;
+    // InternalWreslEditorParser.g:23865:1: rule__Sequence__ConditionAssignment_1_0_1 : ( ruleCondition ) ;
     public final void rule__Sequence__ConditionAssignment_1_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23742:1: ( ( ruleCondition ) )
-            // InternalWreslEditorParser.g:23743:1: ( ruleCondition )
+            // InternalWreslEditorParser.g:23869:1: ( ( ruleCondition ) )
+            // InternalWreslEditorParser.g:23870:1: ( ruleCondition )
             {
-            // InternalWreslEditorParser.g:23743:1: ( ruleCondition )
-            // InternalWreslEditorParser.g:23744:1: ruleCondition
+            // InternalWreslEditorParser.g:23870:1: ( ruleCondition )
+            // InternalWreslEditorParser.g:23871:1: ruleCondition
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSequenceAccess().getConditionConditionParserRuleCall_1_0_1_0()); 
@@ -70007,17 +70349,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Condition__LogicalAssignment_1_0"
-    // InternalWreslEditorParser.g:23753:1: rule__Condition__LogicalAssignment_1_0 : ( ruleLogicalExpression ) ;
+    // InternalWreslEditorParser.g:23880:1: rule__Condition__LogicalAssignment_1_0 : ( ruleLogicalExpression ) ;
     public final void rule__Condition__LogicalAssignment_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23757:1: ( ( ruleLogicalExpression ) )
-            // InternalWreslEditorParser.g:23758:1: ( ruleLogicalExpression )
+            // InternalWreslEditorParser.g:23884:1: ( ( ruleLogicalExpression ) )
+            // InternalWreslEditorParser.g:23885:1: ( ruleLogicalExpression )
             {
-            // InternalWreslEditorParser.g:23758:1: ( ruleLogicalExpression )
-            // InternalWreslEditorParser.g:23759:1: ruleLogicalExpression
+            // InternalWreslEditorParser.g:23885:1: ( ruleLogicalExpression )
+            // InternalWreslEditorParser.g:23886:1: ruleLogicalExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getConditionAccess().getLogicalLogicalExpressionParserRuleCall_1_0_0()); 
@@ -70052,17 +70394,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__LogicalExpression__C1Assignment_0"
-    // InternalWreslEditorParser.g:23768:1: rule__LogicalExpression__C1Assignment_0 : ( ruleConditionalUnary ) ;
+    // InternalWreslEditorParser.g:23895:1: rule__LogicalExpression__C1Assignment_0 : ( ruleConditionalUnary ) ;
     public final void rule__LogicalExpression__C1Assignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23772:1: ( ( ruleConditionalUnary ) )
-            // InternalWreslEditorParser.g:23773:1: ( ruleConditionalUnary )
+            // InternalWreslEditorParser.g:23899:1: ( ( ruleConditionalUnary ) )
+            // InternalWreslEditorParser.g:23900:1: ( ruleConditionalUnary )
             {
-            // InternalWreslEditorParser.g:23773:1: ( ruleConditionalUnary )
-            // InternalWreslEditorParser.g:23774:1: ruleConditionalUnary
+            // InternalWreslEditorParser.g:23900:1: ( ruleConditionalUnary )
+            // InternalWreslEditorParser.g:23901:1: ruleConditionalUnary
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogicalExpressionAccess().getC1ConditionalUnaryParserRuleCall_0_0()); 
@@ -70097,17 +70439,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__LogicalExpression__C2Assignment_1_1"
-    // InternalWreslEditorParser.g:23783:1: rule__LogicalExpression__C2Assignment_1_1 : ( ruleConditionalUnary ) ;
+    // InternalWreslEditorParser.g:23910:1: rule__LogicalExpression__C2Assignment_1_1 : ( ruleConditionalUnary ) ;
     public final void rule__LogicalExpression__C2Assignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23787:1: ( ( ruleConditionalUnary ) )
-            // InternalWreslEditorParser.g:23788:1: ( ruleConditionalUnary )
+            // InternalWreslEditorParser.g:23914:1: ( ( ruleConditionalUnary ) )
+            // InternalWreslEditorParser.g:23915:1: ( ruleConditionalUnary )
             {
-            // InternalWreslEditorParser.g:23788:1: ( ruleConditionalUnary )
-            // InternalWreslEditorParser.g:23789:1: ruleConditionalUnary
+            // InternalWreslEditorParser.g:23915:1: ( ruleConditionalUnary )
+            // InternalWreslEditorParser.g:23916:1: ruleConditionalUnary
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogicalExpressionAccess().getC2ConditionalUnaryParserRuleCall_1_1_0()); 
@@ -70142,17 +70484,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ConditionalTerm__E1Assignment_0_0"
-    // InternalWreslEditorParser.g:23798:1: rule__ConditionalTerm__E1Assignment_0_0 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:23925:1: rule__ConditionalTerm__E1Assignment_0_0 : ( ruleExpression ) ;
     public final void rule__ConditionalTerm__E1Assignment_0_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23802:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:23803:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:23929:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:23930:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:23803:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:23804:1: ruleExpression
+            // InternalWreslEditorParser.g:23930:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:23931:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getConditionalTermAccess().getE1ExpressionParserRuleCall_0_0_0()); 
@@ -70187,17 +70529,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ConditionalTerm__E2Assignment_0_2"
-    // InternalWreslEditorParser.g:23813:1: rule__ConditionalTerm__E2Assignment_0_2 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:23940:1: rule__ConditionalTerm__E2Assignment_0_2 : ( ruleExpression ) ;
     public final void rule__ConditionalTerm__E2Assignment_0_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23817:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:23818:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:23944:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:23945:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:23818:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:23819:1: ruleExpression
+            // InternalWreslEditorParser.g:23945:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:23946:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getConditionalTermAccess().getE2ExpressionParserRuleCall_0_2_0()); 
@@ -70232,17 +70574,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Add__M1Assignment_0"
-    // InternalWreslEditorParser.g:23828:1: rule__Add__M1Assignment_0 : ( ruleMultiply ) ;
+    // InternalWreslEditorParser.g:23955:1: rule__Add__M1Assignment_0 : ( ruleMultiply ) ;
     public final void rule__Add__M1Assignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23832:1: ( ( ruleMultiply ) )
-            // InternalWreslEditorParser.g:23833:1: ( ruleMultiply )
+            // InternalWreslEditorParser.g:23959:1: ( ( ruleMultiply ) )
+            // InternalWreslEditorParser.g:23960:1: ( ruleMultiply )
             {
-            // InternalWreslEditorParser.g:23833:1: ( ruleMultiply )
-            // InternalWreslEditorParser.g:23834:1: ruleMultiply
+            // InternalWreslEditorParser.g:23960:1: ( ruleMultiply )
+            // InternalWreslEditorParser.g:23961:1: ruleMultiply
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAddAccess().getM1MultiplyParserRuleCall_0_0()); 
@@ -70277,17 +70619,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Add__M2Assignment_1_1"
-    // InternalWreslEditorParser.g:23843:1: rule__Add__M2Assignment_1_1 : ( ruleMultiply ) ;
+    // InternalWreslEditorParser.g:23970:1: rule__Add__M2Assignment_1_1 : ( ruleMultiply ) ;
     public final void rule__Add__M2Assignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23847:1: ( ( ruleMultiply ) )
-            // InternalWreslEditorParser.g:23848:1: ( ruleMultiply )
+            // InternalWreslEditorParser.g:23974:1: ( ( ruleMultiply ) )
+            // InternalWreslEditorParser.g:23975:1: ( ruleMultiply )
             {
-            // InternalWreslEditorParser.g:23848:1: ( ruleMultiply )
-            // InternalWreslEditorParser.g:23849:1: ruleMultiply
+            // InternalWreslEditorParser.g:23975:1: ( ruleMultiply )
+            // InternalWreslEditorParser.g:23976:1: ruleMultiply
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAddAccess().getM2MultiplyParserRuleCall_1_1_0()); 
@@ -70322,17 +70664,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Multiply__U1Assignment_0"
-    // InternalWreslEditorParser.g:23858:1: rule__Multiply__U1Assignment_0 : ( ruleUnary ) ;
+    // InternalWreslEditorParser.g:23985:1: rule__Multiply__U1Assignment_0 : ( ruleUnary ) ;
     public final void rule__Multiply__U1Assignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23862:1: ( ( ruleUnary ) )
-            // InternalWreslEditorParser.g:23863:1: ( ruleUnary )
+            // InternalWreslEditorParser.g:23989:1: ( ( ruleUnary ) )
+            // InternalWreslEditorParser.g:23990:1: ( ruleUnary )
             {
-            // InternalWreslEditorParser.g:23863:1: ( ruleUnary )
-            // InternalWreslEditorParser.g:23864:1: ruleUnary
+            // InternalWreslEditorParser.g:23990:1: ( ruleUnary )
+            // InternalWreslEditorParser.g:23991:1: ruleUnary
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultiplyAccess().getU1UnaryParserRuleCall_0_0()); 
@@ -70367,17 +70709,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Multiply__U2Assignment_1_1"
-    // InternalWreslEditorParser.g:23873:1: rule__Multiply__U2Assignment_1_1 : ( ruleUnary ) ;
+    // InternalWreslEditorParser.g:24000:1: rule__Multiply__U2Assignment_1_1 : ( ruleUnary ) ;
     public final void rule__Multiply__U2Assignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23877:1: ( ( ruleUnary ) )
-            // InternalWreslEditorParser.g:23878:1: ( ruleUnary )
+            // InternalWreslEditorParser.g:24004:1: ( ( ruleUnary ) )
+            // InternalWreslEditorParser.g:24005:1: ( ruleUnary )
             {
-            // InternalWreslEditorParser.g:23878:1: ( ruleUnary )
-            // InternalWreslEditorParser.g:23879:1: ruleUnary
+            // InternalWreslEditorParser.g:24005:1: ( ruleUnary )
+            // InternalWreslEditorParser.g:24006:1: ruleUnary
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultiplyAccess().getU2UnaryParserRuleCall_1_1_0()); 
@@ -70412,23 +70754,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Term__RefAssignment_0"
-    // InternalWreslEditorParser.g:23888:1: rule__Term__RefAssignment_0 : ( ( RULE_ID ) ) ;
+    // InternalWreslEditorParser.g:24015:1: rule__Term__RefAssignment_0 : ( ( RULE_ID ) ) ;
     public final void rule__Term__RefAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23892:1: ( ( ( RULE_ID ) ) )
-            // InternalWreslEditorParser.g:23893:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:24019:1: ( ( ( RULE_ID ) ) )
+            // InternalWreslEditorParser.g:24020:1: ( ( RULE_ID ) )
             {
-            // InternalWreslEditorParser.g:23893:1: ( ( RULE_ID ) )
-            // InternalWreslEditorParser.g:23894:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:24020:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:24021:1: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTermAccess().getRefDeclarationCrossReference_0_0()); 
             }
-            // InternalWreslEditorParser.g:23895:1: ( RULE_ID )
-            // InternalWreslEditorParser.g:23896:1: RULE_ID
+            // InternalWreslEditorParser.g:24022:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:24023:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTermAccess().getRefDeclarationIDTerminalRuleCall_0_0_1()); 
@@ -70465,17 +70807,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Term__NAssignment_1"
-    // InternalWreslEditorParser.g:23907:1: rule__Term__NAssignment_1 : ( ruleNumber ) ;
+    // InternalWreslEditorParser.g:24034:1: rule__Term__NAssignment_1 : ( ruleNumber ) ;
     public final void rule__Term__NAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23911:1: ( ( ruleNumber ) )
-            // InternalWreslEditorParser.g:23912:1: ( ruleNumber )
+            // InternalWreslEditorParser.g:24038:1: ( ( ruleNumber ) )
+            // InternalWreslEditorParser.g:24039:1: ( ruleNumber )
             {
-            // InternalWreslEditorParser.g:23912:1: ( ruleNumber )
-            // InternalWreslEditorParser.g:23913:1: ruleNumber
+            // InternalWreslEditorParser.g:24039:1: ( ruleNumber )
+            // InternalWreslEditorParser.g:24040:1: ruleNumber
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTermAccess().getNNumberParserRuleCall_1_0()); 
@@ -70510,17 +70852,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Term__FAssignment_2"
-    // InternalWreslEditorParser.g:23922:1: rule__Term__FAssignment_2 : ( ruleFunction ) ;
+    // InternalWreslEditorParser.g:24049:1: rule__Term__FAssignment_2 : ( ruleFunction ) ;
     public final void rule__Term__FAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23926:1: ( ( ruleFunction ) )
-            // InternalWreslEditorParser.g:23927:1: ( ruleFunction )
+            // InternalWreslEditorParser.g:24053:1: ( ( ruleFunction ) )
+            // InternalWreslEditorParser.g:24054:1: ( ruleFunction )
             {
-            // InternalWreslEditorParser.g:23927:1: ( ruleFunction )
-            // InternalWreslEditorParser.g:23928:1: ruleFunction
+            // InternalWreslEditorParser.g:24054:1: ( ruleFunction )
+            // InternalWreslEditorParser.g:24055:1: ruleFunction
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTermAccess().getFFunctionParserRuleCall_2_0()); 
@@ -70555,17 +70897,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Term__EAssignment_3_1"
-    // InternalWreslEditorParser.g:23937:1: rule__Term__EAssignment_3_1 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:24064:1: rule__Term__EAssignment_3_1 : ( ruleExpression ) ;
     public final void rule__Term__EAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23941:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:23942:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24068:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:24069:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:23942:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:23943:1: ruleExpression
+            // InternalWreslEditorParser.g:24069:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24070:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTermAccess().getEExpressionParserRuleCall_3_1_0()); 
@@ -70600,17 +70942,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Term__SAssignment_4"
-    // InternalWreslEditorParser.g:23952:1: rule__Term__SAssignment_4 : ( ruleSpecialIdent ) ;
+    // InternalWreslEditorParser.g:24079:1: rule__Term__SAssignment_4 : ( ruleSpecialIdent ) ;
     public final void rule__Term__SAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23956:1: ( ( ruleSpecialIdent ) )
-            // InternalWreslEditorParser.g:23957:1: ( ruleSpecialIdent )
+            // InternalWreslEditorParser.g:24083:1: ( ( ruleSpecialIdent ) )
+            // InternalWreslEditorParser.g:24084:1: ( ruleSpecialIdent )
             {
-            // InternalWreslEditorParser.g:23957:1: ( ruleSpecialIdent )
-            // InternalWreslEditorParser.g:23958:1: ruleSpecialIdent
+            // InternalWreslEditorParser.g:24084:1: ( ruleSpecialIdent )
+            // InternalWreslEditorParser.g:24085:1: ruleSpecialIdent
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTermAccess().getSSpecialIdentParserRuleCall_4_0()); 
@@ -70645,23 +70987,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ExternalFunction1__RefAssignment_0_0"
-    // InternalWreslEditorParser.g:23967:1: rule__ExternalFunction1__RefAssignment_0_0 : ( ( RULE_ID ) ) ;
+    // InternalWreslEditorParser.g:24094:1: rule__ExternalFunction1__RefAssignment_0_0 : ( ( RULE_ID ) ) ;
     public final void rule__ExternalFunction1__RefAssignment_0_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23971:1: ( ( ( RULE_ID ) ) )
-            // InternalWreslEditorParser.g:23972:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:24098:1: ( ( ( RULE_ID ) ) )
+            // InternalWreslEditorParser.g:24099:1: ( ( RULE_ID ) )
             {
-            // InternalWreslEditorParser.g:23972:1: ( ( RULE_ID ) )
-            // InternalWreslEditorParser.g:23973:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:24099:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:24100:1: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExternalFunction1Access().getRefDeclarationCrossReference_0_0_0()); 
             }
-            // InternalWreslEditorParser.g:23974:1: ( RULE_ID )
-            // InternalWreslEditorParser.g:23975:1: RULE_ID
+            // InternalWreslEditorParser.g:24101:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:24102:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExternalFunction1Access().getRefDeclarationIDTerminalRuleCall_0_0_0_1()); 
@@ -70698,23 +71040,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ExternalFunction1__E1Assignment_2"
-    // InternalWreslEditorParser.g:23986:1: rule__ExternalFunction1__E1Assignment_2 : ( ( rule__ExternalFunction1__E1Alternatives_2_0 ) ) ;
+    // InternalWreslEditorParser.g:24113:1: rule__ExternalFunction1__E1Assignment_2 : ( ( rule__ExternalFunction1__E1Alternatives_2_0 ) ) ;
     public final void rule__ExternalFunction1__E1Assignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:23990:1: ( ( ( rule__ExternalFunction1__E1Alternatives_2_0 ) ) )
-            // InternalWreslEditorParser.g:23991:1: ( ( rule__ExternalFunction1__E1Alternatives_2_0 ) )
+            // InternalWreslEditorParser.g:24117:1: ( ( ( rule__ExternalFunction1__E1Alternatives_2_0 ) ) )
+            // InternalWreslEditorParser.g:24118:1: ( ( rule__ExternalFunction1__E1Alternatives_2_0 ) )
             {
-            // InternalWreslEditorParser.g:23991:1: ( ( rule__ExternalFunction1__E1Alternatives_2_0 ) )
-            // InternalWreslEditorParser.g:23992:1: ( rule__ExternalFunction1__E1Alternatives_2_0 )
+            // InternalWreslEditorParser.g:24118:1: ( ( rule__ExternalFunction1__E1Alternatives_2_0 ) )
+            // InternalWreslEditorParser.g:24119:1: ( rule__ExternalFunction1__E1Alternatives_2_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExternalFunction1Access().getE1Alternatives_2_0()); 
             }
-            // InternalWreslEditorParser.g:23993:1: ( rule__ExternalFunction1__E1Alternatives_2_0 )
-            // InternalWreslEditorParser.g:23993:2: rule__ExternalFunction1__E1Alternatives_2_0
+            // InternalWreslEditorParser.g:24120:1: ( rule__ExternalFunction1__E1Alternatives_2_0 )
+            // InternalWreslEditorParser.g:24120:2: rule__ExternalFunction1__E1Alternatives_2_0
             {
             pushFollow(FOLLOW_2);
             rule__ExternalFunction1__E1Alternatives_2_0();
@@ -70749,23 +71091,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ExternalFunction1__E2Assignment_3_1"
-    // InternalWreslEditorParser.g:24002:1: rule__ExternalFunction1__E2Assignment_3_1 : ( ( rule__ExternalFunction1__E2Alternatives_3_1_0 ) ) ;
+    // InternalWreslEditorParser.g:24129:1: rule__ExternalFunction1__E2Assignment_3_1 : ( ( rule__ExternalFunction1__E2Alternatives_3_1_0 ) ) ;
     public final void rule__ExternalFunction1__E2Assignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24006:1: ( ( ( rule__ExternalFunction1__E2Alternatives_3_1_0 ) ) )
-            // InternalWreslEditorParser.g:24007:1: ( ( rule__ExternalFunction1__E2Alternatives_3_1_0 ) )
+            // InternalWreslEditorParser.g:24133:1: ( ( ( rule__ExternalFunction1__E2Alternatives_3_1_0 ) ) )
+            // InternalWreslEditorParser.g:24134:1: ( ( rule__ExternalFunction1__E2Alternatives_3_1_0 ) )
             {
-            // InternalWreslEditorParser.g:24007:1: ( ( rule__ExternalFunction1__E2Alternatives_3_1_0 ) )
-            // InternalWreslEditorParser.g:24008:1: ( rule__ExternalFunction1__E2Alternatives_3_1_0 )
+            // InternalWreslEditorParser.g:24134:1: ( ( rule__ExternalFunction1__E2Alternatives_3_1_0 ) )
+            // InternalWreslEditorParser.g:24135:1: ( rule__ExternalFunction1__E2Alternatives_3_1_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExternalFunction1Access().getE2Alternatives_3_1_0()); 
             }
-            // InternalWreslEditorParser.g:24009:1: ( rule__ExternalFunction1__E2Alternatives_3_1_0 )
-            // InternalWreslEditorParser.g:24009:2: rule__ExternalFunction1__E2Alternatives_3_1_0
+            // InternalWreslEditorParser.g:24136:1: ( rule__ExternalFunction1__E2Alternatives_3_1_0 )
+            // InternalWreslEditorParser.g:24136:2: rule__ExternalFunction1__E2Alternatives_3_1_0
             {
             pushFollow(FOLLOW_2);
             rule__ExternalFunction1__E2Alternatives_3_1_0();
@@ -70799,24 +71141,69 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
     // $ANTLR end "rule__ExternalFunction1__E2Assignment_3_1"
 
 
+    // $ANTLR start "rule__ExternalFunction1__E0Assignment_5_1"
+    // InternalWreslEditorParser.g:24145:1: rule__ExternalFunction1__E0Assignment_5_1 : ( ruleExpression ) ;
+    public final void rule__ExternalFunction1__E0Assignment_5_1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalWreslEditorParser.g:24149:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:24150:1: ( ruleExpression )
+            {
+            // InternalWreslEditorParser.g:24150:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24151:1: ruleExpression
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getExternalFunction1Access().getE0ExpressionParserRuleCall_5_1_0()); 
+            }
+            pushFollow(FOLLOW_2);
+            ruleExpression();
+
+            state._fsp--;
+            if (state.failed) return ;
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getExternalFunction1Access().getE0ExpressionParserRuleCall_5_1_0()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__ExternalFunction1__E0Assignment_5_1"
+
+
     // $ANTLR start "rule__ExternalFunction2__RefAssignment_0_0"
-    // InternalWreslEditorParser.g:24018:1: rule__ExternalFunction2__RefAssignment_0_0 : ( ( RULE_ID ) ) ;
+    // InternalWreslEditorParser.g:24160:1: rule__ExternalFunction2__RefAssignment_0_0 : ( ( RULE_ID ) ) ;
     public final void rule__ExternalFunction2__RefAssignment_0_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24022:1: ( ( ( RULE_ID ) ) )
-            // InternalWreslEditorParser.g:24023:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:24164:1: ( ( ( RULE_ID ) ) )
+            // InternalWreslEditorParser.g:24165:1: ( ( RULE_ID ) )
             {
-            // InternalWreslEditorParser.g:24023:1: ( ( RULE_ID ) )
-            // InternalWreslEditorParser.g:24024:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:24165:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:24166:1: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExternalFunction2Access().getRefDeclarationCrossReference_0_0_0()); 
             }
-            // InternalWreslEditorParser.g:24025:1: ( RULE_ID )
-            // InternalWreslEditorParser.g:24026:1: RULE_ID
+            // InternalWreslEditorParser.g:24167:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:24168:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExternalFunction2Access().getRefDeclarationIDTerminalRuleCall_0_0_0_1()); 
@@ -70853,23 +71240,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TrunkTimeArray__RefAssignment_0"
-    // InternalWreslEditorParser.g:24037:1: rule__TrunkTimeArray__RefAssignment_0 : ( ( RULE_ID ) ) ;
+    // InternalWreslEditorParser.g:24179:1: rule__TrunkTimeArray__RefAssignment_0 : ( ( RULE_ID ) ) ;
     public final void rule__TrunkTimeArray__RefAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24041:1: ( ( ( RULE_ID ) ) )
-            // InternalWreslEditorParser.g:24042:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:24183:1: ( ( ( RULE_ID ) ) )
+            // InternalWreslEditorParser.g:24184:1: ( ( RULE_ID ) )
             {
-            // InternalWreslEditorParser.g:24042:1: ( ( RULE_ID ) )
-            // InternalWreslEditorParser.g:24043:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:24184:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:24185:1: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTrunkTimeArrayAccess().getRefDeclarationCrossReference_0_0()); 
             }
-            // InternalWreslEditorParser.g:24044:1: ( RULE_ID )
-            // InternalWreslEditorParser.g:24045:1: RULE_ID
+            // InternalWreslEditorParser.g:24186:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:24187:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTrunkTimeArrayAccess().getRefDeclarationIDTerminalRuleCall_0_0_1()); 
@@ -70906,17 +71293,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TrunkTimeArray__T1Assignment_2"
-    // InternalWreslEditorParser.g:24056:1: rule__TrunkTimeArray__T1Assignment_2 : ( ruleTrunkTimeArrayIndex ) ;
+    // InternalWreslEditorParser.g:24198:1: rule__TrunkTimeArray__T1Assignment_2 : ( ruleTrunkTimeArrayIndex ) ;
     public final void rule__TrunkTimeArray__T1Assignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24060:1: ( ( ruleTrunkTimeArrayIndex ) )
-            // InternalWreslEditorParser.g:24061:1: ( ruleTrunkTimeArrayIndex )
+            // InternalWreslEditorParser.g:24202:1: ( ( ruleTrunkTimeArrayIndex ) )
+            // InternalWreslEditorParser.g:24203:1: ( ruleTrunkTimeArrayIndex )
             {
-            // InternalWreslEditorParser.g:24061:1: ( ruleTrunkTimeArrayIndex )
-            // InternalWreslEditorParser.g:24062:1: ruleTrunkTimeArrayIndex
+            // InternalWreslEditorParser.g:24203:1: ( ruleTrunkTimeArrayIndex )
+            // InternalWreslEditorParser.g:24204:1: ruleTrunkTimeArrayIndex
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTrunkTimeArrayAccess().getT1TrunkTimeArrayIndexParserRuleCall_2_0()); 
@@ -70951,17 +71338,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TrunkTimeArray__T2Assignment_4"
-    // InternalWreslEditorParser.g:24071:1: rule__TrunkTimeArray__T2Assignment_4 : ( ruleTrunkTimeArrayIndex ) ;
+    // InternalWreslEditorParser.g:24213:1: rule__TrunkTimeArray__T2Assignment_4 : ( ruleTrunkTimeArrayIndex ) ;
     public final void rule__TrunkTimeArray__T2Assignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24075:1: ( ( ruleTrunkTimeArrayIndex ) )
-            // InternalWreslEditorParser.g:24076:1: ( ruleTrunkTimeArrayIndex )
+            // InternalWreslEditorParser.g:24217:1: ( ( ruleTrunkTimeArrayIndex ) )
+            // InternalWreslEditorParser.g:24218:1: ( ruleTrunkTimeArrayIndex )
             {
-            // InternalWreslEditorParser.g:24076:1: ( ruleTrunkTimeArrayIndex )
-            // InternalWreslEditorParser.g:24077:1: ruleTrunkTimeArrayIndex
+            // InternalWreslEditorParser.g:24218:1: ( ruleTrunkTimeArrayIndex )
+            // InternalWreslEditorParser.g:24219:1: ruleTrunkTimeArrayIndex
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTrunkTimeArrayAccess().getT2TrunkTimeArrayIndexParserRuleCall_4_0()); 
@@ -70996,23 +71383,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TrunkTimeArrayIndex__RefAssignment_2"
-    // InternalWreslEditorParser.g:24086:1: rule__TrunkTimeArrayIndex__RefAssignment_2 : ( ( RULE_ID ) ) ;
+    // InternalWreslEditorParser.g:24228:1: rule__TrunkTimeArrayIndex__RefAssignment_2 : ( ( RULE_ID ) ) ;
     public final void rule__TrunkTimeArrayIndex__RefAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24090:1: ( ( ( RULE_ID ) ) )
-            // InternalWreslEditorParser.g:24091:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:24232:1: ( ( ( RULE_ID ) ) )
+            // InternalWreslEditorParser.g:24233:1: ( ( RULE_ID ) )
             {
-            // InternalWreslEditorParser.g:24091:1: ( ( RULE_ID ) )
-            // InternalWreslEditorParser.g:24092:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:24233:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:24234:1: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTrunkTimeArrayIndexAccess().getRefDeclarationCrossReference_2_0()); 
             }
-            // InternalWreslEditorParser.g:24093:1: ( RULE_ID )
-            // InternalWreslEditorParser.g:24094:1: RULE_ID
+            // InternalWreslEditorParser.g:24235:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:24236:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTrunkTimeArrayIndexAccess().getRefDeclarationIDTerminalRuleCall_2_0_1()); 
@@ -71049,17 +71436,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__MaxFunction__E1Assignment_2"
-    // InternalWreslEditorParser.g:24105:1: rule__MaxFunction__E1Assignment_2 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:24247:1: rule__MaxFunction__E1Assignment_2 : ( ruleExpression ) ;
     public final void rule__MaxFunction__E1Assignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24109:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:24110:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24251:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:24252:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:24110:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:24111:1: ruleExpression
+            // InternalWreslEditorParser.g:24252:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24253:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMaxFunctionAccess().getE1ExpressionParserRuleCall_2_0()); 
@@ -71094,17 +71481,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__MaxFunction__E2Assignment_3_1"
-    // InternalWreslEditorParser.g:24120:1: rule__MaxFunction__E2Assignment_3_1 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:24262:1: rule__MaxFunction__E2Assignment_3_1 : ( ruleExpression ) ;
     public final void rule__MaxFunction__E2Assignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24124:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:24125:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24266:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:24267:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:24125:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:24126:1: ruleExpression
+            // InternalWreslEditorParser.g:24267:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24268:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMaxFunctionAccess().getE2ExpressionParserRuleCall_3_1_0()); 
@@ -71139,17 +71526,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__MinFunction__E1Assignment_2"
-    // InternalWreslEditorParser.g:24135:1: rule__MinFunction__E1Assignment_2 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:24277:1: rule__MinFunction__E1Assignment_2 : ( ruleExpression ) ;
     public final void rule__MinFunction__E1Assignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24139:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:24140:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24281:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:24282:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:24140:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:24141:1: ruleExpression
+            // InternalWreslEditorParser.g:24282:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24283:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMinFunctionAccess().getE1ExpressionParserRuleCall_2_0()); 
@@ -71184,17 +71571,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__MinFunction__E2Assignment_3_1"
-    // InternalWreslEditorParser.g:24150:1: rule__MinFunction__E2Assignment_3_1 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:24292:1: rule__MinFunction__E2Assignment_3_1 : ( ruleExpression ) ;
     public final void rule__MinFunction__E2Assignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24154:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:24155:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24296:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:24297:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:24155:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:24156:1: ruleExpression
+            // InternalWreslEditorParser.g:24297:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24298:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMinFunctionAccess().getE2ExpressionParserRuleCall_3_1_0()); 
@@ -71229,17 +71616,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ModFunction__E1Assignment_2"
-    // InternalWreslEditorParser.g:24165:1: rule__ModFunction__E1Assignment_2 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:24307:1: rule__ModFunction__E1Assignment_2 : ( ruleExpression ) ;
     public final void rule__ModFunction__E1Assignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24169:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:24170:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24311:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:24312:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:24170:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:24171:1: ruleExpression
+            // InternalWreslEditorParser.g:24312:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24313:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getModFunctionAccess().getE1ExpressionParserRuleCall_2_0()); 
@@ -71274,17 +71661,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ModFunction__E2Assignment_4"
-    // InternalWreslEditorParser.g:24180:1: rule__ModFunction__E2Assignment_4 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:24322:1: rule__ModFunction__E2Assignment_4 : ( ruleExpression ) ;
     public final void rule__ModFunction__E2Assignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24184:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:24185:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24326:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:24327:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:24185:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:24186:1: ruleExpression
+            // InternalWreslEditorParser.g:24327:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24328:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getModFunctionAccess().getE2ExpressionParserRuleCall_4_0()); 
@@ -71319,17 +71706,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IntFunction__EAssignment_2"
-    // InternalWreslEditorParser.g:24195:1: rule__IntFunction__EAssignment_2 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:24337:1: rule__IntFunction__EAssignment_2 : ( ruleExpression ) ;
     public final void rule__IntFunction__EAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24199:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:24200:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24341:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:24342:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:24200:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:24201:1: ruleExpression
+            // InternalWreslEditorParser.g:24342:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24343:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIntFunctionAccess().getEExpressionParserRuleCall_2_0()); 
@@ -71364,17 +71751,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AbsFunction__EAssignment_2"
-    // InternalWreslEditorParser.g:24210:1: rule__AbsFunction__EAssignment_2 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:24352:1: rule__AbsFunction__EAssignment_2 : ( ruleExpression ) ;
     public final void rule__AbsFunction__EAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24214:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:24215:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24356:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:24357:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:24215:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:24216:1: ruleExpression
+            // InternalWreslEditorParser.g:24357:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24358:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAbsFunctionAccess().getEExpressionParserRuleCall_2_0()); 
@@ -71409,17 +71796,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__RoundFunction__EAssignment_2"
-    // InternalWreslEditorParser.g:24225:1: rule__RoundFunction__EAssignment_2 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:24367:1: rule__RoundFunction__EAssignment_2 : ( ruleExpression ) ;
     public final void rule__RoundFunction__EAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24229:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:24230:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24371:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:24372:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:24230:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:24231:1: ruleExpression
+            // InternalWreslEditorParser.g:24372:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24373:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRoundFunctionAccess().getEExpressionParserRuleCall_2_0()); 
@@ -71454,17 +71841,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__PowFunction__E1Assignment_2"
-    // InternalWreslEditorParser.g:24240:1: rule__PowFunction__E1Assignment_2 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:24382:1: rule__PowFunction__E1Assignment_2 : ( ruleExpression ) ;
     public final void rule__PowFunction__E1Assignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24244:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:24245:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24386:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:24387:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:24245:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:24246:1: ruleExpression
+            // InternalWreslEditorParser.g:24387:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24388:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPowFunctionAccess().getE1ExpressionParserRuleCall_2_0()); 
@@ -71499,17 +71886,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__PowFunction__E2Assignment_4"
-    // InternalWreslEditorParser.g:24255:1: rule__PowFunction__E2Assignment_4 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:24397:1: rule__PowFunction__E2Assignment_4 : ( ruleExpression ) ;
     public final void rule__PowFunction__E2Assignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24259:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:24260:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24401:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:24402:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:24260:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:24261:1: ruleExpression
+            // InternalWreslEditorParser.g:24402:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24403:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPowFunctionAccess().getE2ExpressionParserRuleCall_4_0()); 
@@ -71544,17 +71931,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__LogFunction__EAssignment_2"
-    // InternalWreslEditorParser.g:24270:1: rule__LogFunction__EAssignment_2 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:24412:1: rule__LogFunction__EAssignment_2 : ( ruleExpression ) ;
     public final void rule__LogFunction__EAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24274:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:24275:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24416:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:24417:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:24275:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:24276:1: ruleExpression
+            // InternalWreslEditorParser.g:24417:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24418:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogFunctionAccess().getEExpressionParserRuleCall_2_0()); 
@@ -71589,17 +71976,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__SinFunction__EAssignment_2"
-    // InternalWreslEditorParser.g:24285:1: rule__SinFunction__EAssignment_2 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:24427:1: rule__SinFunction__EAssignment_2 : ( ruleExpression ) ;
     public final void rule__SinFunction__EAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24289:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:24290:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24431:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:24432:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:24290:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:24291:1: ruleExpression
+            // InternalWreslEditorParser.g:24432:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24433:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSinFunctionAccess().getEExpressionParserRuleCall_2_0()); 
@@ -71634,17 +72021,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__CosFunction__EAssignment_2"
-    // InternalWreslEditorParser.g:24300:1: rule__CosFunction__EAssignment_2 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:24442:1: rule__CosFunction__EAssignment_2 : ( ruleExpression ) ;
     public final void rule__CosFunction__EAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24304:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:24305:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24446:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:24447:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:24305:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:24306:1: ruleExpression
+            // InternalWreslEditorParser.g:24447:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24448:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCosFunctionAccess().getEExpressionParserRuleCall_2_0()); 
@@ -71679,17 +72066,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__TanFunction__EAssignment_2"
-    // InternalWreslEditorParser.g:24315:1: rule__TanFunction__EAssignment_2 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:24457:1: rule__TanFunction__EAssignment_2 : ( ruleExpression ) ;
     public final void rule__TanFunction__EAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24319:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:24320:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24461:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:24462:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:24320:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:24321:1: ruleExpression
+            // InternalWreslEditorParser.g:24462:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24463:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTanFunctionAccess().getEExpressionParserRuleCall_2_0()); 
@@ -71724,17 +72111,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__CotFunction__EAssignment_2"
-    // InternalWreslEditorParser.g:24330:1: rule__CotFunction__EAssignment_2 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:24472:1: rule__CotFunction__EAssignment_2 : ( ruleExpression ) ;
     public final void rule__CotFunction__EAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24334:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:24335:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24476:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:24477:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:24335:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:24336:1: ruleExpression
+            // InternalWreslEditorParser.g:24477:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24478:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCotFunctionAccess().getEExpressionParserRuleCall_2_0()); 
@@ -71769,17 +72156,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AsinFunction__EAssignment_2"
-    // InternalWreslEditorParser.g:24345:1: rule__AsinFunction__EAssignment_2 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:24487:1: rule__AsinFunction__EAssignment_2 : ( ruleExpression ) ;
     public final void rule__AsinFunction__EAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24349:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:24350:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24491:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:24492:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:24350:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:24351:1: ruleExpression
+            // InternalWreslEditorParser.g:24492:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24493:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAsinFunctionAccess().getEExpressionParserRuleCall_2_0()); 
@@ -71814,17 +72201,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AcosFunction__EAssignment_2"
-    // InternalWreslEditorParser.g:24360:1: rule__AcosFunction__EAssignment_2 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:24502:1: rule__AcosFunction__EAssignment_2 : ( ruleExpression ) ;
     public final void rule__AcosFunction__EAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24364:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:24365:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24506:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:24507:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:24365:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:24366:1: ruleExpression
+            // InternalWreslEditorParser.g:24507:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24508:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAcosFunctionAccess().getEExpressionParserRuleCall_2_0()); 
@@ -71859,17 +72246,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AtanFunction__EAssignment_2"
-    // InternalWreslEditorParser.g:24375:1: rule__AtanFunction__EAssignment_2 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:24517:1: rule__AtanFunction__EAssignment_2 : ( ruleExpression ) ;
     public final void rule__AtanFunction__EAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24379:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:24380:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24521:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:24522:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:24380:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:24381:1: ruleExpression
+            // InternalWreslEditorParser.g:24522:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24523:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAtanFunctionAccess().getEExpressionParserRuleCall_2_0()); 
@@ -71904,17 +72291,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__AcotFunction__EAssignment_2"
-    // InternalWreslEditorParser.g:24390:1: rule__AcotFunction__EAssignment_2 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:24532:1: rule__AcotFunction__EAssignment_2 : ( ruleExpression ) ;
     public final void rule__AcotFunction__EAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24394:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:24395:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24536:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:24537:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:24395:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:24396:1: ruleExpression
+            // InternalWreslEditorParser.g:24537:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24538:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAcotFunctionAccess().getEExpressionParserRuleCall_2_0()); 
@@ -71949,23 +72336,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModel__Ref1Assignment_0"
-    // InternalWreslEditorParser.g:24405:1: rule__VarModel__Ref1Assignment_0 : ( ( RULE_ID ) ) ;
+    // InternalWreslEditorParser.g:24547:1: rule__VarModel__Ref1Assignment_0 : ( ( RULE_ID ) ) ;
     public final void rule__VarModel__Ref1Assignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24409:1: ( ( ( RULE_ID ) ) )
-            // InternalWreslEditorParser.g:24410:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:24551:1: ( ( ( RULE_ID ) ) )
+            // InternalWreslEditorParser.g:24552:1: ( ( RULE_ID ) )
             {
-            // InternalWreslEditorParser.g:24410:1: ( ( RULE_ID ) )
-            // InternalWreslEditorParser.g:24411:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:24552:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:24553:1: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelAccess().getRef1DeclarationCrossReference_0_0()); 
             }
-            // InternalWreslEditorParser.g:24412:1: ( RULE_ID )
-            // InternalWreslEditorParser.g:24413:1: RULE_ID
+            // InternalWreslEditorParser.g:24554:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:24555:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelAccess().getRef1DeclarationIDTerminalRuleCall_0_0_1()); 
@@ -72002,23 +72389,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModel__Ref2Assignment_2"
-    // InternalWreslEditorParser.g:24424:1: rule__VarModel__Ref2Assignment_2 : ( ( RULE_ID ) ) ;
+    // InternalWreslEditorParser.g:24566:1: rule__VarModel__Ref2Assignment_2 : ( ( RULE_ID ) ) ;
     public final void rule__VarModel__Ref2Assignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24428:1: ( ( ( RULE_ID ) ) )
-            // InternalWreslEditorParser.g:24429:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:24570:1: ( ( ( RULE_ID ) ) )
+            // InternalWreslEditorParser.g:24571:1: ( ( RULE_ID ) )
             {
-            // InternalWreslEditorParser.g:24429:1: ( ( RULE_ID ) )
-            // InternalWreslEditorParser.g:24430:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:24571:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:24572:1: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelAccess().getRef2ModelCrossReference_2_0()); 
             }
-            // InternalWreslEditorParser.g:24431:1: ( RULE_ID )
-            // InternalWreslEditorParser.g:24432:1: RULE_ID
+            // InternalWreslEditorParser.g:24573:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:24574:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelAccess().getRef2ModelIDTerminalRuleCall_2_0_1()); 
@@ -72055,23 +72442,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelStep__Ref1Assignment_0"
-    // InternalWreslEditorParser.g:24443:1: rule__VarModelStep__Ref1Assignment_0 : ( ( RULE_ID ) ) ;
+    // InternalWreslEditorParser.g:24585:1: rule__VarModelStep__Ref1Assignment_0 : ( ( RULE_ID ) ) ;
     public final void rule__VarModelStep__Ref1Assignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24447:1: ( ( ( RULE_ID ) ) )
-            // InternalWreslEditorParser.g:24448:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:24589:1: ( ( ( RULE_ID ) ) )
+            // InternalWreslEditorParser.g:24590:1: ( ( RULE_ID ) )
             {
-            // InternalWreslEditorParser.g:24448:1: ( ( RULE_ID ) )
-            // InternalWreslEditorParser.g:24449:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:24590:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:24591:1: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelStepAccess().getRef1DeclarationCrossReference_0_0()); 
             }
-            // InternalWreslEditorParser.g:24450:1: ( RULE_ID )
-            // InternalWreslEditorParser.g:24451:1: RULE_ID
+            // InternalWreslEditorParser.g:24592:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:24593:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelStepAccess().getRef1DeclarationIDTerminalRuleCall_0_0_1()); 
@@ -72108,23 +72495,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelStep__Ref2Assignment_2"
-    // InternalWreslEditorParser.g:24462:1: rule__VarModelStep__Ref2Assignment_2 : ( ( RULE_ID ) ) ;
+    // InternalWreslEditorParser.g:24604:1: rule__VarModelStep__Ref2Assignment_2 : ( ( RULE_ID ) ) ;
     public final void rule__VarModelStep__Ref2Assignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24466:1: ( ( ( RULE_ID ) ) )
-            // InternalWreslEditorParser.g:24467:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:24608:1: ( ( ( RULE_ID ) ) )
+            // InternalWreslEditorParser.g:24609:1: ( ( RULE_ID ) )
             {
-            // InternalWreslEditorParser.g:24467:1: ( ( RULE_ID ) )
-            // InternalWreslEditorParser.g:24468:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:24609:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:24610:1: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelStepAccess().getRef2ModelCrossReference_2_0()); 
             }
-            // InternalWreslEditorParser.g:24469:1: ( RULE_ID )
-            // InternalWreslEditorParser.g:24470:1: RULE_ID
+            // InternalWreslEditorParser.g:24611:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:24612:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelStepAccess().getRef2ModelIDTerminalRuleCall_2_0_1()); 
@@ -72161,17 +72548,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelStep__EAssignment_5"
-    // InternalWreslEditorParser.g:24481:1: rule__VarModelStep__EAssignment_5 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:24623:1: rule__VarModelStep__EAssignment_5 : ( ruleExpression ) ;
     public final void rule__VarModelStep__EAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24485:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:24486:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24627:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:24628:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:24486:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:24487:1: ruleExpression
+            // InternalWreslEditorParser.g:24628:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24629:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelStepAccess().getEExpressionParserRuleCall_5_0()); 
@@ -72206,23 +72593,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelIndex__Ref1Assignment_0"
-    // InternalWreslEditorParser.g:24496:1: rule__VarModelIndex__Ref1Assignment_0 : ( ( RULE_ID ) ) ;
+    // InternalWreslEditorParser.g:24638:1: rule__VarModelIndex__Ref1Assignment_0 : ( ( RULE_ID ) ) ;
     public final void rule__VarModelIndex__Ref1Assignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24500:1: ( ( ( RULE_ID ) ) )
-            // InternalWreslEditorParser.g:24501:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:24642:1: ( ( ( RULE_ID ) ) )
+            // InternalWreslEditorParser.g:24643:1: ( ( RULE_ID ) )
             {
-            // InternalWreslEditorParser.g:24501:1: ( ( RULE_ID ) )
-            // InternalWreslEditorParser.g:24502:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:24643:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:24644:1: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelIndexAccess().getRef1DeclarationCrossReference_0_0()); 
             }
-            // InternalWreslEditorParser.g:24503:1: ( RULE_ID )
-            // InternalWreslEditorParser.g:24504:1: RULE_ID
+            // InternalWreslEditorParser.g:24645:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:24646:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelIndexAccess().getRef1DeclarationIDTerminalRuleCall_0_0_1()); 
@@ -72259,23 +72646,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelIndexStep__Ref1Assignment_0"
-    // InternalWreslEditorParser.g:24515:1: rule__VarModelIndexStep__Ref1Assignment_0 : ( ( RULE_ID ) ) ;
+    // InternalWreslEditorParser.g:24657:1: rule__VarModelIndexStep__Ref1Assignment_0 : ( ( RULE_ID ) ) ;
     public final void rule__VarModelIndexStep__Ref1Assignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24519:1: ( ( ( RULE_ID ) ) )
-            // InternalWreslEditorParser.g:24520:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:24661:1: ( ( ( RULE_ID ) ) )
+            // InternalWreslEditorParser.g:24662:1: ( ( RULE_ID ) )
             {
-            // InternalWreslEditorParser.g:24520:1: ( ( RULE_ID ) )
-            // InternalWreslEditorParser.g:24521:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:24662:1: ( ( RULE_ID ) )
+            // InternalWreslEditorParser.g:24663:1: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelIndexStepAccess().getRef1DeclarationCrossReference_0_0()); 
             }
-            // InternalWreslEditorParser.g:24522:1: ( RULE_ID )
-            // InternalWreslEditorParser.g:24523:1: RULE_ID
+            // InternalWreslEditorParser.g:24664:1: ( RULE_ID )
+            // InternalWreslEditorParser.g:24665:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelIndexStepAccess().getRef1DeclarationIDTerminalRuleCall_0_0_1()); 
@@ -72312,17 +72699,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__VarModelIndexStep__EAssignment_6"
-    // InternalWreslEditorParser.g:24534:1: rule__VarModelIndexStep__EAssignment_6 : ( ruleExpression ) ;
+    // InternalWreslEditorParser.g:24676:1: rule__VarModelIndexStep__EAssignment_6 : ( ruleExpression ) ;
     public final void rule__VarModelIndexStep__EAssignment_6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24538:1: ( ( ruleExpression ) )
-            // InternalWreslEditorParser.g:24539:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24680:1: ( ( ruleExpression ) )
+            // InternalWreslEditorParser.g:24681:1: ( ruleExpression )
             {
-            // InternalWreslEditorParser.g:24539:1: ( ruleExpression )
-            // InternalWreslEditorParser.g:24540:1: ruleExpression
+            // InternalWreslEditorParser.g:24681:1: ( ruleExpression )
+            // InternalWreslEditorParser.g:24682:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVarModelIndexStepAccess().getEExpressionParserRuleCall_6_0()); 
@@ -72357,23 +72744,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IncludeFile__LocalAssignment_1_1"
-    // InternalWreslEditorParser.g:24550:1: rule__IncludeFile__LocalAssignment_1_1 : ( ( rule__IncludeFile__LocalAlternatives_1_1_0 ) ) ;
+    // InternalWreslEditorParser.g:24692:1: rule__IncludeFile__LocalAssignment_1_1 : ( ( rule__IncludeFile__LocalAlternatives_1_1_0 ) ) ;
     public final void rule__IncludeFile__LocalAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24554:1: ( ( ( rule__IncludeFile__LocalAlternatives_1_1_0 ) ) )
-            // InternalWreslEditorParser.g:24555:1: ( ( rule__IncludeFile__LocalAlternatives_1_1_0 ) )
+            // InternalWreslEditorParser.g:24696:1: ( ( ( rule__IncludeFile__LocalAlternatives_1_1_0 ) ) )
+            // InternalWreslEditorParser.g:24697:1: ( ( rule__IncludeFile__LocalAlternatives_1_1_0 ) )
             {
-            // InternalWreslEditorParser.g:24555:1: ( ( rule__IncludeFile__LocalAlternatives_1_1_0 ) )
-            // InternalWreslEditorParser.g:24556:1: ( rule__IncludeFile__LocalAlternatives_1_1_0 )
+            // InternalWreslEditorParser.g:24697:1: ( ( rule__IncludeFile__LocalAlternatives_1_1_0 ) )
+            // InternalWreslEditorParser.g:24698:1: ( rule__IncludeFile__LocalAlternatives_1_1_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIncludeFileAccess().getLocalAlternatives_1_1_0()); 
             }
-            // InternalWreslEditorParser.g:24557:1: ( rule__IncludeFile__LocalAlternatives_1_1_0 )
-            // InternalWreslEditorParser.g:24557:2: rule__IncludeFile__LocalAlternatives_1_1_0
+            // InternalWreslEditorParser.g:24699:1: ( rule__IncludeFile__LocalAlternatives_1_1_0 )
+            // InternalWreslEditorParser.g:24699:2: rule__IncludeFile__LocalAlternatives_1_1_0
             {
             pushFollow(FOLLOW_2);
             rule__IncludeFile__LocalAlternatives_1_1_0();
@@ -72408,17 +72795,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__IncludeFile__FileAssignment_2"
-    // InternalWreslEditorParser.g:24566:1: rule__IncludeFile__FileAssignment_2 : ( RULE_STRING ) ;
+    // InternalWreslEditorParser.g:24708:1: rule__IncludeFile__FileAssignment_2 : ( RULE_STRING ) ;
     public final void rule__IncludeFile__FileAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalWreslEditorParser.g:24570:1: ( ( RULE_STRING ) )
-            // InternalWreslEditorParser.g:24571:1: ( RULE_STRING )
+            // InternalWreslEditorParser.g:24712:1: ( ( RULE_STRING ) )
+            // InternalWreslEditorParser.g:24713:1: ( RULE_STRING )
             {
-            // InternalWreslEditorParser.g:24571:1: ( RULE_STRING )
-            // InternalWreslEditorParser.g:24572:1: RULE_STRING
+            // InternalWreslEditorParser.g:24713:1: ( RULE_STRING )
+            // InternalWreslEditorParser.g:24714:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIncludeFileAccess().getFileSTRINGTerminalRuleCall_2_0()); 
@@ -75553,10 +75940,10 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
         }
     }
     static final String dfa_33s = "\45\uffff";
-    static final String dfa_34s = "\36\uffff\1\40\3\uffff\1\44\2\uffff";
-    static final String dfa_35s = "\1\20\6\125\21\uffff\1\132\1\4\1\141\1\171\2\uffff\1\7\1\141\2\uffff\1\7\2\uffff";
-    static final String dfa_36s = "\1\u0082\1\140\5\125\21\uffff\2\u0082\1\141\1\171\2\uffff\1\177\1\141\2\uffff\1\177\2\uffff";
-    static final String dfa_37s = "\7\uffff\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\1\15\1\16\1\17\1\20\1\21\1\22\1\23\4\uffff\1\2\1\1\2\uffff\1\24\1\25\1\uffff\1\27\1\26";
+    static final String dfa_34s = "\37\uffff\1\41\1\44\4\uffff";
+    static final String dfa_35s = "\1\20\6\125\21\uffff\1\132\1\4\1\171\1\141\2\uffff\1\141\2\7\4\uffff";
+    static final String dfa_36s = "\1\u0082\1\140\5\125\21\uffff\2\u0082\1\171\1\141\2\uffff\1\141\2\177\4\uffff";
+    static final String dfa_37s = "\7\uffff\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\1\15\1\16\1\17\1\20\1\21\1\22\1\23\4\uffff\1\2\1\1\3\uffff\1\24\1\25\1\27\1\26";
     static final String dfa_38s = "\45\uffff}>";
     static final String[] dfa_39s = {
             "\1\4\21\uffff\1\5\1\2\1\3\12\uffff\1\6\45\uffff\1\11\23\uffff\1\10\1\7\1\12\1\13\1\14\1\15\1\16\1\17\1\20\1\21\1\22\1\23\1\24\1\25\1\26\1\27\11\uffff\1\1",
@@ -75583,17 +75970,17 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
             "",
             "",
             "",
-            "\1\33\47\uffff\1\32",
+            "\1\32\47\uffff\1\33",
             "\2\35\5\uffff\1\35\4\uffff\1\35\5\uffff\20\35\11\uffff\1\35\15\uffff\10\35\1\uffff\4\35\1\uffff\1\35\3\uffff\1\35\5\uffff\1\35\1\34\1\uffff\1\35\1\uffff\1\35\7\uffff\1\35\6\uffff\22\35\7\uffff\1\35",
             "\1\36",
             "\1\37",
             "",
             "",
-            "\1\40\5\uffff\2\40\30\uffff\1\40\3\uffff\1\40\1\uffff\2\40\1\uffff\3\40\4\uffff\1\40\3\uffff\1\40\11\uffff\1\40\4\uffff\1\40\2\uffff\2\40\1\uffff\4\40\1\uffff\1\41\6\40\1\uffff\3\40\1\uffff\1\40\1\uffff\2\40\26\uffff\2\40\2\uffff\1\40",
-            "\1\42",
-            "",
-            "",
+            "\1\40",
+            "\1\41\5\uffff\2\41\30\uffff\1\41\3\uffff\1\41\1\uffff\2\41\1\uffff\3\41\4\uffff\1\41\3\uffff\1\41\11\uffff\1\41\4\uffff\1\41\2\uffff\2\41\1\uffff\4\41\1\uffff\1\42\6\41\1\uffff\3\41\1\uffff\1\41\1\uffff\2\41\26\uffff\2\41\2\uffff\1\41",
             "\1\44\5\uffff\2\44\30\uffff\1\44\3\uffff\1\44\1\uffff\2\44\1\uffff\3\44\4\uffff\1\44\3\uffff\1\44\11\uffff\1\44\4\uffff\1\44\2\uffff\2\44\1\uffff\4\44\1\uffff\1\43\6\44\1\uffff\3\44\1\uffff\1\44\1\uffff\2\44\26\uffff\2\44\2\uffff\1\44",
+            "",
+            "",
             "",
             ""
     };

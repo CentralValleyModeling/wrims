@@ -262,6 +262,7 @@ public class WreslEditorParser extends AbstractContentAssistParser {
 					put(grammarAccess.getFunctionAccess().getGroup_4(), "rule__Function__Group_4__0");
 					put(grammarAccess.getExternalFunction1Access().getGroup(), "rule__ExternalFunction1__Group__0");
 					put(grammarAccess.getExternalFunction1Access().getGroup_3(), "rule__ExternalFunction1__Group_3__0");
+					put(grammarAccess.getExternalFunction1Access().getGroup_5(), "rule__ExternalFunction1__Group_5__0");
 					put(grammarAccess.getExternalFunction2Access().getGroup(), "rule__ExternalFunction2__Group__0");
 					put(grammarAccess.getTrunkTimeArrayAccess().getGroup(), "rule__TrunkTimeArray__Group__0");
 					put(grammarAccess.getTrunkTimeArrayIndexAccess().getGroup_1(), "rule__TrunkTimeArrayIndex__Group_1__0");
@@ -438,6 +439,7 @@ public class WreslEditorParser extends AbstractContentAssistParser {
 					put(grammarAccess.getExternalFunction1Access().getRefAssignment_0_0(), "rule__ExternalFunction1__RefAssignment_0_0");
 					put(grammarAccess.getExternalFunction1Access().getE1Assignment_2(), "rule__ExternalFunction1__E1Assignment_2");
 					put(grammarAccess.getExternalFunction1Access().getE2Assignment_3_1(), "rule__ExternalFunction1__E2Assignment_3_1");
+					put(grammarAccess.getExternalFunction1Access().getE0Assignment_5_1(), "rule__ExternalFunction1__E0Assignment_5_1");
 					put(grammarAccess.getExternalFunction2Access().getRefAssignment_0_0(), "rule__ExternalFunction2__RefAssignment_0_0");
 					put(grammarAccess.getTrunkTimeArrayAccess().getRefAssignment_0(), "rule__TrunkTimeArray__RefAssignment_0");
 					put(grammarAccess.getTrunkTimeArrayAccess().getT1Assignment_2(), "rule__TrunkTimeArray__T1Assignment_2");

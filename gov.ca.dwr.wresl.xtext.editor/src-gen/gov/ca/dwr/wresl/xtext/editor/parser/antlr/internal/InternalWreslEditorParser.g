@@ -6674,7 +6674,35 @@ ruleMonth
     {
     	newLeafNode(otherlv_7, grammarAccess.getExternalFunction1Access().getRightParenthesisKeyword_4());
     }
+(
+	otherlv_8=LeftParenthesis
+    {
+    	newLeafNode(otherlv_8, grammarAccess.getExternalFunction1Access().getLeftParenthesisKeyword_5_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getExternalFunction1Access().getE0ExpressionParserRuleCall_5_1_0()); 
+	    }
+		lv_e0_9_0=ruleExpression		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getExternalFunction1Rule());
+	        }
+       		set(
+       			$current, 
+       			"e0",
+        		lv_e0_9_0, 
+        		"gov.ca.dwr.wresl.xtext.editor.WreslEditor.Expression");
+	        afterParserOrEnumRuleCall();
+	    }
+
 )
+)
+	otherlv_10=RightParenthesis
+    {
+    	newLeafNode(otherlv_10, grammarAccess.getExternalFunction1Access().getRightParenthesisKeyword_5_2());
+    }
+)?)
 ;
 
 

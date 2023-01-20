@@ -223,7 +223,7 @@ Function:
 	ExternalFunction1 | ExternalFunction2 | MaxFunction | MinFunction | '(' SumContent ')' | ModFunction | IntFunction | AbsFunction | RoundFunction | PowFunction | LogFunction | SinFunction | CosFunction | TanFunction | CotFunction | AsinFunction | AcosFunction | AtanFunction | AcotFunction | VarModel | VarModelStep | VarModelIndex | VarModelIndexStep;
 
 ExternalFunction1:
-	((ref=[Declaration])|TafCfs|Month) '(' e1=(Expression|TrunkTimeArray) (',' e2+=(Expression|TrunkTimeArray))* ')';
+	((ref=[Declaration])|TafCfs|Month) '(' e1=(Expression|TrunkTimeArray) (',' e2+=(Expression|TrunkTimeArray))* ')' ('(' e0=Expression ')')?;
 	
 ExternalFunction2:
 	((ref=[Declaration])|TafCfs|Month) '(' ')';

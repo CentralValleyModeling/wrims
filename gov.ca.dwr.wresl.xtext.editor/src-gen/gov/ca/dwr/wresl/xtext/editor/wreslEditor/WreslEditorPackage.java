@@ -2736,13 +2736,22 @@ public interface WreslEditorPackage extends EPackage
   int EXTERNAL_FUNCTION1__E2 = FUNCTION_FEATURE_COUNT + 2;
 
   /**
+   * The feature id for the '<em><b>E0</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXTERNAL_FUNCTION1__E0 = FUNCTION_FEATURE_COUNT + 3;
+
+  /**
    * The number of structural features of the '<em>External Function1</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EXTERNAL_FUNCTION1_FEATURE_COUNT = FUNCTION_FEATURE_COUNT + 3;
+  int EXTERNAL_FUNCTION1_FEATURE_COUNT = FUNCTION_FEATURE_COUNT + 4;
 
   /**
    * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ExternalFunction2Impl <em>External Function2</em>}' class.
@@ -5500,6 +5509,17 @@ public interface WreslEditorPackage extends EPackage
   EReference getExternalFunction1_E2();
 
   /**
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.ExternalFunction1#getE0 <em>E0</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>E0</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.ExternalFunction1#getE0()
+   * @see #getExternalFunction1()
+   * @generated
+   */
+  EReference getExternalFunction1_E0();
+
+  /**
    * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.ExternalFunction2 <em>External Function2</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -7766,6 +7786,14 @@ public interface WreslEditorPackage extends EPackage
      * @generated
      */
     EReference EXTERNAL_FUNCTION1__E2 = eINSTANCE.getExternalFunction1_E2();
+
+    /**
+     * The meta object literal for the '<em><b>E0</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference EXTERNAL_FUNCTION1__E0 = eINSTANCE.getExternalFunction1_E0();
 
     /**
      * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ExternalFunction2Impl <em>External Function2</em>}' class.

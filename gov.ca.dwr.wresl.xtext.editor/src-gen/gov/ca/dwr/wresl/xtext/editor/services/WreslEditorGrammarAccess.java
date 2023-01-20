@@ -103,7 +103,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Pattern:
 		//	Variable | IncludeFile | IncludeModel | IncludeGroup | Goal | Objective;
-		public ParserRule getRule() { return rule; }
+		 public ParserRule getRule() { return rule; }
 
 		//Variable | IncludeFile | IncludeModel | IncludeGroup | Goal | Objective
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -138,7 +138,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Declaration:
 		//	'Declare' '{' name=ID '}';
-		public ParserRule getRule() { return rule; }
+		 public ParserRule getRule() { return rule; }
 
 		//'Declare' '{' name=ID '}'
 		public Group getGroup() { return cGroup; }
@@ -168,7 +168,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Variable:
 		//	StateVariable | DecisionVariable | ExternalDef;
-		public ParserRule getRule() { return rule; }
+		 public ParserRule getRule() { return rule; }
 
 		//StateVariable | DecisionVariable | ExternalDef
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -191,7 +191,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//StateVariable:
 		//	SvarDef | ConstDef;
-		public ParserRule getRule() { return rule; }
+		 public ParserRule getRule() { return rule; }
 
 		//SvarDef | ConstDef
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -211,7 +211,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//DecisionVariable:
 		//	DvarDef | Alias;
-		public ParserRule getRule() { return rule; }
+		 public ParserRule getRule() { return rule; }
 
 		//DvarDef | Alias
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -234,7 +234,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//IfIncItems:
 		//	IfTerm elseifterm=ElseIfTerm? elseterm=ElseTerm?;
-		public ParserRule getRule() { return rule; }
+		 public ParserRule getRule() { return rule; }
 
 		//IfTerm elseifterm=ElseIfTerm? elseterm=ElseTerm?
 		public Group getGroup() { return cGroup; }
@@ -3916,13 +3916,19 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cE2ExpressionParserRuleCall_3_1_0_0 = (RuleCall)cE2Alternatives_3_1_0.eContents().get(0);
 		private final RuleCall cE2TrunkTimeArrayParserRuleCall_3_1_0_1 = (RuleCall)cE2Alternatives_3_1_0.eContents().get(1);
 		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Keyword cLeftParenthesisKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Assignment cE0Assignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final RuleCall cE0ExpressionParserRuleCall_5_1_0 = (RuleCall)cE0Assignment_5_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_5_2 = (Keyword)cGroup_5.eContents().get(2);
 		
 		//ExternalFunction1:
 		//	(ref=[Declaration] | TafCfs | Month) '(' e1=(Expression | TrunkTimeArray) (',' e2+=(Expression | TrunkTimeArray))*
-		//	')';
+		//	')' ('(' e0=Expression ')')?;
 		public ParserRule getRule() { return rule; }
 
 		//(ref=[Declaration] | TafCfs | Month) '(' e1=(Expression | TrunkTimeArray) (',' e2+=(Expression | TrunkTimeArray))* ')'
+		//('(' e0=Expression ')')?
 		public Group getGroup() { return cGroup; }
 
 		//(ref=[Declaration] | TafCfs | Month)
@@ -3978,6 +3984,21 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 		//')'
 		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
+
+		//('(' e0=Expression ')')?
+		public Group getGroup_5() { return cGroup_5; }
+
+		//'('
+		public Keyword getLeftParenthesisKeyword_5_0() { return cLeftParenthesisKeyword_5_0; }
+
+		//e0=Expression
+		public Assignment getE0Assignment_5_1() { return cE0Assignment_5_1; }
+
+		//Expression
+		public RuleCall getE0ExpressionParserRuleCall_5_1_0() { return cE0ExpressionParserRuleCall_5_1_0; }
+
+		//')'
+		public Keyword getRightParenthesisKeyword_5_2() { return cRightParenthesisKeyword_5_2; }
 	}
 
 	public class ExternalFunction2Elements extends AbstractParserRuleElementFinder {
@@ -6587,7 +6608,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ExternalFunction1:
 	//	(ref=[Declaration] | TafCfs | Month) '(' e1=(Expression | TrunkTimeArray) (',' e2+=(Expression | TrunkTimeArray))*
-	//	')';
+	//	')' ('(' e0=Expression ')')?;
 	public ExternalFunction1Elements getExternalFunction1Access() {
 		return pExternalFunction1;
 	}

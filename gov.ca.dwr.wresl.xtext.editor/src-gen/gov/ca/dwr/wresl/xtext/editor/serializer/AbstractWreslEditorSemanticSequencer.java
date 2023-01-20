@@ -823,7 +823,7 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 	 *     ExternalFunction1 returns ExternalFunction1
 	 *
 	 * Constraint:
-	 *     (ref=[Declaration|ID]? (e1=Expression | e1=TrunkTimeArray) e2+=Expression? (e2+=TrunkTimeArray? e2+=Expression?)*)
+	 *     (ref=[Declaration|ID]? (e1=Expression | e1=TrunkTimeArray) e2+=Expression? (e2+=TrunkTimeArray? e2+=Expression?)* e0=Expression?)
 	 */
 	protected void sequence_ExternalFunction1(ISerializationContext context, ExternalFunction1 semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

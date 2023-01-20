@@ -2680,6 +2680,16 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getExternalFunction1_E0()
+  {
+    return (EReference)externalFunction1EClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getExternalFunction2()
   {
     return externalFunction2EClass;
@@ -3557,6 +3567,7 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     createEReference(externalFunction1EClass, EXTERNAL_FUNCTION1__REF);
     createEReference(externalFunction1EClass, EXTERNAL_FUNCTION1__E1);
     createEReference(externalFunction1EClass, EXTERNAL_FUNCTION1__E2);
+    createEReference(externalFunction1EClass, EXTERNAL_FUNCTION1__E0);
 
     externalFunction2EClass = createEClass(EXTERNAL_FUNCTION2);
     createEReference(externalFunction2EClass, EXTERNAL_FUNCTION2__REF);
@@ -3980,6 +3991,7 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     initEReference(getExternalFunction1_Ref(), this.getDeclaration(), null, "ref", null, 0, 1, ExternalFunction1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getExternalFunction1_E1(), ecorePackage.getEObject(), null, "e1", null, 0, 1, ExternalFunction1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getExternalFunction1_E2(), ecorePackage.getEObject(), null, "e2", null, 0, -1, ExternalFunction1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExternalFunction1_E0(), this.getExpression(), null, "e0", null, 0, 1, ExternalFunction1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(externalFunction2EClass, ExternalFunction2.class, "ExternalFunction2", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getExternalFunction2_Ref(), this.getDeclaration(), null, "ref", null, 0, 1, ExternalFunction2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
