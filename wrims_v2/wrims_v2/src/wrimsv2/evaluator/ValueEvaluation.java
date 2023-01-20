@@ -828,11 +828,11 @@ public class ValueEvaluation {
 		int i2 = id2.getData().intValue();
 		
 		if (i1>=0){
-			Error.addEvaluationError("The first index of array variable "+ident+" has to be less than 0.");
+			Error.addEvaluationError("The first index of array variable "+ident+" has to be less than 0 in non-constraint statements.");
 			return new IntDouble(1.0,false);
 		}
 		if (i2<0){
-			Error.addEvaluationError("The second index of array variable "+ident+" has to be larger or equal than 0.");
+			Error.addEvaluationError("The second index of array variable "+ident+" has to be larger than or equal to 0.");
 			return new IntDouble(1.0,false);
 		}
 		if (!ControlData.currDvMap.containsKey(ident) && !ControlData.currAliasMap.containsKey(ident)){

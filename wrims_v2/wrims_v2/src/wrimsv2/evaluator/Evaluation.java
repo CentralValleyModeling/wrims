@@ -1093,12 +1093,25 @@ public class Evaluation {
 		int i1 = id1.getData().intValue();
 		int i2 = id2.getData().intValue();
 		
-		if (i1>=0){
-			Error.addEvaluationError("The first index of array variable "+ident+" has to be less than 0.");
+		if (i1==0){
+			EvalExpression ee = new EvalExpression();
+			LinkedHashMap<String, IntDouble> multiplier = ee.getMultiplier();
+			if (i2==0){
+				multiplier.put(ident, new IntDouble(1, true));
+				return ee;
+			}else if (i2>0){
+				String vn = ident+"__fut__"+id2;
+				multiplier.put(vn, new IntDouble(1, true));
+				return ee;
+			}
+		}
+		
+		if (i1>0){
+			Error.addEvaluationError("The first index of array variable "+ident+" has to be less than or equal to 0 in constraint statements.");
 			return new EvalExpression(new IntDouble(1.0,false));
 		}
 		if (i2<0){
-			Error.addEvaluationError("The second index of array variable "+ident+" has to be larger or equal than 0.");
+			Error.addEvaluationError("The second index of array variable "+ident+" has to be larger than or equal to 0.");
 			return new EvalExpression(new IntDouble(1.0,false));
 		}
 		if (!ControlData.currDvMap.containsKey(ident) && !ControlData.currAliasMap.containsKey(ident)){
