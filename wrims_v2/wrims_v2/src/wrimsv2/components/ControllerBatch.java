@@ -361,6 +361,7 @@ public class ControllerBatch {
 								HDF5Writer.writeOneCycleSv(mds, cycleI);
 							}
 						}
+						ILP.logMemory();
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
 
@@ -741,6 +742,7 @@ public class ControllerBatch {
 								HDF5Writer.writeOneCycleSv(mds, cycleI);
 							}
 						}
+						ILP.logMemory();
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
 						
@@ -924,6 +926,7 @@ public class ControllerBatch {
 								HDF5Writer.writeOneCycleSv(mds, cycleI);
 							}
 						}
+						ILP.logMemory();
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
 
@@ -1156,6 +1159,7 @@ public class ControllerBatch {
 								HDF5Writer.writeOneCycleSv(mds, cycleI);
 							}
 						}
+						ILP.logMemory();
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
 
@@ -1304,9 +1308,10 @@ public class ControllerBatch {
 								HDF5Writer.writeOneCycleSv(mds, cycleI);
 							}
 						}
+						ILP.logMemory();
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
-	
+						
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){
 							VariableTimeStep.currTimeAddOneMonth();
@@ -1522,9 +1527,9 @@ public class ControllerBatch {
 								HDF5Writer.writeOneCycleSv(mds, cycleI);
 							}
 						}
+						ILP.logMemory();
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
-
 						
 						//if (CbcSolver.intLog && (!ControlData.cbc_debug_routeXA && !ControlData.cbc_debug_routeCbc)) {
 						if (CbcSolver.intLog) {

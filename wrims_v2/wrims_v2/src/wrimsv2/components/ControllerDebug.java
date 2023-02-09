@@ -440,6 +440,7 @@ public class ControllerDebug extends Thread {
 								HDF5Writer.writeOneCycleSv(mds, cycleI);
 							}
 						}
+						ILP.logMemory();
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (CbcSolver.intLog && ControlData.solverName.equalsIgnoreCase("CBC")) {
 							CbcSolver.logIntCheck(sds);	

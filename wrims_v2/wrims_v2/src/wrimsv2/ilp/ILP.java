@@ -66,6 +66,7 @@ public class ILP {
 	public static PrintWriter _noteFile_cbc_time;
 	public static PrintWriter _noteFile_cbc_int;
 	public static PrintWriter _noteFile_cbc_int_log;
+	public static PrintWriter _noteFile_memory;
 	public static PrintWriter _watchFile_xa;
 	public static PrintWriter _watchFile_cbc;
 	private static Set<String> dvar_effective;
@@ -163,6 +164,8 @@ public class ILP {
 				}
 			}
 
+			_noteFile_memory = Tools.openFile(_ilpDir.getAbsolutePath(), "Note_memory.log");
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1105,5 +1108,9 @@ public class ILP {
 	
 	public static void setCplxLpDir(String dir){
 		_cplexLpDir=dir;
+	}
+	
+	public static void logMemory(){
+		ILP.writeNoteLn(ILP.getYearMonthCycle(), "MB: " + Math.round(Runtime.getRuntime().totalMemory()/1024/1024), ILP._noteFile_memory);
 	}
 }
