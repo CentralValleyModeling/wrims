@@ -211,6 +211,8 @@ public class ControlData {
 	public static int t_annec_matchdsm2=0;
 	public static int n_annec_matchdsm2=0;
 	
+	public static int pid=-1;
+	
 	public ControlData(){
 	}
 	

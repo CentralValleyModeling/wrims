@@ -1,10 +1,13 @@
 package wrimsv2.ilp;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -164,6 +167,7 @@ public class ILP {
 				}
 			}
 
+			//new File(_ilpDir.getAbsolutePath()+"\\Note_memory.log").createNewFile();
 			_noteFile_memory = Tools.openFile(_ilpDir.getAbsolutePath(), "Note_memory.log");
 			
 		} catch (IOException e) {
@@ -1111,6 +1115,24 @@ public class ILP {
 	}
 	
 	public static void logMemory(){
-		ILP.writeNoteLn(ILP.getYearMonthCycle(), "MB: " + Math.round(Runtime.getRuntime().totalMemory()/1024/1024), ILP._noteFile_memory);
+		try {
+			//System.out.println("tasklist.exe /fi \"PID eq "+ControlData.pid+"\" > \""+ _ilpDir.getAbsolutePath()+"\\Note_memory.log\"");
+			ProcessBuilder builder = new ProcessBuilder("tasklist.exe", "/nh", "/fi", "\"PID", "eq", ControlData.pid+"\"");
+			Process process = builder.start();
+			InputStream stdout = process.getInputStream();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(stdout));
+			BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+	        String line = null;
+	        while ((line = br.readLine()) != null) {
+	        	if (!line.equals("")){
+	        		ILP.writeNoteLn(ILP.getYearMonthCycle(), line, ILP._noteFile_memory);
+	        	}
+	        }
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
