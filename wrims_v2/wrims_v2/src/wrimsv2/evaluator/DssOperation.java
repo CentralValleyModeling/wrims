@@ -324,6 +324,8 @@ public class DssOperation {
 			ControlData.writer.storeTimeSeriesData(pathName, startJulmin, dd,
 						storeFlags);
 			dd._yValues=null;
+			dd=null;
+			values1=null;
 			values=null;
 		}
 		System.gc();
@@ -376,6 +378,8 @@ public class DssOperation {
 					ControlData.writer.storeTimeSeriesData(pathName, startJulmin, dd,
 							storeFlags);
 					dd._yValues=null;
+					dd=null;
+					values1=null;
 					values=null;
 				}
 			}
@@ -745,13 +749,15 @@ public class DssOperation {
 			int nTimeStep1 = TimeOperation.getNumberOfTimestep(prevMemDate, memStartDate, timestep)-1;
 			int nTimeStep2 = TimeOperation.getNumberOfTimestep(prevMemDate, outputDate, timestep)-1;
 			int size = nTimeStep2-nTimeStep1+1;
-			double[] values1=new double[values.length];
+			//double[] values1=new double[values.length];
 			for (int i=0; i<size; i++){
-				values1[i]=values[i+nTimeStep1];
+				//values1[i]=values[i+nTimeStep1];
+				values[i]=values[i+nTimeStep1];
+				values[i+nTimeStep1]=-901.0;
 			}
-			ddsfl.data=null;
-			values=null;
-			ddsfl.setData(values1);
+			//ddsfl.data=null;
+			//values=null;
+			//ddsfl.setData(values1);
 			ddsfl.setStartTime(memStartDate);
 		}
 		System.gc();
@@ -775,13 +781,14 @@ public class DssOperation {
 					int nTimeStep1 = TimeOperation.getNumberOfTimestep(prevMemDate, memStartDate, timestep)-1;
 					int nTimeStep2 = TimeOperation.getNumberOfTimestep(prevMemDate, outputDate, timestep)-1;
 					int size = nTimeStep2-nTimeStep1+1;
-					double[] values1=new double[values.length];
+					//double[] values1=new double[values.length];
 					for (int j=0; j<size; j++){
-						values1[j]=values[j+nTimeStep1];
+						//values1[j]=values[j+nTimeStep1];
+						values[j]=values[j+nTimeStep1];
 					}
-					ddsfl.data=null;
-					values=null;
-					ddsfl.setData(values1);
+					//ddsfl.data=null;
+					//values=null;
+					//ddsfl.setData(values1);
 					ddsfl.setStartTime(memStartDate);
 				}
 			}
