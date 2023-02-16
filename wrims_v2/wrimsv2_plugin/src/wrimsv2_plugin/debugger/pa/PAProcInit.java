@@ -90,6 +90,7 @@ public class PAProcInit {
 		Vector<String> paPathList = paInitDss.getPathnameList();
 		Collections.sort(paPathList, Collections.reverseOrder());
 		int size = paPathList.size();
+		/*
 		int sYear=DebugCorePlugin.startYear;
 		for (int i=0; i<size; i++){
 			String path = paPathList.get(i);
@@ -111,6 +112,7 @@ public class PAProcInit {
 		String startTime=TimeOperation.createStartTime(dsy, 1, 1, "1DAY");
 		String endTime=TimeOperation.createEndTime1(DebugCorePlugin.paStartYear, DebugCorePlugin.paStartMonth, DebugCorePlugin.paStartDay, "1DAY");
 		paInitDss.setTimeWindow(startTime, endTime);
+		*/
 		for (int i=0; i<size; i++){
 			String path = paPathList.get(i);
 			try {

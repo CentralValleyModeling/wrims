@@ -580,6 +580,7 @@ public class WPPPATab extends AbstractLaunchConfigurationTab {
 		Collections.sort(paPathList, Collections.reverseOrder());
 		int size = paPathList.size();
 		if (isFirstOne){
+			/*
 			int sYear=startYear;
 			for (int i=0; i<size; i++){
 				String path = paPathList.get(i);
@@ -599,9 +600,9 @@ public class WPPPATab extends AbstractLaunchConfigurationTab {
 			}
 			startTime=TimeOperation.createStartTime(sYear, 1, 1, "1DAY");
 			endTime=TimeOperation.createEndTime1(startYear, startMonth, startDay, "1DAY");
-			
+			*/
 		}else{
-			paInitDss.setTimeWindow(startTime, endTime);
+			//paInitDss.setTimeWindow(startTime, endTime);
 			for (int i=0; i<size; i++){
 				String path = paPathList.get(i);
 				try {
