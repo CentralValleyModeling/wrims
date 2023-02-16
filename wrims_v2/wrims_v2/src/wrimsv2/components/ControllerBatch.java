@@ -363,8 +363,27 @@ public class ControllerBatch {
 							}
 						}
 						ILP.logMemory();
-						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
+						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");		
 						if (Error.error_evaluation.size()>=1) noError=false;
+						try{
+							if (enableConfigProgress) {
+								FileWriter progressFile = progressFile= new FileWriter(StudyUtils.configFilePath+".prgss");
+								PrintWriter pw = new PrintWriter(progressFile);
+								pw.println("Run to "+ControlData.currYear +"/"+ ControlData.currMonth +"/"+ ControlData.currDay);
+								pw.close();
+							}else if(enableProgressLog){
+								FileWriter progressFile= new FileWriter(FilePaths.mainDirectory + "progress.txt");
+								PrintWriter pw = new PrintWriter(progressFile);
+								int cy = 0;
+								if (ControlData.currYear > cy) {
+									cy = ControlData.currYear;
+									pw.println(ControlData.startYear + " " + ControlData.endYear + " " + ControlData.currYear +" "+ ControlData.currMonth);
+									pw.close();
+								}
+							}
+						}catch(IOException e){
+							e.printStackTrace();
+						}
 
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){
@@ -407,25 +426,6 @@ public class ControllerBatch {
 			}
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
-			try{
-				if (enableConfigProgress) {
-					FileWriter progressFile = progressFile= new FileWriter(StudyUtils.configFilePath+".prgss");
-					PrintWriter pw = new PrintWriter(progressFile);
-					pw.println("Run to "+ControlData.currYear +"/"+ ControlData.currMonth +"/"+ ControlData.currDay);
-					pw.close();
-				}else if(enableProgressLog){
-					FileWriter progressFile= new FileWriter(FilePaths.mainDirectory + "progress.txt");
-					PrintWriter pw = new PrintWriter(progressFile);
-					int cy = 0;
-					if (ControlData.currYear > cy) {
-						cy = ControlData.currYear;
-						pw.println(ControlData.startYear + " " + ControlData.endYear + " " + ControlData.currYear +" "+ ControlData.currMonth);
-						pw.close();
-					}
-				}
-			}catch(IOException e){
-				e.printStackTrace();
-			}
 		}
 		ControlData.xasolver.close();
 		
@@ -930,7 +930,26 @@ public class ControllerBatch {
 						ILP.logMemory();
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
-
+						try{
+							if (enableConfigProgress) {
+								FileWriter progressFile = progressFile= new FileWriter(StudyUtils.configFilePath+".prgss");
+								PrintWriter pw = new PrintWriter(progressFile);
+								pw.println("Run to "+ControlData.currYear +"/"+ ControlData.currMonth +"/"+ ControlData.currDay);
+								pw.close();
+							}else if(enableProgressLog){
+								FileWriter progressFile= new FileWriter(FilePaths.mainDirectory + "progress.txt");
+								PrintWriter pw = new PrintWriter(progressFile);
+								int cy = 0;
+								if (ControlData.currYear > cy) {
+									cy = ControlData.currYear;
+									pw.println(ControlData.startYear + " " + ControlData.endYear + " " + ControlData.currYear +" "+ ControlData.currMonth);
+									pw.close();
+								}
+							}
+						}catch(IOException e){
+							e.printStackTrace();
+						}
+						
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){
 							VariableTimeStep.currTimeAddOneMonth();
@@ -1312,6 +1331,25 @@ public class ControllerBatch {
 						ILP.logMemory();
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
+						try{
+							if (enableConfigProgress) {
+								FileWriter progressFile = progressFile= new FileWriter(StudyUtils.configFilePath+".prgss");
+								PrintWriter pw = new PrintWriter(progressFile);
+								pw.println("Run to "+ControlData.currYear +"/"+ ControlData.currMonth +"/"+ ControlData.currDay);
+								pw.close();
+							}else if(enableProgressLog){
+								FileWriter progressFile= new FileWriter(FilePaths.mainDirectory + "progress.txt");
+								PrintWriter pw = new PrintWriter(progressFile);
+								int cy = 0;
+								if (ControlData.currYear > cy) {
+									cy = ControlData.currYear;
+									pw.println(ControlData.startYear + " " + ControlData.endYear + " " + ControlData.currYear +" "+ ControlData.currMonth);
+									pw.close();
+								}
+							}
+						}catch(IOException e){
+							e.printStackTrace();
+						}
 						
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){
@@ -1342,25 +1380,6 @@ public class ControllerBatch {
 			}
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
-			try{
-				if (enableConfigProgress) {
-					FileWriter progressFile = progressFile= new FileWriter(StudyUtils.configFilePath+".prgss");
-					PrintWriter pw = new PrintWriter(progressFile);
-					pw.println("Run to "+ControlData.currYear +"/"+ ControlData.currMonth +"/"+ ControlData.currDay);
-					pw.close();
-				}else if(enableProgressLog){
-					FileWriter progressFile= new FileWriter(FilePaths.mainDirectory + "progress.txt");
-					PrintWriter pw = new PrintWriter(progressFile);
-					int cy = 0;
-					if (ControlData.currYear > cy) {
-						cy = ControlData.currYear;
-						pw.println(ControlData.startYear + " " + ControlData.endYear + " " + ControlData.currYear +" "+ ControlData.currMonth);
-						pw.close();
-					}
-				}
-			}catch(IOException e){
-				e.printStackTrace();
-			}
 
 		}
 		ClpSolver.close();
@@ -1531,6 +1550,25 @@ public class ControllerBatch {
 						ILP.logMemory();
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
+						try{
+							if (enableConfigProgress) {
+								FileWriter progressFile = progressFile= new FileWriter(StudyUtils.configFilePath+".prgss");
+								PrintWriter pw = new PrintWriter(progressFile);
+								pw.println("Run to "+ControlData.currYear +"/"+ ControlData.currMonth +"/"+ ControlData.currDay);
+								pw.close();
+							}else if(enableProgressLog){
+								FileWriter progressFile= new FileWriter(FilePaths.mainDirectory + "progress.txt");
+								PrintWriter pw = new PrintWriter(progressFile);
+								int cy = 0;
+								if (ControlData.currYear > cy) {
+									cy = ControlData.currYear;
+									pw.println(ControlData.startYear + " " + ControlData.endYear + " " + ControlData.currYear +" "+ ControlData.currMonth);
+									pw.close();
+								}
+							}
+						}catch(IOException e){
+							e.printStackTrace();
+						}
 						
 						//if (CbcSolver.intLog && (!ControlData.cbc_debug_routeXA && !ControlData.cbc_debug_routeCbc)) {
 						if (CbcSolver.intLog) {
@@ -1586,25 +1624,6 @@ public class ControllerBatch {
 			}
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
-			try{
-				if (enableConfigProgress) {
-					FileWriter progressFile = progressFile= new FileWriter(StudyUtils.configFilePath+".prgss");
-					PrintWriter pw = new PrintWriter(progressFile);
-					pw.println("Run to "+ControlData.currYear +"/"+ ControlData.currMonth +"/"+ ControlData.currDay);
-					pw.close();
-				}else if(enableProgressLog){
-					FileWriter progressFile= new FileWriter(FilePaths.mainDirectory + "progress.txt");
-					PrintWriter pw = new PrintWriter(progressFile);
-					int cy = 0;
-					if (ControlData.currYear > cy) {
-						cy = ControlData.currYear;
-						pw.println(ControlData.startYear + " " + ControlData.endYear + " " + ControlData.currYear +" "+ ControlData.currMonth);
-						pw.close();
-					}
-				}
-			}catch(IOException e){
-				e.printStackTrace();
-			}
 		}
 		CbcSolver.close(); if (ControlData.cbc_debug_routeXA || ControlData.cbc_debug_routeCbc) {ControlData.xasolver.close();}
 		
