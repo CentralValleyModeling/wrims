@@ -1,5 +1,0 @@
-define D418_Base {value D418[WHEELCVC]}
-define D419_Base {value D419[WHEELCVC]}
-define C_SAC000_ADD_cvp_Base {value C_SAC000_ADD_cvp[WHEELCVC]}
-define C_SAC000_ADD_swp_Base {value C_SAC000_ADD_swp[WHEELCVC]}
-

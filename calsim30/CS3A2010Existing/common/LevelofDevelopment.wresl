@@ -1,7 +1,0 @@
-! Level of Development switches
-
-define ExistingLOD {std kind 'SWITCH' units 'NONE'}
-define FutureLOD {std kind 'SWITCH' units 'NONE'}
-
-goal setExistingLOD {ExistingLOD = 1.0}
-goal setFutureLOD {FutureLOD = 0.0}
