@@ -22,6 +22,7 @@ import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
 import wrimsv2.evaluator.ValueEvaluatorParser;
 import wrimsv2.evaluator.WeightEval;
+import wrimsv2.tools.General;
 
 public class ProcessWeightSurplusSlack extends RecursiveTask<Integer>{
  
@@ -95,7 +96,7 @@ public class ProcessWeightSurplusSlack extends RecursiveTask<Integer>{
    			solverWeightSlackSurplusMap.put(wtSlackSurplusName, wtSlackSurplus);
    			evaluator.reset();
     		
-   			int timeArraySize=ModelDataSet.getTimeArraySize(wtSlackSurplus.timeArraySizeParser);
+   			int timeArraySize=General.getTimeArraySize(wtSlackSurplus.timeArraySizeParser);
    			for (prvs.timeArrayIndex=1; prvs.timeArrayIndex<=timeArraySize; prvs.timeArrayIndex++){
    				WeightElement newWtSlackSurplus=new WeightElement();
    				String newWtSlackSurplusName=wtSlackSurplusName+"__fut__"+prvs.timeArrayIndex;

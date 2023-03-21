@@ -22,6 +22,7 @@ import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
 import wrimsv2.evaluator.ValueEvaluatorParser;
 import wrimsv2.evaluator.WeightEval;
+import wrimsv2.tools.General;
 
 public class ProcessWeight extends RecursiveTask<Integer>{
  
@@ -97,7 +98,7 @@ public class ProcessWeight extends RecursiveTask<Integer>{
 			solverWtMap.put(wtName,wt);
 			evaluator.reset();
 			
-			int timeArraySize=ModelDataSet.getTimeArraySize(wt.timeArraySizeParser);
+			int timeArraySize=General.getTimeArraySize(wt.timeArraySizeParser);
 			for (prvs.timeArrayIndex=1; prvs.timeArrayIndex<=timeArraySize; prvs.timeArrayIndex++){
 				WeightElement newWt=new WeightElement();
 				String newWtName=wtName+"__fut__"+prvs.timeArrayIndex;

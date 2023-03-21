@@ -10,8 +10,6 @@ import java.io.ObjectOutputStream;
 import java.util.Date;
 import java.util.Properties;
 
-
-
 import org.antlr.runtime.RecognitionException;
 import org.apache.commons.io.FilenameUtils;
 
@@ -19,17 +17,17 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 
-import wrimsv2.commondata.wresldata.Param;
-import wrimsv2.commondata.wresldata.StudyDataSet;
+import wrimsv2.commondata.wresldata.*;
 import wrimsv2.components.BuildProps;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.FilePaths;
 import wrimsv2.evaluator.WeightEval;
+import wrimsv2.solver.mpmodel.MPModel;
+import wrimsv2.sql.socket.FileEvent;
 import wrimsv2.tools.Warmstart;
-import wrimsv2.wreslplus.elements.StudyTemp;
-import wrimsv2.wreslplus.elements.VarCycleIndex;
-import wrimsv2.wreslplus.elements.Workflow;
+import wrimsv2.wreslplus.elements.*;
 import wrimsv2.wreslplus.elements.procedures.ToWreslData;
+
 
 public class StudyUtils {
 
@@ -261,6 +259,7 @@ public class StudyUtils {
 	public static void writeObj(StudyDataSet sds, String objFilePath) {
 		
 		Kryo kryo = new Kryo();
+		registerClasses(kryo);
 		try {
 			Output output = new Output(new FileOutputStream(objFilePath));
 		    kryo.writeObject(output, sds);
@@ -276,6 +275,7 @@ public class StudyUtils {
 
 		StudyDataSet sds=new StudyDataSet();
 		Kryo kryo = new Kryo();
+		registerClasses(kryo);
 		try {
 			Input input = new Input(new FileInputStream(objFilePath));
 			sds = kryo.readObject(input, StudyDataSet.class);
@@ -287,5 +287,36 @@ public class StudyUtils {
 
 		return sds;
 
+	}
+	
+	public static void registerClasses(Kryo kryo){
+		kryo.register(Alias.class);
+		kryo.register(Dvar.class);
+		kryo.register(External.class);
+		kryo.register(Goal.class);
+		kryo.register(ModelDataSet.class);
+		kryo.register(StudyDataSet.class);
+		kryo.register(Svar.class);
+		kryo.register(Timeseries.class);
+		kryo.register(WeightElement.class);
+		kryo.register(MPModel.class);
+		kryo.register(FileEvent.class);
+		kryo.register(AliasTemp.class);
+		kryo.register(DvarTemp.class);
+		kryo.register(ExternalTemp.class);
+		kryo.register(GoalCase.class);
+		kryo.register(GoalHS.class);
+		kryo.register(GoalTemp.class);
+		kryo.register(IfIncItemGroup.class);
+		kryo.register(IncFileTemp.class);
+		kryo.register(ModelTemp.class);
+		kryo.register(ParamTemp.class);
+		kryo.register(SequenceTemp.class);
+		kryo.register(StudyTemp.class);
+		kryo.register(SvarTemp.class);
+		kryo.register(TimeseriesTemp.class);
+		kryo.register(WeightSubgroup.class);
+		kryo.register(WeightTable.class);
+		kryo.register(WeightTemp.class);
 	}
 }

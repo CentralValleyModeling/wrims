@@ -31,6 +31,7 @@ import wrimsv2.parallel.ProcessDvar;
 import wrimsv2.parallel.ProcessTimeseries;
 import wrimsv2.parallel.ProcessWeight;
 import wrimsv2.parallel.ProcessWeightSurplusSlack;
+import wrimsv2.tools.General;
 
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
@@ -152,23 +153,6 @@ public class ModelDataSet implements Serializable {
 	public void resetSlackSurplusWeight(){
 		usedWtSlackSurplusList = new CopyOnWriteArrayList<String>();
 	}
-
-	public static int getTimeArraySize(ValueEvaluatorParser timeArraySizeParser){
-		int timeArraySize;
-		try{
-			timeArraySizeParser.evaluator();
-			IntDouble timeArrayEvalValue=timeArraySizeParser.evalValue;
-			timeArraySizeParser.reset();
-			if (!timeArrayEvalValue.isInt()){
-				Error.addEvaluationError("the time array size is not an integer.");
-			}
-			timeArraySize=timeArrayEvalValue.getData().intValue();
-		}catch(RecognitionException e) {
-			Error.addEvaluationError("weight time array definition has error");
-			timeArraySize=0;
-		}
-		return timeArraySize;
-	}
 	
 	public void processWeight(){
 		ModelDataSet mds=ControlData.currModelDataSet;
@@ -272,7 +256,7 @@ public class ModelDataSet implements Serializable {
 				svar.setData(new IntDouble(1.0, false));
 			}
 			
-			int timeArraySize=getTimeArraySize(svar.timeArraySizeParser);
+			int timeArraySize=General.getTimeArraySize(svar.timeArraySizeParser);
 			for (prvs.timeArrayIndex=1; prvs.timeArrayIndex<=timeArraySize; prvs.timeArrayIndex++){
 				condition=false;
 				i=-1;
@@ -545,7 +529,7 @@ public class ModelDataSet implements Serializable {
 				//}
 			}
 			
-			int timeArraySize=getTimeArraySize(alias.timeArraySizeParser);
+			int timeArraySize=General.getTimeArraySize(alias.timeArraySizeParser);
 			for (prvs.timeArrayIndex=1; prvs.timeArrayIndex<=timeArraySize; prvs.timeArrayIndex++){
 				String newAsName=asName+"__fut__"+prvs.timeArrayIndex;
 				try {

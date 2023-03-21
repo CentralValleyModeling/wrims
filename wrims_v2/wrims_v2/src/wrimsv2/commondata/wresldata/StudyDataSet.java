@@ -157,7 +157,10 @@ public class StudyDataSet implements Serializable {
 	}
 	
 	public void setVarCycleIndexList(ArrayList<String> varCycleIndexList){
-		this.varCycleIndexList=varCycleIndexList;
+		this.varCycleIndexList=new ArrayList<String>();
+		for (int i=0; i<varCycleIndexList.size(); i++){
+			this.varCycleIndexList.add(varCycleIndexList.get(i));
+		}
 	}
 
 	public ArrayList<String> getDvarTimeArrayCycleIndexList(){

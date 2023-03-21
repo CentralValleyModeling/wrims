@@ -24,6 +24,7 @@ import wrimsv2.components.Error;
 import wrimsv2.evaluator.EvalConstraint;
 import wrimsv2.evaluator.EvaluatorParser;
 import wrimsv2.evaluator.ValueEvaluatorParser;
+import wrimsv2.tools.General;
 
 public class ProcessConstraint extends RecursiveTask<Integer>{
  
@@ -91,7 +92,7 @@ public class ProcessConstraint extends RecursiveTask<Integer>{
 			Goal goal=gMap.get(goalName);
 			ArrayList<ValueEvaluatorParser> caseConditions=goal.caseConditionParsers;
 			
-			int timeArraySize=ModelDataSet.getTimeArraySize(goal.timeArraySizeParser);
+			int timeArraySize=General.getTimeArraySize(goal.timeArraySizeParser);
 			ParallelVars prvs = new ParallelVars();
 			for (prvs.timeArrayIndex=1; prvs.timeArrayIndex<=timeArraySize; prvs.timeArrayIndex++){
 				Goal newGoal=new Goal();

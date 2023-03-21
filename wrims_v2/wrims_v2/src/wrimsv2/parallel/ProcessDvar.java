@@ -20,6 +20,7 @@ import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
 import wrimsv2.evaluator.ValueEvaluatorParser;
+import wrimsv2.tools.General;
 
 public class ProcessDvar extends RecursiveTask<Integer>{
  
@@ -117,7 +118,7 @@ public class ProcessDvar extends RecursiveTask<Integer>{
 			evaluator.reset();
 			solverDvarMap.put(dvName, dvar);
 			
-			int timeArraySize=ModelDataSet.getTimeArraySize(dvar.timeArraySizeParser);
+			int timeArraySize=General.getTimeArraySize(dvar.timeArraySizeParser);
 			if (!dvar.timeArraySize.equals("0") && !timeArrayDvList.contains(dvName)){
 				timeArrayDvList.add(dvName);
 			
