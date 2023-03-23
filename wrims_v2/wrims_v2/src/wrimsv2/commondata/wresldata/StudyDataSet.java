@@ -3,9 +3,11 @@ package wrimsv2.commondata.wresldata;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 import wrimsv2.components.IntDouble;
 import wrimsv2.evaluator.ValueEvaluatorParser;
@@ -15,10 +17,11 @@ public class StudyDataSet implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	private String absMainFilePath;
+	private String absMainFilePath="";
 	
 	private ArrayList<String> parameterList = new ArrayList<String>();
-	private LinkedHashMap<String, Svar> parameterMap = new LinkedHashMap<String, Svar>(); 
+	private LinkedHashMap<String, Svar> parameterMap = new LinkedHashMap<String, Svar>();
+	public LinkedHashMap<String, Svar> controlDataParameterMap = new LinkedHashMap<String, Svar>();
 	
 	private ArrayList<String> modelList = new ArrayList<String>();
 	private ArrayList<String> modelConditionList = new ArrayList<String>();

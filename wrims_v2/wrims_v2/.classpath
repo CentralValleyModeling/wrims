@@ -31,5 +31,6 @@
 	<classpathentry kind="lib" path="src/wrimsv2/lib/sqljdbc4-2.0.jar"/>
 	<classpathentry kind="lib" path="libs/Antlr3.5/antlr-3.5.2-complete-no-st3.jar"/>
 	<classpathentry kind="lib" path="src/wrimsv2/lib_x64/jep-3.8.2.jar"/>
+	<classpathentry kind="lib" path="src/wrimsv2/lib_x64/java-object-diff-0.95.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

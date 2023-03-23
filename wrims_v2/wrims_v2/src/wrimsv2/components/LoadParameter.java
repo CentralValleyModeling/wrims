@@ -30,8 +30,9 @@ public class LoadParameter {
 	public static void process(StudyDataSet sds){
 
 
-		ControlData.parameterMap = convertParamMapToSvarMap(sds.getParameterMap());
-		evaluateAllParams(sds.getParameterList(), ControlData.parameterMap);	
+		sds.controlDataParameterMap = convertParamMapToSvarMap(sds.getParameterMap());
+		ControlData.parameterMap=sds.controlDataParameterMap;
+		evaluateAllParams(sds.getParameterList(), sds.controlDataParameterMap);	
 		
 	}	
 

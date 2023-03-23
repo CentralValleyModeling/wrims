@@ -89,7 +89,7 @@ public class ToWreslData {
 		
 		o.setParameterList(s.parameterList);
 		//o.setParameterMap(convertParameterMap(s.parameterMap));
-		o.setParameterMap(ControlData.parameterMap);
+		o.setParameterMap(s.controlDataParameterMap);
 		
 		
 		//for (String k: s.modelList_effective){

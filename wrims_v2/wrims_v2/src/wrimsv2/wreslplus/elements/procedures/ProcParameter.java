@@ -29,8 +29,9 @@ public class ProcParameter {
 	public static void process(StudyTemp st){
 
 
-		ControlData.parameterMap = convertParamMapToSvarMap(st.parameterMap);
-		evaluateAllParams(st.parameterList, ControlData.parameterMap);	
+		st.controlDataParameterMap = convertParamMapToSvarMap(st.parameterMap);
+		ControlData.parameterMap=st.controlDataParameterMap;
+		evaluateAllParams(st.parameterList, st.controlDataParameterMap);	
 		
 	}	
 

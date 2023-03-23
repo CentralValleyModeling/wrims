@@ -130,7 +130,7 @@ public class ParserUtils {
 	
 					ToLowerCase.convert(fm);
 					
-					ErrorCheck.checkVarRedefined(fm);
+					ErrorCheck.checkVarRedefined(fm, st);
 					
 					// check unknown dependants in if statement
 					ErrorCheck.checkIfStatementHasUnknownDependants(fm, st.parameterMap.keySet());

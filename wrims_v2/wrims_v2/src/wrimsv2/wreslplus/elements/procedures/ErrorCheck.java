@@ -270,7 +270,7 @@ public class ErrorCheck {
 			
 			ModelTemp m = s.modelMap.get(k);
 			
-			totalDup += checkVarRedefined(m);
+			totalDup += checkVarRedefined(m, s);
 			
 		}
 		
@@ -278,7 +278,7 @@ public class ErrorCheck {
 
 	}	
 
-	public static int checkVarRedefined (ModelTemp m){
+	public static int checkVarRedefined (ModelTemp m, StudyTemp st){
 				
 		
 		// check dvar list duplicates
@@ -297,7 +297,7 @@ public class ErrorCheck {
 
 		// check svar defined in initial statement
 		
-		ArrayList<String> svDup_initialStatement = new ArrayList<String>(ControlData.parameterMap.keySet());
+		ArrayList<String> svDup_initialStatement = new ArrayList<String>(st.controlDataParameterMap.keySet());
 		
 		svDup_initialStatement.retainAll(m.svList);
 
@@ -776,7 +776,7 @@ public class ErrorCheck {
 			SequenceTemp seqObj = st.seqMap.get(k);
 			ArrayList<String> unknown_deps = new ArrayList<String>(seqObj.dependants);
 			
-			unknown_deps.removeAll(ControlData.parameterMap.keySet());
+			unknown_deps.removeAll(st.controlDataParameterMap.keySet());
 			unknown_deps.removeAll(Param.reservedSet);
 
 

@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.components.IntDouble;
 
 import com.google.common.collect.HashBasedTable;
@@ -23,6 +24,7 @@ public class StudyTemp implements Serializable {
 	public ArrayList<String> parameterConstList;  // subset of parameterList
 	//public Map<String, String> parameterMap; 
 	public LinkedHashMap<String, SvarTemp> parameterMap; 
+	public LinkedHashMap<String, Svar> controlDataParameterMap;
 	
 	public ArrayList<String> seqList;
 	public ArrayList<String> seqTimeStepList;
@@ -61,6 +63,7 @@ public class StudyTemp implements Serializable {
 		parameterList = new ArrayList<String>();
 		parameterConstList = new ArrayList<String>();
 		parameterMap = new LinkedHashMap<String, SvarTemp>();
+		controlDataParameterMap = new LinkedHashMap<String, Svar>();
 		
 		seqTimeStepList = new ArrayList<String>();
 		modelList = new ArrayList<String>();
