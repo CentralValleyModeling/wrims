@@ -12,6 +12,10 @@ import java.util.Properties;
 
 import org.antlr.runtime.RecognitionException;
 import org.apache.commons.io.FilenameUtils;
+//import org.codehaus.jackson.JsonGenerationException;
+//import org.codehaus.jackson.JsonParseException;
+//import org.codehaus.jackson.map.JsonMappingException;
+//import org.codehaus.jackson.map.ObjectMapper;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
@@ -154,11 +158,11 @@ public class StudyUtils {
 	public static void compileObject(String inMainWreslPath, StudyDataSet sds) {
 
 		StringBuilder b = new StringBuilder(inMainWreslPath);
-		b.replace(inMainWreslPath.lastIndexOf("."), inMainWreslPath.length(), ".par");
+		b.replace(inMainWreslPath.lastIndexOf("."), inMainWreslPath.length(), ".json");
 		String objFilePath = b.toString();
 
 		StringBuilder b2 = new StringBuilder(FilePaths.mainFile);
-		b2.replace(FilePaths.mainFile.lastIndexOf("."), FilePaths.mainFile.length(), ".par");
+		b2.replace(FilePaths.mainFile.lastIndexOf("."), FilePaths.mainFile.length(), ".json");
 		String objFileName = b2.toString();
 		
 		LogUtils.importantMsg("Writing parser data....");
@@ -257,7 +261,7 @@ public class StudyUtils {
 	}
 
 	public static void writeObj(StudyDataSet sds, String objFilePath) {
-		
+
 		Kryo kryo = new Kryo();
 		registerClasses(kryo);
 		try {
@@ -268,7 +272,22 @@ public class StudyUtils {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
+		/*
+		ObjectMapper objectMapper = new ObjectMapper();
+		try {
+			objectMapper.writeValue(new File(objFilePath), sds);
+		} catch (JsonGenerationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		*/
 	}
 
 	private static StudyDataSet readObj(String objFilePath) {
@@ -285,6 +304,22 @@ public class StudyUtils {
 			e.printStackTrace();
 		}
 
+		/*
+		ObjectMapper objectMapper = new ObjectMapper();
+		StudyDataSet sds=new StudyDataSet();
+		try {
+			sds = objectMapper.readValue(new File(objFilePath), StudyDataSet.class);
+		} catch (JsonParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		*/
 		return sds;
 
 	}

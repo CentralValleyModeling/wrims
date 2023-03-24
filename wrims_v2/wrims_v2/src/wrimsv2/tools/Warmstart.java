@@ -251,7 +251,76 @@ public class Warmstart {
 			
 	}
 
-	
+	public static void collectIntegerDV_3(StudyDataSet sd) {
+		
+		int nCyc = sd.cycIntDvMap.size();
+		
+		int firstCycWarmStart=9999;
+		ArrayList<Integer> cycWarmStart = new ArrayList<Integer>();
+		ArrayList<Integer> cycWarmStop = new ArrayList<Integer>();
+		ArrayList<Integer> cycWarmUse = new ArrayList<Integer>();
+		
+		
+		for (int i=0; i<nCyc-1; i++){
+			if (sd.cycIntDvMap.get(i).size()>Param.cbcMinIntNumber) {
+				firstCycWarmStart = i;
+				cycWarmStart.add(i);
+				break;
+			}
+		}
+		
+		if (firstCycWarmStart < nCyc-1){
+			
+			int stop = firstCycWarmStart;
+			int start = firstCycWarmStart; 
+			
+			while(stop < nCyc && start < nCyc-1){
+			
+				stop  = Procedures.findWarmStop(start, nCyc, sd); 
+				if ( stop > start){
+					cycWarmStop.add(stop);
+					
+					for (int i=start+1; i<= stop; i++) cycWarmUse.add(i);
+					
+				} else {
+					cycWarmStart.remove(cycWarmStart.size()-1);
+				}
+				//System.out.println("stop: "+stop);
+				
+				start = Procedures.findWarmStart(stop, nCyc, sd); if (start<nCyc-1) cycWarmStart.add(start);
+				//System.out.println("start: "+start);
+			}
+			
+			
+			if (cycWarmStart.size()!=cycWarmStop.size()) System.out.println("*** Error in warm setting.");
+			
+			ControlData.cycWarmStart = cycWarmStart;
+			ControlData.cycWarmStop = cycWarmStop;
+			ControlData.cycWarmUse = cycWarmUse;			
+			
+			
+		} else {
+			
+			ControlData.useCbcWarmStart=false;
+			
+		}
+		
+		System.out.println("cycWarmStart: "+ControlData.cycWarmStart);
+//		System.out.println("cycWarmStop: "+ControlData.cycWarmStop);
+		System.out.println("cycWarmUse: " + ControlData.cycWarmUse);
+		
+		if (ControlData.cycWarmStart != null && ControlData.cycWarmUse != null) {
+
+			String w = ControlData.cycWarmStart.toString() + "\n" + ControlData.cycWarmUse.toString() + "\n";
+			for (int c : sd.cycIntDvMap.keySet()) {
+				ArrayList<String> t = new ArrayList<String>(sd.cycIntDvMap.get(c));
+				Collections.sort(t);
+				w = w + "cycle: " + c + "\n" + t.toString() + "\n";
+			}
+//		Tools.quickLog("warmstart_new.txt", w);
+		}
+		
+	}
 	
 	
 	

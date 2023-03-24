@@ -47,6 +47,7 @@ import wrimsv2.sql.MySQLCWriter;
 import wrimsv2.sql.MySQLRWriter;
 import wrimsv2.sql.SQLServerRWriter;
 import wrimsv2.tools.General;
+import wrimsv2.tools.Warmstart;
 import wrimsv2.wreslparser.elements.StudyUtils;
 import wrimsv2.wreslparser.elements.Tools;
 import wrimsv2.wreslplus.elements.procedures.ErrorCheck;
@@ -228,6 +229,13 @@ public class ControllerBatch {
 
 			StudyDataSet sds = StudyUtils.loadObject(StudyUtils.parserDataPath);
 			LoadParameter.process(sds);
+			if (ControlData.useCbcWarmStart || ControlData.cbcCheckIntErr || ControlData.cbc_debug_routeCbc || ControlData.cbc_debug_routeXA){
+				if (ControlData.solverName.equalsIgnoreCase("Cbc")  || ControlData.solverName.equalsIgnoreCase("Cbc1")){
+					
+					Warmstart.collectIntegerDV_3(sds);			
+				
+				}
+			}
 			return sds;			
 		
 		} else if(StudyUtils.compileOnly) {
