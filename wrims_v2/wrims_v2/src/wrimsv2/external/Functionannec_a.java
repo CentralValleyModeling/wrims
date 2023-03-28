@@ -2,8 +2,6 @@ package wrimsv2.external;
 
 import java.util.*;
 
-import wrimsv2.components.ControlData;
-
 public class Functionannec_a extends ExternalFunction{
 	private final boolean DEBUG = false;
 
@@ -17,8 +15,6 @@ public class Functionannec_a extends ExternalFunction{
 		long t1 = Calendar.getInstance().getTimeInMillis();
 		
 		//values in reverse order:
-		Object param15 = stack.pop();
-		Object param14 = stack.pop();
 		Object param13 = stack.pop();
 		Object param12 = stack.pop();
 		Object param11 = stack.pop();
@@ -34,8 +30,6 @@ public class Functionannec_a extends ExternalFunction{
 		Object param1 = stack.pop();
 
 		//cast params to correct types:
-		int EndDay = ((Number) param15).intValue();
-		int BeginDay = ((Number) param14).intValue();
 		int currYear = ((Number) param13).intValue();
 		int currMonth = ((Number) param12).intValue();
 		int ave_type = ((Number) param11).intValue();
@@ -95,7 +89,7 @@ public class Functionannec_a extends ExternalFunction{
 			Qsac_prv[i]=Qsac_prv_Arr[i].floatValue();
 		}
 
-		float result = annec_a(Qsac_prv, Qexp_prv, Qsjr_prv, DXC_prv, DICU_prv, Qsac_oth_prv, Qexp_oth_prv, VernEC_prv, mon, location, ave_type, currMonth, currYear, BeginDay, EndDay);
+		float result = annec_a(Qsac_prv, Qexp_prv, Qsjr_prv, DXC_prv, DICU_prv, Qsac_oth_prv, Qexp_oth_prv, VernEC_prv, mon, location, ave_type, currMonth, currYear);
 
 		// push the result on the Stack
 		stack.push(new Float(result));
@@ -107,5 +101,5 @@ public class Functionannec_a extends ExternalFunction{
 		ControlData.n_annec=ControlData.n_annec+1;
 	}
 
-	public native float annec_a(float[] Qsac_prv, float[] Qexp_prv, float[] Qsjr_prv, float[] DXC_prv, float[] DICU_prv, float[] Qsac_oth_prv, float[] Qexp_oth_prv, float[] VernEC_prv, float[] mon, int location, int ave_type, int currMonth, int currYear, int BeginDay, int EndDay);
+	public native float annec_a(float[] Qsac_prv, float[] Qexp_prv, float[] Qsjr_prv, float[] DXC_prv, float[] DICU_prv, float[] Qsac_oth_prv, float[] Qexp_oth_prv, float[] VernEC_prv, float[] mon, int location, int ave_type, int currMonth, int currYear);
 }
