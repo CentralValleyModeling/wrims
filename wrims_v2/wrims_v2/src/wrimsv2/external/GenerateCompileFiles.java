@@ -81,6 +81,8 @@ public class GenerateCompileFiles {
 			out.println();
 			out.println("import java.util.*;");
 			out.println();
+			out.println("import wrimsv2.components.ControlData;");
+			out.println();
 			out.println("public class Function"+functionName+" extends ExternalFunction{");
 			out.println("	private final boolean DEBUG = false;");
 			out.println();

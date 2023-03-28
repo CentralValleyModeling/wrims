@@ -2,6 +2,8 @@ package wrimsv2.external;
 
 import java.util.*;
 
+import wrimsv2.components.ControlData;
+
 public class Functionannec_a extends ExternalFunction{
 	private final boolean DEBUG = false;
 
