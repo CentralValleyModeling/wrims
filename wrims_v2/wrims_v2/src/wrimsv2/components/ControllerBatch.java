@@ -375,7 +375,7 @@ public class ControllerBatch {
 						if (Error.error_evaluation.size()>=1) noError=false;
 						try{
 							if (enableConfigProgress) {
-								FileWriter progressFile = progressFile= new FileWriter(StudyUtils.configFilePath+".prgss");
+								FileWriter progressFile = new FileWriter(StudyUtils.configFilePath+".prgss");
 								PrintWriter pw = new PrintWriter(progressFile);
 								pw.println("Run to "+ControlData.currYear +"/"+ ControlData.currMonth +"/"+ ControlData.currDay);
 								pw.close();
@@ -940,7 +940,7 @@ public class ControllerBatch {
 						if (Error.error_evaluation.size()>=1) noError=false;
 						try{
 							if (enableConfigProgress) {
-								FileWriter progressFile = progressFile= new FileWriter(StudyUtils.configFilePath+".prgss");
+								FileWriter progressFile = new FileWriter(StudyUtils.configFilePath+".prgss");
 								PrintWriter pw = new PrintWriter(progressFile);
 								pw.println("Run to "+ControlData.currYear +"/"+ ControlData.currMonth +"/"+ ControlData.currDay);
 								pw.close();
@@ -1341,7 +1341,7 @@ public class ControllerBatch {
 						if (Error.error_evaluation.size()>=1) noError=false;
 						try{
 							if (enableConfigProgress) {
-								FileWriter progressFile = progressFile= new FileWriter(StudyUtils.configFilePath+".prgss");
+								FileWriter progressFile = new FileWriter(StudyUtils.configFilePath+".prgss");
 								PrintWriter pw = new PrintWriter(progressFile);
 								pw.println("Run to "+ControlData.currYear +"/"+ ControlData.currMonth +"/"+ ControlData.currDay);
 								pw.close();
@@ -1560,7 +1560,7 @@ public class ControllerBatch {
 						if (Error.error_evaluation.size()>=1) noError=false;
 						try{
 							if (enableConfigProgress) {
-								FileWriter progressFile = progressFile= new FileWriter(StudyUtils.configFilePath+".prgss");
+								FileWriter progressFile = new FileWriter(StudyUtils.configFilePath+".prgss");
 								PrintWriter pw = new PrintWriter(progressFile);
 								pw.println("Run to "+ControlData.currYear +"/"+ ControlData.currMonth +"/"+ ControlData.currDay);
 								pw.close();
