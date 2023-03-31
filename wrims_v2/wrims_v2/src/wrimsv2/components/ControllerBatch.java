@@ -75,6 +75,7 @@ public class ControllerBatch {
 					PrintWriter pw = new PrintWriter(progressFile);
 					pw.println("Parsing and preprocessing the model ...");
 					pw.close();
+					progressFile.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -379,6 +380,7 @@ public class ControllerBatch {
 								PrintWriter pw = new PrintWriter(progressFile);
 								pw.println("Run to "+ControlData.currYear +"/"+ ControlData.currMonth +"/"+ ControlData.currDay);
 								pw.close();
+								progressFile.close();
 							}else if(enableProgressLog){
 								FileWriter progressFile= new FileWriter(FilePaths.mainDirectory + "progress.txt");
 								PrintWriter pw = new PrintWriter(progressFile);
@@ -387,6 +389,7 @@ public class ControllerBatch {
 									cy = ControlData.currYear;
 									pw.println(ControlData.startYear + " " + ControlData.endYear + " " + ControlData.currYear +" "+ ControlData.currMonth);
 									pw.close();
+									progressFile.close();
 								}
 							}
 						}catch(IOException e){
@@ -472,6 +475,7 @@ public class ControllerBatch {
 					pw.println("Run completed.");
 				}
 				pw.close();
+				progressFile.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -754,6 +758,27 @@ public class ControllerBatch {
 						ILP.logMemory();
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
+						try{
+							if (enableConfigProgress) {
+								FileWriter progressFile = new FileWriter(StudyUtils.configFilePath+".prgss");
+								PrintWriter pw = new PrintWriter(progressFile);
+								pw.println("Run to "+ControlData.currYear +"/"+ ControlData.currMonth +"/"+ ControlData.currDay);
+								pw.close();
+								progressFile.close();
+							}else if(enableProgressLog){
+								FileWriter progressFile= new FileWriter(FilePaths.mainDirectory + "progress.txt");
+								PrintWriter pw = new PrintWriter(progressFile);
+								int cy = 0;
+								if (ControlData.currYear > cy) {
+									cy = ControlData.currYear;
+									pw.println(ControlData.startYear + " " + ControlData.endYear + " " + ControlData.currYear +" "+ ControlData.currMonth);
+									pw.close();
+									progressFile.close();
+								}
+							}
+						}catch(IOException e){
+							e.printStackTrace();
+						}
 						
 						if (CbcSolver.intLog && ControlData.solverType == Param.SOLVER_CBC.intValue()) {
 							CbcSolver.logIntCheck(sds);	
@@ -831,6 +856,28 @@ public class ControllerBatch {
 		}else if (ControlData.outputType==5){
 			CsvOperation co = new CsvOperation();
 			co.ouputCSV(FilePaths.fullCsvPath, 0);
+		}
+		
+		// write complete or fail
+		if (enableProgressLog || enableConfigProgress) {
+			try {
+				FileWriter progressFile;
+				if (enableConfigProgress){
+					progressFile= new FileWriter(StudyUtils.configFilePath+".prgss");
+				}else{
+					progressFile= new FileWriter(FilePaths.mainDirectory + "progress.txt", true);
+				}
+				PrintWriter pw = new PrintWriter(progressFile);
+				if (Error.getTotalError() > 0) {
+					pw.println("Run failed.");
+				} else {
+					pw.println("Run completed.");
+				}
+				pw.close();
+				progressFile.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -944,6 +991,7 @@ public class ControllerBatch {
 								PrintWriter pw = new PrintWriter(progressFile);
 								pw.println("Run to "+ControlData.currYear +"/"+ ControlData.currMonth +"/"+ ControlData.currDay);
 								pw.close();
+								progressFile.close();
 							}else if(enableProgressLog){
 								FileWriter progressFile= new FileWriter(FilePaths.mainDirectory + "progress.txt");
 								PrintWriter pw = new PrintWriter(progressFile);
@@ -952,6 +1000,7 @@ public class ControllerBatch {
 									cy = ControlData.currYear;
 									pw.println(ControlData.startYear + " " + ControlData.endYear + " " + ControlData.currYear +" "+ ControlData.currMonth);
 									pw.close();
+									progressFile.close();
 								}
 							}
 						}catch(IOException e){
@@ -1019,6 +1068,28 @@ public class ControllerBatch {
 		}else if (ControlData.outputType==5){
 			CsvOperation co = new CsvOperation();
 			co.ouputCSV(FilePaths.fullCsvPath, 0);
+		}
+		
+		// write complete or fail
+		if (enableProgressLog || enableConfigProgress) {
+			try {
+				FileWriter progressFile;
+				if (enableConfigProgress){
+					progressFile= new FileWriter(StudyUtils.configFilePath+".prgss");
+				}else{
+					progressFile= new FileWriter(FilePaths.mainDirectory + "progress.txt", true);
+				}
+				PrintWriter pw = new PrintWriter(progressFile);
+				if (Error.getTotalError() > 0) {
+					pw.println("Run failed.");
+				} else {
+					pw.println("Run completed.");
+				}
+				pw.close();
+				progressFile.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -1345,6 +1416,7 @@ public class ControllerBatch {
 								PrintWriter pw = new PrintWriter(progressFile);
 								pw.println("Run to "+ControlData.currYear +"/"+ ControlData.currMonth +"/"+ ControlData.currDay);
 								pw.close();
+								progressFile.close();
 							}else if(enableProgressLog){
 								FileWriter progressFile= new FileWriter(FilePaths.mainDirectory + "progress.txt");
 								PrintWriter pw = new PrintWriter(progressFile);
@@ -1353,6 +1425,7 @@ public class ControllerBatch {
 									cy = ControlData.currYear;
 									pw.println(ControlData.startYear + " " + ControlData.endYear + " " + ControlData.currYear +" "+ ControlData.currMonth);
 									pw.close();
+									progressFile.close();
 								}
 							}
 						}catch(IOException e){
@@ -1429,6 +1502,7 @@ public class ControllerBatch {
 					pw.println("Run completed.");
 				}
 				pw.close();
+				progressFile.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -1564,6 +1638,7 @@ public class ControllerBatch {
 								PrintWriter pw = new PrintWriter(progressFile);
 								pw.println("Run to "+ControlData.currYear +"/"+ ControlData.currMonth +"/"+ ControlData.currDay);
 								pw.close();
+								progressFile.close();
 							}else if(enableProgressLog){
 								FileWriter progressFile= new FileWriter(FilePaths.mainDirectory + "progress.txt");
 								PrintWriter pw = new PrintWriter(progressFile);
@@ -1572,6 +1647,7 @@ public class ControllerBatch {
 									cy = ControlData.currYear;
 									pw.println(ControlData.startYear + " " + ControlData.endYear + " " + ControlData.currYear +" "+ ControlData.currMonth);
 									pw.close();
+									progressFile.close();
 								}
 							}
 						}catch(IOException e){
@@ -1670,6 +1746,7 @@ public class ControllerBatch {
 					pw.println("Run completed.");
 				}
 				pw.close();
+				progressFile.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
