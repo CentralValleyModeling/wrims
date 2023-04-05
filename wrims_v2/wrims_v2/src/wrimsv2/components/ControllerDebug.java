@@ -339,10 +339,8 @@ public class ControllerDebug extends Thread {
 				        		ILP.writeSvarValue();
 				        	}
 							new XASolver();
-							if (isSelectedCycleOutput){
-								ILP.writeObjValue_XA();
-								ILP.writeDvarValue_XA();
-							}
+							ILP.writeObjValue_XA();
+							ILP.writeDvarValue_XA();
 				        }else if (ControlData.solverName.equalsIgnoreCase("CBC")){
 				        	HashSet<String> originalDvarKeys=null;
 				        	if (ControlData.cbc_debug_routeCbc || ControlData.cbc_debug_routeXA) {
@@ -353,7 +351,7 @@ public class ControllerDebug extends Thread {
 //								ILP.setMaximumFractionDigits();
 								// write svar
 								ILP.writeSvarValue();
-							}else if (ILP.logging && isSelectedCycleOutput) {
+							}else if (ILP.logging) {
 				        		ILP.setIlpFile();
 				        		ILP.writeIlp();
 				        		if (ILP.loggingVariableValue){
@@ -384,10 +382,10 @@ public class ControllerDebug extends Thread {
 							
 							if (ControlData.cbc_debug_routeXA ||ControlData.cbc_debug_routeCbc ) {										
 								CbcSolver.logCbcDebug(sds);
-							}else if (ControlData.watchList!=null) {
+							}else if (ControlData.watchList.length>0) {
 								CbcSolver.logCbcWatchList(sds);
 							}else if (Error.error_solving.size()<1) {
-				            	if (ILP.logging && isSelectedCycleOutput) {
+				            	if (ILP.logging) {
 				            		ILP.writeObjValue_Clp0_Cbc0();
 				            		if (ILP.loggingVariableValue) ILP.writeDvarValue_Clp0_Cbc0(CbcSolver.varDoubleMap);
 				            	}
@@ -395,14 +393,14 @@ public class ControllerDebug extends Thread {
 				        }else if (ControlData.solverName.equalsIgnoreCase("LPSolve")) {
 							ILP.setIlpFile();
 							ILP.writeIlp();
-							if (ILP.loggingVariableValue && isSelectedCycleOutput) {
+							if (ILP.loggingVariableValue) {
 								ILP.setVarFile();
 								ILP.writeSvarValue();
 							}
 				        	LPSolveSolver.setLP(ILP.lpSolveFilePath);
 				            LPSolveSolver.solve();
 				            if (Error.error_solving.size()<1) {
-				            	if (ILP.logging && isSelectedCycleOutput) {
+				            	if (ILP.logging) {
 				            		ILP.writeObjValue_LPSOLVE();
 				            		if (ILP.loggingVariableValue) ILP.writeDvarValue_LPSOLVE();
 				            	}
@@ -410,14 +408,14 @@ public class ControllerDebug extends Thread {
 				        }else if (ControlData.solverName.equalsIgnoreCase("Gurobi")){
 				        	ILP.setIlpFile();
 							ILP.writeIlp();
-							if (ILP.loggingVariableValue && isSelectedCycleOutput) {
+							if (ILP.loggingVariableValue) {
 								ILP.setVarFile();
 								ILP.writeSvarValue();
 							}
 							GurobiSolver.setLp(ILP.cplexLpFilePath);
 							GurobiSolver.solve();
 							if (Error.error_solving.size()<1) {
-				            	if (ILP.logging && isSelectedCycleOutput) {
+				            	if (ILP.logging) {
 				            		ILP.writeObjValue_LPSOLVE();
 				            		if (ILP.loggingVariableValue) ILP.writeDvarValue_Gurobi();
 				            	}
