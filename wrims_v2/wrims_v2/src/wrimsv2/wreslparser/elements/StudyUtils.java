@@ -158,11 +158,11 @@ public class StudyUtils {
 	public static void compileObject(String inMainWreslPath, StudyDataSet sds) {
 
 		StringBuilder b = new StringBuilder(inMainWreslPath);
-		b.replace(inMainWreslPath.lastIndexOf("."), inMainWreslPath.length(), ".json");
+		b.replace(inMainWreslPath.lastIndexOf("."), inMainWreslPath.length(), ".par");
 		String objFilePath = b.toString();
 
 		StringBuilder b2 = new StringBuilder(FilePaths.mainFile);
-		b2.replace(FilePaths.mainFile.lastIndexOf("."), FilePaths.mainFile.length(), ".json");
+		b2.replace(FilePaths.mainFile.lastIndexOf("."), FilePaths.mainFile.length(), ".par");
 		String objFileName = b2.toString();
 		
 		LogUtils.importantMsg("Writing parser data....");
