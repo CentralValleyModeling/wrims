@@ -1114,25 +1114,34 @@ public class ILP {
 		_cplexLpDir=dir;
 	}
 	
-	public static void logMemory(){
-		try {
-			//System.out.println("tasklist.exe /fi \"PID eq "+ControlData.pid+"\" > \""+ _ilpDir.getAbsolutePath()+"\\Note_memory.log\"");
-			ProcessBuilder builder = new ProcessBuilder("tasklist.exe", "/nh", "/fi", "\"PID", "eq", ControlData.pid+"\"");
-			Process process = builder.start();
-			InputStream stdout = process.getInputStream();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(stdout));
-			BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+	public static void logUsageMemory(int year, int month, int day, int cycleIndex){
+		Thread thread = new Thread(){
+			public void run(){
+				try {
+					//System.out.println("tasklist.exe /fi \"PID eq "+ControlData.pid+"\" > \""+ _ilpDir.getAbsolutePath()+"\\Note_memory.log\"");
+					ProcessBuilder builder = new ProcessBuilder("tasklist.exe", "/nh", "/fi", "\"PID", "eq", ControlData.pid+"\"");
+					Process process = builder.start();
+					InputStream stdout = process.getInputStream();
+					BufferedReader reader = new BufferedReader(new InputStreamReader(stdout));
+					BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
-	        String line = null;
-	        while ((line = br.readLine()) != null) {
-	        	if (!line.equals("")){
-	        		ILP.writeNoteLn(ILP.getYearMonthCycle(), line, ILP._noteFile_memory);
-	        	}
-	        }
+			        String line = null;
+			        while ((line = br.readLine()) != null) {
+			        	if (!line.equals("")){
+			        		String twoDigitMonth = String.format("%02d", month);
+			        		String twoDigitCycle = String.format("%02d", cycleIndex+1);
+			        		String ret = year + "_" + twoDigitMonth + "_c" + twoDigitCycle;
+			        		ILP.writeNoteLn(ret, line, ILP._noteFile_memory);
+			        	}
+			        }
 
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		};
+
+	    thread.start();
 	}
 }

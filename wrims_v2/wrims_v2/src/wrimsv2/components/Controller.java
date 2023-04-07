@@ -536,7 +536,7 @@ public class Controller {
 						new XASolver();
 
 							if (ILP.logging) {
-						ILP.writeObjValue_XA();
+								ILP.writeObjValue_XA();
 								if (ILP.loggingVariableValue) ILP.writeDvarValue_XA();
 							}
 				        }

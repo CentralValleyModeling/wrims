@@ -371,7 +371,8 @@ public class ControllerBatch {
 								HDF5Writer.writeOneCycleSv(mds, cycleI);
 							}
 						}
-						ILP.logMemory();
+						if (ILP.logging) ILP.logUsageMemory(ControlData.currYear, ControlData.currMonth, ControlData.currDay, ControlData.currCycleIndex);
+						//ILP.logUsageMemory(ControlData.currYear, ControlData.currMonth, ControlData.currDay, ControlData.currCycleIndex);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");		
 						if (Error.error_evaluation.size()>=1) noError=false;
 						try{
@@ -620,7 +621,7 @@ public class ControllerBatch {
 				            LPSolveSolver.setLP(ILP.lpSolveFilePath);
 				            LPSolveSolver.solve();
 				            if (Error.error_solving.size()<1) {
-				            	if (ILP.logging && isSelectedCycleOutput)  {
+				            	if (ILP.logging)  {
 				            		ILP.writeObjValue_LPSOLVE();
 				            		if (ILP.loggingVariableValue) ILP.writeDvarValue_LPSOLVE();
 				            	}
@@ -640,7 +641,7 @@ public class ControllerBatch {
 					        	
 					        	// check solving errors and put them in Error.error_solving
 					            if (Error.error_solving.size()<1) {
-					            	if (ILP.logging && isSelectedCycleOutput) { 
+					            	if (ILP.logging) { 
 					            		
 					            		ILP.reOpenCplexLpFile(true);
 					            		// write objValue in lp file
@@ -666,7 +667,7 @@ public class ControllerBatch {
 				        	
 				        	// check solving errors and put them in Error.error_solving
 				            if (Error.error_solving.size()<1) {
-				            	if (ILP.logging && isSelectedCycleOutput)  { 
+				            	if (ILP.logging)  { 
 				            		
 				            		ILP.reOpenCplexLpFile(true);
 				            		// write objValue in lp file
@@ -686,7 +687,7 @@ public class ControllerBatch {
 				        	
 				        	// check solving errors and put them in Error.error_solving
 				            if (Error.error_solving.size()<1) {
-				            	if (ILP.logging && isSelectedCycleOutput)  { 
+				            	if (ILP.logging)  { 
 				            		
 				            		if(!ControlData.useCplexLpString) ILP.reOpenCplexLpFile(true);
 				            		// write objValue in lp file
@@ -708,7 +709,7 @@ public class ControllerBatch {
 				        	
 				        	// check solving errors and put them in Error.error_solving
 				            if (Error.error_solving.size()<1) {
-				            	if (ILP.logging && isSelectedCycleOutput)  { 
+				            	if (ILP.logging)  { 
 				            		
 				            		ILP.reOpenCplexLpFile(true);
 				            		// write objValue in lp file
@@ -724,7 +725,7 @@ public class ControllerBatch {
 
 							new XASolver(); 
 							
-							if (ILP.logging && isSelectedCycleOutput) {
+							if (ILP.logging) {
 								ILP.writeObjValue_XA();
 								if (ILP.loggingVariableValue) ILP.writeDvarValue_XA();
 							}
@@ -755,7 +756,8 @@ public class ControllerBatch {
 								HDF5Writer.writeOneCycleSv(mds, cycleI);
 							}
 						}
-						ILP.logMemory();
+						if (ILP.logging) ILP.logUsageMemory(ControlData.currYear, ControlData.currMonth, ControlData.currDay, ControlData.currCycleIndex);
+						//ILP.logUsageMemory(ControlData.currYear, ControlData.currMonth, ControlData.currDay, ControlData.currCycleIndex);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
 						try{
@@ -982,7 +984,8 @@ public class ControllerBatch {
 								HDF5Writer.writeOneCycleSv(mds, cycleI);
 							}
 						}
-						ILP.logMemory();
+						if (ILP.logging) ILP.logUsageMemory(ControlData.currYear, ControlData.currMonth, ControlData.currDay, ControlData.currCycleIndex);
+						//ILP.logUsageMemory(ControlData.currYear, ControlData.currMonth, ControlData.currDay, ControlData.currCycleIndex);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
 						try{
@@ -1258,7 +1261,8 @@ public class ControllerBatch {
 								HDF5Writer.writeOneCycleSv(mds, cycleI);
 							}
 						}
-						ILP.logMemory();
+						if (ILP.logging) ILP.logUsageMemory(ControlData.currYear, ControlData.currMonth, ControlData.currDay, ControlData.currCycleIndex);
+						//ILP.logUsageMemory(ControlData.currYear, ControlData.currMonth, ControlData.currDay, ControlData.currCycleIndex);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
 
@@ -1407,7 +1411,8 @@ public class ControllerBatch {
 								HDF5Writer.writeOneCycleSv(mds, cycleI);
 							}
 						}
-						ILP.logMemory();
+						if (ILP.logging) ILP.logUsageMemory(ControlData.currYear, ControlData.currMonth, ControlData.currDay, ControlData.currCycleIndex);
+						//ILP.logUsageMemory(ControlData.currYear, ControlData.currMonth, ControlData.currDay, ControlData.currCycleIndex);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
 						try{
@@ -1629,7 +1634,8 @@ public class ControllerBatch {
 								HDF5Writer.writeOneCycleSv(mds, cycleI);
 							}
 						}
-						ILP.logMemory();
+						if (ILP.logging) ILP.logUsageMemory(ControlData.currYear, ControlData.currMonth, ControlData.currDay, ControlData.currCycleIndex);
+						//ILP.logUsageMemory(ControlData.currYear, ControlData.currMonth, ControlData.currDay, ControlData.currCycleIndex);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
 						try{
