@@ -108,12 +108,12 @@ public class ControllerDebug extends Thread {
 	@Override
 	public void run() {
 		new DataBaseProfile(args);
-		General.getPID();
 		if (args[0].toLowerCase().startsWith("-launch")){
 			procLaunch(args);
 		}else{
 			ConfigUtils.loadArgs(args);
 		}
+		if (ILP.loggingUsageMemeory) General.getPID();
 		connectToDataBase();
 		//generateStudyFile();
 		try {

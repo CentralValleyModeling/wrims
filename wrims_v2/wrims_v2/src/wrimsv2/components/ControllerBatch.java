@@ -66,8 +66,8 @@ public class ControllerBatch {
 		long startTimeInMillis = Calendar.getInstance().getTimeInMillis();
 		try {
 			new DataBaseProfile(args);
-			General.getPID();
 			processArgs(args);
+			if (ILP.loggingUsageMemeory) General.getPID();
 			connectToDataBase();
 			if (enableConfigProgress) {
 				try {
