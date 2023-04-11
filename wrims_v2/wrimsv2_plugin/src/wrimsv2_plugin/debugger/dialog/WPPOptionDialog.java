@@ -52,6 +52,7 @@ public class WPPOptionDialog extends Dialog {
 	private Button buttonSelectedCycles;
 	private Button buttonRTMessage;
 	private Button buttonPrintGWFuncCalls;
+	private Button buttonTrackMemoryUsage;
 	private Text textSelectedCycles;
 	private Text txtcbcTolerancePrimal;
 	private Text txtcbcTolerancePrimalRelax;
@@ -152,6 +153,7 @@ public class WPPOptionDialog extends Dialog {
 				SettingPref.save();
 				DebugCorePlugin.showRunTimeMessage=buttonRTMessage.getSelection();
 				DebugCorePlugin.printGWFuncCalls=buttonPrintGWFuncCalls.getSelection();
+				DebugCorePlugin.trackMemoryUsage=buttonTrackMemoryUsage.getSelection();
 				if (DebugCorePlugin.isDebugging){
 					try {
 						DebugCorePlugin.target.sendRequest("solveroption:"+DebugCorePlugin.solver+":"+DebugCorePlugin.log);
@@ -169,6 +171,7 @@ public class WPPOptionDialog extends Dialog {
 						DebugCorePlugin.target.sendRequest("SelectedCycleOutput:"+DebugCorePlugin.outputCycles.replace(" ", ""));
 						DebugCorePlugin.target.sendRequest("ShowRunTimeMessage:"+DebugCorePlugin.showRunTimeMessage);
 						DebugCorePlugin.target.sendRequest("PrintGWFuncCalls:"+DebugCorePlugin.printGWFuncCalls);
+						DebugCorePlugin.target.sendRequest("TrackMemoryUsage:"+DebugCorePlugin.trackMemoryUsage);
 						
 						if (iAssignCBCSetting==1 || iAssignCBCSetting==3){
 							if (vcbcTolerancePrimal!=pvcbcTolerancePrimal){
@@ -346,6 +349,13 @@ public class WPPOptionDialog extends Dialog {
 		buttonPrintGWFuncCalls =  new Button(composite, SWT.CHECK);
 		buttonPrintGWFuncCalls.setSelection(DebugCorePlugin.printGWFuncCalls);
 		buttonPrintGWFuncCalls.setLayoutData(gridData);
+		
+		Label label7 =  new Label(composite, SWT.NONE);
+		label7.setText("Track memory usage");
+		
+		buttonTrackMemoryUsage =  new Button(composite, SWT.CHECK);
+		buttonTrackMemoryUsage.setSelection(DebugCorePlugin.trackMemoryUsage);
+		buttonTrackMemoryUsage.setLayoutData(gridData);
 		
 		generalTab.setControl(composite);
 	}

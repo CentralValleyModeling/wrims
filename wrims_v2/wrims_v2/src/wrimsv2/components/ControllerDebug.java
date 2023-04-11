@@ -439,7 +439,7 @@ public class ControllerDebug extends Thread {
 								HDF5Writer.writeOneCycleSv(mds, cycleI);
 							}
 						}
-						if (ILP.logging) ILP.logUsageMemory(ControlData.currYear, ControlData.currMonth, ControlData.currDay, ControlData.currCycleIndex);
+						if (ILP.loggingUsageMemeory) ILP.logUsageMemory(ControlData.currYear, ControlData.currMonth, ControlData.currDay, ControlData.currCycleIndex);
 						//ILP.logUsageMemory(ControlData.currYear, ControlData.currMonth, ControlData.currDay, ControlData.currCycleIndex);
 						System.out.println("Cycle "+cycleI+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (CbcSolver.intLog && ControlData.solverName.equalsIgnoreCase("CBC")) {

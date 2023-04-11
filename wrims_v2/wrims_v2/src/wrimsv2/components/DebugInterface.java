@@ -587,6 +587,28 @@ public class DebugInterface {
 					e.printStackTrace();
 				}
 			}
+		}else if(request.startsWith("TrackMemoryUsage:")){
+			int index=request.indexOf(":");
+			String ilpLogUsageMemory=request.substring(index+1);
+			if (ilpLogUsageMemory.equalsIgnoreCase("True")){
+				ILP.loggingUsageMemeory=true;
+				try {
+					sendRequest("Track memory usage on");
+					System.out.println("Track memory usage on");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}else{
+				ILP.loggingUsageMemeory=false;
+				try {
+					sendRequest("Track memory usage off");
+					System.out.println("Track memory usage off");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}else if (request.startsWith("savesvdss:")){
 			int index=request.indexOf(":");
 			String fileName=request.substring(index+1);

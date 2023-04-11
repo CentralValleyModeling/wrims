@@ -87,6 +87,7 @@ public class ILP {
 	public static boolean loggingCplexLp = false; // special LP problem file format designed by Cplex
 	public static boolean loggingLpSolve = false; // special LP problem file format designed by LpSolve
 	public static boolean loggingMPModel = false; // special LP problem binary file format designed for OR-Tools
+	public static boolean loggingUsageMemeory = false;
 	
 	private static File _ilpRootDir;  
 	private static File _ilpDir; 

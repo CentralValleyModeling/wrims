@@ -269,6 +269,7 @@ public class WPPWsiDiTab extends AbstractLaunchConfigurationTab {
 			out.println("IlpLog             "+"no");
 			out.println("IlpLogFormat       "+"none");
 			out.println("IlpLogVarValue     "+"no");
+			out.println("IlpLogUsageMemory  "+"no");
 			out.println("WreslPlus          "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_WRESLPLUS, "no"));
 			out.println("AllowSvTsInit      "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_ALLOWSVTSINIT, "no"));
 			out.println("AllRestartFiles    "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_ALLRESTARTFILES, "no"));

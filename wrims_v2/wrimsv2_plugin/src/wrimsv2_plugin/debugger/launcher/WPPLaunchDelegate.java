@@ -656,6 +656,12 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 				configMap.put("printgwfunccalls", "no");
 			}
 			
+			if (DebugCorePlugin.trackMemoryUsage){
+				configMap.put("ilplogusagememory", "yes");
+			}else{
+				configMap.put("ilplogusagememory", "no");
+			}
+			
 			configMap.put("ifsisselfile", ifsIsSelFile);
 			configMap.put("unchangegwrestart", unchangeGWRestart);
 			
@@ -739,6 +745,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			out.println("IlpLogFormat       "+configMap.get("IlpLogFormat".toLowerCase()));
 			out.println("IlpLogVarValue     "+configMap.get("IlpLogVarValue".toLowerCase()));
 			out.println("IlpLogAllCycles    "+configMap.get("IlpLogAllCycles".toLowerCase()));
+			out.println("IlpLogUsageMemory  "+configMap.get("IlpLogUsageMemory".toLowerCase()));
 			out.println("WreslPlus          "+configMap.get("WreslPlus".toLowerCase()));
 			out.println("AllowSvTsInit      "+configMap.get("AllowSvTsInit".toLowerCase()));
 			out.println("AllRestartFiles    "+configMap.get("AllRestartFiles".toLowerCase()));

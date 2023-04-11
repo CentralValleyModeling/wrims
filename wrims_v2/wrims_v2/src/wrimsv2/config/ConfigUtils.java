@@ -987,6 +987,14 @@ public class ConfigUtils {
 
 		}
 		
+		String strIlpLogUsageMemory = configMap.get("ilplogusagememory");
+		if (strIlpLogUsageMemory.equalsIgnoreCase("yes") || strIlpLogUsageMemory.equalsIgnoreCase("true")) {
+			ILP.loggingUsageMemeory = true;		
+		}else{
+			ILP.loggingUsageMemeory = false;
+		}
+		System.out.println("IlpLogUsageMemory:      " + ILP.loggingUsageMemeory);
+		
 		String s = configMap.get("wreslplus");
 		
 		if (s.equalsIgnoreCase("yes") || s.equalsIgnoreCase("true")){
@@ -1349,6 +1357,7 @@ public class ConfigUtils {
 		configMap.put("lookupsubdir".toLowerCase(), "");
 		configMap.put("IlpLog".toLowerCase(), "no");
 		configMap.put("IlpLogVarValue".toLowerCase(), "no");
+		configMap.put("IlpLogUsageMemory".toLowerCase(), "no");
 		configMap.put("WreslPlus".toLowerCase(), "no");
 		configMap.put("AllowSvTsInit".toLowerCase(), "no");
 		configMap.put("DatabaseURL".toLowerCase(), "none");
