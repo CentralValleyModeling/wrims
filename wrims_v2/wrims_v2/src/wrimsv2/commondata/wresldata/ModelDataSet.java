@@ -256,7 +256,7 @@ public class ModelDataSet implements Serializable {
 				svar.setData(new IntDouble(1.0, false));
 			}
 			
-			int timeArraySize=General.getTimeArraySize(svar.timeArraySizeParser);
+			int timeArraySize=new TimeArray().getTimeArraySize(svar.timeArraySizeParser);
 			for (prvs.timeArrayIndex=1; prvs.timeArrayIndex<=timeArraySize; prvs.timeArrayIndex++){
 				condition=false;
 				i=-1;
@@ -529,7 +529,7 @@ public class ModelDataSet implements Serializable {
 				//}
 			}
 			
-			int timeArraySize=General.getTimeArraySize(alias.timeArraySizeParser);
+			int timeArraySize=new TimeArray().getTimeArraySize(alias.timeArraySizeParser);
 			for (prvs.timeArrayIndex=1; prvs.timeArrayIndex<=timeArraySize; prvs.timeArrayIndex++){
 				String newAsName=asName+"__fut__"+prvs.timeArrayIndex;
 				try {

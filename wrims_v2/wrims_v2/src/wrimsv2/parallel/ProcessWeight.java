@@ -17,6 +17,7 @@ import com.sun.java.util.collections.Collections;
 import wrimsv2.commondata.solverdata.SolverData;
 import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.ModelDataSet;
+import wrimsv2.commondata.wresldata.TimeArray;
 import wrimsv2.commondata.wresldata.WeightElement;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
@@ -98,7 +99,7 @@ public class ProcessWeight extends RecursiveTask<Integer>{
 			solverWtMap.put(wtName,wt);
 			evaluator.reset();
 			
-			int timeArraySize=General.getTimeArraySize(wt.timeArraySizeParser);
+			int timeArraySize=new TimeArray().getTimeArraySize(wt.timeArraySizeParser);
 			for (prvs.timeArrayIndex=1; prvs.timeArrayIndex<=timeArraySize; prvs.timeArrayIndex++){
 				WeightElement newWt=new WeightElement();
 				String newWtName=wtName+"__fut__"+prvs.timeArrayIndex;

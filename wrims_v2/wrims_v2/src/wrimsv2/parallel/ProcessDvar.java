@@ -17,6 +17,7 @@ import com.sun.java.util.collections.Collections;
 import wrimsv2.commondata.solverdata.SolverData;
 import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.ModelDataSet;
+import wrimsv2.commondata.wresldata.TimeArray;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
 import wrimsv2.evaluator.ValueEvaluatorParser;
@@ -118,7 +119,7 @@ public class ProcessDvar extends RecursiveTask<Integer>{
 			evaluator.reset();
 			solverDvarMap.put(dvName, dvar);
 			
-			int timeArraySize=General.getTimeArraySize(dvar.timeArraySizeParser);
+			int timeArraySize=new TimeArray().getTimeArraySize(dvar.timeArraySizeParser);
 			if (!dvar.timeArraySize.equals("0") && !timeArrayDvList.contains(dvName)){
 				timeArrayDvList.add(dvName);
 			

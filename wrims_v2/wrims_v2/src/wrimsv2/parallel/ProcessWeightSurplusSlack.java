@@ -17,6 +17,7 @@ import com.sun.java.util.collections.Collections;
 import wrimsv2.commondata.solverdata.SolverData;
 import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.ModelDataSet;
+import wrimsv2.commondata.wresldata.TimeArray;
 import wrimsv2.commondata.wresldata.WeightElement;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
@@ -96,7 +97,7 @@ public class ProcessWeightSurplusSlack extends RecursiveTask<Integer>{
    			solverWeightSlackSurplusMap.put(wtSlackSurplusName, wtSlackSurplus);
    			evaluator.reset();
     		
-   			int timeArraySize=General.getTimeArraySize(wtSlackSurplus.timeArraySizeParser);
+   			int timeArraySize=new TimeArray().getTimeArraySize(wtSlackSurplus.timeArraySizeParser);
    			for (prvs.timeArrayIndex=1; prvs.timeArrayIndex<=timeArraySize; prvs.timeArrayIndex++){
    				WeightElement newWtSlackSurplus=new WeightElement();
    				String newWtSlackSurplusName=wtSlackSurplusName+"__fut__"+prvs.timeArrayIndex;
