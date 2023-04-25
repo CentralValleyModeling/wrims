@@ -70,8 +70,11 @@ public class WPPBatchRunDialog extends Dialog {
 	private String launchNamesLine="";
 	private String[] dvDssList;
 	private int dssCombineStartYear=2015;
-	private int dssCombineStartMonth=10;
-	private int dssCombineStartDay=31;
+	private int dssCombineStartMonth=9;
+	private int dssCombineStartDay=30;
+	private int dssCombineEndYear=1921;
+	private int dssCombineEndMonth=10;
+	private int dssCombineEndDay=31;
 	
 	public WPPBatchRunDialog(Shell parentShell) {
 		super(parentShell, SWT.MIN|SWT.RESIZE);
@@ -789,21 +792,34 @@ public class WPPBatchRunDialog extends Dialog {
 		dvDssList=new String[size];
 		Calendar cs=Calendar.getInstance();
 		cs.set(dssCombineStartYear, dssCombineStartMonth-1, dssCombineStartDay);
+		Calendar ce=Calendar.getInstance();
+		ce.set(dssCombineEndYear, dssCombineEndMonth-1, dssCombineEndDay);
 		for (int i=0; i<launchPathList.size(); i++){
 			String lfp=launchPathList.get(i);
 			if (configMap.containsKey(lfp)){
 				LaunchConfigInfo config = configMap.get(lfp);
 				dvDssList[i] = config.getStringAttribute(DebugCorePlugin.ATTR_WPP_DVARFILE, (String)null);
 				int sy=Integer.parseInt(config.getStringAttribute(DebugCorePlugin.ATTR_WPP_STARTYEAR, "2015"));
-				int sm = TimeOperation.monthValue(config.getStringAttribute(DebugCorePlugin.ATTR_WPP_STARTMONTH, "10"));
-				int sd= Integer.parseInt(config.getStringAttribute(DebugCorePlugin.ATTR_WPP_STARTDAY, "31"));
-				Calendar c=Calendar.getInstance();
-				c.set(sy, sm-1, sd);
-				if (c.before(cs)){
+				int sm = TimeOperation.monthValue(config.getStringAttribute(DebugCorePlugin.ATTR_WPP_STARTMONTH, "9"));
+				int sd= Integer.parseInt(config.getStringAttribute(DebugCorePlugin.ATTR_WPP_STARTDAY, "30"));
+				int ey=Integer.parseInt(config.getStringAttribute(DebugCorePlugin.ATTR_WPP_ENDYEAR, "1921"));
+				int em = TimeOperation.monthValue(config.getStringAttribute(DebugCorePlugin.ATTR_WPP_ENDMONTH, "10"));
+				int ed= Integer.parseInt(config.getStringAttribute(DebugCorePlugin.ATTR_WPP_ENDDAY, "31"));
+				Calendar cs1=Calendar.getInstance();
+				cs1.set(sy, sm-1, sd);
+				if (cs1.before(cs)){
 					dssCombineStartYear=sy;
 					dssCombineStartMonth=sm;
 					dssCombineStartDay=sd;
 					cs.set(dssCombineStartYear, dssCombineStartMonth-1, dssCombineStartDay);
+				}
+				Calendar ce1=Calendar.getInstance();
+				ce1.set(ey, em-1, ed);
+				if (ce1.after(ce)){
+					dssCombineEndYear=ey;
+					dssCombineEndMonth=em;
+					dssCombineEndDay=ed;
+					cs.set(dssCombineEndYear, dssCombineEndMonth-1, dssCombineEndDay);
 				}
 			}
 		}
