@@ -819,7 +819,7 @@ public class WPPBatchRunDialog extends Dialog {
 					dssCombineEndYear=ey;
 					dssCombineEndMonth=em;
 					dssCombineEndDay=ed;
-					cs.set(dssCombineEndYear, dssCombineEndMonth-1, dssCombineEndDay);
+					ce.set(dssCombineEndYear, dssCombineEndMonth-1, dssCombineEndDay);
 				}
 			}
 		}
