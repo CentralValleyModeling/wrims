@@ -250,6 +250,7 @@ public class WPPOptionDialog extends Dialog {
 		solverCombo = new Combo(composite, SWT.BORDER);
 		solverCombo.add("CBC");
 		solverCombo.add("XA");
+		//solverCombo.add("Gurobi");
 		//solverCombo.add("CBC2.10");
 		//solverCombo.add("CBC2.9.8");
 		//solverCombo.add("LPSolve");
@@ -267,10 +268,8 @@ public class WPPOptionDialog extends Dialog {
 			solverCombo.select(0);
 		}else if (DebugCorePlugin.solver.equals("XA")){
 			solverCombo.select(1);
-		}else if (DebugCorePlugin.solver.equals("CBC2.10")){
+		}else if (DebugCorePlugin.solver.equals("Gurobi")){
 			solverCombo.select(2);
-		}else if (DebugCorePlugin.solver.equals("CBC2.9.8")){
-			solverCombo.select(3);
 		}
 		prevSel=solverCombo.getSelectionIndex();
 		solverCombo.setLayoutData(gridData);

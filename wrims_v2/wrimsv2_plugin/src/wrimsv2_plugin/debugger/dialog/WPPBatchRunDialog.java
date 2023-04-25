@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,12 +36,14 @@ import wrimsv2_plugin.batchrun.LaunchConfigInfo;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.tools.FileProcess;
+import wrimsv2_plugin.tools.TimeOperation;
 
 
 public class WPPBatchRunDialog extends Dialog {
 	private Text fileText;
 	private	String fileName="";
 	private	String lfgName="";
+	private String dvDssName="";
 	private Button addButton;
 	private Button deleteButton;
 	private Button startAllButton;
@@ -50,6 +53,7 @@ public class WPPBatchRunDialog extends Dialog {
 	private Button wsidiButton;
 	private Button openButton;
 	private Button saveButton;
+	private Button combineButton;
 	private List brl;
 	
 	private boolean isSequential=false;
@@ -64,6 +68,10 @@ public class WPPBatchRunDialog extends Dialog {
 	private String lookupNamesLine="";
 	private String engineNamesLine="";
 	private String launchNamesLine="";
+	private String[] dvDssList;
+	private int dssCombineStartYear=2015;
+	private int dssCombineStartMonth=10;
+	private int dssCombineStartDay=31;
 	
 	public WPPBatchRunDialog(Shell parentShell) {
 		super(parentShell, SWT.MIN|SWT.RESIZE);
@@ -102,7 +110,7 @@ public class WPPBatchRunDialog extends Dialog {
 		
 		Button browseButton = new Button(shell, SWT.PUSH);
 		browseButton.setText("Browse");
-		GridData gd2 = new GridData(GridData.HORIZONTAL_ALIGN_CENTER);
+		GridData gd2 = new GridData(GridData.FILL_HORIZONTAL);
 		gd2.horizontalSpan = 1;
 		browseButton.setLayoutData(gd2);
 		browseButton.addSelectionListener(new SelectionAdapter() {
@@ -127,7 +135,7 @@ public class WPPBatchRunDialog extends Dialog {
 		
 		addButton = new Button(shell, SWT.PUSH);
 		addButton.setText("Add");
-		GridData gd3 = new GridData(GridData.HORIZONTAL_ALIGN_CENTER);
+		GridData gd3 = new GridData(GridData.FILL_HORIZONTAL);
 		gd3.horizontalSpan = 1;
 		addButton.setLayoutData(gd3);
 		addButton.addSelectionListener(new SelectionAdapter() {
@@ -156,7 +164,7 @@ public class WPPBatchRunDialog extends Dialog {
 		
 		deleteButton = new Button(shell, SWT.PUSH);
 		deleteButton.setText("Delete");
-		GridData gd4 = new GridData(GridData.HORIZONTAL_ALIGN_CENTER);
+		GridData gd4 = new GridData(GridData.FILL_HORIZONTAL);
 		gd4.horizontalSpan = 1;
 		deleteButton.setLayoutData(gd4);
 		deleteButton.addSelectionListener(new SelectionAdapter() {
@@ -181,7 +189,7 @@ public class WPPBatchRunDialog extends Dialog {
 		
 		startAllButton = new Button(shell, SWT.PUSH);
 		startAllButton.setText("Start All");
-		GridData gd5 = new GridData(GridData.HORIZONTAL_ALIGN_CENTER);
+		GridData gd5 = new GridData(GridData.FILL_HORIZONTAL);
 		gd5.horizontalSpan = 1;
 		startAllButton.setLayoutData(gd5);
 		startAllButton.addSelectionListener(new SelectionAdapter() {
@@ -207,7 +215,7 @@ public class WPPBatchRunDialog extends Dialog {
 		
 		stopAllButton = new Button(shell, SWT.PUSH);
 		stopAllButton.setText("Stop All");
-		GridData gd6 = new GridData(GridData.HORIZONTAL_ALIGN_CENTER);
+		GridData gd6 = new GridData(GridData.FILL_HORIZONTAL);
 		gd6.horizontalSpan = 1;
 		stopAllButton.setLayoutData(gd6);
 		stopAllButton.addSelectionListener(new SelectionAdapter() {
@@ -232,7 +240,7 @@ public class WPPBatchRunDialog extends Dialog {
 		
 		stopButton = new Button(shell, SWT.PUSH);
 		stopButton.setText("Stop");
-		GridData gd7 = new GridData(GridData.HORIZONTAL_ALIGN_CENTER);
+		GridData gd7 = new GridData(GridData.FILL_HORIZONTAL);
 		gd7.horizontalSpan = 1;
 		stopButton.setLayoutData(gd7);
 		stopButton.addSelectionListener(new SelectionAdapter() {
@@ -250,7 +258,7 @@ public class WPPBatchRunDialog extends Dialog {
 		
 		seqButton = new Button(shell, SWT.CHECK);
 		seqButton.setText("Sequential");
-		GridData gd8 = new GridData(GridData.HORIZONTAL_ALIGN_CENTER);
+		GridData gd8 = new GridData(GridData.FILL_HORIZONTAL);
 		gd8.horizontalSpan = 1;
 		seqButton.setLayoutData(gd8);
 		seqButton.addSelectionListener(new SelectionAdapter() {
@@ -267,7 +275,7 @@ public class WPPBatchRunDialog extends Dialog {
 
 		wsidiButton = new Button(shell,SWT.CHECK);
 		wsidiButton.setText("WsiDi");
-		GridData gd9 = new GridData(GridData.HORIZONTAL_ALIGN_CENTER);
+		GridData gd9 = new GridData(GridData.FILL_HORIZONTAL);
 		gd9.horizontalSpan = 1;
 		wsidiButton.setLayoutData(gd9);
 		wsidiButton.addSelectionListener(new SelectionAdapter() {
@@ -284,7 +292,7 @@ public class WPPBatchRunDialog extends Dialog {
 		
 		openButton = new Button(shell, SWT.PUSH);
 		openButton.setText("Open");
-		GridData gd10 = new GridData(GridData.HORIZONTAL_ALIGN_CENTER);
+		GridData gd10 = new GridData(GridData.FILL_HORIZONTAL);
 		gd10.horizontalSpan = 1;
 		openButton.setLayoutData(gd10);
 		openButton.addSelectionListener(new SelectionAdapter() {
@@ -324,7 +332,7 @@ public class WPPBatchRunDialog extends Dialog {
 		
 		saveButton = new Button(shell, SWT.PUSH);
 		saveButton.setText("Save");
-		GridData gd11 = new GridData(GridData.HORIZONTAL_ALIGN_CENTER);
+		GridData gd11 = new GridData(GridData.FILL_HORIZONTAL);
 		gd11.horizontalSpan = 1;
 		saveButton.setLayoutData(gd11);
 		saveButton.addSelectionListener(new SelectionAdapter() {
@@ -342,6 +350,36 @@ public class WPPBatchRunDialog extends Dialog {
 						if (file !=null){
 							lfgName=file;
 							saveLfgFile(lfgName);
+						}
+					}
+				});
+			}
+		});
+		
+		combineButton = new Button(shell, SWT.PUSH);
+		combineButton.setText("Combine DV DSS");
+		GridData gd12 = new GridData(GridData.FILL_HORIZONTAL);
+		gd12.horizontalSpan = 1;
+		combineButton.setLayoutData(gd12);
+		combineButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				final IWorkbench workbench=PlatformUI.getWorkbench();
+				workbench.getDisplay().asyncExec(new Runnable(){
+
+					public void run(){
+						Shell shell=workbench.getActiveWorkbenchWindow().getShell();
+						FileDialog dlg=new FileDialog(shell, SWT.SAVE);
+						dlg.setText("Combine DV Dss files from PA runs to");
+						dlg.setFilterNames(new String[]{"DV Dss File (*.dss)", "All Files (*.*)"});
+						dlg.setFilterExtensions(new String[]{"*.dss", "*.*"});
+						dlg.setFileName(dvDssName);
+						String file=dlg.open();
+						if (file !=null){
+							dvDssName=file;
+							procLaunchConfigs();
+							procDvDssFiles();
+							combineDvDss(dvDssName);
 						}
 					}
 				});
@@ -744,5 +782,38 @@ public class WPPBatchRunDialog extends Dialog {
 				if (ms==1 && launchType==1) DSSUtil.generateCatalog(svPath);
 			}
 		}
+	}
+	
+	public void procLaunchConfigs(){
+		int size=launchPathList.size();
+		dvDssList=new String[size];
+		Calendar cs=Calendar.getInstance();
+		cs.set(dssCombineStartYear, dssCombineStartMonth-1, dssCombineStartDay);
+		for (int i=0; i<launchPathList.size(); i++){
+			String lfp=launchPathList.get(i);
+			if (configMap.containsKey(lfp)){
+				LaunchConfigInfo config = configMap.get(lfp);
+				dvDssList[i] = config.getStringAttribute(DebugCorePlugin.ATTR_WPP_DVARFILE, (String)null);
+				int sy=Integer.parseInt(config.getStringAttribute(DebugCorePlugin.ATTR_WPP_STARTYEAR, "2015"));
+				int sm = TimeOperation.monthValue(config.getStringAttribute(DebugCorePlugin.ATTR_WPP_STARTMONTH, "10"));
+				int sd= Integer.parseInt(config.getStringAttribute(DebugCorePlugin.ATTR_WPP_STARTDAY, "31"));
+				Calendar c=Calendar.getInstance();
+				c.set(sy, sm-1, sd);
+				if (c.before(cs)){
+					dssCombineStartYear=sy;
+					dssCombineStartMonth=sm;
+					dssCombineStartDay=sd;
+					cs.set(dssCombineStartYear, dssCombineStartMonth-1, dssCombineStartDay);
+				}
+			}
+		}
+	}
+	
+	public void procDvDssFiles(){
+		
+	}
+	
+	public void combineDvDss(String fn){
+
 	}
 }
