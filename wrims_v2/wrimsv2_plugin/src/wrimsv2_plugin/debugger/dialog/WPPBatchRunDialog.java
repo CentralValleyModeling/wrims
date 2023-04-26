@@ -380,9 +380,10 @@ public class WPPBatchRunDialog extends Dialog {
 						String file=dlg.open();
 						if (file !=null){
 							dvDssName=file;
-							procLaunchConfigs();
-							procDvDssFiles();
-							combineDvDss(dvDssName);
+							if (procLaunchConfigs()){
+								procDvDssFiles();
+								combineDvDss(dvDssName);
+							}
 						}
 					}
 				});
@@ -787,7 +788,7 @@ public class WPPBatchRunDialog extends Dialog {
 		}
 	}
 	
-	public void procLaunchConfigs(){
+	public boolean procLaunchConfigs(){
 		int size=launchPathList.size();
 		dvDssList=new String[size];
 		Calendar cs=Calendar.getInstance();
@@ -822,6 +823,12 @@ public class WPPBatchRunDialog extends Dialog {
 					ce.set(dssCombineEndYear, dssCombineEndMonth-1, dssCombineEndDay);
 				}
 			}
+		}
+		
+		if (ce.before(cs)){
+			return false;
+		}else{
+			return true;
 		}
 	}
 	

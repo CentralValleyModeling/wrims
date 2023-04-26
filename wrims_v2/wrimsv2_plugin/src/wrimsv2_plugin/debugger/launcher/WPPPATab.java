@@ -54,6 +54,7 @@ public class WPPPATab extends AbstractLaunchConfigurationTab {
 	private Combo dvMonthCombo;
 	private Combo dvDayCombo;
 	private Button unchangeGWRestartBut;
+	private Button unchangeInitialDssBut;
 	private Button createSeriesPAInitsBut;
 	private WPPMainTab mainTab;
 	private ILaunchConfiguration configuration;
@@ -259,6 +260,26 @@ public class WPPPATab extends AbstractLaunchConfigurationTab {
 			
 		});
 		
+		unchangeInitialDssBut=new Button(comp, SWT.CHECK);
+		unchangeInitialDssBut.setText("Keep Initial Dss File at the Start Date");
+		gd1 = new GridData(GridData.BEGINNING);
+		gd1.horizontalSpan =2;
+		unchangeInitialDssBut.setLayoutData(gd1);
+		unchangeInitialDssBut.addSelectionListener(new SelectionListener(){
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				updateLaunchConfigurationDialog();	
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
 		createSeriesPAInitsBut=new Button(comp, SWT.NONE);
 		createSeriesPAInitsBut.setText("Create a Series of PA Intial Files");
 		gd1 = new GridData(GridData.BEGINNING);
@@ -391,6 +412,17 @@ public class WPPPATab extends AbstractLaunchConfigurationTab {
 		} catch (CoreException e) {
 			setErrorMessage(e.getMessage());
 		}
+		
+		try {
+			String unchangeInitialDss = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_UNCHANGEINITIALDSS, "yes");
+			if (unchangeInitialDss.equals("yes")){
+				unchangeInitialDssBut.setSelection(true);
+			}else{
+				unchangeInitialDssBut.setSelection(false);
+			}
+		} catch (CoreException e) {
+			setErrorMessage(e.getMessage());
+		}
 	}
 
 	@Override
@@ -425,6 +457,14 @@ public class WPPPATab extends AbstractLaunchConfigurationTab {
 			unchangeGWRestart="no";
 		}
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_UNCHANGEGWRESTART, unchangeGWRestart);
+		
+		String unchangeInitialDss="yes";
+		if (unchangeInitialDssBut.getSelection()){
+			unchangeInitialDss="yes";
+		}else{
+			unchangeInitialDss="no";
+		}
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_UNCHANGEINITIALDSS, unchangeInitialDss);
 	}
 
 	@Override

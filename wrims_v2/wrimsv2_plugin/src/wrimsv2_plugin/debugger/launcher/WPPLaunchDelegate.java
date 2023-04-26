@@ -81,6 +81,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 	private String jarXA="XAOptimizer.jar";
 	private int sid=1;
 	private boolean afterFirstRound=false;
+	private boolean afterFirstPARun=false;
 	private int ms=1;
 	private boolean useMainFile=true;
 	private String databaseURL="none";
@@ -97,7 +98,9 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 	private String yearSectionOutput;
 	private String monMemSection;
 	private String unchangeGWRestart;
-
+	private String unchangeInitialDss;
+	private boolean isSameInitialDss=true;
+	
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.ILaunchConfigurationDelegate#launch(org.eclipse.debug.core.ILaunchConfiguration, java.lang.String, org.eclipse.debug.core.ILaunch, org.eclipse.core.runtime.IProgressMonitor)
 	 */
@@ -202,12 +205,13 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 		PAProcRun procRun = new PAProcRun();
 		PAProcDV procDV = new PAProcDV(configuration);
 		
-		procInit.createPAInit(configuration);
+		if (isSameInitialDss) procInit.createPAInit(configuration);
 		procRun.initialPATime();
 		procDV.deleteDVFile(configuration);
 		
 		int terminateCode=0;
 		useMainFile=true;
+		afterFirstPARun=false;
 		
 		while (procRun.continueRun() && terminateCode==0){				
 			int requestPort = -1;
@@ -244,11 +248,12 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			}
 			
 			procDV.resetDVStartDate();
-			procInit.createInitData(procRun);
+			if (isSameInitialDss) procInit.createInitData(procRun);
 			procRun.updatePATime();
 			useMainFile=false;
+			afterFirstPARun=true;
 		}
-		procInit.deletePAInit();
+		if (isSameInitialDss) procInit.deletePAInit();
 		
 		return terminateCode;
 	}
@@ -399,6 +404,13 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 		try {
 			String lastSuffix="_MS"+ms;
 			
+			unchangeInitialDss=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_UNCHANGEINITIALDSS, "yes");
+			if (unchangeInitialDss.equalsIgnoreCase("yes")){
+				isSameInitialDss=true;
+			}else{
+				isSameInitialDss=false;
+			}
+			
 			String studyName=null;
 			studyName = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STUDY, (String)null);
 					
@@ -423,7 +435,16 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			initFile = null;
 			initFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_INITFILE+suffix, (String)null);
 			if (DebugCorePlugin.launchType==1){
-				initFile=DebugCorePlugin.paInitFile;
+				if (isSameInitialDss){
+					initFile=DebugCorePlugin.paInitFile;
+				}else{
+					if (afterFirstPARun){
+						String dvarFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_DVARFILE, (String)null);
+						initFile=dvarFile;
+					}else{
+						initFile=initFile;
+					}
+				}
 			}else{
 				if (afterFirstRound) {
 					String lastDvarFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_DVARFILE+lastSuffix, (String)null);
@@ -626,8 +647,20 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 				configMap.put("OVFile".toLowerCase(), FileProcess.procRelativePath(ovFile, configuration));
 			}
 			
-			if (DebugCorePlugin.launchType==1 || (ms>1 && afterFirstRound)){
+			if (DebugCorePlugin.launchType==1){
+				if (isSameInitialDss){
+					configMap.put("prefixinittodvarfile", "no");
+				}else{ 
+					if (afterFirstPARun){
+						configMap.put("prefixinittodvarfile", "no");
+					}else{
+						configMap.put("prefixinittodvarfile", "yes");
+					}
+				}
+			}else if (ms>1 && afterFirstRound){
 				configMap.put("prefixinittodvarfile", "no");
+			}else{
+				configMap.put("prefixinittodvarfile", "yes");
 			}
 			
 			if (DebugCorePlugin.outputCycleToDss){
@@ -771,10 +804,8 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 				out.println("LpSolveNumberOfRetries    2");				
 				
 			}
-			if (DebugCorePlugin.launchType==1 || (ms>1 && afterFirstRound)){
-				out.println("prefixinittodvarfile  "+configMap.get("prefixinittodvarfile"));
-			}
-			
+			out.println("prefixinittodvarfile  "+configMap.get("prefixinittodvarfile"));
+						
 			if (DebugCorePlugin.launchType==1){
 				out.println("unchangeGWRestart         "+configMap.get("unchangegwrestart").toLowerCase());
 			}

@@ -74,6 +74,7 @@ public class BatchRunProcess {
 	private String jarXA="XAOptimizer.jar";
 	private int sid=1;
 	private boolean afterFirstRound=false;
+	private boolean afterFirstPARun=false;
 	private int ms=1;
 	private boolean useMainFile=true;
 	private int launchType;
@@ -119,6 +120,8 @@ public class BatchRunProcess {
 	private String yearSectionOutput;
 	private String monMemSection;
 	private String unchangeGWRestart;
+	private String unchangeInitialDss;
+	private boolean isSameInitialDss=true;
 	private String genSVCatalog="no";
 		
 	public void launch(LaunchConfigInfo configuration, String launchFilePath) throws CoreException {		
@@ -173,11 +176,12 @@ public class BatchRunProcess {
 		PAProcRunBR procRun = new PAProcRunBR();
 		PAProcDVBR procDV = new PAProcDVBR(configuration);
 		
-		procInit.createPAInit(launchFilePath, this);
+		if (isSameInitialDss) procInit.createPAInit(launchFilePath, this);
 		procRun.initialPATime(this);
 		procDV.deleteDVFile(launchFilePath);
 		
 		useMainFile=true;
+		afterFirstPARun=false;
 		
 		while (procRun.continueRun(this) && terminateCode==0){				
 		
@@ -195,11 +199,12 @@ public class BatchRunProcess {
 			}
 			
 			procDV.resetDVStartDate(this);
-			procInit.createInitData(procRun, this);
+			if (isSameInitialDss) procInit.createInitData(procRun, this);
 			procRun.updatePATime(this);
 			useMainFile=false;
+			afterFirstPARun=true;
 		}
-		procInit.deletePAInit(this);
+		if (isSameInitialDss) procInit.deletePAInit(this);
 		
 	}
 	
@@ -308,6 +313,13 @@ public class BatchRunProcess {
 		
 		String lastSuffix="_MS"+ms;
 		
+		unchangeInitialDss=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_UNCHANGEINITIALDSS, "yes");
+		if (unchangeInitialDss.equalsIgnoreCase("yes")){
+			isSameInitialDss=true;
+		}else{
+			isSameInitialDss=false;
+		}
+		
 		String studyName=null;
 		studyName = configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_STUDY, (String)null);
 				
@@ -332,7 +344,16 @@ public class BatchRunProcess {
 		initFile = null;
 		initFile = configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_INITFILE+suffix, (String)null);
 		if (launchType==1){
-			initFile=paInitFile;
+			if (isSameInitialDss){
+				initFile=paInitFile;
+			}else{
+				if (afterFirstPARun){
+					String dvarFile = configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_DVARFILE, (String)null);
+					initFile=dvarFile;
+				}else{
+					initFile=initFile;
+				}
+			}
 		}else{
 			if (afterFirstRound) {
 				String lastDvarFile = configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_DVARFILE+lastSuffix, (String)null);
@@ -524,8 +545,20 @@ public class BatchRunProcess {
 				configMap.put("OVFile".toLowerCase(), FileProcess.procRelativePath(ovFile, launchFilePath));
 			}
 			
-			if (launchType==1 || (ms>1 && afterFirstRound)){
+			if (launchType==1){
+				if (isSameInitialDss){
+					configMap.put("prefixinittodvarfile", "no");
+				}else{ 
+					if (afterFirstPARun){
+						configMap.put("prefixinittodvarfile", "no");
+					}else{
+						configMap.put("prefixinittodvarfile", "yes");
+					}
+				}
+			}else if ((ms>1 && afterFirstRound)){
 				configMap.put("prefixinittodvarfile", "no");
+			}else{
+				configMap.put("prefixinittodvarfile", "yes");
 			}
 			
 			if (DebugCorePlugin.outputCycleToDss && !isWsiDiRun){
@@ -661,9 +694,7 @@ public class BatchRunProcess {
 				out.println("LpSolveNumberOfRetries    2");				
 				
 			}
-			if (launchType==1 || (ms>1 && afterFirstRound)){
-				out.println("prefixinittodvarfile  "+configMap.get("prefixinittodvarfile"));
-			}
+			out.println("prefixinittodvarfile  "+configMap.get("prefixinittodvarfile"));
 			if (launchType==1){
 				out.println("unchangegwrestart     "+configMap.get("unchangegwrestart"));
 				out.println("gensvcatalog          "+configMap.get("gensvcatalog"));

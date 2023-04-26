@@ -244,7 +244,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static final String ATTR_WPP_YEARSECTIONOUTPUT=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_YEARSECTIONOUTPUT";
 	public static final String ATTR_WPP_MONMEMSECTION=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_MONMEMSECTION";	
 	public static final String ATTR_WPP_UNCHANGEGWRESTART=ID_WPP_DEBUG_MODEL + "ATTR_WPP_UNCHANGEGWRESTART";
-	
+	public static final String ATTR_WPP_UNCHANGEINITIALDSS=ID_WPP_DEBUG_MODEL + "ATTR_WPP_UNCHANGEINITIALDSS";
 	
 	public static final String lineSep=System.getProperty("line.separator");
 	public static final String tab="\t";
