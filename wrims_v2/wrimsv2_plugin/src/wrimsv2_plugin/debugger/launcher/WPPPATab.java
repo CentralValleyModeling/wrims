@@ -241,7 +241,7 @@ public class WPPPATab extends AbstractLaunchConfigurationTab {
 		});
 		
 		unchangeGWRestartBut=new Button(comp, SWT.CHECK);
-		unchangeGWRestartBut.setText("Keep GW Restart File at the Start Date");
+		unchangeGWRestartBut.setText("Use the Same GW Restart File");
 		gd1 = new GridData(GridData.BEGINNING);
 		gd1.horizontalSpan =2;
 		unchangeGWRestartBut.setLayoutData(gd1);
@@ -261,7 +261,7 @@ public class WPPPATab extends AbstractLaunchConfigurationTab {
 		});
 		
 		unchangeInitialDssBut=new Button(comp, SWT.CHECK);
-		unchangeInitialDssBut.setText("Keep Initial Dss File at the Start Date");
+		unchangeInitialDssBut.setText("Get Initial Data from Initial Dss File at the Start Date");
 		gd1 = new GridData(GridData.BEGINNING);
 		gd1.horizontalSpan =2;
 		unchangeInitialDssBut.setLayoutData(gd1);

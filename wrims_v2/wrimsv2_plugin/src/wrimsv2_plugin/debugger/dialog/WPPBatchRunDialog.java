@@ -1,5 +1,12 @@
 package wrimsv2_plugin.debugger.dialog;
 
+import hec.heclib.dss.CondensedReference;
+import hec.heclib.dss.HecDss;
+import hec.heclib.util.HecTime;
+import hec.hecmath.HecMath;
+import hec.hecmath.TimeSeriesMath;
+import hec.io.TimeSeriesContainer;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,10 +17,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Vector;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.swt.SWT;
@@ -35,6 +46,7 @@ import wrimsv2_plugin.batchrun.BatchRunProcess;
 import wrimsv2_plugin.batchrun.LaunchConfigInfo;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.tools.DssOperations;
 import wrimsv2_plugin.tools.FileProcess;
 import wrimsv2_plugin.tools.TimeOperation;
 
@@ -69,12 +81,12 @@ public class WPPBatchRunDialog extends Dialog {
 	private String engineNamesLine="";
 	private String launchNamesLine="";
 	private String[] dvDssList;
-	private int dssCombineStartYear=2015;
-	private int dssCombineStartMonth=9;
-	private int dssCombineStartDay=30;
 	private int dssCombineEndYear=1921;
 	private int dssCombineEndMonth=10;
 	private int dssCombineEndDay=31;
+	private ArrayList<String> dvPathList=new ArrayList<String>();
+	private Map<String, TimeSeriesContainer> dcMap=new HashMap<String, TimeSeriesContainer>();
+	private Map<String, Integer> startTimeMap=new HashMap<String, Integer>();
 	
 	public WPPBatchRunDialog(Shell parentShell) {
 		super(parentShell, SWT.MIN|SWT.RESIZE);
@@ -380,10 +392,9 @@ public class WPPBatchRunDialog extends Dialog {
 						String file=dlg.open();
 						if (file !=null){
 							dvDssName=file;
-							if (procLaunchConfigs()){
-								procDvDssFiles();
-								combineDvDss(dvDssName);
-							}
+							procLaunchConfigs();
+							procDvDssFiles();
+							combineDvDss(dvDssName);
 						}
 					}
 				});
@@ -788,32 +799,19 @@ public class WPPBatchRunDialog extends Dialog {
 		}
 	}
 	
-	public boolean procLaunchConfigs(){
+	public void procLaunchConfigs(){
 		int size=launchPathList.size();
 		dvDssList=new String[size];
-		Calendar cs=Calendar.getInstance();
-		cs.set(dssCombineStartYear, dssCombineStartMonth-1, dssCombineStartDay);
+		startTimeMap=new HashMap<String, Integer>();
 		Calendar ce=Calendar.getInstance();
 		ce.set(dssCombineEndYear, dssCombineEndMonth-1, dssCombineEndDay);
-		for (int i=0; i<launchPathList.size(); i++){
-			String lfp=launchPathList.get(i);
-			if (configMap.containsKey(lfp)){
+		if (size>0){
+			for (int i=0; i<size; i++){
+				String lfp=launchPathList.get(i);
 				LaunchConfigInfo config = configMap.get(lfp);
-				dvDssList[i] = config.getStringAttribute(DebugCorePlugin.ATTR_WPP_DVARFILE, (String)null);
-				int sy=Integer.parseInt(config.getStringAttribute(DebugCorePlugin.ATTR_WPP_STARTYEAR, "2015"));
-				int sm = TimeOperation.monthValue(config.getStringAttribute(DebugCorePlugin.ATTR_WPP_STARTMONTH, "9"));
-				int sd= Integer.parseInt(config.getStringAttribute(DebugCorePlugin.ATTR_WPP_STARTDAY, "30"));
 				int ey=Integer.parseInt(config.getStringAttribute(DebugCorePlugin.ATTR_WPP_ENDYEAR, "1921"));
 				int em = TimeOperation.monthValue(config.getStringAttribute(DebugCorePlugin.ATTR_WPP_ENDMONTH, "10"));
 				int ed= Integer.parseInt(config.getStringAttribute(DebugCorePlugin.ATTR_WPP_ENDDAY, "31"));
-				Calendar cs1=Calendar.getInstance();
-				cs1.set(sy, sm-1, sd);
-				if (cs1.before(cs)){
-					dssCombineStartYear=sy;
-					dssCombineStartMonth=sm;
-					dssCombineStartDay=sd;
-					cs.set(dssCombineStartYear, dssCombineStartMonth-1, dssCombineStartDay);
-				}
 				Calendar ce1=Calendar.getInstance();
 				ce1.set(ey, em-1, ed);
 				if (ce1.after(ce)){
@@ -822,21 +820,165 @@ public class WPPBatchRunDialog extends Dialog {
 					dssCombineEndDay=ed;
 					ce.set(dssCombineEndYear, dssCombineEndMonth-1, dssCombineEndDay);
 				}
+				
+				String dvPath = config.getStringAttribute(DebugCorePlugin.ATTR_WPP_DVARFILE, (String)null);
+				if (!new File(dvPath).isAbsolute()){
+					dvPath=FileProcess.procRelativePath(dvPath, lfp);
+				}
+				dvDssList[i] = dvPath;
+				HecDss dvDss;
+				try {
+					dvDss = HecDss.open(dvPath);
+					Vector<CondensedReference> pathList = dvDss.getCondensedCatalog();
+					int plSize = pathList.size();
+					for (int j=0; j<plSize; j++){
+						CondensedReference cr = pathList.get(j);
+						String path = cr.getNominalPathname();
+						String[] parts=path.split("/");
+						String path1="/"+parts[1]+"/"+parts[2]+"/"+parts[3]+"//"+parts[5]+"/"+parts[6]+"/";
+						TimeSeriesContainer dc = (TimeSeriesContainer)dvDss.get(path1, true);
+						int startTime=dc.startTime;
+						if (startTimeMap.containsKey(path1)){
+							if (startTime<startTimeMap.get(path1)){
+								startTimeMap.put(path1, startTime);
+							}
+						}else{
+							startTimeMap.put(path1, dc.startTime);
+						}
+					}
+				} catch (Exception e) {
+					WPPException.handleException(e);
+				}	
 			}
-		}
-		
-		if (ce.before(cs)){
-			return false;
-		}else{
-			return true;
 		}
 	}
 	
 	public void procDvDssFiles(){
-		
+		dvPathList=new ArrayList<String>();
+		dcMap=new HashMap<String, TimeSeriesContainer>();
+		HecDss dvDss;
+		int lSize = dvDssList.length;
+		for (int j=0; j<lSize; j++){
+			String dvPath=dvDssList[j];
+			try {
+				dvDss=HecDss.open(dvPath);
+				Vector<CondensedReference> paPathList = dvDss.getCondensedCatalog();
+				int size = paPathList.size();
+				for (int i=0; i<size; i++){
+					CondensedReference cr = paPathList.get(i);
+					String path = cr.getNominalPathname();
+					String[] parts=path.split("/");
+					String path1="/"+parts[1]+"/"+parts[2]+"/"+parts[3]+"//"+parts[5]+"/"+parts[6]+"/";
+					if (!dvPathList.contains(path1)){
+						dvPathList.add(path1);
+						try {
+							TimeSeriesContainer dc = (TimeSeriesContainer)dvDss.get(path1, true);
+							TimeSeriesContainer dc1 = new TimeSeriesContainer();
+							int valueSize;
+							dc1.fullName=dc.fullName;
+							dc1.interval=dc.interval;
+							dc1.units=dc.units;
+							dc1.type=dc.type;
+							int offset;
+							if (parts[5].equalsIgnoreCase("1MON")){
+								int startTime=startTimeMap.get(path1);
+								long javaStartTime=startTime*60l*1000l-2208988800000l;
+								Date dateA=new Date(javaStartTime);
+								Date dateB=new Date(dssCombineEndYear-1900, dssCombineEndMonth-1, TimeOperation.numberOfDays(dssCombineEndMonth, dssCombineEndYear));
+								valueSize=TimeOperation.getNumberOfTimestep(dateA, dateB, "1MON");
+								long st=dc.startTime*60l*1000l-2208988800000l;
+								Date dateC=new Date(st);
+								dc1.startTime=startTime;
+								dc1.times=new int[valueSize];
+								dc1.values=new double[valueSize];
+								dc1.numberValues=valueSize;
+								offset=TimeOperation.getNumberOfTimestep(dateA, dateC, "1MON")-1;
+								for (int k=0; k<dc.values.length; k++){
+									dc1.times[offset+k]=dc1.startTime+dc1.interval*k;
+									dc1.values[offset+k]=dc.values[k];
+								}
+							}else{
+								int startTime=startTimeMap.get(path1);
+								long javaStartTime=startTime*60l*1000l-2208988800000l;
+								Date dateA=new Date(javaStartTime);
+								Date dateB=new Date(dssCombineEndYear-1900, dssCombineEndMonth-1, dssCombineEndDay);
+								valueSize=TimeOperation.getNumberOfTimestep(dateA, dateB, "1DAY");
+								long st=dc.startTime*60l*1000l-2208988800000l;
+								Date dateC=new Date(st);
+								dc1.startTime=startTime;
+								dc1.times=new int[valueSize];
+								dc1.values=new double[valueSize];
+								dc1.numberValues=valueSize;
+								offset=TimeOperation.getNumberOfTimestep(dateA, dateC, "1DAY")-1;
+								for (int k=0; k<dc.values.length; k++){
+									dc1.times[offset+k]=dc1.startTime+dc1.interval*k;
+									dc1.values[offset+k]=dc.values[k];
+								}
+							}
+							dcMap.put(path1, dc1);
+						} catch (Exception e) {
+							WPPException.handleException(e);
+						}
+					}else{
+						try {
+							TimeSeriesContainer dc = (TimeSeriesContainer)dvDss.get(path1, true);
+							if (dc != null){
+								TimeSeriesContainer dc1 = dcMap.get(path1);
+								int offset;
+								if (parts[5].equalsIgnoreCase("1MON")){
+									int startTime=dc1.startTime;
+									long javaStartTime=startTime*60l*1000l-2208988800000l;
+									Date dateA=new Date(javaStartTime);
+									long st=dc.startTime*60l*1000l-2208988800000l;
+									Date dateC=new Date(st);
+									offset=TimeOperation.getNumberOfTimestep(dateA, dateC, "1MON")-1;
+									for (int k=0; k<dc.values.length; k++){
+										dc1.times[offset+k]=dc1.startTime+dc1.interval*k;
+										dc1.values[offset+k]=dc.values[k];
+									}
+								}else{
+									int startTime=dc1.startTime;
+									long javaStartTime=startTime*60l*1000l-2208988800000l;
+									Date dateA=new Date(javaStartTime);
+									long st=dc.startTime*60l*1000l-2208988800000l;
+									Date dateC=new Date(st);
+									offset=TimeOperation.getNumberOfTimestep(dateA, dateC, "1DAY")-1;
+									for (int k=0; k<dc.values.length; k++){
+										dc1.times[offset+k]=dc1.startTime+dc1.interval*k;
+										dc1.values[offset+k]=dc.values[k];
+									}
+								}
+							}
+						} catch (Exception e) {
+							WPPException.handleException(e);
+						}
+					}
+				}
+				dvDss.close();
+			} catch (Exception e) {
+				WPPException.handleException(e);
+			}
+		}
 	}
 	
 	public void combineDvDss(String fn){
-
+		HecDss combinedDss;
+		try {
+			combinedDss=HecDss.open(fn);
+		} catch (Exception e) {
+			WPPException.handleException(e);
+			return;
+		}
+		int size = dvPathList.size();
+		for (int i=0; i<size; i++){
+			String path = dvPathList.get(i);
+			try {
+				TimeSeriesContainer dc = dcMap.get(path);
+				combinedDss.put(dc);
+			} catch (Exception e) {
+				WPPException.handleException(e);
+			}
+		}
+		combinedDss.close();
 	}
 }

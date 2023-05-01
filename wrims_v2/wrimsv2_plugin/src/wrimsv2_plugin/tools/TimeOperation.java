@@ -1,5 +1,7 @@
 package wrimsv2_plugin.tools;
 
+import java.time.Duration;
+import java.util.Calendar;
 import java.util.Date;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
@@ -185,9 +187,12 @@ public class TimeOperation {
 	public static int diffInDay(int yearA, int monthA, int dayA, int yearB, int monthB, int dayB){
 		Date dateA=new Date((yearA-1900), (monthA-1), dayA);
 		Date dateB=new Date((yearB-1900), (monthB-1), dayB);
-		long timeA=dateA.getTime();
-		long timeB=dateB.getTime();
-		int diff=Math.round((timeB-timeA)/(1000*60*60*24));
+		Calendar c1=Calendar.getInstance();
+		c1.setTime(dateA);
+		Calendar c2=Calendar.getInstance();
+		c2.setTime(dateB);
+		int diff = (int)Duration.between(c1.toInstant(), c2.toInstant()).toDays();
+		if (diff<=0) diff=0;
 		return diff;
 	}
 	
@@ -204,6 +209,29 @@ public class TimeOperation {
 			return "0"+day;
 		}else{
 			return ""+day;
+		}
+	}
+	
+	public static int getNumberOfTimestep(Date dateA, Date dateB, String timeStep){
+		if (timeStep.equals("1MON")){
+			int monthA=dateA.getMonth();
+			int yearA=dateA.getYear();
+			int monthB=dateB.getMonth();
+			int yearB=dateB.getYear();
+			int diff=(yearB-yearA)*12+(monthB-monthA)+1;
+			if (diff<=0) diff=0;
+			return diff;
+		}else{
+			//long timeA=dateA.getTime();
+			//long timeB=dateB.getTime();
+			//int diff=Math.round((timeB-timeA)/(1000l*60*60*24))+1;
+			Calendar c1=Calendar.getInstance();
+			c1.setTime(dateA);
+			Calendar c2=Calendar.getInstance();
+			c2.setTime(dateB);
+			int diff = (int)Duration.between(c1.toInstant(), c2.toInstant()).toDays()+1;
+			if (diff<=0) diff=0;
+			return diff;
 		}
 	}
 }
