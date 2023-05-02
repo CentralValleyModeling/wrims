@@ -894,7 +894,7 @@ public class WPPBatchRunDialog extends Dialog {
 								dc1.numberValues=valueSize;
 								offset=TimeOperation.getNumberOfTimestep(dateA, dateC, "1MON")-1;
 								for (int k=0; k<dc.values.length; k++){
-									dc1.times[offset+k]=dc1.startTime+dc1.interval*k;
+									dc1.times[offset+k]=dc.times[k];
 									dc1.values[offset+k]=dc.values[k];
 								}
 							}else{
@@ -911,7 +911,7 @@ public class WPPBatchRunDialog extends Dialog {
 								dc1.numberValues=valueSize;
 								offset=TimeOperation.getNumberOfTimestep(dateA, dateC, "1DAY")-1;
 								for (int k=0; k<dc.values.length; k++){
-									dc1.times[offset+k]=dc1.startTime+dc1.interval*k;
+									dc1.times[offset+k]=dc.times[k];
 									dc1.values[offset+k]=dc.values[k];
 								}
 							}
@@ -933,7 +933,7 @@ public class WPPBatchRunDialog extends Dialog {
 									Date dateC=new Date(st);
 									offset=TimeOperation.getNumberOfTimestep(dateA, dateC, "1MON")-1;
 									for (int k=0; k<dc.values.length; k++){
-										dc1.times[offset+k]=dc1.startTime+dc1.interval*k;
+										dc1.times[offset+k]=dc.times[k];
 										dc1.values[offset+k]=dc.values[k];
 									}
 								}else{
@@ -944,7 +944,7 @@ public class WPPBatchRunDialog extends Dialog {
 									Date dateC=new Date(st);
 									offset=TimeOperation.getNumberOfTimestep(dateA, dateC, "1DAY")-1;
 									for (int k=0; k<dc.values.length; k++){
-										dc1.times[offset+k]=dc1.startTime+dc1.interval*k;
+										dc1.times[offset+k]=dc.times[k];
 										dc1.values[offset+k]=dc.values[k];
 									}
 								}
