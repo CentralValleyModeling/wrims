@@ -34,8 +34,11 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Dialog;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
@@ -66,10 +69,12 @@ public class WPPBatchRunDialog extends Dialog {
 	private Button openButton;
 	private Button saveButton;
 	private Button combineButton;
+	private ProgressBar combineDvPB;
 	private List brl;
 	
 	private boolean isSequential=false;
 	private boolean isWsidi=false;
+	private boolean isDvCombining=false;
 	
 	private ArrayList<String> launchPathList=new ArrayList<String>();
 	private ArrayList<String> launchNameList=new ArrayList<String>();
@@ -371,6 +376,7 @@ public class WPPBatchRunDialog extends Dialog {
 			}
 		});
 		
+		isDvCombining=false;
 		combineButton = new Button(shell, SWT.PUSH);
 		combineButton.setText("Combine DV DSS");
 		GridData gd12 = new GridData(GridData.FILL_HORIZONTAL);
@@ -383,25 +389,71 @@ public class WPPBatchRunDialog extends Dialog {
 				workbench.getDisplay().asyncExec(new Runnable(){
 
 					public void run(){
-						Shell shell=workbench.getActiveWorkbenchWindow().getShell();
-						FileDialog dlg=new FileDialog(shell, SWT.SAVE);
-						dlg.setText("Combine DV Dss files from PA runs to");
-						dlg.setFilterNames(new String[]{"DV Dss File (*.dss)", "All Files (*.*)"});
-						dlg.setFilterExtensions(new String[]{"*.dss", "*.*"});
-						dlg.setFileName(dvDssName);
-						String file=dlg.open();
-						if (file !=null){
-							dvDssName=file;
-							procLaunchConfigs();
-							procDvDssFiles();
-							combineDvDss(dvDssName);
+						isDvCombining=!isDvCombining;
+						if (isDvCombining){
+							Shell shell=workbench.getActiveWorkbenchWindow().getShell();
+							FileDialog dlg=new FileDialog(shell, SWT.SAVE);
+							dlg.setText("Combine DV Dss files from PA runs to");
+							dlg.setFilterNames(new String[]{"DV Dss File (*.dss)", "All Files (*.*)"});
+							dlg.setFilterExtensions(new String[]{"*.dss", "*.*"});
+							dlg.setFileName(dvDssName);
+							String file=dlg.open();
+							if (file !=null){
+								dvDssName=file;
+								Thread thread=new Thread(){
+									public void run(){
+										procLaunchConfigs();
+										procDvDssFiles();
+										combineDvDss(dvDssName);
+										final IWorkbench workbench=PlatformUI.getWorkbench();
+										workbench.getDisplay().asyncExec(new Runnable(){
+											public void run(){
+												combineButton.setText("Combine DV DSS");
+												isDvCombining=false;
+												resetCombineDvPB();
+											}
+										});
+									}
+								};
+								thread.start();
+							}
+							combineButton.setText("Stop Combining");
 						}
 					}
 				});
 			}
 		});
+		
+		Label placeHolder=new Label(shell, SWT.NONE);
+		gd1 = new GridData(GridData.BEGINNING);
+		gd1.horizontalSpan =5;
+		placeHolder.setLayoutData(gd1);
+		placeHolder.setVisible(true);
+		
+		combineDvPB=new ProgressBar(shell, SWT.NONE);
+		gd1 = new GridData(GridData.FILL_HORIZONTAL);
+		gd1.horizontalSpan =3;
+		combineDvPB.setLayoutData(gd1);
+		resetCombineDvPB();;
 	}
 	
+	public void resetCombineDvPB(){
+		combineDvPB.setMinimum(0);
+		combineDvPB.setMaximum(10);
+		combineDvPB.setSelection(0);
+		combineDvPB.setVisible(true);
+	}
+	
+	public void setCombineDvPB(final int index){
+		Display.getDefault().asyncExec(new Runnable(){
+		
+			public void run(){
+				combineDvPB.setSelection(index);
+				combineDvPB.setVisible(true);
+			}
+		
+		});
+	}
 	
 	protected void startAllBatchRun(){
 		
@@ -800,7 +852,16 @@ public class WPPBatchRunDialog extends Dialog {
 	}
 	
 	public void procLaunchConfigs(){
-		int size=launchPathList.size();
+		final int size=launchPathList.size();
+		Display.getDefault().asyncExec(new Runnable(){
+			
+			public void run(){
+				combineDvPB.setMaximum(size*2+1);
+				combineDvPB.setSelection(0);
+				combineDvPB.setVisible(true);
+			}
+			
+		});
 		dvDssList=new String[size];
 		startTimeMap=new HashMap<String, Integer>();
 		Calendar ce=Calendar.getInstance();
@@ -845,10 +906,15 @@ public class WPPBatchRunDialog extends Dialog {
 						}else{
 							startTimeMap.put(path1, dc.startTime);
 						}
+						if (!isDvCombining) {
+							dvDss.close();
+							return;
+						}
 					}
 				} catch (Exception e) {
 					WPPException.handleException(e);
 				}	
+				setCombineDvPB(i+1);
 			}
 		}
 	}
@@ -953,11 +1019,16 @@ public class WPPBatchRunDialog extends Dialog {
 							WPPException.handleException(e);
 						}
 					}
+					if (!isDvCombining) {
+						dvDss.close();
+						return;
+					}
 				}
 				dvDss.close();
 			} catch (Exception e) {
 				WPPException.handleException(e);
 			}
+			setCombineDvPB(lSize+j+1);
 		}
 	}
 	
@@ -975,10 +1046,15 @@ public class WPPBatchRunDialog extends Dialog {
 			try {
 				TimeSeriesContainer dc = dcMap.get(path);
 				combinedDss.put(dc);
+				if (!isDvCombining) {
+					combinedDss.close();
+					return;
+				}
 			} catch (Exception e) {
 				WPPException.handleException(e);
 			}
 		}
+		setCombineDvPB(2*size+1);
 		combinedDss.close();
 	}
 }
