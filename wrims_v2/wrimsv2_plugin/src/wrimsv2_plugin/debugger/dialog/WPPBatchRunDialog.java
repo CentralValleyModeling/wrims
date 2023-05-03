@@ -856,65 +856,22 @@ public class WPPBatchRunDialog extends Dialog {
 		Display.getDefault().asyncExec(new Runnable(){
 			
 			public void run(){
-				combineDvPB.setMaximum(size*2+1);
+				combineDvPB.setMaximum(size+1);
 				combineDvPB.setSelection(0);
 				combineDvPB.setVisible(true);
 			}
 			
 		});
 		dvDssList=new String[size];
-		startTimeMap=new HashMap<String, Integer>();
-		Calendar ce=Calendar.getInstance();
-		ce.set(dssCombineEndYear, dssCombineEndMonth-1, dssCombineEndDay);
 		if (size>0){
 			for (int i=0; i<size; i++){
 				String lfp=launchPathList.get(i);
-				LaunchConfigInfo config = configMap.get(lfp);
-				int ey=Integer.parseInt(config.getStringAttribute(DebugCorePlugin.ATTR_WPP_ENDYEAR, "1921"));
-				int em = TimeOperation.monthValue(config.getStringAttribute(DebugCorePlugin.ATTR_WPP_ENDMONTH, "10"));
-				int ed= Integer.parseInt(config.getStringAttribute(DebugCorePlugin.ATTR_WPP_ENDDAY, "31"));
-				Calendar ce1=Calendar.getInstance();
-				ce1.set(ey, em-1, ed);
-				if (ce1.after(ce)){
-					dssCombineEndYear=ey;
-					dssCombineEndMonth=em;
-					dssCombineEndDay=ed;
-					ce.set(dssCombineEndYear, dssCombineEndMonth-1, dssCombineEndDay);
-				}
-				
+				LaunchConfigInfo config = configMap.get(lfp);				
 				String dvPath = config.getStringAttribute(DebugCorePlugin.ATTR_WPP_DVARFILE, (String)null);
 				if (!new File(dvPath).isAbsolute()){
 					dvPath=FileProcess.procRelativePath(dvPath, lfp);
 				}
 				dvDssList[i] = dvPath;
-				HecDss dvDss;
-				try {
-					dvDss = HecDss.open(dvPath);
-					Vector<CondensedReference> pathList = dvDss.getCondensedCatalog();
-					int plSize = pathList.size();
-					for (int j=0; j<plSize; j++){
-						CondensedReference cr = pathList.get(j);
-						String path = cr.getNominalPathname();
-						String[] parts=path.split("/");
-						String path1="/"+parts[1]+"/"+parts[2]+"/"+parts[3]+"//"+parts[5]+"/"+parts[6]+"/";
-						TimeSeriesContainer dc = (TimeSeriesContainer)dvDss.get(path1, true);
-						int startTime=dc.startTime;
-						if (startTimeMap.containsKey(path1)){
-							if (startTime<startTimeMap.get(path1)){
-								startTimeMap.put(path1, startTime);
-							}
-						}else{
-							startTimeMap.put(path1, dc.startTime);
-						}
-						if (!isDvCombining) {
-							dvDss.close();
-							return;
-						}
-					}
-				} catch (Exception e) {
-					WPPException.handleException(e);
-				}	
-				setCombineDvPB(i+1);
 			}
 		}
 	}
@@ -928,97 +885,111 @@ public class WPPBatchRunDialog extends Dialog {
 			String dvPath=dvDssList[j];
 			try {
 				dvDss=HecDss.open(dvPath);
-				Vector<CondensedReference> paPathList = dvDss.getCondensedCatalog();
+				Vector paPathList = dvDss.getCatalogedPathnames();
 				int size = paPathList.size();
 				for (int i=0; i<size; i++){
-					CondensedReference cr = paPathList.get(i);
-					String path = cr.getNominalPathname();
+					String path = (String) paPathList.get(i);
 					String[] parts=path.split("/");
-					String path1="/"+parts[1]+"/"+parts[2]+"/"+parts[3]+"//"+parts[5]+"/"+parts[6]+"/";
-					if (!dvPathList.contains(path1)){
-						dvPathList.add(path1);
-						try {
-							TimeSeriesContainer dc = (TimeSeriesContainer)dvDss.get(path1, true);
-							TimeSeriesContainer dc1 = new TimeSeriesContainer();
-							int valueSize;
-							dc1.fullName=dc.fullName;
-							dc1.interval=dc.interval;
-							dc1.units=dc.units;
-							dc1.type=dc.type;
+					if (!dvPathList.contains(path)){
+						dvPathList.add(path);
+						TimeSeriesContainer dc = (TimeSeriesContainer)dvDss.get(path);
+						TimeSeriesContainer dc1 = new TimeSeriesContainer();
+						dc1.fullName=dc.fullName;
+						dc1.interval=dc.interval;
+						dc1.units=dc.units;
+						dc1.type=dc.type;
+						dc1.startTime=dc.startTime;
+						dc1.numberValues=dc.numberValues;
+						dc1.times=dc.times;
+						dc1.values=dc.values;
+						dcMap.put(path, dc1);				
+					}else{
+						TimeSeriesContainer dc = (TimeSeriesContainer)dvDss.get(path);	
+						TimeSeriesContainer dc1=dcMap.get(path);
+						int nv = dc.numberValues;
+						int nv1 = dc1.numberValues;
+						if(dc.startTime>=dc1.startTime && dc.times[nv-1]>=dc1.times[nv1-1]){
+							long dc1StartTime=dc1.startTime*60l*1000l-2208988800000l;
+							Date dateA=new Date(dc1StartTime);
+							long dcStartTime=dc.startTime*60l*1000l-2208988800000l;
+							Date dateB=new Date(dcStartTime);
+							TimeSeriesContainer dc2 = new TimeSeriesContainer();
+							dc2.fullName=dc1.fullName;
+							dc2.interval=dc1.interval;
+							dc2.units=dc1.units;
+							dc2.type=dc1.type;
+							dc2.startTime=dc1.startTime;
 							int offset;
 							if (parts[5].equalsIgnoreCase("1MON")){
-								int startTime=startTimeMap.get(path1);
-								long javaStartTime=startTime*60l*1000l-2208988800000l;
-								Date dateA=new Date(javaStartTime);
-								Date dateB=new Date(dssCombineEndYear-1900, dssCombineEndMonth-1, TimeOperation.numberOfDays(dssCombineEndMonth, dssCombineEndYear));
-								valueSize=TimeOperation.getNumberOfTimestep(dateA, dateB, "1MON");
-								long st=dc.startTime*60l*1000l-2208988800000l;
-								Date dateC=new Date(st);
-								dc1.startTime=startTime;
-								dc1.times=new int[valueSize];
-								dc1.values=new double[valueSize];
-								dc1.numberValues=valueSize;
-								offset=TimeOperation.getNumberOfTimestep(dateA, dateC, "1MON")-1;
-								for (int k=0; k<dc.values.length; k++){
+								offset = TimeOperation.getNumberOfTimestep(dateA, dateB, "1MON")-1;							
+							}else{
+								offset = TimeOperation.getNumberOfTimestep(dateA, dateB, "1DAY")-1;
+							}
+							dc2.numberValues=nv+offset;
+							dc2.times=new int[dc2.numberValues];
+							dc2.values=new double[dc2.numberValues];
+							for (int k=0; k<offset; k++){
+								dc2.times[k]=dc1.times[k];
+								dc2.values[k]=dc1.values[k];
+							}
+							for (int k=0; k<nv; k++){
+								dc2.times[k+offset]=dc.times[k];
+								dc2.values[k+offset]=dc.values[k];
+							}
+							dcMap.put(path, dc2);
+						}else if (dc.startTime<=dc1.startTime && dc.times[nv-1]>=dc1.times[nv1-1]){
+							dcMap.put(path, dc);
+						}else if(dc.startTime>dc1.startTime && dc.times[nv-1]<dc1.times[nv1-1]){
+							long dc1StartTime=dc1.startTime*60l*1000l-2208988800000l;
+							Date dateA=new Date(dc1StartTime);
+							long dcStartTime=dc.startTime*60l*1000l-2208988800000l;
+							Date dateB=new Date(dcStartTime);
+							if (parts[5].equalsIgnoreCase("1MON")){
+								int offset = TimeOperation.getNumberOfTimestep(dateA, dateB, "1MON")-1;
+								for (int k=0; k<nv; k++){
 									dc1.times[offset+k]=dc.times[k];
 									dc1.values[offset+k]=dc.values[k];
 								}
 							}else{
-								int startTime=startTimeMap.get(path1);
-								long javaStartTime=startTime*60l*1000l-2208988800000l;
-								Date dateA=new Date(javaStartTime);
-								Date dateB=new Date(dssCombineEndYear-1900, dssCombineEndMonth-1, dssCombineEndDay);
-								valueSize=TimeOperation.getNumberOfTimestep(dateA, dateB, "1DAY");
-								long st=dc.startTime*60l*1000l-2208988800000l;
-								Date dateC=new Date(st);
-								dc1.startTime=startTime;
-								dc1.times=new int[valueSize];
-								dc1.values=new double[valueSize];
-								dc1.numberValues=valueSize;
-								offset=TimeOperation.getNumberOfTimestep(dateA, dateC, "1DAY")-1;
-								for (int k=0; k<dc.values.length; k++){
+								int offset = TimeOperation.getNumberOfTimestep(dateA, dateB, "1DAY")-1;
+								for (int k=0; k<nv; k++){
 									dc1.times[offset+k]=dc.times[k];
 									dc1.values[offset+k]=dc.values[k];
 								}
 							}
-							dcMap.put(path1, dc1);
-						} catch (Exception e) {
-							WPPException.handleException(e);
-						}
-					}else{
-						try {
-							TimeSeriesContainer dc = (TimeSeriesContainer)dvDss.get(path1, true);
-							if (dc != null){
-								TimeSeriesContainer dc1 = dcMap.get(path1);
-								int offset;
-								if (parts[5].equalsIgnoreCase("1MON")){
-									int startTime=dc1.startTime;
-									long javaStartTime=startTime*60l*1000l-2208988800000l;
-									Date dateA=new Date(javaStartTime);
-									long st=dc.startTime*60l*1000l-2208988800000l;
-									Date dateC=new Date(st);
-									offset=TimeOperation.getNumberOfTimestep(dateA, dateC, "1MON")-1;
-									for (int k=0; k<dc.values.length; k++){
-										dc1.times[offset+k]=dc.times[k];
-										dc1.values[offset+k]=dc.values[k];
-									}
-								}else{
-									int startTime=dc1.startTime;
-									long javaStartTime=startTime*60l*1000l-2208988800000l;
-									Date dateA=new Date(javaStartTime);
-									long st=dc.startTime*60l*1000l-2208988800000l;
-									Date dateC=new Date(st);
-									offset=TimeOperation.getNumberOfTimestep(dateA, dateC, "1DAY")-1;
-									for (int k=0; k<dc.values.length; k++){
-										dc1.times[offset+k]=dc.times[k];
-										dc1.values[offset+k]=dc.values[k];
-									}
-								}
+							dcMap.put(path, dc1);
+						}else{
+							long dc1StartTime=dc1.startTime*60l*1000l-2208988800000l;
+							Date dateB=new Date(dc1StartTime);
+							long dcStartTime=dc.startTime*60l*1000l-2208988800000l;
+							Date dateA=new Date(dcStartTime);
+							TimeSeriesContainer dc2 = new TimeSeriesContainer();
+							dc2.fullName=dc.fullName;
+							dc2.interval=dc.interval;
+							dc2.units=dc.units;
+							dc2.type=dc.type;
+							dc2.startTime=dc.startTime;
+							int offset;
+							if (parts[5].equalsIgnoreCase("1MON")){
+								offset = TimeOperation.getNumberOfTimestep(dateA, dateB, "1MON")-1;	
+								
+							}else{
+								offset = TimeOperation.getNumberOfTimestep(dateA, dateB, "1DAY")-1;
 							}
-						} catch (Exception e) {
-							WPPException.handleException(e);
+							dc2.numberValues=nv1+offset;
+							dc2.times=new int[dc2.numberValues];
+							dc2.values=new double[dc2.numberValues];
+							for (int k=0; k<offset; k++){
+								dc2.times[k]=dc.times[k];
+								dc2.values[k]=dc.values[k];
+							}
+							for (int k=0; k<nv1; k++){
+								dc2.times[k+offset]=dc1.times[k];
+								dc2.values[k+offset]=dc1.values[k];
+							}
+							dcMap.put(path, dc2);
 						}
-					}
+					}		
 					if (!isDvCombining) {
 						dvDss.close();
 						return;
@@ -1028,7 +999,7 @@ public class WPPBatchRunDialog extends Dialog {
 			} catch (Exception e) {
 				WPPException.handleException(e);
 			}
-			setCombineDvPB(lSize+j+1);
+			setCombineDvPB(j+1);
 		}
 	}
 	
@@ -1054,7 +1025,7 @@ public class WPPBatchRunDialog extends Dialog {
 				WPPException.handleException(e);
 			}
 		}
-		setCombineDvPB(2*size+1);
+		setCombineDvPB(size+1);
 		combinedDss.close();
 	}
 }
