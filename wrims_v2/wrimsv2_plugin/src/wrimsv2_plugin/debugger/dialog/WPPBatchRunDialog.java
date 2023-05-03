@@ -928,7 +928,11 @@ public class WPPBatchRunDialog extends Dialog {
 							dc2.numberValues=nv+offset;
 							dc2.times=new int[dc2.numberValues];
 							dc2.values=new double[dc2.numberValues];
-							for (int k=0; k<offset; k++){
+							for (int k=0; k<dc1.numberValues; k++){
+								dc2.times[k]=dc1.times[0]+k*dc2.interval;
+								dc2.values[k]=-901.0;
+							}
+							for (int k=0; k<nv1; k++){
 								dc2.times[k]=dc1.times[k];
 								dc2.values[k]=dc1.values[k];
 							}
@@ -979,7 +983,11 @@ public class WPPBatchRunDialog extends Dialog {
 							dc2.numberValues=nv1+offset;
 							dc2.times=new int[dc2.numberValues];
 							dc2.values=new double[dc2.numberValues];
-							for (int k=0; k<offset; k++){
+							for (int k=0; k<dc2.numberValues; k++){
+								dc2.times[k]=dc.times[0]+k*dc2.interval;
+								dc2.values[k]=-901.0;
+							}
+							for (int k=0; k<nv; k++){
 								dc2.times[k]=dc.times[k];
 								dc2.values[k]=dc.values[k];
 							}
