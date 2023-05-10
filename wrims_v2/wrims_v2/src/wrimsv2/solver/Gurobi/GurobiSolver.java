@@ -127,7 +127,7 @@ public class GurobiSolver {
 	      
 	      if (optimstatus == GRB.Status.INF_OR_UNBD) {
 	        model.getEnv().set(GRB.IntParam.Presolve, 0);
-		model.getEnv().set(GRB.FloatParam.FeasibilityTol, 0.001);
+		//model.getEnv().set(GRB.FloatParam.FeasibilityTol, 0.001);
 	        model.optimize();
 	        optimstatus = model.get(GRB.IntAttr.Status);
 	        result.status = model.get(GRB.IntAttr.Status);
