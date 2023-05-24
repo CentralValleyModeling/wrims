@@ -14,7 +14,7 @@ public class TF {
 
 	public static void main(String[] args) throws Exception {
 
-	    SavedModelBundle model = SavedModelBundle.load("Z:\\TensorFlow\\anntf.h5", "serve");
+	    SavedModelBundle model = SavedModelBundle.load("Z:\\TensorFlow\\model", "serve");
 
         Session s = model.session();
         Tensor data = Tensor.create(new double[] {2.0, 3.0, 4.0});
