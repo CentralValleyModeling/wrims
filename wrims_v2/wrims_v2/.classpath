@@ -33,8 +33,8 @@
 	<classpathentry kind="lib" path="src/wrimsv2/lib_x64/java-object-diff-0.95.jar"/>
 	<classpathentry kind="lib" path="src/wrimsv2/lib_x64/libtensorflow-1.14.0.jar"/>
 	<classpathentry kind="lib" path="src/wrimsv2/lib_x64/hec-monolith-3.1.11.jar"/>
-	<classpathentry kind="lib" path="src/wrimsv2/lib_x64/hec-nucleus-metadata-2.0.0.jar"/>
 	<classpathentry kind="lib" path="src/wrimsv2/lib_x64/flogger-0.5.1.jar"/>
 	<classpathentry kind="lib" path="src/wrimsv2/lib_x64/flogger-system-backend-0.5.1.jar"/>
+	<classpathentry kind="lib" path="src/wrimsv2/lib_x64/hec-nucleus-metadata-2.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
