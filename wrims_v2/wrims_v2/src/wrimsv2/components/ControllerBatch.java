@@ -443,7 +443,7 @@ public class ControllerBatch {
 		
 		if (ControlData.yearOutputSection<0 && ControlData.writeInitToDVOutput) DssOperation.writeInitDvarAliasToDSS();
 		DssOperation.writeDVAliasToDSS();
-		ControlData.writer.closeDSSFile();
+		ControlData.dvDss.close();
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
 			HDF5Writer.writeTimestepData();
@@ -843,7 +843,7 @@ public class ControllerBatch {
 		
 		if (ControlData.yearOutputSection<0 && ControlData.writeInitToDVOutput) DssOperation.writeInitDvarAliasToDSS();
 		DssOperation.writeDVAliasToDSS();
-		ControlData.writer.closeDSSFile();
+		ControlData.dvDss.close();
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
 			HDF5Writer.writeTimestepData();
@@ -1056,7 +1056,7 @@ public class ControllerBatch {
 
 		if (ControlData.yearOutputSection<0 && ControlData.writeInitToDVOutput) DssOperation.writeInitDvarAliasToDSS();
 		DssOperation.writeDVAliasToDSS();
-		ControlData.writer.closeDSSFile();
+		ControlData.dvDss.close();
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
 			HDF5Writer.writeTimestepData();
@@ -1302,7 +1302,7 @@ public class ControllerBatch {
 			DssOperation.writeInitDvarAliasToDSS();
 		}
 		DssOperation.writeDVAliasToDSS();
-		ControlData.writer.closeDSSFile();
+		ControlData.dvDss.close();
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
 			HDF5Writer.writeTimestepData();
@@ -1474,7 +1474,7 @@ public class ControllerBatch {
 			DssOperation.writeInitDvarAliasToDSS();
 		}
 		DssOperation.writeDVAliasToDSS();
-		ControlData.writer.closeDSSFile();
+		ControlData.dvDss.close();
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
 			HDF5Writer.writeTimestepData();
@@ -1719,7 +1719,7 @@ public class ControllerBatch {
 		
 		if (ControlData.yearOutputSection<0 && ControlData.writeInitToDVOutput) DssOperation.writeInitDvarAliasToDSS();
 		DssOperation.writeDVAliasToDSS();
-		ControlData.writer.closeDSSFile();
+		ControlData.dvDss.close();
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
 			HDF5Writer.writeTimestepData();

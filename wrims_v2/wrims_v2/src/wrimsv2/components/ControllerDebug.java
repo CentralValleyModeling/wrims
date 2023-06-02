@@ -238,7 +238,7 @@ public class ControllerDebug extends Thread {
 		}else{
 			Error.addConfigError("Solver name not recognized: "+ControlData.solverName);
 			Error.writeErrorLog();
-			if (ControlData.outputType!=1) ControlData.writer.closeDSSFile();
+			if (ControlData.outputType!=1) ControlData.dvDss.close();
 			return;
 		}
 		if (ControlData.showTimeUsage) new TimeUsage();
@@ -505,7 +505,7 @@ public class ControllerDebug extends Thread {
 
 		if (ControlData.yearOutputSection<0 && ControlData.writeInitToDVOutput) DssOperation.writeInitDvarAliasToDSS();
 		DssOperation.writeDVAliasToDSS();
-		ControlData.writer.closeDSSFile();
+		ControlData.dvDss.close();
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
 			HDF5Writer.writeTimestepData();
