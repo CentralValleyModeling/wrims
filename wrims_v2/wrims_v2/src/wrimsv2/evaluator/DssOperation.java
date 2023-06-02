@@ -255,34 +255,36 @@ public class DssOperation {
 		return true;
 	}
 	
+	/*
     public static DataSet getDataFor(String file, String apart, String bpart, String cpart, String dpart, String epart, String fpart){
         dpart = "01JAN1920"; //To Do: this method may be removed
         DataReference ref = DSSUtil.createDataReference("local",file,Pathname.createPathname(new String[]{apart, bpart, cpart, dpart, epart, fpart}));
         return ref.getData();
     }
+    */
     
     public static synchronized HecTimeSeries getDataForSvar(String apart, String bpart, String cpart, String dpart, String epart, String fpart, int svFileIndex, String filename){
     	//DataReference[] refs;
     	String path="/"+apart+"/"+bpart+"/"+cpart+"/"+dpart+"/"+epart+"/"+fpart+"/";
     	HecTimeSeries ts = new HecTimeSeries();
+    	DSSPathname dssPathname;
     	if (svFileIndex==1){
     		//refs = ControlData.groupSvar.find(new String[]{apart, bpart, cpart, dpart, epart, fpart});
-    		DSSPathname dssPathname = ControlData.cacheSvar.getNominalPathname(path);
-            TimeSeriesContainer tsc = new TimeSeriesContainer();
-            tsc.fileName = filename;
-            tsc.fullName = dssPathname.pathname();
-            boolean removeMissing = false;
-            ts.read(tsc, removeMissing);
-            ts.setUnits(tsc.units);
+    		dssPathname = ControlData.cacheSvar.getNominalPathname(path);
     	}else{
     		//refs = ControlData.groupSvar2.find(new String[]{apart, bpart, cpart, dpart, epart, fpart});
-    		DSSPathname dssPathname = ControlData.cacheSvar2.getNominalPathname(path);
-            TimeSeriesContainer tsc = new TimeSeriesContainer();
+    		dssPathname = ControlData.cacheSvar2.getNominalPathname(path);
+    	}
+    	if (dssPathname==null){
+    		return null;
+    	}else{
+    		TimeSeriesContainer tsc = new TimeSeriesContainer();
             tsc.fileName = filename;
             tsc.fullName = dssPathname.pathname();
             boolean removeMissing = false;
             ts.read(tsc, removeMissing);
             ts.setUnits(tsc.units);
+        	return ts;
     	}
     	/*
         if (refs.length==0){
@@ -291,8 +293,6 @@ public class DssOperation {
               return refs[0].getData();
         }
         */
-    	
-    	return ts;
     }
     
     public static HecTimeSeries getDataForInitial(String apart, String bpart, String cpart, String dpart, String epart, String fpart){
@@ -300,13 +300,17 @@ public class DssOperation {
     	HecTimeSeries ts = new HecTimeSeries();
     	//refs = ControlData.groupSvar.find(new String[]{apart, bpart, cpart, dpart, epart, fpart});
     	DSSPathname dssPathname = ControlData.cacheInit.getNominalPathname(path);
-        TimeSeriesContainer tsc = new TimeSeriesContainer();
-        tsc.fileName = FilePaths.fullInitFilePath;
-        tsc.fullName = dssPathname.pathname();
-        boolean removeMissing = false;
-        ts.read(tsc, removeMissing);
-        ts.setUnits(tsc.units);
-        return ts;
+    	if (dssPathname==null){
+    		return null;
+    	}else{
+    		TimeSeriesContainer tsc = new TimeSeriesContainer();
+    		tsc.fileName = FilePaths.fullInitFilePath;
+    		tsc.fullName = dssPathname.pathname();
+    		boolean removeMissing = false;
+    		ts.read(tsc, removeMissing);
+    		ts.setUnits(tsc.units);
+    		return ts;
+    	}
     }
 	
 	public static void writeInitDvarAliasToDSS() {	
