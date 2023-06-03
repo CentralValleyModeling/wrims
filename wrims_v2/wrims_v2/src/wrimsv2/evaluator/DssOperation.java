@@ -435,20 +435,27 @@ public class DssOperation {
 					}else{
 						startDate=TimeOperation.addOneDay(ControlData.prevOutputDate);
 					}
-					DSSData dd = new DSSData();
-					dd._dataType=DSSUtil.REGULAR_TIME_SERIES;
-					dd._yType="PER-AVER";
-					dd._numberRead=size1;
-					dd._yUnits=ddsfl.getUnits().toUpperCase();
-					dd._yValues = values1;
-					boolean storeFlags = false;
-					String pathName="/"+ControlData.partA+"_Cycle"+cycleI+"/"+DssOperation.getTSName(dvAliasName)+"/"+ddsfl.getKind()+"//"+ddsfl.getTimeStep()+"/"+ControlData.svDvPartF+"/";
-					String startDateStr=TimeOperation.dssTimeEndDay(startDate.getYear()+1900, startDate.getMonth()+1, startDate.getDate());
-					long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
-					ControlData.writer.storeTimeSeriesData(pathName, startJulmin, dd,
-							storeFlags);
-					dd._yValues=null;
-					dd=null;
+					TimeSeriesContainer dc = new TimeSeriesContainer();
+					//dd._dataType=DSSUtil.REGULAR_TIME_SERIES;
+					dc.type="PER-AVER";
+					dc.numberValues=size1;
+					dc.units=ddsfl.getUnits().toUpperCase();
+					dc.values = values1;
+					//boolean storeFlags = false;
+					dc.setName("/"+ControlData.partA+"_Cycle"+cycleI+"/"+DssOperation.getTSName(dvAliasName)+"/"+ddsfl.getKind()+"//"+ddsfl.getTimeStep()+"/"+ControlData.svDvPartF+"/");
+					Calendar startCalendar=Calendar.getInstance();
+					startCalendar.setTime(startDate);
+					dc.setStartTime(new HecTime(startCalendar));
+					try {
+						ControlData.dvDss.put(dc);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					//String startDateStr=TimeOperation.dssTimeEndDay(startDate.getYear()+1900, startDate.getMonth()+1, startDate.getDate());
+					//long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
+					//ControlData.writer.storeTimeSeriesData(pathName, startJulmin, dd, storeFlags);
+					dc.values=null;
+					dc=null;
 					values1=null;
 					values=null;
 				}
