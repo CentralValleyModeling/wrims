@@ -305,4 +305,11 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 		TableViewer viewer=(TableViewer) getViewer();
 		ProcessAltColumn.AdjustAltColumnNames(viewer, 0);
 	}
+	
+	/**
+	 * Passing the focus request to the viewer's control.
+	 */
+	public void setFocus() {
+		getViewer().getControl().setFocus();
+	}
 }
