@@ -163,6 +163,7 @@ public class WPPVarMonitorView extends ViewPart{
 	
 	@Override
 	public void setFocus() {
+		getSite().getPart().setFocus();
 	}
 
 }
