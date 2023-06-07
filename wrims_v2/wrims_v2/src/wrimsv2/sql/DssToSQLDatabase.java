@@ -1,5 +1,12 @@
 package wrimsv2.sql;
 
+import hec.heclib.dss.DSSPathname;
+import hec.heclib.dss.HecDssCatalog;
+import hec.heclib.dss.HecTimeSeries;
+import hec.heclib.util.HecTime;
+import hec.heclib.util.doubleArrayContainer;
+import hec.io.TimeSeriesContainer;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,20 +17,18 @@ import java.io.LineNumberReader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 
-import vista.db.dss.DSSUtil;
-import vista.set.DataReference;
-import vista.set.DataSet;
-import vista.set.DataSetAttr;
-import vista.set.Group;
-import vista.set.RegularTimeSeries;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.FilePaths;
+import wrimsv2.evaluator.CondensedReferenceCacheAndRead;
 import wrimsv2.evaluator.CsvOperation;
 import wrimsv2.evaluator.DataTimeSeries;
 import wrimsv2.evaluator.DssDataSet;
 import wrimsv2.evaluator.DssDataSetFixLength;
 import wrimsv2.evaluator.DssOperation;
+import wrimsv2.evaluator.CondensedReferenceCacheAndRead.CondensedReferenceCache;
 import wrimsv2.hdf5.DSSHDF5Converter;
 
 public class DssToSQLDatabase {
@@ -120,32 +125,47 @@ public class DssToSQLDatabase {
 		HashMap<String, DssDataSet> ddsMap=new HashMap<String, DssDataSet>();
 		File dssFile=new File (dssPath);
 		if (!dssFile.exists()) return ddsMap;
-		DSSUtil.generateCatalog(dssPath);
-		Group group = DSSUtil.createGroup("local", dssPath);
-		int size = group.getNumberOfDataReferences();
-		for (int i=0; i<size; i++){
-			DataReference ref = group.getDataReference(i);
-			DataSet ds = ref.getData();
-			RegularTimeSeries rts=(RegularTimeSeries)ds;
+		//DSSUtil.generateCatalog(dssPath);
+		//Group group = DSSUtil.createGroup("local", dssPath);
+		String pathnameFilter="*";
+		HecDssCatalog catalog = new HecDssCatalog(dssPath);
+        CondensedReferenceCache cache = CondensedReferenceCacheAndRead.createCondensedCache(dssPath, pathnameFilter);
+        Set<DSSPathname> dps = cache.condensedReferences;
+        Iterator<DSSPathname> it = dps.iterator();
+		//int size = group.getNumberOfDataReferences();
+		while (it.hasNext()){
+			//DataReference ref = group.getDataReference(i);
+			//DataSet ds = ref.getData();
+			//RegularTimeSeries rts=(RegularTimeSeries)ds;
+			DSSPathname dp = it.next();
+			TimeSeriesContainer tsc = new TimeSeriesContainer();
+			HecTimeSeries hts = new HecTimeSeries();
+            tsc.fileName = dssPath;
+            tsc.fullName = dp.pathname();
+            boolean removeMissing = false;
+            hts.read(tsc, removeMissing);
+            hts.setUnits(tsc.units);
 			DssDataSet dds= new DssDataSet();
 			ArrayList<Double> dataArray= new ArrayList<Double>();
-			Date startDate=rts.getStartTime().getDate();
-			int year=startDate.getYear()+1900;
-			int month=startDate.getMonth();;
-			int day = startDate.getDate();
-			for (double dataEntry :  rts.getYArray()){
+			HecTime startTime=hts.startTime();
+			int year=startTime.year();
+			int month=startTime.month();
+			int day = startTime.day();
+			Date startDate=new Date(year-1900, month-1, day);
+			doubleArrayContainer values=new doubleArrayContainer();
+			hts.getData(values);
+			for (double dataEntry :  values.array){
 				dataArray.add(dataEntry);
 			}
-			DataSetAttr attr = rts.getAttributes();
-			dds.setUnits(attr.getYUnits());
-			dds.setKind(attr.getTypeName());
+			dds.setUnits(hts.units());
+			dds.setKind(hts.cPart().toLowerCase());
 	        dds.setData(dataArray);
-	        String timeStep=rts.getTimeInterval().toString();
+	        String timeStep=hts.ePart().toUpperCase();
 	        dds.setTimeStep(timeStep);
 	        dds.setStartTime(startDate);
 	        dds.setFromDssFile(true);
 	        dds.generateStudyStartIndex();
-	        String name=attr.getLocationName();
+	        String name=hts.bPart().toLowerCase();
 	        String entryNameTS=DssOperation.entryNameTS(name, timeStep);
 	        ddsMap.put(entryNameTS, dds);
 		}
@@ -156,30 +176,43 @@ public class DssToSQLDatabase {
 		HashMap<String, DssDataSetFixLength> ddsMap=new HashMap<String, DssDataSetFixLength>();
 		File dssFile=new File (dssPath);
 		if (!dssFile.exists()) return ddsMap;
-		DSSUtil.generateCatalog(dssPath);
-		Group group = DSSUtil.createGroup("local", dssPath);
-		int size = group.getNumberOfDataReferences();
-		for (int i=0; i<size; i++){
-			DataReference ref = group.getDataReference(i);
-			DataSet ds = ref.getData();
-			RegularTimeSeries rts=(RegularTimeSeries)ds;
+		//DSSUtil.generateCatalog(dssPath);
+		//Group group = DSSUtil.createGroup("local", dssPath);
+		String pathnameFilter="*";
+		HecDssCatalog catalog = new HecDssCatalog(dssPath);
+        CondensedReferenceCache cache = CondensedReferenceCacheAndRead.createCondensedCache(dssPath, pathnameFilter);
+        Set<DSSPathname> dps = cache.condensedReferences;
+        Iterator<DSSPathname> it = dps.iterator();
+		//int size = group.getNumberOfDataReferences();
+		while (it.hasNext()){
+			//DataReference ref = group.getDataReference(i);
+			//DataSet ds = ref.getData();
+			//RegularTimeSeries rts=(RegularTimeSeries)ds;
+			DSSPathname dp = it.next();
+			TimeSeriesContainer tsc = new TimeSeriesContainer();
+			HecTimeSeries hts = new HecTimeSeries();
+            tsc.fileName = dssPath;
+            tsc.fullName = dp.pathname();
+            boolean removeMissing = false;
+            hts.read(tsc, removeMissing);
+            hts.setUnits(tsc.units);
 			DssDataSetFixLength dds= new DssDataSetFixLength();
-			double[] yArray = rts.getYArray();
-			Date startDate=rts.getStartTime().getDate();
-			int year=startDate.getYear()+1900;
-			int month=startDate.getMonth();;
-			int day = startDate.getDate();
-			int j=0;
-			double[] data = yArray;
-			DataSetAttr attr = rts.getAttributes();
-			dds.setUnits(attr.getYUnits());
-			dds.setKind(attr.getTypeName());
+			HecTime startTime=hts.startTime();
+			int year=startTime.year();
+			int month=startTime.month();
+			int day = startTime.day();
+			Date startDate=new Date(year-1900, month-1, day);
+			doubleArrayContainer values=new doubleArrayContainer();
+			hts.getData(values);
+			double[] data = values.array;
+			dds.setUnits(hts.units());
+			dds.setKind(hts.cPart().toLowerCase());
 	        dds.setData(data);
-	        String timeStep=rts.getTimeInterval().toString();
+	        String timeStep=hts.ePart().toUpperCase();
 	        dds.setTimeStep(timeStep);
 	        dds.setStartTime(startDate);
 	        dds.setFromDssFile(true);
-	        String name=attr.getLocationName();
+	        String name=hts.bPart().toLowerCase();
 	        String entryNameTS=DssOperation.entryNameTS(name, timeStep);
 	        ddsMap.put(entryNameTS, dds);
 		}
