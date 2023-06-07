@@ -156,8 +156,7 @@ public class CalSimHydroView extends ViewPart implements ISelectionListener{
 	
 	@Override
 	public void setFocus() {
-		// TODO Auto-generated method stub
-		
+		getSite().getPart().setFocus();
 	}
 
 }

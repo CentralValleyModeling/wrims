@@ -274,4 +274,11 @@ public class WPPGoalView extends AbstractDebugView implements ISelectionListener
 		viewer.refresh();
 	    if (goalStack.length>0) new SetSelectionInTable(oldSelection, viewer, table);
 	}
+	
+	/**
+	 * Passing the focus request to the viewer's control.
+	 */
+	public void setFocus() {
+		getViewer().getControl().setFocus();
+	}
 }
