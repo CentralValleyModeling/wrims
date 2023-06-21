@@ -44,12 +44,12 @@ public class Functiondoestimation extends ExternalFunction{
 		//cast params to correct types:
 		int wyt_SAC = ((Number) param17).intValue();
 		int month = ((Number) param16).intValue();
-		float FOL__Prv2 = ((Number) param15).floatValue();
+		float I_FOL_Prv2 = ((Number) param15).floatValue();
 		float I_OROVL_Prv2 = ((Number) param14).floatValue();
 		float I_SHSTA_Prv2 = ((Number) param13).floatValue();
 		float I_WKYTN_Prv2 = ((Number) param12).floatValue();
 		float I_TRNTY_Prv2 = ((Number) param11).floatValue();
-		float FOL_I_Prv1 = ((Number) param10).floatValue();
+		float I_FOL_Prv1 = ((Number) param10).floatValue();
 		float I_OROVL_Prv1 = ((Number) param9).floatValue();
 		float I_SHSTA_Prv1 = ((Number) param8).floatValue();
 		float I_WKYTN_Prv1 = ((Number) param7).floatValue();
@@ -60,22 +60,22 @@ public class Functiondoestimation extends ExternalFunction{
 		float I_WKYTN = ((Number) param2).floatValue();
 		float I_TRNTY = ((Number) param1).floatValue();
 
-		float result = doestimation(I_TRNTY, I_WKYTN, I_SHSTA, I_OROVL, I_FOL, I_TRNTY_Prv1, I_WKYTN_Prv1, I_SHSTA_Prv1, I_OROVL_Prv1, FOL_I_Prv1, I_TRNTY_Prv2, I_WKYTN_Prv2, I_SHSTA_Prv2, I_OROVL_Prv2, FOL_Prv2, month, wyt_SAC);
+		float result = doestimation(I_TRNTY, I_WKYTN, I_SHSTA, I_OROVL, I_FOL, I_TRNTY_Prv1, I_WKYTN_Prv1, I_SHSTA_Prv1, I_OROVL_Prv1, I_FOL_Prv1, I_TRNTY_Prv2, I_WKYTN_Prv2, I_SHSTA_Prv2, I_OROVL_Prv2, I_FOL_Prv2, month, wyt_SAC);
 
 		// push the result on the Stack
 		stack.push(new Float(result));
 
 	}
 
-	public float doestimation(float I_TRNTY, float I_WKYTN, float I_SHSTA, float I_OROVL, float I_FOL, float I_TRNTY_Prv1, float I_WKYTN_Prv1, float I_SHSTA_Prv1, float I_OROVL_Prv1, float FOL_I_Prv1, float I_TRNTY_Prv2, float I_WKYTN_Prv2, float I_SHSTA_Prv2, float I_OROVL_Prv2, float FOL_Prv2, int month, int wyt_SAC){
+	public float doestimation(float I_TRNTY, float I_WKYTN, float I_SHSTA, float I_OROVL, float I_FOL, float I_TRNTY_Prv1, float I_WKYTN_Prv1, float I_SHSTA_Prv1, float I_OROVL_Prv1, float I_FOL_Prv1, float I_TRNTY_Prv2, float I_WKYTN_Prv2, float I_SHSTA_Prv2, float I_OROVL_Prv2, float I_FOL_Prv2, int month, int wyt_SAC){
         
 		SavedModelBundle model = SavedModelBundle.load(FilePaths.mainDirectory+File.separator+"external"+File.separator+"model", "serve");
         Session s = model.session();
         // the first 15 feature are considered as float values.
         float[][] rawdata = new float[][] { { 
         	I_TRNTY, I_WKYTN, I_SHSTA, I_OROVL, I_FOL, 
-        	I_TRNTY_Prv1, I_WKYTN_Prv1, I_SHSTA_Prv1, I_OROVL_Prv1, FOL_I_Prv1, 
-        	I_TRNTY_Prv2, I_WKYTN_Prv2, I_SHSTA_Prv2, I_OROVL_Prv2, FOL__Prv2 } }; // Until the 15th feature
+        	I_TRNTY_Prv1, I_WKYTN_Prv1, I_SHSTA_Prv1, I_OROVL_Prv1, I_FOL_Prv1, 
+        	I_TRNTY_Prv2, I_WKYTN_Prv2, I_SHSTA_Prv2, I_OROVL_Prv2, I_FOL_Prv2 } }; // Until the 15th feature
         long[][] rawdata_int = new long[][] { { month, wyt_SAC } }; // The 16th and 17th features as integers
         
                 String[] tensorNames = new String[] {
