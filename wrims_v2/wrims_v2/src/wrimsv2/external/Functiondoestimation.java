@@ -44,7 +44,7 @@ public class Functiondoestimation extends ExternalFunction{
 		//cast params to correct types:
 		int wyt_SAC = ((Number) param17).intValue();
 		int month = ((Number) param16).intValue();
-		float FOL__Prv2 = ((Number) param15).floatValue();
+		float FOL_Prv2 = ((Number) param15).floatValue();
 		float I_OROVL_Prv2 = ((Number) param14).floatValue();
 		float I_SHSTA_Prv2 = ((Number) param13).floatValue();
 		float I_WKYTN_Prv2 = ((Number) param12).floatValue();
