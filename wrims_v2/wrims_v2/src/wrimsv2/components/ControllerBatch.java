@@ -292,12 +292,8 @@ public class ControllerBatch {
 			System.exit(1);
 		}
 		
-		boolean noEndOutput=false;
 		TimeOperation.initOutputDate(ControlData.yearOutputSection);
 		TimeOperation.initMemDate(ControlData.monMemSection);
-		if ((ControlData.outputYear==ControlData.endYear && ControlData.outputMonth==ControlData.endMonth && ControlData.outputDay==ControlData.endDay) || noEndOutput){
-			noEndOutput=true;
-		}
 		
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
@@ -430,7 +426,8 @@ public class ControllerBatch {
 			}
 			Date date1= new Date(ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
 			Date date2= new Date(ControlData.outputYear-1900, ControlData.outputMonth-1, ControlData.outputDay);
-			if (ControlData.yearOutputSection>0 && date1.after(date2)){
+			Date date3= new Date(ControlData.endYear-1900, ControlData.endMonth-1, ControlData.endDay);
+			if (ControlData.yearOutputSection>0 && (date1.after(date2) ||date1.after(date3))){
 				if (ControlData.writeInitToDVOutput && sectionI==0){
 					DssOperation.writeInitDvarAliasToDSS();
 				}
@@ -439,9 +436,6 @@ public class ControllerBatch {
 				TimeOperation.setMemDate(ControlData.monMemSection);
 				DssOperation.shiftData();
 				TimeOperation.setOutputDate(ControlData.yearOutputSection);
-				if ((ControlData.outputYear==ControlData.endYear && ControlData.outputMonth==ControlData.endMonth && ControlData.outputDay==ControlData.endDay) || noEndOutput){
-					noEndOutput=true;
-				}
 			}
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
@@ -546,12 +540,8 @@ public class ControllerBatch {
 			Error.writeErrorLog();
 		}
 		
-		boolean noEndOutput=false;
 		TimeOperation.initOutputDate(ControlData.yearOutputSection);
 		TimeOperation.initMemDate(ControlData.monMemSection);
-		if ((ControlData.outputYear==ControlData.endYear && ControlData.outputMonth==ControlData.endMonth && ControlData.outputDay==ControlData.endDay) || noEndOutput){
-			noEndOutput=true;
-		}
 		
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
@@ -825,7 +815,8 @@ public class ControllerBatch {
 			}
 			Date date1= new Date(ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
 			Date date2= new Date(ControlData.outputYear-1900, ControlData.outputMonth-1, ControlData.outputDay);
-			if (ControlData.yearOutputSection>0 && date1.after(date2)){
+			Date date3= new Date(ControlData.endYear-1900, ControlData.endMonth-1, ControlData.endDay);
+			if (ControlData.yearOutputSection>0 && (date1.after(date2) || date1.after(date3))){
 				if (ControlData.writeInitToDVOutput && sectionI==0){
 					DssOperation.writeInitDvarAliasToDSS();
 				}
@@ -834,9 +825,6 @@ public class ControllerBatch {
 				TimeOperation.setMemDate(ControlData.monMemSection);
 				DssOperation.shiftData();
 				TimeOperation.setOutputDate(ControlData.yearOutputSection);
-				if ((ControlData.outputYear==ControlData.endYear && ControlData.outputMonth==ControlData.endMonth && ControlData.outputDay==ControlData.endDay) || noEndOutput){
-					noEndOutput=true;
-				}
 			}
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
@@ -910,12 +898,8 @@ public class ControllerBatch {
 		ILP.initializeIlp();
 		GurobiSolver.initialize();
 		
-		boolean noEndOutput=false;
 		TimeOperation.initOutputDate(ControlData.yearOutputSection);
 		TimeOperation.initMemDate(ControlData.monMemSection);
-		if ((ControlData.outputYear==ControlData.endYear && ControlData.outputMonth==ControlData.endMonth && ControlData.outputDay==ControlData.endDay) || noEndOutput){
-			noEndOutput=true;
-		}
 		
 		int sectionI=0;
 		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
@@ -1058,7 +1042,8 @@ public class ControllerBatch {
 			}
 			Date date1= new Date(ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
 			Date date2= new Date(ControlData.outputYear-1900, ControlData.outputMonth-1, ControlData.outputDay);
-			if (ControlData.yearOutputSection>0 && date1.after(date2)){
+			Date date3= new Date(ControlData.endYear-1900, ControlData.endMonth-1, ControlData.endDay);
+			if (ControlData.yearOutputSection>0 && (date1.after(date2) || date1.after(date3))){
 				if (ControlData.writeInitToDVOutput && sectionI==0){
 					DssOperation.writeInitDvarAliasToDSS();
 				}
@@ -1067,9 +1052,6 @@ public class ControllerBatch {
 				TimeOperation.setMemDate(ControlData.monMemSection);
 				DssOperation.shiftData();
 				TimeOperation.setOutputDate(ControlData.yearOutputSection);
-				if ((ControlData.outputYear==ControlData.endYear && ControlData.outputMonth==ControlData.endMonth && ControlData.outputDay==ControlData.endDay) || noEndOutput){
-					noEndOutput=true;
-				}
 			}
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
@@ -1547,12 +1529,8 @@ public class ControllerBatch {
 			System.exit(1);
 		}
 		
-		boolean noEndOutput=false;
 		TimeOperation.initOutputDate(ControlData.yearOutputSection);
 		TimeOperation.initMemDate(ControlData.monMemSection);
-		if ((ControlData.outputYear==ControlData.endYear && ControlData.outputMonth==ControlData.endMonth && ControlData.outputDay==ControlData.endDay) || noEndOutput){
-			noEndOutput=true;
-		}
 		
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
@@ -1728,7 +1706,8 @@ public class ControllerBatch {
 			}
 			Date date1= new Date(ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
 			Date date2= new Date(ControlData.outputYear-1900, ControlData.outputMonth-1, ControlData.outputDay);
-			if (ControlData.yearOutputSection>0 && date1.after(date2)){
+			Date date3= new Date(ControlData.endYear-1900, ControlData.endMonth-1, ControlData.endDay);
+			if (ControlData.yearOutputSection>0 && (date1.after(date2) || date1.after(date3))){
 				if (ControlData.writeInitToDVOutput && sectionI==0){
 					DssOperation.writeInitDvarAliasToDSS();
 				}
@@ -1737,9 +1716,6 @@ public class ControllerBatch {
 				TimeOperation.setMemDate(ControlData.monMemSection);
 				DssOperation.shiftData();
 				TimeOperation.setOutputDate(ControlData.yearOutputSection);
-				if ((ControlData.outputYear==ControlData.endYear && ControlData.outputMonth==ControlData.endMonth && ControlData.outputDay==ControlData.endDay) || noEndOutput){
-					noEndOutput=true;
-				}
 			}
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
