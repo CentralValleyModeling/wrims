@@ -269,12 +269,8 @@ public class ControllerDebug extends Thread {
 			GurobiSolver.initialize();
 		}
 		
-		boolean noEndOutput=false;
 		TimeOperation.initOutputDate(ControlData.yearOutputSection);
 		TimeOperation.initMemDate(ControlData.monMemSection);
-		if ((ControlData.outputYear==ControlData.endYear && ControlData.outputMonth==ControlData.endMonth && ControlData.outputDay==ControlData.endDay) || noEndOutput){
-			noEndOutput=true;
-		}
 		
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
@@ -481,7 +477,8 @@ public class ControllerDebug extends Thread {
 			}
 			Date date1= new Date(ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
 			Date date2= new Date(ControlData.outputYear-1900, ControlData.outputMonth-1, ControlData.outputDay);
-			if (ControlData.yearOutputSection>0 && date1.after(date2)){
+			Date date3= new Date(ControlData.endYear-1900, ControlData.endMonth-1, ControlData.endDay);
+			if (ControlData.yearOutputSection>0 && (date1.after(date2) || date1.after(date3))){
 				if (ControlData.writeInitToDVOutput && sectionI==0){
 					DssOperation.writeInitDvarAliasToDSS();
 				}
@@ -490,9 +487,6 @@ public class ControllerDebug extends Thread {
 				TimeOperation.setMemDate(ControlData.monMemSection);
 				DssOperation.shiftData();
 				TimeOperation.setOutputDate(ControlData.yearOutputSection);
-				if ((ControlData.outputYear==ControlData.endYear && ControlData.outputMonth==ControlData.endMonth && ControlData.outputDay==ControlData.endDay) || noEndOutput){
-					noEndOutput=true;
-				}
 			}
 			updateVarMonitor();
 			if (ControlData.resimDate){
@@ -511,7 +505,7 @@ public class ControllerDebug extends Thread {
 		new CloseCurrentSolver(ControlData.solverName);
 
 		if (ControlData.yearOutputSection<0 && ControlData.writeInitToDVOutput) DssOperation.writeInitDvarAliasToDSS();
-		if (!noEndOutput) DssOperation.writeDVAliasToDSS();
+		if (ControlData.yearOutputSection<0) DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
