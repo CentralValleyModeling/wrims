@@ -292,8 +292,12 @@ public class ControllerBatch {
 			System.exit(1);
 		}
 		
+		boolean noEndOutput=false;
 		TimeOperation.initOutputDate(ControlData.yearOutputSection);
 		TimeOperation.initMemDate(ControlData.monMemSection);
+		if ((ControlData.outputYear==ControlData.endYear && ControlData.outputMonth==ControlData.endMonth && ControlData.outputDay==ControlData.endDay) || noEndOutput){
+			noEndOutput=true;
+		}
 		
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
@@ -435,6 +439,9 @@ public class ControllerBatch {
 				TimeOperation.setMemDate(ControlData.monMemSection);
 				DssOperation.shiftData();
 				TimeOperation.setOutputDate(ControlData.yearOutputSection);
+				if ((ControlData.outputYear==ControlData.endYear && ControlData.outputMonth==ControlData.endMonth && ControlData.outputDay==ControlData.endDay) || noEndOutput){
+					noEndOutput=true;
+				}
 			}
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
@@ -442,7 +449,7 @@ public class ControllerBatch {
 		ControlData.xasolver.close();
 		
 		if (ControlData.yearOutputSection<0 && ControlData.writeInitToDVOutput) DssOperation.writeInitDvarAliasToDSS();
-		DssOperation.writeDVAliasToDSS();
+		if (!noEndOutput) DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
@@ -539,8 +546,12 @@ public class ControllerBatch {
 			Error.writeErrorLog();
 		}
 		
+		boolean noEndOutput=false;
 		TimeOperation.initOutputDate(ControlData.yearOutputSection);
 		TimeOperation.initMemDate(ControlData.monMemSection);
+		if ((ControlData.outputYear==ControlData.endYear && ControlData.outputMonth==ControlData.endMonth && ControlData.outputDay==ControlData.endDay) || noEndOutput){
+			noEndOutput=true;
+		}
 		
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
@@ -823,6 +834,9 @@ public class ControllerBatch {
 				TimeOperation.setMemDate(ControlData.monMemSection);
 				DssOperation.shiftData();
 				TimeOperation.setOutputDate(ControlData.yearOutputSection);
+				if ((ControlData.outputYear==ControlData.endYear && ControlData.outputMonth==ControlData.endMonth && ControlData.outputDay==ControlData.endDay) || noEndOutput){
+					noEndOutput=true;
+				}
 			}
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
@@ -842,7 +856,7 @@ public class ControllerBatch {
 		}
 		
 		if (ControlData.yearOutputSection<0 && ControlData.writeInitToDVOutput) DssOperation.writeInitDvarAliasToDSS();
-		DssOperation.writeDVAliasToDSS();
+		if (!noEndOutput) DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
@@ -896,8 +910,13 @@ public class ControllerBatch {
 		ILP.initializeIlp();
 		GurobiSolver.initialize();
 		
+		boolean noEndOutput=false;
 		TimeOperation.initOutputDate(ControlData.yearOutputSection);
 		TimeOperation.initMemDate(ControlData.monMemSection);
+		if ((ControlData.outputYear==ControlData.endYear && ControlData.outputMonth==ControlData.endMonth && ControlData.outputDay==ControlData.endDay) || noEndOutput){
+			noEndOutput=true;
+		}
+		
 		int sectionI=0;
 		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
 
@@ -1048,6 +1067,9 @@ public class ControllerBatch {
 				TimeOperation.setMemDate(ControlData.monMemSection);
 				DssOperation.shiftData();
 				TimeOperation.setOutputDate(ControlData.yearOutputSection);
+				if ((ControlData.outputYear==ControlData.endYear && ControlData.outputMonth==ControlData.endMonth && ControlData.outputDay==ControlData.endDay) || noEndOutput){
+					noEndOutput=true;
+				}
 			}
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
@@ -1055,7 +1077,7 @@ public class ControllerBatch {
 		GurobiSolver.dispose();
 
 		if (ControlData.yearOutputSection<0 && ControlData.writeInitToDVOutput) DssOperation.writeInitDvarAliasToDSS();
-		DssOperation.writeDVAliasToDSS();
+		if (!noEndOutput) DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
@@ -1525,8 +1547,12 @@ public class ControllerBatch {
 			System.exit(1);
 		}
 		
+		boolean noEndOutput=false;
 		TimeOperation.initOutputDate(ControlData.yearOutputSection);
 		TimeOperation.initMemDate(ControlData.monMemSection);
+		if ((ControlData.outputYear==ControlData.endYear && ControlData.outputMonth==ControlData.endMonth && ControlData.outputDay==ControlData.endDay) || noEndOutput){
+			noEndOutput=true;
+		}
 		
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
@@ -1711,6 +1737,9 @@ public class ControllerBatch {
 				TimeOperation.setMemDate(ControlData.monMemSection);
 				DssOperation.shiftData();
 				TimeOperation.setOutputDate(ControlData.yearOutputSection);
+				if ((ControlData.outputYear==ControlData.endYear && ControlData.outputMonth==ControlData.endMonth && ControlData.outputDay==ControlData.endDay) || noEndOutput){
+					noEndOutput=true;
+				}
 			}
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
@@ -1718,7 +1747,7 @@ public class ControllerBatch {
 		CbcSolver.close(); if (ControlData.cbc_debug_routeXA || ControlData.cbc_debug_routeCbc) {ControlData.xasolver.close();}
 		
 		if (ControlData.yearOutputSection<0 && ControlData.writeInitToDVOutput) DssOperation.writeInitDvarAliasToDSS();
-		DssOperation.writeDVAliasToDSS();
+		if (!noEndOutput) DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();

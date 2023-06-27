@@ -269,8 +269,12 @@ public class ControllerDebug extends Thread {
 			GurobiSolver.initialize();
 		}
 		
+		boolean noEndOutput=false;
 		TimeOperation.initOutputDate(ControlData.yearOutputSection);
 		TimeOperation.initMemDate(ControlData.monMemSection);
+		if ((ControlData.outputYear==ControlData.endYear && ControlData.outputMonth==ControlData.endMonth && ControlData.outputDay==ControlData.endDay) || noEndOutput){
+			noEndOutput=true;
+		}
 		
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
@@ -486,6 +490,9 @@ public class ControllerDebug extends Thread {
 				TimeOperation.setMemDate(ControlData.monMemSection);
 				DssOperation.shiftData();
 				TimeOperation.setOutputDate(ControlData.yearOutputSection);
+				if ((ControlData.outputYear==ControlData.endYear && ControlData.outputMonth==ControlData.endMonth && ControlData.outputDay==ControlData.endDay) || noEndOutput){
+					noEndOutput=true;
+				}
 			}
 			updateVarMonitor();
 			if (ControlData.resimDate){
@@ -504,7 +511,7 @@ public class ControllerDebug extends Thread {
 		new CloseCurrentSolver(ControlData.solverName);
 
 		if (ControlData.yearOutputSection<0 && ControlData.writeInitToDVOutput) DssOperation.writeInitDvarAliasToDSS();
-		DssOperation.writeDVAliasToDSS();
+		if (!noEndOutput) DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 		if (ControlData.outputType==1){
 			HDF5Writer.createDvarAliasLookup();
