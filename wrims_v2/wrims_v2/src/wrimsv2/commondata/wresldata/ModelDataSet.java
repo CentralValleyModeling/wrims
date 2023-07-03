@@ -423,9 +423,9 @@ public class ModelDataSet implements Serializable {
 				}
 				String entryNameTS=DssOperation.entryNameTS(asName, ControlData.timeStep);
 				if (!DataTimeSeries.dvAliasTS.containsKey(entryNameTS)){
-					DssDataSetFixLength dds=new DssDataSetFixLength();
-					double[] data=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
-					dds.setData(data);
+					DssDataSetFixLength dds=new DssDataSetFixLength(ControlData.totalTimeStep.get(ControlData.currCycleIndex));
+					//double[] data=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
+					//dds.setData(data);
 					dds.setTimeStep(ControlData.partE);
 					dds.setStartTime(ControlData.memStartDate);
 					dds.setUnits(alias.units);
@@ -443,9 +443,9 @@ public class ModelDataSet implements Serializable {
 				//if (ControlData.outputCycleToDss){
 				HashMap<String, DssDataSetFixLength> dvAliasTSCycle = DataTimeSeries.dvAliasTSCycles.get(ControlData.currCycleIndex);
 				if (!dvAliasTSCycle.containsKey(entryNameTS)){
-					DssDataSetFixLength dds1=new DssDataSetFixLength();
-					double[] data1=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
-					dds1.setData(data1);
+					DssDataSetFixLength dds1=new DssDataSetFixLength(ControlData.totalTimeStep.get(ControlData.currCycleIndex));
+					//double[] data1=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
+					//dds1.setData(data1);
 					dds1.setTimeStep(ControlData.partE);
 					dds1.setStartTime(ControlData.memStartDate);
 					dds1.setUnits(alias.units);
@@ -494,9 +494,9 @@ public class ModelDataSet implements Serializable {
 				String newAsName=asName+"__fut__0";
 				String entryNameTS=DssOperation.entryNameTS(newAsName, ControlData.timeStep);
 				if (!DataTimeSeries.dvAliasTS.containsKey(entryNameTS)){
-					DssDataSetFixLength dds=new DssDataSetFixLength();
-					double[] data=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
-					dds.setData(data);
+					DssDataSetFixLength dds=new DssDataSetFixLength(ControlData.totalTimeStep.get(ControlData.currCycleIndex));
+					//double[] data=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
+					//dds.setData(data);
 					dds.setTimeStep(ControlData.partE);
 					dds.setStartTime(ControlData.memStartDate);
 					dds.setUnits(alias.units);
@@ -514,9 +514,9 @@ public class ModelDataSet implements Serializable {
 				//if (ControlData.outputCycleToDss){
 				HashMap<String, DssDataSetFixLength> dvAliasTSCycle = DataTimeSeries.dvAliasTSCycles.get(ControlData.currCycleIndex);
 				if (!dvAliasTSCycle.containsKey(entryNameTS)){
-					DssDataSetFixLength dds1=new DssDataSetFixLength();
-					double[] data1=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
-					dds1.setData(data1);
+					DssDataSetFixLength dds1=new DssDataSetFixLength(ControlData.totalTimeStep.get(ControlData.currCycleIndex));
+					//double[] data1=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
+					//dds1.setData(data1);
 					dds1.setTimeStep(ControlData.partE);
 					dds1.setStartTime(ControlData.memStartDate);
 					dds1.setUnits(alias.units);
@@ -558,9 +558,9 @@ public class ModelDataSet implements Serializable {
 					}
 					String entryNameTS=DssOperation.entryNameTS(newAsName, ControlData.timeStep);
 					if (!DataTimeSeries.dvAliasTS.containsKey(entryNameTS)){
-						DssDataSetFixLength dds=new DssDataSetFixLength();
-						double[] data=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
-						dds.setData(data);
+						DssDataSetFixLength dds=new DssDataSetFixLength(ControlData.totalTimeStep.get(ControlData.currCycleIndex));
+						//double[] data=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
+						//dds.setData(data);
 						dds.setTimeStep(ControlData.partE);
 						dds.setStartTime(ControlData.memStartDate);
 						dds.setUnits(alias.units);
@@ -578,9 +578,9 @@ public class ModelDataSet implements Serializable {
 					//if (ControlData.outputCycleToDss){
 					HashMap<String, DssDataSetFixLength> dvAliasTSCycle = DataTimeSeries.dvAliasTSCycles.get(ControlData.currCycleIndex);
 					if (!dvAliasTSCycle.containsKey(entryNameTS)){
-						DssDataSetFixLength dds1=new DssDataSetFixLength();
-						double[] data1=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
-						dds1.setData(data1);
+						DssDataSetFixLength dds1=new DssDataSetFixLength(ControlData.totalTimeStep.get(ControlData.currCycleIndex));
+						//double[] data1=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
+						//dds1.setData(data1);
 						dds1.setTimeStep(ControlData.partE);
 						dds1.setStartTime(ControlData.memStartDate);
 						dds1.setUnits(alias.units);
