@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry exported="true" kind="lib" path="lib_x64/hecData.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib_x64/heclib.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib_x64/jts-1.13.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/eclipse_JRE"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry exported="true" kind="lib" path="lib_x64/gridUtil.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib_x64/hec.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib_x64/images.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib_x64/rma.jar"/>
 	<classpathentry kind="lib" path="lib_x64/commons-io-2.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib_x64/guava-11.0.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib_x64/help/dssvueHelp.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib_x64/sys/jh.jar"/>
 	<classpathentry kind="lib" path="lib_x64/vista.jar"/>
 	<classpathentry kind="lib" path="lib_x64/dsm2-input-model.jar"/>
@@ -20,5 +14,10 @@
 	<classpathentry kind="lib" path="lib_x64/WRIMSv2.jar"/>
 	<classpathentry kind="lib" path="lib_x64/mysql-connector-java-5.1.42-bin.jar"/>
 	<classpathentry kind="lib" path="lib_x64/sqljdbc4-2.0.jar"/>
+	<classpathentry kind="lib" path="lib_x64/context-specific-help-1.1.0.jar"/>
+	<classpathentry kind="lib" path="lib_x64/dssgui-3.3.31.jar"/>
+	<classpathentry kind="lib" path="lib_x64/hec-monolith-3.3.20.jar"/>
+	<classpathentry kind="lib" path="lib_x64/hec-nucleus-data-2.0.1.jar"/>
+	<classpathentry kind="lib" path="lib_x64/hec-nucleus-metadata-2.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
