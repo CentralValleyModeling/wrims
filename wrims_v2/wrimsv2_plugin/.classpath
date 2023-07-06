@@ -14,10 +14,8 @@
 	<classpathentry kind="lib" path="lib_x64/WRIMSv2.jar"/>
 	<classpathentry kind="lib" path="lib_x64/mysql-connector-java-5.1.42-bin.jar"/>
 	<classpathentry kind="lib" path="lib_x64/sqljdbc4-2.0.jar"/>
-	<classpathentry kind="lib" path="lib_x64/context-specific-help-1.1.0.jar"/>
-	<classpathentry kind="lib" path="lib_x64/dssgui-3.3.31.jar"/>
-	<classpathentry kind="lib" path="lib_x64/hec-monolith-3.3.20.jar"/>
-	<classpathentry kind="lib" path="lib_x64/hec-nucleus-data-2.0.1.jar"/>
-	<classpathentry kind="lib" path="lib_x64/hec-nucleus-metadata-2.0.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib_x64/hec-monolith-3.3.20.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib_x64/hec-nucleus-data-2.0.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib_x64/hec-nucleus-metadata-2.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
