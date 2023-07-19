@@ -206,6 +206,7 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 
 	@Override
 	public void setFocus() {
+		getSite().getPart().setFocus();
 	}
 
 	@Override
