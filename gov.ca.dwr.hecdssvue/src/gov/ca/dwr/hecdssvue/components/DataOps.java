@@ -337,7 +337,7 @@ public class DataOps {
 		}
 		
 		for (int j=0; j<size; j++) {
-			String name = DssPluginCore.allSchematicVariableNames.get(j);
+			String name = DssPluginCore.allSchematicVariableNames.get(j).toLowerCase();
 			if (DssPluginCore.allPathName.containsKey(name)){
 				String pathName = DssPluginCore.allPathName.get(name);
 				for (int i=0; i<4; i++){
