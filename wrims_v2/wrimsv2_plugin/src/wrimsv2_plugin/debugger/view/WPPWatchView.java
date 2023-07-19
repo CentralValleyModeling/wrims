@@ -372,4 +372,11 @@ public class WPPWatchView extends AbstractDebugView implements ISelectionListene
 		TableViewer viewer=(TableViewer) getViewer();
 		ProcessAltColumn.AdjustAltColumnNames(viewer, 1);
 	}
+	
+	/**
+	 * Passing the focus request to the viewer's control.
+	 */
+	public void setFocus() {
+		getViewer().getControl().setFocus();
+	}
 }

@@ -303,4 +303,11 @@ public class WPPAllVariableView extends AbstractDebugView implements ISelectionL
 		}
 		table.redraw();
 	}
+	
+	/**
+	 * Passing the focus request to the viewer's control.
+	 */
+	public void setFocus() {
+		getViewer().getControl().setFocus();
+	}
 }
