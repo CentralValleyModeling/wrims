@@ -14,7 +14,14 @@ import wrimsv2.components.FilePaths;
 
 public class Functiondoestimation extends ExternalFunction{
 	private final boolean DEBUG = false;
-
+	static {
+		// set TensorFlow native library debug property
+		System.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "error");
+	
+	ProcessBuilder pb = new ProcessBuilder("myCommand", "myArg");
+	Map<String, String> env = pb.environment();
+	env.put("TF_CPP_MIN_LOG_LEVEL", "3");
+	}
 
 	public Functiondoestimation(){
 
