@@ -385,6 +385,7 @@ public class WPPWsiDiTab extends AbstractLaunchConfigurationTab {
 		out.println();
 		out.println("set path=" + externalPath + ";"+"lib;%path%");
 		out.println("set temp_wrims2=jre\\bin");
+		out.println("set TF_CPP_MIN_LOG_LEVEL=2");
 		out.println();
 		/*
 		String xmx="1280m";

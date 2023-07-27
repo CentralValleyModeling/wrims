@@ -450,6 +450,7 @@ public class BatchRunProcess {
 		out.println("@echo off");
 		out.println("set path=" + externalPath + ";"+"lib;%path%");
 		out.println("set temp_wrims2=jre\\bin");
+		out.println("set TF_CPP_MIN_LOG_LEVEL=2");
 		/*
 		String xmx="1280m";
 		if (System.getProperty("os.arch").equalsIgnoreCase("amd64")){
