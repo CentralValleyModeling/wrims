@@ -108,6 +108,8 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static int suspendedMonth=9;
 	public static int suspendedDay=30;
 	public static int suspendedCycle=99;
+	public static int paInitialDssInterval;
+	public static boolean isCreateSeriesPAInit=true;
 	
 	public static DebugSet debugSet;
 	
