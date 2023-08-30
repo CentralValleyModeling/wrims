@@ -87,34 +87,12 @@ public class Functionhydroforecast extends ExternalFunction{
 			float[] a56={0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f};
 			float[] a57={0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f};
 			float[] a58={0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f};
-			float[] a59={0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f};
-			float[] a60={0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f};
-			float[] a61={0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f};
-			float[] a62={0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f};
-			float[] a63={0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f};
-			float[] a64={0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f};
-			float[] a65={0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f};
-			float[] a66={0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f};
-			float[] a67={0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f};
-			float[] a68={0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f};
-			float[] a69={0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f};
-			float result = hydroforecast(ICALC, ICODE, IYPOS, IMPOS, IYEAR, IM, IFREQOD, IFREQ1, IFREQ2, IFREQ3, IFREQ4, IFREQ5, ICC, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10,  a11, a12, a13, a14, a15, a16, a17, a18, a19, a20, a21, a22, a23, a24, a25, a26, a27, a28, a29, a30, a31, a32, a33, a34, a35, a36, a37, a38, a39, a40, a41, a42, a43, a44, a45, a46, a47, a48, a49, a50, a51, a52, a53, a54, a55, a56, a57, a58, a59, a60, a61, a62, a63, a64, a65, a66, a67, a68, a69);
+			float result = hydroforecast(ICALC, ICODE, IYPOS, IMPOS, IYEAR, IM, IFREQOD, IFREQ1, IFREQ2, IFREQ3, IFREQ4, IFREQ5, ICC, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10,  a11, a12, a13, a14, a15, a16, a17, a18, a19, a20, a21, a22, a23, a24, a25, a26, a27, a28, a29, a30, a31, a32, a33, a34, a35, a36, a37, a38, a39, a40, a41, a42, a43, a44, a45, a46, a47, a48, a49, a50, a51, a52, a53, a54, a55, a56, a57, a58);
 			
 			// push the result on the Stack
 			stack.push(new Float(result));
 		}else{
 			//values in reverse order:
-			Object param82 = stack.pop();
-			Object param81 = stack.pop();
-			Object param80 = stack.pop();
-			Object param79 = stack.pop();
-			Object param78 = stack.pop();
-			Object param77 = stack.pop();
-			Object param76 = stack.pop();
-			Object param75 = stack.pop();
-			Object param74 = stack.pop();
-			Object param73 = stack.pop();
-			Object param72 = stack.pop();
 			Object param71 = stack.pop();
 			Object param70 = stack.pop();
 			Object param69 = stack.pop();
@@ -187,73 +165,6 @@ public class Functionhydroforecast extends ExternalFunction{
 			Object param2 = stack.pop();
 			Object param1 = stack.pop();
 
-			//cast params to correct types:
-			Number[] QMSJ1_Arr = (Number[])param82;
-			int size_QMSJ1=QMSJ1_Arr.length;
-			float[] QMSJ1=new float[size_QMSJ1];
-			for (int i=0; i<size_QMSJ1; i++){
-				QMSJ1[i]=QMSJ1_Arr[i].floatValue();
-			}
-			Number[] QMME1_Arr = (Number[])param81;
-			int size_QMME1=QMME1_Arr.length;
-			float[] QMME1=new float[size_QMME1];
-			for (int i=0; i<size_QMME1; i++){
-				QMME1[i]=QMME1_Arr[i].floatValue();
-			}
-			Number[] QMTU1_Arr = (Number[])param80;
-			int size_QMTU1=QMTU1_Arr.length;
-			float[] QMTU1=new float[size_QMTU1];
-			for (int i=0; i<size_QMTU1; i++){
-				QMTU1[i]=QMTU1_Arr[i].floatValue();
-			}
-			Number[] QMST1_Arr = (Number[])param79;
-			int size_QMST1=QMST1_Arr.length;
-			float[] QMST1=new float[size_QMST1];
-			for (int i=0; i<size_QMST1; i++){
-				QMST1[i]=QMST1_Arr[i].floatValue();
-			}
-			Number[] QMWH1_Arr = (Number[])param78;
-			int size_QMWH1=QMWH1_Arr.length;
-			float[] QMWH1=new float[size_QMWH1];
-			for (int i=0; i<size_QMWH1; i++){
-				QMWH1[i]=QMWH1_Arr[i].floatValue();
-			}
-			Number[] QMTR1_Arr = (Number[])param77;
-			int size_QMTR1=QMTR1_Arr.length;
-			float[] QMTR1=new float[size_QMTR1];
-			for (int i=0; i<size_QMTR1; i++){
-				QMTR1[i]=QMTR1_Arr[i].floatValue();
-			}
-			Number[] QMBD1_Arr = (Number[])param76;
-			int size_QMBD1=QMBD1_Arr.length;
-			float[] QMBD1=new float[size_QMBD1];
-			for (int i=0; i<size_QMBD1; i++){
-				QMBD1[i]=QMBD1_Arr[i].floatValue();
-			}
-			Number[] QMSH1_Arr = (Number[])param75;
-			int size_QMSH1=QMSH1_Arr.length;
-			float[] QMSH1=new float[size_QMSH1];
-			for (int i=0; i<size_QMSH1; i++){
-				QMSH1[i]=QMSH1_Arr[i].floatValue();
-			}
-			Number[] QMYU1_Arr = (Number[])param74;
-			int size_QMYU1=QMYU1_Arr.length;
-			float[] QMYU1=new float[size_QMYU1];
-			for (int i=0; i<size_QMYU1; i++){
-				QMYU1[i]=QMYU1_Arr[i].floatValue();
-			}
-			Number[] QMFO1_Arr = (Number[])param73;
-			int size_QMFO1=QMFO1_Arr.length;
-			float[] QMFO1=new float[size_QMFO1];
-			for (int i=0; i<size_QMFO1; i++){
-				QMFO1[i]=QMFO1_Arr[i].floatValue();
-			}
-			Number[] QMOR1_Arr = (Number[])param72;
-			int size_QMOR1=QMOR1_Arr.length;
-			float[] QMOR1=new float[size_QMOR1];
-			for (int i=0; i<size_QMOR1; i++){
-				QMOR1[i]=QMOR1_Arr[i].floatValue();
-			}
 			Number[] QSJ1_Arr = (Number[])param71;
 			int size_QSJ1=QSJ1_Arr.length;
 			float[] QSJ1=new float[size_QSJ1];
@@ -616,7 +527,7 @@ public class Functionhydroforecast extends ExternalFunction{
 			int ICODE = ((Number) param2).intValue();
 			int ICALC = ((Number) param1).intValue();
 
-			float result = hydroforecast(ICALC, ICODE, IYPOS, IMPOS, IYEAR, IM, IFREQOD, IFREQ1, IFREQ2, IFREQ3, IFREQ4, IFREQ5, ICC, SQKS, SQOR, SQFW, SQFP, SQSW, SQNB, QOR, QFO, QYU, QSH, QBD, QTR, QWH, QST, QTU, QME, QSJ, POR, PFO, PYU, PSH, PTR, PWH, PST, PTU, PME, PSJ, TOR, TFO, TYU, TSH, TTR, TWH, TST, TTU, TME, TSJ, VPDOR, VPDFO, VPDYU, VPDSH, VPDTR, VPDWH, VPDST, VPDTU, VPDME, VPDSJ, QOR1, QFO1, QYU1, QSH1, QBD1, QTR1, QWH1, QST1, QTU1, QME1, QSJ1, QMOR1, QMFO1, QMYU1, QMSH1, QMBD1, QMTR1, QMWH1, QMST1, QMTU1, QMME1, QMSJ1);
+			float result = hydroforecast(ICALC, ICODE, IYPOS, IMPOS, IYEAR, IM, IFREQOD, IFREQ1, IFREQ2, IFREQ3, IFREQ4, IFREQ5, ICC, SQKS, SQOR, SQFW, SQFP, SQSW, SQNB, QOR, QFO, QYU, QSH, QBD, QTR, QWH, QST, QTU, QME, QSJ, POR, PFO, PYU, PSH, PTR, PWH, PST, PTU, PME, PSJ, TOR, TFO, TYU, TSH, TTR, TWH, TST, TTU, TME, TSJ, VPDOR, VPDFO, VPDYU, VPDSH, VPDTR, VPDWH, VPDST, VPDTU, VPDME, VPDSJ, QOR1, QFO1, QYU1, QSH1, QBD1, QTR1, QWH1, QST1, QTU1, QME1, QSJ1);
 
 			// push the result on the Stack
 			stack.push(new Float(result));
@@ -625,5 +536,5 @@ public class Functionhydroforecast extends ExternalFunction{
 
 	}
 
-	public native float hydroforecast(int ICALC, int ICODE, int IYPOS, int IMPOS, int IYEAR, int IM, int IFREQOD, int IFREQ1, int IFREQ2, int IFREQ3, int IFREQ4, int IFREQ5, int ICC, float[] SQKS, float[] SQOR, float[] SQFW, float[] SQFP, float[] SQSW, float[] SQNB, float[] QOR, float[] QFO, float[] QYU, float[] QSH, float[] QBD, float[] QTR, float[] QWH, float[] QST, float[] QTU, float[] QME, float[] QSJ, float[] POR, float[] PFO, float[] PYU, float[] PSH, float[] PTR, float[] PWH, float[] PST, float[] PTU, float[] PME, float[] PSJ, float[] TOR, float[] TFO, float[] TYU, float[] TSH, float[] TTR, float[] TWH, float[] TST, float[] TTU, float[] TME, float[] TSJ, float[] VPDOR, float[] VPDFO, float[] VPDYU, float[] VPDSH, float[] VPDTR, float[] VPDWH, float[] VPDST, float[] VPDTU, float[] VPDME, float[] VPDSJ, float[] QOR1, float[] QFO1, float[] QYU1, float[] QSH1, float[] QBD1, float[] QTR1, float[] QWH1, float[] QST1, float[] QTU1, float[] QME1, float[] QSJ1, float[] QMOR1, float[] QMFO1, float[] QMYU1, float[] QMSH1, float[] QMBD1, float[] QMTR1, float[] QMWH1, float[] QMST1, float[] QMTU1, float[] QMME1, float[] QMSJ1);
+	public native float hydroforecast(int ICALC, int ICODE, int IYPOS, int IMPOS, int IYEAR, int IM, int IFREQOD, int IFREQ1, int IFREQ2, int IFREQ3, int IFREQ4, int IFREQ5, int ICC, float[] SQKS, float[] SQOR, float[] SQFW, float[] SQFP, float[] SQSW, float[] SQNB, float[] QOR, float[] QFO, float[] QYU, float[] QSH, float[] QBD, float[] QTR, float[] QWH, float[] QST, float[] QTU, float[] QME, float[] QSJ, float[] POR, float[] PFO, float[] PYU, float[] PSH, float[] PTR, float[] PWH, float[] PST, float[] PTU, float[] PME, float[] PSJ, float[] TOR, float[] TFO, float[] TYU, float[] TSH, float[] TTR, float[] TWH, float[] TST, float[] TTU, float[] TME, float[] TSJ, float[] VPDOR, float[] VPDFO, float[] VPDYU, float[] VPDSH, float[] VPDTR, float[] VPDWH, float[] VPDST, float[] VPDTU, float[] VPDME, float[] VPDSJ, float[] QOR1, float[] QFO1, float[] QYU1, float[] QSH1, float[] QBD1, float[] QTR1, float[] QWH1, float[] QST1, float[] QTU1, float[] QME1, float[] QSJ1);
 }
