@@ -334,6 +334,7 @@ public class DssOperation {
 			dc.units=dds.getUnits().toUpperCase();
 			dc.values = values;
 			dc.setName("/"+ControlData.partA+"/"+DssOperation.getTSName(initName)+"/"+dds.getKind()+"//"+timeStep+"/"+ControlData.svDvPartF+"/");
+			dc.setStoreAsDoubles(true);
 			try {
 				ControlData.dvDss.put(dc);
 			} catch (Exception e) {
@@ -380,6 +381,7 @@ public class DssOperation {
 			Calendar startCalendar=Calendar.getInstance();
 			startCalendar.setTime(startDate);
 			dc.setStartTime(new HecTime(startCalendar));
+			dc.setStoreAsDoubles(true);
 			try {
 				ControlData.dvDss.put(dc);
 			} catch (Exception e) {
@@ -441,6 +443,7 @@ public class DssOperation {
 					Calendar startCalendar=Calendar.getInstance();
 					startCalendar.setTime(startDate);
 					dc.setStartTime(new HecTime(startCalendar));
+					dc.setStoreAsDoubles(true);
 					try {
 						ControlData.dvDss.put(dc);
 					} catch (Exception e) {
@@ -497,6 +500,7 @@ public class DssOperation {
 			Calendar startCalendar=Calendar.getInstance();
 			startCalendar.setTime(startDate);
 			dc.setStartTime(new HecTime(startCalendar));
+			dc.setStoreAsDoubles(true);
 			try {
 				dss.put(dc);
 			} catch (Exception e) {
@@ -535,6 +539,7 @@ public class DssOperation {
 			Calendar startCalendar=Calendar.getInstance();
 			startCalendar.setTime(startDate);
 			dc.setStartTime(new HecTime(startCalendar));
+			dc.setStoreAsDoubles(true);
 			try {
 				dss.put(dc);
 			} catch (Exception e) {
@@ -616,6 +621,7 @@ public class DssOperation {
 			}
 			//boolean storeFlags = false;
 			dc.setName("/"+ControlData.partA+"/"+initName+"/"+dds.getKind()+"//"+dds.getTimeStep()+"/"+ControlData.initPartF+"/");
+			dc.setStoreAsDoubles(true);
 			try {
 				dss.put(dc);
 			} catch (Exception e) {
@@ -673,6 +679,7 @@ public class DssOperation {
 			Calendar startCalendar=Calendar.getInstance();
 			startCalendar.setTime(startDate);
 			dc.setStartTime(new HecTime(startCalendar));
+			dc.setStoreAsDoubles(true);
 			try {
 				dss.put(dc);
 			} catch (Exception e) {
@@ -737,6 +744,7 @@ public class DssOperation {
 					Calendar startCalendar=Calendar.getInstance();
 					startCalendar.setTime(startDate);
 					dc.setStartTime(new HecTime(startCalendar));
+					dc.setStoreAsDoubles(true);
 					try {
 						dss.put(dc);
 					} catch (Exception e) {
@@ -824,6 +832,7 @@ public class DssOperation {
 			}
 			//boolean storeFlags = false;
 			dc.setName("/"+ControlData.partA+"/"+svName+"/"+dds.getKind()+"//"+dds.getTimeStep()+"/"+ControlData.svDvPartF+"/");
+			dc.setStoreAsDoubles(true);
 			try {
 				dss.put(dc);
 			} catch (Exception e) {
