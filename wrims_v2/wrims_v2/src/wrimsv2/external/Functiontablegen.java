@@ -3,6 +3,7 @@ package wrimsv2.external;
 import java.util.*;
 
 import wrimsv2.components.ControlData;
+import wrimsv2.components.FilePaths;
 
 public class Functiontablegen extends ExternalFunction{
 	private final boolean DEBUG = false;
@@ -98,13 +99,16 @@ public class Functiontablegen extends ExternalFunction{
 		}
 		int ICODE1 = ((Number) param2).intValue();
 		int ICALC1 = ((Number) param1).intValue();
+		
+		String cPath=FilePaths.genTableDir;
+		int iLenPath=cPath.length();
 
-		float result = tablegen(ICALC1, ICODE1, Q100OR, Q100FO, Q100YU, Q100SH, Q100BD, Q100TR, Q100WH, Q100ST, Q100TU, Q100ME, Q100SJ);
+		float result = tablegen(cPath, iLenPath, ICALC1, ICODE1, Q100OR, Q100FO, Q100YU, Q100SH, Q100BD, Q100TR, Q100WH, Q100ST, Q100TU, Q100ME, Q100SJ);
 
 		// push the result on the Stack
 		stack.push(new Float(result));
 
 	}
 
-	public native float tablegen(int ICALC1, int ICODE1, float[] Q100OR, float[] Q100FO, float[] Q100YU, float[] Q100SH, float[] Q100BD, float[] Q100TR, float[] Q100WH, float[] Q100ST, float[] Q100TU, float[] Q100ME, float[] Q100SJ);
+	public native float tablegen(String cPath, int iLenPath, int ICALC1, int ICODE1, float[] Q100OR, float[] Q100FO, float[] Q100YU, float[] Q100SH, float[] Q100BD, float[] Q100TR, float[] Q100WH, float[] Q100ST, float[] Q100TU, float[] Q100ME, float[] Q100SJ);
 }

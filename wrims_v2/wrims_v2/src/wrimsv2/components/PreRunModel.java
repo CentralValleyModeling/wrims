@@ -16,6 +16,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.io.FileUtils;
+
 import vista.db.dss.DSSDataWriter;
 import vista.db.dss.DSSUtil;
 import wrimsv2.commondata.wresldata.External;
@@ -29,9 +31,11 @@ import wrimsv2.evaluator.TimeOperation;
 import wrimsv2.external.LoadAllDll;
 import wrimsv2.hdf5.HDF5Reader;
 import wrimsv2.hdf5.HDF5Writer;
+import wrimsv2.wreslparser.elements.StudyUtils;
 
 public class PreRunModel {
 	public PreRunModel(StudyDataSet sds){
+		clearGenTableDir();
 		setSelectedOutputCycles();
 		
 		ControlData.currStudyDataSet=sds;
@@ -219,5 +223,22 @@ public class PreRunModel {
         catch (Exception e) {
         	e.printStackTrace();
         }  
+	}
+	
+	public void clearGenTableDir(){
+		String configFileName=new File(StudyUtils.configFilePath).getName();
+		FilePaths.genTableDir=FilePaths.mainDirectory+"lookup"+File.separator+"gen"+File.separator+configFileName+File.separator;
+		
+		File folder = new File(FilePaths.genTableDir);
+		if (folder.exists()){
+			try {
+				FileUtils.cleanDirectory(folder);
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
+		}else{
+			folder.mkdirs();
+		}
+		
 	}
 }
