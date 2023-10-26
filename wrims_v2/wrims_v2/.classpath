@@ -33,5 +33,6 @@
 	<classpathentry kind="lib" path="src/wrimsv2/lib_x64/jep-3.8.2.jar"/>
 	<classpathentry kind="lib" path="src/wrimsv2/lib_x64/java-object-diff-0.95.jar"/>
 	<classpathentry kind="lib" path="src/wrimsv2/lib_x64/libtensorflow-1.14.0.jar"/>
+	<classpathentry kind="lib" path="src/wrimsv2/lib_x64/calsurrogate.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
