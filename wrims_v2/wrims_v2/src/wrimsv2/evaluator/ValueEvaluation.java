@@ -1032,21 +1032,29 @@ public class ValueEvaluation {
 		int ei=end.getData().intValue();
 		
 		if (si>ei){
-			Error.addEvaluationError("The starting index of trunk data for variable " + ident + " is larger than the ending index");
-			idArray.add(new IntDouble(1.0, false));
-			return idArray;
-		}
-	
-		for (int i=si; i<=ei; i++){
-			ArrayList<IntDouble> indexArray1=new ArrayList<IntDouble> ();
-			IntDouble index = new IntDouble(i, true);
-			indexArray1.add(index);
-			ArrayList<ArrayList<IntDouble>> indexArray = new ArrayList<ArrayList<IntDouble>>();
-			indexArray.add(indexArray1);
-			IntDouble id=ValueEvaluation.argFunction(ident, indexArray);
-			id.setIndex(i);
-			id.setName(ident);
-			idArray.add(id);
+			for (int i=si; i>=ei; i--){
+				ArrayList<IntDouble> indexArray1=new ArrayList<IntDouble> ();
+				IntDouble index = new IntDouble(i, true);
+				indexArray1.add(index);
+				ArrayList<ArrayList<IntDouble>> indexArray = new ArrayList<ArrayList<IntDouble>>();
+				indexArray.add(indexArray1);
+				IntDouble id=ValueEvaluation.argFunction(ident, indexArray);
+				id.setIndex(i);
+				id.setName(ident);
+				idArray.add(id);
+			}
+		}else{
+			for (int i=si; i<=ei; i++){
+				ArrayList<IntDouble> indexArray1=new ArrayList<IntDouble> ();
+				IntDouble index = new IntDouble(i, true);
+				indexArray1.add(index);
+				ArrayList<ArrayList<IntDouble>> indexArray = new ArrayList<ArrayList<IntDouble>>();
+				indexArray.add(indexArray1);
+				IntDouble id=ValueEvaluation.argFunction(ident, indexArray);
+				id.setIndex(i);
+				id.setName(ident);
+				idArray.add(id);
+			}
 		}
 		return idArray;
 	}
