@@ -5,8 +5,6 @@ import java.util.*;
 
 import calsim.surrogate.SurrogateMonth;
 import calsim.surrogate.examples.EmmatonExampleTensorFlowANN;
-import wrimsv2.components.ControlData;
-import wrimsv2.components.FilePaths;
 
 public class Functionemmatonsurrogateec extends ExternalFunction{
 	private final boolean DEBUG = false;
@@ -76,7 +74,7 @@ public class Functionemmatonsurrogateec extends ExternalFunction{
 	}
 
 	public double emmatonsurrogateec(double[] sac, double[] exp, double[] dcc, double[] net_dcd, double[] sjr, double[] smscg, int year, int month){
-		SurrogateMonth surrogateMonth = EmmatonExampleTensorFlowANN.emmatonSurrogateMonth(FilePaths.mainDirectory+File.separator+"external"+File.separator+"ann_calsim-main"+File.separator+"emmaton");
+		SurrogateMonth surrogateMonth = EmmatonExampleTensorFlowANN.emmatonSurrogateMonth(externalDir+"ann_calsim-main"+File.separator+"emmaton");
 
 		double[][] sac1 = { sac };
 		double[][] exp1 = { exp };

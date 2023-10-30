@@ -9,9 +9,6 @@ import org.tensorflow.Tensor;
 import org.tensorflow.TensorFlow;
 import org.tensorflow.Session.Runner;
 
-import wrimsv2.components.ControlData;
-import wrimsv2.components.FilePaths;
-
 public class Functiondoestimation extends ExternalFunction{
 	private final boolean DEBUG = false;
 	static {
@@ -76,7 +73,7 @@ public class Functiondoestimation extends ExternalFunction{
 
 	public float doestimation(float I_TRNTY, float I_WKYTN, float I_SHSTA, float I_OROVL, float I_FOL, float I_TRNTY_Prv1, float I_WKYTN_Prv1, float I_SHSTA_Prv1, float I_OROVL_Prv1, float I_FOL_Prv1, float I_TRNTY_Prv2, float I_WKYTN_Prv2, float I_SHSTA_Prv2, float I_OROVL_Prv2, float I_FOL_Prv2, int month, int wyt_SAC){
         
-		SavedModelBundle model = SavedModelBundle.load(FilePaths.mainDirectory+File.separator+"external"+File.separator+"model", "serve");
+		SavedModelBundle model = SavedModelBundle.load(externalDir+"model", "serve");
         Session s = model.session();
         // the first 15 feature are considered as float values.
         float[][] rawdata = new float[][] { { 
