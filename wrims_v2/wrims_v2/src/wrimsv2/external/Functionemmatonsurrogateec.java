@@ -3,20 +3,44 @@ package wrimsv2.external;
 import java.io.File;
 import java.util.*;
 
+import calsim.surrogate.AggregateMonths;
+import calsim.surrogate.DailyToSurrogate;
+import calsim.surrogate.DailyToSurrogateBlocked;
+import calsim.surrogate.DisaggregateMonths;
+import calsim.surrogate.DisaggregateMonthsDaysToOps;
+import calsim.surrogate.DisaggregateMonthsRepeat;
+import calsim.surrogate.DisaggregateMonthsSpline;
+import calsim.surrogate.Surrogate;
 import calsim.surrogate.SurrogateMonth;
+import calsim.surrogate.TensorWrapper;
 import calsim.surrogate.examples.EmmatonExampleTensorFlowANN;
+import calsim.surrogate.examples.SalinitySurrogateManager;
 
 public class Functionemmatonsurrogateec extends ExternalFunction{
 	private final boolean DEBUG = false;
-
+	private SalinitySurrogateManager ssm;
 
 	public Functionemmatonsurrogateec(){
-
+		ssm=SalinitySurrogateManager.INSTANCE;
+		//set up an ANN surrogate month for emmaton	
+		int location = ssm.EMM_CALSIM;
+		int aveType = ssm.MEAN;
+		DisaggregateMonths spline = new DisaggregateMonthsSpline(5);
+		DisaggregateMonths repeat = new DisaggregateMonthsRepeat(5);
+		DisaggregateMonths daysOps = new DisaggregateMonthsDaysToOps(5, 1., 0.);
+		DisaggregateMonths[] disagg = { spline, spline, daysOps, spline, spline, spline, repeat };
+		Surrogate emm = emmatonANN();
+		AggregateMonths agg = AggregateMonths.MONTHLY_MEAN;
+		SurrogateMonth month = new SurrogateMonth(disagg, emmatonANN(), agg);
+		ssm.setSurrogateForSite(location, aveType, month);
 	}
 
 	public void execute(Stack stack) {
 
 		//values in reverse order:
+		Object param11 = stack.pop();
+		Object param10 = stack.pop();
+		Object param9 = stack.pop();
 		Object param8 = stack.pop();
 		Object param7 = stack.pop();
 		Object param6 = stack.pop();
@@ -27,8 +51,11 @@ public class Functionemmatonsurrogateec extends ExternalFunction{
 		Object param1 = stack.pop();
 
 		//cast params to correct types:
-		int month = ((Number) param8).intValue();
-		int year = ((Number) param7).intValue();
+		int year = ((Number) param11).intValue();
+		int month = ((Number) param10).intValue();
+		int ave_type = ((Number) param9).intValue();
+		int variable = ((Number) param8).intValue();
+		int location = ((Number) param7).intValue();
 		Number[] smscg_Arr = (Number[])param6;
 		int size_smscg=smscg_Arr.length;
 		double[] smscg=new double[size_smscg];
@@ -66,16 +93,15 @@ public class Functionemmatonsurrogateec extends ExternalFunction{
 			sac[i]=sac_Arr[i].doubleValue();
 		}
 
-		double result = emmatonsurrogateec(sac, exp, dcc, net_dcd, sjr, smscg, year, month);
+		float result = surrogateec(sac, exp, dcc, net_dcd, sjr, smscg, location, variable, ave_type, month, year);
 
 		// push the result on the Stack
-		stack.push(result);
+		stack.push(new Double(result));
 
 	}
 
-	public double emmatonsurrogateec(double[] sac, double[] exp, double[] dcc, double[] net_dcd, double[] sjr, double[] smscg, int year, int month){
-		SurrogateMonth surrogateMonth = EmmatonExampleTensorFlowANN.emmatonSurrogateMonth(externalDir+"ann_calsim-main"+File.separator+"emmaton");
-
+	public float surrogateec(double[] sac, double[] exp, double[] dcc, double[] net_dcd, double[] sjr, double[] smscg, int location, int variable, int ave_type, int month, int year){	
+		
 		double[][] sac1 = { sac };
 		double[][] exp1 = { exp };
 
@@ -94,7 +120,20 @@ public class Functionemmatonsurrogateec extends ExternalFunction{
 		floatInput.add(tide);
 		floatInput.add(smscg1);
 
-		double[][] out = surrogateMonth.annMonth(floatInput, year, month);
-		return out[0][0];
+		float out = ssm.annEC(floatInput, location, variable, ave_type, month, year);
+		return out;
+	}
+	
+	public static Surrogate emmatonANN() {
+		String fname = externalDir+ "ann_calsim-main/emmaton";
+		String[] tensorNames = { "serving_default_sac_input:0", "serving_default_exports_input:0",
+				"serving_default_dcc_input:0", "serving_default_net_dcd_input:0", "serving_default_sjr_input:0",
+				"serving_default_tide_input:0", "serving_default_smscg_input:0", };
+
+		String[] tensorNamesInt = new String[0];
+		String outName = "StatefulPartitionedCall:0";
+		DailyToSurrogate dayToANN = new DailyToSurrogateBlocked(8, 10, 11);
+		Surrogate wrap = new TensorWrapper(fname, tensorNames, tensorNamesInt, outName, dayToANN);
+		return wrap;
 	}
 }
