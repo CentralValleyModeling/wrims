@@ -415,6 +415,8 @@ public class WPPWsiDiTab extends AbstractLaunchConfigurationTab {
 	            	  writer.write("        lookupName=r\""+lookupPath+"\"\n");
 	              }else if (count==30){
 	            	  writer.write("        launchName=r\""+launchConfig.getFile().getLocation().toFile().getAbsolutePath()+"\"\n");
+	         	  }else if (count==31){
+	         		  writer.write("        offset="+offsetText.getText()+"\n");
 	         	  }else{
 	                  writer.append(line+"\n");
 	              }

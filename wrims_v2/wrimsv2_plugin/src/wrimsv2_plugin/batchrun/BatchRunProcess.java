@@ -123,6 +123,7 @@ public class BatchRunProcess {
 	private String unchangeInitialDss;
 	private boolean isSameInitialDss=true;
 	private String genSVCatalog="no";
+	public String wsidiOffset;
 		
 	public void launch(LaunchConfigInfo configuration, String launchFilePath) throws CoreException {		
 		
@@ -418,6 +419,7 @@ public class BatchRunProcess {
 		
 		ifsIsSelFile=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_IFSISSELENTRY, "yes");
 		unchangeGWRestart=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_UNCHANGEGWRESTART, "yes");
+		wsidiOffset=configuration.getStringAttribute(DebugCorePlugin.ATTR_WPP_WSIDIOFFSET, "1.2");
 		
 		String mainFileAbsPath;
 		if (new File(mainFile).isAbsolute()){

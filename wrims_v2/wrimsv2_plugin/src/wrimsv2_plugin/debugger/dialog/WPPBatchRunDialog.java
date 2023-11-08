@@ -85,6 +85,7 @@ public class WPPBatchRunDialog extends Dialog {
 	private String lookupNamesLine="";
 	private String engineNamesLine="";
 	private String launchNamesLine="";
+	private String offsetsLine="";
 	private String[] dvDssList;
 	private int dssCombineEndYear=1921;
 	private int dssCombineEndMonth=10;
@@ -693,6 +694,8 @@ public class WPPBatchRunDialog extends Dialog {
 	            	  writer.write(engineNamesLine);
 	              }else if (count==32){
 	            	  writer.write(launchNamesLine);
+	              }else if (count==33){
+	            	  writer.write(offsetsLine);
 	              }else{
 	                  writer.append(line+"\n");
 	              }
@@ -735,6 +738,8 @@ public class WPPBatchRunDialog extends Dialog {
 	            	  writer.write(engineNamesLine);
 	              }else if (count==32){
 	            	  writer.write(launchNamesLine);
+	              }else if (count==33){
+	            	  writer.write(offsetsLine);
 	              }else{
 	                  writer.append(line+"\n");
 	              }
@@ -761,6 +766,7 @@ public class WPPBatchRunDialog extends Dialog {
 		lookupNamesLine="        lookupNames=[";
 		engineNamesLine="        engineNames=[";
 		launchNamesLine="        launchNames=[";
+		offsetsLine =   "        offsets=[";
 		
 		for (int i=0; i<launchPathList.size(); i++){
 			String lfp=launchPathList.get(i);
@@ -773,11 +779,13 @@ public class WPPBatchRunDialog extends Dialog {
 					lookupNamesLine=lookupNamesLine+"r\""+brp.lookupFullPath+"\"";
 					engineNamesLine=engineNamesLine+"r\""+brp.engineFileFullPath+"\"";
 					launchNamesLine=launchNamesLine+"r\""+lfp+"\""; 
+					offsetsLine=offsetsLine+brp.wsidiOffset;
 				}else{
 					dvNamesLine=dvNamesLine+",r\""+brp.dvFileFullPath+"\"";
 					lookupNamesLine=lookupNamesLine+",r\""+brp.lookupFullPath+"\"";
 					engineNamesLine=engineNamesLine+",r\""+brp.engineFileFullPath+"\"";
 					launchNamesLine=launchNamesLine+",r\""+lfp+"\"";
+					offsetsLine=offsetsLine+","+brp.wsidiOffset;
 				}
 			}
 		}
@@ -785,6 +793,7 @@ public class WPPBatchRunDialog extends Dialog {
 		lookupNamesLine=lookupNamesLine+"]\n";
 		engineNamesLine=engineNamesLine+"]\n";
 		launchNamesLine=launchNamesLine+"]\n";
+		offsetsLine=offsetsLine+"]\n";
 	}
 	
 	public void procBatchRunFileNames(String fn){
