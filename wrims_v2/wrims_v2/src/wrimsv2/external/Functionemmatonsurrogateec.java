@@ -110,7 +110,18 @@ public class Functionemmatonsurrogateec extends ExternalFunction{
 		double[][] sjr1 = { sjr };
 		double[][] tide = { { 6.560, 6.184, 5.508, 5.083, 6.913 } };
 		double[][] smscg1 = { smscg };
-
+		
+		if (DEBUG){
+			System.out.println("sac " + Arrays.toString(sac));
+			System.out.println("exp " + Arrays.toString(exp));
+			System.out.println("dcc " + Arrays.toString(dcc));
+			System.out.println("net_dcd " + Arrays.toString(net_dcd));
+			System.out.println("sjr " + Arrays.toString(sjr));
+			System.out.println("smscg " + Arrays.toString(smscg));
+			System.out.println("Month " + month);
+			System.out.println("Year " + year);
+		}
+		
 		ArrayList<double[][]> floatInput = new ArrayList<double[][]>();
 		floatInput.add(sac1);
 		floatInput.add(exp1);
