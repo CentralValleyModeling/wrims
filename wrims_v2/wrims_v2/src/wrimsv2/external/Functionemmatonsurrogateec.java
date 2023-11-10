@@ -31,7 +31,7 @@ public class Functionemmatonsurrogateec extends ExternalFunction{
 		DisaggregateMonths[] disagg = { spline, spline, daysOps, spline, spline, spline, repeat };
 		Surrogate emm = emmatonANN();
 		AggregateMonths agg = AggregateMonths.MONTHLY_MEAN;
-		SurrogateMonth month = new SurrogateMonth(disagg, emmatonANN(), agg);
+		SurrogateMonth month = new SurrogateMonth(disagg, emm, agg);
 		ssm.setSurrogateForSite(location, aveType, month);
 	}
 
