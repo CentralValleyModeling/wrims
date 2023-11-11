@@ -101,6 +101,8 @@ public class PreRunModel {
 			ControlData.currCycleIndex=i;
 			processExternal();
 		}
+		new LoadAllDll(ControlData.allDll);
+		System.out.println("Loading dlls done");
 
 		if (ControlData.outputType==1){
 			System.out.println("Create HDF5 output data structure.");
@@ -163,13 +165,12 @@ public class PreRunModel {
 				ControlData.currEvalName=exName;
 				External external=exMap.get(exName);
 				ControlData.allExternalFunction.put(exName, external.type);
-				if (external.type.endsWith(".dll") && !ControlData.allDll.contains(exName)){
+				if (external.type.endsWith(".dll") && !ControlData.allDll.contains(external.type)){
 					ControlData.allDll.add(external.type);
 				}
 			}
 		}
-		new LoadAllDll(ControlData.allDll);
-		System.out.println("Load dlls for Cycle "+(ControlData.currCycleIndex+1)+" done");
+		//System.out.println("Load dlls for Cycle "+(ControlData.currCycleIndex+1)+" done");
 	}
 	
 	public void setSelectedOutputCycles(){
