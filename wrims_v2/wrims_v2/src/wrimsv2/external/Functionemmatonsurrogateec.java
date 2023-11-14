@@ -3,6 +3,8 @@ package wrimsv2.external;
 import java.io.File;
 import java.util.*;
 
+import wrimsv2.components.ControlData;
+import wrimsv2.components.TimeUsage;
 import calsim.surrogate.AggregateMonths;
 import calsim.surrogate.DailyToSurrogate;
 import calsim.surrogate.DailyToSurrogateBlocked;
@@ -18,6 +20,8 @@ import calsim.surrogate.examples.SalinitySurrogateManager;
 
 public class Functionemmatonsurrogateec extends ExternalFunction{
 	private final boolean DEBUG = false;
+	private static int cpuTime=0;
+	private static int nCalls=0;
 	private SalinitySurrogateManager ssm;
 
 	public Functionemmatonsurrogateec(){
@@ -37,6 +41,8 @@ public class Functionemmatonsurrogateec extends ExternalFunction{
 
 	public void execute(Stack stack) {
 
+		long t1 = Calendar.getInstance().getTimeInMillis();
+		
 		//values in reverse order:
 		Object param11 = stack.pop();
 		Object param10 = stack.pop();
@@ -97,7 +103,20 @@ public class Functionemmatonsurrogateec extends ExternalFunction{
 
 		// push the result on the Stack
 		stack.push(new Double(result));
-
+		
+		long t2 = Calendar.getInstance().getTimeInMillis();
+		cpuTime=cpuTime+(int) (t2-t1);
+		nCalls++;
+		if (TimeUsage.cpuTimeMap.containsKey("emmatonsurrogateec")){
+			TimeUsage.cpuTimeMap.replace("emmatonsurrogateec", cpuTime);
+		}else{
+			TimeUsage.cpuTimeMap.put("emmatonsurrogateec", cpuTime);
+		}
+		if (TimeUsage.nCallsMap.containsKey("emmatonsurrogateec")){
+			TimeUsage.nCallsMap.replace("emmatonsurrogateec", nCalls);
+		}else{
+			TimeUsage.nCallsMap.put("emmatonsurrogateec", nCalls);
+		}
 	}
 
 	public float surrogateec(double[] sac, double[] exp, double[] dcc, double[] net_dcd, double[] sjr, double[] smscg, int location, int variable, int ave_type, int month, int year){	

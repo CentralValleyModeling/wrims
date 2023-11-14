@@ -241,7 +241,7 @@ public class ControllerDebug extends Thread {
 			if (ControlData.outputType!=1) ControlData.writer.closeDSSFile();
 			return;
 		}
-		if (ControlData.showTimeUsage) new TimeUsage();
+		if (ControlData.showTimeUsage) TimeUsage.showTimeUsage();
 		System.out.println("=================Run ends!================");
 	}
 	

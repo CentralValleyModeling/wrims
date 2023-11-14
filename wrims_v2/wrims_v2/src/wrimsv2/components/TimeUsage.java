@@ -1,8 +1,18 @@
 package wrimsv2.components;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import wrimsv2.external.ExternalFunction;
+import wrimsv2.external.Functionemmatonsurrogateec;
+
 public class TimeUsage {
 
-	public TimeUsage(){
+	public static Map<String, Integer> cpuTimeMap = new HashMap<String, Integer>();
+	public static Map<String, Integer> nCallsMap = new HashMap<String, Integer>();
+	
+	public static void showTimeUsage(){
 		System.out.println("Parse Time Usage: "+ControlData.t_parse/60000+"min "+Math.round((ControlData.t_parse/60000.0-ControlData.t_parse/60000)*60)+"sec");
 		System.out.println("Read Timeseries Time Usage: "+ControlData.t_readTs/60000+"min "+Math.round((ControlData.t_readTs/60000.0-ControlData.t_readTs/60000)*60)+"sec");
 		System.out.println("Process Timesereis Time Usage: "+ControlData.t_ts/60000+"min "+Math.round((ControlData.t_ts/60000.0-ControlData.t_ts/60000)*60)+"sec");
@@ -30,6 +40,17 @@ public class TimeUsage {
 		System.out.println("ANN Get NDO X2 Number of Calls: "+ControlData.n_anngetndo_x2);
 		System.out.println("ANN Get NDO X2 Split Time Usage: "+ControlData.t_anngetndo_x2_curmonndosplit/60000+"min "+Math.round((ControlData.t_anngetndo_x2_curmonndosplit/60000.0-ControlData.t_anngetndo_x2_curmonndosplit/60000)*60)+"sec");
 		System.out.println("ANN Get NDO X2 Split Number of Calls: "+ControlData.n_anngetndo_x2_curmonndosplit);
+		Iterator<String> it = cpuTimeMap.keySet().iterator();
+		while (it.hasNext()){
+			String pi=it.next();
+			int cpuTime=cpuTimeMap.get(pi);
+			System.out.println("EmmatonSurrogateEC Time Usage: "+cpuTime/60000+"min "+Math.round((cpuTime/60000.0-cpuTime/60000)*60)+"sec");
+			if (nCallsMap.containsKey(pi)){
+				int nCalls = nCallsMap.get(pi);
+				System.out.println("EmmatonSurrogateEC Time Usage: "+ nCalls);
+			}
+		}
+		
 	}
 	
 }

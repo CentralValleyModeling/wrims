@@ -100,7 +100,7 @@ public class ControllerBatch {
 				ILP.setMaximumFractionDigits();
 				
 				runModel(sds);
-				if (ControlData.showTimeUsage) new TimeUsage();
+				if (ControlData.showTimeUsage) TimeUsage.showTimeUsage();
 				long endTimeInMillis = Calendar.getInstance().getTimeInMillis();
 				int runPeriod=(int) (endTimeInMillis-startTimeInMillis);
 				System.out.println("=================Run Time is "+runPeriod/60000+"min"+Math.round((runPeriod/60000.0-runPeriod/60000)*60)+"sec====");
