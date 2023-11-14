@@ -1,9 +1,7 @@
 package wrimsv2.external;
 
-import java.io.File;
 import java.util.*;
 
-import wrimsv2.components.ControlData;
 import wrimsv2.components.TimeUsage;
 import calsim.surrogate.AggregateMonths;
 import calsim.surrogate.DailyToSurrogate;
@@ -107,15 +105,15 @@ public class Functionemmatonsurrogateec extends ExternalFunction{
 		long t2 = Calendar.getInstance().getTimeInMillis();
 		cpuTime=cpuTime+(int) (t2-t1);
 		nCalls++;
-		if (TimeUsage.cpuTimeMap.containsKey("emmatonsurrogateec")){
-			TimeUsage.cpuTimeMap.replace("emmatonsurrogateec", cpuTime);
+		if (cpuTimeMap.containsKey("emmatonsurrogateec")){
+			cpuTimeMap.replace("emmatonsurrogateec", cpuTime);
 		}else{
-			TimeUsage.cpuTimeMap.put("emmatonsurrogateec", cpuTime);
+			cpuTimeMap.put("emmatonsurrogateec", cpuTime);
 		}
-		if (TimeUsage.nCallsMap.containsKey("emmatonsurrogateec")){
-			TimeUsage.nCallsMap.replace("emmatonsurrogateec", nCalls);
+		if (nCallsMap.containsKey("emmatonsurrogateec")){
+			nCallsMap.replace("emmatonsurrogateec", nCalls);
 		}else{
-			TimeUsage.nCallsMap.put("emmatonsurrogateec", nCalls);
+			nCallsMap.put("emmatonsurrogateec", nCalls);
 		}
 	}
 
