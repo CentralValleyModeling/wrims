@@ -1,7 +1,9 @@
 package wrimsv2.external;
 
+import java.io.File;
 import java.util.*;
 
+import wrimsv2.components.ControlData;
 import wrimsv2.components.TimeUsage;
 import calsim.surrogate.AggregateMonths;
 import calsim.surrogate.DailyToSurrogate;
@@ -20,9 +22,12 @@ public class Functionemmatonsurrogateec extends ExternalFunction{
 	private final boolean DEBUG = false;
 	private static int cpuTime=0;
 	private static int nCalls=0;
+	private static int cpuTime0=0;
+	private static int nCalls0=0;
 	private SalinitySurrogateManager ssm;
 
 	public Functionemmatonsurrogateec(){
+		long t1 = Calendar.getInstance().getTimeInMillis();
 		ssm=SalinitySurrogateManager.INSTANCE;
 		//set up an ANN surrogate month for emmaton	
 		int location = ssm.EMM_CALSIM;
@@ -35,6 +40,12 @@ public class Functionemmatonsurrogateec extends ExternalFunction{
 		AggregateMonths agg = AggregateMonths.MONTHLY_MEAN;
 		SurrogateMonth month = new SurrogateMonth(disagg, emm, agg);
 		ssm.setSurrogateForSite(location, aveType, month);
+		
+		long t2 = Calendar.getInstance().getTimeInMillis();
+		cpuTime0=cpuTime0+(int) (t2-t1);
+		nCalls0++;
+		TimeUsage.cpuTimeMap.put("emmatonsurrogateec_constructor", cpuTime0);
+		TimeUsage.nCallsMap.put("emmatonsurrogateec_constructor", nCalls0);
 	}
 
 	public void execute(Stack stack) {
@@ -105,16 +116,8 @@ public class Functionemmatonsurrogateec extends ExternalFunction{
 		long t2 = Calendar.getInstance().getTimeInMillis();
 		cpuTime=cpuTime+(int) (t2-t1);
 		nCalls++;
-		if (cpuTimeMap.containsKey("emmatonsurrogateec")){
-			cpuTimeMap.replace("emmatonsurrogateec", cpuTime);
-		}else{
-			cpuTimeMap.put("emmatonsurrogateec", cpuTime);
-		}
-		if (nCallsMap.containsKey("emmatonsurrogateec")){
-			nCallsMap.replace("emmatonsurrogateec", nCalls);
-		}else{
-			nCallsMap.put("emmatonsurrogateec", nCalls);
-		}
+		TimeUsage.cpuTimeMap.put("emmatonsurrogateec", cpuTime);
+		TimeUsage.nCallsMap.put("emmatonsurrogateec", nCalls);
 	}
 
 	public float surrogateec(double[] sac, double[] exp, double[] dcc, double[] net_dcd, double[] sjr, double[] smscg, int location, int variable, int ave_type, int month, int year){	
