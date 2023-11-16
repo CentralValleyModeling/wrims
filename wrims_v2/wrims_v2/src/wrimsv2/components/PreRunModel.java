@@ -35,7 +35,7 @@ import wrimsv2.wreslparser.elements.StudyUtils;
 
 public class PreRunModel {
 	public PreRunModel(StudyDataSet sds){
-		clearGenTableDir();
+		setGenTableDir();
 		setSelectedOutputCycles();
 		
 		ControlData.currStudyDataSet=sds;
@@ -226,17 +226,19 @@ public class PreRunModel {
         }  
 	}
 	
-	public void clearGenTableDir(){
+	public void setGenTableDir(){
 		String configFileName=new File(StudyUtils.configFilePath).getName();
 		FilePaths.genTableDir=FilePaths.mainDirectory+"lookup"+File.separator+"gen"+File.separator+configFileName+File.separator;
 		
 		File folder = new File(FilePaths.genTableDir);
 		if (folder.exists()){
+			/*
 			try {
 				FileUtils.cleanDirectory(folder);
 			} catch (IOException e) {
 				e.printStackTrace();
 			} 
+			*/
 		}else{
 			folder.mkdirs();
 		}
