@@ -148,6 +148,7 @@ public class Functionemmatonsurrogatelinegen extends ExternalFunction{
 		exp[BATCHZERO][0] = (double) (Qexp_est);
 		dcc[BATCHZERO][0] = (double) DXC_fut;
 		dcd[BATCHZERO][0] = (double) DICU_fut;
+		sjr[BATCHZERO][0] = (double) Qsjr_fut;
 		tide[BATCHZERO][0] = -999.;
 		smscg[BATCHZERO][0] = (double) SMSCG_fut;
 
