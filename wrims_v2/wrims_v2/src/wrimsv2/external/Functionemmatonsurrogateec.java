@@ -22,8 +22,6 @@ public class Functionemmatonsurrogateec extends ExternalFunction{
 	private final boolean DEBUG = false;
 	private static int cpuTime=0;
 	private static int nCalls=0;
-	private static int cpuTime0=0;
-	private static int nCalls0=0;
 	private SalinitySurrogateManager ssm;
 
 	public Functionemmatonsurrogateec(){
@@ -42,10 +40,10 @@ public class Functionemmatonsurrogateec extends ExternalFunction{
 		ssm.setSurrogateForSite(location, aveType, month);
 		
 		long t2 = Calendar.getInstance().getTimeInMillis();
-		cpuTime0=cpuTime0+(int) (t2-t1);
-		nCalls0++;
-		TimeUsage.cpuTimeMap.put("emmatonsurrogateec_constructor", cpuTime0);
-		TimeUsage.nCallsMap.put("emmatonsurrogateec_constructor", nCalls0);
+		cpuTime=cpuTime+(int) (t2-t1);
+		nCalls++;
+		TimeUsage.cpuTimeMap.put("emmatonsurrogateec", cpuTime);
+		TimeUsage.nCallsMap.put("emmatonsurrogateec", nCalls);
 	}
 
 	public void execute(Stack stack) {
