@@ -1383,7 +1383,7 @@ public class ConfigUtils {
 
 	}
 
-	private static void readParameter(String configFilePath) {
+	public static void readParameter(String configFilePath) {
 	
 		final File configFile = new File(configFilePath);	
 	
@@ -1480,7 +1480,7 @@ public class ConfigUtils {
 		
 	}
 	
-	private static boolean readBoolean(Map<String, String> cM, String name, boolean defaultV){
+	public static boolean readBoolean(Map<String, String> cM, String name, boolean defaultV){
 		
 		String l = name.toLowerCase();
 		if (cM.keySet().contains(l)) {		
@@ -1494,7 +1494,7 @@ public class ConfigUtils {
 		return defaultV;
 	}
 	
-	private static double readDouble(Map<String, String> cM, String name, double defaultV){
+	public static double readDouble(Map<String, String> cM, String name, double defaultV){
 		
 		double returnV = defaultV;
 		String l = name.toLowerCase();
