@@ -32,6 +32,8 @@ public class ConfigUtils {
 
 	public static LinkedHashMap<String, ParamTemp> paramMap = new LinkedHashMap<String, ParamTemp>();
 	
+	public static Map<String, String> configMap = new HashMap<String, String>();
+	
 	public static void loadArgs(String[] args) {
 
 		// for Error.log header
@@ -115,7 +117,7 @@ public class ConfigUtils {
 		//StudyUtils.config_errors = 0; // reset
 		String k=null;
 
-		Map<String, String> configMap = new HashMap<String, String>();
+		configMap = new HashMap<String, String>();
 
 		configMap = checkConfigFile(configFile);
 		
