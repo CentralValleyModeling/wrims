@@ -24,7 +24,7 @@ import org.eclipse.ui.PlatformUI;
 import wrimsv2_plugin.debugger.exception.WPPException;
 
 
-
+@SuppressWarnings("unused")
 public class ReportButtonAction implements ActionListener {
 
 	@Override

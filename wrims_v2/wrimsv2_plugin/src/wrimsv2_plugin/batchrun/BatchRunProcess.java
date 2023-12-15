@@ -785,7 +785,7 @@ public class BatchRunProcess {
 	 * @throws CoreException
 	 */
 	private void abort(String message, Throwable e) throws CoreException {
-		throw new CoreException(new Status(IStatus.ERROR, DebugCorePlugin.getDefault().getDescriptor().getUniqueIdentifier(), 0, message, e));
+		throw new CoreException(new Status(IStatus.ERROR, DebugCorePlugin.getDefault().getBundle().getSymbolicName(), 0, message, e));
 	}
 	
 	/**

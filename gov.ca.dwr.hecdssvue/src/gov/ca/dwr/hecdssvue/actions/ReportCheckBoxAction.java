@@ -32,6 +32,7 @@ import wrimsv2_plugin.debugger.model.WPPValue;
 import wrimsv2_plugin.debugger.view.WPPGoalView;
 import wrimsv2_plugin.tools.DataProcess;
 
+@SuppressWarnings("unused")
 public class ReportCheckBoxAction implements ActionListener {
 
 	@Override

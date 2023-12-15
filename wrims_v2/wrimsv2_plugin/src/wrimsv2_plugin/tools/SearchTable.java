@@ -3,7 +3,6 @@ package wrimsv2_plugin.tools;
 import java.util.Stack;
 
 import org.eclipse.debug.core.DebugException;
-import org.eclipse.swt.custom.TableTreeItem;
 import org.eclipse.swt.widgets.TableItem;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;

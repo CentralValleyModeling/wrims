@@ -13,6 +13,7 @@ package wrimsv2_plugin.debugger.core;
 
 import org.eclipse.core.internal.resources.PreferenceInitializer;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
@@ -382,8 +383,8 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static File getFileInPlugin(IPath path) {
 		try {
 			URL installURL =
-				new URL(getDefault().getDescriptor().getInstallURL(), path.toString());
-			URL localURL = Platform.asLocalURL(installURL);
+				new URL(getDefault().getBundle().getEntry("/"), path.toString());
+			URL localURL = FileLocator.toFileURL(installURL);
 			return new File(localURL.getFile());
 		} catch (IOException ioe) {
 			return null;

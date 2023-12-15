@@ -3,13 +3,7 @@ package wrimsv2_plugin.debugger.dialog;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.eclipse.debug.core.DebugException;
-import org.eclipse.jface.viewers.TableTreeViewer;
-import org.eclipse.jface.viewers.CellEditor.LayoutData;
-import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.TableTree;
-import org.eclipse.swt.custom.TableTreeItem;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
