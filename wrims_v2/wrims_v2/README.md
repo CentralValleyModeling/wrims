@@ -1,0 +1,210 @@
+jdeps.exe -cp .\vista\lib\vista.jar lib\WRIMSv2.jar > wrimsv2.dep.txt
+<br>
+
+- WRIMSv2.jar -> .\vista\lib\vista.jar
+- WRIMSv2.jar -> not found
+<br><br>
+- org.antlr.runtime                                  -> org.antlr.runtime.misc                             WRIMSv2.jar
+- org.antlr.runtime                                  -> org.antlr.runtime.tree                             WRIMSv2.jar
+- org.antlr.runtime.debug                            -> org.antlr.runtime                                  WRIMSv2.jar
+- org.antlr.runtime.debug                            -> org.antlr.runtime.misc                             WRIMSv2.jar
+- org.antlr.runtime.debug                            -> org.antlr.runtime.tree                             WRIMSv2.jar
+- org.antlr.runtime.tree                             -> org.antlr.runtime                                  WRIMSv2.jar
+- org.antlr.runtime.tree                             -> org.antlr.runtime.misc                             WRIMSv2.jar
+- org.antlr.runtime.tree                             -> org.antlr.stringtemplate                           not found
+- wrimsv2.commondata.solverdata                      -> wrimsv2.commondata.wresldata                       WRIMSv2.jar
+- wrimsv2.commondata.solverdata                      -> wrimsv2.evaluator                                  WRIMSv2.jar
+- wrimsv2.commondata.wresldata                       -> org.antlr.runtime                                  WRIMSv2.jar
+- wrimsv2.commondata.wresldata                       -> wrimsv2.commondata.solverdata                      WRIMSv2.jar
+- wrimsv2.commondata.wresldata                       -> wrimsv2.components                                 WRIMSv2.jar
+- wrimsv2.commondata.wresldata                       -> wrimsv2.evaluator                                  WRIMSv2.jar
+- wrimsv2.commondata.wresldata                       -> wrimsv2.parallel                                   WRIMSv2.jar
+- wrimsv2.components                                 -> com.sunsetsoft.xa                                  not found
+- wrimsv2.components                                 -> gurobi                                             not found
+- wrimsv2.components                                 -> org.antlr.runtime                                  WRIMSv2.jar
+- wrimsv2.components                                 -> vista.db.dss                                       vista.jar
+- wrimsv2.components                                 -> vista.set                                          vista.jar
+- wrimsv2.components                                 -> wrimsv2.commondata.solverdata                      WRIMSv2.jar
+- wrimsv2.components                                 -> wrimsv2.commondata.wresldata                       WRIMSv2.jar
+- wrimsv2.components                                 -> wrimsv2.config                                     WRIMSv2.jar
+- wrimsv2.components                                 -> wrimsv2.debug                                      WRIMSv2.jar
+- wrimsv2.components                                 -> wrimsv2.evaluator                                  WRIMSv2.jar
+- wrimsv2.components                                 -> wrimsv2.external                                   WRIMSv2.jar
+- wrimsv2.components                                 -> wrimsv2.hdf5                                       WRIMSv2.jar
+- wrimsv2.components                                 -> wrimsv2.ilp                                        WRIMSv2.jar
+- wrimsv2.components                                 -> wrimsv2.launch                                     WRIMSv2.jar
+- wrimsv2.components                                 -> wrimsv2.parallel                                   WRIMSv2.jar
+- wrimsv2.components                                 -> wrimsv2.solver                                     WRIMSv2.jar
+- wrimsv2.components                                 -> wrimsv2.solver.Gurobi                              WRIMSv2.jar
+- wrimsv2.components                                 -> wrimsv2.solver.mpmodel                             WRIMSv2.jar
+- wrimsv2.components                                 -> wrimsv2.solver.ortools                             WRIMSv2.jar
+- wrimsv2.components                                 -> wrimsv2.sql                                        WRIMSv2.jar
+- wrimsv2.components                                 -> wrimsv2.tools                                      WRIMSv2.jar
+- wrimsv2.components                                 -> wrimsv2.wreslparser.elements                       WRIMSv2.jar
+- wrimsv2.components                                 -> wrimsv2.wreslparser.grammar                        WRIMSv2.jar
+- wrimsv2.components                                 -> wrimsv2.wreslplus.elements                         WRIMSv2.jar
+- wrimsv2.components                                 -> wrimsv2.wreslplus.elements.procedures              WRIMSv2.jar
+- wrimsv2.components                                 -> wrimsv2.wreslplus.grammar                          WRIMSv2.jar
+- wrimsv2.config                                     -> org.antlr.runtime                                  WRIMSv2.jar
+- wrimsv2.config                                     -> org.coinor.cbc                                     not found
+- wrimsv2.config                                     -> wrimsv2.components                                 WRIMSv2.jar
+- wrimsv2.config                                     -> wrimsv2.evaluator                                  WRIMSv2.jar
+- wrimsv2.config                                     -> wrimsv2.ilp                                        WRIMSv2.jar
+- wrimsv2.config                                     -> wrimsv2.solver                                     WRIMSv2.jar
+- wrimsv2.config                                     -> wrimsv2.wreslparser.elements                       WRIMSv2.jar
+- wrimsv2.config                                     -> wrimsv2.wreslplus.elements                         WRIMSv2.jar
+- wrimsv2.config                                     -> wrimsv2.wreslplus.grammar                          WRIMSv2.jar
+- wrimsv2.debug                                      -> vista.db.dss                                       vista.jar
+- wrimsv2.debug                                      -> vista.set                                          vista.jar
+- wrimsv2.debug                                      -> wrimsv2.commondata.wresldata                       WRIMSv2.jar
+- wrimsv2.debug                                      -> wrimsv2.components                                 WRIMSv2.jar
+- wrimsv2.debug                                      -> wrimsv2.evaluator                                  WRIMSv2.jar
+- wrimsv2.debug                                      -> wrimsv2.external                                   WRIMSv2.jar
+- wrimsv2.debug                                      -> wrimsv2.solver                                     WRIMSv2.jar
+- wrimsv2.debug                                      -> wrimsv2.wreslparser.elements                       WRIMSv2.jar
+- wrimsv2.evaluator                                  -> org.antlr.runtime                                  WRIMSv2.jar
+- wrimsv2.evaluator                                  -> org.antlr.runtime.tree                             WRIMSv2.jar
+- wrimsv2.evaluator                                  -> vista.db.dss                                       vista.jar
+- wrimsv2.evaluator                                  -> vista.set                                          vista.jar
+- wrimsv2.evaluator                                  -> vista.time                                         vista.jar
+- wrimsv2.evaluator                                  -> wrimsv2.commondata.solverdata                      WRIMSv2.jar
+- wrimsv2.evaluator                                  -> wrimsv2.commondata.wresldata                       WRIMSv2.jar
+- wrimsv2.evaluator                                  -> wrimsv2.components                                 WRIMSv2.jar
+- wrimsv2.evaluator                                  -> wrimsv2.external                                   WRIMSv2.jar
+- wrimsv2.evaluator                                  -> wrimsv2.hdf5                                       WRIMSv2.jar
+- wrimsv2.evaluator                                  -> wrimsv2.ilp                                        WRIMSv2.jar
+- wrimsv2.evaluator                                  -> wrimsv2.parallel                                   WRIMSv2.jar
+- wrimsv2.evaluator                                  -> wrimsv2.solver                                     WRIMSv2.jar
+- wrimsv2.evaluator                                  -> wrimsv2.tools                                      WRIMSv2.jar
+- wrimsv2.external                                   -> jep                                                not found
+- wrimsv2.external                                   -> org.tensorflow                                     not found
+- wrimsv2.external                                   -> wrimsv2.commondata.wresldata                       WRIMSv2.jar
+- wrimsv2.external                                   -> wrimsv2.components                                 WRIMSv2.jar
+- wrimsv2.external                                   -> wrimsv2.evaluator                                  WRIMSv2.jar
+- wrimsv2.external                                   -> wrimsv2.ilp                                        WRIMSv2.jar
+- wrimsv2.external                                   -> wrimsv2.solver                                     WRIMSv2.jar
+- wrimsv2.hdf5                                       -> ncsa.hdf.hdf5lib                                   not found
+- wrimsv2.hdf5                                       -> ncsa.hdf.hdf5lib.exceptions                        not found
+- wrimsv2.hdf5                                       -> vista.db.dss                                       vista.jar
+- wrimsv2.hdf5                                       -> vista.set                                          vista.jar
+- wrimsv2.hdf5                                       -> vista.time                                         vista.jar
+- wrimsv2.hdf5                                       -> wrimsv2.commondata.wresldata                       WRIMSv2.jar
+- wrimsv2.hdf5                                       -> wrimsv2.components                                 WRIMSv2.jar
+- wrimsv2.hdf5                                       -> wrimsv2.config                                     WRIMSv2.jar
+- wrimsv2.hdf5                                       -> wrimsv2.evaluator                                  WRIMSv2.jar
+- wrimsv2.hdf5                                       -> wrimsv2.launch                                     WRIMSv2.jar
+- wrimsv2.hdf5                                       -> wrimsv2.parallel                                   WRIMSv2.jar
+- wrimsv2.hdf5                                       -> wrimsv2.tools                                      WRIMSv2.jar
+- wrimsv2.ilp                                        -> com.google.ortools.linearsolver                    not found
+- wrimsv2.ilp                                        -> com.sunsetsoft.xa                                  not found
+- wrimsv2.ilp                                        -> wrimsv2.commondata.solverdata                      WRIMSv2.jar
+- wrimsv2.ilp                                        -> wrimsv2.commondata.wresldata                       WRIMSv2.jar
+- wrimsv2.ilp                                        -> wrimsv2.components                                 WRIMSv2.jar
+- wrimsv2.ilp                                        -> wrimsv2.evaluator                                  WRIMSv2.jar
+- wrimsv2.ilp                                        -> wrimsv2.solver                                     WRIMSv2.jar
+- wrimsv2.ilp                                        -> wrimsv2.solver.Gurobi                              WRIMSv2.jar
+- wrimsv2.ilp                                        -> wrimsv2.solver.mpmodel                             WRIMSv2.jar
+- wrimsv2.ilp                                        -> wrimsv2.solver.ortools                             WRIMSv2.jar
+- wrimsv2.ilp                                        -> wrimsv2.wreslparser.elements                       WRIMSv2.jar
+- wrimsv2.launch                                     -> wrimsv2.components                                 WRIMSv2.jar
+- wrimsv2.launch                                     -> wrimsv2.evaluator                                  WRIMSv2.jar
+- wrimsv2.launch                                     -> wrimsv2.ilp                                        WRIMSv2.jar
+- wrimsv2.launch                                     -> wrimsv2.solver                                     WRIMSv2.jar
+- wrimsv2.launch                                     -> wrimsv2.wreslparser.elements                       WRIMSv2.jar
+- wrimsv2.parallel                                   -> org.antlr.runtime                                  WRIMSv2.jar
+- wrimsv2.parallel                                   -> wrimsv2.commondata.wresldata                       WRIMSv2.jar
+- wrimsv2.parallel                                   -> wrimsv2.components                                 WRIMSv2.jar
+- wrimsv2.parallel                                   -> wrimsv2.evaluator                                  WRIMSv2.jar
+- wrimsv2.solver                                     -> com.sunsetsoft.xa                                  not found
+- wrimsv2.solver                                     -> lpsolve                                            not found
+- wrimsv2.solver                                     -> org.coinor.cbc                                     not found
+- wrimsv2.solver                                     -> org.coinor.clp                                     not found
+- wrimsv2.solver                                     -> wrimsv2.commondata.solverdata                      WRIMSv2.jar
+- wrimsv2.solver                                     -> wrimsv2.commondata.wresldata                       WRIMSv2.jar
+- wrimsv2.solver                                     -> wrimsv2.components                                 WRIMSv2.jar
+- wrimsv2.solver                                     -> wrimsv2.evaluator                                  WRIMSv2.jar
+- wrimsv2.solver                                     -> wrimsv2.ilp                                        WRIMSv2.jar
+- wrimsv2.solver                                     -> wrimsv2.solver.Gurobi                              WRIMSv2.jar
+- wrimsv2.solver                                     -> wrimsv2.solver.cbc                                 WRIMSv2.jar
+- wrimsv2.solver                                     -> wrimsv2.solver.clp                                 WRIMSv2.jar
+- wrimsv2.solver                                     -> wrimsv2.tools                                      WRIMSv2.jar
+- wrimsv2.solver                                     -> wrimsv2.wreslplus.elements                         WRIMSv2.jar
+- wrimsv2.solver.Gurobi                              -> gurobi                                             not found
+- wrimsv2.solver.Gurobi                              -> wrimsv2.commondata.solverdata                      WRIMSv2.jar
+- wrimsv2.solver.Gurobi                              -> wrimsv2.commondata.wresldata                       WRIMSv2.jar
+- wrimsv2.solver.Gurobi                              -> wrimsv2.components                                 WRIMSv2.jar
+- wrimsv2.solver.Gurobi                              -> wrimsv2.evaluator                                  WRIMSv2.jar
+- wrimsv2.solver.mpmodel                             -> wrimsv2.solver.mpmodel.export                      WRIMSv2.jar
+- wrimsv2.solver.mpmodel                             -> wrimsv2.wreslparser.elements                       WRIMSv2.jar
+- wrimsv2.solver.mpmodel.export                      -> wrimsv2.commondata.solverdata                      WRIMSv2.jar
+- wrimsv2.solver.mpmodel.export                      -> wrimsv2.commondata.wresldata                       WRIMSv2.jar
+- wrimsv2.solver.mpmodel.export                      -> wrimsv2.components                                 WRIMSv2.jar
+- wrimsv2.solver.mpmodel.export                      -> wrimsv2.evaluator                                  WRIMSv2.jar
+- wrimsv2.solver.mpmodel.export                      -> wrimsv2.solver.mpmodel                             WRIMSv2.jar
+- wrimsv2.solver.ortools                             -> com.google.ortools.linearsolver                    not found
+- wrimsv2.solver.ortools                             -> wrimsv2.commondata.solverdata                      WRIMSv2.jar
+- wrimsv2.solver.ortools                             -> wrimsv2.commondata.wresldata                       WRIMSv2.jar
+- wrimsv2.solver.ortools                             -> wrimsv2.components                                 WRIMSv2.jar
+- wrimsv2.solver.ortools                             -> wrimsv2.evaluator                                  WRIMSv2.jar
+- wrimsv2.solver.ortools                             -> wrimsv2.solver.mpmodel                             WRIMSv2.jar
+- wrimsv2.sql                                        -> vista.db.dss                                       vista.jar
+- wrimsv2.sql                                        -> vista.set                                          vista.jar
+- wrimsv2.sql                                        -> vista.time                                         vista.jar
+- wrimsv2.sql                                        -> wrimsv2.components                                 WRIMSv2.jar
+- wrimsv2.sql                                        -> wrimsv2.evaluator                                  WRIMSv2.jar
+- wrimsv2.sql                                        -> wrimsv2.sql.socket                                 WRIMSv2.jar
+- wrimsv2.sql                                        -> wrimsv2.tools                                      WRIMSv2.jar
+- wrimsv2.tf                                         -> org.tensorflow                                     not found
+- wrimsv2.tools                                      -> de.danielbechler.diff                              not found
+- wrimsv2.tools                                      -> de.danielbechler.diff.node                         not found
+- wrimsv2.tools                                      -> org.antlr.runtime                                  WRIMSv2.jar
+- wrimsv2.tools                                      -> sun.management                                     JDK internal API (java.management)
+- wrimsv2.tools                                      -> wrimsv2.commondata.solverdata                      WRIMSv2.jar
+- wrimsv2.tools                                      -> wrimsv2.commondata.wresldata                       WRIMSv2.jar
+- wrimsv2.tools                                      -> wrimsv2.components                                 WRIMSv2.jar
+- wrimsv2.tools                                      -> wrimsv2.evaluator                                  WRIMSv2.jar
+- wrimsv2.tools                                      -> wrimsv2.wreslparser.elements                       WRIMSv2.jar
+- wrimsv2.tools                                      -> wrimsv2.wreslparser.grammar                        WRIMSv2.jar
+- wrimsv2.tools                                      -> wrimsv2.wreslplus.elements                         WRIMSv2.jar
+- wrimsv2.tools.solutionRangeFinder                  -> com.google.ortools.linearsolver                    not found
+- wrimsv2.tools.solutionRangeFinder                  -> wrimsv2.solver.mpmodel                             WRIMSv2.jar
+- wrimsv2.tools.solutionRangeFinder                  -> wrimsv2.solver.ortools                             WRIMSv2.jar
+- wrimsv2.tools.solutionRangeFinder                  -> wrimsv2.wreslplus.elements                         WRIMSv2.jar
+- wrimsv2.wreslparser.elements                       -> com.esotericsoftware.kryo                          not found
+- wrimsv2.wreslparser.elements                       -> com.esotericsoftware.kryo.io                       not found
+- wrimsv2.wreslparser.elements                       -> org.antlr.runtime                                  WRIMSv2.jar
+- wrimsv2.wreslparser.elements                       -> org.antlr.runtime.tree                             WRIMSv2.jar
+- wrimsv2.wreslparser.elements                       -> org.testng                                         not found
+- wrimsv2.wreslparser.elements                       -> wrimsv2.commondata.wresldata                       WRIMSv2.jar
+- wrimsv2.wreslparser.elements                       -> wrimsv2.components                                 WRIMSv2.jar
+- wrimsv2.wreslparser.elements                       -> wrimsv2.evaluator                                  WRIMSv2.jar
+- wrimsv2.wreslparser.elements                       -> wrimsv2.solver.mpmodel                             WRIMSv2.jar
+- wrimsv2.wreslparser.elements                       -> wrimsv2.sql.socket                                 WRIMSv2.jar
+- wrimsv2.wreslparser.elements                       -> wrimsv2.tools                                      WRIMSv2.jar
+- wrimsv2.wreslparser.elements                       -> wrimsv2.wreslparser.grammar                        WRIMSv2.jar
+- wrimsv2.wreslparser.elements                       -> wrimsv2.wreslplus.elements                         WRIMSv2.jar
+- wrimsv2.wreslparser.elements                       -> wrimsv2.wreslplus.elements.procedures              WRIMSv2.jar
+- wrimsv2.wreslparser.grammar                        -> org.antlr.runtime                                  WRIMSv2.jar
+- wrimsv2.wreslparser.grammar                        -> org.antlr.runtime.tree                             WRIMSv2.jar
+- wrimsv2.wreslparser.grammar                        -> wrimsv2.commondata.wresldata                       WRIMSv2.jar
+- wrimsv2.wreslparser.grammar                        -> wrimsv2.wreslparser.elements                       WRIMSv2.jar
+- wrimsv2.wreslparser.grammar                        -> wrimsv2.wreslplus.elements                         WRIMSv2.jar
+- wrimsv2.wreslplus.elements                         -> org.antlr.runtime                                  WRIMSv2.jar
+- wrimsv2.wreslplus.elements                         -> wrimsv2.commondata.wresldata                       WRIMSv2.jar
+- wrimsv2.wreslplus.elements                         -> wrimsv2.components                                 WRIMSv2.jar
+- wrimsv2.wreslplus.elements                         -> wrimsv2.config                                     WRIMSv2.jar
+- wrimsv2.wreslplus.elements                         -> wrimsv2.wreslparser.elements                       WRIMSv2.jar
+- wrimsv2.wreslplus.elements                         -> wrimsv2.wreslplus.elements.procedures              WRIMSv2.jar
+- wrimsv2.wreslplus.elements                         -> wrimsv2.wreslplus.grammar                          WRIMSv2.jar
+- wrimsv2.wreslplus.elements.procedures              -> org.antlr.runtime                                  WRIMSv2.jar
+- wrimsv2.wreslplus.elements.procedures              -> wrimsv2.commondata.wresldata                       WRIMSv2.jar
+- wrimsv2.wreslplus.elements.procedures              -> wrimsv2.components                                 WRIMSv2.jar
+- wrimsv2.wreslplus.elements.procedures              -> wrimsv2.config                                     WRIMSv2.jar
+- wrimsv2.wreslplus.elements.procedures              -> wrimsv2.evaluator                                  WRIMSv2.jar
+- wrimsv2.wreslplus.elements.procedures              -> wrimsv2.wreslparser.elements                       WRIMSv2.jar
+- wrimsv2.wreslplus.elements.procedures              -> wrimsv2.wreslplus.elements                         WRIMSv2.jar
+- wrimsv2.wreslplus.grammar                          -> org.antlr.runtime                                  WRIMSv2.jar
+- wrimsv2.wreslplus.grammar                          -> org.antlr.runtime.tree                             WRIMSv2.jar
+- wrimsv2.wreslplus.grammar                          -> wrimsv2.commondata.wresldata                       WRIMSv2.jar
+- wrimsv2.wreslplus.grammar                          -> wrimsv2.wreslparser.elements                       WRIMSv2.jar
+- wrimsv2.wreslplus.grammar                          -> wrimsv2.wreslplus.elements                         WRIMSv2.jar
