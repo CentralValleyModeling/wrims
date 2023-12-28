@@ -32,7 +32,7 @@ public class SalinitySurrogateSetup{
 
 		//set up an ANN surrogate month for emmaton	
 		int location = ssm.EMM_CALSIM;
-		int aveType = ssm.MEAN;
+		int aveType = ssm.MONTHLY_AVE;
 		DisaggregateMonths spline = new DisaggregateMonthsSpline(5);
 		DisaggregateMonths repeat = new DisaggregateMonthsRepeat(5);
 		DisaggregateMonths daysOps = new DisaggregateMonthsDaysToOps(5, 1., 0.);
