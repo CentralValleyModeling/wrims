@@ -202,15 +202,15 @@ public class PreRunModel {
             String line;
             int lineCount=1;
 			while ((line = br.readLine()) != null) {
-                if (line.toUpperCase().contains("11: INITIAL CONDITIONS DATA FILE")){
+                if (line.toUpperCase().contains("INITIAL CONDITIONS DATA FILE")){
                 	if (ControlData.startMonth==1){
                 		String initMonth="DEC";
                 		int initYear=ControlData.startYear-1;
-                		line="Restart\\CVInitial_Restart_"+initMonth+initYear+".dat                /11: INITIAL CONDITIONS DATA FILE (INPUT, REQUIRED)";
+                		line="Restart\\CVInitial_Restart_"+initMonth+initYear+".dat                /6: INITIAL CONDITIONS DATA FILE (INPUT, REQUIRED)";
                 	}else{
                 		String initMonth=TimeOperation.monthName(ControlData.startMonth-1);
                 		int initYear=ControlData.startYear;
-                		line="Restart\\CVInitial_Restart_"+initMonth+initYear+".dat                /11: INITIAL CONDITIONS DATA FILE (INPUT, REQUIRED)";
+                		line="Restart\\CVInitial_Restart_"+initMonth+initYear+".dat                /6: INITIAL CONDITIONS DATA FILE (INPUT, REQUIRED)";
                 	}
 				}   
                 bw.write(line+"\n");
