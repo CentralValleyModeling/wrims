@@ -6,7 +6,6 @@ on:
       - wrims-devops
   push:
     branches:
-      - Feature/wrims-core
       - wrims-devops
 
 jobs:
