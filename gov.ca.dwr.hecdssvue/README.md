@@ -1,4 +1,13 @@
-jdeps.exe  -cp dropins\gov.ca.dwr.hecdssvue_1.0.0.0.jar;dropins\gov.ca.dwr.jdiagram_1.0.0.0.jar;lib\WRIMSv2.jar;dropins\wrimsv2_plugin_1.0.0.0.jar;lib\calsim.jar;lib\hec.jar;lib\hecData.jar;lib\heclib.jar;lib\vista.jar;lib\dsm2-input-model.jar  
+## dwr.hecdssvue dependencies
+The HECDSSVUE jar is a plugin to Eclipse's Equinox RCP (Rich Client Platform). Its components include the packages
+listed below, with indicated dependencies on other packages managed here (i.e. excluding external jars from java,
+eclipse, etc.)
+### Jar files:
+- vista.jar
+- WRIMSv2.jar
+- hec.jar
+- dsm2-input-model.jar
+- wrimsv2_plugin_1.0.0.0.jar (i.e. internal dependencies)jdeps.exe  -cp dropins\gov.ca.dwr.hecdssvue_1.0.0.0.jar;dropins\gov.ca.dwr.jdiagram_1.0.0.0.jar;lib\WRIMSv2.jar;dropins\wrimsv2_plugin_1.0.0.0.jar;lib\calsim.jar;lib\hec.jar;lib\hecData.jar;lib\heclib.jar;lib\vista.jar;lib\dsm2-input-model.jar  
 dropins\gov.ca.dwr.hecdssvue_1.0.0.0.jar
 
 - gov.ca.dwr.hecdssvue_1.0.0.0.jar -> dropins\wrimsv2_plugin_1.0.0.0.jar
