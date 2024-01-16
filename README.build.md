@@ -37,7 +37,7 @@ In Eclipse:
   - Choose the option "Existing Projects into Workspace" and press the "Next" button.
   - Browse to D:\cvwrsm\trunk and import the project `mil.army.usace.hec-dependencies`
 
-- Close all projects in the Package Explorer except
+- The following projects must be present in the Package Explorer to build the wrimsv2_plugin project:
 	- `mil.army.usace.hec-dependencies`
 	- `gov.ca.dwr.hecdssvue`
 	- `gov.ca.dwr.jdiagram`
@@ -59,7 +59,17 @@ In Eclipse:
 
 - Select `wrimsv2_plugin` project in the Package Explorer and select Build Path=>Configure Build Path... from the right-click menu. If the JRE System Library is "unbound" in the dialog that follows, select it, and click the Edit... button. Select the workspace default JRE, and close the dialogs.
 
-- From the project menu, run "Clean..." followed by "Build All"
+- From the project menu, run "Clean..." then clean and build the projects for 
+  - `gov.ca.dwr.hecdssvue`
+  - `gov.ca.dwr.jdiagram`
+  - `wrimsv2_plugin`<br>
+
+This build omits the projects
+- `gov.ca.dwr.wresl.editor`
+- `gov.ca.dwr.wresl.editor.ui`<br>
+ 
+This means that not all of the features of the WRIMS GUI will be available.<br>
+
 
 - In `wrimsv2_plugin`, select WRIMS2_plugin.launch and pick Run As=>WRIMS2_plugin from the right-click menu. 
 - This launches the WRIMS application. You'll see an Eclipse splash screen, and some messages in the console window. The WRIMS app should run in spite of the messages.
