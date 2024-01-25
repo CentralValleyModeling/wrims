@@ -6,7 +6,8 @@ Directories here:
 -  buildSrc -- Holds build configuration information common to all subprojects. For specifics, see Gradle documentation https://docs.gradle.org/current/userguide/organizing_gradle_projects.html#sec:build_sources
 -  gradle -- configurations for the gradle build, most significantly the file "libs.version.toml" which sets the version numbers for the libraries that will be retrieved from Maven Central or other artifact repositories at build time
 -  wrims-core -- the gradle sub-project that produces the equivalent of the previous WRIMSv2.jar file
--  wrims_v2 -- see above
+- wrims_plugin -- the gradle sub-project that produces the equivalent of the previous WRIMSv2_plugin.jar file 
+- wrims_v2 -- see above
 
 The remaining files at this level are set up to support a mult-project gradle build as described at https://docs.gradle.org/current/userguide/intro_multi_project_builds.html
 
