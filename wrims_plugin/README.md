@@ -26,3 +26,12 @@ p2 artifact repositories using com.diffplug.p2-maven-plugin. Others are local co
 the wrims_plugin/plugins directory. As the devops team updates, these jars should all be 
 retrieved from repositories. Once we reach java 11, it should be possible to pull all 
 Eclipse dependencies from Maven Central.
+
+## Gradle build results:
+1. The plugin jar is built in wrims_plugin/build/libs/wrims_plugin-*branch-id*-SNAPSHOT.jar
+2. The gradle-build jar contains only the classes in the wrimsv2_plugin package, in contrast to 
+the distributed jar, which also contains a folder of icons, some .dll files, and 
+internal copies of many of its dependency jars.
+3. Within the wrimsv2_plugin package, the gradle build produces exactly the same set of 
+classes as the HEC-DSS v6 distributed jar. None of the class files in the two jar files are
+identical, however.
