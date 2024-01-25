@@ -1,0 +1,84 @@
+
+plugins{
+    id 'library.deps-conventions'
+    id 'library.java-conventions'
+
+    // The following plugin is used to pull jars from Eclipse's p2 repositories
+    //
+    id 'com.diffplug.p2.asmaven' version '3.44.0'
+}
+
+// The jars we pull from Eclipse's p2 repositories
+def eclipseDeps = [
+        'org.eclipse.core.commands',
+        'org.eclipse.core.contenttype',
+        'org.eclipse.core.jobs',
+        'org.eclipse.core.runtime',
+        'org.eclipse.core.resources',
+        'org.eclipse.debug.core',
+        'org.eclipse.debug.ui',
+        'org.eclipse.equinox.common',
+        'org.eclipse.equinox.preferences',
+        'org.eclipse.jdt.core',
+        'org.eclipse.text',
+        'org.eclipse.osgi'
+]
+// build a maven repo in our build folder containing these artifacts
+// eclipse version used for this project is Luna SR2 (4.4.2)
+p2AsMaven {
+    group 'p2', {
+        repoEclipse '4.4.2'
+        eclipseDeps.each { p2.addIU(it) }
+        eclipseDeps.each { p2.addIU(it + '.source') }
+    }
+}
+
+java {
+    sourceCompatibility = '1.6'
+    targetCompatibility = '1.8'
+}
+
+sourceSets {
+    src {
+        java {
+            srcDirs "src/main/java/"
+        }
+    }
+}
+
+dependencies {
+    implementation project(':wrims-core')
+
+    eclipseDeps.each { implementation "p2:${it}:+" }
+    implementation libs.commons.io
+    implementation libs.itext
+
+    implementation fileTree(dir: 'plugins', include: '*.jar')
+
+    // JFreeChart is used in reports and jcommon provides
+    // dependncies needed for jfreechart
+    // the jfreechart and jcommon jars in the WRIMS project don't match
+    // any of the versions in maven central. The jfreechart classes dated 2010,
+    // and the jcommon classes are dated 2009.
+    // implementation libs.jcommon
+    // implementation libs.jfreechart
+    // implementation files('dep-local/jcommon.jar')
+    implementation files('dep-local/jfreechart.jar')
+
+    implementation files('dep-local/dsm2-input-model.jar')
+
+    // these should be superseded with the hec-monolith updates
+    implementation files('dep-local/vista.jar')
+    implementation files('dep-local/hec.jar')
+    implementation files('dep-local/rma.jar')
+    // replace with:
+    // implementation libs.hec.monolith
+    // implementation libs.hec.nucleus.metadata
+
+}
+
+configurations.all {
+    exclude group: "javax.media", module: "jai_core"
+    exclude group: "javax.media", module: "jai_codec"
+    exclude group: "com.sun.media", module: "jai_imageio"
+}

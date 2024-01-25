@@ -1,28 +1,34 @@
 [versions]
+commons-io = "2.1"
+guava = "11.0.2"
 hec-monolith = "3.3.22"
 hec-nucleus-metadata = "2.0.1"
-guava = "11.0.2"
-commons-io = "2.1"
-xstream = "1.4.3"
-javatuples = "1.2"
 java-object-diff = "0.95"
-kryo = "2.24.0"
+javatuples = "1.2"
+jcommon = "1.0.17"
 jep = "3.8.2"
+jfreechart = "1.0.14"
+kryo = "2.24.0"
 libtensorflow = "1.14.0"
+itext = "2.1.5"
 testng = "6.3"
+xstream = "1.4.3"
 
 [libraries]
+antlr = "org.antlr:antlr:3.5.2"
+commons-io = { module = "commons-io:commons-io", version.ref = "commons-io" }
+guava = { module = "com.google.guava:guava", version.ref = "guava" }
 hec-monolith = { module = "mil.army.usace.hec:hec-monolith", version.ref = "hec-monolith" }
 hec-nucleus-metadata = { module = "mil.army.usace.hec:hec-nucleus-metadata", version.ref = "hec-nucleus-metadata" }
-antlr = "org.antlr:antlr:3.5.2"
-guava = { module = "com.google.guava:guava", version.ref = "guava" }
-commons-io = { module = "commons-io:commons-io", version.ref = "commons-io" }
-xstream = { module = "com.thoughtworks.xstream:xstream", version.ref = "xstream" }
-javatuples = { module = "org.javatuples:javatuples", version.ref = "javatuples" }
+itext = { module = "com.lowagie:itext", version.ref = "itext" }
 java-object-diff = { module = "de.danielbechler:java-object-diff", version.ref = "java-object-diff" }
-kryo = { module = "com.esotericsoftware.kryo:kryo", version.ref = "kryo" }
+javatuples = { module = "org.javatuples:javatuples", version.ref = "javatuples" }
+jcommon = { module = "org.jfree:jcommon", version.ref = "jcommon" }
 jep = { module = "black.ninia:jep", version.ref = "jep" }
+jfreechart = { module = "org.jfree:jfreechart", version.ref = "jfreechart" }
+kryo = { module = "com.esotericsoftware.kryo:kryo", version.ref = "kryo" }
 libtensorflow = { module = "org.tensorflow:libtensorflow", version.ref = "libtensorflow" }
 testng = { module = "org.testng:testng", version.ref = "testng" }
+xstream = { module = "com.thoughtworks.xstream:xstream", version.ref = "xstream" }
 
 [bundles]
