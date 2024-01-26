@@ -11,8 +11,7 @@ file dates in the jar and comparing decompiled sources from the local jars, this
 build was configured to use the local copies, which appear to have a feature set 
  somewhere between jfreechart v 1.0.13 and 1.0.14 and jcommon v 1.0.16 and 1.0.17. These jars 
 are available on Maven central in the jfree.org organization. Earlier versions of 
-the jars are available on Maven Central in the jfree (not jfree.org) organization.
-<br>
+the jars are available on Maven Central in the jfree (not jfree.org) organization.<br>
 In order to build the plugin with the Maven Central jars, it would have been necessary to 
 refactor imports in ReportPDFWriter.java from
   - `import org.jfree.chart.util.RectangleInsets;`
