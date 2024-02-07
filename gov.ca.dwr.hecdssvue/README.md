@@ -1,7 +1,7 @@
-# WRIMS Plugin build notes
+# gov.ca.dwr.hecdssvue Plugin build notes
 
 ### The plugin depends on 
-1. the WRIMS Core project, which is built by the gradle sub-project wrims-core
+1. the wrims_plugin project, which is built by the gradle sub-project wrims_plugin
 2. hec.jar and vista.jar, which should be superseded by updated HEC dependencies to match WRIMS-core
 3. jfreechart.jar and jcommon.jar. There are local copies of these at 
   - wrims_v2/wrims_plugin/lib_x64/jfreechart.jar

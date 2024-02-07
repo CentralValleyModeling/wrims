@@ -1,0 +1,20 @@
+plugins{
+    id 'library.deps-conventions'
+    id 'library.java-conventions'
+
+    // The following plugin is used to pull jars from Eclipse's p2 repositories
+    //
+    // id 'com.diffplug.p2.asmaven' version '3.36.0'
+
+    // The following plugin is used to build the OSGI bundle
+    id 'biz.aQute.bnd.builder' version '6.4.0'
+}
+
+// group = 'gov.ca.dwr'
+
+dependencies {
+}
+
+// test {
+//     useJUnitPlatform()
+// }

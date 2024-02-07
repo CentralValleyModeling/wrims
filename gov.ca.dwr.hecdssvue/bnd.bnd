@@ -1,0 +1,6 @@
+Bundle-Name: HEC-DSSVue in DWR
+Bundle-SymbolicName: gov.ca.dwr.hecdssvue;singleton:=true
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: gov.ca.dwr.hecdssvue;uses:="org.eclipse.jface.resource,org.eclipse.ui.plugin,org.osgi.framework",gov.ca.dwr.hecdssvue.components,gov.ca.dwr.hecdssvue.panel,gov.ca.dwr.hecdssvue.views;uses:="org.eclipse.core.runtime.jobs,javax.swing,hec.gfx2d,org.eclipse.swt.graphics,org.eclipse.jface.viewers,org.eclipse.ui.part,org.eclipse.swt.widgets,hec.dataTable"
+Bundle-Activator: gov.ca.dwr.hecdssvue.Activator
+Bundle-ActivationPolicy: lazy
