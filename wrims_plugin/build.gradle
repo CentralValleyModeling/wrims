@@ -1,41 +1,51 @@
-
 plugins{
     id 'library.deps-conventions'
     id 'library.java-conventions'
 
     // The following plugin is used to pull jars from Eclipse's p2 repositories
     //
-    id 'com.diffplug.p2.asmaven' version '3.44.0'
+    // id 'com.diffplug.p2.asmaven' version '3.36.0'
+
+    // The following plugin is used to build the OSGI bundle
+    id 'biz.aQute.bnd.builder' version '6.4.0'
 }
 
 // The jars we pull from Eclipse's p2 repositories
-def eclipseDeps = [
-        'org.eclipse.core.commands',
-        'org.eclipse.core.contenttype',
-        'org.eclipse.core.jobs',
-        'org.eclipse.core.runtime',
-        'org.eclipse.core.resources',
-        'org.eclipse.debug.core',
-        'org.eclipse.debug.ui',
-        'org.eclipse.equinox.common',
-        'org.eclipse.equinox.preferences',
-        'org.eclipse.jdt.core',
-        'org.eclipse.text',
-        'org.eclipse.osgi'
-]
+// def eclipseDeps = [
+//         'org.eclipse.core.commands',
+//         'org.eclipse.core.contenttype',
+//         'org.eclipse.core.jobs',
+//         'org.eclipse.core.runtime',
+//         'org.eclipse.core.resources',
+//         'org.eclipse.debug.core',
+//         'org.eclipse.debug.ui',
+//         'org.eclipse.equinox.common',
+//         'org.eclipse.equinox.preferences',
+//         'org.eclipse.jdt.core',
+//         'org.eclipse.text',
+//         'org.eclipse.osgi'
+// ]
 // build a maven repo in our build folder containing these artifacts
 // eclipse version used for this project is Luna SR2 (4.4.2)
-p2AsMaven {
-    group 'p2', {
-        repoEclipse '4.4.2'
-        eclipseDeps.each { p2.addIU(it) }
-        eclipseDeps.each { p2.addIU(it + '.source') }
-    }
-}
-
+// p2AsMaven {
+//     group 'p2', {
+//         repo 'http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/'
+//         repo 'http://download.eclipse.org/releases/luna'
+//         repo 'http://download.eclipse.org/technology/babel/update-site/R0.13.1/luna'
+//         repo 'http://download.eclipse.org/tools/orbit/downloads/drops/R20140525021250/repository/'
+//         repo 'http://udig.refractions.net/files/update-jai/'
+//         eclipseDeps.each { p2.addIU(it) }
+//         eclipseDeps.each { p2.addIU(it + '.source') }
+//    }
+// }
+// repositories {
+//     maven {
+//         url "${buildDir}/p2AsMaven/maven"
+//     }
+// }
 java {
-    sourceCompatibility = '1.6'
-    targetCompatibility = '1.8'
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 sourceSets {
@@ -49,11 +59,10 @@ sourceSets {
 dependencies {
     implementation project(':wrims-core')
 
-    eclipseDeps.each { implementation "p2:${it}:+" }
+    // eclipseDeps.each { implementation "p2:${it}:+" }
+    implementation fileTree(dir: 'plugins', include: ['*.jar'])
     implementation libs.commons.io
     implementation libs.itext
-
-    implementation fileTree(dir: 'plugins', include: '*.jar')
 
     // JFreeChart is used in reports and jcommon provides
     // dependncies needed for jfreechart
@@ -74,6 +83,10 @@ dependencies {
     // replace with:
     // implementation libs.hec.monolith
     // implementation libs.hec.nucleus.metadata
+
+    // The following dependencies are used to build the OSGI bundle
+    implementation 'org.osgi:org.osgi.core:6.0.0'
+    implementation 'org.osgi:org.osgi.compendium:5.0.0'
 
 }
 

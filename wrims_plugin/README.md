@@ -3,15 +3,16 @@
 ### The plugin depends on 
 1. the WRIMS Core project, which is built by the gradle sub-project wrims-core
 2. hec.jar and vista.jar, which should be superceded by updated HEC dependencies to match WRIMS-core
-3. Jars for jfreechart and jcommon. There are local copies of these at 
+3. jfreechart.jar and jcommon.jar. There are local copies of these at 
   - wrims_v2/wrims_plugin/lib_x64/jfreechart.jar
   - wrims_v2/wrims_plugin/lib_x64/sys/jcommon.jar<br>
 but they don't match the jars in Maven Central or other repositories. Based on 
 file dates in the jar and comparing decompiled sources from the local jars, this 
 build was configured to use the local copies, which appear to have a feature set 
- somewhere between jfreechart v 1.0.13 and 1.0.14 and jcommon v 1.0.16 and 1.0.17. These jars 
-are available on Maven central in the jfree.org organization. Earlier versions of 
-the jars are available on Maven Central in the jfree (not jfree.org) organization.
+ somewhere between jfreechart v 1.0.13 and 1.0.14 and jcommon v 1.0.16 and 1.0.17. 
+The jars with version numbers are available on Maven central in the jfree.org 
+organization. Earlier versions of the jars are available on Maven Central in the 
+jfree (not jfree.org) organization.
 <br>
 In order to build the plugin with the Maven Central jars, it would have been necessary to 
 refactor imports in ReportPDFWriter.java from
