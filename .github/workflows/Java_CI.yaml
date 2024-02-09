@@ -3,10 +3,10 @@ name: Java CI
 on:
   pull_request:
     branches:
-      - wrims-devops
+      - Feature/wrims-devops
   push:
     branches:
-      - wrims-devops
+      - Feature/wrims-devops
 
 jobs:
   build:
