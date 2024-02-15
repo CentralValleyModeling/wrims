@@ -53,7 +53,9 @@ public class Test_heclib7 extends TestCase {
 		data[11]=12.0;
 		dds.setData(data);
 		dds.setTimeStep("1MON");
-		Date startDate = new Date(1921-1900, 10-1, 31);
+		Calendar calendar = Calendar.getInstance();
+        calendar.set(1921, 10-1, 31, 24, 0);
+        Date startDate = calendar.getTime();
 		dds.setStartTime(startDate);
 		dds.setUnits("Test");
 		dds.setKind("None");
