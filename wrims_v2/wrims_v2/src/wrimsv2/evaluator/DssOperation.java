@@ -317,20 +317,21 @@ public class DssOperation {
 			DssDataSet dds=DataTimeSeries.dvAliasInit.get(initName);
 			ArrayList<Double> data=dds.getData();
 			int size=data.size();
-			double[] values=new double[size];
-			for (int i=0; i<size; i++){
-				values[i]=data.get(i);
-			}
 			String timeStep=dds.getTimeStep();
 			TimeSeriesContainer dc = new TimeSeriesContainer();
 			Date startDate=dds.getStartTime();
 			Calendar startCalendar=Calendar.getInstance();
-			startCalendar.setTime(startDate);
+			Date startDate1 = new Date(startDate.getYear(), startDate.getMonth(), startDate.getDate(), 24, 0);
+			startCalendar.setTime(startDate1);
 			//long startJulmin = TimeFactory.getInstance().createTime(startDate).getTimeInMinutes();
-			Date modelStartDate=new Date(ControlData.startYear-1900, ControlData.startMonth, ControlData.startDay);
+			Date modelStartDate=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
 			dc.setStartTime(new HecTime(startCalendar));
 			dc.type="PER-AVER";
-			dc.numberValues=TimeOperation.getNumberOfTimestep(startDate, modelStartDate, timeStep);
+			dc.numberValues=Math.min(size, TimeOperation.getNumberOfTimestep(startDate, modelStartDate, timeStep));
+			double[] values=new double[dc.numberValues];
+			for (int i=0; i<dc.numberValues; i++){
+				values[i]=data.get(i);
+			}
 			dc.units=dds.getUnits().toUpperCase();
 			dc.values = values;
 			dc.setName("/"+ControlData.partA+"/"+DssOperation.getTSName(initName)+"/"+dds.getKind()+"//"+timeStep+"/"+ControlData.svDvPartF+"/");
@@ -379,7 +380,8 @@ public class DssOperation {
 			//boolean storeFlags = false;
 			dc.setName("/"+ControlData.partA+"/"+DssOperation.getTSName(dvAliasName)+"/"+ddsfl.getKind()+"//"+ddsfl.getTimeStep()+"/"+ControlData.svDvPartF+"/");
 			Calendar startCalendar=Calendar.getInstance();
-			startCalendar.setTime(startDate);
+			Date startDate1 = new Date(startDate.getYear(), startDate.getMonth(), startDate.getDate(), 24, 0);
+			startCalendar.setTime(startDate1);
 			dc.setStartTime(new HecTime(startCalendar));
 			dc.setStoreAsDoubles(true);
 			try {
@@ -441,7 +443,8 @@ public class DssOperation {
 					//boolean storeFlags = false;
 					dc.setName("/"+ControlData.partA+"_Cycle"+cycleI+"/"+DssOperation.getTSName(dvAliasName)+"/"+ddsfl.getKind()+"//"+ddsfl.getTimeStep()+"/"+ControlData.svDvPartF+"/");
 					Calendar startCalendar=Calendar.getInstance();
-					startCalendar.setTime(startDate);
+					Date startDate1 = new Date(startDate.getYear(), startDate.getMonth(), startDate.getDate(), 24, 0);
+					startCalendar.setTime(startDate1);
 					dc.setStartTime(new HecTime(startCalendar));
 					dc.setStoreAsDoubles(true);
 					try {
@@ -498,7 +501,8 @@ public class DssOperation {
 			//boolean storeFlags = false;
 			dc.setName("/"+ControlData.partA+"/"+DssOperation.getTSName(initName)+"/"+dds.getKind()+"//"+timeStep+"/"+ControlData.svDvPartF+"/");
 			Calendar startCalendar=Calendar.getInstance();
-			startCalendar.setTime(startDate);
+			Date startDate1 = new Date(startDate.getYear(), startDate.getMonth(), startDate.getDate(), 24, 0);
+			startCalendar.setTime(startDate1);
 			dc.setStartTime(new HecTime(startCalendar));
 			dc.setStoreAsDoubles(true);
 			try {
@@ -537,7 +541,8 @@ public class DssOperation {
 			//boolean storeFlags = false;
 			dc.setName("/"+ControlData.partA+"/"+DssOperation.getTSName(initName)+"/"+dds.getKind()+"//"+timeStep+"/"+ControlData.initPartF+"/");
 			Calendar startCalendar=Calendar.getInstance();
-			startCalendar.setTime(startDate);
+			Date startDate1 = new Date(startDate.getYear(), startDate.getMonth(), startDate.getDate(), 24, 0);
+			startCalendar.setTime(startDate1);
 			dc.setStartTime(new HecTime(startCalendar));
 			dc.setStoreAsDoubles(true);
 			try {
@@ -577,9 +582,10 @@ public class DssOperation {
 			dc.values=new double[size];
 			Date startDate=dds.getStartTime();
 			Calendar startCalendar=Calendar.getInstance();
-			startCalendar.setTime(startDate);
+			Date startDate1 = new Date(startDate.getYear(), startDate.getMonth(), startDate.getDate(), 24, 0);
+			startCalendar.setTime(startDate1);
 			dc.setStartTime(new HecTime(startCalendar));
-			startDate.setTime(startDate.getTime()-1*24*60*60);
+			//startDate.setTime(startDate.getTime()-1*24*60*60);
 			int year=startDate.getYear()+1900;
 			int month=startDate.getMonth()+1;
 			int day=startDate.getDate();
@@ -677,7 +683,8 @@ public class DssOperation {
 			//boolean storeFlags = false;
 			dc.setName("/"+ControlData.partA+"/"+DssOperation.getTSName(dvAliasName)+"/"+ddsfl.getKind()+"//"+timestep+"/"+ControlData.svDvPartF+"/");
 			Calendar startCalendar=Calendar.getInstance();
-			startCalendar.setTime(startDate);
+			Date startDate1 = new Date(startDate.getYear(), startDate.getMonth(), startDate.getDate(), 24, 0);
+			startCalendar.setTime(startDate1);
 			dc.setStartTime(new HecTime(startCalendar));
 			dc.setStoreAsDoubles(true);
 			try {
@@ -740,7 +747,7 @@ public class DssOperation {
 					//boolean storeFlags = false;
 					dc.setName("/"+ControlData.partA+"_Cycle"+cycleI+"/"+DssOperation.getTSName(dvAliasName)+"/"+ddsfl.getKind()+"//"+timestep+"/"+ControlData.svDvPartF+"/");
 					//Date startDate=ddsfl.getStartTime();
-					Date startDate=new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay);
+					Date startDate=new Date(ControlData.memStartYear-1900, ControlData.memStartMonth-1, ControlData.memStartDay, 24, 0);
 					Calendar startCalendar=Calendar.getInstance();
 					startCalendar.setTime(startDate);
 					dc.setStartTime(new HecTime(startCalendar));
@@ -788,9 +795,10 @@ public class DssOperation {
 			dc.values=new double[size];
 			Date startDate=dds.getStartTime();
 			Calendar startCalendar=Calendar.getInstance();
-			startCalendar.setTime(startDate);
+			Date startDate1 = new Date(startDate.getYear(), startDate.getMonth(), startDate.getDate(), 24, 0);
+			startCalendar.setTime(startDate1);
 			dc.setStartTime(new HecTime(startCalendar));
-			startDate.setTime(startDate.getTime()-1*24*60*60);
+			//startDate.setTime(startDate.getTime()-1*24*60*60);
 			int year=startDate.getYear()+1900;
 			int month=startDate.getMonth()+1;
 			int day=startDate.getDate();

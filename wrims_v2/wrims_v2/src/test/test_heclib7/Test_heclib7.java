@@ -40,7 +40,7 @@ public class Test_heclib7 extends TestCase {
 			assertEquals(11527200, tsc.getMinutes()[1]);//30 Nov 1921 2400
 			assertEquals(11656800, tsc.getMinutes()[4]);//28 Feb 1922 2400
 		} finally {
-			File dvFile = new File(dvPath6); 
+			File dvFile = new File(dvPath6);
 			dvFile.delete();
 		}
 	}
@@ -61,10 +61,10 @@ public class Test_heclib7 extends TestCase {
 			assertEquals(11527200, tsc.getMinutes()[1]);//30 Nov 1921 2400
 			assertEquals(11656800, tsc.getMinutes()[4]);//28 Feb 1922 2400
 		}finally {
-			File dvFile = new File(dvPath7); 
+			File dvFile = new File(dvPath7);
 			dvFile.delete();
 		}
-	}	
+	}
 	private void initializeData(){
 		DssDataSetFixLength dds=new DssDataSetFixLength();
 		double[] data=new double[12];
@@ -83,9 +83,8 @@ public class Test_heclib7 extends TestCase {
 		dds.setData(data);
 		dds.setTimeStep("1MON");
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(1921, 10-1, 31, 24, 0);
-		Date startDate = calendar.getTime();
-//		Date startDate = new Date(1921-1900, 10-1, 31);
+        calendar.set(1921, 10-1, 31, 24, 0);
+        Date startDate = calendar.getTime();
 		dds.setStartTime(startDate);
 		dds.setUnits("Test");
 		dds.setKind("None");
@@ -125,7 +124,7 @@ public class Test_heclib7 extends TestCase {
 				dc.values=null;
 				dc=null;
 				values=null;
-			}					
+			}
 		} finally{
 				dvDss.close();
 	}
@@ -144,5 +143,5 @@ public class Test_heclib7 extends TestCase {
 			dvDss.close();
 		}
 	}
-	
+
 }
