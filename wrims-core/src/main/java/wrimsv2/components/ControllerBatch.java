@@ -56,6 +56,7 @@ public class ControllerBatch {
 	
 	public boolean enableProgressLog = false;
 	public boolean enableConfigProgress = false;
+	private boolean runCompleted = false;
 	private MySQLCWriter mySQLCWriter;
 	private MySQLRWriter mySQLRWriter;
 	private SQLServerRWriter sqlServerRWriter;
@@ -105,10 +106,10 @@ public class ControllerBatch {
 				int runPeriod=(int) (endTimeInMillis-startTimeInMillis);
 				System.out.println("=================Run Time is "+runPeriod/60000+"min"+Math.round((runPeriod/60000.0-runPeriod/60000)*60)+"sec====");
 				ILP.writeNoteLn("Total time", "(sec): "+                        Math.round(runPeriod/1000.0));
-				ILP.writeNoteLn("Total time", "(min): "+                        Math.round(runPeriod/1000.0/60));				
+				ILP.writeNoteLn("Total time", "(min): "+                        Math.round(runPeriod/1000.0/60));
+				runCompleted = true;
 			} else {
 				System.out.println("=================Run ends with errors=================");
-				System.exit(1);
 			}
 			
 		} catch (RecognitionException e) {
@@ -116,7 +117,10 @@ public class ControllerBatch {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.exit(0);
+	}
+
+	public boolean isRunCompleted() {
+		return runCompleted;
 	}
 
 	public void processArgs(String[] args){
@@ -494,7 +498,11 @@ public class ControllerBatch {
 	}
 
 	public static void main(String[] args){
-		new ControllerBatch(args);
+		if((new ControllerBatch(args)).isRunCompleted()) {
+			System.exit(0);
+		} else {
+			System.exit(1);
+		}
 	}
 
 	public void runModelILP(StudyDataSet sds){
