@@ -81,6 +81,7 @@ publishing {
                 username = project.findProperty('dwr-gpr.user') ?: "error"
                 password = project.findProperty('dwr-gpr.key') ?: "error"
             }
+
         }
     }
 }
