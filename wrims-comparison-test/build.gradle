@@ -13,6 +13,10 @@ repositories{
     maven {
         name = "GitHubPackages"
         url = uri("https://maven.pkg.github.com/rmanet/cvwrsm")
+        credentials {
+            username = project.findProperty("dwr-gpr.user") ?: System.getenv("GITHUB_USERNAME")
+            password = project.findProperty("dwr-gpr.key") ?: System.getenv("GITHUB_TOKEN")
+        }
     }
 }
 
