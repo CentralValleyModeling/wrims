@@ -20,6 +20,10 @@ compileJava {
     // Java 17 doesn't work.)
 }
 
+test {
+    useJUnitPlatform()
+}
+
 java {
     // When building a library, ensure that a Sources and Javadoc jar are included as well; this makes sure
     // that IDEs are able to automatically download and use the sources and javadoc for your library.

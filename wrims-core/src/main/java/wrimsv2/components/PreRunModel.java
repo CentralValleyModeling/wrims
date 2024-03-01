@@ -82,15 +82,9 @@ public class PreRunModel {
 		if (FilePaths.svarFile.toLowerCase().endsWith(".h5")){
 			HDF5Reader.readTimeseries();
 		}else{
-			//if (ControlData.genSVCatalog) DSSUtil.generateCatalog(FilePaths.fullSvarFilePath);
-			//ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarFilePath);
-			HecDssCatalog catalog = new HecDssCatalog(FilePaths.fullSvarFilePath);
-	        ControlData.cacheSvar = CondensedReferenceCacheAndRead.createCondensedCache(FilePaths.fullSvarFilePath, "*");
+	        ControlData.cacheSvar = CondensedReferenceCacheAndRead.createCondensedCache(FilePaths.fullSvarFilePath);
 			if (!FilePaths.fullSvarFile2Path.equals("")){
-				//if (ControlData.genSVCatalog) DSSUtil.generateCatalog(FilePaths.fullSvarFile2Path);
-				//ControlData.groupSvar2= DSSUtil.createGroup("local", FilePaths.fullSvarFile2Path);
-				HecDssCatalog catalog2 = new HecDssCatalog(FilePaths.fullSvarFile2Path);
-		        ControlData.cacheSvar2 = CondensedReferenceCacheAndRead.createCondensedCache(FilePaths.fullSvarFile2Path, "*");
+		        ControlData.cacheSvar2 = CondensedReferenceCacheAndRead.createCondensedCache(FilePaths.fullSvarFile2Path);
 			}
 			readTimeseries();
 		}
@@ -102,10 +96,7 @@ public class PreRunModel {
 			HDF5Reader.readInitialData();
 		}else{
 			ControlData.initHDF5=false;
-			//DSSUtil.generateCatalog(FilePaths.fullInitFilePath);
-			//ControlData.groupInit= DSSUtil.createGroup("local", FilePaths.fullInitFilePath);
-			HecDssCatalog catalog = new HecDssCatalog(FilePaths.fullInitFilePath);
-	        ControlData.cacheInit = CondensedReferenceCacheAndRead.createCondensedCache(FilePaths.fullInitFilePath, "*");
+	        ControlData.cacheInit = CondensedReferenceCacheAndRead.createCondensedCache(FilePaths.fullInitFilePath);
 		}
 		initialDvarAliasTS();
 
