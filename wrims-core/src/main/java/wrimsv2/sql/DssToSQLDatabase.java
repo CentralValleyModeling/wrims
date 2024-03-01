@@ -127,39 +127,21 @@ public class DssToSQLDatabase {
 		HashMap<String, DssDataSet> ddsMap=new HashMap<String, DssDataSet>();
 		File dssFile=new File (dssPath);
 		if (!dssFile.exists()) return ddsMap;
-		//DSSUtil.generateCatalog(dssPath);
-		//Group group = DSSUtil.createGroup("local", dssPath);
-		String pathnameFilter="*";
-		HecDssCatalog catalog = new HecDssCatalog(dssPath);
-        CondensedReferenceCache cache = CondensedReferenceCacheAndRead.createCondensedCache(dssPath, pathnameFilter);
-        Set<DSSPathname> dps = cache.condensedReferences;
-        Iterator<DSSPathname> it = dps.iterator();
-		//int size = group.getNumberOfDataReferences();
-		while (it.hasNext()){
-			//DataReference ref = group.getDataReference(i);
-			//DataSet ds = ref.getData();
-			//RegularTimeSeries rts=(RegularTimeSeries)ds;
-			DSSPathname dp = it.next();
-			TimeSeriesContainer tsc = new TimeSeriesContainer();
-			HecTimeSeries hts = new HecTimeSeries();
-            tsc.fileName = dssPath;
-            tsc.fullName = dp.pathname();
-            boolean removeMissing = false;
-            hts.read(tsc, removeMissing);
-            hts.setUnits(tsc.units);
+        CondensedReferenceCache cache = CondensedReferenceCacheAndRead.createCondensedCache(dssPath);
+		for(String dp : cache.getAllPaths()){
+			TimeSeriesContainer tsc = cache.readFullRecord(dp);
 			DssDataSet dds= new DssDataSet();
-			ArrayList<Double> dataArray= new ArrayList<Double>();
-			HecTime startTime=hts.startTime();
+			ArrayList<Double> dataArray= new ArrayList<>();
+			HecTime startTime=tsc.getStartTime();
 			int year=startTime.year();
 			int month=startTime.month();
 			int day = startTime.day();
 			Date startDate=new Date(year-1900, month-1, day);
-			doubleArrayContainer values=new doubleArrayContainer();
-			hts.getData(values);
-			for (double dataEntry :  values.array){
+			for (double dataEntry :  tsc.getValues()){
 				dataArray.add(dataEntry);
 			}
-			dds.setUnits(hts.units());
+			dds.setUnits(tsc.getUnits());
+			DSSPathname hts = new DSSPathname(dp);
 			dds.setKind(hts.cPart().toLowerCase());
 	        dds.setData(dataArray);
 	        String timeStep=hts.ePart().toUpperCase();
@@ -178,36 +160,20 @@ public class DssToSQLDatabase {
 		HashMap<String, DssDataSetFixLength> ddsMap=new HashMap<String, DssDataSetFixLength>();
 		File dssFile=new File (dssPath);
 		if (!dssFile.exists()) return ddsMap;
-		//DSSUtil.generateCatalog(dssPath);
-		//Group group = DSSUtil.createGroup("local", dssPath);
-		String pathnameFilter="*";
-		HecDssCatalog catalog = new HecDssCatalog(dssPath);
-        CondensedReferenceCache cache = CondensedReferenceCacheAndRead.createCondensedCache(dssPath, pathnameFilter);
-        Set<DSSPathname> dps = cache.condensedReferences;
-        Iterator<DSSPathname> it = dps.iterator();
-		//int size = group.getNumberOfDataReferences();
-		while (it.hasNext()){
-			//DataReference ref = group.getDataReference(i);
-			//DataSet ds = ref.getData();
-			//RegularTimeSeries rts=(RegularTimeSeries)ds;
-			DSSPathname dp = it.next();
-			TimeSeriesContainer tsc = new TimeSeriesContainer();
-			HecTimeSeries hts = new HecTimeSeries();
-            tsc.fileName = dssPath;
-            tsc.fullName = dp.pathname();
-            boolean removeMissing = false;
-            hts.read(tsc, removeMissing);
-            hts.setUnits(tsc.units);
+
+        CondensedReferenceCache cache = CondensedReferenceCacheAndRead.createCondensedCache(dssPath);
+        Set<String> dps = cache.getAllPaths();
+		for(String dp : dps) {
+			TimeSeriesContainer tsc = cache.readFullRecord(dp);
 			DssDataSetFixLength dds= new DssDataSetFixLength();
-			HecTime startTime=hts.startTime();
+			HecTime startTime=tsc.getStartTime();
 			int year=startTime.year();
 			int month=startTime.month();
 			int day = startTime.day();
 			Date startDate=new Date(year-1900, month-1, day);
-			doubleArrayContainer values=new doubleArrayContainer();
-			hts.getData(values);
-			double[] data = values.array;
-			dds.setUnits(hts.units());
+			DSSPathname hts = new DSSPathname(tsc.getFullName());
+			double[] data = tsc.getValues();
+			dds.setUnits(tsc.getUnits());
 			dds.setKind(hts.cPart().toLowerCase());
 	        dds.setData(data);
 	        String timeStep=hts.ePart().toUpperCase();

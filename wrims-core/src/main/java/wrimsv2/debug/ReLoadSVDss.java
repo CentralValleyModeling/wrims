@@ -33,11 +33,9 @@ public class ReLoadSVDss {
 			System.exit(0);
 		}
 		try {
-			HecDssCatalog catalog = new HecDssCatalog(FilePaths.fullSvarFilePath);
-	        ControlData.cacheSvar = CondensedReferenceCacheAndRead.createCondensedCache(FilePaths.fullSvarFilePath, "*");
+	        ControlData.cacheSvar = CondensedReferenceCacheAndRead.createCondensedCache(FilePaths.fullSvarFilePath);
 			if (!FilePaths.fullSvarFile2Path.equals("")){
-				HecDssCatalog catalog2 = new HecDssCatalog(FilePaths.fullSvarFile2Path);
-		        ControlData.cacheSvar2 = CondensedReferenceCacheAndRead.createCondensedCache(FilePaths.fullSvarFile2Path, "*");
+		        ControlData.cacheSvar2 = CondensedReferenceCacheAndRead.createCondensedCache(FilePaths.fullSvarFile2Path);
 			}
 			ControlData.allTsMap=sds.getTimeseriesMap();
 			readTimeseries();

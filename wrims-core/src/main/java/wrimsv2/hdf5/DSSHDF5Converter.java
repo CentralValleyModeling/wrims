@@ -747,28 +747,15 @@ public class DSSHDF5Converter {
 		parts[4]="1MON";
 		parts[5]=ControlData.svDvPartF;
 		String pathnameFilter="/"+parts[0]+"/"+parts[1]+"/"+parts[2]+"/"+parts[3]+"/"+parts[4]+"/"+parts[5]+"/";
-		HecDssCatalog catalog = new HecDssCatalog(FilePaths.fullSvarFilePath);
         CondensedReferenceCache cache = CondensedReferenceCacheAndRead.createCondensedCache(FilePaths.fullSvarFilePath, pathnameFilter);
-		Iterator<DSSPathname> it = cache.condensedReferences.iterator();
-		//DataReference[] refs = ControlData.groupSvar.find(parts);
-		//int size = refs.length;
-		while(it.hasNext()){
-			DSSPathname dp = it.next();
-			TimeSeriesContainer tsc = new TimeSeriesContainer();
-			HecTimeSeries hts = new HecTimeSeries();
-            tsc.fileName = FilePaths.fullSvarFilePath;
-            tsc.fullName = dp.pathname();
-            boolean removeMissing = false;
-            hts.read(tsc, removeMissing);
-			if (hts!=null){
-				//RegularTimeSeries rts=(RegularTimeSeries)ds;
-				HecTime startTime=hts.startTime();
+
+		for(String dp : cache.getAllPaths()){
+			TimeSeriesContainer tsc = cache.readFullRecord(dp);
+			if (tsc!=null){
+				HecTime startTime=tsc.getStartTime();
 				int year=startTime.year();
 				int month=startTime.month();
-				
-				doubleArrayContainer values=new doubleArrayContainer();
-				hts.getData(values);
-				double[] rtsData = values.array;
+				double[] rtsData =tsc.getValues();
 				int rtsDim=rtsData.length;
 				
 				double[] data=new double[dim];
@@ -783,13 +770,14 @@ public class DSSHDF5Converter {
 						data[j]=rtsData[index];
 					}
 				}
+				DSSPathname hts = new DSSPathname(dp);
 				String name=hts.bPart().toLowerCase();
 				String kind=hts.cPart().toLowerCase();
 				svMonthlyNames.add(name);
 				svMonthlyKinds.add(kind);
 				svMonthlyData.put(name+"/"+kind, data);
 				svLookupNames.add(name);
-				svLookupUnits.add(hts.units());
+				svLookupUnits.add(tsc.getUnits());
 				svLookupKinds.add(kind);
 		        svLookupTimestep.add("1MON");
 		        svLookupIndex.add(svIndex);
@@ -866,30 +854,16 @@ public class DSSHDF5Converter {
 		parts[4]="1DAY";
 		parts[5]=ControlData.svDvPartF;
 		String pathnameFilter="/"+parts[0]+"/"+parts[1]+"/"+parts[2]+"/"+parts[3]+"/"+parts[4]+"/"+parts[5]+"/";
-		HecDssCatalog catalog = new HecDssCatalog(FilePaths.fullSvarFilePath);
         CondensedReferenceCache cache = CondensedReferenceCacheAndRead.createCondensedCache(FilePaths.fullSvarFilePath, pathnameFilter);
-    	Iterator<DSSPathname> it = cache.condensedReferences.iterator();
-		//DataReference[] refs = ControlData.groupSvar.find(parts);
-		//int size = refs.length;
-		while (it.hasNext()){
-			HecTimeSeries ts = new HecTimeSeries();
-			DSSPathname dp = it.next();
-			TimeSeriesContainer tsc = new TimeSeriesContainer();
-			HecTimeSeries hts = new HecTimeSeries();
-            tsc.fileName = FilePaths.fullSvarFilePath;
-            tsc.fullName = dp.pathname();
-            boolean removeMissing = false;
-            hts.read(tsc, removeMissing);
-			if (hts!=null){
-				HecTime startTime=hts.startTime();
+		for(String dp : cache.getAllPaths()){
+			TimeSeriesContainer tsc = cache.readFullRecord(dp);
+			if (tsc!=null){
+				HecTime startTime=tsc.getStartTime();
 				int year=startTime.year();
 				int month=startTime.month();
 				int day=startTime.day();
 				Date rtsStartDate = new Date (year-1900, month-1, day);
-				
-				doubleArrayContainer values=new doubleArrayContainer();
-				hts.getData(values);
-				double[] rtsData = values.array;
+				double[] rtsData = tsc.getValues();
 				int rtsDim=rtsData.length;
 				
 				double[] data=new double[dim];
@@ -911,13 +885,14 @@ public class DSSHDF5Converter {
 						data[j]=rtsData[index];
 					}
 				}
+				DSSPathname hts = new DSSPathname(dp);
 				String name=hts.bPart().toLowerCase();
 				String kind=hts.cPart().toLowerCase();
 				svDailyNames.add(name);
 				svDailyKinds.add(kind);
 				svDailyData.put(name+"/"+kind, data);
 				svLookupNames.add(name);
-				svLookupUnits.add(hts.units());
+				svLookupUnits.add(tsc.getUnits());
 				svLookupKinds.add(kind);
 		        svLookupTimestep.add("1DAY");
 		        svLookupIndex.add(svIndex);
@@ -1025,24 +1000,12 @@ public class DSSHDF5Converter {
 		parts[4]="1MON";
 		parts[5]=ControlData.initPartF;
 		String pathnameFilter="/"+parts[0]+"/"+parts[1]+"/"+parts[2]+"/"+parts[3]+"/"+parts[4]+"/"+parts[5]+"/";
-		HecDssCatalog catalog = new HecDssCatalog(FilePaths.fullInitFilePath);
         CondensedReferenceCache cache = CondensedReferenceCacheAndRead.createCondensedCache(FilePaths.fullInitFilePath, pathnameFilter);
-    	Iterator<DSSPathname> it = cache.condensedReferences.iterator();
-		//DataReference[] refs = ControlData.groupInit.find(parts);
-		//int size = refs.length;
-		
 		firstDateMonthly=new Date(ControlData.startYear-1900, ControlData.startMonth-1, TimeOperation.numberOfDays(ControlData.startMonth, ControlData.startYear));
-		while (it.hasNext()){
-			DSSPathname dp=it.next();
-			TimeSeriesContainer tsc = new TimeSeriesContainer();
-			HecTimeSeries hts = new HecTimeSeries();
-            tsc.fileName = FilePaths.fullInitFilePath;
-            tsc.fullName = dp.pathname();
-            boolean removeMissing = false;
-            hts.read(tsc, removeMissing);
-            hts.setUnits(tsc.units);
-			if (hts != null){
-				HecTime startTime=hts.startTime();
+		for(String dp : cache.getAllPaths()){
+			TimeSeriesContainer tsc = cache.readFullRecord(dp);
+			if (tsc != null){
+				HecTime startTime=tsc.getStartTime();
 				int year=startTime.year();
 				int month=startTime.month();
 				int day = startTime.day();
@@ -1058,26 +1021,14 @@ public class DSSHDF5Converter {
 	
 		int dim=(ControlData.startYear-firstYear)*12+(ControlData.startMonth-firstMonth);
 		if (dim>0){
-			it = cache.condensedReferences.iterator();
-			while (it.hasNext()){
-				HecTimeSeries ts = new HecTimeSeries();
-				DSSPathname dp = it.next();
-				TimeSeriesContainer tsc = new TimeSeriesContainer();
-				HecTimeSeries hts = new HecTimeSeries();
-	            tsc.fileName = FilePaths.fullInitFilePath;
-	            tsc.fullName = dp.pathname();
-	            boolean removeMissing = false;
-	            hts.read(tsc, removeMissing);
-				if (hts!=null){
-					HecTime startTime=hts.startTime();
+			for(String dp : cache.getAllPaths()){
+				TimeSeriesContainer tsc = cache.readFullRecord(dp);
+				if (tsc!=null){
+					HecTime startTime=tsc.getStartTime();
 					int year=startTime.year();
 					int month=startTime.month();
 					int day = startTime.day();
-					Date startDate=new Date(year-1900, month-1, day);
-					doubleArrayContainer values=new doubleArrayContainer();
-					hts.getData(values);
-					
-					double[] rtsData = values.array;
+					double[] rtsData = tsc.getValues();
 					int rtsDim=rtsData.length;
 					double[] data=new double[dim];
 				
@@ -1091,13 +1042,14 @@ public class DSSHDF5Converter {
 							data[j]=rtsData[index];
 						}
 					}
+					DSSPathname hts = new DSSPathname(dp);
 					String name=hts.bPart().toLowerCase();
 					String kind=hts.cPart().toLowerCase();
 					initMonthlyNames.add(name);
 					initMonthlyKinds.add(kind);
 					initMonthlyData.put(name+"/"+kind, data);
 					initLookupNames.add(name);
-					initLookupUnits.add(hts.units());
+					initLookupUnits.add(tsc.getUnits());
 					initLookupKinds.add(kind);
 					initLookupTimestep.add("1MON");
 					initLookupIndex.add(initIndex);
@@ -1173,32 +1125,18 @@ public class DSSHDF5Converter {
 		parts[4]="1DAY";
 		parts[5]=ControlData.initPartF;
 		String pathnameFilter="/"+parts[0]+"/"+parts[1]+"/"+parts[2]+"/"+parts[3]+"/"+parts[4]+"/"+parts[5]+"/";
-		HecDssCatalog catalog = new HecDssCatalog(FilePaths.fullInitFilePath);
         CondensedReferenceCache cache = CondensedReferenceCacheAndRead.createCondensedCache(FilePaths.fullInitFilePath, pathnameFilter);
-		Iterator<DSSPathname> it = cache.condensedReferences.iterator();
-		//DataReference[] refs = ControlData.groupInit.find(parts);
-		//int size = refs.length;
-		
 		Date modelStartDate=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
 		firstDateDaily=modelStartDate;
-		while (it.hasNext()){
-			DSSPathname dp = it.next();
-			TimeSeriesContainer tsc = new TimeSeriesContainer();
-			HecTimeSeries hts = new HecTimeSeries();
-            tsc.fileName = FilePaths.fullInitFilePath;
-            tsc.fullName = dp.pathname();
-            boolean removeMissing = false;
-            hts.read(tsc, removeMissing);
-            hts.setUnits(tsc.units);
-            if (hts != null){
-            	HecTime startTime=hts.startTime();
-    			int year=startTime.year();
-    			int month=startTime.month();
-    			int day = startTime.day();
-    			Date startDate=new Date(year-1900, month-1, day);
-				if (startDate.before(firstDateDaily)){
-					firstDateDaily=startDate;
-				}
+		for(String dp : cache.getAllPaths()) {
+			TimeSeriesContainer tsc = cache.readFullRecord(dp);
+			HecTime startTime = tsc.getStartTime();
+			int year = startTime.year();
+			int month = startTime.month();
+			int day = startTime.day();
+			Date startDate = new Date(year - 1900, month - 1, day);
+			if (startDate.before(firstDateDaily)) {
+				firstDateDaily = startDate;
 			}
 		}
 		//long firstTime=firstDateDaily.getTime();
@@ -1210,26 +1148,16 @@ public class DSSHDF5Converter {
 		int dim = (int)Duration.between(c1.toInstant(), c2.toInstant()).toDays();
 		
 		if (dim>0){
-			it = cache.condensedReferences.iterator();
-			while (it.hasNext()){
-				HecTimeSeries ts = new HecTimeSeries();
-				DSSPathname dp = it.next();
-				TimeSeriesContainer tsc = new TimeSeriesContainer();
-				HecTimeSeries hts = new HecTimeSeries();
-	            tsc.fileName = FilePaths.fullSvarFilePath;
-	            tsc.fullName = dp.pathname();
-	            boolean removeMissing = false;
-	            hts.read(tsc, removeMissing);
-				if (hts!=null){
-					HecTime startTime=hts.startTime();
+			CondensedReferenceCache svarCache = CondensedReferenceCacheAndRead.createCondensedCache(FilePaths.fullSvarFilePath, pathnameFilter);
+			for(String dp : cache.getAllPaths()) {
+				TimeSeriesContainer tsc = svarCache.readFullRecord(dp);
+				if (tsc!=null){
+					HecTime startTime=tsc.getStartTime();
 					int year=startTime.year();
 					int month=startTime.month();
 					int day = startTime.day();
 					Date startDate=new Date(year-1900, month-1, day);
-					doubleArrayContainer values=new doubleArrayContainer();
-					hts.getData(values);
-					
-					double[] rtsData = values.array;
+					double[] rtsData = tsc.getValues();
 					int rtsDim=rtsData.length;
 				
 					double[] data=new double[dim];
@@ -1249,13 +1177,14 @@ public class DSSHDF5Converter {
 							data[j]=rtsData[index];
 						}
 					}
+					DSSPathname hts = new DSSPathname(dp);
 					String name=hts.bPart().toLowerCase();
 					String kind=hts.cPart().toLowerCase();
 					initDailyNames.add(name);
 					initDailyKinds.add(kind);
 					initDailyData.put(name+"/"+kind, data);
 					initLookupNames.add(name);
-					initLookupUnits.add(hts.units());
+					initLookupUnits.add(tsc.getUnits());
 					initLookupKinds.add(kind);
 					initLookupTimestep.add("1DAY");
 					initLookupIndex.add(initIndex);

@@ -16,6 +16,10 @@ sourceSets {
     }
 }
 
+configurations{
+    windows_x64
+}
+
 dependencies {
     antlr libs.antlr
 
@@ -59,7 +63,15 @@ dependencies {
     implementation files('dep-local/coinor.jar')
     implementation files('dep-local/lpsolve55j.jar')
     implementation files('dep-local/XAOptimizer.jar')
-
+    def heclib_windows = libs.heclib.get().copy()
+    heclib_windows.version { it.strictly(libs.versions.heclib.get() + "-win-x86_64") }
+    windows_x64(heclib_windows) {
+        artifact {
+            type = "zip"
+        }
+    }
+    testImplementation(libs.bundles.junit.api)
+    testRuntimeOnly(libs.bundles.junit.engine)
 }
 
 configurations.all {
@@ -94,3 +106,16 @@ tasks.withType(AntlrTask) {
     }
 }
 
+tasks.register('getNatives', Sync) { syncTask ->
+    from {
+        configurations.windows_x64.collect { zipTree(it) }
+    }
+    into file("$buildDir/lib")
+}
+
+test {
+    dependsOn getNatives
+    systemProperty "java.library.path", "$buildDir/lib"
+    systemProperty "dss.level", System.properties."dss.level" ?: "0"
+    systemProperty "log.level", System.properties."log.level" ?: "FINE"
+}
