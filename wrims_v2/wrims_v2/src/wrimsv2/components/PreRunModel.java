@@ -3,7 +3,6 @@ package wrimsv2.components;
 import hec.heclib.dss.HecDss;
 import hec.heclib.dss.HecDssCatalog;
 import hec.heclib.dss.HecTimeSeries;
-import hec.heclib.util.Heclib;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -38,7 +37,7 @@ import wrimsv2.hdf5.HDF5Writer;
 public class PreRunModel {
 	public PreRunModel(StudyDataSet sds){
 		setSelectedOutputCycles();
-		
+
 		ControlData.currStudyDataSet=sds;
 		VariableTimeStep.procCycleTimeStep(sds);
 		ControlData.totalTimeStep=VariableTimeStep.getTotalTimeStep(sds);
@@ -57,16 +56,15 @@ public class PreRunModel {
 			return;
 		}
 		*/
-		
+
 		try {
-			Heclib.zset("ALLV", "", ControlData.vHecLib);
 			ControlData.dvDss = HecDss.open(FilePaths.fullDvarDssPath);
 		} catch (Exception e) {
 			Error.addEngineError("Could not open dv file. "+e);
 			ControlData.dvDss.close();
 			return;
 		}
-		
+
 		if (!(new File(FilePaths.fullInitFilePath)).exists()){
 			System.out.println("Error: Initial file "+ FilePaths.fullInitFilePath+" doesn't exist.");
 			System.out.println("=======Run Complete Unsuccessfully=======");
@@ -84,30 +82,21 @@ public class PreRunModel {
 		if (FilePaths.svarFile.toLowerCase().endsWith(".h5")){
 			HDF5Reader.readTimeseries();
 		}else{
-			//if (ControlData.genSVCatalog) DSSUtil.generateCatalog(FilePaths.fullSvarFilePath);
-			//ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarFilePath);
-			HecDssCatalog catalog = new HecDssCatalog(FilePaths.fullSvarFilePath);
-	        ControlData.cacheSvar = CondensedReferenceCacheAndRead.createCondensedCache(FilePaths.fullSvarFilePath, "*");
+	        ControlData.cacheSvar = CondensedReferenceCacheAndRead.createCondensedCache(FilePaths.fullSvarFilePath);
 			if (!FilePaths.fullSvarFile2Path.equals("")){
-				//if (ControlData.genSVCatalog) DSSUtil.generateCatalog(FilePaths.fullSvarFile2Path);
-				//ControlData.groupSvar2= DSSUtil.createGroup("local", FilePaths.fullSvarFile2Path);
-				HecDssCatalog catalog2 = new HecDssCatalog(FilePaths.fullSvarFile2Path);
-		        ControlData.cacheSvar2 = CondensedReferenceCacheAndRead.createCondensedCache(FilePaths.fullSvarFile2Path, "*");
+		        ControlData.cacheSvar2 = CondensedReferenceCacheAndRead.createCondensedCache(FilePaths.fullSvarFile2Path);
 			}
 			readTimeseries();
 		}
 		long t2 = Calendar.getInstance().getTimeInMillis();
 		ControlData.t_readTs=ControlData.t_readTs+(int) (t2-t1);
-		
+
 		if (FilePaths.initFile.toLowerCase().endsWith(".h5")){
 			ControlData.initHDF5=true;
 			HDF5Reader.readInitialData();
 		}else{
 			ControlData.initHDF5=false;
-			//DSSUtil.generateCatalog(FilePaths.fullInitFilePath);
-			//ControlData.groupInit= DSSUtil.createGroup("local", FilePaths.fullInitFilePath);
-			HecDssCatalog catalog = new HecDssCatalog(FilePaths.fullInitFilePath);
-	        ControlData.cacheInit = CondensedReferenceCacheAndRead.createCondensedCache(FilePaths.fullInitFilePath, "*");
+	        ControlData.cacheInit = CondensedReferenceCacheAndRead.createCondensedCache(FilePaths.fullInitFilePath);
 		}
 		initialDvarAliasTS();
 
@@ -125,7 +114,7 @@ public class PreRunModel {
 			HDF5Writer.listCycleStaticSv(sds);
 			System.out.println("HDF5 output data structure is created.");
 		}
-		
+
 		if (!ControlData.unchangeGWRestart) setGroundwaterInitFile();
 	}
 
@@ -188,12 +177,12 @@ public class PreRunModel {
 		new LoadAllDll(ControlData.allDll);
 		System.out.println("Load dlls for Cycle "+(ControlData.currCycleIndex+1)+" done");
 	}
-	
+
 	public void setSelectedOutputCycles(){
 		String strSelectedCycleOutput = ControlData.selectedCycleOutput.replace("\'", "");
 		ControlData.selectedCycles = strSelectedCycleOutput.split(",");
 	}
-	
+
 	public void setGroundwaterInitFile(){
 		if (FilePaths.groundwaterDir!=null || !FilePaths.groundwaterDir.equals("")){
 			File orig = new File(FilePaths.groundwaterDir+"\\CVGroundwater.in");
@@ -208,7 +197,7 @@ public class PreRunModel {
 			}
 		}
 	}
-	
+
 	public void setGroundwaterInitFilePath(File backup, File input){
 		try {
             FileReader fr = new FileReader(backup);
@@ -228,17 +217,17 @@ public class PreRunModel {
                 		int initYear=ControlData.startYear;
                 		line="Restart\\CVInitial_Restart_"+initMonth+initYear+".dat                /11: INITIAL CONDITIONS DATA FILE (INPUT, REQUIRED)";
                 	}
-				}   
+				}
                 bw.write(line+"\n");
                 lineCount++;
-            }                   
+            }
 			br.close();
 			bw.close();
 			fr.close();
 			fw.close();
-        }   
+        }
         catch (Exception e) {
         	e.printStackTrace();
-        }  
+        }
 	}
 }
