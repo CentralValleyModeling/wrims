@@ -3,6 +3,7 @@ package wrimsv2.components;
 import hec.heclib.dss.HecDss;
 import hec.heclib.dss.HecDssCatalog;
 import hec.heclib.dss.HecTimeSeries;
+import hec.heclib.util.Heclib;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -58,6 +59,7 @@ public class PreRunModel {
 		*/
 
 		try {
+			Heclib.zset("ALLV", "", ControlData.vHecLib);
 			ControlData.dvDss = HecDss.open(FilePaths.fullDvarDssPath);
 		} catch (Exception e) {
 			Error.addEngineError("Could not open dv file. "+e);
@@ -82,9 +84,9 @@ public class PreRunModel {
 		if (FilePaths.svarFile.toLowerCase().endsWith(".h5")){
 			HDF5Reader.readTimeseries();
 		}else{
-	        ControlData.cacheSvar = CondensedReferenceCacheAndRead.createCondensedCache(FilePaths.fullSvarFilePath);
+	        ControlData.cacheSvar = CondensedReferenceCacheAndRead.createCondensedCache(FilePaths.fullSvarFilePath, "*");
 			if (!FilePaths.fullSvarFile2Path.equals("")){
-		        ControlData.cacheSvar2 = CondensedReferenceCacheAndRead.createCondensedCache(FilePaths.fullSvarFile2Path);
+		        ControlData.cacheSvar2 = CondensedReferenceCacheAndRead.createCondensedCache(FilePaths.fullSvarFile2Path, "*");
 			}
 			readTimeseries();
 		}
@@ -96,7 +98,7 @@ public class PreRunModel {
 			HDF5Reader.readInitialData();
 		}else{
 			ControlData.initHDF5=false;
-	        ControlData.cacheInit = CondensedReferenceCacheAndRead.createCondensedCache(FilePaths.fullInitFilePath);
+	        ControlData.cacheInit = CondensedReferenceCacheAndRead.createCondensedCache(FilePaths.fullInitFilePath, "*");
 		}
 		initialDvarAliasTS();
 

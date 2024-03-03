@@ -127,7 +127,7 @@ public class DssToSQLDatabase {
 		HashMap<String, DssDataSet> ddsMap=new HashMap<String, DssDataSet>();
 		File dssFile=new File (dssPath);
 		if (!dssFile.exists()) return ddsMap;
-        CondensedReferenceCache cache = CondensedReferenceCacheAndRead.createCondensedCache(dssPath);
+        CondensedReferenceCache cache = CondensedReferenceCacheAndRead.createCondensedCache(dssPath, "*");
 		for(String dp : cache.getAllPaths()){
 			TimeSeriesContainer tsc = cache.readFullRecord(dp);
 			DssDataSet dds= new DssDataSet();
@@ -161,7 +161,7 @@ public class DssToSQLDatabase {
 		File dssFile=new File (dssPath);
 		if (!dssFile.exists()) return ddsMap;
 
-        CondensedReferenceCache cache = CondensedReferenceCacheAndRead.createCondensedCache(dssPath);
+        CondensedReferenceCache cache = CondensedReferenceCacheAndRead.createCondensedCache(dssPath, "*");
         Set<String> dps = cache.getAllPaths();
 		for(String dp : dps) {
 			TimeSeriesContainer tsc = cache.readFullRecord(dp);
