@@ -33,11 +33,9 @@ public class ReLoadSVDss {
 			System.exit(0);
 		}
 		try {
-			HecDssCatalog catalog = new HecDssCatalog(FilePaths.fullSvarFilePath);
-	        ControlData.cacheSvar = CondensedReferenceCacheAndRead.createCondensedCache(FilePaths.fullSvarFilePath, "*");
+	        ControlData.cacheSvar = CondensedReferenceCacheAndRead.createCondensedCache(FilePaths.fullSvarFilePath);
 			if (!FilePaths.fullSvarFile2Path.equals("")){
-				HecDssCatalog catalog2 = new HecDssCatalog(FilePaths.fullSvarFile2Path);
-		        ControlData.cacheSvar2 = CondensedReferenceCacheAndRead.createCondensedCache(FilePaths.fullSvarFile2Path, "*");
+		        ControlData.cacheSvar2 = CondensedReferenceCacheAndRead.createCondensedCache(FilePaths.fullSvarFile2Path);
 			}
 			ControlData.allTsMap=sds.getTimeseriesMap();
 			readTimeseries();
@@ -45,10 +43,10 @@ public class ReLoadSVDss {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void readTimeseries(){
 		Map<String, Timeseries> tsMap=ControlData.currStudyDataSet.getTimeseriesMap();
-		Map<String, ArrayList<String>> tsTimeStepMap=ControlData.currStudyDataSet.getTimeseriesTimeStepMap(); 
+		Map<String, ArrayList<String>> tsTimeStepMap=ControlData.currStudyDataSet.getTimeseriesTimeStepMap();
 		ControlData.currEvalTypeIndex=6;
 		Set tsKeySet=tsMap.keySet();
 		Iterator iterator=tsKeySet.iterator();
@@ -56,7 +54,7 @@ public class ReLoadSVDss {
 			String tsName=(String)iterator.next();
 			//System.out.println("Reading svar timeseries "+tsName);
 			//To Do: in the svar class, add flag to see if svTS has been loaded
-			if (!DataTimeSeries.lookSvDss.contains(tsName)){ 
+			if (!DataTimeSeries.lookSvDss.contains(tsName)){
 				ArrayList<String> timeStepList=tsTimeStepMap.get(tsName);
 				for (String timeStep:timeStepList){
 					DssOperation.getSVTimeseries(tsName, FilePaths.fullSvarFilePath, timeStep, 1);
