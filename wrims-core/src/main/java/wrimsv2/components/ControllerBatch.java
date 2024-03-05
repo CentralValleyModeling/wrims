@@ -426,7 +426,8 @@ public class ControllerBatch {
 			}
 			Date date1= new Date(ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
 			Date date2= new Date(ControlData.outputYear-1900, ControlData.outputMonth-1, ControlData.outputDay);
-			if (ControlData.yearOutputSection>0 && date1.after(date2)){
+			Date date3= new Date(ControlData.endYear-1900, ControlData.endMonth-1, ControlData.endDay);
+			if (ControlData.yearOutputSection>0 && (date1.after(date2) ||date1.after(date3))){
 				if (ControlData.writeInitToDVOutput && sectionI==0){
 					DssOperation.writeInitDvarAliasToDSS();
 				}
@@ -814,7 +815,8 @@ public class ControllerBatch {
 			}
 			Date date1= new Date(ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
 			Date date2= new Date(ControlData.outputYear-1900, ControlData.outputMonth-1, ControlData.outputDay);
-			if (ControlData.yearOutputSection>0 && date1.after(date2)){
+			Date date3= new Date(ControlData.endYear-1900, ControlData.endMonth-1, ControlData.endDay);
+			if (ControlData.yearOutputSection>0 && (date1.after(date2) || date1.after(date3))){
 				if (ControlData.writeInitToDVOutput && sectionI==0){
 					DssOperation.writeInitDvarAliasToDSS();
 				}
@@ -898,6 +900,7 @@ public class ControllerBatch {
 		
 		TimeOperation.initOutputDate(ControlData.yearOutputSection);
 		TimeOperation.initMemDate(ControlData.monMemSection);
+
 		int sectionI=0;
 		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
 
@@ -1039,7 +1042,8 @@ public class ControllerBatch {
 			}
 			Date date1= new Date(ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
 			Date date2= new Date(ControlData.outputYear-1900, ControlData.outputMonth-1, ControlData.outputDay);
-			if (ControlData.yearOutputSection>0 && date1.after(date2)){
+			Date date3= new Date(ControlData.endYear-1900, ControlData.endMonth-1, ControlData.endDay);
+			if (ControlData.yearOutputSection>0 && (date1.after(date2) || date1.after(date3))){
 				if (ControlData.writeInitToDVOutput && sectionI==0){
 					DssOperation.writeInitDvarAliasToDSS();
 				}
@@ -1702,7 +1706,8 @@ public class ControllerBatch {
 			}
 			Date date1= new Date(ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
 			Date date2= new Date(ControlData.outputYear-1900, ControlData.outputMonth-1, ControlData.outputDay);
-			if (ControlData.yearOutputSection>0 && date1.after(date2)){
+			Date date3= new Date(ControlData.endYear-1900, ControlData.endMonth-1, ControlData.endDay);
+			if (ControlData.yearOutputSection>0 && (date1.after(date2) || date1.after(date3))){
 				if (ControlData.writeInitToDVOutput && sectionI==0){
 					DssOperation.writeInitDvarAliasToDSS();
 				}
