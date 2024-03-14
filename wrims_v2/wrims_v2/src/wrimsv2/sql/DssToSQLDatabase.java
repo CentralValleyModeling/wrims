@@ -16,6 +16,7 @@ import vista.set.DataReference;
 import vista.set.DataSet;
 import vista.set.DataSetAttr;
 import vista.set.Group;
+import vista.set.Pathname;
 import vista.set.RegularTimeSeries;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.FilePaths;
@@ -159,6 +160,11 @@ public class DssToSQLDatabase {
 		DSSUtil.generateCatalog(dssPath);
 		Group group = DSSUtil.createGroup("local", dssPath);
 		int size = group.getNumberOfDataReferences();
+		if (size>0) {
+			Pathname pathName = group.getDataReference(0).getPathname();
+			ControlData.partA=pathName.getPart(0);
+			ControlData.svDvPartF=pathName.getPart(5);
+		}
 		for (int i=0; i<size; i++){
 			DataReference ref = group.getDataReference(i);
 			DataSet ds = ref.getData();

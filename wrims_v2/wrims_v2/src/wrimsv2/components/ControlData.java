@@ -76,8 +76,8 @@ public class ControlData {
 	public static Date monthlyStartTime;
 	public static Date dailyStartTime;
 	public static String simulationTimeFrame;
-	public static String partA;
-	public static String svDvPartF;
+	public static String partA="";
+	public static String svDvPartF="";
 	public static String initPartF;
 	public static Group groupInit;
 	public static Group groupSvar;
