@@ -892,11 +892,22 @@ public class WPPBatchRunDialog extends Dialog {
 		int lSize = dvDssList.length;
 		for (int j=0; j<lSize; j++){
 			String dvPath=dvDssList[j];
+			Vector paPathList=new Vector();
 			try {
 				dvDss=HecDss.open(dvPath);
-				Vector paPathList = dvDss.getCatalogedPathnames();
-				int size = paPathList.size();
-				for (int i=0; i<size; i++){
+				paPathList = dvDss.getCatalogedPathnames();
+			} catch (Exception e) {
+				WPPException.handleException(e);
+				dvDss=null;
+			}
+				
+			int size=0;
+			if (paPathList!=null){
+				size = paPathList.size();
+			}
+			
+			for (int i=0; i<size; i++){
+				try {
 					String path = (String) paPathList.get(i);
 					String[] parts=path.split("/");
 					if (!dvPathList.contains(path)){
@@ -1011,10 +1022,10 @@ public class WPPBatchRunDialog extends Dialog {
 						dvDss.close();
 						return;
 					}
+				}catch (Exception e){
+					WPPException.handleException(e);
 				}
 				dvDss.close();
-			} catch (Exception e) {
-				WPPException.handleException(e);
 			}
 			setCombineDvPB(j+1);
 		}
