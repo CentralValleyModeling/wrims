@@ -86,8 +86,8 @@ publishing {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/rmanet/cvwrsm")
             credentials {
-                username = project.findProperty('dwr-gpr.user') ?: "error"
-                password = project.findProperty('dwr-gpr.key') ?: "error"
+                username = project.findProperty('user-id') ?: "error"
+                password = project.findProperty('password') ?: "error"
             }
 
         }
