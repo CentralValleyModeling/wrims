@@ -17,7 +17,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "greet"
+  # This workflow contains a single job called "wrims_compute"
   wrims_compute:
     # The type of runner that the job will run on
     runs-on: windows-2022
@@ -32,4 +32,4 @@ jobs:
           cache: 'gradle'
 
       - name: Run from Gradle
-        run: ./gradlew :wrims-comparison-test:testExec
+        run: ./gradlew :wrims-comparison-test:testExec -Puser-id=${{secrets.PKG_UID}} -Ppassword.key=${{secrets.PKG_PWD}}
