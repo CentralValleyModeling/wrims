@@ -32,4 +32,4 @@ jobs:
           cache: 'gradle'
 
       - name: Run from Gradle
-        run: ./gradlew :wrims-comparison-test:testExec -Puser-id=${{secrets.PKG_UID}} -Ppassword.key=${{secrets.PKG_PWD}}
+        run: ./gradlew :wrims-comparison-test:testExec -Puser-id=${{secrets.PKG_UID}} -Ppassword=${{secrets.PKG_PWD}}
