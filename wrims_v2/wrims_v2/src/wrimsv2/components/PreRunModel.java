@@ -3,9 +3,12 @@ package wrimsv2.components;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
@@ -37,6 +40,9 @@ public class PreRunModel {
 	public PreRunModel(StudyDataSet sds){
 		setGenTableDir();
 		setSelectedOutputCycles();
+		if (ControlData.ovOption != 0){
+			procOVFile();
+		}
 		
 		ControlData.currStudyDataSet=sds;
 		VariableTimeStep.procCycleTimeStep(sds);
@@ -243,5 +249,41 @@ public class PreRunModel {
 			folder.mkdirs();
 		}
 		
+	}
+	
+	public void procOVFile(){
+		ControlData.ovPartBC=new HashMap<String, String>();
+		File ovFile = new File (ControlData.ovFile);
+		if (!ovFile.exists()){
+			System.out.println("Output variable file doesn't exist. All the timeseries will be written to the csv file.");
+			ControlData.ovOption=0;
+			return;
+		}
+		try {
+			FileInputStream fs = new FileInputStream(ovFile.getAbsolutePath());
+			BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+		    String line=br.readLine();
+		    if (br == null) {
+		    	System.out.println("Output variable file doesn't contain data. All the timeseries will be written to the csv file.");
+		    };
+			while((line=br.readLine()) !=null){
+		    	line=line.replace(" ", "").replace("\t",  "").toUpperCase();
+		    	if (line.equals("")) return;
+		    	String[] parts = line.split(",");
+		    	if (parts.length>=2){
+		    		ControlData.ovPartBC.put(parts[0], parts[1]);
+		    	}	
+		    }
+		    br.close();
+		    fs.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			System.out.println("Output variable file doesn't exist. All the timeseries will be written to the csv file.");
+			ControlData.ovOption=0;
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("Output variable file has errors. All the timeseries will be written to the csv file.");
+			ControlData.ovOption=0;
+		}
 	}
 }
