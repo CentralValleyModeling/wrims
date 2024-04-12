@@ -32,7 +32,7 @@ dependencies {
     regressionTest libs.bundles.junit5
     windows_x64 'mil.army.usace.hec:javaHeclib:7-IQ-0-win-x86_64@zip'
     windows_x64 "gov.ca.dwr:run-libs:+"
-    testProjects "gov.ca.dwr:watershed01:0.1.1"
+    testProjects "gov.ca.dwr:watershed02:0.1.0"
 }
 
 tasks.register("testExecute", JavaExec) {
