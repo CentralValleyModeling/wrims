@@ -118,7 +118,7 @@ public class DssOperation {
 		TimeSeriesContainer tsc;
 		
 		String path=createPath(ControlData.partA.toUpperCase(),ts.dssBPart.toUpperCase(),partC.toUpperCase(),"",ControlData.partE.toUpperCase(), ControlData.initPartF.toUpperCase());
-		tsc = ControlData.cacheSvar.readFullRecord(path);
+		tsc = ControlData.cacheInit.readFullRecord(path);
 
 		if (tsc==null){
 			return false;
