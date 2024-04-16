@@ -12,11 +12,20 @@ configurations{
     windows_x64
     testProjects
     regressionTest
+    comparisonReport
 }
 repositories{
     maven {
-        name = "GitHubPackages"
+        name = "GitHubPackages-RMA"
         url = uri("https://maven.pkg.github.com/rmanet/cvwrsm")
+        credentials {
+            username = project.findProperty("user-id") ?: System.getenv('PKG_UID')
+            password = project.findProperty("password") ?: System.getenv('PKG_PWD')
+        }
+    }
+    maven {
+        name = "GitHubPackages-CVM"
+        url = uri("https://maven.pkg.github.com/CentralValleyModeling/system-summary-report-tool")
         credentials {
             username = project.findProperty("user-id") ?: System.getenv('PKG_UID')
             password = project.findProperty("password") ?: System.getenv('PKG_PWD')
@@ -32,7 +41,8 @@ dependencies {
     regressionTest libs.bundles.junit5
     windows_x64 'mil.army.usace.hec:javaHeclib:7-IQ-0-win-x86_64@zip'
     windows_x64 "gov.ca.dwr:run-libs:+"
-    testProjects "gov.ca.dwr:watershed02:0.1.0"
+    testProjects "gov.ca.dwr:cal_lite_test_01:0.1.0"
+    comparisonReport "gov.ca.dwr:system-summary-report-tool:master-SNAPSHOT"
 }
 
 tasks.register("testExecute", JavaExec) {
@@ -50,6 +60,18 @@ tasks.register("testExecute", JavaExec) {
 
     jvmArgs "-Xmx4096m", "-Xss1024K", "-XX:+CreateMinidumpOnCrash"
 }
+tasks.register("testReport", JavaExec) {
+    def compareDirName = "$buildDir/testProjects"
+    dependsOn(tasks.named("testExecute"))
+    workingDir "${buildDir}/testProjects/"
+    classpath = configurations.comparisonReport
+    mainClass = "gov.ca.dwr.callite.Batch"
+    args "$buildDir/testProjects/callite_version_check_dss6_7.inp"
+    systemProperty "java.library.path", "$buildDir/lib"
+
+    environment 'PATH', "$buildDir/lib;${System.getenv('PATH')}"
+    jvmArgs "-Xmx4096m", "-Xss1024K", "-XX:+CreateMinidumpOnCrash"
+}
 tasks.register('getNatives', Sync) { syncTask ->
     doFirst{
         mkdir "$buildDir/lib"
@@ -62,7 +84,7 @@ tasks.register('getTestProjects', Sync) { syncTask ->
     doFirst{
         mkdir "$buildDir/testProjects"
     }
-    syncTask.from configurations.testProjects.collect { zipTree(it) }
+     syncTask.from configurations.testProjects.collect { zipTree(it) }
     syncTask.into file("$buildDir/testProjects")
 }
 
@@ -86,8 +108,8 @@ publishing {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/rmanet/cvwrsm")
             credentials {
-                username = project.findProperty('user-id') ?: "error"
-                password = project.findProperty('password') ?: "error"
+                username = project.findProperty('user-id') ?: System.getenv('GITHUB_ACTOR')
+                password = project.findProperty('password') ?: System.getenv('GITHUB_TOKEN')
             }
 
         }

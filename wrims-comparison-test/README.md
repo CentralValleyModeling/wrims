@@ -6,8 +6,8 @@ this directory with the following command:
   -PsourceDir=<path to the CalSim or CalLite watershed>
   -PzipName=<name of the zip file to be created>
   -PpostVersion=<version of the zip file>
-  -Pdwr-gpr.user=<username>
-  -Pdwr-gpr.key=<password>
+  -Puser-id=<username>
+  -Ppassword=<password>
     
 ```
 
