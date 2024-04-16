@@ -19,8 +19,8 @@ repositories{
         name = "GitHubPackages-RMA"
         url = uri("https://maven.pkg.github.com/rmanet/cvwrsm")
         credentials {
-            username = project.findProperty("user-id") ?: System.getenv('PKG_UID')
-            password = project.findProperty("password") ?: System.getenv('PKG_PWD')
+            username = project.findProperty("user-id") ?: System.getenv('GITHUB_ACTOR')
+            password = project.findProperty("password") ?: System.getenv('GITHUB_TOKEN')
         }
     }
     maven {
