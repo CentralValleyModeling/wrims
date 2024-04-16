@@ -27,8 +27,8 @@ repositories{
         name = "GitHubPackages-CVM"
         url = uri("https://maven.pkg.github.com/CentralValleyModeling/system-summary-report-tool")
         credentials {
-            username = project.findProperty("user-id") ?: System.getenv('PKG_UID')
-            password = project.findProperty("password") ?: System.getenv('PKG_PWD')
+            username = project.findProperty("user-id") ?: System.getenv('GITHUB_ACTOR')
+            password = project.findProperty("password") ?: System.getenv('GITHUB_TOKEN')
         }
     }
 }
