@@ -14,9 +14,7 @@ on:
         required: false
         # The data type of the input
         type: string
-    jobs.wrims_compute.permissions:
-      contents: read
-      packages: write
+    jobs.wrims_compute.permissions: write-all
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
