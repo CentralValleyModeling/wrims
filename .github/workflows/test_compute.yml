@@ -14,6 +14,9 @@ on:
         required: false
         # The data type of the input
         type: string
+    jobs.wrims_compute.permissions:
+      contents: read
+      packages: write
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -32,7 +35,7 @@ jobs:
           cache: 'gradle'
 
       - name: Run from Gradle
-        run: ./gradlew :wrims-comparison-test:testReport
+        run: ./gradlew :wrims-comparison-test:publish
         env:
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
