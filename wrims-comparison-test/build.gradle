@@ -19,16 +19,16 @@ repositories{
         name = "GitHubPackages-WRIMS"
         url = uri("https://maven.pkg.github.com/CentralValleyModeling/wrims")
         credentials {
-            username = project.findProperty("gh_pkg_uid") ?: System.getenv('GITHUB_ACTOR')
-            password = project.findProperty("gh_pkg_pwd") ?: System.getenv('GITHUB_TOKEN')
+            username = project.findProperty('cvmUserId') ?: System.getenv('PKG_USERNAME')
+            password = project.findProperty('cvmPassword') ?: System.getenv('PKG_TOKEN')
         }
     }
     maven {
         name = "GitHubPackages-ReportTool"
         url = uri("https://maven.pkg.github.com/CentralValleyModeling/system-summary-report-tool")
         credentials {
-            username = project.findProperty("gh_pkg_uid") ?: System.getenv('GITHUB_ACTOR')
-            password = project.findProperty("gh_pkg_pwd") ?: System.getenv('GITHUB_TOKEN')
+            username = project.findProperty('cvmUserId') ?: System.getenv('PKG_USERNAME')
+            password = project.findProperty('cvmPassword') ?: System.getenv('PKG_TOKEN')
         }
     }
 }
@@ -59,7 +59,6 @@ tasks.register("testExecute", JavaExec) {
     jvmArgs "-Xmx4096m", "-Xss1024K", "-XX:+CreateMinidumpOnCrash"
 }
 tasks.register("testReport", JavaExec) {
-    def compareDirName = "$buildDir/testProjects"
     dependsOn(tasks.named("testExecute"))
     workingDir "${buildDir}/testProjects/"
     classpath = configurations.comparisonReport
@@ -100,10 +99,9 @@ publishing {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/CentralValleyModeling/wrims")
             credentials {
-                username = project.findProperty('gh_pkg_uid') ?: System.getenv('GITHUB_ACTOR')
-                password = project.findProperty('gh_pkg_pwd') ?: System.getenv('GITHUB_TOKEN')
+                username = project.findProperty('cvmUserId') ?: System.getenv('PKG_USERNAME')
+                password = project.findProperty('cvmPassword') ?: System.getenv('PKG_TOKEN')
             }
-
         }
     }
 }
