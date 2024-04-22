@@ -1,0 +1,38 @@
+# This is a manually triggered wrims compute
+
+name: WRIMS compute
+on:
+  workflow_dispatch:
+    # Inputs the workflow accepts.
+    inputs:
+      name:
+        # Friendly description to be shown in the UI instead of 'name'
+        description: 'Name of test compute'
+        # Default value if no value is explicitly provided
+        default: 'Test_01.config'
+        # Input has to be provided for the workflow to run
+        required: false
+        # The data type of the input
+        type: string
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "wrims_compute"
+  wrims_compute:
+    # The type of runner that the job will run on
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v2
+        with:
+          java-version: '8'
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Run from Gradle
+        run: ./gradlew :wrims-comparison-test:testReport
+        env:
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
