@@ -28,8 +28,7 @@ repositories{
         url = uri("https://maven.pkg.github.com/CentralValleyModeling/system-summary-report-tool")
         credentials {
             username = project.findProperty('cvmUserId') ?: System.getenv('PKG_USERNAME')
-            password = project.findProperty('cvmPassword') ?: System.getenv('PKG_TOKEN')
-        }
+            password = project.findProperty('cvmPassword') ?: System.getenv('PKG_TOKEN')        }
     }
 }
 
@@ -37,9 +36,11 @@ dependencies {
     implementation(project(":wrims-core")){
         exclude group: "org.testng"
     }
+
     windows_x64 'mil.army.usace.hec:javaHeclib:7-IQ-0-win-x86_64@zip'
     windows_x64 "gov.ca.dwr:run-libs:+"
     testProjects "gov.ca.dwr:cal_lite_test_01:+"
+
     comparisonReport "gov.ca.dwr:system-summary-report-tool:master-SNAPSHOT"
 }
 
@@ -52,7 +53,6 @@ tasks.register("testExecute", JavaExec) {
     classpath += sourceSets.main.runtimeClasspath
     mainClass = "wrimsv2.components.ControllerBatch"
     args "-config=$buildDir/testProjects/CalLite4.1_TF/Test_02.config"
-
     environment 'PATH', "${compareDirName}/Run/external;$buildDir/lib;${System.getenv('PATH')}"
     systemProperty "java.library.path", "${compareDirName}/Run/external;$buildDir/lib"
 
@@ -64,6 +64,7 @@ tasks.register("testReport", JavaExec) {
     classpath = configurations.comparisonReport
     mainClass = "gov.ca.dwr.callite.Batch"
     args "$buildDir/testProjects/callite_version_check_dss6_6.inp"
+
     systemProperty "java.library.path", "$buildDir/lib"
 
     environment 'PATH', "$buildDir/lib;${System.getenv('PATH')}"
@@ -92,6 +93,7 @@ publishing {
                 builtBy testReport
                 extension 'pdf'
             }
+
         }
     }
     repositories {
