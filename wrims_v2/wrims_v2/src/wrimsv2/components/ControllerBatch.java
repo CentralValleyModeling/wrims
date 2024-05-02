@@ -49,8 +49,9 @@ import wrimsv2.sql.SQLServerRWriter;
 import wrimsv2.tools.General;
 import wrimsv2.tools.Warmstart;
 import wrimsv2.wreslparser.elements.StudyUtils;
-import wrimsv2.wreslparser.elements.Tools;
+import wrimsv2.wreslplus.elements.ParserUtils;
 import wrimsv2.wreslplus.elements.procedures.ErrorCheck;
+import wrimsv2.wreslplus.elements.Tools;
 
 public class ControllerBatch {
 	
@@ -227,7 +228,9 @@ public class ControllerBatch {
 			return null;
 			
 		} else if(StudyUtils.loadParserData) {
-
+			String canonicalMainFilePath = Tools.getCanonicalLowCasePath(FilePaths.fullMainPath);			
+			ParserUtils.setRunDir(new File(canonicalMainFilePath).getParent()); 
+			
 			StudyDataSet sds = StudyUtils.loadObject(StudyUtils.parserDataPath);
 			LoadParameter.process(sds);
 			if (ControlData.useCbcWarmStart || ControlData.cbcCheckIntErr || ControlData.cbc_debug_routeCbc || ControlData.cbc_debug_routeXA){

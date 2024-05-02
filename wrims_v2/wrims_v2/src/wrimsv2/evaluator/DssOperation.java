@@ -263,7 +263,7 @@ public class DssOperation {
 		while(iterator.hasNext()){
 			String initName=(String)iterator.next();
 			DssDataSet dds=DataTimeSeries.dvAliasInit.get(initName);
-			if (ControlData.outputType !=0 || (ControlData.ovOption !=0 && isToWrite(getTSName(initName), dds.getKind()))){
+			if (ControlData.outputType !=0 || (ControlData.outputType ==0 && ControlData.ovOption ==0) || (ControlData.ovOption !=0 && isToWrite(getTSName(initName), dds.getKind()))){
 				ArrayList<Double> data=dds.getData();
 				int size=data.size();
 				double[] values=new double[size];
@@ -297,7 +297,7 @@ public class DssOperation {
 		while(iterator.hasNext()){
 			String dvAliasName=(String)iterator.next();
 			DssDataSetFixLength ddsfl=DataTimeSeries.dvAliasTS.get(dvAliasName);
-			if (ControlData.outputType !=0 || (ControlData.ovOption !=0 && isToWrite(getTSName(dvAliasName), ddsfl.getKind()))){
+			if (ControlData.outputType !=0 || (ControlData.outputType ==0 && ControlData.ovOption ==0) || (ControlData.ovOption !=0 && isToWrite(getTSName(dvAliasName), ddsfl.getKind()))){
 				double[] values=ddsfl.getData();
 				String timestep=ddsfl.getTimeStep();
 				int size = values.length;
@@ -353,7 +353,7 @@ public class DssOperation {
 				while(iterator.hasNext()){
 					String dvAliasName=(String)iterator.next();
 					DssDataSetFixLength ddsfl=dvAliasTSCycle.get(dvAliasName);
-					if (ControlData.outputType !=0 || (ControlData.ovOption !=0 && isToWrite(getTSName(dvAliasName), ddsfl.getKind()))){
+					if (ControlData.outputType !=0 || (ControlData.outputType ==0 && ControlData.ovOption ==0) || (ControlData.ovOption !=0 && isToWrite(getTSName(dvAliasName), ddsfl.getKind()))){
 						double[] values=ddsfl.getData();
 						String timestep=ddsfl.getTimeStep();
 						int size = values.length;
@@ -439,7 +439,7 @@ public class DssOperation {
 		while(iterator.hasNext()){
 			String initName=(String)iterator.next();
 			DssDataSet dds=DataTimeSeries.dvAliasInit.get(initName);
-			if (ControlData.outputType !=0 || (ControlData.ovOption !=0 && isToWrite(getTSName(initName), dds.getKind()))){
+			if (ControlData.outputType !=0 || (ControlData.outputType ==0 && ControlData.ovOption ==0) || (ControlData.ovOption !=0 && isToWrite(getTSName(initName), dds.getKind()))){
 				ArrayList<Double> data=dds.getData();
 				int size=data.size();
 				double[] values=new double[size];
@@ -548,7 +548,7 @@ public class DssOperation {
 		while(iterator.hasNext()){
 			String dvAliasName=(String)iterator.next();
 			DssDataSetFixLength ddsfl=DataTimeSeries.dvAliasTS.get(dvAliasName);
-			if (ControlData.outputType !=0 || (ControlData.ovOption !=0 && isToWrite(getTSName(dvAliasName), ddsfl.getKind()))){
+			if (ControlData.outputType !=0 || (ControlData.outputType ==0 && ControlData.ovOption ==0) || (ControlData.ovOption !=0 && isToWrite(getTSName(dvAliasName), ddsfl.getKind()))){
 				String timestep = ddsfl.getTimeStep();
 				double[] values=ddsfl.getData();
 				double[] values1;
@@ -616,7 +616,7 @@ public class DssOperation {
 				while(iterator.hasNext()){
 					String dvAliasName=(String)iterator.next();
 					DssDataSetFixLength ddsfl=dvAliasTSCycle.get(dvAliasName);
-					if (ControlData.outputType !=0 || (ControlData.ovOption !=0 && isToWrite(getTSName(dvAliasName), ddsfl.getKind()))){
+					if (ControlData.outputType !=0 || (ControlData.outputType ==0 && ControlData.ovOption ==0) || (ControlData.ovOption !=0 && isToWrite(getTSName(dvAliasName), ddsfl.getKind()))){
 						String timestep=ddsfl.getTimeStep();
 						double[] values=ddsfl.getData();
 						double[] modValues;

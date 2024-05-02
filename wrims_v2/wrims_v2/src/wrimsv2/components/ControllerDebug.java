@@ -80,6 +80,8 @@ import wrimsv2.wreslparser.elements.StudyParser;
 import wrimsv2.wreslparser.elements.StudyUtils;
 import wrimsv2.wreslparser.elements.TempData;
 import wrimsv2.wreslparser.elements.WriteCSV;
+import wrimsv2.wreslplus.elements.ParserUtils;
+import wrimsv2.wreslplus.elements.Tools;
 import wrimsv2.wreslplus.elements.procedures.ErrorCheck;
 import lpsolve.*;
 
@@ -221,6 +223,9 @@ public class ControllerDebug extends Thread {
 	
 	public StudyDataSet parse()throws RecognitionException, IOException{
 		if(StudyUtils.loadParserData) {
+			String canonicalMainFilePath = Tools.getCanonicalLowCasePath(FilePaths.fullMainPath);			
+			ParserUtils.setRunDir(new File(canonicalMainFilePath).getParent()); 
+			
 			StudyDataSet sds = StudyUtils.loadObject(StudyUtils.parserDataPath);
 			LoadParameter.process(sds);
 			return sds;
