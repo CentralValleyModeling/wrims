@@ -1,0 +1,52 @@
+@startuml
+'https://plantuml.com/component-diagram
+header "WRIMS Plugins with "
+cloud hec_nexus as "HEC Nexus"
+cloud maven_central as "Maven Central"
+cloud dwr_github as "DWR GitHub"
+
+rectangle wrims as "WRIMS Installer"{
+    package wrims_plugin as "gov.ca.dwr.wrims_plugin"{
+        component wrims_core as "wrims-core.jar" #orange
+    }
+    package wrims_dssvue as "gov.ca.dwr.hecdssvue" {
+        component dssvue as "dssgui.jar"
+    }
+    package wrims_jdiagram as "gov.ca.dwr.jdiagram" {
+        component jdiagram as "jdiagram.jar"
+    }
+    package wrims_xtext_editor as "gov.ca.dwr.xtext.editor" {
+        component xtext as "xtext.jar" #orange
+    }
+    package wrims_xtext_editor_ui as "gov.ca.dwr.xtext.editor.ui"
+    package wrims_hec_dependencies as "gov.ca.dwr.hec_dependencies" #orange {
+        rectangle hec_dependencies #orange
+    }
+    package wrims_dwr_dependencies as "gov.ca.dwr.hec_dependencies" #orange {
+        rectangle dwr_dependencies #orange
+    }
+    package wrims_other_dependencies as "gov.ca.dwr.other_dependencies" #orange {
+        rectangle other_dependencies #orange
+    }
+}
+
+wrims_core -down[#red]-> hec_dependencies
+wrims_core -down[#red]-> other_dependencies
+wrims_core -down[#red]-> dwr_dependencies
+
+wrims_plugin -down-> wrims_hec_dependencies
+wrims_plugin -down-> wrims_other_dependencies
+wrims_plugin -down-> wrims_dwr_dependencies
+
+wrims_xtext_editor_ui -down-> wrims_xtext_editor
+wrims_dssvue -down-> wrims_plugin
+hec_dependencies -down.-> hec_nexus
+other_dependencies -down.-> maven_central
+dwr_dependencies -down.-> dwr_github
+
+dssvue -down.-> hec_nexus
+jdiagram -down.-> maven_central
+xtext -down.-> maven_central
+
+footer "orange components indicate exported dependencies\nRed arrows would need to be compile-time only and excluded as transitive dependencies when building the plugin"
+@enduml
