@@ -19,51 +19,96 @@ package "WRIMS Plugins v2.1" {
 
     node "lib_x64" {
     ' Vertical layout with hidden connections
+
     [wrims plugin v2.1 classes from src] -r-> [commons-io v2.1.jar]
+    [wrims plugin v2.1 classes from src] -r-> [dom4j-1.6.1.jar]
+    [wrims plugin v2.1 classes from src] -r-> [dsm2-inut-model.jar]
     [wrims plugin v2.1 classes from src] -r-> [guava v11.0.2.jar]
     [wrims plugin v2.1 classes from src] -r-> [jep v3.8.2.jar]
-    [wrims plugin v2.1 classes from src] -r-> [dsm2-inut-model.jar]
+    [jep v3.8.2.jar] -l-> [jep.dll]
     [wrims plugin v2.1 classes from src] -r-> [iText.jar]
-    [wrims plugin v2.1 classes from src] -r-> [mysql-connector-java-5.1.42-bin.jar]
+    [wrims plugin v2.1 classes from src] -r-> [jarh5obj.jar]
+    [wrims plugin v2.1 classes from src] -r-> [jarhdf5-2.10.0.jar]
+    [wrims plugin v2.1 classes from src] -r-> [jarhdfobj.jar]
     [wrims plugin v2.1 classes from src] -r-> [jfreechart.jar]
     [wrims plugin v2.1 classes from src] -r-> [jpy.jar]
+    [wrims plugin v2.1 classes from src] -r-> [minlog-1.2.jar]
+    [wrims plugin v2.1 classes from src] -r-> [misc.jar]
+    [wrims plugin v2.1 classes from src] -r-> [objenesis-1.2.jar]
+    [wrims plugin v2.1 classes from src] -r-> [poi-3.8-20120326.jar]
+    [wrims plugin v2.1 classes from src] -r-> [poi-ooxml-3.8-20120326.jar]
+    [wrims plugin v2.1 classes from src] -r-> [poi-ooxml-schemas-3.8-20120326.jar]
+    [wrims plugin v2.1 classes from src] -r-> [slf4j-api-1.7.5.jar]
+    [wrims plugin v2.1 classes from src] -r-> [slf4j-nop-1.7.5.jar]
+    [wrims plugin v2.1 classes from src] -r-> [stax-api-1.0.1.jar]
     [wrims plugin v2.1 classes from src] -r-> [vista.jar]
     [wrims plugin v2.1 classes from src] -r-> [wrims-core.jar]
-    [wrims-core.jar] .-r-> [kyro-2.24.0.jar]
-    [wrims-core.jar] .-r-> [com.google.ortools.linearsolver.jar]
-    [wrims-core.jar] .-r-> [commons-io v2.1.jar]
-    [wrims-core.jar] .-r-> [XAOptimizer.jar]
+    note bottom of [wrims-core.jar]
+      LP solver jars and DLLs are not invoked from wrims-core.jar
+      in context of the plugin for the GUI application. In
+      computations, the WRIMS compute is run from a batch file
+      in a spawned process running in the lib folder in the install
+      directory
+    end note
+    [wrims-core.jar] -r-> [antlr-3.5.2-runtime.jar]
+    [wrims-core.jar] -r-> [kyro-2.24.0.jar]
+    [wrims-core.jar] -r-> [java-object-diff-0.95.jar]
+    [wrims-core.jar] -r-> [coinor.jar]
+    [wrims-core.jar] -r-> [gurobi.jar]
+    [wrims-core.jar] -r-> [com.google.ortools.linearsolver.jar]
+    [wrims-core.jar] -r-> [commons-io v2.1.jar]
+    [wrims-core.jar] -r-> [XAOptimizer.jar]
 
-    [wrims plugin v2.1 classes from src] -[hidden]- [commons-io v2.1.jar]
-    [commons-io v2.1.jar] -[hidden]- [guava v11.0.2.jar]
-    [guava v11.0.2.jar] -[hidden]- [jep v3.8.2.jar]
-    [jep v3.8.2.jar] -[hidden]- [dsm2-inut-model.jar]
-    [dsm2-inut-model.jar] -[hidden]- [iText.jar]
-    [iText.jar] -[hidden]- [mysql-connector-java-5.1.42-bin.jar]
-    [mysql-connector-java-5.1.42-bin.jar] -[hidden]- [jfreechart.jar]
+    [commons-io v2.1.jar] -[hidden]- [dom4j-1.6.1.jar]
+    [dom4j-1.6.1.jar] -[hidden]- [dsm2-inut-model.jar]
+    [dsm2-inut-model.jar] -[hidden]- [guava v11.0.2.jar]
+    [guava v11.0.2.jar] -[hidden]- [iText.jar]
+    [iText.jar] -[hidden]- [jep v3.8.2.jar]
+    [jep v3.8.2.jar] -[hidden]- [jep.dll]
+    [jep.dll] -[hidden]- [jarh5obj.jar]
+    [jarh5obj.jar] -[hidden]- [jarhdf5-2.10.0.jar]
+    [jarhdf5-2.10.0.jar]  -[hidden]- [jarhdfobj.jar]
+    [jarhdfobj.jar] -[hidden]- [jfreechart.jar]
     [jfreechart.jar] -[hidden]- [jpy.jar]
-    [jpy.jar] -[hidden]- [vista.jar]
+    [jpy.jar] -[hidden]- [jpy.jar]
+    [jpy.jar] -[hidden]- [minlog-1.2.jar]
+    [minlog-1.2.jar]  -[hidden]- [misc.jar]
+    [misc.jar] -[hidden]- [objenesis-1.2.jar]
+    [objenesis-1.2.jar] -[hidden]- [poi-3.8-20120326.jar]
+    [poi-3.8-20120326.jar] -[hidden]- [poi-ooxml-3.8-20120326.jar]
+    [poi-ooxml-3.8-20120326.jar] -[hidden]- [poi-ooxml-schemas-3.8-20120326.jar]
+    [poi-ooxml-schemas-3.8-20120326.jar] -[hidden]- [slf4j-api-1.7.5.jar]
+    [slf4j-api-1.7.5.jar]   -[hidden]- [slf4j-nop-1.7.5.jar]
+    [slf4j-nop-1.7.5.jar] -[hidden]- [stax-api-1.0.1.jar]
+    [stax-api-1.0.1.jar]     -[hidden]- [vista.jar]
     [vista.jar] -[hidden]- [wrims-core.jar]
-    [wrims-core.jar] -[hidden]- [com.google.ortools.linearsolver.jar]
+    [wrims-core.jar] -[hidden]- [antlr-3.5.2-runtime.jar]
+    [antlr-3.5.2-runtime.jar] -[hidden]- [kyro-2.24.0.jar]
+    [kyro-2.24.0.jar] -[hidden]- [java-object-diff-0.95.jar]
+    [java-object-diff-0.95.jar] -[hidden]- [coinor.jar]
+    [coinor.jar] -[hidden]- [gurobi.jar]
+    [gurobi.jar] -[hidden]- [com.google.ortools.linearsolver.jar]
     [com.google.ortools.linearsolver.jar] -[hidden]- [XAOptimizer.jar]
-    [XAOptimizer.jar] -[hidden]- [kyro-2.24.0.jar]
-}
-}
 
+}
+}
 
 ' External components (example)
-()monolith -right- [hec-monolith v3.3.22]
-()nucleus_data -right- [hec-nucleus-data v2.0.1]
-()nucleus_metadata -right- [hec-nucleus-metadata v2.0.1]
+[wrims plugin v2.1 classes from src] -l-> ()monolith
+[wrims plugin v2.1 classes from src] .-l-> ()nucleus_data
+[wrims plugin v2.1 classes from src] .-l-> ()nucleus_metadata
 
-()wrimsv2_plugin.debugger -r- [wrims plugin v2.1 classes from src]
-()wrimsv2_plugin.presentation -r- [wrims plugin v2.1 classes from src]
-()wrimsv2_plugin.tools -r- [wrims plugin v2.1 classes from src]
+()monolith -left- [hec-monolith v3.3.22]
+()nucleus_data -left- [hec-nucleus-data v2.0.1]
+()nucleus_metadata -left- [hec-nucleus-metadata v2.0.1]
+
+()wrimsv2_plugin.debugger -d- [wrims plugin v2.1 classes from src]
+()wrimsv2_plugin.presentation -d- [wrims plugin v2.1 classes from src]
+()wrimsv2_plugin.tools -d- [wrims plugin v2.1 classes from src]
 
 ()wrimsv2_plugin.debugger -[hidden]- ()wrimsv2_plugin.presentation
 ()wrimsv2_plugin.presentation -[hidden]- ()wrimsv2_plugin.tools
 
-[wrims plugin v2.1 classes from src] -r-> ()monolith
-[wrims plugin v2.1 classes from src] .-r-> ()nucleus_data
-[wrims plugin v2.1 classes from src] .-r-> ()nucleus_metadata
+()monolith -[hidden]-()nucleus_data
+()nucleus_data -[hidden]- ()nucleus_metadata
 @enduml
