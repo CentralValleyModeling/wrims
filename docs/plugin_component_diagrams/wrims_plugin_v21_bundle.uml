@@ -1,0 +1,69 @@
+@startuml
+title WRIMS v2.1 Component Diagram
+
+' Define the package for WRIMS v2.1
+
+package "hec-dependencies" {
+[hec-monolith v3.3.22]
+    ' Vertical layout with hidden connections
+    [hec-monolith v3.3.22]
+    [hec-nucleus-data v2.0.1]
+    [hec-nucleus-metadata v2.0.1]
+
+
+    [hec-monolith v3.3.22] -[hidden]- [hec-nucleus-data v2.0.1]
+    [hec-nucleus-data v2.0.1] -[hidden]- [hec-nucleus-metadata v2.0.1]
+}
+package "WRIMS Plugins v2.1" {
+    [wrims plugin v2.1 classes from src]
+
+    node "lib_x64" {
+    ' Vertical layout with hidden connections
+    [wrims plugin v2.1 classes from src] -r-> [commons-io v2.1.jar]
+    [wrims plugin v2.1 classes from src] -r-> [guava v11.0.2.jar]
+    [wrims plugin v2.1 classes from src] -r-> [jep v3.8.2.jar]
+    [wrims plugin v2.1 classes from src] -r-> [dsm2-inut-model.jar]
+    [wrims plugin v2.1 classes from src] -r-> [iText.jar]
+    [wrims plugin v2.1 classes from src] -r-> [mysql-connector-java-5.1.42-bin.jar]
+    [wrims plugin v2.1 classes from src] -r-> [jfreechart.jar]
+    [wrims plugin v2.1 classes from src] -r-> [jpy.jar]
+    [wrims plugin v2.1 classes from src] -r-> [vista.jar]
+    [wrims plugin v2.1 classes from src] -r-> [wrims-core.jar]
+    [wrims-core.jar] .-r-> [kyro-2.24.0.jar]
+    [wrims-core.jar] .-r-> [com.google.ortools.linearsolver.jar]
+    [wrims-core.jar] .-r-> [commons-io v2.1.jar]
+    [wrims-core.jar] .-r-> [XAOptimizer.jar]
+
+    [wrims plugin v2.1 classes from src] -[hidden]- [commons-io v2.1.jar]
+    [commons-io v2.1.jar] -[hidden]- [guava v11.0.2.jar]
+    [guava v11.0.2.jar] -[hidden]- [jep v3.8.2.jar]
+    [jep v3.8.2.jar] -[hidden]- [dsm2-inut-model.jar]
+    [dsm2-inut-model.jar] -[hidden]- [iText.jar]
+    [iText.jar] -[hidden]- [mysql-connector-java-5.1.42-bin.jar]
+    [mysql-connector-java-5.1.42-bin.jar] -[hidden]- [jfreechart.jar]
+    [jfreechart.jar] -[hidden]- [jpy.jar]
+    [jpy.jar] -[hidden]- [vista.jar]
+    [vista.jar] -[hidden]- [wrims-core.jar]
+    [wrims-core.jar] -[hidden]- [com.google.ortools.linearsolver.jar]
+    [com.google.ortools.linearsolver.jar] -[hidden]- [XAOptimizer.jar]
+    [XAOptimizer.jar] -[hidden]- [kyro-2.24.0.jar]
+}
+}
+
+
+' External components (example)
+()monolith -right- [hec-monolith v3.3.22]
+()nucleus_data -right- [hec-nucleus-data v2.0.1]
+()nucleus_metadata -right- [hec-nucleus-metadata v2.0.1]
+
+()wrimsv2_plugin.debugger -r- [wrims plugin v2.1 classes from src]
+()wrimsv2_plugin.presentation -r- [wrims plugin v2.1 classes from src]
+()wrimsv2_plugin.tools -r- [wrims plugin v2.1 classes from src]
+
+()wrimsv2_plugin.debugger -[hidden]- ()wrimsv2_plugin.presentation
+()wrimsv2_plugin.presentation -[hidden]- ()wrimsv2_plugin.tools
+
+[wrims plugin v2.1 classes from src] -r-> ()monolith
+[wrims plugin v2.1 classes from src] .-r-> ()nucleus_data
+[wrims plugin v2.1 classes from src] .-r-> ()nucleus_metadata
+@enduml

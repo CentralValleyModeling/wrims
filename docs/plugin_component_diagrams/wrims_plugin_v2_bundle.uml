@@ -1,0 +1,68 @@
+@startuml
+title WRIMS v2 plugin Component Diagram
+
+' Define the package for WRIMS v2.1
+package "wrimsv2_plugin_1.0.0.0" {
+    [wrims plugin v2 classes from src]
+
+    node "lib"{
+    [32-bit jars and DLLs]
+    }
+
+    node "lib_x64"{
+    ' Vertical layout with hidden connections
+    [calLite.jar]
+    [calSim.jar]
+    [hec.jar]
+    [hecData.jar]
+    [wrims plugin v2 classes from src] -r-> [heclib.jar]
+    [heclib.jar] -r-> [javaHecLib.dll]
+    [wrims plugin v2 classes from src] -r-> [WRIMSv2.jar]
+    note bottom of [WRIMSv2.jar]
+      DSS and LP solver jars and DLLs are
+      not invoked in this context from WRIMSv2.jar
+    end note
+    [LP solver jars and DLLs]
+    [wrims plugin v2 classes from src] -r-> [guava v11.0.2]
+    [wrims plugin v2 classes from src] -r-> [commons-io v2.1]
+    [wrims plugin v2 classes from src] -r-> [xstream v1.4.3]
+    [wrims plugin v2 classes from src] -r-> [javatuples v1.2]
+    [wrims plugin v2 classes from src] -r-> [java-object-diff v0.95]
+    [wrims plugin v2 classes from src] -r-> [kryo v2.24.0]
+    [wrims plugin v2 classes from src] -r-> [jep v3.8.2]
+    [jep v3.8.2] -r-> [jep.dll]
+    [wrims plugin v2 classes from src] -r-> [testng v6.3]
+    [wrims plugin v2 classes from src] -r-> [libtensorflow v1.14.0]
+    [wrims plugin v2 classes from src] -r-> [junit_5 v5.10.2]
+
+    }
+
+    [calLite.jar] -[hidden]- [calSim.jar]
+    [calSim.jar] -[hidden]- [hec.jar]
+    [hec.jar] -[hidden]- [hecData.jar]
+    [hecData.jar] -[hidden]- [heclib.jar]
+    [heclib.jar] -[hidden]-> [javaHecLib.dll]
+    [javaHecLib.dll] -[hidden]- [WRIMSv2.jar]
+    [WRIMSv2.jar] -[hidden]- [LP solver jars and DLLs]
+    [LP solver jars and DLLs] -[hidden]- [guava v11.0.2]
+    [guava v11.0.2] -[hidden]- [commons-io v2.1]
+    [commons-io v2.1] -[hidden]- [xstream v1.4.3]
+    [xstream v1.4.3] -[hidden]- [javatuples v1.2]
+    [javatuples v1.2] -[hidden]- [java-object-diff v0.95]
+    [java-object-diff v0.95] -[hidden]- [kryo v2.24.0]
+    [kryo v2.24.0] -[hidden]- [jep v3.8.2]
+    [jep v3.8.2] -[hidden]-> [jep.dll]
+    [jep.dll] -[hidden]- [libtensorflow v1.14.0]
+    [libtensorflow v1.14.0] -[hidden]- [testng v6.3]
+    [testng v6.3] -[hidden]- [junit_5 v5.10.2]
+
+}
+
+
+' External components (example)
+()wrimsv2_plugin.debugger -r- [wrims plugin v2 classes from src]
+()wrimsv2_plugin.presentation -r- [wrims plugin v2 classes from src]
+()wrimsv2_plugin.tools -r- [wrims plugin v2 classes from src]
+()wrimsv2_plugin.debugger -[hidden]- ()wrimsv2_plugin.presentation
+()wrimsv2_plugin.presentation -[hidden]- ()wrimsv2_plugin.tools
+@enduml
