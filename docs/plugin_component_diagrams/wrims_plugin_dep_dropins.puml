@@ -1,0 +1,70 @@
+@startuml
+'https://plantuml.com/component-diagram
+header "WRIMS Plugins with "
+cloud hec_nexus as "HEC Nexus"
+cloud maven_central as "Maven Central"
+cloud dwr_github as "DWR GitHub"
+
+rectangle wrims as "WRIMS Installer"{
+    package gov.ca.dwr.wrims_plugin{
+        component wrims_plugin #orange
+        component wrims_core as "wrims-core.jar"
+        component hec_dependencies #orange {
+        package hec.dssgui #orange
+        package hec.gfx2d #orange
+        package hec.heclib #orange
+        package hec.hecmath #orange
+        package hec.io #orange
+        }
+        component dwr_dependencies  #orange {
+        package calsim.app #orange
+        package calsim.gui #orange
+        package vista #orange
+        }
+        component other_dependencies #orange{
+        package antlr.runtime #orange
+        package swixml #orange
+        }
+    }
+    package wrims_dssvue as "gov.ca.dwr.hecdssvue" {
+        component dssvue as "gov.ca.dwr.hecdssvue" #orange
+    }
+    package wrims_jdiagram as "gov.ca.dwr.jdiagram" {
+        component gov.ca.dwr.jdiagram #orange
+        component jdiagram as "jdiagram.jar" {
+        package mindfusion as "com.mindfusion" #orange
+        }
+    }
+    package wrims_xtext_editor as "gov.ca.dwr.xtext.editor" #orange{
+        component xtext as "xtext.jar"
+    }
+    package wrims_xtext_editor_ui as "gov.ca.dwr.xtext.editor.ui" #orange
+}
+
+wrims_core -down[#red]-> hec_dependencies
+wrims_core -down[#red]-> other_dependencies
+wrims_core -down[#red]-> dwr_dependencies
+
+wrims_xtext_editor_ui -down-> antlr.runtime
+wrims_xtext_editor -down-> antlr.runtime
+
+wrims_plugin -r-> wrims_core
+wrims_plugin -down-> hec_dependencies
+wrims_plugin -down-> other_dependencies
+wrims_plugin -down-> dwr_dependencies
+
+wrims_xtext_editor_ui -down-> wrims_xtext_editor
+dssvue -down-> wrims_plugin
+hec_dependencies -down.-> hec_nexus
+other_dependencies -down.-> maven_central
+dwr_dependencies -down.-> dwr_github
+
+dssvue -down-> hec.dssgui
+dssvue -down-> hec_dependencies
+dssvue -down-> dwr_dependencies
+gov.ca.dwr.jdiagram -r-> jdiagram
+jdiagram -down.-> maven_central
+xtext -down.-> maven_central
+
+footer "orange components indicate exported dependencies\nRed arrows would need to be compile-time only and excluded as transitive dependencies when building the plugin\ndependencies on java, eclipse, osgi classes not shown"
+@enduml
