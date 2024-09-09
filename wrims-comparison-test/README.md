@@ -11,10 +11,10 @@ build/testProjects/CalLite4.1_TR with run controls set in the file Test_01.confi
 
 The report that the comparison tool produces is also stored as an artifact. The latest version can be found 
 by following this link on the WRIMS project home page:  
-![image](img1.png)
+![image](../README_images/compare_img1.png)
 
 The PDF of the report is the last item in the list *following* all the checksum values.  
-![image](img2.png)
+![image](../README_images/compare_img2.png)
 
 
 The CalLite test model has been tested successfully running with Java 8 build 212. Newer versions of Java may
