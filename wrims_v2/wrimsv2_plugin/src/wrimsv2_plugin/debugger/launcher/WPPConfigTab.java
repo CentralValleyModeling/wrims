@@ -17,10 +17,17 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.console.IConsoleConstants;
+import org.eclipse.ui.internal.Workbench;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
@@ -41,6 +48,7 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 	//private Text yearSectionText;
 	private Text memSectionText;
 	private Text yearSectionText;
+	private Combo cbcCombo;
 	
 	@Override
 	public void createControl(Composite parent) {
@@ -95,6 +103,34 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 		xaButton.setFont(font);
 		xaButton.setEnabled(false);
 		xaButton.addSelectionListener(new SelectionListener(){
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				updateLaunchConfigurationDialog();	
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				updateLaunchConfigurationDialog();			
+			}
+		});
+		
+		Label cbcLabel = new Label(comp, SWT.NONE);
+		cbcLabel.setText("If Cbc solver is used, please select the version number:");
+		gd = new GridData(GridData.BEGINNING);
+		gd.horizontalSpan=2;
+		cbcLabel.setLayoutData(gd);
+		cbcLabel.setFont(font);
+		
+		cbcCombo = new Combo(comp, SWT.BORDER);
+		for (int i=0; i<DebugCorePlugin.cbcVers.length; i++){
+			cbcCombo.add(DebugCorePlugin.cbcVers[i]);
+		}
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 4;
+		cbcCombo.setLayoutData(gd);
+		cbcCombo.setFont(font);
+		cbcCombo.addSelectionListener(new SelectionListener(){
 			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -258,18 +294,6 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 		gd.horizontalSpan = 4;
 		compButton.setLayoutData(gd);
 		compButton.setFont(font);
-		compButton.addSelectionListener(new SelectionListener(){
-			
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				updateLaunchConfigurationDialog();	
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				updateLaunchConfigurationDialog();			
-			}
-		});
 		
 		dssEndOutputButton = new Button(comp, SWT.RADIO);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
@@ -381,6 +405,7 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_DSSENDOUTPUT, "yes");
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_YEARSECTIONOUTPUT, "10");
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_MONMEMSECTION, "24");
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_SELCBC, DebugCorePlugin.cbcVers[0]);
 	}
 
 	@Override
@@ -406,6 +431,14 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 			}else{
 				xaButton.setSelection(false);
 			}
+		} catch (CoreException e) {
+			WPPException.handleException(e);
+		}
+		
+		String cbcSelVer = DebugCorePlugin.cbcVers[0];
+		try {
+			cbcSelVer = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SELCBC, DebugCorePlugin.cbcVers[0]);
+			cbcCombo.setText(cbcSelVer);
 		} catch (CoreException e) {
 			WPPException.handleException(e);
 		}
@@ -504,6 +537,10 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 		}
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_FREEXA, freeXA);
 		
+		String cbcSelVer = cbcCombo.getText();
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_SELCBC, cbcSelVer);
+		DebugCorePlugin.cbcSelVer=cbcSelVer;
+		
 		String allowSvTsInit="no";
 		if (allowSvTsInitButton.getSelection()){
 			allowSvTsInit="yes";
@@ -546,6 +583,8 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 		
 		String monMemSection  = memSectionText.getText();
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_MONMEMSECTION, monMemSection);
+		
+		showSolverStatus();
 	}
 
 	@Override
@@ -558,5 +597,32 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 		setErrorMessage(null);
 		setMessage(null);
 		return true;
+	}
+	
+	public void showSolverStatus(){
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				String log="";
+				if (!DebugCorePlugin.log.equalsIgnoreCase("NONE")){
+					log=DebugCorePlugin.log;
+				}
+				
+				String status=DebugCorePlugin.solver+"  "+log;
+				if (DebugCorePlugin.solver.equalsIgnoreCase("Cbc")){
+					status=DebugCorePlugin.solver+" "+DebugCorePlugin.cbcSelVer+"  "+log;
+				}
+				
+				IWorkbenchPage page = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage();
+				IViewPart console = page.findView( IConsoleConstants.ID_CONSOLE_VIEW ); 
+				if (console != null){
+					try {
+						console=page.showView(IConsoleConstants.ID_CONSOLE_VIEW);
+						console.getViewSite().getActionBars().getStatusLineManager().setMessage(status);
+					} catch (PartInitException e) {
+						WPPException.handleException(e);
+					}
+				}
+			}
+		});
 	}
 }

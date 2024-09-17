@@ -1,6 +1,6 @@
 package wrimsv2.components;
 
-import gurobi.GRBException;
+import com.gurobi.gurobi.GRBException;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -18,6 +18,7 @@ import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.TokenStream;
 
+import com.gurobi.gurobi.GRBException;
 import com.sunsetsoft.xa.Optimizer;
 
 import vista.db.dss.DSSUtil;

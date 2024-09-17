@@ -121,6 +121,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	private DropTarget initFileDt;
 	private DropTarget groundWaterFolderDt;	
 	private DropTarget calsimHydroDt;
+	private String cbcSelVer;
 	
 	public static String[] months = { "oct", "nov", "dec", "jan", "feb", "mar",
 		"apr", "may", "jun", "jul", "aug", "sep" };
@@ -705,6 +706,13 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		}else{
 			jarXA="XAOptimizer.jar";
 		}
+		try {
+			cbcSelVer=launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_SELCBC, DebugCorePlugin.cbcVers[0]);
+		} catch (CoreException e) {
+			cbcSelVer=DebugCorePlugin.cbcVers[0];
+		}
+		String cbcFolder="lib\\cbc_"+cbcSelVer;
+		
 		out.println("@echo off");
 		out.println();
 		out.println("set path=" + externalPath + ";"+"lib;%path%");
@@ -717,7 +725,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 			xmx="4096m";
 		}
 		*/
-		out.println("jre\\bin\\java -Xmx"+DebugCorePlugin.xmx+"m -Xss1024K -XX:+CreateMinidumpOnCrash -Duser.timezone=Etc/GMT+8 -Djava.library.path=\"" + externalPath + ";lib\" -cp \""+externalPath+";"+"lib\\external;lib\\WRIMSv2.jar;lib\\libtensorflow-1.14.0.jar;lib\\calsurrogate.jar;lib\\jep-3.8.2.jar;lib\\jna-3.5.1.jar;lib\\commons-io-2.1.jar;lib\\"+jarXA+";lib\\lpsolve55j.jar;lib\\coinor.jar;lib\\gurobi.jar;lib\\heclib.jar;lib\\jnios.jar;lib\\jpy.jar;lib\\misc.jar;lib\\pd.jar;lib\\vista.jar;lib\\guava-11.0.2.jar;lib\\javatuples-1.2.jar;lib\\kryo-2.24.0.jar;lib\\minlog-1.2.jar;lib\\objenesis-1.2.jar;lib\\jarh5obj.jar;lib\\jarhdf-2.10.0.jar;lib\\jarhdf5-2.10.0.jar;lib\\jarhdfobj.jar;lib\\slf4j-api-1.7.5.jar;lib\\slf4j-nop-1.7.5.jar;lib\\mysql-connector-java-5.1.42-bin.jar;lib\\sqljdbc4-2.0.jar;lib\\java-object-diff-0.95.jar\" wrimsv2.components.ControllerBatch "+"-config="+configFilePath);
+		out.println("jre\\bin\\java -Xmx"+DebugCorePlugin.xmx+"m -Xss1024K -XX:+CreateMinidumpOnCrash -Duser.timezone=Etc/GMT+8 -Djava.library.path=\"" + externalPath + ";" + cbcFolder + ";lib\" -cp \""+externalPath+";"+"lib\\external;lib\\WRIMSv2.jar;lib\\libtensorflow-1.14.0.jar;lib\\calsurrogate.jar;lib\\jep-3.8.2.jar;lib\\jna-3.5.1.jar;lib\\commons-io-2.1.jar;lib\\"+jarXA+";lib\\lpsolve55j.jar;"+cbcFolder+"\\coinor.jar;lib\\gurobi.jar;lib\\heclib.jar;lib\\jnios.jar;lib\\jpy.jar;lib\\misc.jar;lib\\pd.jar;lib\\vista.jar;lib\\guava-11.0.2.jar;lib\\javatuples-1.2.jar;lib\\kryo-2.24.0.jar;lib\\minlog-1.2.jar;lib\\objenesis-1.2.jar;lib\\jarh5obj.jar;lib\\jarhdf-2.10.0.jar;lib\\jarhdf5-2.10.0.jar;lib\\jarhdfobj.jar;lib\\slf4j-api-1.7.5.jar;lib\\slf4j-nop-1.7.5.jar;lib\\mysql-connector-java-5.1.42-bin.jar;lib\\sqljdbc4-2.0.jar;lib\\java-object-diff-0.95.jar\" wrimsv2.components.ControllerBatch "+"-config="+configFilePath);
 		out.close();
 	}
 	

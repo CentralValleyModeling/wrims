@@ -1,7 +1,5 @@
 package wrimsv2.components;
 
-import gurobi.GRBException;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;

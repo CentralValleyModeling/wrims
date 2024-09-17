@@ -1,14 +1,14 @@
 package wrimsv2.solver.Gurobi;
 
-import gurobi.*;
+import com.gurobi.gurobi.*;
 
-import gurobi.GRB;
-import gurobi.GRBConstr;
-import gurobi.GRBEnv;
-import gurobi.GRBException;
-import gurobi.GRBLinExpr;
-import gurobi.GRBModel;
-import gurobi.GRBVar;
+import com.gurobi.gurobi.GRB;
+import com.gurobi.gurobi.GRBConstr;
+import com.gurobi.gurobi.GRBEnv;
+import com.gurobi.gurobi.GRBException;
+import com.gurobi.gurobi.GRBLinExpr;
+import com.gurobi.gurobi.GRBModel;
+import com.gurobi.gurobi.GRBVar;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -50,7 +50,6 @@ import wrimsv2.evaluator.DssOperation;
 import wrimsv2.evaluator.EvalConstraint;
 import wrimsv2.evaluator.EvaluatorLexer;
 import wrimsv2.evaluator.EvaluatorParser;
-import gurobi.*;
 
 public class GurobiSolver {
 	
@@ -62,6 +61,9 @@ public class GurobiSolver {
 	Map<String, GRBVar> varMap = new HashMap <String, GRBVar> ();
 	
 	public static void initialize(){
+		
+		System.loadLibrary("gurobi110");
+		System.loadLibrary("GurobiJni110");
 		
 	    try {
 	    	//env   = new GRBEnv("TestGurobi.log");

@@ -141,6 +141,8 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static String aPart="";
 	public static String initFPart="";
 	public static String svFPart="";
+	public static String[] cbcVers={"2.9.7_c", "2.10.12_c"};
+	public static String cbcSelVer=cbcVers[0];
 	
 	public static DecimalFormat df = new DecimalFormat("#.####");
 	
@@ -212,6 +214,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static final String ATTR_WPP_ENDDAY=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_ENDDAY";
 	public static final String ATTR_WPP_WRESLPLUS=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_WRESLPLUS";
 	public static final String ATTR_WPP_FREEXA=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_FREEXA";
+	public static final String ATTR_WPP_SELCBC=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_SELCBC";
 	public static final String ATTR_WPP_ALLOWSVTSINIT=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_ALLOWSVTSINIT";
 	public static final String ATTR_WPP_LAUNCHTYPE=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_LAUNCHTYPE";
 	public static final String ATTR_WPP_MULTISTUDY=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_MULTISTUDY";

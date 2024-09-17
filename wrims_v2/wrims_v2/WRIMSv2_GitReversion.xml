@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project default="WRIMSv2" name="Create Standalone Runnable Jar for WRIMSv2">
 
-	<target name="WRIMSv2" depends="Clean_files, generate-version, Build_jar_zip">
+	<target name="WRIMSv2" depends="generate-version, Build_jar_zip">
 
 		<echo message="Finish WRIMS v2" />
 		

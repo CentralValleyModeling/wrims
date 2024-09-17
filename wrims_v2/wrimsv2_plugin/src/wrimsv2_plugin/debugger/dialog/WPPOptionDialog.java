@@ -250,7 +250,7 @@ public class WPPOptionDialog extends Dialog {
 		solverCombo = new Combo(composite, SWT.BORDER);
 		solverCombo.add("CBC");
 		solverCombo.add("XA");
-		//solverCombo.add("Gurobi");
+		solverCombo.add("Gurobi");
 		//solverCombo.add("CBC2.10");
 		//solverCombo.add("CBC2.9.8");
 		//solverCombo.add("LPSolve");
@@ -585,7 +585,11 @@ public class WPPOptionDialog extends Dialog {
 				if (!DebugCorePlugin.log.equalsIgnoreCase("NONE")){
 					log=DebugCorePlugin.log;
 				}
+				
 				String status=DebugCorePlugin.solver+"  "+log;
+				if (DebugCorePlugin.solver.equalsIgnoreCase("Cbc")){
+					status=DebugCorePlugin.solver+" "+DebugCorePlugin.cbcSelVer+"  "+log;
+				}
 				
 				IWorkbenchPage page = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage();
 				try {

@@ -56,6 +56,10 @@ public class WPPConsolePageParticipant implements IConsolePageParticipant {
 		if (!DebugCorePlugin.log.equalsIgnoreCase("NONE")){
 			log=DebugCorePlugin.log;
 		}
-		page.getSite().getActionBars().getStatusLineManager().setMessage(DebugCorePlugin.solver+"  "+log);
+		if (DebugCorePlugin.solver.equalsIgnoreCase("Cbc")){
+			page.getSite().getActionBars().getStatusLineManager().setMessage(DebugCorePlugin.solver+" "+DebugCorePlugin.cbcSelVer+"  "+log);
+		}else{
+			page.getSite().getActionBars().getStatusLineManager().setMessage(DebugCorePlugin.solver+"  "+log);
+		}
 	}
 }

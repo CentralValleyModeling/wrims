@@ -89,7 +89,11 @@ public class DebuggerStartUp implements IStartup {
 				if (!DebugCorePlugin.log.equalsIgnoreCase("NONE")){
 					log=DebugCorePlugin.log;
 				}
+				
 				String status=DebugCorePlugin.solver+"  "+log;
+				if (DebugCorePlugin.solver.equalsIgnoreCase("Cbc")){
+					status=DebugCorePlugin.solver+" "+DebugCorePlugin.cbcSelVer+"  "+log;
+				}
 				
 				IWorkbenchPage page = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage();
 				IViewPart console = page.findView( IConsoleConstants.ID_CONSOLE_VIEW ); 
