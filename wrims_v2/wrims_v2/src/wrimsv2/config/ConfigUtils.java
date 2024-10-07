@@ -157,6 +157,7 @@ public class ConfigUtils {
 		System.out.println("MainFile:       "+FilePaths.fullMainPath);
 		
 		// CbcLibName // default is jCbc and it's not used for version selection
+		/*
 		k = "cbclibname";
 		if (configMap.keySet().contains(k)){
 			
@@ -165,6 +166,17 @@ public class ConfigUtils {
 		// need to know jCbc version to determine solving options 
 		System.loadLibrary(CbcSolver.cbcLibName);
 		System.out.println("CbcLibName: "+CbcSolver.cbcLibName);
+		*/
+		
+		k = "cbc_dlls";
+		if (configMap.keySet().contains(k)){
+			loadCbcLib(configMap.get(k));
+		}
+		
+		k = "gurobi_dlls";
+		if (configMap.keySet().contains(k)){
+			loadGurobiLib(configMap.get(k));
+		}
 		
 		try {
 			
@@ -1509,6 +1521,28 @@ public class ConfigUtils {
 		return returnV;
 	}
 
+	public static void loadCbcLib(String libStr){
+		String[] parts = libStr.split("\\|");
+		for (int i=0; i<parts.length; i++){
+			if (parts[i].toLowerCase().endsWith(".dll")){
+				int lastIndexOfDot = parts[i].lastIndexOf(".");
+		        parts[i]=parts[i].substring(0, lastIndexOfDot);
+			}
+			System.loadLibrary(parts[i]);
+		}
+	}
+	
+	public static void loadGurobiLib(String libStr){
+		String[] parts = libStr.split("\\|");
+		for (int i=0; i<parts.length; i++){
+			if (parts[i].toLowerCase().endsWith(".dll")){
+				int lastIndexOfDot = parts[i].lastIndexOf(".");
+		        parts[i]=parts[i].substring(0, lastIndexOfDot);
+			}
+			System.loadLibrary(parts[i]);
+		}
+	}
+	
 	// private static void loadConfig2(String loadFile) throws IOException {
 	//
 	// try {

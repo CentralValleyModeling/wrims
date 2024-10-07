@@ -10,6 +10,7 @@ import org.eclipse.debug.core.ILaunchConfiguration;
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2_plugin.batchrun.LaunchConfigInfo;
+import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 
 public class FileProcess {
 	public static ArrayList<String> retrieveFileNames(ArrayList<String> fns){
@@ -112,5 +113,24 @@ public class FileProcess {
 		String directory = path.substring(0,index);
 		String fn = "SR"+sri+"_"+path.substring(index);
 		return directory+fn;
+	}
+	
+	public static String createSolverJarFilePaths(String cbcFolder, String gurobiFolder, String cbcSelVer, String gurobiSelVer){
+		String solverJarFilePaths="";
+		if (DebugCorePlugin.cbcJars.containsKey(cbcSelVer)){
+			String cbcJars = DebugCorePlugin.cbcJars.get(cbcSelVer);
+			String[] parts = cbcJars.split("\\|");
+			for (int i=0; i<parts.length; i++){
+				solverJarFilePaths=solverJarFilePaths+cbcFolder+"\\"+parts[i]+";";
+			}
+		}
+		if (DebugCorePlugin.gurobiJars.containsKey(gurobiSelVer)){
+			String gurobiJars = DebugCorePlugin.gurobiJars.get(gurobiSelVer);
+			String[] parts = gurobiJars.split("\\|");
+			for (int i=0; i<parts.length; i++){
+				solverJarFilePaths=solverJarFilePaths+gurobiFolder+"\\"+parts[i]+";";
+			}
+		}
+		return solverJarFilePaths;
 	}
 }

@@ -1,5 +1,10 @@
 package wrimsv2_plugin.debugger.core;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -40,11 +45,14 @@ import wrimsv2_plugin.tools.ShowDuplicatedWatch;
 
 public class DebuggerStartUp implements IStartup {
 
+	private static String solverSetup="solvers.dat";
+	
 	@Override
 	public void earlyStartup() {
 		SettingPref.load();
 		SettingPref.loadCBCDefault();
 		SettingPref.loadCBCSetting();
+		loadSolverSetup();
 		enableRunMenu();
 		initialStudyData();
 		DataProcess.initialVariableValueAlt();
@@ -91,8 +99,10 @@ public class DebuggerStartUp implements IStartup {
 				}
 				
 				String status=DebugCorePlugin.solver+"  "+log;
-				if (DebugCorePlugin.solver.equalsIgnoreCase("Cbc")){
+				if (DebugCorePlugin.solver.equalsIgnoreCase("CBC")){
 					status=DebugCorePlugin.solver+" "+DebugCorePlugin.cbcSelVer+"  "+log;
+				}else if (DebugCorePlugin.solver.equalsIgnoreCase("GUROBI")){
+					status=DebugCorePlugin.solver+" "+DebugCorePlugin.gurobiSelVer+"  "+log;
 				}
 				
 				IWorkbenchPage page = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage();
@@ -140,4 +150,38 @@ public class DebuggerStartUp implements IStartup {
 		});
 		
 	}	
+	
+	public void loadSolverSetup(){
+		try {
+			File file = new File(DebugCorePlugin.dataDir, solverSetup);
+			if (file.exists()){
+				FileInputStream fs = new FileInputStream(file.getAbsolutePath());
+				BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+				LineNumberReader reader = new LineNumberReader(br);
+				br.readLine();
+				String line=br.readLine().toUpperCase();
+				while (line !=null){
+					String[] parts = line.split(",");
+					if (parts.length==4){
+						if (!DebugCorePlugin.solverNames.contains(parts[0])){
+							DebugCorePlugin.solverNames.add(parts[0]);
+						}
+						if (parts[0].equalsIgnoreCase("CBC")){
+							DebugCorePlugin.cbcVers.add(parts[1]);
+							DebugCorePlugin.cbcJars.put(parts[1], parts[2]);
+							DebugCorePlugin.cbcDlls.put(parts[1], parts[3]);
+						}else if (parts[0].equalsIgnoreCase("GUROBI")){
+							DebugCorePlugin.gurobiVers.add(parts[1]);
+							DebugCorePlugin.gurobiJars.put(parts[1], parts[2]);
+							DebugCorePlugin.gurobiDlls.put(parts[1], parts[3]);
+						}
+					}
+					line=br.readLine().toUpperCase();
+				}
+			}
+		}catch (Exception e){
+			WPPException.handleException(e);
+		}
+		return;
+	}
 }

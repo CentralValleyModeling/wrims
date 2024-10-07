@@ -248,9 +248,9 @@ public class WPPOptionDialog extends Dialog {
 		label1.setText("Solver:");
 		
 		solverCombo = new Combo(composite, SWT.BORDER);
-		solverCombo.add("CBC");
-		solverCombo.add("XA");
-		solverCombo.add("Gurobi");
+		for (int i=0; i<DebugCorePlugin.solverNames.size(); i++){
+			solverCombo.add(DebugCorePlugin.solverNames.get(i));
+		}
 		//solverCombo.add("CBC2.10");
 		//solverCombo.add("CBC2.9.8");
 		//solverCombo.add("LPSolve");
@@ -261,16 +261,25 @@ public class WPPOptionDialog extends Dialog {
 		logCombo = new Combo(composite, SWT.SINGLE|SWT.BORDER);
 		logCombo.add("None");
 		logCombo.add("Log");
-		logCombo.add("xa_cbc");
-		logCombo.add("cbc_xa");
+		//logCombo.add("xa_cbc");
+		//logCombo.add("cbc_xa");
 		
-		if (DebugCorePlugin.solver.equals("CBC")){
+		/*
+		if (DebugCorePlugin.solver.equalsIgnoreCase("CBC")){
 			solverCombo.select(0);
-		}else if (DebugCorePlugin.solver.equals("XA")){
+		}else if (DebugCorePlugin.solver.equals("GUROBI")){
 			solverCombo.select(1);
-		}else if (DebugCorePlugin.solver.equals("Gurobi")){
+		}else if (DebugCorePlugin.solver.equalsIgnoreCase("XA")){
 			solverCombo.select(2);
 		}
+		*/
+		
+		for (int i=0; i<DebugCorePlugin.solverNames.size(); i++){
+			if (DebugCorePlugin.solver.equalsIgnoreCase(DebugCorePlugin.solverNames.get(i))){
+				solverCombo.select(i);
+			} 
+		}
+		
 		prevSel=solverCombo.getSelectionIndex();
 		solverCombo.setLayoutData(gridData);
 		solverCombo.addModifyListener(new ModifyListener(){
@@ -587,8 +596,10 @@ public class WPPOptionDialog extends Dialog {
 				}
 				
 				String status=DebugCorePlugin.solver+"  "+log;
-				if (DebugCorePlugin.solver.equalsIgnoreCase("Cbc")){
+				if (DebugCorePlugin.solver.equalsIgnoreCase("CBC")){
 					status=DebugCorePlugin.solver+" "+DebugCorePlugin.cbcSelVer+"  "+log;
+				}else if (DebugCorePlugin.solver.equalsIgnoreCase("GUROBI")){
+					status=DebugCorePlugin.solver+" "+DebugCorePlugin.gurobiSelVer+"  "+log;
 				}
 				
 				IWorkbenchPage page = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage();

@@ -49,6 +49,7 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 	private Text memSectionText;
 	private Text yearSectionText;
 	private Combo cbcCombo;
+	private Combo gurobiCombo;
 	
 	@Override
 	public void createControl(Composite parent) {
@@ -123,14 +124,42 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 		cbcLabel.setFont(font);
 		
 		cbcCombo = new Combo(comp, SWT.BORDER);
-		for (int i=0; i<DebugCorePlugin.cbcVers.length; i++){
-			cbcCombo.add(DebugCorePlugin.cbcVers[i]);
+		for (int i=0; i<DebugCorePlugin.cbcVers.size(); i++){
+			cbcCombo.add(DebugCorePlugin.cbcVers.get(i));
 		}
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 4;
 		cbcCombo.setLayoutData(gd);
 		cbcCombo.setFont(font);
 		cbcCombo.addSelectionListener(new SelectionListener(){
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				updateLaunchConfigurationDialog();	
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				updateLaunchConfigurationDialog();			
+			}
+		});
+		
+		Label gurobiLabel = new Label(comp, SWT.NONE);
+		gurobiLabel.setText("If Gurobi solver is used, please select the version number:");
+		gd = new GridData(GridData.BEGINNING);
+		gd.horizontalSpan=2;
+		gurobiLabel.setLayoutData(gd);
+		gurobiLabel.setFont(font);
+		
+		gurobiCombo = new Combo(comp, SWT.BORDER);
+		for (int i=0; i<DebugCorePlugin.gurobiVers.size(); i++){
+			gurobiCombo.add(DebugCorePlugin.gurobiVers.get(i));
+		}
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 4;
+		gurobiCombo.setLayoutData(gd);
+		gurobiCombo.setFont(font);
+		gurobiCombo.addSelectionListener(new SelectionListener(){
 			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -405,7 +434,8 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_DSSENDOUTPUT, "yes");
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_YEARSECTIONOUTPUT, "10");
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_MONMEMSECTION, "24");
-		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_SELCBC, DebugCorePlugin.cbcVers[0]);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_SELCBC, DebugCorePlugin.cbcVers.get(0));
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_SELGUROBI, DebugCorePlugin.gurobiVers.get(0));
 	}
 
 	@Override
@@ -435,10 +465,18 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 			WPPException.handleException(e);
 		}
 		
-		String cbcSelVer = DebugCorePlugin.cbcVers[0];
+		String cbcSelVer = DebugCorePlugin.cbcVers.get(0);
 		try {
-			cbcSelVer = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SELCBC, DebugCorePlugin.cbcVers[0]);
+			cbcSelVer = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SELCBC, DebugCorePlugin.cbcVers.get(0));
 			cbcCombo.setText(cbcSelVer);
+		} catch (CoreException e) {
+			WPPException.handleException(e);
+		}
+		
+		String gurobiSelVer = DebugCorePlugin.gurobiVers.get(0);
+		try {
+			gurobiSelVer = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SELGUROBI, DebugCorePlugin.gurobiVers.get(0));
+			gurobiCombo.setText(gurobiSelVer);
 		} catch (CoreException e) {
 			WPPException.handleException(e);
 		}
@@ -541,6 +579,10 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_SELCBC, cbcSelVer);
 		DebugCorePlugin.cbcSelVer=cbcSelVer;
 		
+		String gurobiSelVer = gurobiCombo.getText();
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_SELGUROBI, gurobiSelVer);
+		DebugCorePlugin.gurobiSelVer=gurobiSelVer;
+		
 		String allowSvTsInit="no";
 		if (allowSvTsInitButton.getSelection()){
 			allowSvTsInit="yes";
@@ -608,8 +650,10 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 				}
 				
 				String status=DebugCorePlugin.solver+"  "+log;
-				if (DebugCorePlugin.solver.equalsIgnoreCase("Cbc")){
+				if (DebugCorePlugin.solver.equalsIgnoreCase("GUROBI")){
 					status=DebugCorePlugin.solver+" "+DebugCorePlugin.cbcSelVer+"  "+log;
+				}else if (DebugCorePlugin.solver.equalsIgnoreCase("GUROBI")){
+					status=DebugCorePlugin.solver+" "+DebugCorePlugin.gurobiSelVer+"  "+log;
 				}
 				
 				IWorkbenchPage page = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage();

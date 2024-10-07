@@ -62,8 +62,8 @@ public class GurobiSolver {
 	
 	public static void initialize(){
 		
-		System.loadLibrary("gurobi110");
-		System.loadLibrary("GurobiJni110");
+		//System.loadLibrary("gurobi110");
+		//System.loadLibrary("GurobiJni110");
 		
 	    try {
 	    	//env   = new GRBEnv("TestGurobi.log");
