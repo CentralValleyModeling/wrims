@@ -1,0 +1,431 @@
+grammar gov.ca.dwr.wresl.xtext.editor.WreslEditor with org.eclipse.xtext.common.Terminals
+
+generate wreslEditor "http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor"
+
+WreslEvaluator:
+	(pattern+=Pattern | ifincitem+=IfIncItems)+
+	| ((initial=Initial)? sequence+=Sequence+ model+=(Model|Group)+ )| Declaration;
+
+Pattern:
+	Variable | IncludeFile | IncludeModel | IncludeGroup | Goal | Objective;
+
+Declaration:
+	'Declare' '{' name=ID '}';
+
+Variable:
+	StateVariable | DecisionVariable | ExternalDef;
+
+StateVariable: SvarDef | ConstDef;
+
+DecisionVariable: DvarDef | Alias;
+
+IfIncItems:
+	IfTerm  (elseifterm=ElseIfTerm)? (elseterm=ElseTerm)?  ;
+	
+IfTerm: If logical=LogicalExpression '{' pattern+=Pattern+ '}';
+
+ElseIfTerm: (ElseIf logical+=LogicalExpression '{' pattern+=Pattern+ '}')+;
+
+ElseTerm: Else '{' pattern+=Pattern+ '}';
+
+TimeArraySize: '(' name=[Declaration] ')';
+
+Objective:
+	('objective' | 'OBJECTIVE') ('[' local?=('local' | 'LOCAL') ']')? name=ID '='? '{' weights+=WeightItem+ '}';
+
+WeightItem:
+	'[' ref=[Declaration] ta=TimeArraySize? ',' expression=Expression ']' (',')?;
+
+ExternalDef:
+	('define' | 'DEFINE') ('[' local?=('local' | 'LOCAL') ']')? ref=[Declaration] '{' definition=External '}';
+	
+SvarDef:
+	 ('define' | 'DEFINE') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? ref=[Declaration] '{' definition=SVar '}'
+	| (('svar' | 'SVAR' | 'Svar') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? ref=[Declaration] '{' definition=SVar '}');
+
+DvarDef:
+	(('define' | 'DEFINE') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? ref=[Declaration] '{' definition=(DVar|DVarInteger) '}')
+	| (('dvar' | 'DVAR' | 'Dvar') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? ref=[Declaration] '{' definition=(DVar|DVarInteger) '}');
+
+ConstDef:
+	('const' | 'CONST' | 'Const') ('[' local?=('local' | 'LOCAL') ']')? ref=[Declaration] '{' definition=Number '}';
+
+Alias: //name=[SVar|ID] to be changed to reference after scoping is resolved across files
+	('define' | 'DEFINE') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? ref=[Declaration] '{' ('alias' | 'ALIAS') expression=Expression
+	(('kind' |
+	'KIND') kind=STRING)? (('units' | 'UNITS') units=STRING)? '}';
+
+External:
+	('external' | 'EXTERNAL') ((name=ID ('.dll' | '.DLL')) | {External} name=ID);
+
+DVar:
+	(DVarStd | DVarNonStd);
+
+DVarNonStd:
+	lowerUpper=LowerAndOrUpper ("kind" | "KIND") kind=STRING ("units" | "UNITS")
+	units=STRING;
+
+DVarStd:
+	("std" | "STD") ("kind" | "KIND") kind=STRING ("units" | "UNITS") units=STRING;
+
+DVarInteger:
+	DVarIntegerStd | DVarIntegerNonStd;
+
+DVarIntegerStd:
+	("integer" | "INTEGER") ("std" | "STD") ("kind" | "KIND") kind=STRING ("units" | "UNITS") units=STRING;
+
+DVarIntegerNonStd:
+	("integer" | "INTEGER") LowerAndOrUpper ("kind" | "KIND") kind=STRING ("units" | "UNITS") units=STRING;
+
+SVar:
+	SVarDSS | SVarExpression | SVarSum | SVarTable | SVarCase;
+
+SVarDSS:
+	("timeseries" | "TIMESERIES") bPart=STRING? ("kind" | "KIND")
+	kind=STRING ("units" | "UNITS") units=STRING (("convert" | "CONVERT") convert=STRING)?;
+
+SVarExpression:
+	("value" | "VALUE") expression=Expression;
+
+SVarSum:
+	sumContent=SumContent;
+
+SVarTable:
+	tableContent=TableContent;
+
+SVarCase:
+	caseContent+=(CaseContent)+;
+
+CaseContent:
+	("case" | "CASE") caseName=(ID|SpecialIdent) '{' condition=Condition (content=TableContent | content=ValueContent |
+	content=SumContent)
+	'}';
+
+SumContent:
+	("sum" | "SUM") header=SumHeader expression=Expression;
+
+SumHeader:
+	'(' 'i=' expression1=Expression ',' expression2=Expression (',' '-'? INT)? ')';
+
+ValueContent:
+	("value" | "VALUE") expression=Expression;
+
+TableContent:
+	("select" | "SELECT") tableName=(ID|SpecialIdent) ("from" | "FROM") from=(ID|SpecialIdent) (("given" | "GIVEN") given=Assignment ("use" | "USE")
+	use=ID)? (("where" | "WHERE") where=WhereItems)?;
+
+WhereItems:
+	assignment+=Assignment (',' assignment+=Assignment)*;
+
+Assignment:
+	term=TermSimple '=' expression=Expression;
+
+TermSimple:
+	ID | Number | Function | SpecialIdent;
+
+LowerAndOrUpper:
+	lowerUpper | upperLower;
+
+upperLower:
+	upper=Upper (lower=Lower)?;
+
+lowerUpper:
+	lower=Lower (upper=Upper)?;
+
+Upper:
+	("upper" | "UPPER") ({Upper} ("unbounded" | "UNBOUNDED") | expression=Expression);
+
+Lower:
+	("lower" | "LOWER") ({Lower} ("unbounded" | "UNBOUNDED") | expression=Expression);
+
+Goal:
+	("goal" | "GOAL") ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? name=ID '{' definition=(GoalSimple | GoalCase) '}';
+
+GoalCase:
+	('lhs' | 'LHS') lhs=Expression (content=GoalNoCaseContent | caseContent+=GoalCaseContent+);
+
+GoalCaseContent:
+	("case" | "CASE") caseName=(ID|SpecialIdent) '{' condition=Condition ("rhs" | "RHS") rhs=Expression (subContent=SubContent)? '}';
+
+GoalNoCaseContent:
+	("rhs" | "RHS") rhs=Expression (subContent=SubContent)?;
+
+SubContent:
+	gt=LhsGtRhs (lt=LhsLtRhs)? | lt=LhsLtRhs (gt=LhsGtRhs)?; //FIXME: replace with unordered groups
+LhsGtRhs:
+	("lhs" | "LHS") '>' ("rhs" | "RHS") ({LhsGtRhs} ("constrain" | "CONSTRAIN") | penalty=Penalty);
+
+LhsLtRhs:
+	("lhs" | "LHS") '<' ("rhs" | "RHS") ({LhsLtRhs} ("constrain" | "CONSTRAIN") | penalty=Penalty);
+
+Penalty:
+	('penalty' | 'PENALTY') expression=Expression;
+
+GoalSimple:
+	constraint=Constraint;
+
+Constraint:
+	lhs=Expression operator=('<' | '>' | '=') rhs=Expression;
+
+Group:
+	("group" | "GROUP") name=ID '{' (pattern+=Pattern|ifincitems+=IfIncItems)+ '}';
+
+Model:
+	("model" | "MODEL") name=ID '{' (pattern+=Pattern|ifincitems+=IfIncItems)+ '}';
+
+Initial: ("initial"|'Initial'|"INITIAL") '{' pattern+=Pattern+ '}';
+
+Sequence:
+	("sequence" | "SEQUENCE") name=ID '{' ("model" | "MODEL") model=[Model|ID] ((condition=Condition)? (ORDER order=INT)?)|((ORDER order=INT)? (condition=Condition)?) (TimeStep TimeStepValue)?
+	'}';
+
+Condition:
+	("condition" | "CONDITION") (logical=LogicalExpression | {Condition} ALWAYS);
+
+LogicalExpression:
+	c1=ConditionalUnary (BinaryOp c2+=ConditionalUnary)*;
+
+BinaryOp:
+	OR | AND;
+
+ConditionalUnary:
+	(ConditionalNegation)? ConditionalTerm;
+
+ConditionalNegation:
+	NOT;
+
+ConditionalTerm:
+	(e1=Expression Relation e2=Expression) | LogicalFunction | =>('(' LogicalExpression ')')  
+;
+
+Relation:
+	'>' | '<' | '>=' | '<=' | '==' | '/=';
+
+Expression:
+	Add;
+
+Add:
+	m1=Multiply (('+' | '-') m2+=Multiply)*;
+
+Multiply:
+	u1=Unary (('*' | '/') u2+=Unary)*;
+
+Unary:
+	('+' | Negation)? Term;
+
+Negation:
+	'-';
+
+Term:
+	ref=[Declaration] | n=Number | f=Function | '(' e=Expression ')'| s=SpecialIdent | MultiStep;
+
+Function:
+	ExternalFunction1 | ExternalFunction2 | MaxFunction | MinFunction | '(' SumContent ')' | ModFunction | IntFunction | AbsFunction | RoundFunction | PowFunction | LogFunction | SinFunction | CosFunction | TanFunction | CotFunction | AsinFunction | AcosFunction | AtanFunction | AcotFunction | VarModel | VarModelStep | VarModelIndex | VarModelIndexStep;
+
+ExternalFunction1:
+	((ref=[Declaration])|TafCfs|Month) '(' e1=(Expression|TrunkTimeArray) (',' e2+=(Expression|TrunkTimeArray))* ')' ('(' e0=Expression ')')?;
+	
+ExternalFunction2:
+	((ref=[Declaration])|TafCfs|Month) '(' ')';
+
+TrunkTimeArray: 
+	ref=[Declaration] '(' t1=TrunkTimeArrayIndex ':' t2=TrunkTimeArrayIndex ')' 
+  ;
+  
+TrunkTimeArrayIndex: INT|('-' INT)|ref=[Declaration];
+
+MaxFunction:
+	MAX '(' e1=Expression (',' e2+=Expression)* ')';
+
+MinFunction:
+	MIN '(' e1=Expression (',' e2+=Expression)* ')';
+	
+ModFunction:
+    MOD '(' e1=Expression ','  e2=Expression ')';
+
+IntFunction:
+	INTFUNC '(' e=Expression ')';
+
+AbsFunction:
+	ABS '(' e=Expression ')';
+	
+RoundFunction:
+	ROUND '(' e=Expression ')';
+
+PowFunction:
+	POW '(' e1=Expression ','  e2=Expression ')';
+	
+LogFunction:
+	LOG '(' e=Expression ')';
+	
+SinFunction:
+	SIN '(' e=Expression ')';
+	
+CosFunction:
+	COS '(' e=Expression ')';
+
+TanFunction:
+	TAN '(' e=Expression ')';
+
+CotFunction:
+	COT '(' e=Expression ')';
+	
+AsinFunction:
+	ASIN '(' e=Expression ')';
+	
+AcosFunction:
+	ACOS '(' e=Expression ')';
+
+AtanFunction:
+	ATAN '(' e=Expression ')';
+
+AcotFunction:
+	ACOT '(' e=Expression ')';
+
+LogicalFunction:
+	RangeFunction;
+
+VarModel:
+	ref1=[Declaration] '[' ref2=[Model] ']';
+	
+VarModelStep:
+	ref1=[Declaration] '[' ref2=[Model] ']' '(' e=Expression ')';
+
+VarModelIndex: 
+	ref1=[Declaration] '[' '-' INT ']';
+
+VarModelIndexStep: 
+	ref1=[Declaration] '[' '-' INT ']' '(' e=Expression ')';
+
+RangeFunction:
+	RANGE '(' (ID|Month|WaterYear) ',' (ID|CalendarMonth|PrevMonth) ',' (ID|CalendarMonth|PrevMonth) ')';
+
+Ident:
+	name=ID;
+
+Number:
+	INT | FLOAT;
+
+IncludeFile:
+	("include" | "INCLUDE") ('[' local?=("local" | "LOCAL") ']')? file=STRING;
+
+IncludeModel:
+	("include" | "INCLUDE") ('model' | 'MODEL') ID;
+
+IncludeGroup:
+	("include" | "INCLUDE") ('group' | 'GROUP') ID;
+
+SpecialIdent: TafCfs|DaysIn|WaterYear|Month|Day|CalendarMonth|PrevMonth|I;
+
+TafCfs: AF_CFS|CF_SAF|CFS_TAF|TAF_CFS;
+
+I: 'i';
+
+AF_CFS: 'af_cfs';
+
+CF_SAF: 'cfs_af';
+
+CFS_TAF: 'cfs_taf';
+
+TAF_CFS: 'taf_cfs';
+
+DaysIn: 'daysin'|'daysinmonth'|'daysintimestep';
+
+WaterYear: 'wateryear';
+
+Month: 'month';
+
+Day: 'day';
+
+CalendarMonth: 'jan'|'feb'|'mar'|'apr'|'may'|'jun'|'jul'|'aug'|'sep'|'oct'|'nov'|'dec';
+
+PrevMonth: 'prevjan'|'prevfeb'|'prevmar'|'prevapr'|'prevmay'|'prevjun'|'prevjul'|'prevaug'|'prevsep'|'prevoct'|'prevnov'|'prevdec';
+
+MultiStep: '$m';
+
+TimeStep: 'timestep';
+
+TimeStepValue: '1MON'|'1DAY';
+
+terminal If : 'If' | 'IF' | 'if' ;
+
+terminal ElseIf : 'Elseif' | 'ELSEIF' | 'elseif' | 'ElseIf' ;
+
+terminal Else : 'Else' | 'ELSE' | 'else' ;
+
+terminal RANGE:
+	'range' | 'RANGE' | 'Range';
+
+terminal MIN:
+	'min' | 'MIN';
+
+terminal MAX:
+	'max' | 'MAX';
+	
+terminal MOD:
+	'mod' | 'MOD';
+	
+terminal INTFUNC:
+	'int' | 'INT';
+	
+terminal ABS:
+	'abs' | 'ABS';
+
+terminal ROUND:
+	'round'|'ROUND';
+	
+terminal POW:
+	'pow' | 'POW';
+	
+terminal LOG:
+	'log' | 'LOG' | 'log10' | 'LOG10';
+	
+terminal SIN:
+	'sin' | 'SIN';
+	
+terminal COS: 
+	'cos' | 'COS';
+	
+terminal TAN: 
+	'tan' | 'TAN';
+	
+terminal COT: 
+	'cot' | 'COT';
+
+terminal ASIN: 
+	'asin' | 'ASIN';
+	
+terminal ACOS: 
+	'acos' | 'ACOS';
+	
+terminal ATAN: 
+	'atan' | 'ATAN';
+	
+terminal ACOT: 
+	'acot' | 'ACOT';
+
+terminal FLOAT:
+	INT '.' (INT)* | '.' (INT)+;
+
+terminal AND:
+	'.and.' | '.AND.';
+
+terminal OR:
+	'.or.' | '.OR.';
+
+terminal NOT:
+	'.not.' | '.NOT.';
+
+terminal ALWAYS:
+	"always";
+
+terminal ORDER:
+	"order";
+
+terminal STRING:
+	"'" (!("'" | '\n' | '\r'))* "'";
+
+terminal SL_COMMENT:
+	'!' !('\n' | '\r')* ('\r'? '\n')?;
+	
+terminal ID: ('a'..'z'|'A'..'Z') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
