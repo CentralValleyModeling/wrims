@@ -27,9 +27,9 @@ public class Main {
 			System.err.println("Aborting: no path to EMF resource provided!");
 			return;
 		}
-		Injector injector = new gov.ca.dwr.wresl.xtext.editor.WreslEditorStandaloneSetupGenerated().createInjectorAndDoEMFRegistration();
-		Main main = injector.getInstance(Main.class);
-		main.runGenerator(args[0]);
+//		Injector injector = new gov.ca.dwr.wresl.xtext.editor.WreslEditorStandaloneSetupGenerated().createInjectorAndDoEMFRegistration();
+//		Main main = injector.getInstance(Main.class);
+//		main.runGenerator(args[0]);
 	}
 	
 	@Inject 
