@@ -25,6 +25,7 @@ jarhdf5 = "2.11.0"
 jarhdfobj = "2.10.1"
 objenesis = "1.2"
 slf4jnop = "1.7.5"
+guice = "5.1.0"
 
 [libraries]
 hec-monolith = { module = "mil.army.usace.hec:hec-monolith", version.ref = "hec-monolith" }
@@ -54,7 +55,7 @@ jarhdf5 = { module = "ncsa.hdf:jarhdf5", version.ref = "jarhdf5" }
 jarhdfobj = { module = "org.hdfgroup:jarhdfobj", version.ref = "jarhdfobj" }
 obgenesis = { module = "org.objenesis:objenesis", version.ref = "objenesis" }
 slf4jnop = { module = "org.slf4j:slf4j-nop", version.ref = "slf4jnop" }
-
+guice = { module = "com.google.inject:guice", version.ref = "guice" }
 
 #eclipse libraries
 eclipse-core-runtime = { module = "org.eclipse.platform:org.eclipse.core.runtime", version.ref = "eclipse"}

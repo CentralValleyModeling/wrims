@@ -41,6 +41,7 @@ dependencies {
     api libs.jarhdfobj
     api libs.obgenesis
     api libs.slf4jnop
+    api libs.guice
 
     //x64 jars
 //    api(":calsim")

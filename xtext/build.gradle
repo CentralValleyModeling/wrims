@@ -7,7 +7,7 @@ plugins{
 }
 
 jar {
-    archiveBaseName.set('jdiagram')
+    archiveBaseName.set('xtext')
     archiveVersion.set('1.0.0.0')
     archiveFileName.set("${archiveBaseName.get()}_${archiveVersion.get()}.jar")
 }
@@ -20,15 +20,20 @@ configurations {
 dependencies {
     //module dependencies
     implementation project(':third-party')
-    implementation project(':wrims')
-    implementation project(':hecdssvue')
+//    implementation project(':wrims')
+//    implementation project(':hecdssvue')
 
     //additional dependencies
     implementation libs.hec.monolith
     implementation libs.hec.nucleus.metadata
     implementation libs.dssgui
 
-    implementation(":JDiagram") //This library is unavailable in Maven Central.
+    implementation 'commons-cli:commons-cli:1.4'
+    implementation 'log4j:log4j:1.2.17'
+    implementation 'com.ibm.icu:icu4j:71.1'
+
+    implementation(":antlr-generator-3.2.0")
+    implementation(":antlr-runtime-3.2")
 
     //eclipse libs
     eclipseLibs fileTree(dir: '../libs/eclipse', include: ['*.jar'])
@@ -39,3 +44,12 @@ configurations.configureEach {
     exclude group: "javax.media", module: "jai_codec"
     exclude group: "com.sun.media", module: "jai_imageio"
 }
+
+task runMwe2(type: JavaExec) {
+    main = 'org.eclipse.emf.mwe2.launch.runtime.Mwe2Launcher'
+    classpath = sourceSets.main.runtimeClasspath
+    args = ['src/main/resources/gov/ca/dwr/wresl/xtext/editor/GenerateWreslEditor.mwe2']
+    jvmArgs = ['-Xmx512m']
+}
+
+runMwe2.dependsOn classes
