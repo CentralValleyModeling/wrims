@@ -123,4 +123,31 @@ jar {
     bundle {
         bndfile = tasks.named('prepareBndFile').get().outputs.files.first()
     }
+
+}
+
+task findJRockitReflectJars {
+    doLast {
+        def jarFiles = configurations.runtimeClasspath.files.findAll { it.name.endsWith('.jar') }
+        def jRockitReflectJars = []
+
+        jarFiles.each { jarFile ->
+            def jar = new java.util.jar.JarFile(jarFile)
+            def entries = jar.entries()
+            while (entries.hasMoreElements()) {
+                def entry = entries.nextElement()
+                if (entry.name.startsWith('COM/jrockit/reflect')) {
+                    jRockitReflectJars << jarFile
+                    break
+                }
+            }
+        }
+
+        if (jRockitReflectJars) {
+            println "JAR files containing the 'COM.jrockit.reflect' class:"
+            jRockitReflectJars.each { println it }
+        } else {
+            println "No JAR files containing the 'COM.jrockit.reflect' class found."
+        }
+    }
 }
