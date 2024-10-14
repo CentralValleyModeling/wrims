@@ -2,8 +2,8 @@ rootProject.name = 'cvm-wrims'
 include 'third-party'
 include 'wrims-core'
 include 'wrims-comparison-test'
-include 'wrims'
-include 'hecdssvue'
+include 'wrims-ide'
+include 'dwr-hecdssvue'
 include 'jdiagram'
 
 // If there is no gradle.properties when Gradle starts up, copy the template into place
@@ -14,3 +14,4 @@ if (!file('gradle.properties').exists()) {
         rename("gradle.properties.template", "gradle.properties")
     }
 }
+
