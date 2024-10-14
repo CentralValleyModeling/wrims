@@ -54,7 +54,7 @@ jobs:
       with:
         name: dwr-hecdssvue
         path: |
-          ./hecdssvue/build/libs/*.jar
+          ./dwr-hecdssvue/build/libs/*.jar
 
     - name: Upload jdiagram jar
       uses: actions/upload-artifact@v4.0.0
