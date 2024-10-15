@@ -62,6 +62,7 @@ dependencies {
     api(":vista") //developed by DWR. Unavailable on maven central
     api(":XAOptimizer") //Unavailable on maven central
     api(":xml") //custom collection of sun xml packages
+    api(":JDiagram")
 
     //dlls
     api fileTree(dir: '../libs/x64', include: ['cb.dll'])
