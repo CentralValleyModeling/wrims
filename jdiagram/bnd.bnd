@@ -137,18 +137,11 @@ Import-Package: \
     wrimsv2_plugin.tools
 
 Export-Package: \
-    com.mindfusion.common,\
-    com.mindfusion.diagramming,\
-    com.mindfusion.diagramming.export,\
-    com.mindfusion.diagramming.jlayout,\
-    com.mindfusion.diagramming.lanes,\
-    com.mindfusion.drawing,\
-    com.mindfusion.graphs,\
-    com.mindfusion.pdf,\
-    com.mindfusion.svg,\
     gov.ca.dwr.jdiagram,\
     gov.ca.dwr.jdiagram.views,\
-    gov.ca.dwr.jdiagram.toolbars
+    gov.ca.dwr.jdiagram.toolbars,\
+    gov.ca.dwr.jdiagram.dialog,\
+    gov.ca.dwr.jdiagram.panel
 
 -includeresource: \
   plugin.xml = plugin.xml,\

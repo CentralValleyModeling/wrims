@@ -267,6 +267,19 @@ Export-Package: \
     org.jfree.resources,\
     org.jfree.threads,\
     com.keypoint,\
+    com.mindfusion.common,\
+    com.mindfusion.diagramming,\
+    com.mindfusion.diagramming.builders,\
+    com.mindfusion.diagramming.components,\
+    com.mindfusion.diagramming.export,\
+    com.mindfusion.diagramming.importers,\
+    com.mindfusion.diagramming.jlayout,\
+    com.mindfusion.diagramming.lanes,\
+    com.mindfusion.drawing,\
+    com.mindfusion.graphs,\
+    com.mindfusion.pdf,\
+    com.mindfusion.scripting,\
+    com.mindfusion.svg,\
     JDOMAbout$Author.class,\
     JDOMAbout$Info.class,\
     JDOMAbout.class,\

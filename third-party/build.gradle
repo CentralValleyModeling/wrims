@@ -38,6 +38,7 @@ dependencies {
     api(":swixml") //local jar contains additional classes compared to 1.5.144 jar on maven central
     api(":vista") //developed by DWR. Unavailable on maven central
     api(":xml") //custom collection of sun xml packages
+    api(":JDiagram")
 
     //dlls
     api fileTree(dir: '../libs/x64', include: ['cb.dll'])
