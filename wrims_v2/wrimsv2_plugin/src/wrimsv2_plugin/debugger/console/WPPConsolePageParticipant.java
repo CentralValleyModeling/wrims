@@ -60,6 +60,8 @@ public class WPPConsolePageParticipant implements IConsolePageParticipant {
 			page.getSite().getActionBars().getStatusLineManager().setMessage(DebugCorePlugin.solver+" "+DebugCorePlugin.cbcSelVer+"  "+log);
 		}else if (DebugCorePlugin.solver.equalsIgnoreCase("GUROBI")){
 			page.getSite().getActionBars().getStatusLineManager().setMessage(DebugCorePlugin.solver+" "+DebugCorePlugin.gurobiSelVer+"  "+log);
+		}else if (DebugCorePlugin.solver.equalsIgnoreCase("XA")){
+			page.getSite().getActionBars().getStatusLineManager().setMessage(DebugCorePlugin.solver+" "+DebugCorePlugin.xaSelVer+"  "+log);
 		}else{
 			page.getSite().getActionBars().getStatusLineManager().setMessage(DebugCorePlugin.solver+"  "+log);
 		}

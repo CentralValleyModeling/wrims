@@ -99,11 +99,13 @@ public class DebuggerStartUp implements IStartup {
 				}
 				
 				String status=DebugCorePlugin.solver+"  "+log;
+				/*
 				if (DebugCorePlugin.solver.equalsIgnoreCase("CBC")){
 					status=DebugCorePlugin.solver+" "+DebugCorePlugin.cbcSelVer+"  "+log;
 				}else if (DebugCorePlugin.solver.equalsIgnoreCase("GUROBI")){
 					status=DebugCorePlugin.solver+" "+DebugCorePlugin.gurobiSelVer+"  "+log;
 				}
+				*/
 				
 				IWorkbenchPage page = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage();
 				IViewPart console = page.findView( IConsoleConstants.ID_CONSOLE_VIEW ); 
@@ -174,6 +176,10 @@ public class DebuggerStartUp implements IStartup {
 							DebugCorePlugin.gurobiVers.add(parts[1]);
 							DebugCorePlugin.gurobiJars.put(parts[1], parts[2]);
 							DebugCorePlugin.gurobiDlls.put(parts[1], parts[3]);
+						}else if (parts[0].equalsIgnoreCase("XA")){
+							DebugCorePlugin.xaVers.add(parts[1]);
+							DebugCorePlugin.xaJars.put(parts[1], parts[2]);
+							DebugCorePlugin.xaDlls.put(parts[1], parts[3]);
 						}
 					}
 					line=br.readLine().toUpperCase();

@@ -50,6 +50,7 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 	private Text yearSectionText;
 	private Combo cbcCombo;
 	private Combo gurobiCombo;
+	private Combo xaCombo;
 	
 	@Override
 	public void createControl(Composite parent) {
@@ -160,6 +161,34 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 		gurobiCombo.setLayoutData(gd);
 		gurobiCombo.setFont(font);
 		gurobiCombo.addSelectionListener(new SelectionListener(){
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				updateLaunchConfigurationDialog();	
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				updateLaunchConfigurationDialog();			
+			}
+		});
+		
+		Label xaLabel1 = new Label(comp, SWT.NONE);
+		xaLabel1.setText("If XA solver is used, please select the version number:");
+		gd = new GridData(GridData.BEGINNING);
+		gd.horizontalSpan=2;
+		xaLabel1.setLayoutData(gd);
+		xaLabel1.setFont(font);
+		
+		xaCombo = new Combo(comp, SWT.BORDER);
+		for (int i=0; i<DebugCorePlugin.xaVers.size(); i++){
+			xaCombo.add(DebugCorePlugin.xaVers.get(i));
+		}
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 4;
+		xaCombo.setLayoutData(gd);
+		xaCombo.setFont(font);
+		xaCombo.addSelectionListener(new SelectionListener(){
 			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -436,6 +465,7 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_MONMEMSECTION, "24");
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_SELCBC, DebugCorePlugin.cbcVers.get(0));
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_SELGUROBI, DebugCorePlugin.gurobiVers.get(0));
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_SELXA, DebugCorePlugin.xaVers.get(0));
 	}
 
 	@Override
@@ -477,6 +507,14 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 		try {
 			gurobiSelVer = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SELGUROBI, DebugCorePlugin.gurobiVers.get(0));
 			gurobiCombo.setText(gurobiSelVer);
+		} catch (CoreException e) {
+			WPPException.handleException(e);
+		}
+		
+		String xaSelVer = DebugCorePlugin.xaVers.get(0);
+		try {
+			xaSelVer = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SELXA, DebugCorePlugin.xaVers.get(0));
+			xaCombo.setText(xaSelVer);
 		} catch (CoreException e) {
 			WPPException.handleException(e);
 		}
@@ -583,6 +621,10 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_SELGUROBI, gurobiSelVer);
 		DebugCorePlugin.gurobiSelVer=gurobiSelVer;
 		
+		String xaSelVer = xaCombo.getText();
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_SELXA, xaSelVer);
+		DebugCorePlugin.xaSelVer=xaSelVer;
+		
 		String allowSvTsInit="no";
 		if (allowSvTsInitButton.getSelection()){
 			allowSvTsInit="yes";
@@ -654,6 +696,8 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 					status=DebugCorePlugin.solver+" "+DebugCorePlugin.cbcSelVer+"  "+log;
 				}else if (DebugCorePlugin.solver.equalsIgnoreCase("GUROBI")){
 					status=DebugCorePlugin.solver+" "+DebugCorePlugin.gurobiSelVer+"  "+log;
+				}else if (DebugCorePlugin.solver.equalsIgnoreCase("XA")){
+					status=DebugCorePlugin.solver+" "+DebugCorePlugin.xaSelVer+"  "+log;
 				}
 				
 				IWorkbenchPage page = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage();

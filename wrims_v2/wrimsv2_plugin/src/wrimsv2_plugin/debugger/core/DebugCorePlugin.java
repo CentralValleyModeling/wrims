@@ -150,6 +150,10 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static String gurobiSelVer="";
 	public static Map<String, String> gurobiJars=new HashMap<String, String>();
 	public static Map<String, String> gurobiDlls=new HashMap<String, String>();
+	public static ArrayList<String> xaVers=new ArrayList<String>();
+	public static String xaSelVer="";
+	public static Map<String, String> xaJars=new HashMap<String, String>();
+	public static Map<String, String> xaDlls=new HashMap<String, String>();
 	
 	public static DecimalFormat df = new DecimalFormat("#.####");
 	
@@ -223,6 +227,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static final String ATTR_WPP_FREEXA=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_FREEXA";
 	public static final String ATTR_WPP_SELCBC=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_SELCBC";
 	public static final String ATTR_WPP_SELGUROBI=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_SELGUROBI";
+	public static final String ATTR_WPP_SELXA=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_SELXA";
 	public static final String ATTR_WPP_ALLOWSVTSINIT=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_ALLOWSVTSINIT";
 	public static final String ATTR_WPP_LAUNCHTYPE=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_LAUNCHTYPE";
 	public static final String ATTR_WPP_MULTISTUDY=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_MULTISTUDY";

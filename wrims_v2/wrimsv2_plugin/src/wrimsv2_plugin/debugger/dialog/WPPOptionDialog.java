@@ -261,8 +261,8 @@ public class WPPOptionDialog extends Dialog {
 		logCombo = new Combo(composite, SWT.SINGLE|SWT.BORDER);
 		logCombo.add("None");
 		logCombo.add("Log");
-		//logCombo.add("xa_cbc");
-		//logCombo.add("cbc_xa");
+		logCombo.add("xa_cbc");
+		logCombo.add("cbc_xa");
 		
 		/*
 		if (DebugCorePlugin.solver.equalsIgnoreCase("CBC")){
@@ -600,6 +600,8 @@ public class WPPOptionDialog extends Dialog {
 					status=DebugCorePlugin.solver+" "+DebugCorePlugin.cbcSelVer+"  "+log;
 				}else if (DebugCorePlugin.solver.equalsIgnoreCase("GUROBI")){
 					status=DebugCorePlugin.solver+" "+DebugCorePlugin.gurobiSelVer+"  "+log;
+				}else if (DebugCorePlugin.solver.equalsIgnoreCase("XA")){
+					status=DebugCorePlugin.solver+" "+DebugCorePlugin.xaSelVer+"  "+log;
 				}
 				
 				IWorkbenchPage page = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage();

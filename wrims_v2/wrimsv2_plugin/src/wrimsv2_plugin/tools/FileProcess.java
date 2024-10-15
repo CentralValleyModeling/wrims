@@ -115,7 +115,7 @@ public class FileProcess {
 		return directory+fn;
 	}
 	
-	public static String createSolverJarFilePaths(String cbcFolder, String gurobiFolder, String cbcSelVer, String gurobiSelVer){
+	public static String createSolverJarFilePaths(String cbcFolder, String gurobiFolder, String xaFolder, String cbcSelVer, String gurobiSelVer, String xaSelVer){
 		String solverJarFilePaths="";
 		if (DebugCorePlugin.cbcJars.containsKey(cbcSelVer)){
 			String cbcJars = DebugCorePlugin.cbcJars.get(cbcSelVer);
@@ -129,6 +129,13 @@ public class FileProcess {
 			String[] parts = gurobiJars.split("\\|");
 			for (int i=0; i<parts.length; i++){
 				solverJarFilePaths=solverJarFilePaths+gurobiFolder+"\\"+parts[i]+";";
+			}
+		}
+		if (DebugCorePlugin.xaJars.containsKey(xaSelVer)){
+			String xaJars = DebugCorePlugin.xaJars.get(xaSelVer);
+			String[] parts = xaJars.split("\\|");
+			for (int i=0; i<parts.length; i++){
+				solverJarFilePaths=solverJarFilePaths+xaFolder+"\\"+parts[i]+";";
 			}
 		}
 		return solverJarFilePaths;

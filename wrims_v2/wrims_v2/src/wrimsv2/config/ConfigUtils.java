@@ -170,12 +170,17 @@ public class ConfigUtils {
 		
 		k = "cbc_dlls";
 		if (configMap.keySet().contains(k)){
-			loadCbcLib(configMap.get(k));
+			loadSolverLib(configMap.get(k));
 		}
 		
 		k = "gurobi_dlls";
 		if (configMap.keySet().contains(k)){
-			loadGurobiLib(configMap.get(k));
+			loadSolverLib(configMap.get(k));
+		}
+		
+		k = "xa_dlls";
+		if (configMap.keySet().contains(k)){
+			loadSolverLib(configMap.get(k));
 		}
 		
 		try {
@@ -1521,18 +1526,7 @@ public class ConfigUtils {
 		return returnV;
 	}
 
-	public static void loadCbcLib(String libStr){
-		String[] parts = libStr.split("\\|");
-		for (int i=0; i<parts.length; i++){
-			if (parts[i].toLowerCase().endsWith(".dll")){
-				int lastIndexOfDot = parts[i].lastIndexOf(".");
-		        parts[i]=parts[i].substring(0, lastIndexOfDot);
-			}
-			System.loadLibrary(parts[i]);
-		}
-	}
-	
-	public static void loadGurobiLib(String libStr){
+	public static void loadSolverLib(String libStr){
 		String[] parts = libStr.split("\\|");
 		for (int i=0; i<parts.length; i++){
 			if (parts[i].toLowerCase().endsWith(".dll")){
