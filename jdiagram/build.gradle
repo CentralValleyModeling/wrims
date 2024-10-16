@@ -19,7 +19,7 @@ configurations {
 
 dependencies {
     //module dependencies
-    implementation project(':third-party')
+//    implementation project(':third-party')
     implementation project(':wrims-ide')
     implementation project(':dwr-hecdssvue')
 

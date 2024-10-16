@@ -24,7 +24,7 @@ import wrimsv2_plugin.debugger.exception.WPPException;
 public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "gov.ca.dwr.hecdssvue"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "dwr-hecdssvue"; //$NON-NLS-1$
 
 	// The shared instance
 	private static Activator plugin;
