@@ -7,7 +7,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 public class Activator extends AbstractUIPlugin {
-	public static String PLUGIN_ID = "gov.ca.dwr.jdiagram";
+	public static String PLUGIN_ID = "jdiagram";
 	private static BundleContext context;
 	private static Activator plugin;
 

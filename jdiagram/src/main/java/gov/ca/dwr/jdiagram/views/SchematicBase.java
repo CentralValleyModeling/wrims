@@ -538,6 +538,10 @@ public abstract class SchematicBase extends ViewPart {
 			};
 		};
 
+		if(DssPluginCore._preferences == null)
+		{
+			DssPluginCore._preferences = Preferences.userNodeForPackage(getClass());
+		}
 		SchematicPluginCore.isTAFMonthly = DssPluginCore._preferences.getBoolean(ISMONTHLYTAF, true);
 		tafTypeAction = new Action("TAF Type"){
 			
