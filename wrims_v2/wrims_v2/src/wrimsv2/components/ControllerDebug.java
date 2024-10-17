@@ -419,7 +419,7 @@ public class ControllerDebug extends Thread {
 							GurobiSolver.solve();
 							if (Error.error_solving.size()<1) {
 				            	if (ILP.logging) {
-				            		ILP.writeObjValue_LPSOLVE();
+				            		ILP.writeObjValue_Gurobi();
 				            		if (ILP.loggingVariableValue) ILP.writeDvarValue_Gurobi();
 				            	}
 				            }
