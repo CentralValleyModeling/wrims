@@ -16,6 +16,7 @@ import org.eclipse.ui.internal.Workbench;
 import org.eclipse.ui.intro.IIntroPart;
 import org.eclipse.ui.intro.IIntroSite;
 
+import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
 
 public class WelcomeViewListener {
@@ -52,9 +53,12 @@ public class WelcomeViewListener {
 		            @Override
 		            public void partClosed(IWorkbenchPartReference partRef) {
 		                if (partRef.getId().equals("org.eclipse.ui.internal.introview")) {
-		                	String perspectiveID="wpp.ideperspective";  
-		                	//if (!isPerspectiveLoaded(perspectiveID))
-		                    openPerspective(perspectiveID);
+		                	for (int i=DebugCorePlugin.wrimsGUIPerspectives.length-1; i>=0; i--){
+		                		//String perspectiveID="wpp.ideperspective";  
+		                		//if (!isPerspectiveLoaded(perspectiveID))
+		                    	//openPerspective(perspectiveID);
+		                		openPerspective(DebugCorePlugin.wrimsGUIPerspectives[i]);
+		                	}
 		                }
 		            }
 
