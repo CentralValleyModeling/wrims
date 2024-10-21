@@ -39,7 +39,7 @@ Export-Package: \
     gov.ca.dwr.jdiagram.views
 
 -includeresource: \
-  lib_x64/JDiagram.jar=../libs/x64/JDiagram.jar,\
+  lib_x64/JDiagram.jar=../libs/JDiagram.jar,\
   plugin.xml = plugin.xml,\
   contexts.xml = contexts.xml,\
   icons = icons,\

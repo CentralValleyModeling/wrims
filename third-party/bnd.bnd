@@ -10,6 +10,9 @@ Import-Package: \
     rma.*,\
     !*, *
 
+Public-Package: \
+    icons,lib_x64
+
 Require-Bundle: \
     hec-dependencies;bundle-version="1.0.0"
 
@@ -19,8 +22,8 @@ Bundle-NativeCode: \
 
 -includeresource: \
     icons = icons,\
-    lib_x64/jep.dll=../libs/x64/jep.dll,\
-    lib_x64/cb.dll=../libs/x64/cb.dll
+    lib_x64/jep.dll=../libs/win-x64/jep.dll,\
+    lib_x64/cb.dll=../libs/win-x64/cb.dll
 
 
 Export-Package: \
@@ -124,7 +127,6 @@ Export-Package: \
     calsim.schematic.input,\
     calsim.wreslcoder,\
     calsim.wreslcoder.wresl,\
-    codebase,\
     org.coinor.bac,\
     org.coinor.cbc,\
     org.coinor.clp,\
@@ -168,70 +170,6 @@ Export-Package: \
     com.lowagie.text.xml.xmp,\
     com.lowagie.tools,\
     com.lowagie.text.error_messages,\
-    com.sun.media.jai.codec,\
-    com.sun.media.jai.codecimpl,\
-    com.sun.media.jai.codecimpl.fpx,\
-    com.sun.media.jai.codecimpl.util,\
-    com.sun.media.jai.iterator,\
-    com.sun.media.jai.mlib,\
-    com.sun.media.jai.opimage,\
-    com.sun.media.jai.remote,\
-    com.sun.media.jai.rmi,\
-    com.sun.media.jai.tilecodec,\
-    com.sun.media.jai.util,\
-    com.sun.media.jai.widget,\
-    javax.media.jai,\
-    javax.media.jai.iterator,\
-    javax.media.jai.operator,\
-    javax.media.jai.registry,\
-    javax.media.jai.remote,\
-    javax.media.jai.tilecodec,\
-    javax.media.jai.util,\
-    javax.media.jai.widget,\
-    com.sun.media.imageio.plugins.bmp,\
-    com.sun.media.imageio.plugins.jpeg2000,\
-    com.sun.media.imageio.plugins.pnm,\
-    com.sun.media.imageio.plugins.tiff,\
-    com.sun.media.imageio.stream,\
-    com.sun.media.imageioimpl.common,\
-    com.sun.media.imageioimpl.plugins.bmp,\
-    com.sun.media.imageioimpl.plugins.clib,\
-    com.sun.media.imageioimpl.plugins.gif,\
-    com.sun.media.imageioimpl.plugins.jpeg,\
-    com.sun.media.imageioimpl.plugins.jpeg2000,\
-    com.sun.media.imageioimpl.plugins.png,\
-    com.sun.media.imageioimpl.plugins.pnm,\
-    com.sun.media.imageioimpl.plugins.raw,\
-    com.sun.media.imageioimpl.plugins.tiff,\
-    com.sun.media.imageioimpl.plugins.wbmp,\
-    com.sun.media.imageioimpl.stream,\
-    com.sun.media.jai.imageioimpl,\
-    com.sun.media.jai.operator,\
-    jj2000.j2k,\
-    jj2000.j2k.codestream,\
-    jj2000.j2k.codestream.reader,\
-    jj2000.j2k.codestream.writer,\
-    jj2000.j2k.decoder,\
-    jj2000.j2k.entropy,\
-    jj2000.j2k.entropy.decoder,\
-    jj2000.j2k.entropy.encoder,\
-    jj2000.j2k.fileformat,\
-    jj2000.j2k.fileformat.reader,\
-    jj2000.j2k.fileformat.writer,\
-    jj2000.j2k.image,\
-    jj2000.j2k.image.forwcomptransf,\
-    jj2000.j2k.image.input,\
-    jj2000.j2k.image.invcomptransf,\
-    jj2000.j2k.io,\
-    jj2000.j2k.quantization,\
-    jj2000.j2k.quantization.dequantizer,\
-    jj2000.j2k.quantization.quantizer,\
-    jj2000.j2k.roi,\
-    jj2000.j2k.roi.encoder,\
-    jj2000.j2k.util,\
-    jj2000.j2k.wavelet,\
-    jj2000.j2k.wavelet.analysis,\
-    jj2000.j2k.wavelet.synthesis,\
     ncsa.hdf.object.h5,\
     ncsa.hdf.hdf5lib,\
     ncsa.hdf.hdf5lib.callbacks,\
@@ -280,16 +218,6 @@ Export-Package: \
     com.mindfusion.pdf,\
     com.mindfusion.scripting,\
     com.mindfusion.svg,\
-    JDOMAbout$Author.class,\
-    JDOMAbout$Info.class,\
-    JDOMAbout.class,\
-    org.jdom.adapters,\
-    org.jdom,\
-    org.jdom.filter,\
-    org.jdom.input,\
-    org.jdom.output,\
-    org.jdom.transform,\
-    org.jdom.xpath,\
     org.jfree.chart,\
     org.jfree.chart.annotations,\
     org.jfree.chart.axis,\
@@ -327,16 +255,6 @@ Export-Package: \
     org.jfree.data.time.ohlc,\
     org.jfree.data.xml,\
     org.jfree.data.xy,\
-    com.sun.java.help.impl,\
-    com.sun.java.help.search,\
-    javax.help.plaf.basic,\
-    javax.help.plaf.gtk,\
-    javax.help.plaf,\
-    javax.help,\
-    javax.help.event,\
-    javax.help.search,\
-    javax.help.resources,\
-    javax.help.tagext,\
     jnios,\
     org.python.core,\
     org.python.modules,\
@@ -346,41 +264,6 @@ Export-Package: \
     org.python.rmi,\
     com.oroinc.text.regex,\
     JNumeric,\
-    common,\
-    common.log,\
-    jxl.biff,\
-    jxl.biff.drawing,\
-    jxl.biff.formula,\
-    jxl,\
-    jxl.write.biff,\
-    jxl.write,\
-    jxl.read.biff,\
-    jxl.format,\
-    jxl.demo,\
-    com.ziclix.python.sql,\
-    com.ziclix.python.sql.connect,\
-    com.ziclix.python.sql.handler,\
-    com.ziclix.python.sql.pipe,\
-    com.ziclix.python.sql.pipe.csv,\
-    com.ziclix.python.sql.pipe.db,\
-    com.ziclix.python.sql.procedure,\
-    com.ziclix.python.sql.util,\
-    javatests,\
-    jxxload_help,\
-    org.python.core.adapter,\
-    org.python.modules.sets,\
-    org.python.modules.sre,\
-    org.python.modules.time,\
-    org.python.parser.ast,\
-    Demo$1.class,\
-    Demo$2.class,\
-    Demo$3.class,\
-    Demo.class,\
-    LpSolveTest$1MyListener.class,\
-    LpSolveTest$2MyListener.class,\
-    LpSolveTest$3MyListener.class,\
-    LpSolveTest.class,\
-    lpsolve,\
     javax.mail,\
     javax.mail.event,\
     javax.mail.search,\
@@ -427,5 +310,4 @@ Export-Package: \
     vista.report,\
     vista.set,\
     vista.time,\
-    com.sunsetsoft.xa,\
     org.apache.xmlcommons,\
