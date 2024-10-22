@@ -35,9 +35,30 @@ jobs:
         path: |
           ./wrims-core/build/libs/*.jar
 
-    - name: Upload Wrims plugin jar
+    - name: Upload Wrims-IDE jar
       uses: actions/upload-artifact@v4.0.0
       with:
         name: wrims-plugin
         path: |
           ./wrims/build/libs/*.jar
+
+    - name: Upload third-party jar.00
+      uses: actions/upload-artifact@v4.0.0
+      with:
+        name: third-party
+        path: |
+          ./third-party/build/libs/*.jar
+
+    - name: Upload dwr-hecdssvue jar
+      uses: actions/upload-artifact@v4.0.0
+      with:
+        name: dwr-hecdssvue
+        path: |
+          ./hecdssvue/build/libs/*.jar
+
+    - name: Upload jdiagram jar
+      uses: actions/upload-artifact@v4.0.0
+      with:
+        name: jdiagram
+        path: |
+          ./jdiagram/build/libs/*.jar

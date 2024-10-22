@@ -20,9 +20,10 @@ eclipse, etc.)
 
 ![](./README_images/wrims_gui.png)
 
-- [gov.ca.dwr.jdiagram](./gov.ca.dwr.jdiagram/README.md)
-- [gov.ca.dwr.hecdssvue](./gov.ca.dwr.hecdssvue/README.md)
-- [wrimsv2_plugin](./wrims_v2/wrimsv2_plugin/README.md)
+- [dwr-jdiagram](./gov.ca.dwr.jdiagram/README.md)
+- [dwr-hecdssvue](./gov.ca.dwr.hecdssvue/README.md)
+- [wrims-ide](./wrims_v2/wrimsv2_plugin/README.md)
+- [third-party](./third-party/README.md)
 - [WRIMSv2](./wrims_v2/wrims_v2/README.md)
 
 ## DevOps Migration
@@ -34,9 +35,15 @@ Directories here:
 -  buildSrc -- Holds build configuration information common to all subprojects. For specifics, see Gradle documentation https://docs.gradle.org/current/userguide/organizing_gradle_projects.html#sec:build_sources
 -  gradle -- configurations for the gradle build, most significantly the file "libs.version.toml" which sets the version numbers for the libraries that will be retrieved from Maven Central or other artifact repositories at build time
 -  wrims-core -- the gradle sub-project that produces the equivalent of the previous WRIMSv2.jar file
+-  third-party -- the gradle sub-project that consolodates all third party jars into a single OSGI module
+-  wrims-ide -- the gradle sub-project that builds the refactored wrimsv2_plugin module
+-  dwr-hecdssvue -- the gradle sub-project that builds the refactored hecdssvue module
+-  eclipse-luna-libs -- contains all the jars for the Luna version of Eclipse
+  - This version of eclipse is used by the v2 version WRIMS GUI and is unavailable form Maven Central or other artifact repositories
+  - It will be removed once Eclipse is updated to a newer version or an alternative solution for retrieving the jars is identified
 -  wrims_v2 -- see above
 
-The remaining files at this level are set up to support a mult-project gradle build as described at https://docs.gradle.org/current/userguide/intro_multi_project_builds.html
+The remaining files at this level are set up to support a multi-project gradle build as described at https://docs.gradle.org/current/userguide/intro_multi_project_builds.html
 
 Files were moved (rather than copied) from wrims_v2/wrims_v2/src to new locations in wrims-core/src so that their git histories would be preserved. Source files for non-java program components were left in their original folders, and will be moved as the project goes forward. A [README file in wrims_v2/wrims_v2/src](./wrims_v2/wrims_v2/src/README.md) lists the groups of files that were moved and left behind.
 
