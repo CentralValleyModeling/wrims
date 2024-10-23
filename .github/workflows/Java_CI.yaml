@@ -40,7 +40,7 @@ jobs:
       with:
         name: wrims-ide
         path: |
-          ./wrims/build/libs/*.jar
+          ./wrims-ide/build/libs/*.jar
 
     - name: Upload third-party jar
       uses: actions/upload-artifact@v4.0.0
