@@ -1,0 +1,125 @@
+import java.util.jar.JarFile
+
+plugins{
+    id 'library.deps-conventions'
+    id 'library.java-conventions'
+
+    // The following plugin is used to build the OSGI bundle
+    id 'biz.aQute.bnd.builder' version '6.4.0'
+}
+
+dependencies {
+    api libs.antlr
+    api libs.antlr.runtime
+    api libs.commons.io
+    api libs.jfreechart
+    api libs.osgi.core
+    api libs.osgi.compendium
+    api libs.gurobi
+    api libs.jarh5obj
+    api libs.jarhdf5
+    api libs.jarhdfobj
+    api libs.obgenesis
+    api libs.slf4jnop
+
+    //x64 jars
+    api(":calsimgui") //This is version 1.1.2 of CALSIM GUI developed by DWR.
+    api(":coinor") //coinor solver jar, unavailable in maven central
+    api(":com.google.ortools.linearsolver") //linear solver jar, unavailable in maven central
+    api(":COM") //Provides ibm.netrexx.process package, unavailable in maven central
+    api(":dsm2-input-model") //dms2 input model jar, developed by DWR
+    api(":iText") //provides com.lowagie.text package, matching version unavailable in maven central
+    api(":jnios") //unavialable in maven central
+    api(":jpy") //matching jar unavilable in maven central
+    api(":jpython") //matching jar unavilable in maven central
+    api(":misc-1.1") //custom collection of miscellenious packages. Developed by DWR.
+    api(":parser") //custom collection of parser packages. Developed by DWR.
+    api(":sqljdbc4-2.0") //matching jar unavilable in maven central. Newer version available
+    api(":swixml") //local jar contains additional classes compared to 1.5.144 jar on maven central
+    api(":vista") //developed by DWR. Unavailable on maven central
+    api(":xml") //custom collection of sun xml packages
+    api(":JDiagram")
+
+    //dlls
+    api fileTree(dir: '../libs/x64', include: ['cb.dll'])
+    api fileTree(dir: '../libs/x64', include: ['jep.dll'])
+
+}
+
+tasks.register('copyDependencies', Copy) {
+    from(configurations.runtimeClasspath)
+    into 'build/tmp/libs'
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.register('prepareBndFile') {
+    dependsOn(tasks.named("copyDependencies"))
+
+    def bndFile = file('build/bnd/bnd.bnd')
+    outputs.file(bndFile)
+    def bndTemplateFile = file('src/main/bnd/bnd.bnd.template')
+    def libsDir = file('build/tmp/libs')
+    def packageSet = new LinkedHashSet<String>()
+    def includeResourceSet = new LinkedHashSet<String>()
+
+    doFirst {
+        logger.debug("Running prepareBndFile task...")
+
+        if(!bndFile.parentFile.exists()) {
+            bndFile.parentFile.mkdirs();
+        }
+
+        // Delete bnd.bnd if it exists
+        if (bndFile.exists()) {
+            bndFile.delete()
+            logger.debug("Deleted existing bnd.bnd file.")
+        }
+        else {
+            // Create the bnd.bnd file if it does not exist
+            logger.debug("Creating empty bnd.bnd file.")
+            bndFile.createNewFile()
+        }
+
+        // Copy bnd.bnd.template to bnd.bnd
+        bndFile.text = bndTemplateFile.text
+        logger.debug("Copied bnd.bnd.template to bnd.bnd.")
+
+        // Collect package names from JAR files
+        libsDir.eachFileRecurse { file ->
+            if (file.name.endsWith('.jar')) {
+                includeResourceSet.add("lib_x64/${file.name}=${file.path.replace('\\', '/')};lib:=true")
+                JarFile jar = new JarFile(file)
+                jar.entries().each { entry ->
+                    if (entry.name.endsWith('.class')) {
+                        def packageName = entry.name.replaceAll('/[^/]+$', '').replace('/', '.')
+                        if (!packageName.startsWith('Lib.') && !packageName.startsWith('org.osgi') && !packageName.startsWith('org.slf4j') && !packageName.startsWith('org.w3c.dom') && !packageName.startsWith('org.xml.sax') && !packageName.startsWith('javax.xml')) {
+                            packageSet.add(packageName)
+                        }
+                    }
+                }
+            }
+        }
+
+        // Add Include-Resource contents to the end of bnd.bnd
+        def includeResourceContents = includeResourceSet.collect { it + ',\\' }.join('\n    ')
+        bndFile.append("\nInclude-Resource: \\\n    ${includeResourceContents}\n")
+        logger.debug("Added Include-Resource contents to bnd.bnd.")
+
+        // Add Export-Package contents to the end of bnd.bnd
+        def exportContents = packageSet.collect { it + ',\\' }.join('\n    ')
+        bndFile.append("\n-exportcontents: \\\n    ${exportContents}\n")
+        logger.debug("Added Export-Package contents to bnd.bnd.")
+    }
+}
+
+jar {
+    dependsOn tasks.named('prepareBndFile')
+
+    archiveBaseName.set('third-party')
+    archiveVersion.set('1.0.0.0')
+    archiveFileName.set("${archiveBaseName.get()}_${archiveVersion.get()}.jar")
+
+    bundle {
+        bndfile = tasks.named('prepareBndFile').get().outputs.files.first()
+    }
+}
