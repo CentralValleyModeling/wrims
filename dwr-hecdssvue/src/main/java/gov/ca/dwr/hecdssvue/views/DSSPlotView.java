@@ -92,7 +92,8 @@ public class DSSPlotView extends AbstractDSSView {
 		}
 		G2dObject g2dObj = null;
 		Vector g2dataVector = new Vector();
-		for (Iterator iterator = dataVector.iterator(); iterator.hasNext();) {
+		Iterator iterator = dataVector.iterator();
+		while (iterator.hasNext()) {
 			DataContainer data = (DataContainer) iterator.next();
 			if (data instanceof TimeSeriesContainer) {
 				if (DssPluginCore.chartType==0){
