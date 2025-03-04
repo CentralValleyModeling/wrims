@@ -1086,7 +1086,7 @@ public abstract class SchematicBase extends ViewPart {
 			Set<String> keys=names.keySet();
 			Iterator<String> it = keys.iterator();
 			while (it.hasNext()){
-				String name=it.next();
+				String name=it.next().toLowerCase();
 				if (altSchematicVariableData.containsKey(name)){
 					HecMath dataSet=altSchematicVariableData.get(name);
 					boolean isStorage=false;
