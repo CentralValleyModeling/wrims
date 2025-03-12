@@ -91,7 +91,7 @@ Click Apply.
 ![](./README_images/eclipse_jre.png)
 
 Open the Java>Compiler>Errors/Warnings. </br>
-Set "Depricated and restricted API" > "Forbidden reference (access rules)" to "Warning". </br>
+Set "Deprecated and restricted API" > "Forbidden reference (access rules)" to "Warning". </br>
 Click "Apply and Close" on the preferences window.
 
 ![](./README_images/eclipse_java_compiler_errors.png)
@@ -123,15 +123,9 @@ Gradle Tasks & Gradle Executions windows default to the bottom of the Eclipse wi
 
 ## 4. Adjust the build version number 
 
-The version number is configured to default to the branch name to support automatic tagged version
-via the github actions build system. 
+The version number is configured to the last tagged version number with a ".9999" suffix.
+If the checked out commit is a tag then only the tag name will be used.
 
-Edit the root build.gradle file and set an explicit version number.
-
-```
-//    version = versionLabel(versionDetails())
-version = "20250101"
-```
 > [!NOTE]
 > Any numerical value with up to 4 period-delimited values can be used as the version number.
 > It does not need to match any existing tag or branch name. 
