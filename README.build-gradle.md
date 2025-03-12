@@ -32,7 +32,7 @@ Repository Clone URL: https://github.com/CentralValleyModeling/wrims.git
 Checkout the "Feature/wrims-devops" branch. 
 
 ## 2. Override the build the version number
-The version number is configured to the last tagged version number with a ".dev" suffix. 
+The version number is configured to the last tagged version number with a ".9999" suffix. 
 If the checked out commit is a tag then only the tag name will be used.
 
 > [!NOTE]
