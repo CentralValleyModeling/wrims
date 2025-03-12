@@ -1,5 +1,7 @@
 package gov.ca.dwr.hecdssvue.views;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import gov.ca.dwr.hecdssvue.Activator;
 import gov.ca.dwr.hecdssvue.DssPluginCore;
 import gov.ca.dwr.hecdssvue.components.CatalogListSelection;
@@ -10,6 +12,7 @@ import hec.heclib.dss.HecDss;
 import hec.io.DataContainer;
 import hec.io.TimeSeriesContainer;
 import java.util.Collection;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IStatus;
@@ -77,6 +80,9 @@ public class DSSCatalogView extends AbstractDSSView {
 	 * The ID of the view as specified by the extension.
 	 */
 	public static final String ID = "gov.ca.dwr.hecdssvue.views.DSSCatalogView";
+	private static final Cache<String, DataContainer> dssCache = CacheBuilder.newBuilder()
+		.expireAfterWrite(5, TimeUnit.SECONDS) // Entries expire 5 seconds after creation
+		.build();
 
 	private TableViewer viewer;
 	private Action plotAction;
@@ -87,8 +93,6 @@ public class DSSCatalogView extends AbstractDSSView {
 	private Action renameAction;
 	private Action copytoAction;
 	private HecDss dss;
-//	private ArrayList<HecDss> dssArray = new ArrayList<HecDss> ();
-//	private ArrayList<HecDss> dssArray;
 	
 	private TableViewSorter comparator;
 	
@@ -645,27 +649,28 @@ public class DSSCatalogView extends AbstractDSSView {
 	/* 
 	 * return path data from multiple files
 	 */
-	public Vector<DataContainer> getData(String pathname, String[] parts) {
-		Vector<DataContainer> dataVector_path = new Vector<DataContainer>();
-//		DataContainer dataVector_file = new DataContainer();
+	public Vector<DataContainer> getData(String[] parts) {
+		String pathname = DataOps.getPathname(parts);
+		Vector<DataContainer> dataVector_path = new Vector<>();
 		TimeSeriesContainer dataVector_file = new TimeSeriesContainer();
         int dv_flag;
-        ArrayList<HecDss> dssArray = (ArrayList<HecDss>)getViewer().getInput();
+        List<HecDss> dssArray = (List<HecDss>)getViewer().getInput();
 
 		for (int i = 0; i <dssArray.size(); i++){
+			HecDss hecDss = dssArray.get(i);
 			dv_flag = i%2;
 			switch(dv_flag){
 			  case 0:
 				try{
-//				  dataVector_file = dssArray.get(i).get(pathname, true);
-				  if (DssPluginCore.tw.equals("All")){	
-					  HecDss hecDss = dssArray.get(i);
-					  TimeSeriesContainer tsc = (TimeSeriesContainer)hecDss.get(pathname, true);
+				  if (DssPluginCore.tw.equals("All")){
+					  TimeSeriesContainer tsc = (TimeSeriesContainer)dssCache.get(hecDss.getFilename() + pathname,
+						  () -> hecDss.get(pathname, true));
 					  if (tsc == null || tsc.numberValues==0){
 						  String pathname_new=getPathNameIgnorePartAF(i/2, parts, pathname);
-						  if (!pathname.equals(pathname_new)) tsc = (TimeSeriesContainer)hecDss.get(pathname_new, true);
+						  if (!pathname.equals(pathname_new)) tsc = (TimeSeriesContainer)dssCache.get(hecDss.getFilename() + pathname_new,
+							  () -> hecDss.get(pathname_new, true));
 					  }
-					  if (tsc.numberValues==0){
+					  if (tsc == null || tsc.numberValues==0){
 						  dataVector_file = null;
 					  }else{
 						  dataVector_file = DataOps.getMonthlyData(tsc, DssPluginCore.months);
@@ -673,13 +678,14 @@ public class DSSCatalogView extends AbstractDSSView {
 				  }else{
 					  String startTime=DssPluginCore.tw.substring(0, 13);
 					  String endTime=DssPluginCore.tw.substring(15, 28);
-					  HecDss hecDss = dssArray.get(i);
-					  TimeSeriesContainer tsc = (TimeSeriesContainer)hecDss.get(pathname, startTime, endTime);
+					  TimeSeriesContainer tsc = (TimeSeriesContainer)dssCache.get(hecDss.getFilename() + pathname,
+						  () -> hecDss.get(pathname, startTime, endTime));
 					  if (tsc == null || tsc.numberValues==0){
 						  String pathname_new=getPathNameIgnorePartAF(i/2, parts, pathname);
-						  if (!pathname.equals(pathname_new)) tsc = (TimeSeriesContainer)hecDss.get(pathname_new, startTime, endTime);
+						  if (!pathname.equals(pathname_new)) tsc = (TimeSeriesContainer)dssCache.get(hecDss.getFilename() + pathname_new,
+							  () -> hecDss.get(pathname_new, startTime, endTime));
 					  }
-					  if (tsc.numberValues==0){
+					  if (tsc == null || tsc.numberValues==0){
 						  dataVector_file = null;
 					  }else{
 						  dataVector_file = DataOps.getMonthlyData(tsc, DssPluginCore.months);
@@ -692,23 +698,17 @@ public class DSSCatalogView extends AbstractDSSView {
 					dataVector_file=DataOps.diff(dataVector_file, (TimeSeriesContainer)dataVector_path.get(0));
 				}
 				if (dataVector_file !=null && dataVector_file.values.length !=0) dataVector_path.add(dataVector_file);
-//				dataVector_file.units//TODO
                 break;
 			  case 1:
-//				if (dataVector_file.numberValues == 0){
-//				if (dataVector_path.get((i-1)/2).numberValues == 0){
-//				if (dataVector_file.fullName==""){//TODO:prev null
-				if ((dataVector_file==null)||(dataVector_file.fullName=="")||(dataVector_file.values.length==0)){//TODO
-//				if (dataVector_file==null){//TODO
-//				if (dataVector_path.get((i-1)/2).equals(null)){
+				if ((dataVector_file==null)||(dataVector_file.fullName=="")||(dataVector_file.values.length==0)){
 				  try{
-//					dataVector_file = dssArray.get(i).get(pathname, true);
-					if (DssPluginCore.tw.equals("All")){  
-						HecDss hecDss = dssArray.get(i);
-						  TimeSeriesContainer tsc = (TimeSeriesContainer)hecDss.get(pathname, true);
+					if (DssPluginCore.tw.equals("All")){
+						  TimeSeriesContainer tsc = (TimeSeriesContainer)dssCache.get(hecDss.getFilename() + pathname,
+							  () -> hecDss.get(pathname, true));
 						  if (tsc == null || tsc.numberValues==0){
 							  String pathname_new=getPathNameIgnorePartAF(i/2, parts, pathname);
-							  if (!pathname.equals(pathname_new)) tsc = (TimeSeriesContainer)hecDss.get(pathname_new, true);
+							  if (!pathname.equals(pathname_new)) tsc = (TimeSeriesContainer)dssCache.get(hecDss.getFilename() + pathname_new,
+								  () -> hecDss.get(pathname_new, true));
 						  }
 						  if (tsc.numberValues==0){
 							  dataVector_file = null;
@@ -718,13 +718,14 @@ public class DSSCatalogView extends AbstractDSSView {
 					}else{ 
 						String startTime=DssPluginCore.tw.substring(0, 13);
 						String endTime=DssPluginCore.tw.substring(15, 28);
-						HecDss hecDss = dssArray.get(i);
-						TimeSeriesContainer tsc = (TimeSeriesContainer)hecDss.get(pathname, startTime, endTime);
+						TimeSeriesContainer tsc = (TimeSeriesContainer)dssCache.get(hecDss.getFilename() + pathname,
+							() -> hecDss.get(pathname, startTime, endTime));
 						if (tsc == null || tsc.numberValues==0){
 							String pathname_new=getPathNameIgnorePartAF(i/2, parts, pathname);
-							if (!pathname.equals(pathname_new)) tsc = (TimeSeriesContainer)hecDss.get(pathname_new, startTime, endTime);
+							if (!pathname.equals(pathname_new)) tsc = (TimeSeriesContainer)dssCache.get(hecDss.getFilename() + pathname_new,
+								() -> hecDss.get(pathname_new, startTime, endTime));
 						}
-						if (tsc.numberValues==0){
+						if (tsc == null || tsc.numberValues==0) {
 							dataVector_file = null;
 						}else{
 							dataVector_file = DataOps.getMonthlyData(tsc, DssPluginCore.months);
@@ -742,7 +743,7 @@ public class DSSCatalogView extends AbstractDSSView {
 			}
 		}
 		
-		if (DssPluginCore.mode.equals(DssPluginCore.diff) && dataVector_path.size()>0){
+		if (DssPluginCore.mode.equals(DssPluginCore.diff) && !dataVector_path.isEmpty()){
 			dataVector_path.remove(0);
 		}
 		
@@ -771,7 +772,7 @@ public class DSSCatalogView extends AbstractDSSView {
 		}
 		
 	}
-	
+
 	public Vector<String[]> getSelectedParts(){
 		Vector<String[]> selectedParts=new Vector<String[]>();
 		ISelection selection = viewer.getSelection();
@@ -847,7 +848,7 @@ public class DSSCatalogView extends AbstractDSSView {
 		return match;
 	}
 	
-	public String getPathNameIgnorePartAF(int j, String[] parts, String pathname){
+	public static String getPathNameIgnorePartAF(int j, String[] parts, String pathname){
 		boolean found=false;
 		int k=0;
 		ArrayList<String> pathnameList = DssPluginCore.pathnameLists[j];

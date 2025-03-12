@@ -2,22 +2,8 @@ package gov.ca.dwr.hecdssvue.views;
 
 import gov.ca.dwr.hecdssvue.DssPluginCore;
 import gov.ca.dwr.hecdssvue.panel.MonthlyTablePanel;
-import gov.ca.dwr.hecdssvue.panel.OpsPanel;
-import hec.gfx2d.G2dMouseAdapter;
-import hec.gfx2d.G2dObject;
-import hec.gfx2d.G2dPanel;
-import hec.gfx2d.G2dZoomAdapter;
-import hec.gfx2d.PairedDataSet;
-import hec.gfx2d.TimeSeriesDataSet;
-import hec.gfx2d.Viewport;
-import hec.hecmath.DSSFile;
-import hec.hecmath.HecMath;
 import hec.io.DataContainer;
-import hec.io.PairedDataContainer;
-import hec.io.TimeSeriesContainer;
 
-import java.util.Enumeration;
-import java.util.Iterator;
 import java.util.Vector;
 
 import org.eclipse.swt.widgets.Composite;
@@ -58,7 +44,7 @@ public class DSSMonthlyView extends AbstractDSSView {
 	
 	public void createPartControl(Composite parent){
 		super.createPartControl(parent);
-		monthly = new MonthlyTablePanel(_frame);
+		monthly = new MonthlyTablePanel(frame);
 		DssPluginCore.mtp=monthly;
 		contentPane.add(monthly);
 	}
