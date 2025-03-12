@@ -81,7 +81,7 @@ public class DSSCatalogView extends AbstractDSSView {
 	 */
 	public static final String ID = "gov.ca.dwr.hecdssvue.views.DSSCatalogView";
 	private static final Cache<String, DataContainer> dssCache = CacheBuilder.newBuilder()
-		.expireAfterWrite(5, TimeUnit.SECONDS) // Entries expire 5 seconds after creation
+		.expireAfterWrite(30, TimeUnit.SECONDS) // Entries expire 30 seconds after creation
 		.build();
 
 	private TableViewer viewer;
