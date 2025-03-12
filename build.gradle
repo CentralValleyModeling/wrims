@@ -13,15 +13,16 @@ allprojects {
 
 // This utilizes Git Tag based versioning to set the version of the project based on the current Git Branch or Tag.
 // If a tag is checked out, the version will be the name of the most recent tag on this commit.
-// Otherwise, the version will be branchname-SNAPSHOT.
+// Otherwise, the version will be last version suffixed with a +
 def versionLabel(gitInfo) {
     def branch = gitInfo.branchName // all branches are snapshots, only tags get released
     def tag = gitInfo.lastTag
     // tag is returned as is. Branch may need cleanup
-    return branch == null ? tag : branch.replace("/","-") + "-SNAPSHOT"
+    return branch == null ? tag : gitInfo.lastTag + ".dev"
 }
 
 allprojects {
     group = 'gov.ca.dwr'
     version = versionLabel(versionDetails())
+//    version = "20250101"
 }

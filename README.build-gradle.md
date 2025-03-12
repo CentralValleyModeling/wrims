@@ -32,15 +32,9 @@ Repository Clone URL: https://github.com/CentralValleyModeling/wrims.git
 Checkout the "Feature/wrims-devops" branch. 
 
 ## 2. Override the build the version number
-The version number is configured to default to the branch name to support automatic tagged version
-via the github actions build system. 
+The version number is configured to the last tagged version number with a ".dev" suffix. 
+If the checked out commit is a tag then only the tag name will be used.
 
-When building locally, you must override the version with a numerical value in the root [build.gradle](./build.gradle) file.
-Example:
-```
-//    version = versionLabel(versionDetails())
-version = "20250101"
-```
 > [!NOTE]
 > Any numerical value with up to 4 period-delimited values can be used as the version number.
 > It does not need to match any existing tag or branch name. 
