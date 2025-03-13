@@ -31,6 +31,7 @@ dependencies {
     api libs.commons.cli
     api libs.log4j
     api libs.icu4j
+    api libs.guava
 
     //x64 jars
     api(":antlr-generator-3.2.0")

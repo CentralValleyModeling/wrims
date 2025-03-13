@@ -91,7 +91,7 @@ Click Apply.
 ![](./README_images/eclipse_jre.png)
 
 Open the Java>Compiler>Errors/Warnings. </br>
-Set "Depricated and restricted API" > "Forbidden reference (access rules)" to "Warning". </br>
+Set "Deprecated and restricted API" > "Forbidden reference (access rules)" to "Warning". </br>
 Click "Apply and Close" on the preferences window.
 
 ![](./README_images/eclipse_java_compiler_errors.png)
@@ -120,33 +120,17 @@ Once the build is complete, you should see 0 errors in the Problems window.</br>
 Gradle Tasks & Gradle Executions windows default to the bottom of the Eclipse window.
 
 ![](./README_images/eclipse_project_imported.png)
-
-## 4. Adjust the build version number 
-
-The version number is configured to default to the branch name to support automatic tagged version
-via the github actions build system. 
-
-Edit the root build.gradle file and set an explicit version number.
-
-```
-//    version = versionLabel(versionDetails())
-version = "20250101"
-```
-> [!NOTE]
-> Any numerical value with up to 4 period-delimited values can be used as the version number.
-> It does not need to match any existing tag or branch name. 
-> (e.g. 20250101, 2.2.0, 2.2.0.1)
  
 ![](./README_images/wrims_build_version.png)
 
-## 5. Build WRIMS with Gradle task
+## 4. Build WRIMS with Gradle task
 From the "Gradle Tasks" window, run the "build" task on the root project.
 
 NOTE: This will not build an installer, only the code.
 
 ![](./README_images/eclipse_gradle_build.png)
 
-## 6. Building / Running the WRIMS Installer with Gradle Tasks
+## 5. Building / Running the WRIMS Installer with Gradle Tasks
 
 The following gradle tasks have been added to build/run the gradle installer:
 
@@ -166,7 +150,7 @@ The following gradle tasks have been added to build/run the gradle installer:
 >   Received status code 401 from server: Unauthorized <br><br>
 > You are likely missing the cvmUserId and cvmPassword prerequisite settings in your gradle.properties file
 
-## 9. Remote Debug the WRIMS GUI Application
+## 6. Remote Debug the WRIMS GUI Application
 
 After the WRIMS source has been configured and the installer has been built, you are ready to remote debug WRIMS.
 
@@ -223,7 +207,7 @@ You can now set breakpoints in the WRIMS GUI code and debug the application.
 > Regardless of the scope of the code change. This issue has been reported to the Eclipse buildship community
 > and is being tracked here: https://discuss.gradle.org/t/hotswapping-code-with-imported-gradle-project-fails/50387
 
-## 10. Debugging/testing code changes for WRIMS
+## 7. Debugging/testing code changes for WRIMS
 Once you have completed the above steps and are able to run wrims from the build installer, 
 the fastest way to push code changes to the dropin modules is using the Gradle run>updateInstallerDropins task or the run>updateAndRun task.
 
@@ -242,17 +226,27 @@ If the application does not reflect the latest changes, you may need to run a cl
 > This process can also be used to test code changes from other developers that you have pulled from a branch update or after checking out their development branch. 
 
 
-## 11. Eclipse WRIMS Launch Configuration
+## 8. Eclipse WRIMS Launch Configuration
 Attempts have been made to run the WRIMS GUI application directly from Eclipse with a target platform set to use 
 only the plugins configured within the wrims-insall build.  <br><br>
 
 While this seems to be the correct approach, we are still experiencing issues with the application failing to launch. 
 This issue is being tracked here in github: https://github.com/CentralValleyModeling/wrims/issues/197
 
-## 12. Testing Source Code Changes
+## 9. Testing Source Code Changes
 How to test source code changes after already configuring your working developer environment.
 1. Checkout the branch you want to test, or update your current branch with the latest changes.
 2. Run the "updateInstallerDropins" gradle task to update the dropin jars in your built WRIMS GUI application.
 - This task will rebuild any modified dropin jars and copy them into the wrims-installer build. 
 3. Run the "runWrimsGui" gradle task to launch the WRIMS GUI application.
 
+
+## Build  Version Node
+
+The version number is configured to the last tagged version number with a ".9999" suffix.
+If the checked out commit is a tag then only the tag name will be used.
+
+> [!NOTE]
+> Any numerical value with up to 4 period-delimited values can be used as the version number.
+> It does not need to match any existing tag or branch name.
+> (e.g. 20250101, 2.2.0, 2.2.0.1)

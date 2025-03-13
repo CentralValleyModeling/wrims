@@ -41,7 +41,7 @@ public class ShowSelected {
 								//	}
 								//	dataVector.add(data);
 								// read multiple files
-								dataVector_path = catalogView.getData(DataOps.getPathname(parts), parts);
+								dataVector_path = catalogView.getData(parts);
 								if (dataVector_path == null) {
 									continue;
 								}

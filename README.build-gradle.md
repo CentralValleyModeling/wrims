@@ -29,24 +29,9 @@ cvmPassword=<userToken>
 ## 1. Pull Source from GitHub
 Clone the repository to your local machine.
 Repository Clone URL: https://github.com/CentralValleyModeling/wrims.git
-Checkout the "Feature/wrims-devops" branch. 
+Checkout the "Feature/wrims-devops" branch.
 
-## 2. Override the build the version number
-The version number is configured to default to the branch name to support automatic tagged version
-via the github actions build system. 
-
-When building locally, you must override the version with a numerical value in the root [build.gradle](./build.gradle) file.
-Example:
-```
-//    version = versionLabel(versionDetails())
-version = "20250101"
-```
-> [!NOTE]
-> Any numerical value with up to 4 period-delimited values can be used as the version number.
-> It does not need to match any existing tag or branch name. 
-> (e.g. 20250101, 2.2.0, 2.2.0.1)
-
-## 3. Build Code with Gradle Actions
+## 2. Build Code with Gradle Actions
 IDE's such as IntelliJ should automatically recognize the gradle build files and offer to import the project.
 Gradle tasks can either be run through the Gradle actions tab in your IDE or through the terminal/command line.
 
@@ -61,7 +46,7 @@ Terminal / Command line Example from the project root:
 gradlew.bat build
 ```
 
-## 4. Build the installer/patch zip files locally
+## 3. Build the installer/patch zip files locally
 The installer can be built by running the "zipWrimsGui" task in the wrims-install module.
 
 The generated wrims install zip file will be located in the /wrims-install/build/installer
@@ -88,7 +73,7 @@ gradlew.bat :wrims-install:zipWrimsGui
 >   Received status code 401 from server: Unauthorized <br><br>
 > You are likely missing the cvmUserId and cvmPassword prerequisite settings in your Gradle.properties file
 
-## 5. Run the WRIMS GUI Application
+## 4. Run the WRIMS GUI Application
 
 Once the installer has been built, the WRIMS GUI application can launched by running one of the following files
 from the installer directory (wirms-gui\build\installer\wrims_gui_x64_\<version\>):
@@ -96,7 +81,7 @@ from the installer directory (wirms-gui\build\installer\wrims_gui_x64_\<version\
 - WRIMS2_GUI_Start.bat - This will force a clean and start of the WRIMS GUI application
 - WRIMS2_GUI_x64.exe - This will run the application without forcing a clean
 
-## 6. Debug the WRIMS GUI Application
+## 5. Debug the WRIMS GUI Application
 
 The WRIMS GUI application can be debugged from any IDE that supports remote debugging.
 
@@ -164,3 +149,12 @@ the GitHub WRIMS site (https://github.com/CentralValleyModeling/wrims).
 
 The installer and patch zip will be automatically generated and added to the new Release.
 
+
+## Build Version Note
+The version number is configured to the last tagged version number with a ".9999" suffix.
+If the checked out commit is a tag then only the tag name will be used.
+
+> [!NOTE]
+> Any numerical value with up to 4 period-delimited values can be used as the version number.
+> It does not need to match any existing tag or branch name.
+> (e.g. 20250101, 2.2.0, 2.2.0.1)
