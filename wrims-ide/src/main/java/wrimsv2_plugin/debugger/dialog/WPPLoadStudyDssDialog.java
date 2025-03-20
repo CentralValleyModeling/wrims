@@ -35,6 +35,7 @@ import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.view.WPPVariableView;
 import wrimsv2_plugin.debugger.view.WPPWatchView;
 import wrimsv2_plugin.tools.DataProcess;
+import wrimsv2_plugin.tools.DssUtil;
 
 public class WPPLoadStudyDssDialog extends Dialog {
 	private Button[] checkBox=new Button[8];
@@ -399,7 +400,7 @@ public class WPPLoadStudyDssDialog extends Dialog {
 			if (DebugCorePlugin.selectedStudies[i]){
 				try {
 					DebugCorePlugin.dvDss[i]=HecDss.open(DebugCorePlugin.studyDvFileNames[i]);
-					DebugCorePlugin.dvVector[i]=DebugCorePlugin.dvDss[i].getCondensedCatalog();
+					DebugCorePlugin.dvVector[i]= DssUtil.getCondensedReferences(DebugCorePlugin.dvDss[i]);
 					DebugCorePlugin.dvDss[i].close();
 				} catch (Exception e) {
 					WPPException.handleException(e);
@@ -408,7 +409,7 @@ public class WPPLoadStudyDssDialog extends Dialog {
 				}
 				try {
 					DebugCorePlugin.svDss[i]=HecDss.open(DebugCorePlugin.studySvFileNames[i]);
-					DebugCorePlugin.svVector[i]=DebugCorePlugin.svDss[i].getCondensedCatalog();
+					DebugCorePlugin.svVector[i]=DssUtil.getCondensedReferences(DebugCorePlugin.svDss[i]);
 					DebugCorePlugin.svDss[i].close();
 				} catch (Exception e) {
 					WPPException.handleException(e);

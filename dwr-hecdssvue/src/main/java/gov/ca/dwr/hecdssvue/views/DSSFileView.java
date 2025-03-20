@@ -1,16 +1,11 @@
 package gov.ca.dwr.hecdssvue.views;
 
-import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.toList;
 
 import gov.ca.dwr.hecdssvue.Activator;
 import gov.ca.dwr.hecdssvue.DssPluginCore;
 import gov.ca.dwr.hecdssvue.components.DataOps;
-import hec.heclib.dss.CondensedReference;
 import hec.heclib.dss.HecDss;
-
-import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,12 +14,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.io.PrintWriter;
-
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.IntStream;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -48,17 +39,17 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.statushandlers.StatusManager;
-
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.tools.DssUtil;
 
 public class DSSFileView extends ViewPart {
 
@@ -453,7 +444,7 @@ public class DSSFileView extends ViewPart {
 					subMonitor.setTaskName("Reading DV DSS File " + DebugCorePlugin.studyDvFileNames[i]);
 					HecDss hecDss = HecDss.open(DebugCorePlugin.studyDvFileNames[i]);
 					DebugCorePlugin.dvDss[i] = hecDss;
-					DebugCorePlugin.dvVector[i] = hecDss.getCondensedCatalog();
+					DebugCorePlugin.dvVector[i] = DssUtil.getCondensedReferences(hecDss);
 				} catch (Exception e) {
 					WPPException.handleException(e);
 					errorFiles.add(DebugCorePlugin.studyDvFileNames[i]);
@@ -463,7 +454,7 @@ public class DSSFileView extends ViewPart {
 					subMonitor.setTaskName("Reading SV DSS File " + DebugCorePlugin.studySvFileNames[i]);
 					HecDss hecDss = HecDss.open(DebugCorePlugin.studySvFileNames[i]);
 					DebugCorePlugin.svDss[i] = hecDss;
-					DebugCorePlugin.svVector[i] = hecDss.getCondensedCatalog();
+					DebugCorePlugin.svVector[i] = DssUtil.getCondensedReferences(hecDss);
 				} catch (Exception e) {
 					WPPException.handleException(e);
 					errorFiles.add(DebugCorePlugin.studySvFileNames[i]);

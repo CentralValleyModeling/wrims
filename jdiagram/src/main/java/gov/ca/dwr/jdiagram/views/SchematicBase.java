@@ -81,6 +81,7 @@ import org.eclipse.ui.views.properties.PropertyDescriptor;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.tools.DssUtil;
 import wrimsv2_plugin.tools.TimeOperation;
 
 import com.mindfusion.diagramming.AttachToNode;
@@ -1795,7 +1796,7 @@ public abstract class SchematicBase extends ViewPart {
 	
 	public static HashMap<String, String> generatePathnameMap(HecDss file){
 		HashMap<String, String> pathnameMap=new HashMap<String, String> ();
-		Vector<CondensedReference> v=file.getCondensedCatalog();
+		Vector<CondensedReference> v = DssUtil.getCondensedReferences(file);
 		for (int i=0; i<v.size(); i++){
 			CondensedReference cr = v.get(i);
 			String pathname=cr.getNominalPathname();

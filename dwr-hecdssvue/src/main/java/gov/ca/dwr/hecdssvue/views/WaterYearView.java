@@ -31,8 +31,8 @@ import org.eclipse.ui.part.ViewPart;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
-//import wrimsv2_plugin.tools.DssOperations;
 import wrimsv2_plugin.tools.DssOperations;
+import wrimsv2_plugin.tools.DssUtil;
 
 public class WaterYearView extends ViewPart {
 
@@ -413,7 +413,7 @@ public class WaterYearView extends ViewPart {
 		if (DssPluginCore.dssArray.size()==0) return;
 		HecDss dss = DssPluginCore.dssArray.get(0);
 		if (dss == null) return;
-		Vector<CondensedReference> dvVector = dss.getCondensedCatalog();
+		Vector<CondensedReference> dvVector = DssUtil.getCondensedReferences(dss);
 		String sacn=DssOperations.matchPathName(dvVector, "WYT_SAC_", "WATERYEARTYPE", "1MON");
 		if (sacn!=null){
 			try {
