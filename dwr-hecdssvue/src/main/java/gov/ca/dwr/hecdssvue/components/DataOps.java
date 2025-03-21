@@ -29,6 +29,7 @@ import gov.ca.dwr.hecdssvue.dts.AppUtils;
 import gov.ca.dwr.hecdssvue.dts.Project;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.tools.DssUtil;
 
 public class DataOps {
 
@@ -415,8 +416,8 @@ public class DataOps {
 	}
 	
 	public static HashMap<String, String> generatePathnameMap(HecDss file, int j){
-		HashMap<String, String> pathnameMap=new HashMap<String, String> ();
-		Vector<CondensedReference> v=file.getCondensedCatalog();
+		HashMap<String, String> pathnameMap=new HashMap<> ();
+		Vector<CondensedReference> v = DssUtil.getCondensedReferences(file);
 		for (int i=0; i<v.size(); i++){
 			CondensedReference cr = v.get(i);
 			String pathname=cr.getNominalPathname();
