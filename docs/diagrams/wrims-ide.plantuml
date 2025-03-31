@@ -1,0 +1,254 @@
+@startuml
+
+!theme plain
+left to right direction
+skinparam linetype ortho
+
+component wrims_ide as "wrims-ide" #lightgreen
+component COM as "COM.jar" #lightblue
+component JDiagram as "JDiagram.jar" #lightblue
+component ST4
+component XAOptimizer as "XAOptimizer.jar" #lightblue
+component animal_sniffer_annotations as "animal-sniffer-annotations"
+component antlr
+component antlr_generator as "antlr-generator-3.2.0.jar" #lightblue
+component antlr_runtime as "antlr-runtime"
+component aopalliance
+component apiguardian_api as "apiguardian-api"
+component autocomplete
+component bcpkix_jdk15on as "bcpkix-jdk15on"
+component bcprov_jdk15on as "bcprov-jdk15on"
+component callback_services as "callback-services"
+component calsurrogate as "calsurrogate.jar" #lightblue
+component checker_compat_qual as "checker-compat-qual"
+component coinor as "coinor.jar" #lightblue
+component linearsolver as "com.google.ortools.linearsolver.jar" #lightblue
+component commons_cli as "commons-cli"
+component commons_codec as "commons-codec"
+component commons_io as "commons-io"
+component commons_lang as "commons-lang"
+component commons_logging as "commons-logging"
+component commons_vfs2 as "commons-vfs2"
+component luna_libs as "directory '../eclipse-luna-libs'" #orange
+component dom4j
+component dsm2_input_model as "dsm2-input-model.jar" #lightblue
+component dssgui
+component error_prone_annotations
+component flogger
+component guava
+component guice
+component gurobi as "gurobi.jar" #lightblue
+component cwms_ratings_core as "hec-cwms-ratings-core"
+component hec_data_ui as "hec-data-ui"
+component hec_monolith as "hec-monolith"
+component hec_nucleus_data as "hec-nucleus-data"
+component hec_nucleus_metadata as "hec-nucleus-metadata"
+component iText as "iText.jar" #lightblue
+component icu4j
+component j2objc_annotations as "j2objc-annotations"
+component jackson_annotations as "jackson-annotations"
+component jackson_core as "jackson-core"
+component jackson_databind as "jackson-databind"
+component jarh5obj as "jarh5obj.jar" #lightblue
+component jarhdf as "jarhdf-2.10.0.jar" #lightblue
+component jarhdf5 as "jarhdf5-2.10.0.jar" #lightblue
+component jarhdfobj as "jarhdfobj.jar" #lightblue
+component javaHeclib
+component javahelp
+component javax_inject as "javax.inject"
+component jcommon
+component jdom
+component jfreechart
+component jmscommon
+component jna
+component jnios as "jnios.jar" #lightblue
+component jpy as "jpy.jar" #lightblue
+component jpython as "jpython.jar" #lightblue
+component jsr305
+component jts
+component junit_bom as "junit-bom"
+component junit_api as "junit-jupiter-api"
+component junit_engine as "junit-jupiter-engine"
+component junit_params as "junit-jupiter-params"
+component junit_commons as "junit-platform-commons"
+component junit_platform_engine as "junit-platform-engine"
+component jython as "jython-standalone"
+component kryo
+component log4j
+component lookup
+component minlog
+component misc as "misc-1.2.jar" #lightblue
+component mrsidreader
+component objenesis
+component opentest4j
+component poi
+component poi_ooxml as "poi-ooxml"
+component poi_ooxml_schemas as "poi-ooxml-schemas"
+component rstaui
+component rsyntaxtextarea
+component service_annotations as "service-annotations"
+component slf4j_api as "slf4j-api"
+component slf4j_nop as "slf4j-nop"
+component sqljdbc4 as "sqljdbc4-2.0.jar" #lightblue
+component stax as "stax-api"
+component swingx_action as "swingx-action"
+component swingx_autocomplete as "swingx-autocomplete"
+component swingx_common as "swingx-common"
+component swingx_core as "swingx-core"
+component swingx_graphics as "swingx-graphics"
+component swingx_painters as "swingx-painters"
+component swingx_plaf as "swingx-plaf"
+component swixml as "swixml.jar" #lightblue
+component third_party as "third-party" #orange
+component vista as "vista.jar" #lightblue
+component vrt
+component wrims_core as "wrims-core" #orange
+component xml_apis as "xml-apis"
+component xmlbeans
+
+wrims_ide                   -[#000082,plain]->  luna_libs                  
+wrims_ide                   -[#000082,plain]->  javaHeclib              
+wrims_ide                   -[#000082,plain]->  junit_api                  
+wrims_ide                   -[#000082,plain]->  junit_engine                  
+wrims_ide                   -[#000082,plain]->  junit_params                  
+wrims_ide                   -[#000082,plain]->  third_party                  
+wrims_ide                   -[#000082,plain]->  wrims_core
+ST4                      -[#000082,plain]->  antlr_runtime                  
+antlr                    -[#000082,plain]->  ST4                     
+antlr                    -[#000082,plain]->  antlr_runtime                  
+autocomplete             -[#000082,plain]->  rsyntaxtextarea         
+bcpkix_jdk15on                    -[#000082,plain]->  bcprov_jdk15on                  
+callback_services                    -[#000082,plain]->  jackson_annotations                  
+callback_services                    -[#000082,plain]->  jackson_core                  
+callback_services                    -[#000082,plain]->  jackson_databind                   
+callback_services                    -[#000082,plain]->  lookup                  
+callback_services                    -[#000082,plain]->  service_annotations                  
+commons_vfs2                   -[#000082,plain]->  commons_logging                  
+dom4j                    -[#000082,plain]->  xml_apis                   
+dssgui                   -[#000082,plain]->  hec_data_ui                  
+dssgui                   -[#000082,plain]->  hec_monolith                  
+flogger                  -[#000082,plain]->  checker_compat_qual                  
+guava                    -[#000082,plain]->  animal_sniffer_annotations                  
+guava                    -[#000082,plain]->  checker_compat_qual                  
+guava                    -[#000082,plain]->  error_prone_annotations 
+guava                    -[#000082,plain]->  j2objc_annotations                  
+guava                    -[#000082,plain]->  jsr305                  
+guice                    -[#000082,plain]->  aopalliance             
+guice                    -[#000082,plain]->  guava                   
+guice                    -[#000082,plain]->  javax_inject                  
+hec_monolith                   -[#000082,plain]->  bcpkix_jdk15on                   
+hec_monolith                   -[#000082,plain]->  bcprov_jdk15on                  
+hec_monolith                   -[#000082,plain]->  callback_services                   
+hec_monolith                   -[#000082,plain]->  commons_lang                  
+hec_monolith                   -[#000082,plain]->  commons_vfs2                  
+hec_monolith                   -[#000082,plain]->  error_prone_annotations 
+hec_monolith                   -[#000082,plain]->  flogger                 
+hec_monolith                   -[#000082,plain]->  hec_nucleus_data                  
+hec_monolith                   -[#000082,plain]->  hec_nucleus_metadata                 
+hec_monolith                   -[#000082,plain]->  jackson_annotations                  
+hec_monolith                   -[#000082,plain]->  javahelp                
+hec_monolith                   -[#000082,plain]->  jcommon                 
+hec_monolith                   -[#000082,plain]->  jfreechart              
+hec_monolith                   -[#000082,plain]->  jmscommon               
+hec_monolith                   -[#000082,plain]->  jna                     
+hec_monolith                   -[#000082,plain]->  jsr305                  
+hec_monolith                   -[#000082,plain]->  jts                     
+hec_monolith                   -[#000082,plain]->  jython                  
+hec_monolith                   -[#000082,plain]->  lookup                  
+hec_monolith                   -[#000082,plain]->  mrsidreader             
+hec_monolith                   -[#000082,plain]->  poi                     
+hec_monolith                   -[#000082,plain]->  poi_ooxml                   
+hec_monolith                   -[#000082,plain]->  rstaui                  
+hec_monolith                   -[#000082,plain]->  service_annotations                  
+hec_monolith                   -[#000082,plain]->  swingx_core                  
+hec_monolith                   -[#000082,plain]->  vrt                     
+hec_nucleus_data                   -[#000082,plain]->  hec_nucleus_metadata                 
+hec_nucleus_metadata                  -[#000082,plain]->  jdom                    
+hec_nucleus_metadata                  -[#000082,plain]->  lookup                  
+hec_nucleus_metadata                  -[#000082,plain]->  service_annotations                  
+jfreechart               -[#000082,plain]->  jcommon                 
+junit_bom                   -[#000082,plain]->  junit_api                  
+junit_bom                   -[#000082,plain]->  junit_engine                  
+junit_bom                   -[#000082,plain]->  junit_params                  
+junit_bom                   -[#000082,plain]->  junit_commons                  
+junit_bom                   -[#000082,plain]->  junit_platform_engine                  
+junit_api                   -[#000082,plain]->  apiguardian_api                  
+junit_api                   -[#000082,plain]->  junit_bom                  
+junit_api                   -[#000082,plain]->  junit_commons                  
+junit_api                   -[#000082,plain]->  opentest4j              
+junit_engine                   -[#000082,plain]->  apiguardian_api                  
+junit_engine                   -[#000082,plain]->  junit_bom                  
+junit_engine                   -[#000082,plain]->  junit_api                  
+junit_engine                   -[#000082,plain]->  junit_platform_engine                  
+junit_params                   -[#000082,plain]->  apiguardian_api                  
+junit_params                   -[#000082,plain]->  junit_bom                  
+junit_params                   -[#000082,plain]->  junit_api                  
+junit_commons                   -[#000082,plain]->  apiguardian_api                  
+junit_commons                   -[#000082,plain]->  junit_bom                  
+junit_platform_engine                   -[#000082,plain]->  apiguardian_api                  
+junit_platform_engine                   -[#000082,plain]->  junit_bom                  
+junit_platform_engine                   -[#000082,plain]->  junit_commons                  
+junit_platform_engine                   -[#000082,plain]->  opentest4j              
+kryo                     -[#000082,plain]->  minlog                  
+kryo                     -[#000082,plain]->  objenesis               
+poi                      -[#000082,plain]->  commons_codec                  
+poi_ooxml                    -[#000082,plain]->  dom4j                   
+poi_ooxml                    -[#000082,plain]->  poi                     
+poi_ooxml                    -[#000082,plain]->  poi_ooxml_schemas                  
+poi_ooxml_schemas                   -[#000082,plain]->  xmlbeans                
+rstaui                   -[#000082,plain]->  autocomplete            
+rstaui                   -[#000082,plain]->  rsyntaxtextarea         
+slf4j_nop                   -[#000082,plain]->  slf4j_api                  
+swingx_autocomplete                   -[#000082,plain]->  swingx_common                  
+swingx_core                   -[#000082,plain]->  swingx_action                  
+swingx_core                   -[#000082,plain]->  swingx_autocomplete                  
+swingx_core                   -[#000082,plain]->  swingx_graphics                  
+swingx_core                   -[#000082,plain]->  swingx_painters                  
+swingx_core                   -[#000082,plain]->  swingx_plaf                  
+swingx_graphics                   -[#000082,plain]->  swingx_common                  
+swingx_painters                   -[#000082,plain]->  swingx_common                  
+swingx_plaf                   -[#000082,plain]->  swingx_common                  
+third_party                   -[#000082,plain]->  COM                     
+third_party                   -[#000082,plain]->  JDiagram                
+third_party                   -[#000082,plain]->  XAOptimizer             
+third_party                   -[#000082,plain]->  antlr                   
+third_party                   -[#000082,plain]->  antlr_generator                  
+third_party                   -[#000082,plain]->  antlr_runtime                  
+third_party                   -[#000082,plain]->  calsurrogate            
+third_party                   -[#000082,plain]->  coinor                  
+third_party                   -[#000082,plain]->  linearsolver                  
+third_party                   -[#000082,plain]->  commons_cli                  
+third_party                   -[#000082,plain]->  commons_io                  
+third_party                   -[#000082,plain]->  dsm2_input_model                  
+third_party                   -[#000082,plain]->  dssgui                  
+third_party                   -[#000082,plain]->  guava                   
+third_party                   -[#000082,plain]->  guice                   
+third_party                   -[#000082,plain]->  gurobi                  
+third_party                   -[#000082,plain]->  cwms_ratings_core                  
+third_party                   -[#000082,plain]->  hec_monolith                  
+third_party                   -[#000082,plain]->  hec_nucleus_metadata                 
+third_party                   -[#000082,plain]->  iText                   
+third_party                   -[#000082,plain]->  icu4j                   
+third_party                   -[#000082,plain]->  jarh5obj                
+third_party                   -[#000082,plain]->  jarhdf                  
+third_party                   -[#000082,plain]->  jarhdf5                  
+third_party                   -[#000082,plain]->  jarhdfobj               
+third_party                   -[#000082,plain]->  jdom                    
+third_party                   -[#000082,plain]->  jfreechart              
+third_party                   -[#000082,plain]->  jnios                   
+third_party                   -[#000082,plain]->  jpy                     
+third_party                   -[#000082,plain]->  jpython                 
+third_party                   -[#000082,plain]->  kryo                    
+third_party                   -[#000082,plain]->  log4j                   
+third_party                   -[#000082,plain]->  misc                  
+third_party                   -[#000082,plain]->  objenesis               
+third_party                   -[#000082,plain]->  slf4j_nop                  
+third_party                   -[#000082,plain]->  sqljdbc4                  
+third_party                   -[#000082,plain]->  swixml                  
+third_party                   -[#000082,plain]->  vista                   
+wrims_core                   -[#000082,plain]->  antlr                   
+wrims_core                   -[#000082,plain]->  hec_monolith                  
+xmlbeans                 -[#000082,plain]->  stax
+
+footer "green components indicate the primary module being represented \n orange components indicate key local modules \n blue components indicate locally-stored third-party jars"
+@enduml

@@ -1,0 +1,22 @@
+@startuml
+
+!theme plain
+left to right direction
+skinparam linetype ortho
+
+rectangle wrims-ide as "WRIMS IDE" #orange {
+    component editor #lightgreen {
+        package wrimsv2_plugin.editor
+    }
+    component debugger {
+        package wrimsv2_plugin.debugger
+    }
+}
+
+component luna_libs as "directory '../eclipse-luna-libs'" #orange
+
+editor -down-> luna_libs
+editor -down-> debugger
+
+footer "green components indicate the primary module being represented \n orange components indicate key local modules"
+@enduml
