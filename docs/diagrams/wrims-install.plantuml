@@ -1,0 +1,14 @@
+@startuml
+
+!theme plain
+left to right direction
+skinparam linetype ortho
+
+component wrims_install as "wrims-install" #lightgreen
+component run_libs as "run-libs"
+
+wrims_install  -[#000082,plain]->  run_libs
+
+footer "green components indicate the primary module being represented"
+
+@enduml
