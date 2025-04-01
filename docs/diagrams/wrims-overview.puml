@@ -37,36 +37,36 @@ rectangle wrims as "WRIMS 2.2"{
 
 
 
-wrims_ide -down-> wrims_core
-wrims_ide -down-> eclipse_luna_libs
-wrims_ide -down-> local_jars
-wrims_ide -down-> hec
-wrims_ide -down-> wrims_dssvue
-wrims_ide -> xtext_editor_ui
-wrims_ide -down-> non_hec
-wrims_ide -down-> wrims_jdiagram
+wrims_ide -down-> wrims_core #blue
+wrims_ide -down-> eclipse_luna_libs #blue
+wrims_ide -down-> local_jars #grey
+wrims_ide -down-> hec #grey
+wrims_ide -down-> wrims_dssvue #blue
+wrims_ide -> xtext_editor_ui #blue
+wrims_ide -down-> non_hec #grey
+wrims_ide -down-> wrims_jdiagram #blue
 
-wrims_core -down-> local_jars
-wrims_core -down-> non_hec
-wrims_core -down-> hec
+wrims_core -down-> local_jars #grey
+wrims_core -down-> non_hec #grey
+wrims_core -down-> hec #grey
 
-xtext_editor_ui -down-> xtext_editor
-xtext_editor_ui -down-> local_jars
-xtext_editor_ui -down-> non_hec
-xtext_editor -down-> local_jars
-xtext_editor -> eclipse_luna_libs
-xtext_editor_ui -> eclipse_luna_libs
+xtext_editor_ui -down-> xtext_editor #blue
+xtext_editor_ui -down-> local_jars #grey
+xtext_editor_ui -down-> non_hec #grey
+xtext_editor -down-> local_jars #grey
+xtext_editor -> eclipse_luna_libs #blue
+xtext_editor_ui -> eclipse_luna_libs #blue
 
 
-gov.ca.dwr.jdiagram -> local_jars
-wrims_jdiagram -> eclipse_luna_libs
+gov.ca.dwr.jdiagram -> local_jars #grey
+wrims_jdiagram -> eclipse_luna_libs #blue
 
 hec -down-> hec_nexus
 non_hec -down-> maven_central
 
-dssvue -> hec
-dssvue -> local_jars
-dssvue -> eclipse_luna_libs
+dssvue -> hec #grey
+dssvue -> local_jars #grey
+dssvue -> eclipse_luna_libs #blue
 
-footer "green components indicate the primary module being represented \n orange components indicate key local modules"
+footer "green components indicate the primary module being represented \n orange components indicate key local modules \n blue lines indicate module-to-module dependencies"
 @enduml
