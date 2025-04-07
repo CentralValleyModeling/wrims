@@ -69,6 +69,12 @@ public class GurobiSolver {
 	    	//env   = new GRBEnv("TestGurobi.log");
 	    	env   = new GRBEnv();
 	    	env.set(GRB.IntParam.LogToConsole, 0);
+	    	//This sets the parameter values to the ENV, if only specific models are desired, set them below
+	    	env.set(GRB.DoubleParam.FeasibilityTol, 1e-9);
+	    	env.set(GRB.DoubleParam.IntFeasTol, 1e-9);
+	    	
+	    	String GurobiParFilePath = new File(FilePaths.mainDirectory, "GurobiParams.prm").getAbsolutePath();
+	    	env.writeParams(GurobiParFilePath);
 	    	//env.set(GRB.IntParam.Presolve, 0);
 		}
 		catch (GRBException e) {
@@ -84,6 +90,8 @@ public class GurobiSolver {
 	    	//env   = new GRBEnv();
 	    	//env.set(GRB.IntParam.LogToConsole, 0);
 		    model = new GRBModel(env, CplexLpFilePath);
+		    //model.getEnv().set(GRB.DoubleParam.FeasibilityTol, 1e-9);
+		    //model.getEnv().set(GRB.DoubleParam.IntFeasTol, 1e-9);
 		}
 		catch (GRBException e) {
 			Error.addSolvingError("File not found: "+CplexLpFilePath);
