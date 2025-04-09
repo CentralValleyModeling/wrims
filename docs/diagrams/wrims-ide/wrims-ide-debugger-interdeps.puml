@@ -27,6 +27,9 @@ component WRIMS-IDE {
     package sensitivity #lightgreen
     package calsimhydro #lightgreen
     package reporttool #lightgreen
+    package editor #lightgreen
+    package perspective #lightgreen
+    package presentation #lightgreen
 }
 component WRIMS_Core as "WRIMS-Core" #orange
 
@@ -36,6 +39,41 @@ view -> dialog
 view -> exception
 view -> listener
 view -u-> model
+
+editor -> core
+editor -> exception
+editor -> model
+editor -> breakpoint
+
+perspective -> core
+
+batchrun -> core
+batchrun -> tools #blue
+batchrun -> exception
+batchrun -> dialog
+batchrun -> msr
+batchrun -> pa
+
+presentation -> model
+presentation -> core
+presentation -> exception
+presentation -> breakpoint
+
+reporttool -> exception
+reporttool -> tools #blue
+
+sensitivity -> exception
+sensitivity -> tools #blue
+sensitivity -> core
+
+tools -> core
+tools -> exception
+tools -> model
+tools -> WRIMS_Core #blue
+
+calsimhydro -> core
+calsimhydro -> exception
+calsimhydro -> tools #blue
 
 toolbaritem -> exception
 toolbaritem -u-> view
