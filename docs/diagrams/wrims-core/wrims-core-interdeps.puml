@@ -15,7 +15,7 @@ component wrims_core as "WRIMS-Core" {
         package config
         package debug
         package evaluator
-        package exception
+        package exception #pink
         package external
         package hdf5
         package ilp
@@ -201,6 +201,7 @@ wreslplus.elements -> config
 
 ' The following relationships are hidden and used to format the diagram. They do not represent actual dependencies.
 solver -d[hidden]-> commondata
+tf -d[hidden]-> exception
 
 footer "orange components are modules located outside of the wrimsv2 package \n pink components do not rely on other packages within WRIMS-Core"
 
