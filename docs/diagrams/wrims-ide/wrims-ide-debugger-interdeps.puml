@@ -1,0 +1,165 @@
+@startuml
+left to right direction
+skinparam linetype ortho
+
+component WRIMS-IDE {
+    package debugger {
+        package breakpoint
+        package commanditem
+        package console
+        package core
+        package dialog
+        package exception
+        package goal
+        package launcher
+        package listener
+        package menuitem
+        package model
+        package msr
+        package pa
+        package sourcelookup
+        package toolbaritem
+        package ui #pink
+        package view
+    }
+    package tools #lightgreen
+    package batchrun #lightgreen
+    package sensitivity #lightgreen
+    package calsimhydro #lightgreen
+    package reporttool #lightgreen
+    package editor #lightgreen
+    package perspective #lightgreen
+    package presentation #lightgreen
+}
+component WRIMS_Core as "WRIMS-Core" #orange
+
+view -down-> tools #blue
+view -down-> core
+view -> dialog
+view -> exception
+view -> listener
+view -u-> model
+
+editor -> core
+editor -> exception
+editor -> model
+editor -> breakpoint
+
+perspective -> core
+
+batchrun -> core
+batchrun -> tools #blue
+batchrun -> exception
+batchrun -> dialog
+batchrun -> msr
+batchrun -> pa
+
+presentation -> model
+presentation -> core
+presentation -> exception
+presentation -> breakpoint
+
+reporttool -> exception
+reporttool -> tools #blue
+
+sensitivity -> exception
+sensitivity -> tools #blue
+sensitivity -> core
+
+tools -> core
+tools -> exception
+tools -> model
+tools -> WRIMS_Core #blue
+
+calsimhydro -> core
+calsimhydro -> exception
+calsimhydro -> tools #blue
+
+toolbaritem -> exception
+toolbaritem -u-> view
+toolbaritem -> core
+toolbaritem -> dialog
+toolbaritem -> menuitem
+
+sourcelookup -> model
+sourcelookup -> core
+
+pa -down-> tools #blue
+pa -down-> batchrun #blue
+pa -u-> core
+pa -> exception
+
+msr -> tools #blue
+msr -> core
+msr -> exception
+
+model -l-> tools #blue
+model -r-> core
+model -> view
+model -> breakpoint
+model -> exception
+model -> menuitem
+model -> toolbaritem
+
+menuitem -> dialog
+menuitem -> core
+menuitem -> exception
+menuitem -> toolbaritem
+
+listener -> core
+
+launcher -down-> sensitivity #blue
+launcher -down-> calsimhydro #blue
+launcher -> tools #blue
+launcher -> core
+launcher -> exception
+launcher -> dialog
+launcher -> menuitem
+launcher -> toolbaritem
+launcher -> model
+launcher -> msr
+launcher -> pa
+
+exception -> core
+exception -> view
+
+dialog -> batchrun #blue
+dialog -> tools #blue
+dialog -down-> reporttool #blue
+dialog -down-> WRIMS_Core #blue
+dialog -> core
+dialog -> exception
+dialog -> model
+dialog -> view
+dialog -> goal
+dialog -> listener
+dialog -> launcher
+dialog -> menuitem
+dialog -> toolbaritem
+
+core -> tools #blue
+core -> calsimhydro #blue
+core -> model
+core -> toolbaritem
+core -> exception
+core -> menuitem
+core -> listener
+
+console -> toolbaritem
+console --> core
+console -> exception
+
+commanditem -down-> WRIMS_Core #blue
+commanditem -> tools #blue
+commanditem -> core
+commanditem -> dialog
+commanditem -> exception
+commanditem -> model
+commanditem -> view
+
+breakpoint -> core
+breakpoint -> exception
+breakpoint -> model
+
+footer "green components indicate modules outside the the debugger package \n blue lines represent dependencies outside the debugger package \n pink components represent unused modules \n orange components represent modules that are outside of WRIMS-IDE"
+@enduml
