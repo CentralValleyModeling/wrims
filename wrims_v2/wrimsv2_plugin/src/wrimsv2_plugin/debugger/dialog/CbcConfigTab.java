@@ -40,16 +40,16 @@ import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
 
 
-public class ConfigTab extends TabItem {
+public class CbcConfigTab extends TabItem {
 
-	private static String configPrefFile="config.prf";
+	private static String configPrefFile="Cbc_config.prf";
 	private Table configTable;
 	private ArrayList<String> configList=new ArrayList<String>();
 	private Map<String, String[]> configMap=new HashMap<String, String[]>();
 	private Combo valueCombo;
 	private Combo configCombo;
 	
-	public ConfigTab(TabFolder parent, int style) {
+	public CbcConfigTab(TabFolder parent, int style) {
 		super(parent, style);
 		
 		prepComboData();
@@ -279,7 +279,7 @@ public class ConfigTab extends TabItem {
 			TableItem[] tis = configTable.getItems();
 			for (int i=0; i<tis.length; i++){
 				TableItem ti = tis[i];
-				out.println(ti.getText(0)+"\t"+ti.getText(1));
+				out.println(ti.getText(0)+":\t"+ti.getText(1));
 			}
 			out.close();
 			fw.close();

@@ -2,18 +2,13 @@ package wrimsv2.solver.Gurobi;
 
 import com.gurobi.gurobi.*;
 
-import com.gurobi.gurobi.GRB;
-import com.gurobi.gurobi.GRBConstr;
-import com.gurobi.gurobi.GRBEnv;
-import com.gurobi.gurobi.GRBException;
-import com.gurobi.gurobi.GRBLinExpr;
-import com.gurobi.gurobi.GRBModel;
-import com.gurobi.gurobi.GRBVar;
-
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -50,6 +45,7 @@ import wrimsv2.evaluator.DssOperation;
 import wrimsv2.evaluator.EvalConstraint;
 import wrimsv2.evaluator.EvaluatorLexer;
 import wrimsv2.evaluator.EvaluatorParser;
+import wrimsv2.solver.CbcSolver;
 
 public class GurobiSolver {
 	
@@ -60,6 +56,8 @@ public class GurobiSolver {
 	
 	Map<String, GRBVar> varMap = new HashMap <String, GRBVar> ();
 	
+	private static String configPrefFile="Gurobi_config.prf";
+	
 	public static void initialize(){
 		
 		//System.loadLibrary("gurobi110");
@@ -68,10 +66,12 @@ public class GurobiSolver {
 	    try {
 	    	//env   = new GRBEnv("TestGurobi.log");
 	    	env   = new GRBEnv();
-	    	env.set(GRB.IntParam.LogToConsole, 0);
+	    	//env.set("GRB.IntParam.LogToConsole", "0");
 	    	//This sets the parameter values to the ENV, if only specific models are desired, set them below
-	    	env.set(GRB.DoubleParam.FeasibilityTol, 1e-9);
-	    	env.set(GRB.DoubleParam.IntFeasTol, 1e-9);
+	    	//env.set("GRB.DoubleParam.FeasibilityTol", "1e-9");
+	    	//env.set("GRB.DoubleParam.IntFeasTol", "1e-9");
+	    	
+	    	setParameters();
 	    	
 	    	String GurobiParFilePath = new File(FilePaths.mainDirectory, "GurobiParams.prm").getAbsolutePath();
 	    	env.writeParams(GurobiParFilePath);
@@ -423,10 +423,36 @@ public class GurobiSolver {
 		
 		System.out.println("Obj: " + model.get(GRB.DoubleAttr.ObjVal));
 	}
+	
 	public static void addConditionalSlackSurplusToDvarMap(Map<String, Dvar> dvarMap, String multName){
 		Dvar dvar=new Dvar();
 		dvar.upperBoundValue=1.0e23;
 		dvar.lowerBoundValue=0.0;
 		dvarMap.put(multName, dvar);
+	}
+	
+	public static void setParameters(){
+		try {
+			String w2dir = System.getenv("temp_wrims2");
+			String dataDir = new File(w2dir).getCanonicalPath()+"\\data";
+			File file = new File(dataDir, configPrefFile);
+			if (file.exists()){
+				FileInputStream fs = new FileInputStream(file.getAbsolutePath());
+				BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+			    String line = br.readLine();
+			    while (line !=null){
+			    	line.replace(" ", "");
+			    	String[] parts = line.split(":");
+			    	if (parts.length>=2){
+			    		String pn=parts[0].trim();
+			    		String pv=parts[1].trim();
+			    		env.set(pn, pv);
+			    	}
+			    	line=br.readLine();
+			    }
+				br.close();
+			}
+		}catch(Exception e){		
+		}
 	}
 }

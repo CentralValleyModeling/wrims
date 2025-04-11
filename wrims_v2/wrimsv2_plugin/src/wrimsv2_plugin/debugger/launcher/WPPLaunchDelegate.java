@@ -45,7 +45,8 @@ import org.eclipse.ui.internal.Workbench;
 import wrimsv2_plugin.calsimhydro.CalSimHydro;
 import wrimsv2_plugin.debugger.core.CBCSetting;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
-import wrimsv2_plugin.debugger.dialog.ConfigTab;
+import wrimsv2_plugin.debugger.dialog.CbcConfigTab;
+import wrimsv2_plugin.debugger.dialog.GurobiConfigTab;
 import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
 import wrimsv2_plugin.debugger.msr.MSRDataTransfer;
@@ -859,7 +860,8 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			}
 			*/
 			
-			ConfigTab.writeConfigSetting(out);
+			CbcConfigTab.writeConfigSetting(out);
+			GurobiConfigTab.writeConfigSetting(out);
 			
 			out.close();
 		

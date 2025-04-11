@@ -80,7 +80,8 @@ public class WPPOptionDialog extends Dialog {
 	private double vcbcHintRelaxPenalty;
 	private double vcbcHintTimeMax;
 	private int prevSel;
-	private ConfigTab configTab;
+	private CbcConfigTab cbcConfigTab;
+	private GurobiConfigTab gurobiConfigTab;
 
 	public WPPOptionDialog(Shell parent) {
 		super(parent, SWT.MIN|SWT.RESIZE);
@@ -124,8 +125,11 @@ public class WPPOptionDialog extends Dialog {
 	    ifsTab.setText("Infeasibility Analysis");
 	    createInfeasibleTab(tabFolder, ifsTab);
 	    
-	    configTab = new ConfigTab(tabFolder, SWT.BORDER);
-	    configTab.setText("Configurations");
+	    cbcConfigTab = new CbcConfigTab(tabFolder, SWT.BORDER);
+	    cbcConfigTab.setText("Cbc Configurations");
+	    
+	    gurobiConfigTab = new GurobiConfigTab(tabFolder, SWT.BORDER);
+	    gurobiConfigTab.setText("Gurobi Configurations");
 	    
 	    tabFolder.setSize(600, 350);
 	    tabFolder.setLayoutData(gridData);
@@ -213,7 +217,8 @@ public class WPPOptionDialog extends Dialog {
 					}
 				}
 				showSolverStatus();
-				configTab.saveConfigPref();
+				cbcConfigTab.saveConfigPref();
+				gurobiConfigTab.saveConfigPref();
 				shell.close();
 			}
 		});
