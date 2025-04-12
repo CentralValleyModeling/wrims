@@ -1,0 +1,53 @@
+@startuml
+left to right direction
+skinparam linetype ortho
+
+rectangle wrims_core as "WRIMS-Core" #orange {
+    package wrimsv2 {
+        component commondata #lightgreen {
+            package wrimsv2.commondata{
+                package tabledata
+                package solverdata
+                package wresldata
+            }
+        }
+        package debug
+        package evaluator
+        package parallel
+        package components
+        package hdf5
+        package ilp
+        package solver
+        package tools
+
+    }
+}
+package main #orange
+
+wresldata --> parallel
+debug --> wresldata
+solverdata -l-> wresldata
+evaluator --> solverdata
+solverdata -r-> evaluator
+wresldata --> evaluator
+evaluator --> wresldata
+wresldata --> components
+components --> wresldata
+hdf5 -d-> solverdata
+hdf5 -d-> wresldata
+ilp --> solverdata
+ilp --> wresldata
+solver --> wresldata
+solver --> solverdata
+tools --> wresldata
+tools --> solverdata
+main --> wresldata
+
+' The following relationships are hidden and used to format the diagram. They do not represent actual dependencies.
+' solverdata -l[hidden]-> wresldata
+components -l[hidden] wrimsv2.commondata
+evaluator -d[hidden]-> tabledata
+evaluator -l[hidden]-> wrimsv2.commondata
+
+footer "green components indicate the primary module being represented \n orange components indicate key local modules"
+@enduml
