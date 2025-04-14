@@ -71,6 +71,7 @@ public class GurobiSolver {
 	    	//env.set("GRB.DoubleParam.FeasibilityTol", "1e-9");
 	    	//env.set("GRB.DoubleParam.IntFeasTol", "1e-9");
 	    	
+	    	setDefaultParameters();
 	    	setParameters();
 	    	
 	    	String GurobiParFilePath = new File(FilePaths.mainDirectory, "GurobiParams.prm").getAbsolutePath();
@@ -454,5 +455,11 @@ public class GurobiSolver {
 			}
 		}catch(Exception e){		
 		}
+	}
+	
+	public static void setDefaultParameters() throws GRBException{
+    	env.set("GRB.IntParam.LogToConsole", "0");
+    	env.set("GRB.DoubleParam.FeasibilityTol", "1e-9");
+    	env.set("GRB.DoubleParam.IntFeasTol", "1e-9");
 	}
 }
