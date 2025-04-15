@@ -21,8 +21,8 @@ rectangle wrims_core as "WRIMS-Core" #orange {
         package tools
 
     }
+package main
 }
-package main #orange
 
 wresldata --> parallel
 debug --> wresldata

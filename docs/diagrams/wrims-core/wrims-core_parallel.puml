@@ -1,0 +1,36 @@
+@startuml
+left to right direction
+skinparam linetype ortho
+
+rectangle wrims_core as "WRIMS-Core" #orange {
+        package wrimsv2{
+            package parallel {
+                component parallel #lightgreen {
+                    package wrimsv2.parallel
+                }
+            }
+        package commondata
+        package components
+        package evaluator
+        package tools
+
+        package hdf5
+
+    }
+}
+
+parallel -->  evaluator
+evaluator --> parallel
+parallel -->  commondata
+commondata --> parallel
+parallel -->  components
+components --> parallel
+
+hdf5 --> parallel
+parallel -->  tools
+
+' The following relationships are hidden and used to format the diagram. They do not represent actual dependencies.
+'debug -r[hidden]-> evaluator
+
+footer "green components indicate the primary module being represented \n orange components indicate key local modules"
+@enduml

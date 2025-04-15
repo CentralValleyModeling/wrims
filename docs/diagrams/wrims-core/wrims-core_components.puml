@@ -20,8 +20,8 @@ rectangle wrims_core as "WRIMS-Core" #orange {
         package ilp
         package launch
     }
+package main
 }
-package main #orange
 
 components --> commondata
 commondata --> components

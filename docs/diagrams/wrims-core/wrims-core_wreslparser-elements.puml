@@ -1,0 +1,55 @@
+@startuml
+left to right direction
+skinparam linetype ortho
+
+rectangle wrims_core as "WRIMS-Core" #orange {
+        package wrimsv2{
+            package wreslparser.elements {
+                component wreslparser.elements #lightgreen {
+                    package wrimsv2.wreslparser.elements
+                }
+            }
+        package commondata
+        package components
+        package evaluator
+        package solver
+        package tools
+        package sql
+        package wreslparser.grammar
+        package wreslplus.elements
+
+        package config
+        package debug
+        package hdf5
+        package ilp
+        package launch
+    }
+package main
+}
+
+wreslparser.elements -l->  components
+components -->  wreslparser.elements
+wreslparser.elements -l->  solver
+solver -->  wreslparser.elements
+wreslparser.elements -l->  tools
+tools -->  wreslparser.elements
+wreslparser.elements -l->  wreslplus.elements
+wreslplus.elements -->  wreslparser.elements
+
+wreslparser.elements -r->  commondata
+wreslparser.elements -r->  evaluator
+wreslparser.elements -r->  sql
+wreslparser.elements -r->  wreslparser.grammar
+
+config -->  wreslparser.elements
+debug -->  wreslparser.elements
+hdf5 -->  wreslparser.elements
+ilp -->  wreslparser.elements
+launch -->  wreslparser.elements
+main --> wreslparser.elements
+
+' The following relationships are hidden and used to format the diagram. They do not represent actual dependencies.
+'debug -r[hidden]-> evaluator
+
+footer "green components indicate the primary module being represented \n orange components indicate key local modules"
+@enduml
