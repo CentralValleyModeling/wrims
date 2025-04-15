@@ -19,15 +19,15 @@ rectangle wrims_core as "WRIMS-Core" #orange {
     }
 }
 
-parallel -->  evaluator
-evaluator --> parallel
-parallel -->  commondata
-commondata --> parallel
-parallel -->  components
-components --> parallel
+parallel -->  evaluator #blue
+evaluator --> parallel #grey
+parallel -->  commondata #blue
+commondata --> parallel #grey
+parallel -->  components #blue
+components --> parallel #grey
 
-hdf5 --> parallel
-parallel -->  tools
+hdf5 --> parallel #grey
+parallel -->  tools #blue
 
 ' The following relationships are hidden and used to format the diagram. They do not represent actual dependencies.
 'debug -r[hidden]-> evaluator

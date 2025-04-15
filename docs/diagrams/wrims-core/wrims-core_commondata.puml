@@ -24,24 +24,24 @@ rectangle wrims_core as "WRIMS-Core" #orange {
 package main
 }
 
-wresldata --> parallel
-debug --> wresldata
-solverdata -l-> wresldata
-evaluator --> solverdata
-solverdata -r-> evaluator
-wresldata --> evaluator
-evaluator --> wresldata
-wresldata --> components
-components --> wresldata
-hdf5 -d-> solverdata
-hdf5 -d-> wresldata
-ilp --> solverdata
-ilp --> wresldata
-solver --> wresldata
-solver --> solverdata
-tools --> wresldata
-tools --> solverdata
-main --> wresldata
+wresldata --> parallel #blue
+debug --> wresldata #grey
+solverdata -l-> wresldata #blue
+evaluator --> solverdata #grey
+solverdata -r-> evaluator #blue
+wresldata --> evaluator #blue
+evaluator --> wresldata #grey
+wresldata --> components #blue
+components --> wresldata #grey
+hdf5 -d-> solverdata #grey
+hdf5 -d-> wresldata #grey
+ilp --> solverdata #grey
+ilp --> wresldata #grey
+solver --> wresldata #grey
+solver --> solverdata #grey
+tools --> wresldata #grey
+tools --> solverdata #grey
+main --> wresldata #grey
 
 ' The following relationships are hidden and used to format the diagram. They do not represent actual dependencies.
 ' solverdata -l[hidden]-> wresldata

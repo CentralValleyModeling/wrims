@@ -29,27 +29,27 @@ rectangle wrims_core as "WRIMS-Core" #orange {
 package main
 }
 
-evaluator --> components
-components --> evaluator
-evaluator --> hdf5
-hdf5 --> evaluator
-evaluator --> ilp
-ilp --> evaluator
-evaluator --> solver
-solver -left-> evaluator
-evaluator --> tools
-tools --> evaluator
+evaluator --> components #blue
+components --> evaluator #grey
+evaluator --> hdf5 #blue
+hdf5 --> evaluator  #grey
+evaluator --> ilp #blue
+ilp --> evaluator  #grey
+evaluator --> solver #blue
+solver -left-> evaluator  #grey
+evaluator --> tools #blue
+tools --> evaluator  #grey
 
-evaluator --> external
-evaluator --> parallel
-evaluator --> solverdata
-evaluator --> wresldata
+evaluator --> external #blue
+evaluator --> parallel #blue
+evaluator --> solverdata #blue
+evaluator --> wresldata #blue
 
-config --> evaluator
-debug --> evaluator
-launch --> evaluator
-sql --> evaluator
-main -l-> evaluator
+config --> evaluator  #grey
+debug --> evaluator  #grey
+launch --> evaluator  #grey
+sql --> evaluator  #grey
+main -l-> evaluator  #grey
 
 ' The following relationships are hidden and used to format the diagram. They do not represent actual dependencies.
 components -up[hidden]-> ilp

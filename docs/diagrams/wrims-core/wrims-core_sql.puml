@@ -21,16 +21,16 @@ rectangle wrims_core as "WRIMS-Core" #orange {
         package elements
 }
 
-sql -->  components
-components --> sql
+sql -->  components #blue
+components --> sql #grey
 
-sql -->  evaluator
-sql --> hdf5
-sql --> tools
-sql -r->  wreslparser.elements
+sql -->  evaluator #blue
+sql --> hdf5 #blue
+sql --> tools #blue
+sql -r->  wreslparser.elements #blue
 
-elements --> sql
-hdf5 --> sql
+elements --> sql #grey
+hdf5 --> sql #grey
 
 ' The following relationships are hidden and used to format the diagram. They do not represent actual dependencies.
 'debug -r[hidden]-> evaluator

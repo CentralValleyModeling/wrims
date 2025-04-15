@@ -17,13 +17,13 @@ rectangle wrims_core as "WRIMS-Core" #orange {
     package wreslparser.elements
 }
 
-debug -->  components
-components -->  debug
-debug -->  commondata
-debug -->  evaluator
-debug -->  external
-debug -->  solver
-debug -->  wreslparser.elements
+debug -->  components #blue
+components -->  debug #grey
+debug -->  commondata #blue
+debug -->  evaluator #blue
+debug -->  external #blue
+debug -->  solver #blue
+debug -->  wreslparser.elements #blue
 
 ' The following relationships are hidden and used to format the diagram. They do not represent actual dependencies.
 'debug -r[hidden]-> evaluator

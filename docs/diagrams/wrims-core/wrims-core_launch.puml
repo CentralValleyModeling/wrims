@@ -19,16 +19,16 @@ rectangle wrims_core as "WRIMS-Core" #orange {
     }
 }
 
-launch -->  components
-components --> launch
+launch -->  components #blue
+components --> launch #grey
 
-launch -left->  evaluator
-launch -left->  ilp
-launch -left->  solver
+launch -left->  evaluator #blue
+launch -left->  ilp #blue
+launch -left->  solver #blue
 
-launch -r->  wreslparser.elements
+launch -r->  wreslparser.elements #blue
 
-hdf5 --> launch
+hdf5 --> launch #grey
 
 ' The following relationships are hidden and used to format the diagram. They do not represent actual dependencies.
 'debug -r[hidden]-> evaluator

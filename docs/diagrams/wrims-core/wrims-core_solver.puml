@@ -30,22 +30,22 @@ rectangle wrims_core as "WRIMS-Core" #orange {
     }
 }
 
-solver -left->  components
-components -left-> solver
-solver -left->  evaluator
-evaluator --> solver
-solver -left->  ilp
-ilp --> solver
-solver -left->  tools
-tools --> solver
-solver -left->  wreslparser.elements
-wreslparser.elements --> solver
+solver -left->  components #blue
+components -left-> solver #grey
+solver -left->  evaluator #blue
+evaluator --> solver #grey
+solver -left->  ilp #blue
+ilp --> solver #grey
+solver -left->  tools #blue
+tools --> solver #grey
+solver -left->  wreslparser.elements #blue
+wreslparser.elements --> solver #grey
 
-solver -left->  commondata
+solver -left->  commondata #blue
 
-config --> solver
-debug --> solver
-launch --> solver
+config --> solver #grey
+debug --> solver #grey
+launch --> solver #grey
 
 ' The following relationships are hidden and used to format the diagram. They do not represent actual dependencies.
 'debug -r[hidden]-> evaluator

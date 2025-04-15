@@ -27,26 +27,26 @@ rectangle wrims_core as "WRIMS-Core" #orange {
 package main
 }
 
-wreslparser.elements -l->  components
-components -->  wreslparser.elements
-wreslparser.elements -l->  solver
-solver -->  wreslparser.elements
-wreslparser.elements -l->  tools
-tools -->  wreslparser.elements
-wreslparser.elements -l->  wreslplus.elements
-wreslplus.elements -->  wreslparser.elements
+wreslparser.elements -l->  components #blue
+components -->  wreslparser.elements #grey
+wreslparser.elements -l->  solver #blue
+solver -->  wreslparser.elements #grey
+wreslparser.elements -l->  tools #blue
+tools -->  wreslparser.elements #grey
+wreslparser.elements -l->  wreslplus.elements #blue
+wreslplus.elements -->  wreslparser.elements #grey
 
-wreslparser.elements -r->  commondata
-wreslparser.elements -r->  evaluator
-wreslparser.elements -r->  sql
-wreslparser.elements -r->  wreslparser.grammar
+wreslparser.elements -r->  commondata #blue
+wreslparser.elements -r->  evaluator #blue
+wreslparser.elements -r->  sql #blue
+wreslparser.elements -r->  wreslparser.grammar #blue
 
-config -->  wreslparser.elements
-debug -->  wreslparser.elements
-hdf5 -->  wreslparser.elements
-ilp -->  wreslparser.elements
-launch -->  wreslparser.elements
-main --> wreslparser.elements
+config -->  wreslparser.elements #grey
+debug -->  wreslparser.elements #grey
+hdf5 -->  wreslparser.elements #grey
+ilp -->  wreslparser.elements #grey
+launch -->  wreslparser.elements #grey
+main --> wreslparser.elements #grey
 
 ' The following relationships are hidden and used to format the diagram. They do not represent actual dependencies.
 'debug -r[hidden]-> evaluator

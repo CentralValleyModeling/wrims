@@ -23,21 +23,21 @@ package main
 package serial
 }
 
-wreslplus.elements -l->  components
-components -->  wreslplus.elements
-wreslplus.elements -l->  wreslparser.elements
-wreslparser.elements -->  wreslplus.elements
+wreslplus.elements -l->  components #blue
+components -->  wreslplus.elements #grey
+wreslplus.elements -l->  wreslparser.elements #blue
+wreslparser.elements -->  wreslplus.elements #grey
 
-wreslplus.elements -r->  commondata
-wreslplus.elements -r->  evaluator
-wreslplus.elements -r->  wreslparser.grammar
+wreslplus.elements -r->  commondata #blue
+wreslplus.elements -r->  evaluator #blue
+wreslplus.elements -r->  wreslparser.grammar #blue
 
-config -->  wreslplus.elements
-solver -->  wreslplus.elements
-tools -->  wreslplus.elements
+config -->  wreslplus.elements #grey
+solver -->  wreslplus.elements #grey
+tools -->  wreslplus.elements #grey
 
-main -u-> wreslplus.elements
-serial -u-> wreslplus.elements
+main -u-> wreslplus.elements #grey
+serial -u-> wreslplus.elements #grey
 
 ' The following relationships are hidden and used to format the diagram. They do not represent actual dependencies.
 wreslparser.elements -u[hidden]-> tools

@@ -23,47 +23,47 @@ rectangle wrims_core as "WRIMS-Core" #orange {
 package main
 }
 
-components --> commondata
-commondata --> components
+components --> commondata #blue
+commondata --> components #grey
 
-components --> config
-config --> components
+components --> config #blue
+config --> components #grey
 
-components --> debug
-debug --> components
+components --> debug #blue
+debug --> components #grey
 
-components --> evaluator
-evaluator --> components
+components --> evaluator #blue
+evaluator --> components #grey
 
-components --> external
-external --> components
+components --> external #blue
+external --> components #grey
 
-components --> hdf5
-hdf5 --> components
+components --> hdf5 #blue
+hdf5 --> components #grey
 
-components --> ilp
-ilp --> components
+components --> ilp #blue
+ilp --> components #grey
 
-components --> launch
-launch --> components
+components --> launch #blue
+launch --> components #grey
 
-components --> solver
-solver --> components
+components --> solver #blue
+solver --> components #grey
 
-components --> sql
-sql --> components
+components --> sql #blue
+sql --> components #grey
 
-components --> tools
-tools --> components
+components --> tools #blue
+tools --> components #grey
 
-components --> wreslparser.elements
-wreslparser.elements --> components
+components --> wreslparser.elements #blue
+wreslparser.elements --> components #grey
 
-components --> wreslplus.elements
-wreslplus.elements --> components
+components --> wreslplus.elements #blue
+wreslplus.elements --> components #grey
 
 
-main -right-> components
+main -right-> components #grey
 
 
 ' The following relationships are hidden and used to format the diagram. They do not represent actual dependencies.
