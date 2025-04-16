@@ -23,6 +23,7 @@ def versionLabel(gitInfo) {
 
 allprojects {
     group = 'gov.ca.dwr'
-    version = versionLabel(versionDetails())
-//    version = "20250101"
+    //version = versionLabel(versionDetails())
+    
+	version = "2.2.0"
 }
