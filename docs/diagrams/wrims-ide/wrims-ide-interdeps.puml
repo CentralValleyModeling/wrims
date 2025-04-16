@@ -1,0 +1,40 @@
+@startuml
+left to right direction
+skinparam linetype ortho
+
+component WRIMS_IDE as "WRIMS-IDE" {
+    package debugger
+    package sensitivity
+    package tools
+    package reporttool
+    package batchrun
+    package calsimhydro
+    package editor
+    package perspective
+    package presentation
+}
+
+sensitivity -> tools
+sensitivity -> debugger
+
+calsimhydro --> debugger
+
+batchrun -> tools
+batchrun --> debugger
+
+reporttool -> tools
+reporttool -> debugger
+
+debugger -> sensitivity
+debugger -> batchrun
+debugger -> calsimhydro
+debugger -> reporttool
+debugger -> tools
+
+tools --> debugger
+
+editor -d-> debugger
+perspective -> debugger
+presentation -u-> debugger
+
+@enduml

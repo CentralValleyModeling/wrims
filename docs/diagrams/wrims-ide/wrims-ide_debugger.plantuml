@@ -1,0 +1,70 @@
+@startuml
+
+!theme plain
+left to right direction
+skinparam linetype ortho
+
+rectangle wrims-ide as "WRIMS IDE" #orange {
+    component debugger #lightgreen {
+        package wrimsv2_plugin.debugger
+    }
+    component tools {
+        package wrimsv2_plugin.tools
+    }
+    component batchrun {
+        package wrimsv2_plugin.batchrun
+    }
+    component calsimhydro {
+        package wrimsv2_plugin.calsimhydro
+    }
+    component reporttool {
+        package wrimsv2_plugin.reporttool
+    }
+    component sensitivity {
+        package wrimsv2_plugin.sensitivity
+    }
+}
+
+rectangle wrims_core as "WRIMS Core" #orange {
+    package wrimsv2.commondata.wresldata
+    package wrimsv2.debug
+    package wrimsv2.components
+}
+
+rectangle third-party as "Third Party" #orange {
+    package org.osgi
+    component javaHeclib {
+        package hec.heclib.dss
+    }
+    component hec.monolith as "hec-monolith" {
+        package hec.io
+        package hec.hecmath
+        package hec.gfx2d
+    }
+    component vista.jar #lightblue
+    component commons_io as "commons-io" {
+        package org.apache.commons.io
+    }
+}
+
+component luna_libs as "directory '../eclipse-luna-libs'" #orange
+
+debugger -> luna_libs
+debugger -up-> wrimsv2_plugin.tools
+debugger -> wrimsv2_plugin.batchrun
+debugger -> wrimsv2.commondata.wresldata
+debugger -> wrimsv2.debug
+debugger -right-> org.osgi
+debugger -down-> hec.heclib.dss
+debugger -up-> wrimsv2_plugin.calsimhydro
+debugger -down-> hec.io
+debugger -down-> vista.jar
+debugger -down-> org.apache.commons.io
+debugger -down-> wrimsv2.components
+debugger -down-> hec.hecmath
+debugger -right-> wrimsv2_plugin.reporttool
+debugger -down-> wrimsv2_plugin.sensitivity
+debugger -down-> hec.gfx2d
+
+footer "green components indicate the primary module being represented \n orange components indicate key local modules \n blue components indicate locally-stored third-party jars"
+@enduml

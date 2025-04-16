@@ -1,0 +1,56 @@
+@startuml
+
+!theme plain
+left to right direction
+skinparam linetype ortho
+
+rectangle wrims-ide as "WRIMS IDE" #orange {
+    component reporttool #lightgreen {
+        package wrimsv2_plugin.reporttool
+    }
+    component tools {
+        package wrimsv2_plugin.tools
+    }
+    component debugger {
+        package wrimsv2_plugin.debugger
+    }
+}
+
+rectangle third-party as "Third Party" #orange {
+    component javaHeclib {
+        package hec.heclib.dss
+        package hec.heclib.util
+    }
+    component hec.monolith as "hec-monolith" {
+        package hec.io
+        package hec.hecmath
+        package hec.gfx2d
+        package hec.data
+    }
+    component dsm2 as "dsm2-input-model.jar" #lightblue {
+        package gov.ca.dsm2.input
+    }
+    component jfreechart {
+        package org.jfree
+    }
+    component iText #lightblue {
+        package com.lowagie
+    }
+}
+
+component luna_libs as "directory '../eclipse-luna-libs'" #orange
+
+reporttool -> luna_libs
+reporttool -down-> hec.data
+reporttool -down-> hec.heclib.dss
+reporttool -down-> hec.heclib.util
+reporttool -down-> hec.io
+reporttool --> hec.hecmath
+reporttool -down-> wrimsv2_plugin.debugger
+reporttool -up-> wrimsv2_plugin.tools
+reporttool -down-> gov.ca.dsm2.input
+reporttool -down-> org.jfree
+reporttool -down-> com.lowagie
+
+footer "green components indicate the primary module being represented \n orange components indicate key local modules \n blue components indicate locally-stored third-party jars"
+@enduml
