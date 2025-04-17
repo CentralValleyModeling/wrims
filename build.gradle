@@ -52,7 +52,7 @@ subprojects {
             mainClass = 'org.jboss.tattletale.Main'
 
             args = [
-                    "${layout.buildDirectory.asFile.get()}/tmp/libs",
+                    "${layout.buildDirectory.asFile.get()}/tmp/libs#${layout.buildDirectory.asFile.get()}/libs",
                     "${layout.buildDirectory.asFile.get()}/reports/tattletale"
             ]
         }
