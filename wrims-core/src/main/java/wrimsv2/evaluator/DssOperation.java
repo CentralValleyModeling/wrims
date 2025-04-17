@@ -592,70 +592,70 @@ public class DssOperation {
 				Timeseries ts=allTsMap.get(initName);
 				units = ts.units;
 				ctu=ts.convertToUnits;
-			}
-			ArrayList<Double> values=dds.getData();
-			TimeSeriesContainer dc = new TimeSeriesContainer();
-			//DSSData dd = new DSSData();
-			//dd._dataType=DSSUtil.REGULAR_TIME_SERIES;
-			dc.type="PER-AVER";
-			int size=values.size();
-			dc.numberValues=size;
-			dc.units=dds.getUnits().toUpperCase();
-			dc.values=new double[size];
-			Date startDate=dds.getStartTime();
-			Calendar startCalendar=Calendar.getInstance();
-			Date startDate1 = new Date(startDate.getYear(), startDate.getMonth(), startDate.getDate(), 24, 0);
-			startCalendar.setTime(startDate1);
-			dc.setStartTime(new HecTime(startCalendar));
-			//startDate.setTime(startDate.getTime()-1*24*60*60);
-			int year=startDate.getYear()+1900;
-			int month=startDate.getMonth()+1;
-			int day=startDate.getDate();
-			//String startDateStr=TimeOperation.dssTimeEndDay(year, month, day);
-			//long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
-			if (units.equals("taf") && ctu.equals("cfs")){
-				for (int i=0; i<size; i++){
-					Double value=values.get(i);
-					if (value == null){
-						dc.values[i]=-901.0;
-					}else{
-						if (value == -901.0 || value == -902.0){
-							dc.values[i]=value;
+				ArrayList<Double> values=dds.getData();
+				TimeSeriesContainer dc = new TimeSeriesContainer();
+				//DSSData dd = new DSSData();
+				//dd._dataType=DSSUtil.REGULAR_TIME_SERIES;
+				dc.type="PER-AVER";
+				int size=values.size();
+				dc.numberValues=size;
+				dc.units=dds.getUnits().toUpperCase();
+				dc.values=new double[size];
+				Date startDate=dds.getStartTime();
+				Calendar startCalendar=Calendar.getInstance();
+				Date startDate1 = new Date(startDate.getYear(), startDate.getMonth(), startDate.getDate(), 24, 0);
+				startCalendar.setTime(startDate1);
+				dc.setStartTime(new HecTime(startCalendar));
+				//startDate.setTime(startDate.getTime()-1*24*60*60);
+				int year=startDate.getYear()+1900;
+				int month=startDate.getMonth()+1;
+				int day=startDate.getDate();
+				//String startDateStr=TimeOperation.dssTimeEndDay(year, month, day);
+				//long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
+				if (units.equals("taf") && ctu.equals("cfs")){
+					for (int i=0; i<size; i++){
+						Double value=values.get(i);
+						if (value == null){
+							dc.values[i]=-901.0;
 						}else{
-							ParallelVars prvs=TimeOperation.findTime(i, year, month, day);
-							dc.values[i]=value/Evaluation.tafcfs("taf_cfs", prvs);
+							if (value == -901.0 || value == -902.0){
+								dc.values[i]=value;
+							}else{
+								ParallelVars prvs=TimeOperation.findTime(i, year, month, day);
+								dc.values[i]=value/Evaluation.tafcfs("taf_cfs", prvs);
+							}
 						}
 					}
-				}
-			}else if (units.equals("cfs") && ctu.equals("taf")){
-				for (int i=0; i<size; i++){
-					Double value=values.get(i);
-					if (value == null){
-						dc.values[i]=-901.0;
-					}else{
-						if (value == -901.0 || value == -902.0){
-							dc.values[i]=value;
+				}else if (units.equals("cfs") && ctu.equals("taf")){
+					for (int i=0; i<size; i++){
+						Double value=values.get(i);
+						if (value == null){
+							dc.values[i]=-901.0;
 						}else{
-							ParallelVars prvs=TimeOperation.findTime(i, year, month, day);
-							dc.values[i]=value/Evaluation.tafcfs("cfs_taf", prvs);
+							if (value == -901.0 || value == -902.0){
+								dc.values[i]=value;
+							}else{
+								ParallelVars prvs=TimeOperation.findTime(i, year, month, day);
+								dc.values[i]=value/Evaluation.tafcfs("cfs_taf", prvs);
+							}
 						}
 					}
+				}else{
+					for (int i=0; i<size; i++){
+						Double value=values.get(i);
+						dc.values[i]=value;
+					}
 				}
-			}else{
-				for (int i=0; i<size; i++){
-					Double value=values.get(i);
-					dc.values[i]=value;
+				//boolean storeFlags = false;
+				dc.setName("/"+ControlData.partA+"/"+ts.dssBPart+"/"+dds.getKind()+"//"+dds.getTimeStep()+"/"+ControlData.initPartF+"/");
+				dc.setStoreAsDoubles(true);
+				try {
+					dss.put(dc);
+				} catch (Exception e) {
+					//e.printStackTrace();
 				}
+				//writer.storeTimeSeriesData(pathName, startJulmin, dd, storeFlags);
 			}
-			//boolean storeFlags = false;
-			dc.setName("/"+ControlData.partA+"/"+initName+"/"+dds.getKind()+"//"+dds.getTimeStep()+"/"+ControlData.initPartF+"/");
-			dc.setStoreAsDoubles(true);
-			try {
-				dss.put(dc);
-			} catch (Exception e) {
-				//e.printStackTrace();
-			}
-			//writer.storeTimeSeriesData(pathName, startJulmin, dd, storeFlags);
 		}
 		System.out.println("Initial file saved.");
 	}
@@ -808,71 +808,71 @@ public class DssOperation {
 				Timeseries ts=allTsMap.get(svName);
 				units = ts.units;
 				ctu=ts.convertToUnits;
-			}
-			DssDataSet dds=DataTimeSeries.svTS.get(svTsName);
-			ArrayList<Double> values=dds.getData();
-			//DSSData dd = new DSSData();
-			//dd._dataType=DSSUtil.REGULAR_TIME_SERIES;
-			TimeSeriesContainer dc = new TimeSeriesContainer();
-			dc.type="PER-AVER";
-			int size=values.size();
-			dc.numberValues=size;
-			dc.units=dds.getUnits().toUpperCase();
-			dc.values=new double[size];
-			Date startDate=dds.getStartTime();
-			Calendar startCalendar=Calendar.getInstance();
-			Date startDate1 = new Date(startDate.getYear(), startDate.getMonth(), startDate.getDate(), 24, 0);
-			startCalendar.setTime(startDate1);
-			dc.setStartTime(new HecTime(startCalendar));
-			//startDate.setTime(startDate.getTime()-1*24*60*60);
-			int year=startDate.getYear()+1900;
-			int month=startDate.getMonth()+1;
-			int day=startDate.getDate();
-			//String startDateStr=TimeOperation.dssTimeEndDay(year, month, day);
-			//long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
-			if (units.equals("taf") && ctu.equals("cfs")){
-				for (int i=0; i<size; i++){
-					Double value=values.get(i);
-					if (value == null){
-						dc.values[i]=-901.0;
-					}else{
-						if (value == -901.0 || value == -902.0){
-							dc.values[i]=value;
+				DssDataSet dds=DataTimeSeries.svTS.get(svTsName);
+				ArrayList<Double> values=dds.getData();
+				//DSSData dd = new DSSData();
+				//dd._dataType=DSSUtil.REGULAR_TIME_SERIES;
+				TimeSeriesContainer dc = new TimeSeriesContainer();
+				dc.type="PER-AVER";
+				int size=values.size();
+				dc.numberValues=size;
+				dc.units=dds.getUnits().toUpperCase();
+				dc.values=new double[size];
+				Date startDate=dds.getStartTime();
+				Calendar startCalendar=Calendar.getInstance();
+				Date startDate1 = new Date(startDate.getYear(), startDate.getMonth(), startDate.getDate(), 24, 0);
+				startCalendar.setTime(startDate1);
+				dc.setStartTime(new HecTime(startCalendar));
+				//startDate.setTime(startDate.getTime()-1*24*60*60);
+				int year=startDate.getYear()+1900;
+				int month=startDate.getMonth()+1;
+				int day=startDate.getDate();
+				//String startDateStr=TimeOperation.dssTimeEndDay(year, month, day);
+				//long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
+				if (units.equals("taf") && ctu.equals("cfs")){
+					for (int i=0; i<size; i++){
+						Double value=values.get(i);
+						if (value == null){
+							dc.values[i]=-901.0;
 						}else{
-							ParallelVars prvs=TimeOperation.findTime(i, year, month, day);
-							dc.values[i]=value/Evaluation.tafcfs("taf_cfs", prvs);
+							if (value == -901.0 || value == -902.0){
+								dc.values[i]=value;
+							}else{
+								ParallelVars prvs=TimeOperation.findTime(i, year, month, day);
+								dc.values[i]=value/Evaluation.tafcfs("taf_cfs", prvs);
+							}
 						}
 					}
-				}
-			}else if (units.equals("cfs") && ctu.equals("taf")){
-				for (int i=0; i<size; i++){
-					Double value=values.get(i);
-					if (value == null){
-						dc.values[i]=-901.0;
-					}else{
-						if (value == -901.0 || value == -902.0){
-							dc.values[i]=value;
+				}else if (units.equals("cfs") && ctu.equals("taf")){
+					for (int i=0; i<size; i++){
+						Double value=values.get(i);
+						if (value == null){
+							dc.values[i]=-901.0;
 						}else{
-							ParallelVars prvs=TimeOperation.findTime(i, year, month, day);
-							dc.values[i]=value/Evaluation.tafcfs("cfs_taf", prvs);
+							if (value == -901.0 || value == -902.0){
+								dc.values[i]=value;
+							}else{
+								ParallelVars prvs=TimeOperation.findTime(i, year, month, day);
+								dc.values[i]=value/Evaluation.tafcfs("cfs_taf", prvs);
+							}
 						}
 					}
+				}else{
+					for (int i=0; i<size; i++){
+						Double value=values.get(i);
+						dc.values[i]=value;
+					}
 				}
-			}else{
-				for (int i=0; i<size; i++){
-					Double value=values.get(i);
-					dc.values[i]=value;
+				//boolean storeFlags = false;
+				dc.setName("/"+ControlData.partA+"/"+ts.dssBPart+"/"+dds.getKind()+"//"+dds.getTimeStep()+"/"+ControlData.svDvPartF+"/");
+				dc.setStoreAsDoubles(true);
+				try {
+					dss.put(dc);
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
+				//writer.storeTimeSeriesData(pathName, startJulmin, dd, storeFlags);
 			}
-			//boolean storeFlags = false;
-			dc.setName("/"+ControlData.partA+"/"+svName+"/"+dds.getKind()+"//"+dds.getTimeStep()+"/"+ControlData.svDvPartF+"/");
-			dc.setStoreAsDoubles(true);
-			try {
-				dss.put(dc);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			//writer.storeTimeSeriesData(pathName, startJulmin, dd, storeFlags);
 		}
 		System.out.println("Svar file saved.");
 	}
