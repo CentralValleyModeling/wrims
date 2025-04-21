@@ -2,13 +2,9 @@
 left to right direction
 skinparam linetype ortho
 
-rectangle wrims_core as "WRIMS-Core" #orange {
-    package wrimsv2 {
-        package config {
-            component config #lightgreen {
-                package wrimsv2.config
-            }
-        }
+component wrims_core as "WRIMS-Core" {
+    package wrimsv2 #orange {
+        package config #lightgreen
         package components
         package evaluator
         package external
@@ -24,15 +20,15 @@ rectangle wrims_core as "WRIMS-Core" #orange {
 hdf5 -> config #grey
 external -> config #grey
 
-config -r-> components #blue
-components --> config #grey
-config -r->  wreslplus.elements #blue
-wreslplus.elements --> config #grey
+config --> components #firebrick
+components --> config #firebrick
+config -l->  wreslplus.elements #firebrick
+wreslplus.elements --> config #firebrick
 
 config -d->  evaluator #blue
-config -d->  ilp #blue
-config -d->  solver #blue
-config -d->  wreslparser.elements #blue
+config -r->  ilp #blue
+config -r->  solver #blue
+config -r->  wreslparser.elements #blue
 config -l->  wreslplus.grammar #blue
 
 ' The following relationships are hidden and used to format the diagram. They do not represent actual dependencies.
@@ -41,5 +37,5 @@ components -r[hidden]-> config
 wreslparser.elements -d[hidden]-> components
 wreslparser.elements -r[hidden]-> evaluator
 
-footer "green components indicate the primary module being represented \n orange components indicate key local modules"
+footer "green components indicate the primary module being represented \n orange components indicate key local modules \n red lines represent circular dependencies \n blue lines represent dependencies of 'config' on other packages \n grey lines represent non-circular dependencies on 'config'"
 @enduml

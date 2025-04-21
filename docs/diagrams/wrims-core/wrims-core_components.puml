@@ -1,11 +1,9 @@
 @startuml
 left to right direction
 skinparam linetype ortho
-rectangle wrims_core as "WRIMS-Core" #orange {
-    package wrimsv2 {
-        component components #lightgreen {
-            package wrimsv2.components
-        }
+component wrims_core as "WRIMS-Core" {
+    package wrimsv2  #orange{
+        package components #lightgreen
         package commondata
         package wreslparser.elements
         package wreslplus.elements
@@ -20,47 +18,47 @@ rectangle wrims_core as "WRIMS-Core" #orange {
         package ilp
         package launch
     }
-package main
+package main #orange
 }
 
-components --> commondata #blue
-commondata --> components #grey
+components --> commondata #firebrick
+commondata --> components #firebrick
 
-components --> config #blue
-config --> components #grey
+components --> config #firebrick
+config --> components #firebrick
 
-components --> debug #blue
-debug --> components #grey
+components --> debug #firebrick
+debug --> components #firebrick
 
-components --> evaluator #blue
-evaluator --> components #grey
+components --> evaluator #firebrick
+evaluator --> components #firebrick
 
-components --> external #blue
-external --> components #grey
+components --> external #firebrick
+external --> components #firebrick
 
-components --> hdf5 #blue
-hdf5 --> components #grey
+components --> hdf5 #firebrick
+hdf5 --> components #firebrick
 
-components --> ilp #blue
-ilp --> components #grey
+components --> ilp #firebrick
+ilp --> components #firebrick
 
-components --> launch #blue
-launch --> components #grey
+components --> launch #firebrick
+launch --> components #firebrick
 
-components --> solver #blue
-solver --> components #grey
+components --> solver #firebrick
+solver --> components #firebrick
 
-components --> sql #blue
-sql --> components #grey
+components --> sql #firebrick
+sql --> components #firebrick
 
-components --> tools #blue
-tools --> components #grey
+components --> tools #firebrick
+tools --> components #firebrick
 
-components --> wreslparser.elements #blue
-wreslparser.elements --> components #grey
+components --> wreslparser.elements #firebrick
+wreslparser.elements --> components #firebrick
 
-components --> wreslplus.elements #blue
-wreslplus.elements --> components #grey
+components --> wreslplus.elements #firebrick
+wreslplus.elements --> components #firebrick
 
 
 main -right-> components #grey
@@ -73,5 +71,5 @@ main -up[hidden]-> wrims_core
 'commondata -left[hidden]-> components
 wreslparser.elements -left[hidden]-> components
 wreslplus.elements -left[hidden]-> components
-footer "green components indicate the primary module being represented \n orange components indicate key local modules"
+footer "green components indicate the primary module being represented \n orange components indicate key local modules \n red lines represent circular dependencies \n grey lines represent non-circular dependencies on 'components'"
 @enduml

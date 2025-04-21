@@ -2,25 +2,20 @@
 left to right direction
 skinparam linetype ortho
 
-rectangle wrims_core as "WRIMS-Core" #orange {
-        package wrimsv2{
-            package launch {
-                component launch #lightgreen {
-                    package wrimsv2.launch
-                }
-            }
+component wrims_core as "WRIMS-Core"  {
+    package wrimsv2 #orange {
+        package launch #lightgreen
         package components
         package evaluator
         package solver
         package hdf5
         package ilp
         package wreslparser.elements
-
     }
 }
 
-launch -->  components #blue
-components --> launch #grey
+launch -->  components #firebrick
+components --> launch #firebrick
 
 launch -left->  evaluator #blue
 launch -left->  ilp #blue

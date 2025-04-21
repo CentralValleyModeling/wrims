@@ -2,12 +2,8 @@
 left to right direction
 skinparam linetype ortho
 
-rectangle wrims_core as "WRIMS-Core" #orange {
-    package tf {
-        component tf #lightgreen {
-            package wrimsv2.tf
-        }
-    }
+component wrims_core as "WRIMS-Core" #orange {
+    package tf #lightgreen
 }
 
 

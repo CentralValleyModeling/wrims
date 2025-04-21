@@ -4,19 +4,18 @@
 left to right direction
 skinparam linetype ortho
 
-rectangle wrims-ide as "WRIMS IDE" #orange {
-    component editor #lightgreen {
-        package wrimsv2_plugin.editor
+rectangle WRIMS {
+    component wrims-ide as "WRIMS IDE" #orange {
+        package wrimsv2_plugin  {
+            package editor #lightgreen
+            package debugger
+        }
     }
-    component debugger {
-        package wrimsv2_plugin.debugger
-    }
+    folder luna_libs as "directory '../eclipse-luna-libs'" #orange
 }
 
-component luna_libs as "directory '../eclipse-luna-libs'" #orange
-
-editor -down-> luna_libs
-editor -down-> debugger
+editor --> luna_libs
+editor -l-> debugger
 
 footer "green components indicate the primary module being represented \n orange components indicate key local modules"
 @enduml

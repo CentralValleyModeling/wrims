@@ -2,13 +2,9 @@
 left to right direction
 skinparam linetype ortho
 
-rectangle wrims_core as "WRIMS-Core" #orange {
-        package wrimsv2{
-            package hdf5 {
-                component hdf5 #lightgreen {
-                    package wrimsv2.hdf5
-                }
-            }
+component wrims_core as "WRIMS-Core" {
+    package wrimsv2 #orange {
+        package hdf5 #lightgreen
         package commondata
         package components
         package config
@@ -23,24 +19,24 @@ rectangle wrims_core as "WRIMS-Core" #orange {
 }
 package main #orange
 
-hdf5 -left->  components #blue
-components -->  hdf5 #grey
-hdf5 -left->  evaluator #blue
-evaluator -->  hdf5 #grey
-sql -left->  hdf5 #grey
-hdf5 -right->  sql #blue
+hdf5 -left->  components #firebrick
+components -->  hdf5 #firebrick
+hdf5 -left->  evaluator #firebrick
+evaluator -->  hdf5 #firebrick
+sql -left->  hdf5 #firebrick
+hdf5 -right->  sql #firebrick
 
-hdf5 -->  commondata #blue
+hdf5 -l->  commondata #blue
 hdf5 -->  config #blue
 hdf5 -->  launch #blue
-hdf5 -->  parallel #blue
-hdf5 -->  solver #blue
+hdf5 -l->  parallel #blue
+hdf5 -l->  solver #blue
 hdf5 -->  tools #blue
-hdf5 -->  wreslparser.elements #blue
+hdf5 -u->  wreslparser.elements #blue
 main --> hdf5 #grey
 
 ' The following relationships are hidden and used to format the diagram. They do not represent actual dependencies.
 'debug -r[hidden]-> evaluator
 
-footer "green components indicate the primary module being represented \n orange components indicate key local modules"
+footer "green components indicate the primary module being represented \n orange components indicate key local modules \n red lines represent circular dependencies \n blue lines represent dependencies of 'hdf5' on other packages \n grey lines represent non-circular dependencies on 'hdf5'"
 @enduml

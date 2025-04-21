@@ -5,7 +5,7 @@ skinparam linetype ortho
 component wrims_core as "WRIMS-Core" {
     package main #orange
     package serial #orange
-    package wrimsv2 {
+    package wrimsv2 #orange {
         package commondata
         package components
         package config

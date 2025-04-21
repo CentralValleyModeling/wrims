@@ -5,8 +5,8 @@ skinparam linetype ortho
 component wrims_core as "WRIMS-Core" {
     package main #orange
     package serial #orange
-    package wrimsv2 {
-        package commondata{
+    package wrimsv2 #orange {
+        package commondata #white {
             package solverdata
             package talbledata
             package wresldata
@@ -21,25 +21,25 @@ component wrims_core as "WRIMS-Core" {
         package ilp
         package launch
         package parallel
-        package solver{
+        package solver #white {
             package cbc
             package clp
             package Gurobi
             package mpmodel
             package ortools
         }
-        package sql{
+        package sql #white {
             package socket
         }
         package tf #pink
-        package tools{
+        package tools #white {
             package solutionRangeFinder
         }
-        package wreslparser{
+        package wreslparser #white {
             package wreslparser.elements
             package wreslparser.grammar
         }
-        package wreslplus{
+        package wreslplus #white {
             package wreslplus.elements
             package wreslplus.grammar
         }

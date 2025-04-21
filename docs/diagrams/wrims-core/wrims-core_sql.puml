@@ -2,38 +2,32 @@
 left to right direction
 skinparam linetype ortho
 
-rectangle wrims_core as "WRIMS-Core" #orange {
-        package wrimsv2{
-            package sql {
-                component sql #lightgreen {
-                    package wrimsv2.sql{
-                        package wrimsv2.sql.socket
-                    }
-                }
-            }
+component wrims_core as "WRIMS-Core" {
+    package wrimsv2 #orange {
+        package sql #lightgreen{
+            package socket
         }
         package components
         package evaluator
         package hdf5
         package tools
         package wreslparser.elements
-
-        package elements
+        package wreslplus.elements
 }
 
-sql -->  components #blue
-components --> sql #grey
+sql -r->  components #firebrick
+components --> sql #firebrick
 
 sql -->  evaluator #blue
-sql --> hdf5 #blue
+sql --> hdf5 #firebrick
 sql --> tools #blue
-sql -r->  wreslparser.elements #blue
+sql -d->  wreslparser.elements #blue
 
-elements --> sql #grey
-hdf5 --> sql #grey
+wreslplus.elements --> sql #grey
+hdf5 -l-> sql #firebrick
 
 ' The following relationships are hidden and used to format the diagram. They do not represent actual dependencies.
 'debug -r[hidden]-> evaluator
 
-footer "green components indicate the primary module being represented \n orange components indicate key local modules"
+footer "green components indicate the primary module being represented \n orange components indicate key local modules \n red lines represent circular dependencies \n blue lines represent dependencies of 'sql' on other packages \n grey lines represent non-circular dependencies on 'sql'"
 @enduml

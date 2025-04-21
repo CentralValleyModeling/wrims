@@ -2,13 +2,10 @@
 left to right direction
 skinparam linetype ortho
 
-rectangle wrims_core as "WRIMS-Core" #orange {
-    package wrimsv2 {
-        component evaluator #lightgreen {
-            package wrimsv2.evaluator{
-            }
-        }
-        package commondata{
+rectangle wrims_core as "WRIMS-Core"{
+    package wrimsv2  #orange {
+        package evaluator #lightgreen
+        package commondata #white {
                 package wresldata
                 package solverdata
 
@@ -26,19 +23,19 @@ rectangle wrims_core as "WRIMS-Core" #orange {
         package tools
 
     }
-package main
+package main #orange
 }
 
-evaluator --> components #blue
-components --> evaluator #grey
-evaluator --> hdf5 #blue
-hdf5 --> evaluator  #grey
-evaluator --> ilp #blue
-ilp --> evaluator  #grey
-evaluator --> solver #blue
-solver -left-> evaluator  #grey
-evaluator --> tools #blue
-tools --> evaluator  #grey
+evaluator --> components #firebrick
+components -r-> evaluator #firebrick
+evaluator --> hdf5 #firebrick
+hdf5 --> evaluator  #firebrick
+evaluator --> ilp #firebrick
+ilp --> evaluator  #firebrick
+evaluator --> solver #firebrick
+solver -left-> evaluator  #firebrick
+evaluator --> tools #firebrick
+tools --> evaluator  #firebrick
 
 evaluator --> external #blue
 evaluator --> parallel #blue
@@ -57,5 +54,5 @@ ilp -up[hidden]-> hdf5
 hdf5 -up[hidden]-> solver
 solver -up[hidden]-> tools
 
-footer "green components indicate the primary module being represented \n orange components indicate key local modules"
+footer "green components indicate the primary module being represented \n orange components indicate key local modules \n red lines represent circular dependencies \n blue lines represent dependencies of 'evaluator' on other packages \n grey lines represent non-circular dependencies on 'evaluator'"
 @enduml

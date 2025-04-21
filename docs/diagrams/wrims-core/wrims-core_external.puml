@@ -2,11 +2,9 @@
 left to right direction
 skinparam linetype ortho
 
-rectangle wrims_core as "WRIMS-Core" #orange {
-    package wrimsv2 {
-        component external #lightgreen {
-            package wrimsv2.external
-        }
+component wrims_core as "WRIMS-Core" {
+    package wrimsv2  #orange{
+        package external #lightgreen
         package components
         package config
         package debug
@@ -15,11 +13,11 @@ rectangle wrims_core as "WRIMS-Core" #orange {
     }
 }
 
-components -r-> external #grey
-external -l-> components #blue
+components -r-> external #firebrick
+external -l-> components #firebrick
 
-evaluator -r-> external #grey
-external -l-> evaluator #blue
+evaluator -r-> external #firebrick
+external -l-> evaluator #firebrick
 
 external -r-> ilp #blue
 external --> config #blue
@@ -29,5 +27,5 @@ debug -> external #grey
 ' The following relationships are hidden and used to format the diagram. They do not represent actual dependencies.
 components -u[hidden]-> evaluator
 
-footer "green components indicate the primary module being represented \n orange components indicate key local modules"
+footer "green components indicate the primary module being represented \n orange components indicate key local modules \n red lines represent circular dependencies \n blue lines represent dependencies of 'external' on other packages \n grey lines represent non-circular dependencies on 'external'"
 @enduml
