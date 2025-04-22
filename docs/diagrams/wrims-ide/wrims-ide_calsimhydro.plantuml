@@ -17,7 +17,9 @@ rectangle WRIMS {
 }
 calsimhydro -l-> luna_libs
 calsimhydro -r-> tools
-calsimhydro --> debugger
+calsimhydro --> debugger #firebrick
+
+debugger -> calsimhydro #firebrick
 
 footer "green components indicate the primary module being represented \n orange components indicate key local modules"
 @enduml

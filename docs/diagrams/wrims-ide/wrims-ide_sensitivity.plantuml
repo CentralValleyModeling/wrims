@@ -17,7 +17,9 @@ rectangle WRIMS {
 }
 sensitivity -r-> luna_libs
 sensitivity --> tools
-sensitivity -u-> debugger
+sensitivity -u-> debugger #firebrick
 
-footer "green components indicate the primary module being represented \n orange components indicate key local modules"
+debugger -> sensitivity #firebrick
+
+footer "green components indicate the primary module being represented \n orange components indicate key local modules \n red lines represent circular dependencies"
 @enduml

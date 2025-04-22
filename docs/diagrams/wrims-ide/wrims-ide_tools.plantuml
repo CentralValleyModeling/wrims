@@ -18,13 +18,17 @@ rectangle WRIMS {
     }
 
     component wrims-core as "WRIMS Core" #orange {
-        package wrimsv2.commondata.wresldata
+        package wrimsv2 {
+            package commondata.wresldata
+        }
     }
 }
 tools -r-> luna_libs
-tools -l-> debugger
+tools -l-> debugger #firebrick
 tools -u-> mil.army.usace.hec.metadata
-tools -down-> wrimsv2.commondata.wresldata
+tools -down-> commondata.wresldata
 
-footer "green components indicate the primary module being represented \n orange components indicate key local modules"
+debugger -> tools #firebrick
+
+footer "green components indicate the primary module being represented \n orange components indicate key local modules \n red lines represent circular dependencies"
 @enduml

@@ -25,12 +25,12 @@ batchrun -> tools
 batchrun --> debugger #firebrick
 
 reporttool -> tools
-reporttool -> debugger
+reporttool -> debugger #firebrick
 
 debugger -> sensitivity #firebrick
 debugger -> batchrun #firebrick
 debugger -> calsimhydro #firebrick
-debugger -> reporttool
+debugger -> reporttool #firebrick
 debugger -> tools #firebrick
 
 tools --> debugger #firebrick
