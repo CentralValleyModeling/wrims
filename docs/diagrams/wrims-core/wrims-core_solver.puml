@@ -13,7 +13,7 @@ component wrims_core as "WRIMS-Core"{
         }
         package commondata
         package components
-        package evaluator
+        package evaluator #yellow
         package ilp
         package tools
         package wreslparser.elements
@@ -43,5 +43,5 @@ launch --> solver #grey
 ' The following relationships are hidden and used to format the diagram. They do not represent actual dependencies.
 'debug -r[hidden]-> evaluator
 
-footer "green components indicate the primary module being represented \n orange components indicate key local modules \n red lines represent circular dependencies \n blue lines represent dependencies of 'solver' on other packages \n grey lines represent non-circular dependencies on 'solver'"
+footer "green components indicate the primary module being represented \n orange components indicate key local modules \n red lines represent circular dependencies \n blue lines represent dependencies of 'solver' on other packages \n grey lines represent non-circular dependencies on 'solver' \n yellow packages are made up of written and generated Java code"
 @enduml

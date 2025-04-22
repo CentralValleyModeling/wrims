@@ -9,7 +9,7 @@ component wrims_core as "WRIMS-Core" {
             }
         package commondata
         package components
-        package evaluator
+        package evaluator #yellow
         package solver
         package wreslparser #white {
             package elements
@@ -48,5 +48,5 @@ commondata -u[hidden]-> solver
 'parallel -l[hidden]-> hdf5
 'sql -l[hidden]-> parallel
 
-footer "green components indicate the primary module being represented \n orange components indicate key local modules \n red lines represent circular dependencies \n blue lines represent dependencies of 'tools' on other packages \n grey lines represent non-circular dependencies on 'tools' \n turquoise components are generated source code"
+footer "green components indicate the primary module being represented \n orange components indicate key local modules \n red lines represent circular dependencies \n blue lines represent dependencies of 'tools' on other packages \n grey lines represent non-circular dependencies on 'tools' \n turquoise components are generated source code \n yellow packages are made up of written and generated Java code"
 @enduml

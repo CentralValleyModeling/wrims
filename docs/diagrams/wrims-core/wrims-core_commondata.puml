@@ -12,7 +12,7 @@ component wrims_core as "WRIMS-Core" {
             }
 
         package debug
-        package evaluator
+        package evaluator #yellow
         package parallel
         package components
         package hdf5
@@ -49,5 +49,5 @@ components -l[hidden] commondata
 evaluator -d[hidden]-> tabledata
 evaluator -l[hidden]-> commondata
 
-footer "green components indicate the primary module being represented \n orange components indicate key local modules \n red lines represent circular dependencies \n blue lines represent dependencies of 'commondata' on other packages \n grey lines represent non-circular dependencies on 'commondata'"
+footer "green components indicate the primary module being represented \n orange components indicate key local modules \n red lines represent circular dependencies \n blue lines represent dependencies of 'commondata' on other packages \n grey lines represent non-circular dependencies on 'commondata' \n yellow packages are made up of written and generated Java code"
 @enduml

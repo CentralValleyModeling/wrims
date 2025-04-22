@@ -7,7 +7,7 @@ component wrims_core as "WRIMS-Core" {
             package wreslplus.elements #lightgreen
         package commondata
         package components
-        package evaluator
+        package evaluator #yellow
         package wreslparser #white {
             package elements
             package grammar #lightseagreen
@@ -41,5 +41,5 @@ elements -u[hidden]-> tools
 serial -u[hidden]-> main
 components -r[hidden]-> config
 
-footer "green components indicate the primary module being represented \n orange components indicate key local modules \n red lines represent circular dependencies \n blue lines represent dependencies of 'wreslplus.elements' on other packages \n grey lines represent non-circular dependencies on 'wreslplus.elements' \n turquoise components are generated source code"
+footer "green components indicate the primary module being represented \n orange components indicate key local modules \n red lines represent circular dependencies \n blue lines represent dependencies of 'wreslplus.elements' on other packages \n grey lines represent non-circular dependencies on 'wreslplus.elements' \n turquoise components are generated source code \n yellow packages are made up of written and generated Java code"
 @enduml

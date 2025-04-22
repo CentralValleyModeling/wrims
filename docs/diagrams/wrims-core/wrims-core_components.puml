@@ -12,7 +12,7 @@ component wrims_core as "WRIMS-Core" {
         package tools
         package config
         package debug
-        package evaluator
+        package evaluator #yellow
         package external
         package hdf5
         package ilp
@@ -71,5 +71,5 @@ main -up[hidden]-> wrims_core
 'commondata -left[hidden]-> components
 wreslparser.elements -left[hidden]-> components
 wreslplus.elements -left[hidden]-> components
-footer "green components indicate the primary module being represented \n orange components indicate key local modules \n red lines represent circular dependencies \n grey lines represent non-circular dependencies on 'components'"
+footer "green components indicate the primary module being represented \n orange components indicate key local modules \n red lines represent circular dependencies \n grey lines represent non-circular dependencies on 'components' \n yellow packages are made up of written and generated Java code"
 @enduml
