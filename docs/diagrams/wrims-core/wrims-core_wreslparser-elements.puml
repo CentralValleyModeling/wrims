@@ -6,7 +6,7 @@ component wrims_core as "WRIMS-Core" {
     package wrimsv2 #orange {
         package wreslparser #white {
             package elements #lightgreen
-            package grammar
+            package grammar #lightseagreen
         }
         package commondata
         package components
@@ -49,5 +49,5 @@ main --> elements #grey
 ' The following relationships are hidden and used to format the diagram. They do not represent actual dependencies.
 'debug -r[hidden]-> evaluator
 
-footer "green components indicate the primary module being represented \n orange components indicate key local modules \n red lines represent circular dependencies \n blue lines represent dependencies of 'elements' on other packages \n grey lines represent non-circular dependencies on 'elements'"
+footer "green components indicate the primary module being represented \n orange components indicate key local modules \n red lines represent circular dependencies \n blue lines represent dependencies of 'elements' on other packages \n grey lines represent non-circular dependencies on 'elements' \n turquoise components are generated source code"
 @enduml

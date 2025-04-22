@@ -10,7 +10,7 @@ component wrims_core as "WRIMS-Core" {
         package evaluator
         package wreslparser #white {
             package elements
-            package grammar
+            package grammar #lightseagreen
         }
         package config
         package solver
@@ -41,5 +41,5 @@ elements -u[hidden]-> tools
 serial -u[hidden]-> main
 components -r[hidden]-> config
 
-footer "green components indicate the primary module being represented \n orange components indicate key local modules \n red lines represent circular dependencies \n blue lines represent dependencies of 'wreslplus.elements' on other packages \n grey lines represent non-circular dependencies on 'wreslplus.elements'"
+footer "green components indicate the primary module being represented \n orange components indicate key local modules \n red lines represent circular dependencies \n blue lines represent dependencies of 'wreslplus.elements' on other packages \n grey lines represent non-circular dependencies on 'wreslplus.elements' \n turquoise components are generated source code"
 @enduml
