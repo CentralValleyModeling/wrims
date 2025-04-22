@@ -158,3 +158,8 @@ If the checked out commit is a tag then only the tag name will be used.
 > Any numerical value with up to 4 period-delimited values can be used as the version number.
 > It does not need to match any existing tag or branch name.
 > (e.g. 20250101, 2.2.0, 2.2.0.1)
+ 
+## TattleTale Report
+The JBoss TattleTale Report can be generated with the `./gradlew tattletaleReport` task. 
+The report runs a details analysis of jar, package, and class dependencies and can help
+identify cyclic, duplicated, or unused class references.

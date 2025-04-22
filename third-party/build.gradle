@@ -96,12 +96,6 @@ configurations.configureEach {
     exclude group: "xml-apis", module: "xml-apis"
 }
 
-tasks.register('copyDependencies', Copy) {
-    from(configurations.runtimeClasspath)
-    into 'build/tmp/libs'
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-}
-
 tasks.register('copyHeclib', Sync) { syncTask ->
     from {
         configurations.hecdll.collect { zipTree(it) }
