@@ -7,23 +7,27 @@ cloud hec_nexus as "HEC Nexus"
 cloud maven_central as "Maven Central"
 
 rectangle wrims as "WRIMS 2.2"{
-    rectangle wrims_ide as "WRIMS IDE" #lightgreen
+    component wrims_ide as "WRIMS IDE" #lightgreen
 
-    rectangle wrims_dssvue as "DWR DSSVue" #orange {
+    component wrims_dssvue as "DWR DSSVue" #orange {
         package dssvue as "gov.ca.dwr.hecdssvue"
     }
 
-    rectangle wrims_jdiagram as "DWR JDiagram" #orange {
+    component wrims_jdiagram as "DWR JDiagram" #orange {
         package gov.ca.dwr.jdiagram
     }
 
-    rectangle wrims_core as "WRIMS Core" #orange
+    component wrims_core as "WRIMS Core" #orange
 
-    package xtext_editor as "gov.ca.dwr.xtext.editor" #orange
+    component xtext_editor as "xText Editor" #orange {
+        package xtext.editor as "gov.ca.dwr.xtext.editor"
+    }
 
-    package xtext_editor_ui as "gov.ca.dwr.xtext.editor.ui" #orange
+    component xtext_editor_ui as "xText Editor UI" #orange {
+        package xtext.editor.ui as "gov.ca.dwr.xtext.editor.ui"
+    }
 
-    rectangle eclipse_luna_libs as "Eclipse Luna Libraries" #orange {
+    component eclipse_luna_libs as "Eclipse Luna Libraries" #orange {
         package org.eclipse.xtext
     }
 

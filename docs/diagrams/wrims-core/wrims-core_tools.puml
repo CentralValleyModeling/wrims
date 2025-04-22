@@ -2,21 +2,19 @@
 left to right direction
 skinparam linetype ortho
 
-rectangle wrims_core as "WRIMS-Core" #orange {
-        package wrimsv2{
-            package tools {
-                component tools #lightgreen {
-                    package wrimsv2.tools{
-                        package wrimsv2.tools.solutionRangeFinder
-                    }
-                }
+component wrims_core as "WRIMS-Core" {
+        package wrimsv2 #orange {
+            package tools #lightgreen {
+                package solutionRangeFinder
             }
         package commondata
         package components
-        package evaluator
+        package evaluator #yellow
         package solver
-        package wreslparser.elements
-        package wreslparser.grammar
+        package wreslparser #white {
+            package elements
+            package grammar #lightseagreen
+        }
         package wreslplus.elements
 
         package hdf5
@@ -25,17 +23,17 @@ rectangle wrims_core as "WRIMS-Core" #orange {
     }
 }
 
-tools -u->  components #blue
-components -->  tools #grey
-tools -l->  evaluator #blue
-evaluator -->  tools #grey
-tools -u->  solver #blue
-solver -->  tools #grey
-tools -r->  wreslparser.elements #blue
-wreslparser.elements -l->  tools #grey
+tools -u->  components #firebrick
+components -->  tools #firebrick
+tools -l->  evaluator #firebrick
+evaluator -->  tools #firebrick
+tools -u->  solver #firebrick
+solver -->  tools #firebrick
+tools -r->  elements #firebrick
+elements -l->  tools #firebrick
 
 tools -u->  commondata #blue
-tools -u-> wreslparser.grammar #blue
+tools -u-> grammar #blue
 tools -u-> wreslplus.elements #blue
 
 hdf5 -u->  tools #grey
@@ -50,5 +48,5 @@ commondata -u[hidden]-> solver
 'parallel -l[hidden]-> hdf5
 'sql -l[hidden]-> parallel
 
-footer "green components indicate the primary module being represented \n orange components indicate key local modules"
+footer "green components indicate the primary module being represented \n orange components indicate key local modules \n red lines represent circular dependencies \n blue lines represent dependencies of 'tools' on other packages \n grey lines represent non-circular dependencies on 'tools' \n turquoise components are generated source code \n yellow packages are made up of written and generated Java code"
 @enduml

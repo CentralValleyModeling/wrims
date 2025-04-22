@@ -2,45 +2,44 @@
 left to right direction
 skinparam linetype ortho
 
-rectangle wrims_core as "WRIMS-Core" #orange {
-        package wrimsv2{
-            package wreslplus.elements {
-                component wreslplus.elements #lightgreen {
-                    package wrimsv2.wreslplus.elements
-                }
-            }
+component wrims_core as "WRIMS-Core" {
+        package wrimsv2 #orange {
+            package wreslplus.elements #lightgreen
         package commondata
         package components
-        package evaluator
-        package wreslparser.elements
-
+        package evaluator #yellow
+        package wreslparser #white {
+            package elements
+            package grammar #lightseagreen
+        }
         package config
         package solver
         package tools
-        package wreslparser.grammar
     }
-package main
-package serial
+    package main #orange
+    package serial #orange
 }
 
-wreslplus.elements -l->  components #blue
-components -->  wreslplus.elements #grey
-wreslplus.elements -l->  wreslparser.elements #blue
-wreslparser.elements -->  wreslplus.elements #grey
+wreslplus.elements -l->  components #firebrick
+components -->  wreslplus.elements #firebrick
+wreslplus.elements -->  elements #firebrick
+elements -l->  wreslplus.elements #firebrick
 
 wreslplus.elements -r->  commondata #blue
 wreslplus.elements -r->  evaluator #blue
-wreslplus.elements -r->  wreslparser.grammar #blue
+wreslplus.elements -->  grammar #blue
 
 config -->  wreslplus.elements #grey
 solver -->  wreslplus.elements #grey
 tools -->  wreslplus.elements #grey
 
-main -u-> wreslplus.elements #grey
-serial -u-> wreslplus.elements #grey
+main --> wreslplus.elements #grey
+serial -r-> wreslplus.elements #grey
 
 ' The following relationships are hidden and used to format the diagram. They do not represent actual dependencies.
-wreslparser.elements -u[hidden]-> tools
+elements -u[hidden]-> tools
+serial -u[hidden]-> main
+components -r[hidden]-> config
 
-footer "green components indicate the primary module being represented \n orange components indicate key local modules"
+footer "green components indicate the primary module being represented \n orange components indicate key local modules \n red lines represent circular dependencies \n blue lines represent dependencies of 'wreslplus.elements' on other packages \n grey lines represent non-circular dependencies on 'wreslplus.elements' \n turquoise components are generated source code \n yellow packages are made up of written and generated Java code"
 @enduml

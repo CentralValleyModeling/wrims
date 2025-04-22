@@ -3,7 +3,7 @@ left to right direction
 skinparam linetype ortho
 
 component WRIMS-IDE {
-    package debugger {
+    package debugger #lightgreen {
         package breakpoint
         package commanditem
         package console
@@ -22,144 +22,144 @@ component WRIMS-IDE {
         package ui #pink
         package view
     }
-    package tools #lightgreen
-    package batchrun #lightgreen
-    package sensitivity #lightgreen
-    package calsimhydro #lightgreen
-    package reporttool #lightgreen
-    package editor #lightgreen
-    package perspective #lightgreen
-    package presentation #lightgreen
+    package tools #lightblue
+    package batchrun #lightblue
+    package sensitivity #lightblue
+    package calsimhydro #lightblue
+    package reporttool #lightblue
+    package editor #lightblue
+    package perspective #lightblue
+    package presentation #lightblue
 }
 component WRIMS_Core as "WRIMS-Core" #orange
 
 view -down-> tools #blue
-view -down-> core
-view -> dialog
-view -> exception
-view -> listener
-view -u-> model
+view -down-> core #grey
+view -> dialog  #firebrick
+view -> exception #firebrick
+view -> listener #grey
+view -u-> model #firebrick
 
-editor -> core
-editor -> exception
-editor -> model
-editor -> breakpoint
+editor -> core #grey
+editor -> exception #grey
+editor -> model #grey
+editor -> breakpoint #grey
 
-perspective -> core
+perspective -> core #grey
 
-batchrun -> core
+batchrun -> core #grey
 batchrun -> tools #blue
-batchrun -> exception
-batchrun -> dialog
-batchrun -> msr
-batchrun -> pa
+batchrun -> exception #grey
+batchrun -> dialog #firebrick
+batchrun -> msr #grey
+batchrun -> pa #firebrick
 
-presentation -> model
-presentation -> core
-presentation -> exception
-presentation -> breakpoint
+presentation -> model #grey
+presentation -> core #grey
+presentation -> exception #grey
+presentation -> breakpoint #grey
 
-reporttool -> exception
+reporttool -> exception #grey
 reporttool -> tools #blue
 
-sensitivity -> exception
+sensitivity -> exception #grey
 sensitivity -> tools #blue
-sensitivity -> core
+sensitivity -> core #grey
 
-tools -> core
-tools -> exception
-tools -> model
+tools -> core #firebrick
+tools -> exception #grey
+tools -> model #firebrick
 tools -> WRIMS_Core #blue
 
-calsimhydro -> core
-calsimhydro -> exception
+calsimhydro -> core #firebrick
+calsimhydro -> exception #grey
 calsimhydro -> tools #blue
 
-toolbaritem -> exception
-toolbaritem -u-> view
-toolbaritem -> core
-toolbaritem -> dialog
-toolbaritem -> menuitem
+toolbaritem -> exception #grey
+toolbaritem -u-> view #grey
+toolbaritem -> core #firebrick
+toolbaritem -> dialog #firebrick
+toolbaritem -> menuitem #firebrick
 
-sourcelookup -> model
-sourcelookup -> core
+sourcelookup -> model #grey
+sourcelookup -> core #grey
 
 pa -down-> tools #blue
-pa -down-> batchrun #blue
-pa -u-> core
-pa -> exception
+pa -down-> batchrun #firebrick
+pa -u-> core #grey
+pa -> exception #grey
 
 msr -> tools #blue
-msr -> core
-msr -> exception
+msr -> core #grey
+msr -> exception #grey
 
-model -l-> tools #blue
-model -r-> core
-model -> view
-model -> breakpoint
-model -> exception
-model -> menuitem
-model -> toolbaritem
+model -l-> tools #firebrick
+model -r-> core #firebrick
+model -> view #firebrick
+model -> breakpoint #firebrick
+model -> exception #grey
+model -> menuitem #grey
+model -> toolbaritem #grey
 
-menuitem -> dialog
-menuitem -> core
-menuitem -> exception
-menuitem -> toolbaritem
+menuitem -> dialog #firebrick
+menuitem -> core #firebrick
+menuitem -> exception #grey
+menuitem -> toolbaritem #firebrick
 
-listener -> core
+listener -> core #firebrick
 
 launcher -down-> sensitivity #blue
 launcher -down-> calsimhydro #blue
 launcher -> tools #blue
-launcher -> core
-launcher -> exception
-launcher -> dialog
-launcher -> menuitem
-launcher -> toolbaritem
-launcher -> model
-launcher -> msr
-launcher -> pa
+launcher -> core #grey
+launcher -> exception #grey
+launcher -> dialog #firebrick
+launcher -> menuitem #grey
+launcher -> toolbaritem #grey
+launcher -> model #grey
+launcher -> msr #grey
+launcher -> pa #grey
 
-exception -> core
-exception -> view
+exception -> core #firebrick
+exception -> view #firebrick
 
-dialog -> batchrun #blue
+dialog -> batchrun #firebrick
 dialog -> tools #blue
 dialog -down-> reporttool #blue
 dialog -down-> WRIMS_Core #blue
-dialog -> core
-dialog -> exception
-dialog -> model
-dialog -> view
-dialog -> goal
-dialog -> listener
-dialog -> launcher
-dialog -> menuitem
-dialog -> toolbaritem
+dialog -> core #grey
+dialog -> exception #grey
+dialog -> model #grey
+dialog -> view #firebrick
+dialog -> goal #grey
+dialog -> listener #grey
+dialog -> launcher #firebrick
+dialog -> menuitem #firebrick
+dialog -> toolbaritem #firebrick
 
-core -> tools #blue
-core -> calsimhydro #blue
-core -> model
-core -> toolbaritem
-core -> exception
-core -> menuitem
-core -> listener
+core -> tools  #firebrick
+core -> calsimhydro #firebrick
+core -> model #firebrick
+core -> toolbaritem #firebrick
+core -> exception #firebrick
+core -> menuitem #firebrick
+core -> listener #firebrick
 
-console -> toolbaritem
-console --> core
-console -> exception
+console -> toolbaritem #grey
+console --> core #grey
+console -> exception #grey
 
 commanditem -down-> WRIMS_Core #blue
 commanditem -> tools #blue
-commanditem -> core
-commanditem -> dialog
-commanditem -> exception
-commanditem -> model
-commanditem -> view
+commanditem -> core #grey
+commanditem -> dialog #grey
+commanditem -> exception #grey
+commanditem -> model #grey
+commanditem -> view #grey
 
-breakpoint -> core
-breakpoint -> exception
-breakpoint -> model
+breakpoint -> core #grey
+breakpoint -> exception #grey
+breakpoint -> model #firebrick
 
-footer "green components indicate modules outside the the debugger package \n blue lines represent dependencies outside the debugger package \n pink components represent unused modules \n orange components represent modules that are outside of WRIMS-IDE"
+footer "light blue components indicate modules outside the the debugger package \n blue lines represent dependencies of 'debugger' on other packages \n pink components represent unused modules \n orange components represent modules that are outside of WRIMS-IDE \n red lines represent circular dependencies \n grey lines represent non-circular dependencies on 'debugger'"
 @enduml

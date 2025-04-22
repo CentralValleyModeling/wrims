@@ -2,23 +2,19 @@
 left to right direction
 skinparam linetype ortho
 
-rectangle wrims_core as "WRIMS-Core" #orange {
-    package wrimsv2{
-        package debug {
-            component debug #lightgreen {
-                package wrimsv2.debug
-            }
-        }
+component wrims_core as "WRIMS-Core" {
+    package wrimsv2 #orange{
+        package debug #lightgreen
     package commondata
     package components
-    package evaluator
+    package evaluator #yellow
     package external
     package solver
     package wreslparser.elements
 }
 
-debug -->  components #blue
-components -->  debug #grey
+debug -->  components #firebrick
+components -->  debug #firebrick
 debug -->  commondata #blue
 debug -->  evaluator #blue
 debug -->  external #blue
@@ -28,5 +24,5 @@ debug -->  wreslparser.elements #blue
 ' The following relationships are hidden and used to format the diagram. They do not represent actual dependencies.
 'debug -r[hidden]-> evaluator
 
-footer "green components indicate the primary module being represented \n orange components indicate key local modules"
+footer "green components indicate the primary module being represented \n orange components indicate key local modules \n red lines represent circular dependencies \n blue lines represent dependencies of 'debug' on other packages \n yellow packages are made up of written and generated Java code"
 @enduml

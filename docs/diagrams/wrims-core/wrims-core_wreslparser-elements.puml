@@ -2,20 +2,18 @@
 left to right direction
 skinparam linetype ortho
 
-rectangle wrims_core as "WRIMS-Core" #orange {
-        package wrimsv2{
-            package wreslparser.elements {
-                component wreslparser.elements #lightgreen {
-                    package wrimsv2.wreslparser.elements
-                }
-            }
+component wrims_core as "WRIMS-Core" {
+    package wrimsv2 #orange {
+        package wreslparser #white {
+            package elements #lightgreen
+            package grammar #lightseagreen
+        }
         package commondata
         package components
-        package evaluator
+        package evaluator #yellow
         package solver
         package tools
         package sql
-        package wreslparser.grammar
         package wreslplus.elements
 
         package config
@@ -24,32 +22,32 @@ rectangle wrims_core as "WRIMS-Core" #orange {
         package ilp
         package launch
     }
-package main
+    package main #orange
 }
 
-wreslparser.elements -l->  components #blue
-components -->  wreslparser.elements #grey
-wreslparser.elements -l->  solver #blue
-solver -->  wreslparser.elements #grey
-wreslparser.elements -l->  tools #blue
-tools -->  wreslparser.elements #grey
-wreslparser.elements -l->  wreslplus.elements #blue
-wreslplus.elements -->  wreslparser.elements #grey
+elements -r->  components #firebrick
+components -->  elements #firebrick
+elements -d->  solver #firebrick
+solver -->  elements #firebrick
+elements -->  tools #firebrick
+tools -l->  elements #firebrick
+elements -->  wreslplus.elements #firebrick
+wreslplus.elements -->  elements #firebrick
 
-wreslparser.elements -r->  commondata #blue
-wreslparser.elements -r->  evaluator #blue
-wreslparser.elements -r->  sql #blue
-wreslparser.elements -r->  wreslparser.grammar #blue
+elements -->  commondata #blue
+elements -->  evaluator #blue
+elements -->  sql #blue
+elements -r->  grammar #blue
 
-config -->  wreslparser.elements #grey
-debug -->  wreslparser.elements #grey
-hdf5 -->  wreslparser.elements #grey
-ilp -->  wreslparser.elements #grey
-launch -->  wreslparser.elements #grey
-main --> wreslparser.elements #grey
+config -->  elements #grey
+debug -->  elements #grey
+hdf5 -->  elements #grey
+ilp -->  elements #grey
+launch -->  elements #grey
+main --> elements #grey
 
 ' The following relationships are hidden and used to format the diagram. They do not represent actual dependencies.
 'debug -r[hidden]-> evaluator
 
-footer "green components indicate the primary module being represented \n orange components indicate key local modules"
+footer "green components indicate the primary module being represented \n orange components indicate key local modules \n red lines represent circular dependencies \n blue lines represent dependencies of 'elements' on other packages \n grey lines represent non-circular dependencies on 'elements' \n turquoise components are generated source code \n yellow packages are made up of written and generated Java code"
 @enduml
