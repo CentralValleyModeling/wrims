@@ -17,7 +17,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Set up JDK 1.8
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v4
       with:
         java-version: '8'
         distribution: 'temurin'
@@ -57,7 +57,7 @@ jobs:
       with:
         name: dwr-hecdssvue
         path: |
-          ./hecdssvue/build/libs/*.jar
+          ./dwr-hecdssvue/build/libs/*.jar
 
     - name: Upload jdiagram jar
       uses: actions/upload-artifact@v4.0.0
@@ -79,3 +79,18 @@ jobs:
         name: xtext-editor-ui
         path: |
           ./xtext-editor-ui/build/libs/*.jar
+
+    - name: Generate tattletale-reports
+      env:
+        PKG_USERNAME: ${{ github.actor }}
+        PKG_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        ./gradlew clean
+        ./gradlew tattletaleReport
+
+    - name: Upload Reports
+      uses: actions/upload-artifact@v4.0.0
+      with:
+        name: reports
+        path: |
+          ./*/build/reports/**

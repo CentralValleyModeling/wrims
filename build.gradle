@@ -24,5 +24,37 @@ def versionLabel(gitInfo) {
 allprojects {
     group = 'gov.ca.dwr'
     version = versionLabel(versionDetails())
-//    version = "20250101"
+}
+
+subprojects {
+    plugins.withType(JavaPlugin) {
+        configurations {
+            tattletale
+        }
+
+        dependencies {
+            tattletale libs.tattletale
+        }
+
+        tasks.register('copyDependencies', Copy) {
+            from(configurations.runtimeClasspath) {
+                exclude '**/org.eclipse*.jar'
+            }
+            into 'build/tmp/libs'
+            duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+        }
+
+        tasks.register('tattletaleReport', JavaExec) {
+            dependsOn copyDependencies
+            group = 'verification'
+            description = "Generates a JBoss Tattletale report for ${project.name}."
+            classpath = configurations.tattletale
+            mainClass = 'org.jboss.tattletale.Main'
+
+            args = [
+                    "${layout.buildDirectory.asFile.get()}/tmp/libs#${layout.buildDirectory.asFile.get()}/libs",
+                    "${layout.buildDirectory.asFile.get()}/reports/tattletale"
+            ]
+        }
+    }
 }

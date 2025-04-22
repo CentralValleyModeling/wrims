@@ -32,6 +32,7 @@ xerces = "2.11.0"
 commons_cli = "1.4"
 log4j = "1.2.17"
 icu4j = "71.1"
+tattletale = "1.2.0.Beta2"
 
 [libraries]
 hec-monolith = { module = "mil.army.usace.hec:hec-monolith", version.ref = "hec-monolith" }
@@ -69,6 +70,7 @@ xerces = { module = "xerces:xercesImpl", version.ref = "xerces" }
 commons-cli = { module = "commons-cli:commons-cli", version.ref = "commons_cli" }
 log4j = { module = "log4j:log4j", version.ref = "log4j" }
 icu4j = { module = "com.ibm.icu:icu4j", version.ref = "icu4j" }
+tattletale = { module = "org.jboss.tattletale:tattletale", version.ref = "tattletale"}
 
 
 [bundles]
