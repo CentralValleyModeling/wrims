@@ -2,7 +2,7 @@
 left to right direction
 skinparam linetype ortho
 
-rectangle wrims_core as "WRIMS-Core" {
+component wrims_core as "WRIMS-Core" {
     package wrimsv2 #orange{
         package debug #lightgreen
     package commondata

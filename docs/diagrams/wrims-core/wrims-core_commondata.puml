@@ -26,7 +26,8 @@ package main #orange
 
 wresldata --> parallel #blue
 debug --> wresldata #grey
-solverdata --> wresldata #blue
+wresldata --> solverdata #firebrick
+solverdata --> wresldata #firebrick
 evaluator --> solverdata #firebrick
 solverdata -r-> evaluator #firebrick
 wresldata --> evaluator #firebrick
