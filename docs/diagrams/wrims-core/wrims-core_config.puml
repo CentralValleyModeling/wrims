@@ -17,9 +17,6 @@ component wrims_core as "WRIMS-Core" {
     }
 }
 
-hdf5 -> config #grey
-external -> config #grey
-
 config --> components #firebrick
 components --> config #firebrick
 config -l->  wreslplus.elements #firebrick
@@ -30,6 +27,9 @@ config -r->  ilp #blue
 config -r->  solver #blue
 config -r->  wreslparser.elements #blue
 config -l->  wreslplus.grammar #blue
+
+hdf5 -> config #grey
+external -> config #grey
 
 ' The following relationships are hidden and used to format the diagram. They do not represent actual dependencies.
 config -r[hidden]-> evaluator

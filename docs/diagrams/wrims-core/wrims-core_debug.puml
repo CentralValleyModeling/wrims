@@ -15,6 +15,7 @@ component wrims_core as "WRIMS-Core" {
 
 debug -->  components #firebrick
 components -->  debug #firebrick
+
 debug -->  commondata #blue
 debug -->  evaluator #blue
 debug -->  external #blue

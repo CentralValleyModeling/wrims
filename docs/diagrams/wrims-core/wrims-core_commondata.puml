@@ -19,21 +19,22 @@ component wrims_core as "WRIMS-Core" {
         package ilp
         package solver
         package tools
+        package wreslparser
+        package wreslplus
 
     }
 package main #orange
 }
+wresldata --> solverdata #grey
+evaluator --> solverdata #grey
 
-wresldata --> parallel #blue
-debug --> wresldata #grey
-wresldata --> solverdata #firebrick
-solverdata --> wresldata #firebrick
-evaluator --> solverdata #firebrick
-solverdata -r-> evaluator #firebrick
+wresldata --> parallel #firebrick
+parallel --> wresldata  #firebrick
 wresldata --> evaluator #firebrick
 evaluator --> wresldata #firebrick
 wresldata --> components #firebrick
 components --> wresldata #firebrick
+
 hdf5 -d-> solverdata #grey
 hdf5 -d-> wresldata #grey
 ilp --> solverdata #grey
@@ -42,6 +43,9 @@ solver --> wresldata #grey
 solver --> solverdata #grey
 tools --> wresldata #grey
 tools --> solverdata #grey
+debug --> wresldata #grey
+wreslparser --> wresldata #grey
+wreslplus --> wresldata #grey
 main --> wresldata #grey
 
 ' The following relationships are hidden and used to format the diagram. They do not represent actual dependencies.

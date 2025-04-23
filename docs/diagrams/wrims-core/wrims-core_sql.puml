@@ -12,19 +12,17 @@ component wrims_core as "WRIMS-Core" {
         package hdf5
         package tools
         package wreslparser.elements
-        package wreslplus.elements
 }
 
-sql -r->  components #firebrick
+sql -->  components #firebrick
 components --> sql #firebrick
+sql -->  wreslparser.elements #firebrick
+wreslparser.elements --> sql #firebrick
 
 sql -->  evaluator #blue
-sql --> hdf5 #firebrick
 sql --> tools #blue
-sql -d->  wreslparser.elements #blue
 
-wreslplus.elements --> sql #grey
-hdf5 -l-> sql #firebrick
+hdf5 -l-> sql #grey
 
 ' The following relationships are hidden and used to format the diagram. They do not represent actual dependencies.
 'debug -r[hidden]-> evaluator

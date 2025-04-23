@@ -14,7 +14,7 @@ component wrims_core as "WRIMS-Core" {
         package solver
         package tools
         package sql
-        package wreslplus.elements
+        package wreslplus
 
         package config
         package debug
@@ -31,13 +31,14 @@ elements -d->  solver #firebrick
 solver -->  elements #firebrick
 elements -->  tools #firebrick
 tools -l->  elements #firebrick
-elements -->  wreslplus.elements #firebrick
-wreslplus.elements -->  elements #firebrick
+elements -->  wreslplus #firebrick
+wreslplus -->  elements #firebrick
+elements -r->  grammar #firebrick
+grammar -->  elements #firebrick
 
 elements -->  commondata #blue
 elements -->  evaluator #blue
 elements -->  sql #blue
-elements -r->  grammar #blue
 
 config -->  elements #grey
 debug -->  elements #grey

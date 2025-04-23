@@ -21,6 +21,8 @@ component wrims_core as "WRIMS-Core"{
         package solver
         package sql
         package tools
+        package wreslparser.elements
+        package wreslplus.elements
 
     }
 package main #orange
@@ -36,13 +38,17 @@ evaluator --> solver #firebrick
 solver -left-> evaluator  #firebrick
 evaluator --> tools #firebrick
 tools --> evaluator  #firebrick
+evaluator --> wresldata #firebrick
+wresldata --> evaluator  #firebrick
+external --> evaluator #firebrick
+evaluator --> external  #firebrick
 
-evaluator --> external #blue
 evaluator --> parallel #blue
 evaluator --> solverdata #blue
-evaluator --> wresldata #blue
 
 config --> evaluator  #grey
+wreslparser.elements --> evaluator #grey
+wreslplus.elements --> evaluator #grey
 debug --> evaluator  #grey
 launch --> evaluator  #grey
 sql --> evaluator  #grey

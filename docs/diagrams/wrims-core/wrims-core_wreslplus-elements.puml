@@ -4,14 +4,14 @@ skinparam linetype ortho
 
 component wrims_core as "WRIMS-Core" {
         package wrimsv2 #orange {
-            package wreslplus.elements #lightgreen
+        package wreslparser.elements #lightgreen
         package commondata
         package components
         package evaluator #yellow
-        package wreslparser #white {
-            package elements
-            package grammar #lightseagreen
-        }
+        package wreslplus{
+            package elements #lightgreen
+            package grammar #turquoise
+            }
         package config
         package solver
         package tools
@@ -20,21 +20,20 @@ component wrims_core as "WRIMS-Core" {
     package serial #orange
 }
 
-wreslplus.elements -l->  components #firebrick
-components -->  wreslplus.elements #firebrick
-wreslplus.elements -->  elements #firebrick
-elements -l->  wreslplus.elements #firebrick
+elements -l->  components #firebrick
+components -->  elements #firebrick
 
-wreslplus.elements -r->  commondata #blue
-wreslplus.elements -r->  evaluator #blue
-wreslplus.elements -->  grammar #blue
+elements -r->  evaluator #blue
+elements -r->  commondata #blue
+elements -r->  grammar #blue
+elements -r->  wreslparser.elements #blue
 
-config -->  wreslplus.elements #grey
-solver -->  wreslplus.elements #grey
-tools -->  wreslplus.elements #grey
+config -->  elements #grey
+solver -->  elements #grey
+tools -->  elements #grey
 
-main --> wreslplus.elements #grey
-serial -r-> wreslplus.elements #grey
+main --> elements #grey
+serial -r-> elements #grey
 
 ' The following relationships are hidden and used to format the diagram. They do not represent actual dependencies.
 elements -u[hidden]-> tools

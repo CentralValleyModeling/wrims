@@ -9,7 +9,6 @@ component wrims_core as "WRIMS-Core" {
         package components
         package evaluator #yellow
         package solver
-        package tools
         package wreslparser.elements
 
         package config
@@ -27,7 +26,6 @@ ilp -left->  solver #firebrick
 solver -->  ilp #firebrick
 
 ilp -->  commondata #blue
-ilp -->  tools #blue
 ilp -r->  wreslparser.elements #blue
 
 config --> ilp #grey

@@ -20,7 +20,6 @@ components --> launch #firebrick
 launch -left->  evaluator #blue
 launch -left->  ilp #blue
 launch -left->  solver #blue
-
 launch -r->  wreslparser.elements #blue
 
 hdf5 --> launch #grey

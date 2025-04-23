@@ -8,7 +8,6 @@ component wrims_core as "WRIMS-Core" {
         package commondata
         package components
         package evaluator #yellow
-        package tools
         package hdf5
     }
 }
@@ -21,7 +20,6 @@ parallel -->  components #firebrick
 components --> parallel #firebrick
 
 hdf5 --> parallel #grey
-parallel -->  tools #blue
 
 ' The following relationships are hidden and used to format the diagram. They do not represent actual dependencies.
 'debug -r[hidden]-> evaluator

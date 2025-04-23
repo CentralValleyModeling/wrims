@@ -11,9 +11,7 @@ component wrims_core as "WRIMS-Core" {
         package evaluator #yellow
         package launch
         package parallel
-        package solver
         package tools
-        package wreslparser.elements
         package sql
     }
 }
@@ -23,16 +21,13 @@ hdf5 -left->  components #firebrick
 components -->  hdf5 #firebrick
 hdf5 -left->  evaluator #firebrick
 evaluator -->  hdf5 #firebrick
-sql -left->  hdf5 #firebrick
-hdf5 -right->  sql #firebrick
 
+hdf5 -right->  sql #blue
 hdf5 -l->  commondata #blue
 hdf5 -->  config #blue
 hdf5 -->  launch #blue
 hdf5 -l->  parallel #blue
-hdf5 -l->  solver #blue
 hdf5 -->  tools #blue
-hdf5 -u->  wreslparser.elements #blue
 main --> hdf5 #grey
 
 ' The following relationships are hidden and used to format the diagram. They do not represent actual dependencies.

@@ -13,6 +13,7 @@ component wrims_core as "WRIMS-Core" {
         package config
         package debug
         package evaluator #yellow
+        package parallel
         package external
         package hdf5
         package ilp
@@ -35,6 +36,9 @@ evaluator --> components #firebrick
 
 components --> external #firebrick
 external --> components #firebrick
+
+components --> parallel #firebrick
+parallel --> components #firebrick
 
 components --> hdf5 #firebrick
 hdf5 --> components #firebrick
