@@ -44,11 +44,13 @@ reporttool --> hec.heclib.dss
 reporttool --> hec.heclib.util
 reporttool --> hec.io
 reporttool --> hec.hecmath
-reporttool --> debugger
+reporttool --> debugger #firebrick
 reporttool -up-> tools
 reporttool --> gov.ca.dsm2.input
 reporttool --> org.jfree
 reporttool --> com.lowagie
 
-footer "green components indicate the primary module being represented \n orange components indicate key local modules \n blue components indicate locally-stored third-party jars"
+debugger -> reporttool #firebrick
+
+footer "green components indicate the primary module being represented \n orange components indicate key local modules \n blue components indicate locally-stored third-party jars \n red lines represent circular dependencies"
 @enduml
