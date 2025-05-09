@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.io.PrintWriter;
+import java.util.Collections;
 
 import wrimsv2_plugin.debugger.exception.WPPException;
 
@@ -15,6 +16,7 @@ public class SettingPref {
 	private static String settingPrefFile="setting.prf";
 	private static String cbcSettingPrefFile="CBCSetting.prf";
 	private static String cbcSettingDefaultFile="CBCSettingDefault.prf";
+	private static String configPrefFile="Cbc_config.prf";
 	
 	public static void load(){
 		try {
@@ -201,6 +203,27 @@ public class SettingPref {
 			fw.close();
 		} catch (IOException e) {
 			WPPException.handleException(e);
+		}
+	}
+	
+	public static void writeCbcConfigSettingToConfigFile(PrintWriter out){
+		try{
+			File file = new File(DebugCorePlugin.dataDir, configPrefFile);
+			if (!file.exists()){
+				file.createNewFile();
+				return;
+			}
+			
+			FileInputStream fs = new FileInputStream(file.getAbsolutePath());
+			BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+			LineNumberReader reader = new LineNumberReader(br);
+			String line = reader.readLine();
+			while (line !=null){
+				out.println(line);
+				line = reader.readLine();
+			}
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 	}
 }

@@ -54,6 +54,7 @@ import org.eclipse.ui.PlatformUI;
 
 import wrimsv2_plugin.debugger.core.CBCSetting;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+import wrimsv2_plugin.debugger.core.SettingPref;
 import wrimsv2_plugin.debugger.dialog.CbcConfigTab;
 import wrimsv2_plugin.debugger.dialog.GurobiConfigTab;
 import wrimsv2_plugin.debugger.dialog.WPPDssToSqlDialog;
@@ -340,6 +341,8 @@ public class WPPWsiDiTab extends AbstractLaunchConfigurationTab {
 			}
 			out.println("cbcHintRelaxPenalty       "+CBCSetting.cbcHintRelaxPenalty);
 			out.println("cbcHintTimeMax            "+DataProcess.doubleStringtoInt(CBCSetting.cbcHintTimeMax));
+			
+			SettingPref.writeCbcConfigSettingToConfigFile(out);
 			
 			if (DebugCorePlugin.cbcDlls.containsKey(cbcSelVer)){
 				out.println("cbc_dlls                  "+DebugCorePlugin.cbcDlls.get(cbcSelVer));

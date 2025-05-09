@@ -27,6 +27,7 @@ import org.eclipse.debug.core.model.IProcess;
 
 import wrimsv2_plugin.debugger.core.CBCSetting;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+import wrimsv2_plugin.debugger.core.SettingPref;
 import wrimsv2_plugin.debugger.dialog.CbcConfigTab;
 import wrimsv2_plugin.debugger.dialog.GurobiConfigTab;
 import wrimsv2_plugin.debugger.exception.WPPException;
@@ -726,6 +727,8 @@ public class BatchRunProcess {
 			}
 			out.println("cbcHintRelaxPenalty       "+CBCSetting.cbcHintRelaxPenalty);
 			out.println("cbcHintTimeMax            "+DataProcess.doubleStringtoInt(CBCSetting.cbcHintTimeMax));
+			
+			SettingPref.writeCbcConfigSettingToConfigFile(out);
 			
 			if (DebugCorePlugin.cbcDlls.containsKey(cbcSelVer)){
 				out.println("cbc_dlls                  "+DebugCorePlugin.cbcDlls.get(cbcSelVer));
