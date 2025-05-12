@@ -2,8 +2,12 @@ package wrimsv2_plugin.debugger.dialog;
 
 
 import java.awt.Desktop;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
 
 import org.eclipse.debug.core.DebugException;
 import org.eclipse.jface.viewers.TableViewer;
@@ -44,6 +48,7 @@ import wrimsv2_plugin.tools.DataProcess;
 
 public class WPPOptionDialog extends Dialog {
 	
+	private static String configPrefFile="Cbc_config.prf";
 	protected Text textMemory;
 	protected Combo solverCombo;
 	protected Combo logCombo;
@@ -158,6 +163,10 @@ public class WPPOptionDialog extends Dialog {
 				DebugCorePlugin.showRunTimeMessage=buttonRTMessage.getSelection();
 				DebugCorePlugin.printGWFuncCalls=buttonPrintGWFuncCalls.getSelection();
 				DebugCorePlugin.trackMemoryUsage=buttonTrackMemoryUsage.getSelection();
+				
+				cbcConfigTab.saveConfigPref();
+				gurobiConfigTab.saveConfigPref();
+				
 				if (DebugCorePlugin.isDebugging){
 					try {
 						DebugCorePlugin.target.sendRequest("solveroption:"+DebugCorePlugin.solver+":"+DebugCorePlugin.log);
@@ -212,13 +221,13 @@ public class WPPOptionDialog extends Dialog {
 							String cbcSetting = "cbcHintTimeMax:"+DataProcess.doubleStringtoInt(CBCSetting.cbcHintTimeMax);
 							DebugCorePlugin.target.sendRequest(cbcSetting.replace(" ", ""));
 						}
+						
+						sendRequestCbcConfig();
 					} catch (DebugException e) {
 						WPPException.handleException(e);
 					}
 				}
 				showSolverStatus();
-				cbcConfigTab.saveConfigPref();
-				gurobiConfigTab.saveConfigPref();
 				shell.close();
 			}
 		});
@@ -750,6 +759,27 @@ public class WPPOptionDialog extends Dialog {
 			DebugCorePlugin.cbcUsed=false;
 			DebugCorePlugin.cbc210Used=false;
 			DebugCorePlugin.cbc298Used=true;
+		}
+	}
+	
+	public void sendRequestCbcConfig(){
+		try {
+			File file = new File(DebugCorePlugin.dataDir, configPrefFile);
+			if (!file.exists()){
+				file.createNewFile();
+				return;
+			}
+			FileInputStream fs = new FileInputStream(file.getAbsolutePath());
+			BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+		    LineNumberReader reader = new LineNumberReader(br);
+		    String line = reader.readLine();
+		    while (line !=null){
+		    	String modLine = line.replace(" ", "").replace("\t", "");
+		    	DebugCorePlugin.target.sendRequest("CbcConfig:"+modLine);
+		    	line = reader.readLine();
+		    }
+		} catch (Exception e) {
+			WPPException.handleException(e);
 		}
 	}
 }

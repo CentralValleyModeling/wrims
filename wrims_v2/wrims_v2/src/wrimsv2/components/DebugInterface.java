@@ -732,6 +732,41 @@ public class DebugInterface {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}else if (request.startsWith("CbcConfig:")){
+			String[] requestParts=request.split(":");
+			if (requestParts[1].equalsIgnoreCase("CbcDebugDeviation")){
+				CbcSolver.debugDeviation=Boolean.parseBoolean(requestParts[2]);
+			}else if(requestParts[1].equalsIgnoreCase("CbcDebugDeviationMin")){
+				CbcSolver.debugDeviationMin=Double.parseDouble(requestParts[2]);
+			}else if(requestParts[1].equalsIgnoreCase("CbcDebugDeviationWeightMin")){
+				CbcSolver.debugDeviationWeightMin=Double.parseDouble(requestParts[2]);
+			}else if(requestParts[1].equalsIgnoreCase("CbcDebugDeviationWeightMultiply")){
+				CbcSolver.debugDeviationWeightMultiply=Double.parseDouble(requestParts[2]);
+			}else if(requestParts[1].equalsIgnoreCase("CbcDebugDeviationFindMissing")){
+				CbcSolver.debugDeviationFindMissing=Boolean.parseBoolean(requestParts[2]);
+			}else if(requestParts[1].equalsIgnoreCase("cbcdebugobjdiff")){
+				CbcSolver.debugObjDiff=Boolean.parseBoolean(requestParts[2]);
+			}else if(requestParts[1].equalsIgnoreCase("cbcobjlog")){
+				CbcSolver.logObj=Boolean.parseBoolean(requestParts[2]);
+			}else if(requestParts[1].equalsIgnoreCase("cbclogstartdate")){
+				CbcSolver.cbcLogStartDate=Integer.parseInt(requestParts[2]);
+			}else if(requestParts[1].equalsIgnoreCase("cbclogstopdate")){
+				CbcSolver.cbcLogStopDate=Integer.parseInt(requestParts[2]);
+			}else if(requestParts[1].equalsIgnoreCase("watch")){
+				ControlData.watchList=requestParts[2].split(",");
+			}else if(requestParts[1].equalsIgnoreCase("NameSorting")){
+				ControlData.isNameSorting=Boolean.parseBoolean(requestParts[2]);
+			}else if(requestParts[1].equalsIgnoreCase("CbcWhsScaling")){
+				CbcSolver.whsScaling=Boolean.parseBoolean(requestParts[2]);
+			}else if(requestParts[1].equalsIgnoreCase("CbcWhsSafe")){
+				CbcSolver.whsSafe=Boolean.parseBoolean(requestParts[2]);
+			}
+			try {
+				sendRequest(requestParts[1]+" set");
+				System.out.println(requestParts[1]+" set");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
