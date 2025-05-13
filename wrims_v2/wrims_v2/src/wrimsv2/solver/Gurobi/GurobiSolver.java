@@ -50,7 +50,7 @@ import wrimsv2.solver.CbcSolver;
 public class GurobiSolver {
 	
 	int modelStatus;
-	static GRBEnv    env;
+	public static GRBEnv    env;
 	static GRBModel  model;
 	public static Map <String, Double> varDoubleMap;
 	

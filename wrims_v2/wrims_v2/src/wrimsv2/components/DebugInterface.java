@@ -29,6 +29,7 @@ import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.TokenStream;
 
 import com.google.common.primitives.Doubles;
+import com.gurobi.gurobi.GRBException;
 import com.sun.java.util.collections.Arrays;
 
 import vista.db.dss.DSSData;
@@ -766,6 +767,21 @@ public class DebugInterface {
 				System.out.println(requestParts[1]+" set");
 			} catch (IOException e) {
 				e.printStackTrace();
+			}
+		}else if (request.startsWith("GurobiConfig:")){
+			String[] requestParts=request.split(":");
+			if (GurobiSolver.env !=null){
+				try {
+					GurobiSolver.env.set(requestParts[1], requestParts[2]);
+					try {
+						sendRequest(requestParts[1]+" set");
+						System.out.println(requestParts[1]+" set");
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				} catch (GRBException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}

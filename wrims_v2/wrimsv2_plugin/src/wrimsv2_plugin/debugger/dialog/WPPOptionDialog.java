@@ -48,7 +48,8 @@ import wrimsv2_plugin.tools.DataProcess;
 
 public class WPPOptionDialog extends Dialog {
 	
-	private static String configPrefFile="Cbc_config.prf";
+	private static String cbcConfigFile="Cbc_config.prf";
+	private static String gurobiConfigFile="Gurobi_config.prf";
 	protected Text textMemory;
 	protected Combo solverCombo;
 	protected Combo logCombo;
@@ -223,6 +224,7 @@ public class WPPOptionDialog extends Dialog {
 						}
 						
 						sendRequestCbcConfig();
+						sendRequestGurobiConfig();
 					} catch (DebugException e) {
 						WPPException.handleException(e);
 					}
@@ -764,7 +766,7 @@ public class WPPOptionDialog extends Dialog {
 	
 	public void sendRequestCbcConfig(){
 		try {
-			File file = new File(DebugCorePlugin.dataDir, configPrefFile);
+			File file = new File(DebugCorePlugin.dataDir, cbcConfigFile);
 			if (!file.exists()){
 				file.createNewFile();
 				return;
@@ -776,6 +778,27 @@ public class WPPOptionDialog extends Dialog {
 		    while (line !=null){
 		    	String modLine = line.replace(" ", "").replace("\t", "");
 		    	DebugCorePlugin.target.sendRequest("CbcConfig:"+modLine);
+		    	line = reader.readLine();
+		    }
+		} catch (Exception e) {
+			WPPException.handleException(e);
+		}
+	}
+	
+	public void sendRequestGurobiConfig(){
+		try {
+			File file = new File(DebugCorePlugin.dataDir, gurobiConfigFile);
+			if (!file.exists()){
+				file.createNewFile();
+				return;
+			}
+			FileInputStream fs = new FileInputStream(file.getAbsolutePath());
+			BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+		    LineNumberReader reader = new LineNumberReader(br);
+		    String line = reader.readLine();
+		    while (line !=null){
+		    	String modLine = line.replace(" ", "").replace("\t", "");
+		    	DebugCorePlugin.target.sendRequest("GurobiConfig:"+modLine);
 		    	line = reader.readLine();
 		    }
 		} catch (Exception e) {
