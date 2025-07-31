@@ -329,7 +329,7 @@ public class ReportPDFWriter implements Writer {
 			dataset.addSeries(seriesName[i], seriesData);
 		}
 
-		PlotOrientation orientation=PlotOrientation.HORIZONTAL;
+		PlotOrientation orientation=PlotOrientation.VERTICAL;
 		final JFreeChart xyLineChart = ChartFactory.createXYLineChart(title, xAxisLabel, yAxisLabel, dataset, orientation, true, true, true);
 		XYPlot xyPlot = xyLineChart.getXYPlot();
 		ValueAxis domainAxis = xyPlot.getDomainAxis();
