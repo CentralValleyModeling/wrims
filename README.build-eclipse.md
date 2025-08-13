@@ -15,7 +15,8 @@ The Gradle integration involved refactoring the primary modules into the these r
 
 # WRIMS Developer Build Setup - Using Gradle:
 PREREQUISITES:
-- Java JDK 1.8 installed (https://www.oracle.com/java/technologies/javase/javase8u211-later-archive-downloads.html)
+- Java JDK 1.8 installed 
+  - Recommend Adoptium Temurin JDK Java 8: https://adoptium.net/temurin/releases/?version=8&os=any&arch=any 
 - JAVA_HOME environment variable set to installed JDK 1.8 (optional)
   - This is only required to build the project from the command line. 
 - Git
@@ -149,6 +150,9 @@ The following gradle tasks have been added to build/run the gradle installer:
 >   Could not GET 'https://maven.pkg.github.com/CentralValleyModeling/wrims/gov/ca/dwr/run-libs/maven-metadata.xml'. 
 >   Received status code 401 from server: Unauthorized <br><br>
 > You are likely missing the cvmUserId and cvmPassword prerequisite settings in your gradle.properties file
+> 
+> If you are encountering certificate errors during download step, update your Java 8 JDK to the recommended Adoptium Temurin JDK Java 8 version:
+> https://adoptium.net/temurin/releases/?version=8&os=any&arch=any
 
 ## 6. Remote Debug the WRIMS GUI Application
 
@@ -170,6 +174,11 @@ The following gradle tasks hava been added to launch the WRIMS application with 
 ![](./README_images/eclipse_debug_wrims_tasks.png)
 
 Run either the debug>debugWRIMS task or the debug>updateAndDebugWRIMS task to launch the WRIMS GUI application with remote debugging enabled.
+
+> [!NOTE]
+> If the plugins are failing to load, make sure that you updated the version number in the root build.gradle file
+> to a valid version number (e.g. 2.2.0.9999) before building the installer. If you change the version number, you'll
+> need to clean and rebuild the installer to ensure that the plugins are loaded correctly.
 
 ### Configure the Remote Debug sessions:
 From the toolbar, click Run>Debug Configurations
