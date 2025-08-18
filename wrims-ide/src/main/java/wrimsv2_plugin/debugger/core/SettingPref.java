@@ -63,6 +63,9 @@ public class SettingPref {
 		    	DebugCorePlugin.outputAllCycles=false;
 		    }
 		    DebugCorePlugin.outputCycles=br.readLine();
+		    fs.close();
+		    br.close();
+		    reader.close();
 		} catch (Exception e) {
 			DebugCorePlugin.solver="CBC";
 			DebugCorePlugin.xmx="4096";
@@ -71,6 +74,7 @@ public class SettingPref {
 			DebugCorePlugin.outputCycles="\'\'";
 			e.printStackTrace();
 		}
+		save();
 		return;
 	}
 	
@@ -275,8 +279,8 @@ public class SettingPref {
         MBeanServer mBeanServer=ManagementFactory.getPlatformMBeanServer();
 		try {
 			Object attribute = mBeanServer.getAttribute(new ObjectName("java.lang", "type", "OperatingSystem"), "TotalPhysicalMemorySize");
-	        int totalPhysicalMemorySize = Integer.parseInt(attribute.toString());
-	        int maxAllocatedMemory=(int) ((int)0.65*totalPhysicalMemorySize/1024.);
+	        long totalPhysicalMemorySize = Long.parseLong(attribute.toString());
+	        int maxAllocatedMemory=(int) (0.65*totalPhysicalMemorySize/1024./1024.);
 	        return maxAllocatedMemory; 
 		} catch (InstanceNotFoundException | AttributeNotFoundException | MalformedObjectNameException
 				| ReflectionException | MBeanException e) {
