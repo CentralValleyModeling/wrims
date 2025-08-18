@@ -17,12 +17,14 @@ import org.eclipse.ui.intro.IIntroPart;
 import org.eclipse.ui.intro.IIntroSite;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+import wrimsv2_plugin.debugger.core.SettingPref;
 import wrimsv2_plugin.debugger.exception.WPPException;
 
 public class WelcomeViewListener {
 
     public void addWelcomeViewListener() {
     	
+    	SettingPref.loadInitially();
     	Display.getDefault().syncExec(new Runnable() {
 
 			@Override
