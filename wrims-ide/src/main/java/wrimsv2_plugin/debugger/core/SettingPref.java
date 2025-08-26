@@ -43,6 +43,9 @@ public class SettingPref {
 			BufferedReader br = new BufferedReader(new InputStreamReader(fs));
 		    LineNumberReader reader = new LineNumberReader(br);
 		    DebugCorePlugin.solver=br.readLine();
+
+		    //Set allocated memory to 65% of the total physical memoery if initial allocated memory is over 65%
+		    //when a new release or patch update occurs
 		    String xmx=br.readLine();
 		    int maxAM = getMaxAllocatedMemory();
 		    if (Integer.parseInt(xmx) > maxAM) {
