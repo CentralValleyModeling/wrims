@@ -11,6 +11,8 @@
  *******************************************************************************/
 package wrimsv2_plugin.debugger.launcher;
 
+import java.io.File;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.DebugPlugin;
@@ -37,18 +39,42 @@ public class WPPLaunchShortcut implements ILaunchShortcut {
      */
     @Override
 	public void launch(ISelection selection, String mode) {
-        // must be a structured selection with one file selected
-        IFile file = (IFile) ((IStructuredSelection)selection).getFirstElement();
+        // Support both workspace IFile and raw String filesystem path in selection
+        if (!(selection instanceof IStructuredSelection)) {
+            return; // cannot handle
+        }
+        Object first = ((IStructuredSelection) selection).getFirstElement();
+        if (first == null) {
+            return;
+        }
+
+        String path;
+        String name;
+        if (first instanceof IFile) {
+            IFile file = (IFile) first;
+            path = file.getFullPath().toString();
+            name = file.getName();
+        } else if (first instanceof String) {
+            path = (String) first;
+            File f = new File(path);
+            name = f.getName();
+        } else {
+            return; // unsupported selection type
+        }
 
         // check for an existing launch config for the WPP file
-        String path = file.getFullPath().toString(); 
-        ILaunchManager launchManager = DebugPlugin.getDefault().getLaunchManager();
+        DebugPlugin debug = DebugPlugin.getDefault();
+        if (debug == null) {
+            // Likely running in headless test environment; skip actual launching
+            return;
+        }
+        ILaunchManager launchManager = debug.getLaunchManager();
         ILaunchConfigurationType type = launchManager.getLaunchConfigurationType(DebugCorePlugin.ID_WPP_LAUNCH_CONFIGURATION_TYPE);
         try {
             ILaunchConfiguration[] configurations = launchManager.getLaunchConfigurations(type);
             for (int i = 0; i < configurations.length; i++) {
                 ILaunchConfiguration configuration = configurations[i];
-                String attribute = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_PROGRAM, (String)null);
+                String attribute = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_PROGRAM, (String) null);
                 if (path.equals(attribute)) {
                     DebugUITools.launch(configuration, mode);
                     return;
@@ -57,15 +83,15 @@ public class WPPLaunchShortcut implements ILaunchShortcut {
         } catch (CoreException e) {
             return;
         }
-        
+
         try {
             // create a new configuration for the WPP file
-            ILaunchConfigurationWorkingCopy workingCopy = type.newInstance(null, file.getName());
+            ILaunchConfigurationWorkingCopy workingCopy = type.newInstance(null, name);
             workingCopy.setAttribute(DebugCorePlugin.ATTR_WPP_PROGRAM, path);
             ILaunchConfiguration configuration = workingCopy.doSave();
             DebugUITools.launch(configuration, mode);
         } catch (CoreException e1) {
-        	WPPException.handleException(e1);
+            WPPException.handleException(e1);
         }
     }
 
