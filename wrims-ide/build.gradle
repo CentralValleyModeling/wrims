@@ -10,6 +10,10 @@ configurations {
     windows_x64
 }
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     api(project(':wrims-core'))
     implementation project(':third-party')
@@ -17,7 +21,18 @@ dependencies {
     compileOnly fileTree(dir: '../eclipse-luna-libs', include: ['*.jar'])
 
     windows_x64("mil.army.usace.hec:javaHeclib:${libs.versions.heclib.get()}@zip")
+    testImplementation("io.cucumber:cucumber-java:7.14.0")
+    testImplementation("io.cucumber:cucumber-junit-platform-engine:7.14.0")
+    testImplementation(platform("org.junit:junit-bom:5.10.0"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("org.junit.platform:junit-platform-suite")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.11.3")
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.11.3")
     testImplementation(libs.bundles.junit5)
+    testImplementation("org.eclipse.platform:org.eclipse.jface:3.35.100") // Or the appropriate version
+    testImplementation("org.eclipse.platform:org.eclipse.swt:3.128.0") // Example for Windows 64-bit, choose appropriate platform
 }
 
 jar {
@@ -48,3 +63,26 @@ test {
     dependsOn(getNatives)
     systemProperty "java.library.path", "${layout.buildDirectory.asFile.get()}/lib"
 }
+
+/*
+configurations {
+    cucumberRuntime {
+        extendsFrom testImplementation
+    }
+}
+		
+task cucumberCli() {
+    dependsOn assemble, testClasses
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = [
+              	'--plugin', 'pretty',
+              	'--plugin', 'html:target/cucumber-report.html', 
+              	'--glue', 'com.baeldung.cucumber', 
+              	'src/main/java/wrimsv2_plugin/features/launch']
+        }
+    }
+}
+*/
