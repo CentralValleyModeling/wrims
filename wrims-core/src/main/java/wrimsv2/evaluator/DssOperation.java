@@ -916,7 +916,7 @@ public class DssOperation {
 			for (int i=0; i<size; i++){
 				//values1[i]=values[i+nTimeStep1];
 				values[i]=values[i+nTimeStep1];
-				values[i+nTimeStep1]=-901.0;
+				values[i+nTimeStep1]=Double.NaN;
 			}
 			//ddsfl.data=null;
 			//values=null;
