@@ -24,7 +24,6 @@ public class WelcomeViewListener {
 
     public void addWelcomeViewListener() {
     	
-    	SettingPref.loadInitially();
     	Display.getDefault().syncExec(new Runnable() {
 
 			@Override
@@ -61,6 +60,7 @@ public class WelcomeViewListener {
 		                    	//openPerspective(perspectiveID);
 		                		openPerspective(DebugCorePlugin.wrimsGUIPerspectives[i]);
 		                	}
+		                	SettingPref.loadInitially();
 		                }
 		            }
 
