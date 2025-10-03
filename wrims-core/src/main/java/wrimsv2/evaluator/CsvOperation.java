@@ -65,7 +65,7 @@ public class CsvOperation {
 						if (!ControlData.isSimOutput) date=TimeOperation.backOneDay(date);
 						for (int i=0; i<data.length; i++){
 							double value = data[i];
-							if (value != Double.NaN){
+							if (!Double.isNaN(value)){
 								line = scenarioIndex+","+ControlData.partA+","+ControlData.svDvPartF+",1DAY,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+ value +"\n";
 								bw.write(line);
 							}else{
@@ -80,7 +80,7 @@ public class CsvOperation {
 						if (!ControlData.isSimOutput) date=TimeOperation.backOneMonth(date);
 						for (int i=0; i<data.length; i++){
 							double value = data[i];
-							if (value != Double.NaN){
+							if (!Double.isNaN(value)){
 								line = scenarioIndex+","+ControlData.partA+","+ControlData.svDvPartF+",1MON,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+ value +"\n";
 								bw.write(line);
 							}else{
@@ -124,7 +124,7 @@ public class CsvOperation {
 						//date=TimeOperation.backOneDay(date);
 						for (int i=0; i<data.size(); i++){
 							double value = data.get(i);
-							if (value != -901.0 && value !=-902.0 && value != Double.NaN){
+							if (value != -901.0 && value !=-902.0 && !Double.isNaN(value)){
 								line = scenarioIndex+","+ControlData.partA+","+ControlData.svDvPartF+",1DAY,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+ convertValue(value, units, convertToUnits, date, timestep) +"\n";
 								bw.write(line);
 							}
@@ -134,7 +134,7 @@ public class CsvOperation {
 						//date=TimeOperation.backOneMonth(date);
 						for (int i=0; i<data.size(); i++){
 							double value = data.get(i);
-							if (value != -901.0 && value !=-902.0 && value != Double.NaN){
+							if (value != -901.0 && value !=-902.0 && !Double.isNaN(value)){
 								line = scenarioIndex+","+ControlData.partA+","+ControlData.svDvPartF+",1MON,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+convertValue(value, units, convertToUnits, date, timestep)+"\n";
 								bw.write(line);
 							}
@@ -175,7 +175,7 @@ public class CsvOperation {
 								date=TimeOperation.backOneDay(date);
 								for (int i=0; i<data.size(); i++){
 									double value = data.get(i);
-									if (value != -901.0 && value !=-902.0 && value !=Double.NaN){
+									if (value != -901.0 && value !=-902.0 && !Double.isNaN(value)){
 										line = scenarioIndex+","+ControlData.partA+","+ControlData.svDvPartF+",1DAY,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+convertValue(value, units, convertToUnits, date, timestep)+"\n";
 										bw.write(line);
 									}
@@ -185,7 +185,7 @@ public class CsvOperation {
 								date=TimeOperation.backOneMonth(date);
 								for (int i=0; i<data.size(); i++){
 									double value = data.get(i);
-									if (value != -901.0 && value !=-902.0 && value !=Double.NaN){
+									if (value != -901.0 && value !=-902.0 && !Double.isNaN(value)){
 										line = scenarioIndex+","+ControlData.partA+","+ControlData.svDvPartF+",1MON,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+convertValue(value, units, convertToUnits, date, timestep)+"\n";
 										bw.write(line);
 									}
@@ -227,7 +227,7 @@ public class CsvOperation {
 							date=TimeOperation.backOneDay(date);
 							for (int i=0; i<data.size(); i++){
 								double value = data.get(i);
-								if (value != -901.0 && value !=-902.0  && value !=Double.NaN){
+								if (value != -901.0 && value !=-902.0  && !Double.isNaN(value)){
 									line = scenarioIndex+","+ControlData.partA+","+ControlData.svDvPartF+",1DAY,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+convertValue(value, units, convertToUnits, date, timestep)+"\n";
 									bw.write(line);
 								}
@@ -237,7 +237,7 @@ public class CsvOperation {
 							date=TimeOperation.backOneMonth(date);
 							for (int i=0; i<data.size(); i++){
 								double value = data.get(i);
-								if (value != -901.0 && value !=-902.0  && value !=Double.NaN){
+								if (value != -901.0 && value !=-902.0  && !Double.isNaN(value)){
 									line = scenarioIndex+","+ControlData.partA+","+ControlData.svDvPartF+",1MON,"+unitsName+","+formDateData(date)+","+variableName+","+kindName+","+convertValue(value, units, convertToUnits, date, timestep)+"\n";
 									bw.write(line);
 								}
