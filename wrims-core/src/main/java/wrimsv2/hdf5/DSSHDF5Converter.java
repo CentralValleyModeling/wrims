@@ -765,7 +765,7 @@ public class DSSHDF5Converter {
 				for (int j=0; j<dim; j++){
 					int index=det_timestep+j;
 					if (index<0 || index>=rtsDim){
-						data[j]=-901.0;
+						data[j]=Double.NaN;
 					}else{
 						data[j]=rtsData[index];
 					}
@@ -880,7 +880,7 @@ public class DSSHDF5Converter {
 				for (int j=0; j<dim; j++){
 					int index=(int)det_timestep+j;
 					if (index<0 || index>=rtsDim){
-						data[j]=-901.0;
+						data[j]=Double.NaN;
 					}else{
 						data[j]=rtsData[index];
 					}
@@ -1037,7 +1037,7 @@ public class DSSHDF5Converter {
 					for (int j=0; j<dim; j++){
 						int index=det_timestep+j;
 						if (index<0 || index>=rtsDim){
-							data[j]=-901.0;
+							data[j]=Double.NaN;
 						}else{
 							data[j]=rtsData[index];
 						}
@@ -1172,7 +1172,7 @@ public class DSSHDF5Converter {
 					for (int j=0; j<dim; j++){
 						int index=det_timestep+j;
 						if (index<0 || index>=rtsDim){
-							data[j]=-901.0;
+							data[j]=Double.NaN;
 						}else{
 							data[j]=rtsData[index];
 						}

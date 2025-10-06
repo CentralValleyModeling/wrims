@@ -78,6 +78,8 @@ public class DssOperation {
 					dataArray.add(-901.0);
 				}else if (dataEntry==-902.0){
 					dataArray.add(-902.0);
+				}else if (Double.isNaN(dataEntry)){
+					dataArray.add(Double.NaN);
 				}else{
 					ParallelVars prvs = TimeOperation.findTime(i, year, month, day);
 					double dataEntryValue=dataEntry*Evaluation.tafcfs("taf_cfs", prvs);
@@ -92,6 +94,8 @@ public class DssOperation {
 					dataArray.add(-901.0);
 				}else if (dataEntry==-902.0){
 					dataArray.add(-902.0);
+				}else if (Double.isNaN(dataEntry)){
+					dataArray.add(Double.NaN);
 				}else{
 					ParallelVars prvs = TimeOperation.findTime(i, year, month, day);
 					double dataEntryValue=dataEntry*Evaluation.tafcfs("cfs_taf", prvs);
@@ -164,6 +168,8 @@ public class DssOperation {
 					dataArray.add(-901.0);
 				}else if (dataEntry==-902.0){
 					dataArray.add(-902.0);
+				}else if (Double.isNaN(dataEntry)){
+					dataArray.add(Double.NaN);
 				}else{
 					TimeOperation.findTime(i);
 					dataArray.add(dataEntry*Evaluation.tafcfs("taf_cfs", prvs));
@@ -181,6 +187,8 @@ public class DssOperation {
 					dataArray.add(-901.0);
 				}else if (dataEntry==-902.0){
 					dataArray.add(-902.0);
+				}else if (Double.isNaN(dataEntry)){
+					dataArray.add(Double.NaN);
 				}else{
 					TimeOperation.findTime(i);
 					dataArray.add(dataEntry*Evaluation.tafcfs("cfs_taf", prvs));
@@ -617,9 +625,9 @@ public class DssOperation {
 				for (int i=0; i<size; i++){
 					Double value=values.get(i);
 					if (value == null){
-						dc.values[i]=-901.0;
+						dc.values[i]=Double.NaN;
 					}else{
-						if (value == -901.0 || value == -902.0){
+						if (value == -901.0 || value == -902.0 || Double.isNaN(value)){
 							dc.values[i]=value;
 						}else{
 							ParallelVars prvs=TimeOperation.findTime(i, year, month, day);
@@ -631,9 +639,9 @@ public class DssOperation {
 				for (int i=0; i<size; i++){
 					Double value=values.get(i);
 					if (value == null){
-						dc.values[i]=-901.0;
+						dc.values[i]=Double.NaN;;
 					}else{
-						if (value == -901.0 || value == -902.0){
+						if (value == -901.0 || value == -902.0 || Double.isNaN(value)){
 							dc.values[i]=value;
 						}else{
 							ParallelVars prvs=TimeOperation.findTime(i, year, month, day);
@@ -834,9 +842,9 @@ public class DssOperation {
 				for (int i=0; i<size; i++){
 					Double value=values.get(i);
 					if (value == null){
-						dc.values[i]=-901.0;
+						dc.values[i]=Double.NaN;
 					}else{
-						if (value == -901.0 || value == -902.0){
+						if (value == -901.0 || value == -902.0 || Double.isNaN(value)){
 							dc.values[i]=value;
 						}else{
 							ParallelVars prvs=TimeOperation.findTime(i, year, month, day);
@@ -848,9 +856,9 @@ public class DssOperation {
 				for (int i=0; i<size; i++){
 					Double value=values.get(i);
 					if (value == null){
-						dc.values[i]=-901.0;
+						dc.values[i]=Double.NaN;
 					}else{
-						if (value == -901.0 || value == -902.0){
+						if (value == -901.0 || value == -902.0 || Double.isNaN(value)){
 							dc.values[i]=value;
 						}else{
 							ParallelVars prvs=TimeOperation.findTime(i, year, month, day);

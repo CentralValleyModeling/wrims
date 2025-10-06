@@ -985,7 +985,7 @@ public class AppUtils {
                     startDateStr = TimeOperation.dssTime(startDate.getYear() + 1900, mon, 1);
                     startTime = (new HecTime(startDateStr));
                     double yValue = yArray[j];
-                    if (yValue != -901.0) {
+                    if (yValue != -901.0 && yValue != -902.0 && !Double.isNaN(yValue)) {
                         times.add(startTime.value());
                         values.add(yValue);
                     }
@@ -1000,7 +1000,7 @@ public class AppUtils {
                     startDateStr = TimeOperation.dssTime(startDate.getYear() + 1900, mon, startDate.getDate());
                     startTime = (new HecTime(startDateStr));
                     double yValue = yArray[j];
-                    if (yValue != -901.0) {
+                    if (yValue != -901.0 && yValue != -902.0 && !Double.isNaN(yValue)) {
                         times.add(startTime.value());
                         values.add(yValue);
                     }

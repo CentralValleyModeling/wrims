@@ -152,10 +152,10 @@ public class WPPVarMonitorView extends ViewPart{
 		}
 		if (dc.times[size-1]<dc.endTime){
 			dc.times[size]=dc.endTime;
-			dc.values[size]=-901.0;
+			dc.values[size]=Double.NaN;
 		}else{
 			dc.times[size]=dc.endTime+1;
-			dc.values[size]=-901.0;
+			dc.values[size]=Double.NaN;
 		}
 		
 		return dc;
