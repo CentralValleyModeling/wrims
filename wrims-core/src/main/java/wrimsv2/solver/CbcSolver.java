@@ -1525,55 +1525,72 @@ int pp=0;
 		boolean isConflictFound = false;
 		
 		while (success) {
-			
-			tr =(int) (Calendar.getInstance().getTimeInMillis()-ts)/1000;
-			if (tr>CbcSolver.cbcHintTimeMax) {
-				ILP.writeNoteLn("\r\nInfeasibility analysis stopped due to time limit exceeded.", true, true);
-				break;}
-			
-			iisPossibleConstraintMap_cumulative.putAll(iisPossibleConstraintMap);
 
-			if (hasPriorityConstraints) {				
-				_pstc.removeAll(iisConfirmConstraint);
-				if (_pstc.size()<1) {hasPriorityConstraints = false;}
-				}
-			iisPossibleConstraintMap.clear();
-			iisConfirmConstraint.clear();
+            tr = (int) (Calendar.getInstance().getTimeInMillis() - ts) / 1000;
+            if (tr > CbcSolver.cbcHintTimeMax) {
+                ILP.writeNoteLn("\r\nInfeasibility analysis stopped due to time limit exceeded.", true, true);
+                break;
+            }
+
+            iisPossibleConstraintMap_cumulative.putAll(iisPossibleConstraintMap);
+
+            if (hasPriorityConstraints) {
+                _pstc.removeAll(iisConfirmConstraint);
+                if (_pstc.size() < 1) {
+                    hasPriorityConstraints = false;
+                }
+            }
+            iisPossibleConstraintMap.clear();
+            iisConfirmConstraint.clear();
 //					System.out.println(hasPriorityConstraints);
 //					System.out.println(_pstc);					
-			success = iisSolve(isFirstTimeRun, iisPossibleConstraintMap_cumulative.keySet());
-			//isFirstTimeRun=false;
-			
-			if (hasPriorityConstraints) {
-				if (!success || iisPossibleConstraintMap.size()<1){
-					ILP.writeNoteLn("End priority search.",true,false);
-					hasPriorityConstraints = false;
-					_pstc = null;
-					success = true;
-					continue;
-				}
-			}
-				
-			if (!success || iisPossibleConstraintMap.size()<1) {
-				ILP.writeNoteLn("Infeasibility analysis ended.", true, false);
-				if (iisPossibleConstraintMap_cumulative.size()>0) {
-					//if (true) {
-					if (!isConflictFound) {
-						// output unconfirmed hints
-						ILP.writeNoteLn("The following constraints might cause infeasibility.", true, false);
-						for (String c: iisPossibleConstraintMap_cumulative.keySet()){
-							ILP.writeNoteLn(Tools.findGoalLocation(c)+" "+iisPossibleConstraintMap_cumulative.get(c),true,true);
-						}
-					}	
-				}
-				return;
-			} else {
+            success = iisSolve(isFirstTimeRun, iisPossibleConstraintMap_cumulative.keySet());
+            //isFirstTimeRun=false;
+
+            if (hasPriorityConstraints) {
+                if (!success || iisPossibleConstraintMap.size() < 1) {
+                    ILP.writeNoteLn("End priority search.", true, false);
+                    hasPriorityConstraints = false;
+                    _pstc = null;
+                    success = true;
+                    continue;
+                }
+            }
+
+            if (!success || iisPossibleConstraintMap.size() < 1) {
+                // ADDED: Print all unconfirmed constraints before ending
+                if (iisPossibleConstraintMap_cumulative.size() > 0) {
+                    ILP.writeNoteLn("\n@@All potential infeasibility constraints (unconfirmed):", true, true);
+
+                    Set<String> unconfirmed =
+                            new LinkedHashSet<>(iisPossibleConstraintMap_cumulative.keySet());
+
+                    for (String c : unconfirmed) {
+                        ILP.writeNoteLn(
+                                Tools.findGoalLocation(c) + " " + iisPossibleConstraintMap_cumulative.get(c), true, true);
+                    }
+                }
+            }
+            ILP.writeNoteLn("Infeasibility analysis ended.", true, false);
+
+            if (iisPossibleConstraintMap_cumulative.size() > 0) {
+                //if (true) {
+                if (!isConflictFound) {
+                    // output unconfirmed hints
+                    ILP.writeNoteLn("The following constraints might cause infeasibility.", true, false);
+                    for (String c : iisPossibleConstraintMap_cumulative.keySet()) {
+                        ILP.writeNoteLn(Tools.findGoalLocation(c) + " " + iisPossibleConstraintMap_cumulative.get(c), true, true);
+                    }
+                }
+            }
+
+        else {
 				ILP.writeNoteLn("Finding constraints that cause infeasibility...", true, false);
 //				System.out.println("iisPossibleConstraintMap_cumulative.size():"+iisPossibleConstraintMap_cumulative.size());
 //				System.out.println("iisPossibleConstraintMap.size():"+iisPossibleConstraintMap.size());
 //				System.out.println("total_relaxed:"+total_relaxed_constraints);
 			}
-			
+
 	
 			for (String c : iisPossibleConstraintMap.keySet()){
 				if(iisSolveConfirm(c)){
