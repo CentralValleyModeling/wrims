@@ -12,6 +12,12 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.HashMap;
+
 
 import mil.army.usace.hec.metadata.Interval;
 import mil.army.usace.hec.metadata.IntervalFactory;
@@ -55,6 +61,7 @@ import wrimsv2.wreslplus.elements.ParserUtils;
 import wrimsv2.wreslplus.elements.procedures.ErrorCheck;
 import wrimsv2.wreslplus.elements.Tools;
 
+
 public class ControllerBatch {
 	
 	public boolean enableProgressLog = false;
@@ -65,7 +72,44 @@ public class ControllerBatch {
 	private SQLServerRWriter sqlServerRWriter;
 	
 	public ControllerBatch() {} // do nothing
-	
+    private static final String[] MAJOR_RES = {
+            "TRNTY",   // Trinity
+            "SHSTA",   // Shasta
+            "OROVL",   // Oroville
+            "FOLSM",   // Folsom
+            "MILTN"    // New Melones (example, change to your codes)
+    };
+    private static Map<String, Double> majorDeadPool = new HashMap<>();
+
+    private static void loadMajorDeadPools(String arcsReservoirsPath) {
+        majorDeadPool.clear();
+        try {
+            String txt = new String(Files.readAllBytes(Paths.get(arcsReservoirsPath)));
+
+            // line style: define S_TRNTYlevel1 {value 240}
+            Pattern p = Pattern.compile(
+                    "define\\s+S_([A-Z0-9]+)level1\\s*\\{\\s*value\\s+([0-9.]+)\\s*\\}",
+                    Pattern.CASE_INSENSITIVE
+            );
+            Matcher m = p.matcher(txt);
+            while (m.find()) {
+                String res = m.group(1).toUpperCase();
+                double val = Double.parseDouble(m.group(2));
+                // only keep those in MAJOR_RES
+                for (String keep : MAJOR_RES) {
+                    if (keep.equalsIgnoreCase(res)) {
+                        // we will compare against S_<RES>_1 (zone-1) in TAF
+                        majorDeadPool.put("S_" + res + "_1", val);
+                        break;
+                    }
+                }
+            }
+            System.out.println("[DeadPool] Loaded level1 for " + majorDeadPool.size()
+                    + " reservoir(s) from " + arcsReservoirsPath);
+        } catch (Exception ex) {
+            System.err.println("[DeadPool] Could not read " + arcsReservoirsPath + ": " + ex.getMessage());
+        }
+    }
 	public ControllerBatch(String[] args) {
 		long startTimeInMillis = Calendar.getInstance().getTimeInMillis();
 		try {
@@ -95,7 +139,10 @@ public class ControllerBatch {
 				}
 				new PreEvaluator(sds);
 				new PreRunModel(sds);
-				//generateStudyFile();
+                // Load dead pool levels for major reservoirs
+                loadMajorDeadPools("E:/Projects/WRIMS2.2/wrims/wrims_v2/wrims_v2/examples/calsim30_bo_svn51/common/System/SystemTables_Sac/arcs-Reservoirs.wresl");
+
+                //generateStudyFile();
 				long check = Calendar.getInstance().getTimeInMillis();
 				
 				ILP.getIlpDir();
@@ -1644,6 +1691,17 @@ public class ControllerBatch {
 							Error.writeSolvingErrorFile("Error_solving.txt");
 							Error.writeErrorLog();
 							noError=false;
+                            //the following piece of code added by HZS for saving while hitting infeasibility
+                            ControlData.lastSuccessfulCycleIndex = ControlData.currCycleIndex - 1;
+                            //ControlData.currCycle=-1;
+                            // NEW: quick dead-pool check on the failing cycle
+                            checkMajorsAtInfeasibility(ControlData.currCycleIndex);
+                            // Dead-pool quick check on the failing cycle
+                            boolean dpHit = checkMajorsAtInfeasibility(ControlData.currCycleIndex);
+                            if (!dpHit) {
+                                System.err.println("[DeadPool] No major-reservoir dead-pool violations at cycle "
+                                        + ControlData.currCycleIndex + ". Infeasibility is likely NOT caused by hitting dead pools.");
+                            }
 						}
 						int cycleI=i+1;
 						String strCycleI=cycleI+"";
@@ -1778,8 +1836,43 @@ public class ControllerBatch {
 			}
 		}
 	}
+    private static Double getZ1(String name, int idx) {
+        try {
+            Object dvar = ControlData.currDvMap.get(name);
+            if (dvar == null) return null;
+            java.lang.reflect.Field f = dvar.getClass().getField("data"); // or use getData()
+            java.util.List<?> arr = (java.util.List<?>) f.get(dvar);
+            if (idx >= 0 && idx < arr.size()) return ((Number)arr.get(idx)).doubleValue();
+        } catch (Exception ignore) {}
+        return null;
+    }
 
-	public void connectToDataBase(){
+    private static boolean checkMajorsAtInfeasibility(int cycleIndex) {
+        if (majorDeadPool.isEmpty()) return false;
+
+        boolean any = false;
+        for (Map.Entry<String, Double> e : majorDeadPool.entrySet()) {
+            String z1 = e.getKey();        // e.g., S_TRNTY_1
+            double dp = e.getValue();      // level1 (TAF)
+            Double v  = getZ1(z1, cycleIndex);
+            if (v == null) continue;
+
+            if (v < dp - 1e-6) {
+                if (!any) {
+                    System.err.println("=== Dead-pool check at infeasible cycle " + cycleIndex + " ===");
+                }
+                any = true;
+                String base = z1.substring(0, z1.length()-2); // S_TRNTY
+                System.err.println("  " + base + " zone1 = " + v + " TAF  < level1 " + dp + " TAF");
+            }
+        }
+        if (any) {
+            System.err.println("===============================================");
+        }
+        return any; // true if any violation found
+    }
+
+    public void connectToDataBase(){
 		if (ControlData.outputType==2){
 			mySQLCWriter=new MySQLCWriter();
 		}else if (ControlData.outputType==3){
@@ -1794,3 +1887,4 @@ public class ControllerBatch {
 		new LaunchConfiguration(launchFilePath);
 	}
 }
+

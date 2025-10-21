@@ -50,7 +50,8 @@ public class ControlData {
 	public static ArrayList<String> allDll= new ArrayList<String>() ;
 	public static String currCycleName;
 	public static int currCycleIndex;
-	public static int currEvalTypeIndex; //0=sv; 1=dv; 2=alias; 3=goal; 4=external; 5=timeseries define; 6=timeseries reading; 7=weight; 8=initial_vars; 9=conditional_include
+    public static int lastSuccessfulCycleIndex = -1;  // -1 means “none yet”
+    public static int currEvalTypeIndex; //0=sv; 1=dv; 2=alias; 3=goal; 4=external; 5=timeseries define; 6=timeseries reading; 7=weight; 8=initial_vars; 9=conditional_include
 	public static String currEvalName;
 	public static int currDay=1;
 	public static int currMonth;
@@ -215,7 +216,11 @@ public class ControlData {
 	public static int n_anngetndo_x2_curmonndosplit=0;
 	public static int t_annec_matchdsm2=0;
 	public static int n_annec_matchdsm2=0;
-	
+    // Map reservoir zone-1 dvar -> dead-pool threshold (TAF), e.g., "S_TRNTY_1" -> 240.0
+    public static Map<String, Double> deadPoolThresholdByZone1 = new HashMap<>();
+    // Optional: tolerance used when comparing storage to dead-pool (to ignore tiny numerical noise)
+    // Optional: where to read dead-pool values from; if null, loader will try a default filename
+    public static String arcsReservoirsWreslPath = null;public static double deadPoolCheckEps = 1e-6;
 	public static int pid=-1;
 	
 	public ControlData(){
