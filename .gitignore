@@ -44,3 +44,10 @@ bin/
 .DS_Store
 
 gradle.properties
+*.properties.local
+gradle.properties.properties
+
+# secrets
+gradle.properties.properties
+gradle.properties
+*.properties.local
