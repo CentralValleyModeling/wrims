@@ -140,7 +140,17 @@ public class ControllerBatch {
 				new PreEvaluator(sds);
 				new PreRunModel(sds);
                 // Load dead pool levels for major reservoirs
-                loadMajorDeadPools("E:/Projects/WRIMS2.2/wrims/wrims_v2/wrims_v2/examples/calsim30_bo_svn51/common/System/SystemTables_Sac/arcs-Reservoirs.wresl");
+                // Load dead pool levels for major reservoirs
+                String arcsPath =
+                        Paths.get(FilePaths.mainDirectory)
+                                .resolve("wrims_v2").resolve("wrims_v2")
+                                .resolve("examples").resolve("calsim30_bo_svn51")
+                                .resolve("common").resolve("System")
+                                .resolve("SystemTables_Sac")
+                                .resolve("arcs-Reservoirs.wresl")
+                                .toString();
+
+                loadMajorDeadPools(arcsPath);
 
                 //generateStudyFile();
 				long check = Calendar.getInstance().getTimeInMillis();

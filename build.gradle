@@ -20,7 +20,7 @@ def versionLabel(gitInfo) {
     // tag is returned as is. Branch may need cleanup
     //return branch == null ? tag : gitInfo.lastTag + ".9999"
     //return branch == null ? tag : gitInfo.lastTag
-    return branch == null ? tag : "-2.2.1"
+    return branch == null ? tag : "2.2.1"
 }
 
 allprojects {
