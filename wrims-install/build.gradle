@@ -32,7 +32,7 @@ tasks.register('unzipThirdPartyLibs', Copy) {
 //download the latest WRIMS GUI installer from DWR
 tasks.register('downloadWrimsGuiInstaller', Download) {
     dependsOn unzipThirdPartyLibs
-    src 'https://data.cnra.ca.gov/dataset/0f6b03b4-7de8-4579-8aa0-60f73d9d21fb/resource/89f60e4a-c0c2-4ca2-acac-beb6bdb5d69e/download/wrims2_gui_x64_20240129.zip'
+    src 'https://data.cnra.ca.gov/dataset/0f6b03b4-7de8-4579-8aa0-60f73d9d21fb/resource/0174040a-f557-49ff-8d7b-87cca8afcac0/download/wrims2_gui_x64_20260224.zip'
     dest new File(wrimsGuiDownload)
     onlyIfModified true
 }
