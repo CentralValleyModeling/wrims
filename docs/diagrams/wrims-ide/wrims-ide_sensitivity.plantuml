@@ -4,23 +4,22 @@
 left to right direction
 skinparam linetype ortho
 
-rectangle wrims-ide as "WRIMS IDE" #orange {
-    component sensitivity #lightgreen {
-        package wrimsv2_plugin.sensitivity
+rectangle WRIMS {
+    component wrims-ide as "WRIMS IDE" #orange {
+        package wrimsv2_plugin {
+            package sensitivity #lightgreen
+            package tools
+            package debugger
+        }
     }
-    component tools {
-        package wrimsv2_plugin.tools
-    }
-    component debugger {
-        package wrimsv2_plugin.debugger
-    }
+
+    folder luna_libs as "directory '../eclipse-luna-libs'" #orange
 }
+sensitivity -r-> luna_libs
+sensitivity --> tools
+sensitivity -u-> debugger #firebrick
 
-component luna_libs as "directory '../eclipse-luna-libs'" #orange
+debugger -> sensitivity #firebrick
 
-sensitivity -down-> luna_libs
-sensitivity -down-> tools
-sensitivity -down-> debugger
-
-footer "green components indicate the primary module being represented \n orange components indicate key local modules"
+footer "green components indicate the primary module being represented \n orange components indicate key local modules \n red lines represent circular dependencies"
 @enduml

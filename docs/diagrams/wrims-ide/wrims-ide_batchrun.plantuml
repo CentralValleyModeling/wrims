@@ -4,27 +4,27 @@
 left to right direction
 skinparam linetype ortho
 
-rectangle wrims-ide as "WRIMS IDE" #orange {
-    component batchrun #lightgreen {
-        package wrimsv2_plugin.batchrun
+rectangle WRIMS {
+    component wrims-ide as "WRIMS IDE" #orange {
+        package wrimsv2_plugin {
+            package batchrun #lightgreen
+            package tools
+            package debugger
+        }
     }
-    component tools {
-        package wrimsv2_plugin.tools
-    }
-    component debugger {
-        package wrimsv2_plugin.debugger
+
+    folder luna_libs as "directory '../eclipse-luna-libs'" #orange
+    rectangle Third-Party #orange {
+        component vista as "vista.jar" #lightblue
     }
 }
 
-component luna_libs as "directory '../eclipse-luna-libs'" #orange
-rectangle third-party #orange {
-    component vista as "vista.jar" #lightblue
-}
-
-batchrun -down-> luna_libs
-batchrun -down-> vista
+batchrun -r-> luna_libs
+batchrun -l-> vista
 batchrun -down-> tools
-batchrun -down-> debugger
+batchrun -down-> debugger #firebrick
 
-footer "green components indicate the primary module being represented \n orange components indicate key local modules \n blue components indicate locally-stored third-party jars"
+debugger -> batchrun #firebrick
+
+footer "green components indicate the primary module being represented \n orange components indicate key local modules \n blue components indicate locally-stored third-party jars \n red lines represent circular dependencies"
 @enduml

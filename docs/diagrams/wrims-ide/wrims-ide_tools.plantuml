@@ -4,28 +4,31 @@
 left to right direction
 skinparam linetype ortho
 
-rectangle wrims-ide as "WRIMS IDE" #orange {
-    component tools #lightgreen {
-        package wrimsv2_plugin.tools
+rectangle WRIMS {
+    component wrims-ide as "WRIMS IDE" #orange {
+        package wrimsv2_plugin {
+            package tools #lightgreen
+            package debugger
+        }
     }
-    component debugger {
-        package wrimsv2_plugin.debugger
+
+    folder luna_libs as "directory '../eclipse-luna-libs'" #orange
+    rectangle third-party as "Third Party" #orange {
+        package mil.army.usace.hec.metadata
+    }
+
+    component wrims-core as "WRIMS Core" #orange {
+        package wrimsv2 {
+            package commondata.wresldata
+        }
     }
 }
+tools -r-> luna_libs
+tools -l-> debugger #firebrick
+tools -u-> mil.army.usace.hec.metadata
+tools -down-> commondata.wresldata
 
-component luna_libs as "directory '../eclipse-luna-libs'" #orange
-rectangle third-party #orange {
-    package mil.army.usace.hec.metadata
-}
+debugger -> tools #firebrick
 
-rectangle wrims-core as "WRIMS Core" #orange {
-    package wrimsv2.commondata.wresldata
-}
-
-tools -down-> luna_libs
-tools -down-> debugger
-tools -down-> mil.army.usace.hec.metadata
-tools -down-> wrimsv2.commondata.wresldata
-
-footer "green components indicate the primary module being represented \n orange components indicate key local modules"
+footer "green components indicate the primary module being represented \n orange components indicate key local modules \n red lines represent circular dependencies"
 @enduml

@@ -3,38 +3,41 @@ left to right direction
 skinparam linetype ortho
 
 component WRIMS_IDE as "WRIMS-IDE" {
-    package debugger
-    package sensitivity
-    package tools
-    package reporttool
-    package batchrun
-    package calsimhydro
-    package editor
-    package perspective
-    package presentation
+    package wrimsv2_plugin {
+        package debugger
+        package sensitivity
+        package tools
+        package reporttool
+        package batchrun
+        package calsimhydro
+        package editor
+        package perspective
+        package presentation
+    }
 }
 
 sensitivity -> tools
-sensitivity -> debugger
+sensitivity -> debugger #firebrick
 
-calsimhydro --> debugger
+calsimhydro --> debugger #firebrick
 
 batchrun -> tools
-batchrun --> debugger
+batchrun --> debugger #firebrick
 
 reporttool -> tools
-reporttool -> debugger
+reporttool -> debugger #firebrick
 
-debugger -> sensitivity
-debugger -> batchrun
-debugger -> calsimhydro
-debugger -> reporttool
-debugger -> tools
+debugger -> sensitivity #firebrick
+debugger -> batchrun #firebrick
+debugger -> calsimhydro #firebrick
+debugger -> reporttool #firebrick
+debugger -> tools #firebrick
 
-tools --> debugger
+tools --> debugger #firebrick
 
 editor -d-> debugger
 perspective -> debugger
 presentation -u-> debugger
 
+footer "red lines represent circular dependencies"
 @enduml
