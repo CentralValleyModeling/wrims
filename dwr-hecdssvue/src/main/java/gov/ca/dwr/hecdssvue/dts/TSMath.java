@@ -31,7 +31,7 @@ import vista.time.TimeInterval;
  * @version $Id: TSMath.java,v 1.1.2.13 2001/07/12 01:58:32 amunevar Exp $
  */
 public class TSMath {
-    public static final double MISSING_VALUE = -901.0F;
+    public static final double MISSING_VALUE = Double.NaN;
     public static final ElementFilter DEFAULT_FILTER = new CompositeFilter(new ElementFilter[] {
         d -> NumericalConstants.isValidValue(d.getY()),
         new MultiValueFilter(new double[] {Float.MIN_VALUE})});

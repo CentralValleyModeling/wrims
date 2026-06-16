@@ -1232,7 +1232,7 @@ public final class MonthlyTableModel extends AbstractTableModel { // extends
 						if (j == 0 && column > 0) {
 							for (int k = 0; k < column; ++k) {
 								((HecDoubleArray) row[1]).element(k)
-										.set(-901.0); // -901 or -902????????
+										.set(Double.NaN); // -901 or -902????????
 								((HecDoubleArray) row[1]).element(k)
 										.setUndefined();
 							}
@@ -1286,7 +1286,7 @@ public final class MonthlyTableModel extends AbstractTableModel { // extends
 									for (int k = column + 1; k < 12; ++k) {
 										// row filler at end if needed
 										((HecDoubleArray) row[1]).element(k)
-												.set(-901.0); // -901 or -902?
+												.set(Double.NaN); // -901 or -902?
 										((HecDoubleArray) row[1]).element(k)
 												.setUndefined();
 									}
