@@ -268,6 +268,7 @@ public class StudyUtils {
 			Output output = new Output(new FileOutputStream(objFilePath));
 		    kryo.writeObject(output, sds);
 		    output.close();
+		    kryo.reset();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -299,6 +300,7 @@ public class StudyUtils {
 			Input input = new Input(new FileInputStream(objFilePath));
 			sds = kryo.readObject(input, StudyDataSet.class);
 		    input.close();
+		    kryo.reset();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
