@@ -46,6 +46,17 @@ public class Functiongenfrcstrunofftables extends ExternalFunction{
 
 	public void formTables(double frcst_fea, double frcst_sac, double frcst_amr){
 
+		if(ControlData.resimFrcstRunoffTable && ControlData.currMonth !=1) {
+			if (ControlData.currYear==ControlData.endYear && ControlData.currMonth==ControlData.endMonth){
+				writeTable("feather_runoff_forecast", 1, 5, frcst_fea_arr);
+				writeTable("sacramento_runoff_forecast", 2, 5, frcst_sac_arr);
+				writeTable("american_runoff_forecast", 2, 9, frcst_amr_arr);
+			}
+			return;
+		}else {
+			ControlData.resimFrcstRunoffTable=false;
+		}
+		
 	    if (ControlData.currMonth==1){
 	    	wYears.add(TimeOperation.waterYearValue());
 	    	frcst_fea_list=new ArrayList<Double>();
@@ -70,8 +81,6 @@ public class Functiongenfrcstrunofftables extends ExternalFunction{
 	    }else if (ControlData.currMonth>=3 && ControlData.currMonth<=9){
 	    	frcst_amr_list.add(frcst_amr);
 	    }
-
-
 
 		if (ControlData.currYear==ControlData.endYear && ControlData.currMonth==ControlData.endMonth){
 			writeTable("feather_runoff_forecast", 1, 5, frcst_fea_arr);
