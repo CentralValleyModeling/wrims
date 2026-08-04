@@ -406,8 +406,10 @@ public class WPPPATab extends AbstractLaunchConfigurationTab {
 			String resetDVStart = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_PARESETDVSTART, "no");
 			if (resetDVStart.equals("yes")){
 				resetDVStartBut.setSelection(true);
+				nResetDVStartBut.setSelection(false);
 				enableDVStartDate(true);
 			}else{
+				resetDVStartBut.setSelection(false);
 				nResetDVStartBut.setSelection(true);
 				enableDVStartDate(false);
 			}
